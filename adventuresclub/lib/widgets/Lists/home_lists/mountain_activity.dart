@@ -20,7 +20,7 @@ class _MountainActivityState extends State<MountainActivity> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
         shrinkWrap: true,
         physics: const ClampingScrollPhysics(),
         itemCount: 7,
@@ -111,7 +111,7 @@ class _MountainActivityState extends State<MountainActivity> {
                             
                           ],),
                           
-                          const Divider(indent: 4,endIndent: 4,),
+                          const Expanded(child: Divider(indent: 1,endIndent: 1,color: greyColor,thickness: 2,)),
                             Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [

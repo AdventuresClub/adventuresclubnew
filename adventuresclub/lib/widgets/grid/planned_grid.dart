@@ -21,14 +21,14 @@ class _PlannedGridState extends State<PlannedGrid> {
   }
   Widget build(BuildContext context) {
  final double itemHeight =
-        (MediaQuery.of(context).size.height - kToolbarHeight - 24) / 8.75;
-    final double itemWidth = MediaQuery.of(context).size.width / 4.5;
-    return   GridView.count(
+        (MediaQuery.of(context).size.height - kToolbarHeight - 24) / 10.75;
+    final double itemWidth = MediaQuery.of(context).size.width / 3.5;
+    return GridView.count(
           physics: const ScrollPhysics(),
           shrinkWrap: true,
-          mainAxisSpacing: 1,
-          childAspectRatio:0.65,
-          crossAxisSpacing: 1,
+          mainAxisSpacing: 0.5,
+          childAspectRatio:0.75,
+          crossAxisSpacing: 0.5,
           crossAxisCount: 2,
           children: List.generate(
             6, // widget.profileURL.length,
@@ -46,8 +46,8 @@ class _PlannedGridState extends State<PlannedGrid> {
                        Stack(
                          children: [
                            Container(
-                            width: MediaQuery.of(context).size.width/2,
-                            height: 130,
+                            width: MediaQuery.of(context).size.width/2.2,
+                            height: 100,
                             decoration: BoxDecoration(
                                 borderRadius: const BorderRadius.only(
                                     topLeft: Radius.circular(12),
@@ -62,12 +62,12 @@ class _PlannedGridState extends State<PlannedGrid> {
                                     fit: BoxFit.cover)),
                            ),
                             const Positioned(
-                                bottom: 15,
-                                right: 10,
+                                bottom: 5,
+                                right: 5,
                                 child:CircleAvatar(
-                                  radius: 20,
+                                  radius: 14,
                                   backgroundColor: Colors.red,
-                                  child: Icon(Icons.favorite)) 
+                                  child: Icon(Icons.favorite,size: 20,)) 
                                 ),
                          ],
                        ),
@@ -89,7 +89,7 @@ class _PlannedGridState extends State<PlannedGrid> {
                                 allowHalfRating: true,
                                 itemCount: 5,
                                 itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
-                                itemBuilder: (context, _) => Icon(
+                                itemBuilder: (context, _) => const Icon(
                                   Icons.star,
                                   color: Colors.amber,
                                 size: 12,

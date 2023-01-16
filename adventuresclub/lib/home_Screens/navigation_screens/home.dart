@@ -42,7 +42,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             const SizedBox(
-              height: 250,
+              height: 230,
               child: RecommendedActivity(),
             ),
             Padding(
@@ -57,7 +57,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-            const SizedBox(height: 300, child: RecentlyAdded()),
+            const SizedBox(height: 260, child: RecentlyAdded()),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Align(
@@ -70,7 +70,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-            const SizedBox(height: 300, child: MountainActivity()),
+            const SizedBox(height: 260, child: MountainActivity()),
           ],
         ),
       ),

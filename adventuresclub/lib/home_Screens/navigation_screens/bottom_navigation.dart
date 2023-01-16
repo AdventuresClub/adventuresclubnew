@@ -132,8 +132,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
               ),
             ],
             backgroundColor: Colors.transparent,
-            selectedItemColor: greenishColor,
-            unselectedItemColor: blackColor,
+            selectedItemColor: bluishColor,
+            unselectedItemColor: blackColor.withOpacity(0.6),
+            selectedLabelStyle: TextStyle(color: blackColor.withOpacity(0.6)),
             showUnselectedLabels: true,
           ),
        

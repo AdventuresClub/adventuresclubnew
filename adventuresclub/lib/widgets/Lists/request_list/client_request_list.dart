@@ -108,11 +108,11 @@ class _ClientRequestListState extends State<ClientRequestList> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SquareButton('Book Again', bluishColor, whiteColor, 4, 16, 11, abc),
+                  SquareButton('Book Again', bluishColor, whiteColor, 4, 20, 11, abc),
                   
-                  SquareButton('Rate Now', Colors.amber, whiteColor, 4, 16, 11, goToMyAd),
+                  SquareButton('Rate Now', Colors.amber, whiteColor, 4, 20, 11, goToMyAd),
                   
-                  SquareButton('Chat Provider', blueColor, whiteColor, 4, 16, 11, abc),
+                  SquareButton('Chat Provider', blueColor, whiteColor, 4, 20, 11, abc),
                 ],
               ),
             ],),

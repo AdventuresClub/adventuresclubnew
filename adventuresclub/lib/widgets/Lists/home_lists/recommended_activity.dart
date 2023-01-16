@@ -40,7 +40,7 @@ class _RecommendedActivityState extends State<RecommendedActivity> {
                   borderRadius: BorderRadius.circular(16)),
               elevation: 2,
               child: Padding(
-                padding: const EdgeInsets.all(4.0),
+                padding: const EdgeInsets.only(top:4.0,left:4,right: 4),
                 child: Column(
                   children: [
                     Stack(
