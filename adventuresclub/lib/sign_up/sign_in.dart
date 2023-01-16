@@ -1,5 +1,6 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
+import 'package:adventuresclub/sign_up/Sign_up.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/text_fields.dart';
@@ -110,6 +111,11 @@ class _SignInState extends State<SignIn> {
       return const BottomNavigation();
     }));
   }
+   goToSignUp(){
+    Navigator.of(context).push(MaterialPageRoute(builder: (_){
+      return const SignUp();
+    }));
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -157,19 +163,22 @@ class _SignInState extends State<SignIn> {
            const SizedBox(height:20),
                ],
              ), 
-          const Align(
-            alignment: Alignment.center,
-            child: Text.rich(
-            TextSpan(
-              children: [
-                TextSpan(text: "Don't have an account? ",style: TextStyle(color:whiteColor)),
-                TextSpan(
-            text: 'Register',
-            style: TextStyle(fontWeight: FontWeight.bold, color: whiteColor),
-                ),
-              ],
+          GestureDetector(
+            onTap: goToSignUp,
+            child: const Align(
+              alignment: Alignment.center,
+              child: Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(text: "Don't have an account? ",style: TextStyle(color:whiteColor)),
+                  TextSpan(
+              text: 'Register',
+              style: TextStyle(fontWeight: FontWeight.bold, color: whiteColor),
+                  ),
+                ],
+              ),
             ),
-          ),
+            ),
           )
           ],),
         ),

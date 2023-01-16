@@ -1,5 +1,6 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
+import 'package:adventuresclub/sign_up/sign_in.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/grid/checkbox_grid.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
@@ -129,7 +130,11 @@ class _SignUpState extends State<SignUp> {
       return const BottomNavigation();
     }));
   }
-
+ goToSignIn(){
+    Navigator.of(context).push(MaterialPageRoute(builder: (_){
+      return const SignIn();
+    }));
+  }
   abc() {}
   @override
   Widget build(BuildContext context) {
@@ -245,23 +250,26 @@ class _SignUpState extends State<SignUp> {
                   FontWeight.w600,
                   16),
               const SizedBox(height: 20),
-              const Align(
-                alignment: Alignment.center,
-                child: Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                          text: 'Already have an account ?',
+              GestureDetector(
+                onTap: goToSignIn,
+                child: const Align(
+                  alignment: Alignment.center,
+                  child: Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                            text: 'Already have an account ?',
+                            style: TextStyle(
+                                color: whiteColor, fontFamily: 'Raleway')),
+                        TextSpan(
+                          text: 'Sign In',
                           style: TextStyle(
-                              color: whiteColor, fontFamily: 'Raleway')),
-                      TextSpan(
-                        text: 'Sign In',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: whiteColor,
-                            fontFamily: 'Raleway'),
-                      ),
-                    ],
+                              fontWeight: FontWeight.bold,
+                              color: whiteColor,
+                              fontFamily: 'Raleway'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               )

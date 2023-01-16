@@ -26,9 +26,9 @@ class _PlannedGridState extends State<PlannedGrid> {
     return GridView.count(
           physics: const ScrollPhysics(),
           shrinkWrap: true,
-          mainAxisSpacing: 0.5,
-          childAspectRatio:0.75,
-          crossAxisSpacing: 0.5,
+          mainAxisSpacing: 0.2,
+          childAspectRatio:0.80,
+          crossAxisSpacing: 0.2,
           crossAxisCount: 2,
           children: List.generate(
             6, // widget.profileURL.length,

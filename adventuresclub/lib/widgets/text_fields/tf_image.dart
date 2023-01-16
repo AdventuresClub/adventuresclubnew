@@ -21,11 +21,12 @@ class _TfImageState extends State<TfImage> {
                           controller: widget.controller,
                         decoration: InputDecoration(
 contentPadding:const EdgeInsets.symmetric(vertical: 20,horizontal: 8),
-                        hintStyle: TextStyle(    fontSize: 14,),
+                        hintStyle: const TextStyle(fontSize: 14,),
                         hintText: widget.hinttext,
                         filled: true,
                         fillColor: whiteColor,
-                        suffixIcon: Image(image: ExactAssetImage(widget.image),height: 4,width:4,),
+                        suffixIcon: Image.asset(widget.image,height: 4,width: 4,) ,
+                        //Image(image: ExactAssetImage(widget.image),height: 4,width:4,),
                            border: OutlineInputBorder(
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                   borderSide: BorderSide(color: greyColor.withOpacity(0.2)),
