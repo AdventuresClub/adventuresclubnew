@@ -21,6 +21,14 @@ const greyBackgroundColor = Color(0xFF0F0F0F);
 
 const greyProfileColor = Color(0xFFF6F6F6);
 
+const greyColor3 = Color(0xFF92908E);
+
+const redColor = Color(0xFFDF5252);
+
+const greycolor4 = Color(0xFFBCBCBC);
+
+const yellowcolor = Color(0xFFFFB04E);
+const blueColor1 = Color(0xFF1D7FFF);
 const greyColor2 = Color(0xFF737D6D);
 const greyTextColor = Color(0xFF565656);
 const greyishColor = Color(0xFF333631);

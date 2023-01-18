@@ -218,7 +218,7 @@ class _AccountState extends State<Account> {
                } 
                if(tile3Text[index] == 'Invite Friends'){
                 Navigator.of(context).push(MaterialPageRoute(builder: (_){
-                  return const CompletePartnerSteps();
+                  return const CompleteProfile();
                 }));
                } 
                if(tile3Text[index] == 'About us'){

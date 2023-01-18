@@ -39,6 +39,7 @@ class _SignUpState extends State<SignUp> {
 
   TextEditingController weight2Controller = TextEditingController();
   List<bool> value = [false, false, false, false, false, false];
+  bool valuea = false;
   enterOTP() {
     showDialog(
         context: context,
@@ -168,11 +169,11 @@ class _SignUpState extends State<SignUp> {
                 width: 320,
               ),
               const SizedBox(height: 20),
-              TextFields('Username', userNameController, 20, whiteColor),
+              TextFields('Username', userNameController, 17, whiteColor),
               const SizedBox(height: 20),
 
               TextFields(
-                  'Enter Email Password', emailController, 20, whiteColor),
+                  'Enter Email Password', emailController, 17, whiteColor),
               const SizedBox(height: 20),
                 
               TfImage('Nationality','images/ic_drop_down.png',1,nationalityController),
@@ -249,6 +250,7 @@ class _SignUpState extends State<SignUp> {
                   'Raleway',
                   FontWeight.w600,
                   16),
+                
               const SizedBox(height: 20),
               GestureDetector(
                 onTap: goToSignIn,

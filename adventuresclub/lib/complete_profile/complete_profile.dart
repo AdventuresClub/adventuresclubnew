@@ -33,6 +33,11 @@ class _CompleteProfileState extends State<CompleteProfile> {
     '3',
     '4'
   ];
+  List stepText = [
+    'Official Details',
+    'Payment Setup',
+    'Select Package',
+  ]; 
   @override
   Widget build(BuildContext context) {
     final completeProfileProvider =
@@ -73,57 +78,81 @@ class _CompleteProfileState extends State<CompleteProfile> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 0,
+            padding: const EdgeInsets.only(
+              left: 20,
             ),
             child: Consumer<CompleteProfileProvider>(
               builder: (context, provider, child) {
-                return Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal:0.0),
-                    child: StepProgressIndicator(
+                return  StepProgressIndicator(
+                      padding: 0,
     totalSteps: provider.steps.length,
                   currentStep: provider.currentStep + 1,
-    size: 36,
+    size: 60,
     selectedColor: bluishColor,
     unselectedColor: greyColor,
     customStep: (index, color, _) => color == bluishColor
-        ?  Row(
+        ?    Column(
+          
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [ Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                    children: [
+           
+                  Container(
+                                  padding: const EdgeInsets.symmetric(horizontal:16,vertical: 12),
+                                decoration: BoxDecoration(
+                                  color:
+                                         
+                                   bluishColor,
+                                  borderRadius: BorderRadius.circular(65)),
+                                child: Center(child: MyText(text: text1[index],color: whiteColor,weight: FontWeight.w500,fontFamily: 'Roboto',)),),
                         const Expanded(
-                        child: Divider(color: greyColor,thickness: 5,indent: 0,endIndent: 0,),),
-                       CircleAvatar(
-              radius: 40,
-              backgroundColor: color,
-              child:MyText(text: text1[index],color: whiteColor,)
-            ),
-                        const Expanded(
-                        child: Divider(color: greyColor,thickness: 5,),),
+                        child: Divider(color: bluishColor,thickness: 7,),),
+                ],
+              ),
+               
+               Align(
+                          alignment: Alignment.centerLeft,
+                          child:MyText(text: text[index],color: bluishColor,weight: FontWeight.w500,fontFamily: 'Roboto',size: 10,)),              
+                 
                     ],
                   )
         
-        :  Row(
+        :      Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Expanded(
-                        child: Divider(color: greyColor,thickness: 5,indent: 0,),),
-                        
-                       CircleAvatar(
-              radius: 40,
-              backgroundColor: color,
-              child:MyText(text: text1[index],color: whiteColor,)
-            ),
+                Row(
+                  
+                  mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+              
+                      Container(
+                               padding: const EdgeInsets.symmetric(horizontal:16,vertical: 12),
+                                      
+                                decoration: BoxDecoration(
+                                  color:
+                                         
+                                   greyColor3,
+                                  borderRadius: BorderRadius.circular(65)),
+                                child: Center(child: MyText(text: text1[index],color: whiteColor,weight: FontWeight.w500,fontFamily: 'Roboto')),),
+               if(index != 3)
                        const Expanded(
-                        child: Divider(color: greyColor,thickness: 5,),),
+                        child: Divider(color: greyColor,thickness: 7,),),
                     ],
                   ),
-)
+               
+               Align(
+                          alignment: Alignment.centerLeft,
+                          child:MyText(text: text[index],color: greyColor,weight: FontWeight.w500,fontFamily: 'Roboto',size: 10,)),              
+                 
+                    ],
                   ),
                 );
               },
             ),
           ),
           const SizedBox(
-            height: 5,
+            height:     15,
           ),
           Expanded(
             child: Consumer<CompleteProfileProvider>(

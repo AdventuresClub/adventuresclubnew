@@ -27,7 +27,7 @@ class _TFWithSuffixTextState extends State<TFWithSuffixText> {
       
       decoration: InputDecoration(
           contentPadding:
-              const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+              const EdgeInsets.symmetric(vertical: 17, horizontal: 15),
           hintText: widget.hintText,
           hintStyle: const TextStyle(
             color: blackColor,

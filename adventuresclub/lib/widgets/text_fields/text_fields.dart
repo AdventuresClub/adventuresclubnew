@@ -32,15 +32,18 @@ class _TextFieldsState extends State<TextFields> {
         autofocus: true,
         keyboardType: widget.show,
         controller: widget.controller,
+       style: const TextStyle(decoration:TextDecoration.none,),
         decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(
                 vertical: widget.verticalPadding, horizontal: 15),
             hintText: widget.hintText,
             hintStyle: TextStyle(
-                color: blackColor.withOpacity(0.6),
+                color: blackColor.withOpacity(0.6,),
                 fontWeight: FontWeight.w600,
                 fontSize: 14,
+                
                 fontFamily: 'Raleway'),
+
             hintMaxLines: 1,
             isDense: true,
             filled: true,

@@ -2,8 +2,6 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class MyPoints extends StatefulWidget {
   const MyPoints({super.key});

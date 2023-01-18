@@ -20,7 +20,7 @@ class _TfImageState extends State<TfImage> {
     return   TextField(
                           controller: widget.controller,
                         decoration: InputDecoration(
-contentPadding:const EdgeInsets.symmetric(vertical: 20,horizontal: 8),
+contentPadding:const EdgeInsets.symmetric(vertical: 17,horizontal: 8),
                         hintStyle: const TextStyle(fontSize: 14,),
                         hintText: widget.hinttext,
                         filled: true,

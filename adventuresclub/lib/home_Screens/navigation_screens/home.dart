@@ -42,7 +42,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             const SizedBox(
-              height: 230,
+              height: 240,
               child: RecommendedActivity(),
             ),
             Padding(

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/details.dart';
 import 'package:flutter/material.dart';
@@ -120,7 +122,7 @@ class _PlannedGridState extends State<PlannedGrid> {
                             
                           ],),
                           
-                          const Divider(indent: 10,endIndent: 10,),
+                          const Divider(indent: 2,endIndent: 2,thickness: sqrt1_2,),
                             Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [

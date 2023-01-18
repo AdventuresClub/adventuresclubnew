@@ -1,5 +1,5 @@
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/widgets/grid/provided_adventure_grid.dart';
+import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/multiline_field.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +13,7 @@ class MyAdventures extends StatefulWidget {
 }
 
 class _MyAdventuresState extends State<MyAdventures> {
+  abc(){}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +58,7 @@ class _MyAdventuresState extends State<MyAdventures> {
                                   ],
                                 ),
                                 const SizedBox(height: 10,),
-                            MyText(text: 'Lorem ipsum dolor sit amet,\nconsetetur sadipscing elitr,\nsed diam nonumy eirmod',weight: FontWeight.w400,color: greyColor,size: 12,),
+                            MyText(text: 'Lorem ipsum dolor sit amet,\nconsetetur sadipscing elitr,\nsed diam nonumy eirmod',weight: FontWeight.w400,color: greyColor,size: 14,),
                             
                               ],
                             ),
@@ -102,6 +103,8 @@ class _MyAdventuresState extends State<MyAdventures> {
                  ),
                ),
                 
+          const SizedBox(height: 50,),
+ButtonIconLess('Submit', bluishColor, whiteColor, 1.8, 16, 18, abc),
             ],),
       
       ),

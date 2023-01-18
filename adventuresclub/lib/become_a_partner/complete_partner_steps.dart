@@ -32,6 +32,11 @@ class _CompletePartnerStepsState extends State<CompletePartnerSteps> {
     '3',
     '4'
   ];
+  List stepText = [
+    'Official Details',
+    'Payment Setup',
+    'Select Package',
+  ]; 
   @override
   Widget build(BuildContext context) {
     final completePartnerProvider =
@@ -72,51 +77,146 @@ class _CompletePartnerStepsState extends State<CompletePartnerSteps> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 0,
+            padding: const EdgeInsets.only(
+              left: 35,
             ),
             child: Consumer<CompletePartnerProvider>(
               builder: (context, provider, child) {
-                return Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal:0.0),
-                    child: StepProgressIndicator(
+                return  StepProgressIndicator(
+                      padding: 0,
     totalSteps: provider.steps.length,
+    
                   currentStep: provider.currentStep + 1,
-    size: 36,
+    size: 60,
     selectedColor: bluishColor,
     unselectedColor: greyColor,
     customStep: (index, color, _) => color == bluishColor
-        ?  Row(
-                   children: [
-                        const Expanded(
-                        child: Divider(color: greyColor,thickness: 5,indent: 0,endIndent: 0,),),
-                       CircleAvatar(
-              radius: 40,
-              backgroundColor: color,
-              child:MyText(text: text1[index],color: whiteColor,)
-            ),
-                        const Expanded(
-                        child: Divider(color: greyColor,thickness: 5,),),
-                    ],
-                  )
-        
-        :  Row(
-                    children: [
-                      const Expanded(
-                        child: Divider(color: greyColor,thickness: 5,indent: 0,),),
+        ?    Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+                       children: [
+                                    if (index ==0)
+                                     Padding(
+                                       padding: const EdgeInsets.only(left:8.0),
+                                       child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal:16,vertical: 12),
+                                  
+                                        decoration: BoxDecoration(
+                                          color:
+                                                 
+                                           bluishColor,
+                                          borderRadius: BorderRadius.circular(65)),
+                                        child: Center(child: MyText(text: text1[index],color: whiteColor,weight: FontWeight.w500,fontFamily: 'Roboto')),),
+                                     ),
+                             
+                                 if (index !=0)
+                         Container(
+                          width: 15,
+                          color: bluishColor,
+                          height: 7,
+                        ),
                         
-                       CircleAvatar(
-              radius: 40,
-              backgroundColor: color,
-              child:MyText(text: text1[index],color: whiteColor,)
-            ),
-                       const Expanded(
-                        child: Divider(color: greyColor,thickness: 5,),),
-                    ],
+                        if (index !=0)
+                                      Container(
+                                    padding: const EdgeInsets.symmetric(horizontal:16,vertical: 12),
+                                  
+                                        decoration: BoxDecoration(
+                                          color:
+                                                 
+                                           bluishColor,
+                                          borderRadius: BorderRadius.circular(65)),
+                                        child: Center(child: MyText(text: text1[index],color: whiteColor,weight: FontWeight.w500,fontFamily: 'Roboto')),),
+                                     
+                            
+               
+                            const Expanded(
+                            child: Divider(color: bluishColor,thickness: 7,),),
+                        ],
+                      ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child:  MyText(text: stepText[index],color: bluishColor,weight: FontWeight.w500,fontFamily: 'Roboto',size: 10,align: TextAlign.left,),
+                         
+                        ),
+                                  ],
+                                )
+       
+        
+        :    Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: [ 
+                          
+                              Padding(
+                                padding: const EdgeInsets.only(left:0.0),
+                                child: Row(
+             mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                        //     if(index != 0)
+                        //  Container(
+                        //   width: 15,
+                        //   color: greyColor3,
+                        //   height: 10,
+                        // ),
+                                    if(index==0)
+                                   Padding(
+                                     padding: const EdgeInsets.only(left:8.0),
+                                     child: Container(
+                                       padding: const EdgeInsets.symmetric(horizontal:16,vertical: 12),
+                                      decoration: BoxDecoration(
+                                        color: greyColor3,
+                                        borderRadius: BorderRadius.circular(65)),
+                                      child: Center(child: MyText(text: text1[index],color: whiteColor,weight: FontWeight.w500,fontFamily: 'Roboto',)),),
+                                   ),
+                  
+                  if (index !=0 && index != 2)
+                         Container(
+                          width: 15,
+                          color: bluishColor,
+                          height: 7,
+                        ),
+                        if (index != 0 && index != 1 )
+                         Container(
+                          width: 15,
+                          color: bluishColor,
+                          height: 7,
+                        ),
+                        
+                        if (index !=0)
+                                   Padding(
+                                     padding: const EdgeInsets.only(left:0.0),
+                                     child: Container(
+                                       padding: const EdgeInsets.symmetric(horizontal:16,vertical: 12),
+                                      decoration: BoxDecoration(
+                                        color: greyColor3,
+                                        borderRadius: BorderRadius.circular(65)),
+                                      child: Center(child: MyText(text: text1[index],color: whiteColor,weight: FontWeight.w500,fontFamily: 'Roboto',)),),
+                                   ),
+                 
+                 if(index != 2)
+                           const Expanded(
+                            child: Divider(color: greyColor,thickness: 7,),),
+                
+                                 ],
+                           ),
+                              ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child:MyText(text: stepText[index],color: greyColor,weight: FontWeight.w500,fontFamily: 'Roboto',size: 10,align: TextAlign.left,),
+                    
                   ),
-)
-                  ),
+                  
+             
+                        ],
+                      ),
+      
+       
+
                 );
               },
             ),

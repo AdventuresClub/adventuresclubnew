@@ -1,5 +1,6 @@
 import 'package:adventuresclub/complete_profile/complete_profile.dart';
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/home_Screens/accounts/about.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -17,6 +18,15 @@ class _MountainActivityState extends State<MountainActivity> {
     return const CompleteProfile();
   }));
  }
+ void goToProvider() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return const About();
+        },
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -70,7 +80,8 @@ class _MountainActivityState extends State<MountainActivity> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                          MyText(text: 'Hill Climbing',color: blackColor,size: 14,),
+                          MyText(text: 'Hill Climbing',color: blackColor,size: 12,
+                          weight: FontWeight.bold,),
                           const SizedBox(width:20),
                           RatingBar.builder(
                             initialRating: 3,
@@ -111,18 +122,23 @@ class _MountainActivityState extends State<MountainActivity> {
                             
                           ],),
                           
-                          const Expanded(child: Divider(indent: 1,endIndent: 1,color: greyColor,thickness: 2,)),
-                            Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                           const CircleAvatar(
-                            backgroundColor: transparentColor,
-                            child:Image(image: ExactAssetImage('images/avatar.png'),fit: BoxFit.cover,)),
-                          const SizedBox(width:10),
-                        
-                            MyText(text: 'Provide By Alexander',color:blackColor,fontStyle: FontStyle.italic,size: 12,),
-                            
-                          ],)
+                    const SizedBox(height: 10,),
+                      Image(image: const ExactAssetImage('images/line.png',),width: MediaQuery.of(context).size.width/2.2,),
+                   
+                            GestureDetector(
+                              onTap: goToProvider,
+                              child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                                       const CircleAvatar(
+                              backgroundColor: transparentColor,
+                              child:Image(image: ExactAssetImage('images/avatar.png'),fit: BoxFit.cover,)),
+                                                      const SizedBox(width:10),
+                                                    
+                              MyText(text: 'Provide By Alexander',color:blackColor,fontStyle: FontStyle.italic,size: 12,),
+                              
+                                                      ],),
+                            )
                         
                         
                         ]),

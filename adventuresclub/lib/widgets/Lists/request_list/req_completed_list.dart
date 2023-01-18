@@ -78,9 +78,9 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-           MyText(text: text[index],color: blackColor,weight: FontWeight.w500,size: 12,height: 1.8,),
+           MyText(text: text[index],color: blackColor,weight: FontWeight.w500,size: 13,height: 1.8,),
            
-           MyText(text: text2[index],color: greyColor,weight: FontWeight.w400,size: 12,height: 1.8,),
+           MyText(text: text2[index],color: greyColor,weight: FontWeight.w400,size: 13,height: 1.8,),
          
           ],);
           }),),
@@ -91,11 +91,11 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SquareButton('Book Again', bluishColor, whiteColor, 3.7,21, 11, abc),
+                  SquareButton('Book Again', bluishColor, whiteColor, 3.7,21, 12, abc),
                   
-                  SquareButton('Rate Now', Colors.amber, whiteColor, 3.7,21, 11, goToMyAd),
+                  SquareButton('Rate Now', yellowcolor, whiteColor, 3.7,21, 12, goToMyAd),
                   
-                  SquareButton('Chat Provider', blueColor, whiteColor, 3.7, 21, 11, abc),
+                  SquareButton('Chat Provider', blueColor1, whiteColor, 3.7, 21, 12, abc),
                 ],
               ),
             ],),

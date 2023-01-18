@@ -1,4 +1,5 @@
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/home_Screens/accounts/about.dart';
 import 'package:adventuresclub/home_Screens/details.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,15 @@ class _RecommendedActivityState extends State<RecommendedActivity> {
       MaterialPageRoute(
         builder: (_) {
           return const Details();
+        },
+      ),
+    );
+  }
+void goToProvider() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return const About();
         },
       ),
     );
@@ -139,30 +149,21 @@ class _RecommendedActivityState extends State<RecommendedActivity> {
                         ),
                       ],
                     ),
-                    Divider(
-                      indent: 4,
-                      endIndent: 4,
-                      thickness: 1,
-                      color: blackColor.withOpacity(0.2),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        const CircleAvatar(
-                            radius: 12,
+                    SizedBox(height: 10,),
+                    Image(image: const ExactAssetImage('images/line.png',),width: MediaQuery.of(context).size.width/2.2,),
+                    GestureDetector(
+                   onTap: goToProvider,
+                      child:    Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                           const CircleAvatar(
                             backgroundColor: transparentColor,
-                            child: Image(
-                              image: ExactAssetImage('images/avatar.png'),
-                              fit: BoxFit.cover,
-                            )),
-                        //const SizedBox(width: 10),
-                        MyText(
-                          text: 'Provide By Alexander',
-                          color: blackColor,
-                          fontStyle: FontStyle.italic,
-                          size: 10,
-                        ),
-                      ],
+                            child:Image(image: ExactAssetImage('images/avatar.png'),fit: BoxFit.cover,)),
+                          const SizedBox(width:10),
+                        
+                            MyText(text: 'Provide By Alexander',color:blackColor,fontStyle: FontStyle.italic,size: 12,),
+                            
+                          ],)
                     )
                   ],
                 ),

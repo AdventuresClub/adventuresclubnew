@@ -25,7 +25,7 @@ class _TFWithBoldHintTextState extends State<TFWithBoldHintText> {
       controller: widget.controller,
       decoration: InputDecoration(
                                 hintText: widget.hintText,
-                                hintStyle: TextStyle(fontWeight: FontWeight.bold,fontSize: 26),
+                                hintStyle: const TextStyle(fontWeight: FontWeight.bold,fontSize: 26),
                              border: UnderlineInputBorder(
               borderRadius: const BorderRadius.all(Radius.circular(10.0)),
               borderSide: BorderSide(color: greyColor.withOpacity(0.5)),

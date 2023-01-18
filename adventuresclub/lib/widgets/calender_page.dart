@@ -25,6 +25,8 @@ class _HomeCalendarPageState extends State<HomeCalendarPage> {
 //     });
 //   }
 // }
+
+
   @override  
   Widget build(BuildContext context) {  
     return Scaffold(  
@@ -43,6 +45,16 @@ class _HomeCalendarPageState extends State<HomeCalendarPage> {
                  weekdayStyle: TextStyle(color: blackTypeColor4)
                 ),
                 
+       //         selectedDayPredicate: (day) {
+//   return isSameDay(_selectedDay, day);
+// },
+// onDaySelected: (selectedDay, focusedDay) {
+//   setState(() {
+//     _selectedDay = selectedDay;
+//     _focusedDay = focusedDay; // update `_focusedDay` here as well
+//   });
+// },
+     
                 calendarStyle: CalendarStyle(  
                     // todayColor: Colors.blue,  
                     // selectedColor: Theme.of(context).primaryColor,  
@@ -50,6 +62,7 @@ class _HomeCalendarPageState extends State<HomeCalendarPage> {
                     //     fontWeight: FontWeight.bold,  
                     //     fontSize: 22.0,  
                     //     color: Colors.white)  
+                
                 ),  
                 
                 headerStyle: HeaderStyle(  

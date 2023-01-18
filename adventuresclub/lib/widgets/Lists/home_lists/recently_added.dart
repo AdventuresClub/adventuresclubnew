@@ -1,4 +1,5 @@
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/home_Screens/accounts/about.dart';
 import 'package:adventuresclub/home_Screens/accounts/my_services.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,15 @@ class _RecentlyAddedState extends State<RecentlyAdded> {
     return const MyServices();
   }));
  }
+ void goToProvider() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return const About();
+        },
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -70,7 +80,8 @@ class _RecentlyAddedState extends State<RecentlyAdded> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                          MyText(text: 'Hill Climbing',color: blackColor,size: 14,),
+                          MyText(text: 'Hill Climbing',color: blackColor,size: 12,
+                          weight: FontWeight.bold,),
                           const SizedBox(width:20),
                           RatingBar.builder(
                             initialRating: 3,
@@ -111,18 +122,23 @@ class _RecentlyAddedState extends State<RecentlyAdded> {
                             
                           ],),
                           
-                          const Divider(indent: 4,endIndent: 4,),
-                            Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                           const CircleAvatar(
-                            backgroundColor: transparentColor,
-                            child:Image(image: ExactAssetImage('images/avatar.png'),fit: BoxFit.cover,)),
-                          const SizedBox(width:10),
-                        
-                            MyText(text: 'Provide By Alexander',color:blackColor,fontStyle: FontStyle.italic,size: 12,),
-                            
-                          ],)
+                    SizedBox(height: 10,),
+                           Image(image: const ExactAssetImage('images/line.png',),width: MediaQuery.of(context).size.width/2.2,),
+                   
+                            GestureDetector(
+                              onTap: goToProvider,
+                              child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                                       const CircleAvatar(
+                              backgroundColor: transparentColor,
+                              child:Image(image: ExactAssetImage('images/avatar.png'),fit: BoxFit.cover,)),
+                                                      const SizedBox(width:10),
+                                                    
+                              MyText(text: 'Provide By Alexander',color:blackColor,fontStyle: FontStyle.italic,size: 12,),
+                              
+                                                      ],),
+                            )
                         
                         
                         ]),

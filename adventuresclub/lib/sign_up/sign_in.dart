@@ -20,6 +20,7 @@ class _SignInState extends State<SignIn> {
   TextEditingController otpController = TextEditingController();
   
   List<bool> value = [false,false,false,false,false,false];
+   bool valuea = false;
    enterOTP() {
     showDialog(
         context: context,
@@ -131,8 +132,7 @@ class _SignInState extends State<SignIn> {
         ),
       child:Padding(
         padding: const EdgeInsets.all(20.0),
-        child: SingleChildScrollView(
-          child: Column(
+        child:  Column(
              mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
              Column(
@@ -144,16 +144,25 @@ class _SignInState extends State<SignIn> {
            Image.asset('images/whitelogo.png',height: 120,width: 320,),
             
                  const SizedBox(height:20),
-          TextFields('Email or Username', emailController,20,whiteColor
+          TextFields('Email or Username', emailController,17,whiteColor
           
           ),
                   const  SizedBox(height:20),
                  TFWithSiffixIcon('Password', Icons.visibility_off, passController,true),
-               const SizedBox(height:20),
-           
+               const SizedBox(height:5),
+             Row(
+               children: [
+                 Checkbox(value: valuea, onChanged: (bool? value ){
+                        setState(() {
+                          valuea = value!;
+                        }); 
+                      }),
+                      MyText(text: 'Remember me',color: whiteColor,)
+               ],
+             ),
               
           Padding(
-            padding: const EdgeInsets.only(top:60.0),
+            padding: const EdgeInsets.only(top:30.0),
             child: Button('Register', greenishColor, greenishColor ,whiteColor, 18, enterOTP, Icons.add, whiteColor, false, 1.3,'Raleway',FontWeight.w600,16),
           ),
            const SizedBox(height:20),
@@ -163,26 +172,31 @@ class _SignInState extends State<SignIn> {
            const SizedBox(height:20),
                ],
              ), 
-          GestureDetector(
-            onTap: goToSignUp,
-            child: const Align(
-              alignment: Alignment.center,
-              child: Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(text: "Don't have an account? ",style: TextStyle(color:whiteColor)),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              GestureDetector(
+                onTap: goToSignUp,
+                child: const Align(
+                  alignment: Alignment.center,
+                  child: Text.rich(
                   TextSpan(
-              text: 'Register',
-              style: TextStyle(fontWeight: FontWeight.bold, color: whiteColor),
+                    children: [
+                      TextSpan(text: "Don't have an account? ",style: TextStyle(color:whiteColor)),
+                      TextSpan(
+                  text: 'Register',
+                  style: TextStyle(fontWeight: FontWeight.bold, color: whiteColor),
+                      ),
+                    ],
                   ),
-                ],
+                ),
+                ),
               ),
-            ),
-            ),
+            ],
           )
           ],),
         ),
       )
-    ));
+    );
   }
 }

@@ -92,9 +92,9 @@ class _RequestsListState extends State<RequestsList> {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-           MyText(text: text[index],color: blackColor,weight: FontWeight.w500,size: 12,height: 1.8,),
+           MyText(text: text[index],color: blackColor,weight: FontWeight.w500,size: 13,height: 1.8,),
            
-           MyText(text:text2[index],color: greyColor,weight: FontWeight.w400,size: 12,height: 1.8,),
+           MyText(text:text2[index],color: greyColor,weight: FontWeight.w400,size: 13,height: 1.8,),
          
           ],);
           }),),
@@ -107,11 +107,11 @@ class _RequestsListState extends State<RequestsList> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SquareButton('View Details', bluishColor, whiteColor, 3.7, 21, 11, goTo),
+                  SquareButton('View Details', bluishColor, whiteColor, 3.7, 21, 12, goTo),
                   
-                  SquareButton('Cancel Requests', Colors.red, whiteColor, 3.7, 21, 11, goTo_),
+                  SquareButton('Cancel Requests', redColor, whiteColor, 3.7, 21, 12, goTo_),
                   
-                  SquareButton('Make Payment', greyShadeColor, whiteColor, 3.7, 21, 11, goToMakePayments),
+                  SquareButton('Make Payment', greycolor4, whiteColor, 3.7, 21, 12, goToMakePayments),
                 ],
               ),
             ],),
