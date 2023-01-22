@@ -1,5 +1,6 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/details_card.dart';
+import 'package:adventuresclub/home_Screens/accounts/international_visa_card_details.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,8 @@ class PaymentMethods extends StatefulWidget {
 }
 
 class _PaymentMethodsState extends State<PaymentMethods> {
-  List images =['images/debit_cards.png',
+  List images =[
+    //'images/debit_cards.png',
   'images/paypal.png',
   'images/visa1.png',
   'images/cash.png',
@@ -19,9 +21,11 @@ class _PaymentMethodsState extends State<PaymentMethods> {
   
   ];
 
-  List text = ['Oman Debit Cards (Omannat)',
+  List text = [
+    
+   // 'Oman Debit Cards (Omannat)',
   'Paypal',
-  'International Visa Card',
+  'Bank Card',
   'Cash On Arrival',
   'Wire Transfer'
   ];
@@ -65,7 +69,8 @@ const SizedBox(height:20),
               return ListTile(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (_){
-                    return const DetailsCard();
+                    return const InternationalVisaCardDetails();
+                    //const DetailsCard();
                   }));
                 },
               leading: CircleAvatar(

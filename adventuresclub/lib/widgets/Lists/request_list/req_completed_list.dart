@@ -18,20 +18,26 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
     }));
   }
   List text =[
+      'Booking Number :',
+        'Activity Name :',
     'Provider Name :',
     'Booking Date :',
     'Activity Date :',
     'Registrations :',
     'Unit Cost :',
     'Total Cost :',
-    'Payment Chanel :'
+    'Payable Cost',
+    'Payment Channel :'
   ];
   List text2 =[
+      '112',
+        'Mr adventure',
     'John Doe',
     '30 Sep, 2020',
     '05 Oct, 2020',
     '2 Adults, 3 Youngsters',
     '\$ 400.50',
+    '\$ 1500.50',
     '\$ 1500.50',
     'Debit/Credit Card'
   ];

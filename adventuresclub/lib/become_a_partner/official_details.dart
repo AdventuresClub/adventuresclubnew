@@ -18,25 +18,11 @@ bool value = false;
     return Column(
       children:[
         const SizedBox(height:20),
-        Align(alignment: Alignment.centerLeft,
-            child:  MyText(text: 'Company Name',color: blackTypeColor1,align: TextAlign.center,),
-                
-            ),
-                  const SizedBox(height:10),
+     
             TFWithSize('Enter Comany Name', controller, 12, lightGreyColor, 1),
             const SizedBox(height:20),
-             Align(alignment: Alignment.centerLeft,
-            child:  MyText(text: 'Official Address',color: blackTypeColor1,align: TextAlign.center,),
-                
-            ),
-                  const SizedBox(height:10),
             TFWithSize('Enter Official Address', controller, 12, lightGreyColor, 1),
             const SizedBox(height:20),
-             Align(alignment: Alignment.centerLeft,
-            child:  MyText(text: 'GeoLocation',color: blackTypeColor1,align: TextAlign.center,),
-                
-            ),
-                  const SizedBox(height:10),
             TFWithSize('Enter GeoLocation', controller, 12, lightGreyColor, 1),
             const SizedBox(height:20),
               Align(alignment: Alignment.centerLeft,
@@ -70,26 +56,13 @@ setState(() {
               ],
             ),
                    const SizedBox(height:20),
-        Align(alignment: Alignment.centerLeft,
-            child:  MyText(text: 'CR Name',color: blackTypeColor1,align: TextAlign.center,),
-                
-            ),
-                  const SizedBox(height:10),
-            TFWithSize('Enter CR name', controller, 12, lightGreyColor, 1),
+        TFWithSize('Enter CR name', controller, 12, lightGreyColor, 1),
             const SizedBox(height:20),
-        Align(alignment: Alignment.centerLeft,
-            child:  MyText(text: 'CR Number',color: blackTypeColor1,align: TextAlign.center,),
-                
-            ),
-                  const SizedBox(height:10),
-            TFWithSize('Enter CR number', controller, 12, lightGreyColor, 1),
+        TFWithSize('Enter CR number', controller, 12, lightGreyColor, 1),
             const SizedBox(height:20),
-        Align(alignment: Alignment.centerLeft,
-            child:  MyText(text: 'CR Copy',color: blackTypeColor1,align: TextAlign.center,),
-                
-            ),
+       
 
-           const SizedBox(height: 15,),
+          
         Align(
           alignment: Alignment.centerLeft,
           child: Container(

@@ -18,6 +18,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: greyProfileColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -42,7 +43,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             const SizedBox(
-              height: 240,
+              height: 233,
               child: RecommendedActivity(),
             ),
             Padding(
@@ -57,7 +58,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-            const SizedBox(height: 260, child: RecentlyAdded()),
+            const SizedBox(height: 233, child: RecentlyAdded()),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Align(
@@ -70,7 +71,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-            const SizedBox(height: 260, child: MountainActivity()),
+            const SizedBox(height: 233, child: MountainActivity()),
           ],
         ),
       ),

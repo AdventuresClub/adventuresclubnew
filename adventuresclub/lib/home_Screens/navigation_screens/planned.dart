@@ -16,20 +16,20 @@ class _PlannedState extends State<Planned> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-  
-      body:SingleChildScrollView(
-        child: Column(children: [
-          SizedBox(height: 25,),
+  backgroundColor: greyProfileColor,
+      body: ListView(
+        children: [
           SizedBox(
-            height:170,
+            height:155,
             child: HomeCalendarPage()),
             Align(alignment:Alignment.center,
-            child: MyText(text: 'Scheduled Sessions',color: blackColor,weight: FontWeight.bold,)
+            child: MyText(text: 'Scheduled Sessions',color: greyColor,weight: FontWeight.bold,)
             ),
-            PlannedGrid()
+            const SizedBox(height: 5,),
+            const PlannedGrid()
       
         ],),
-      )
+      
       );
   }
 }

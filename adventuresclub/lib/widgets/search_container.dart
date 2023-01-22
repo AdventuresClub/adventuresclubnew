@@ -7,7 +7,10 @@ class SearchContainer extends StatefulWidget {
   final width;
   final String image;
   final bool value;
-  const SearchContainer(this.hinttext, this.width, this.image, this.value,
+  final bool countryName;
+   final String country;
+   final double fontSize;
+  const SearchContainer(this.hinttext, this.width, this.image, this.value,this.countryName,this.country,this.fontSize,
       {Key? key})
       : super(key: key);
 
@@ -49,14 +52,25 @@ class _SearchContainerState extends State<SearchContainer> {
                 ),
                 Text(
                   widget.hinttext,
-                  style: TextStyle(color: searchTextColor.withOpacity(0.6)),
+                  style: TextStyle(color: searchTextColor.withOpacity(0.6),fontSize: widget.fontSize),
                 ),
               ],
             ),
-            if (widget.value == true)
-              Image(
-                image: ExactAssetImage(widget.image),
-                height: 20,
+           
+              Row(
+                children: [
+                  
+                   if (widget.countryName == true)
+                   Text(
+                  widget.country,
+                  style: TextStyle(color: searchTextColor.withOpacity(0.6),fontSize: widget.fontSize),
+                ),
+                 if (widget.value == true)
+                  Image(
+                    image: ExactAssetImage(widget.image),
+                    height: 20,
+                  ),
+                ],
               )
           ],
         ),

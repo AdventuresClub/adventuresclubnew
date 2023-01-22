@@ -29,7 +29,15 @@ class _TopListState extends State<TopList> {
       ),
     );
   }
-
+List images = [
+  'images/maskGroup44.png',
+  'images/lake.png',
+  'images/maskGroup44.png',
+  'images/lake.png',
+  'images/maskGroup44.png',
+  'images/lake.png',
+  'images/lake.png',
+];
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -46,11 +54,11 @@ class _TopListState extends State<TopList> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const CircleAvatar(
+                     CircleAvatar(
                       backgroundColor: transparentColor,
                       radius: 23,
                       child: Image(
-                        image: ExactAssetImage('images/maskGroup44.png'),
+                        image: ExactAssetImage(images[index]),
                         fit: BoxFit.cover,
                       ),
                     ),

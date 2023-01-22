@@ -19,7 +19,7 @@ import 'package:adventuresclub/home_Screens/accounts/payment_methods.dart';
 import 'package:adventuresclub/home_Screens/accounts/profile/profile.dart';
 import 'package:adventuresclub/home_Screens/accounts/health_condition.dart';
 import 'package:adventuresclub/home_Screens/accounts/adventure_category.dart';
-import 'package:adventuresclub/home_Screens/accounts/settings.dart';
+import 'package:adventuresclub/home_Screens/accounts/settings/settings.dart';
 import 'package:adventuresclub/home_Screens/accounts/tour_packages.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
@@ -37,36 +37,36 @@ class _AccountState extends State<Account> {
   'images/points.png'
   ];
   List text = ['Favorite',
-  'Notification',
-  'My Points'
+  'My Services',
+  'Client Requests'
   ];
   List tile1 = [
+     'images/points.png',
     'images/healthCondition.png',
-    'images/payment.png'
-  ];
-  List tile1Text = ['Health Condition',
-  'Payment'
-  ];
-  List tile2Text = ['Category',
-  'Packages'
-  ];
-  
-  List tile3Text = ['Settings',
-  'Invite Friends',
-  'About us',
-  'Contact us',
-  'Log out',
-  ];
-   List tile2 = [
-    'images/category.png',
-    'images/packages.png'
-  ];
-   List tile3 = [
+      'images/notification.png',
+    'images/payment.png',
+    // 'images/category.png',
+    // 'images/packages.png',
     'images/gear.png',
     'images/envelope.png',
     'images/about.png',
     'images/phone.png',
-    'images/logout.png'
+    'images/logout.png',
+
+  ];
+  List tile1Text = [
+    
+    'My Points',
+  'Health Condition',
+  'Notification',
+  'Service & Quality Standards',
+  
+  'Settings',
+  'Invite Friends',
+  'About us',
+  'Contact us',
+  'Log out',
+
   ];
   goToProfile(){
     Navigator.of(context).push(MaterialPageRoute(builder: (_){
@@ -76,15 +76,13 @@ class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: greyColor1,
+        backgroundColor: greyProfileColor,
       body:ListView(children: [
        
-        Container(
-          color: whiteColor,
-          child: Column(
+        Column(
             children: [
               Container(
-                color: whiteColor,
+                color: greyProfileColor,
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -122,129 +120,118 @@ class _AccountState extends State<Account> {
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Card(
-                  shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   elevation: 1,
-                  child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                    for(int i = 0; i < 3; i++ )
-                    Column(children: [
-                     GestureDetector(
-                      onTap:(){
-                         if(text[i] == 'Favorite') {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (_){
-                          return const Favorite();
-                        }));
-                        }
-                        if(text[i] == 'My Points') {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (_){
-                          return const MyPoints();
-                        }));
-                        }
-                        if(text[i] == 'Notification') {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (_){
-                          return const Notifications();
-                        }));
-                        }
-                      },
-                      child: Image(image: ExactAssetImage(images[i]),height: 40,width: 40,)),
-                     MyText(text: text[i],color: bluishColor,)
-                    ],)
-                  ],),
-                ),),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  child:  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                      for(int i = 0; i < 3; i++ )
+                      Column(children: [
+                       GestureDetector(
+                        onTap:(){
+                           if(text[i] == 'Favorite') {
+                            Navigator.of(context).push(MaterialPageRoute(builder: (_){
+                            return const Favorite();
+                          }));
+                          }
+                          if(text[i] == 'My Services') {
+                            Navigator.of(context).push(MaterialPageRoute(builder: (_){
+                            return const MyServices();
+                          }));
+                          }
+                          if(text[i] == 'Client Requests') {
+                            Navigator.of(context).push(MaterialPageRoute(builder: (_){
+                            return const ClientsRequests();
+                          }));
+                          }
+                        },
+                        child: Image(image: ExactAssetImage(images[i]),height: 40,width: 40,)),
+                       MyText(text: text[i],color: bluishColor,)
+                      ],)
+                    ],),
+                  ),
+                ),
               ),
             ],
           ),
-        ),
-        Container(
-          color: whiteColor,
-          child: Wrap(children: List.generate(2, (index){
+        Wrap(children: List.generate(tile1.length, (index){
             return ListTile(
+              visualDensity: const VisualDensity(horizontal:0,vertical: -3 ),
+              contentPadding: const EdgeInsets.symmetric(vertical: 0,horizontal: 20),
+              horizontalTitleGap: 1,
               onTap: (() {
+                 if(tile1Text[index] == 'My Points'){
+                Navigator.of(context).push(MaterialPageRoute(builder: (_){
+                  return const MyPoints();
+                }));
+               } 
                if(tile1Text[index] == 'Health Condition'){
                 Navigator.of(context).push(MaterialPageRoute(builder: (_){
                   return const HealthCondition();
                 }));
                } 
-               if(tile1Text[index] == 'Payment'){
-                Navigator.of(context).push(MaterialPageRoute(builder: (_){
-                  return const Payment();
-                }));
-               } 
-               
-              }),
-              leading: Image(image: ExactAssetImage(tile1[index]),height: 25,width: 25,),
-              title:MyText(text: tile1Text[index],color: greyTextColor,)
-            );
-          }),),
-        ),
-        const SizedBox(height:15),
-         Container(
-          color: whiteColor,
-           child: Wrap(children: List.generate(2, (index){
-            return GestureDetector(
-              onTap: () {
-                if(tile2Text[index] == 'Category'){
-                Navigator.of(context).push(MaterialPageRoute(builder: (_){
-                  return const AdventureCategory();
-                }));
-               } 
-               if(tile2Text[index] == 'Packages'){
-                Navigator.of(context).push(MaterialPageRoute(builder: (_){
-                  return const ContactUs();
-                }));
-               } 
-              },
-              child: ListTile(
-                leading: Image(image: ExactAssetImage(tile2[index]),height: 25,width: 25,),
-                title:MyText(text: tile2Text[index],color: greyTextColor,)
-              ),
-            );
-        }),),
-         ),
-         
-        const SizedBox(height:15),
-         Container(
-          color: whiteColor,
-           child: Wrap(children: List.generate(tile3.length, (index){
-            return GestureDetector(
-              onTap: () {
-                if(tile3Text[index] == 'Settings'){
+              //  if(tile1Text[index] == 'Payment'){
+              //   Navigator.of(context).push(MaterialPageRoute(builder: (_){
+              //     return const Payment();
+              //   }));
+              //  } 
+              //   if(tile1Text[index] == 'Category'){
+              //   Navigator.of(context).push(MaterialPageRoute(builder: (_){
+              //     return const AdventureCategory();
+              //   }));
+              //  } 
+              //  if(tile1Text[index] == 'Packages'){
+              //   Navigator.of(context).push(MaterialPageRoute(builder: (_){
+              //     return const ContactUs();
+              //   }));
+              //  } 
+                if(tile1Text[index] == 'Settings'){
                 Navigator.of(context).push(MaterialPageRoute(builder: (_){
                   return const Settings();
                 }));
                } 
-               if(tile3Text[index] == 'Invite Friends'){
+               if(tile1Text[index] == 'Invite Friends'){
                 Navigator.of(context).push(MaterialPageRoute(builder: (_){
                   return const CompleteProfile();
                 }));
                } 
-               if(tile3Text[index] == 'About us'){
+               if(tile1Text[index] == 'About us'){
                 Navigator.of(context).push(MaterialPageRoute(builder: (_){
                   return const AboutUs();
                 }));
                } 
-               if(tile3Text[index] == 'Contact us'){
+               if(tile1Text[index] == 'Contact us'){
                 Navigator.of(context).push(MaterialPageRoute(builder: (_){
-                  return const MyServicesAdDetails();
+                  return const ContactUs();
+                  //const MyServicesAdDetails();
                 }));
                } 
-                if(tile3Text[index] == 'Log out'){
+                if(tile1Text[index] == 'Log out'){
                 Navigator.of(context).push(MaterialPageRoute(builder: (_){
-                  return const MyServices();
+                  return const CompleteProfile();
                 }));
-               } 
-              },
-              child:
-            ListTile(
-              
-              leading: Image(image: ExactAssetImage(tile3[index]),height: 25,width: 25,),
-              title:MyText(text: tile3Text[index],color: greyTextColor,)
-            ));
-        }),),
-         )  
+               }
+              }),
+              leading: Image(image: ExactAssetImage(tile1[index]),height: tile1Text[index] == 'My Points' ? 35 : 25  ,width: 35,color: greyColor,),
+              title:MyText(text: tile1Text[index],color: greyColor,size: 14,weight: FontWeight.w500,),
+              trailing: tile1Text[index] == 'Settings' ? SizedBox(
+                width: 90,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                      MyText(text: 'Oman',color: greyColor,),
+                      const Image(image: ExactAssetImage('images/maskGroup51.png'))
+                ],),
+              ):
+              const SizedBox(width: 0,)
+            
+            );
+          }),),
+      
+        const SizedBox(height:15),
+         
       ],)
     );
   }

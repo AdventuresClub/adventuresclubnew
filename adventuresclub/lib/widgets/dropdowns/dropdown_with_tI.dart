@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 class DropdownWithTI extends StatefulWidget {
   final text;
   final bool expanded;
-  const DropdownWithTI(this.text,this.expanded,{super.key});
+  final showBorder;
+  const DropdownWithTI(this.text,this.expanded,this.showBorder,{super.key});
 
   @override
   State<DropdownWithTI> createState() => _DropdownWithTIState();
@@ -23,7 +24,8 @@ class _DropdownWithTIState extends State<DropdownWithTI> {
           decoration: BoxDecoration(
             color: Colors.transparent,
             borderRadius: BorderRadius.circular(12),
-          
+              border:widget.showBorder?
+              Border.all(color: greyColor3): Border.all(color: whiteColor)
           ),
           child: DropdownButton<String>(
                   isExpanded: widget.expanded,

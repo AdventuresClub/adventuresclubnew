@@ -32,21 +32,27 @@ class _RequestsListState extends State<RequestsList> {
     return const  MyServices();
   }));
  }
- List text =[
+  List text =[
+      'Booking Number :',
+        'Activity Name :',
     'Provider Name :',
     'Booking Date :',
     'Activity Date :',
     'Registrations :',
     'Unit Cost :',
     'Total Cost :',
-    'Payment Chanel :'
+    'Payable Cost',
+    'Payment Channel :'
   ];
   List text2 =[
+      '112',
+        'Mr adventure',
     'John Doe',
     '30 Sep, 2020',
     '05 Oct, 2020',
     '2 Adults, 3 Youngsters',
     '\$ 400.50',
+    '\$ 1500.50',
     '\$ 1500.50',
     'Debit/Credit Card'
   ];
@@ -69,7 +75,14 @@ class _RequestsListState extends State<RequestsList> {
                 children: [
                   MyText(text: 'Location Name',color: blackColor,),
                   
-                  MyText(text: 'Confirmed',color: Colors.green,weight: FontWeight.bold,)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      MyText(text: 'Confirmed',color: Colors.orange,weight: FontWeight.bold,),
+                      SizedBox(width: 5,),
+                      Image(image: ExactAssetImage('images/bin.png',),color:Colors.orange,height: 20,),
+                    ],
+                  )
                 ],
                ),
 

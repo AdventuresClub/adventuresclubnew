@@ -114,7 +114,7 @@ class _CompletePartnerStepsState extends State<CompletePartnerSteps> {
                                         child: Center(child: MyText(text: text1[index],color: whiteColor,weight: FontWeight.w500,fontFamily: 'Roboto')),),
                                      ),
                              
-                                 if (index !=0)
+                                 if (index !=0 )
                          Container(
                           width: 15,
                           color: bluishColor,
@@ -174,18 +174,26 @@ class _CompletePartnerStepsState extends State<CompletePartnerSteps> {
                                       child: Center(child: MyText(text: text1[index],color: whiteColor,weight: FontWeight.w500,fontFamily: 'Roboto',)),),
                                    ),
                   
-                  if (index !=0 && index != 2)
+                  if (index !=0 )
                          Container(
                           width: 15,
                           color: bluishColor,
                           height: 7,
                         ),
-                        if (index != 0 && index != 1 )
-                         Container(
-                          width: 15,
-                          color: bluishColor,
-                          height: 7,
-                        ),
+                  
+
+                        // if (index !=0 )
+                        //  Container(
+                        //   width: 15,
+                        //   color: bluishColor,
+                        //   height: 7,
+                        // ),
+                        // if (index != 0 && index != 1 )
+                        //  Container(
+                        //   width: 15,
+                        //   color: bluishColor,
+                        //   height: 7,
+                        // ),
                         
                         if (index !=0)
                                    Padding(

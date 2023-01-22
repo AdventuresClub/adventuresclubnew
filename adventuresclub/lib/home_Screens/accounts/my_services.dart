@@ -1,3 +1,4 @@
+import 'package:adventuresclub/complete_profile/complete_profile.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/grid/my_services_grid/my_services_grid.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
@@ -12,6 +13,12 @@ class MyServices extends StatefulWidget {
 }
 
 class _MyServicesState extends State<MyServices> {
+ 
+ goTo(){
+  Navigator.of(context).push(MaterialPageRoute(builder: (_){
+    return const CompleteProfile();
+  }));
+ }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +34,9 @@ class _MyServicesState extends State<MyServices> {
             ),
           ),
           title: MyText(text: 'My Services',color: bluishColor,),
-      actions: const [Image(image: ExactAssetImage('images/add-circle.png'),width: 25,height: 25,),
+      actions:  [GestureDetector(
+        onTap: goTo,
+        child: Image(image: ExactAssetImage('images/add-circle.png'),width: 25,height: 25,)),
       SizedBox(width: 15,)
       
       ],
@@ -36,9 +45,9 @@ class _MyServicesState extends State<MyServices> {
             child: Theme(
               data: Theme.of(context).copyWith(accentColor: Colors.white),
               child:
-            Padding(
-              padding: const EdgeInsets.only(bottom:20.0),
-              child: SearchContainer('Search Adventures',1.1, 'images/path.png', true),
+            const Padding(
+              padding: EdgeInsets.only(bottom:20.0),
+              child: SearchContainer('Search Adventures',1.1, 'images/path.png', true,false,'oman',14),
             ),
             ),
           ),

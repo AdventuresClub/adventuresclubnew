@@ -1,4 +1,5 @@
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/home_Screens/view_details.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,11 @@ class AdventureCategoryGrid extends StatefulWidget {
 }
 
 class _AdventureCategoryGridState extends State<AdventureCategoryGrid> {
+  void goToDetails(){
+    Navigator.of(context).push(MaterialPageRoute(builder: (_){
+      return const ViewDetails();
+    }));
+  }
   List<String> text = [
     'Water Sport',
     'Adventure Sport',
@@ -47,19 +53,22 @@ class _AdventureCategoryGridState extends State<AdventureCategoryGrid> {
           children: List.generate(
             text.length, // widget.profileURL.length,
             (index) {
-              return Container(
-                
-                decoration: BoxDecoration(
+              return GestureDetector(
+                onTap: goToDetails,
+                child: Container(
                   
-                  borderRadius: BorderRadius.circular(6),
-                image: DecorationImage(image: ExactAssetImage(images[index]),fit: BoxFit.cover)
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    MyText(text: text[index],color: whiteColor,weight: FontWeight.w500,size: 16,align: TextAlign.center,),
-                   const SizedBox(height:5)
-                  ],
+                  decoration: BoxDecoration(
+                    
+                    borderRadius: BorderRadius.circular(6),
+                  image: DecorationImage(image: ExactAssetImage(images[index]),fit: BoxFit.cover)
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      MyText(text: text[index],color: whiteColor,weight: FontWeight.w500,size: 16,align: TextAlign.center,),
+                     const SizedBox(height:5)
+                    ],
+                  ),
                 ),
               );
             },

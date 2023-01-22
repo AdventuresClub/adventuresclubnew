@@ -23,9 +23,9 @@ class _VisitState extends State<Visit> {
   String drink = "";
   String smoke = "";
   List text = [
-    'Restaurant',
-    'Shop',
-    'Land',
+    'Bike Riding',
+    'Archery',
+    'Ride',
     'Sea'
   ];
   List images  = [
@@ -33,6 +33,14 @@ class _VisitState extends State<Visit> {
     'images/shoppic.png',
     'images/feet.png',
     'images/beach.png'
+  ];
+  List text1 = [
+
+3.0,
+4.0,
+4.5,
+
+4.5,
   ];
   goTo(){
   Navigator.of(context).push(MaterialPageRoute(builder: (_){
@@ -48,7 +56,7 @@ class _VisitState extends State<Visit> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SearchContainer('what are you looking for?',1.3,'images/maskGroup51.png',false),
+                const SearchContainer('what are you looking for?',1.3,'images/maskGroup51.png',false,false,'oman',14),
                 const SizedBox(width: 3,),
                 GestureDetector(
                   onTap: () {
@@ -70,8 +78,37 @@ class _VisitState extends State<Visit> {
             child: Wrap(
               direction: Axis.horizontal,
               children: List.generate(text.length, (index) {
-              return SizedBox(
-                width: MediaQuery.of(context).size.width/3.5,
+              return getVisit(context, index,text1[index]);
+                  }),),
+          ),
+        
+        const SizedBox(height:20,),
+        Container(
+          height: 500,
+          width: MediaQuery.of(context).size.width,
+          decoration: const BoxDecoration(
+          image: DecorationImage(image: ExactAssetImage('images/screenshot.png'))
+        ),
+        
+        ),
+    
+        ],),
+    ),
+    bottomNavigationBar: Container(
+
+      decoration: const BoxDecoration(
+        color: greyProfileColor,
+        ),
+      height: 175 ,child:
+          SizedBox(
+            height: 170,
+            child: VisitList()),
+       ),
+    );
+  }
+Widget getVisit(context, int index,double width){
+  return SizedBox(
+                width: MediaQuery.of(context).size.width/width,
                 child: Card(
                    shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(35)
@@ -102,13 +139,14 @@ class _VisitState extends State<Visit> {
                     ),
                 child:  
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                             Image(image: ExactAssetImage(images[index]),color: greyColor,),
                             const SizedBox(width: 1,),
-                              MyText(text: text[index],size: 9,
+                              MyText(text: text[index],size: 12,
                                 
-                            weight: FontWeight.w700,
-                            color: current == index ? whiteColor : greyColorShade400,
+                            weight: FontWeight.w400,
+                            color: current == index ? whiteColor : blackTypeColor3,
                          
                               ),
                             ],
@@ -117,35 +155,6 @@ class _VisitState extends State<Visit> {
                      )),
                 ),
               );
-                  }),),
-          ),
-        
-        const SizedBox(height:20,),
-        Container(
-          height: 500,
-          width: MediaQuery.of(context).size.width,
-          decoration: const BoxDecoration(
-          image: DecorationImage(image: ExactAssetImage('images/screenshot.png'))
-        ),
-        
-        ),
-    
-        ],),
-    ),
-    bottomNavigationBar: Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(40)),
-      height: 235 ,child:Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: const [
-          SizedBox(height: 5,),
-          Image(image: ExactAssetImage('images/rectangle.png')),
-          SizedBox(
-            height: 220,
-            child: VisitList()),
-        ],
-      )),
-    );
-  }
-
+}
  
 }

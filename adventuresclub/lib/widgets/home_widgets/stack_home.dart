@@ -29,7 +29,7 @@ class _StackHomeState extends State<StackHome> {
   }
   abc(){}
   List text = [
-    'Transportation from gathering area',
+    'Transportation ',
     'Drinks',
     'Snacks',
     'Bike Riding',
@@ -84,7 +84,7 @@ addActivites(){
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         MyText(text: 'Sector',color: greyColor,),
-                        const DropdownWithTI('Training', false),
+                        const DropdownWithTI('Training', false,false),
                       ],
                     ),
                     
@@ -92,7 +92,7 @@ addActivites(){
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(text: 'Category',color: greyColor,),
-                        const DropdownWithTI('Training', false),
+                        const DropdownWithTI('Training', false,false),
                       ],
                     ),
                       Column(
@@ -100,7 +100,7 @@ addActivites(){
                       mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           MyText(text: 'Type',color: greyColor,),
-                          const DropdownWithTI('Training', false),
+                          const DropdownWithTI('Training', false,false),
                         ],
                       ),
                    ],),
@@ -112,7 +112,7 @@ addActivites(){
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         MyText(text: 'Sector',color: greyColor,),
-                        const DropdownWithTI('Training', false),
+                        const DropdownWithTI('Training', false,false),
                       ],
                     ),
                     
@@ -120,7 +120,7 @@ addActivites(){
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(text: 'Category',color: greyColor,),
-                        const DropdownWithTI('Training', false),
+                        const DropdownWithTI('Training', false,false),
                       ],
                     ),
                       Column(
@@ -128,7 +128,7 @@ addActivites(){
                       mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           MyText(text: 'Type',color: greyColor,),
-                          const DropdownWithTI('Training', false),
+                          const DropdownWithTI('Training', false,false),
                         ],
                       ),
                    ],),
@@ -140,7 +140,7 @@ addActivites(){
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         MyText(text: 'Sector',color: greyColor,),
-                        const DropdownWithTI('Training', false),
+                        const DropdownWithTI('Training', false,false),
                       ],
                     ),
                     
@@ -148,7 +148,7 @@ addActivites(){
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(text: 'Category',color: greyColor,),
-                        const DropdownWithTI('Training', false),
+                        const DropdownWithTI('Training', false,false),
                       ],
                     ),
                       Column(
@@ -156,14 +156,13 @@ addActivites(){
                       mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           MyText(text: 'Type',color: greyColor,),
-                          const DropdownWithTI('Training', false),
+                          const DropdownWithTI('Training', false,false),
                         ],
                       ),
                    ],),
                        MyText(text: 'Activities Included'),
                        
-                       Wrap(
-                        direction: Axis.horizontal,
+                       Row(
                         children: List.generate(text.length, (index) {
                           return 
                        Row(
@@ -236,8 +235,8 @@ addActivites(){
               const SizedBox(
                 width: 8,
               ),
-              const SearchContainer('what are you looking for ?', 1.4,
-                  'images/maskGroup51.png', true),
+              const SearchContainer('Search adventure name', 1.4,
+                  'images/maskGroup51.png', true, true,'Oman',12),
               const SizedBox(
                 width: 8,
               ),
@@ -245,7 +244,7 @@ addActivites(){
                 onTap: goToMessages,
                 child: const Icon(
                   Icons.message,
-                  color: whiteColor,
+                  color: whiteColor,size: 30,
                 ),
               ),
             ],

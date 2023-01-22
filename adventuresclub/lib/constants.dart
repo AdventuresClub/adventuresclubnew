@@ -20,7 +20,7 @@ const blueColor = Color(0xFF7EC8E3);
 const greyBackgroundColor = Color(0xFF0F0F0F);
 
 const greyProfileColor = Color(0xFFF6F6F6);
-
+const greyProfileColor1 = Color(0xFFf5f5f5);
 const greyColor3 = Color(0xFF92908E);
 
 const redColor = Color(0xFFDF5252);

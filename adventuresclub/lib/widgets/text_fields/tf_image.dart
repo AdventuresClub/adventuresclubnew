@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:country_code_picker/country_code_picker.dart';
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 
 class TfImage extends StatefulWidget {
@@ -15,33 +18,61 @@ class TfImage extends StatefulWidget {
 }
 
 class _TfImageState extends State<TfImage> {
+  
+  String countryName= "";
+
+  
   @override
   Widget build(BuildContext context) {
-    return   TextField(
-                          controller: widget.controller,
-                        decoration: InputDecoration(
-contentPadding:const EdgeInsets.symmetric(vertical: 17,horizontal: 8),
-                        hintStyle: const TextStyle(fontSize: 14,),
-                        hintText: widget.hinttext,
-                        filled: true,
-                        fillColor: whiteColor,
-                        suffixIcon: Image.asset(widget.image,height: 4,width: 4,) ,
-                        //Image(image: ExactAssetImage(widget.image),height: 4,width:4,),
-                           border: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                  borderSide: BorderSide(color: greyColor.withOpacity(0.2)),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                  borderSide: BorderSide(color: greyColor.withOpacity(0.2)),
-                ),
-                 focusedBorder: OutlineInputBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                borderSide: BorderSide(color: greyColor.withOpacity(0.2)),
-              ),
-                  
-                ),
-                
-                      );
+    return    Container(
+      padding: const EdgeInsets.all(0),
+      decoration: BoxDecoration(
+      color: whiteColor,
+      borderRadius: BorderRadius.circular(8)
+      ),
+      child: ListTile(
+        onTap: () => showCountryPicker(
+  context: context,
+  countryListTheme: CountryListThemeData(
+    flagSize: 25,
+    
+    backgroundColor: Colors.white,
+    textStyle: TextStyle(fontSize: 16, color: Colors.blueGrey),
+    bottomSheetHeight: 500, // Optional. Country list modal height
+    //Optional. Sets the border radius for the bottomsheet.
+      borderRadius: BorderRadius.only(
+      topLeft: Radius.circular(20.0),
+      topRight: Radius.circular(20.0),
+    ),
+    //Optional. Styles the search field.
+    
+    inputDecoration: InputDecoration(
+      
+      labelText: widget.hinttext,
+      hintText: widget.hinttext,
+      prefixIcon: const Icon(Icons.search),
+      border: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: const Color(0xFF8C98A8).withOpacity(0.2),
+        ),
+      ),
+    ),
+  ),
+  onSelect: (Country country) => 
+  setState(() {
+    countryName = country.displayName;
+  })
+  //print('Select country: ${country.displayName}'),
+  
+),
+        tileColor: whiteColor,
+        selectedTileColor: whiteColor,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+        leading: MyText(text: ''),
+       
+        trailing: const Image(image: ExactAssetImage('images/ic_drop_down.png'),height:16,width: 16,)
+      ),
+    );
+
   }
 }

@@ -13,8 +13,8 @@ class PaymentSetup extends StatefulWidget {
 class _PaymentSetupState extends State<PaymentSetup> {
   TextEditingController controller = TextEditingController();
   List text = [
-    'Oman Debit Card',
-    'International Visa Card',
+    
+    'Bank Card',
     'Pay On Arrival'
   ];
   List<bool> value = [
@@ -22,6 +22,9 @@ class _PaymentSetupState extends State<PaymentSetup> {
     false,
     false,
   ];
+  bool paypalValue = false;
+  
+  bool wireTransferValue = false;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -50,18 +53,46 @@ class _PaymentSetupState extends State<PaymentSetup> {
                   )
                ;}),),
         const SizedBox(height:20),
-         Align(alignment: Alignment.centerLeft,
-            child:  MyText(text: 'Pay Pal',color: blackTypeColor1,align: TextAlign.center,),
+        //  Align(alignment: Alignment.centerLeft,
+        //     child:  CheckboxListTile(
+        //       value: payPalvalue,
+        //       leading: MyText(text: 'Pay Pal',color: blackTypeColor1,align: TextAlign.center,)),
                 
-            ),
+        //     ),
+        CheckboxListTile(
+                      contentPadding: const EdgeInsets.only(bottom: 0,),
+                            side: const BorderSide(color: bluishColor),
+                            checkboxShape: const RoundedRectangleBorder(side:  BorderSide(color: bluishColor),),
+                            visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+                            activeColor: greyProfileColor,
+                            checkColor: bluishColor,
+                            value: paypalValue, onChanged: ((bool? value2) {
+                            setState(() {
+                   paypalValue = value2!;
+                });
+                          }),
+                          
+                          title: MyText(text:'Pay Pal',color: blackTypeColor,fontFamily: 'Raleway',size: 14,),
+                          ),
                   const SizedBox(height:10),
             TFWithSize('Enter Paypal id here', controller, 12, lightGreyColor, 1),
             const SizedBox(height:20),
-        Align(alignment: Alignment.centerLeft,
-            child:  MyText(text: 'Wire Transfer',color: blackTypeColor1,align: TextAlign.center,),
-                
-            ),
-                  const SizedBox(height:10),
+        CheckboxListTile(
+                      contentPadding: const EdgeInsets.only(bottom: 0,),
+                            side: const BorderSide(color: bluishColor),
+                            checkboxShape: const RoundedRectangleBorder(side:  BorderSide(color: bluishColor),),
+                            visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+                            activeColor: greyProfileColor,
+                            checkColor: bluishColor,
+                            value: wireTransferValue, onChanged: ((bool? value2) {
+                            setState(() {
+                   wireTransferValue = value2!;
+                });
+                          }),
+                          
+                          title: MyText(text:'Wire Transfer',color: blackTypeColor,fontFamily: 'Raleway',size: 14,),
+                          ),
+        const SizedBox(height:10),
             TFWithSize('Enter bank name here', controller, 12, lightGreyColor, 1),
             const SizedBox(height:20),
 

@@ -1,22 +1,18 @@
-import 'dart:math';
-
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/about.dart';
 import 'package:adventuresclub/home_Screens/details.dart';
+import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-import '../my_text.dart';
-
-class PlannedGrid extends StatefulWidget {
-  const PlannedGrid({super.key});
+class ViewDetailsGrid extends StatefulWidget {
+  const ViewDetailsGrid({super.key});
 
   @override
-  State<PlannedGrid> createState() => _PlannedGridState();
+  State<ViewDetailsGrid> createState() => _ViewDetailsGridState();
 }
 
-class _PlannedGridState extends State<PlannedGrid> {
-  
+class _ViewDetailsGridState extends State<ViewDetailsGrid> {
   void goToDetails(){
     Navigator.of(context).push(MaterialPageRoute(builder: (_){
       return const Details();
@@ -43,7 +39,7 @@ void goToProvider() {
   }
   @override
   Widget build(BuildContext context) {
- final double itemHeight =
+    final double itemHeight =
         (MediaQuery.of(context).size.height - kToolbarHeight - 24) / 10.75;
     final double itemWidth = MediaQuery.of(context).size.width / 3.5;
     return GridView.count(
