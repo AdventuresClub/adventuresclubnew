@@ -84,7 +84,7 @@ addActivites(){
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         MyText(text: 'Sector',color: greyColor,),
-                        const DropdownWithTI('Training', false,false),
+                        const DropdownWithTI('Training', false,false,3,true),
                       ],
                     ),
                     
@@ -92,7 +92,7 @@ addActivites(){
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(text: 'Category',color: greyColor,),
-                        const DropdownWithTI('Training', false,false),
+                        const DropdownWithTI('Training', false,false,3,true),
                       ],
                     ),
                       Column(
@@ -100,7 +100,7 @@ addActivites(){
                       mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           MyText(text: 'Type',color: greyColor,),
-                          const DropdownWithTI('Training', false,false),
+                          const DropdownWithTI('Training', false,false,3,true),
                         ],
                       ),
                    ],),
@@ -112,7 +112,7 @@ addActivites(){
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         MyText(text: 'Sector',color: greyColor,),
-                        const DropdownWithTI('Training', false,false),
+                        const DropdownWithTI('Training', false,false,3,true),
                       ],
                     ),
                     
@@ -120,7 +120,7 @@ addActivites(){
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(text: 'Category',color: greyColor,),
-                        const DropdownWithTI('Training', false,false),
+                        const DropdownWithTI('Training', false,false,3,true),
                       ],
                     ),
                       Column(
@@ -128,7 +128,7 @@ addActivites(){
                       mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           MyText(text: 'Type',color: greyColor,),
-                          const DropdownWithTI('Training', false,false),
+                          const DropdownWithTI('Training', false,false,3,true),
                         ],
                       ),
                    ],),
@@ -140,7 +140,7 @@ addActivites(){
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         MyText(text: 'Sector',color: greyColor,),
-                        const DropdownWithTI('Training', false,false),
+                        const DropdownWithTI('Training', false,false,3,true),
                       ],
                     ),
                     
@@ -148,7 +148,7 @@ addActivites(){
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(text: 'Category',color: greyColor,),
-                        const DropdownWithTI('Training', false,false),
+                        const DropdownWithTI('Training', false,false,3,true),
                       ],
                     ),
                       Column(
@@ -156,7 +156,7 @@ addActivites(){
                       mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           MyText(text: 'Type',color: greyColor,),
-                          const DropdownWithTI('Training', false,false),
+                          const DropdownWithTI('Training', false,false,3,true),
                         ],
                       ),
                    ],),

@@ -101,16 +101,21 @@ class _VisaCardDetailsState extends State<VisaCardDetails> {
               ),
               
                           ),),
+                          SizedBox(height: 10,),
                           MyText(text: 'Expiry Date',color: blackTypeColor3,),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: const [
-                          DropdownWithTI('Month', false,true),
+                          SizedBox(height: 2,),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width/1.2,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: const [
+                            DropdownWithTI('Month', true,true,2.6,true),
                          
-                          DropdownWithTI('Year', false,true),
+                            DropdownWithTI('Year', true,true,2.6,true),
                          
-                          ],),
-                          
+                            ],),
+                          ),
+
                        ],
                      ),
                    ),

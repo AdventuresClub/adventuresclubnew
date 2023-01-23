@@ -133,7 +133,7 @@ class _CompletePartnerStepsState extends State<CompletePartnerSteps> {
                                         child: Center(child: MyText(text: text1[index],color: whiteColor,weight: FontWeight.w500,fontFamily: 'Roboto')),),
                                      
                             
-               
+               if(index != 2)
                             const Expanded(
                             child: Divider(color: bluishColor,thickness: 7,),),
                         ],
@@ -177,7 +177,7 @@ class _CompletePartnerStepsState extends State<CompletePartnerSteps> {
                   if (index !=0 )
                          Container(
                           width: 15,
-                          color: bluishColor,
+                          color: greyColor,
                           height: 7,
                         ),
                   
