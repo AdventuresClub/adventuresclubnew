@@ -14,7 +14,7 @@ class PaymentMethods extends StatefulWidget {
 class _PaymentMethodsState extends State<PaymentMethods> {
   List images =[
     //'images/debit_cards.png',
-  'images/paypal.png',
+ // 'images/paypal.png',
   'images/visa1.png',
   'images/cash.png',
   'images/wire_transfer.png'
@@ -24,7 +24,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
   List text = [
     
    // 'Oman Debit Cards (Omannat)',
-  'Paypal',
+ // 'Paypal',
   'Bank Card',
   'Cash On Arrival',
   'Wire Transfer'

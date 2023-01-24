@@ -1,5 +1,6 @@
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/home_Screens/accounts/payment_methods.dart';
+import 'package:adventuresclub/home_Screens/payment_methods/one_pay_method.dart';
+import 'package:adventuresclub/home_Screens/payment_methods/payment_methods.dart';
 import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ List<String> costText = ['\$100.00',
 ];
 goTo(){
   Navigator.of(context).push(MaterialPageRoute(builder: (_){
-    return const PaymentMethods();
+    return const OnePayMethod();
   }));
 }
   @override

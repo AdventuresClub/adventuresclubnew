@@ -12,7 +12,7 @@ class OfficialDetail extends StatefulWidget {
 
 class _OfficialDetailState extends State<OfficialDetail> {
     TextEditingController controller = TextEditingController();
-bool value = false;
+bool value = true;
 bool value1 = false;
   @override
   Widget build(BuildContext context) {

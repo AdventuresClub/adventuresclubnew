@@ -12,8 +12,9 @@ class ChooseLanguage extends StatefulWidget {
 
 class _ChooseLanguageState extends State<ChooseLanguage> {
   
- List<bool> value = [true,false];
-  bool value1 = false;
+ List<bool> valuee = [true,false];
+  bool value1 = true;
+  bool value = false;
   goToOnboardingScreens(){
     Navigator.of(context).push(MaterialPageRoute(builder: (_){
       return const OnBoardingScreens();
@@ -47,16 +48,38 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                   const SizedBox(height:20),
          Padding(
            padding: const EdgeInsets.only(top:20.0),
-           child: Wrap(children: List.generate(2, (index){ return
+           child: 
             Column(
               children: [
                 CheckboxListTile(
                         visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
                         activeColor: bluishColor,
-                        value: value[index], onChanged: ((bool? valuee) {
+                        value: value1, onChanged: ((bool? valuee) {
                       
                         setState(() {
-                          value[index] = valuee!;
+                          value1 = valuee!;
+                          value = false;
+                        });
+                      }),
+                      checkboxShape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(32)
+                      ),
+                      side: const BorderSide(width:1 ,color: blackColor,),
+                      title: MyText(text:'English',color: greyColor,fontFamily: 'Raleway',),
+                      ),
+                  
+                const Divider(indent: 10,
+                endIndent: 0,
+                color: greyColor,
+                ),
+                  CheckboxListTile(
+                        visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+                        activeColor: bluishColor,
+                        value: value, onChanged: ((bool? valuee) {
+                      
+                        setState(() {
+                          value = valuee!;
+                          value1 = false;
                     
                         });
                       }),
@@ -64,7 +87,7 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                         borderRadius: BorderRadius.circular(32)
                       ),
                       side: const BorderSide(width:1 ,color: blackColor,),
-                      title: MyText(text:text[index],color: greyColor,fontFamily: 'Raleway',),
+                      title: MyText(text:'Arabic',color: greyColor,fontFamily: 'Raleway',),
                       ),
                   
                 const Divider(indent: 10,
@@ -72,9 +95,7 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                 color: greyColor,
                 ),
               ],
-            );
-           }) 
-           ,),
+            ),
          ),
               
            

@@ -1,5 +1,5 @@
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/home_Screens/accounts/payment_methods.dart';
+import 'package:adventuresclub/home_Screens/payment_methods/payment_methods.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/buttons/square_button.dart';
 import 'package:flutter/material.dart';

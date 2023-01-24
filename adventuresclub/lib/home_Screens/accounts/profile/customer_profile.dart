@@ -1,17 +1,19 @@
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/widgets/app_bar.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:adventuresclub/widgets/tabs/profile_tabs.dart';
 import 'package:adventuresclub/widgets/text_fields/text_fields.dart';
 import 'package:flutter/material.dart';
 
-class Profile extends StatefulWidget {
-  const Profile({super.key});
+class CustomerProfile extends StatefulWidget {
+  const CustomerProfile({super.key});
 
   @override
-  State<Profile> createState() => _ProfileState();
+  State<CustomerProfile> createState() => _CustomerProfileState();
 }
 
-class _ProfileState extends State<Profile> {
+class _CustomerProfileState extends State<CustomerProfile> {
   TextEditingController controller = TextEditingController();
   abc(){}
   changePass(){
@@ -84,12 +86,8 @@ class _ProfileState extends State<Profile> {
           ),
           title: MyText(text: 'Profile',color: bluishColor,),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          
-          mainAxisAlignment: MainAxisAlignment.center,
+      body:  Column(
+       mainAxisAlignment: MainAxisAlignment.start,
           children: [
           Stack(
             clipBehavior: Clip.none,
@@ -108,30 +106,17 @@ class _ProfileState extends State<Profile> {
                  ))
             ],
           ),
+          const ProfileTabs(),
+                ],),
+       
+      bottomNavigationBar: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+         const SizedBox(height:20),
+          Button('Save', bluishColor, bluishColor, whiteColor, 18 , abc, Icons.add, whiteColor, false, 1.6, 'Roboto',FontWeight.w400,16),
+          const SizedBox(height:20),
         
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal:8.0,vertical: 15),
-                  child: Column(
-                    children: [
-                      TextFields('Kenneth Gutierrez', controller,15,greyProfileColor,
-          
-          ),
-           Divider(indent: 4,endIndent: 4,color: greyColor.withOpacity(0.5),),
-           TextFields('+44-3658789456', controller,15,greyProfileColor,
-          
-          ),
-          
-           Divider(indent: 4,endIndent: 4,color: greyColor.withOpacity(0.5),),
-           TextFields('demo@xyz.com', controller,15,greyProfileColor,
-          
-          ),
-          
-           Divider(indent: 4,endIndent: 4,color: greyColor.withOpacity(0.5),),
-                    ],
-                  ),
-                ),
-           ],),
-        ),
-      ));
+      ],),
+      );
   }
 }
