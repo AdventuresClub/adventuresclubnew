@@ -24,7 +24,7 @@ const greyProfileColor1 = Color(0xFFf5f5f5);
 const greyColor3 = Color(0xFF92908E);
 
 const redColor = Color(0xFFDF5252);
-
+const greenColor1 = Color(0xFF07A24B);
 const greycolor4 = Color(0xFFBCBCBC);
 
 const yellowcolor = Color(0xFFFFB04E);

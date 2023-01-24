@@ -124,7 +124,7 @@ class _RequestsListState extends State<RequestsList> {
                   
                   SquareButton('Cancel Requests', redColor, whiteColor, 3.7, 21, 12, goTo_),
                   
-                  SquareButton('Make Payment', greycolor4, whiteColor, 3.7, 21, 12, goToMakePayments),
+                  SquareButton('Make Payment', greenColor1, whiteColor, 3.7, 21, 12, goToMakePayments),
                 ],
               ),
             ],),
