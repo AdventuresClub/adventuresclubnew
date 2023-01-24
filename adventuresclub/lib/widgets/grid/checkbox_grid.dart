@@ -58,20 +58,27 @@ class _CheckboxGridState extends State<CheckboxGrid> {
           (index) {
             return Row(
               children: [
-                Transform.scale(
-                  scale: 0.8,
-                  child: Checkbox(
-                      activeColor: whiteColor,
-                      checkColor: bluishColor,
-                      hoverColor: bluishColor,
-                      focusColor: bluishColor,
-                      value: value[index],
-                      onChanged: (bool? value1) {
-                        setState(() {
-                          value[index] = value1!;
-                        });
-                      }),
+                Padding(
+                  padding: const EdgeInsets.only(left:12.0),
+                  child: SizedBox(
+                    width: 15,
+                    child: Transform.scale(
+                      scale: 0.8,
+                      child: Checkbox(
+                          activeColor: whiteColor,
+                          checkColor: bluishColor,
+                          hoverColor: bluishColor,
+                          focusColor: bluishColor,
+                          value: value[index],
+                          onChanged: (bool? value1) {
+                            setState(() {
+                              value[index] = value1!;
+                            });
+                          }),
+                    ),
+                  ),
                 ),
+                SizedBox(width: 10,),
                 // Expanded(
                 //   child: SizedBox.shrink(),
                 //   flex: 1,
@@ -80,7 +87,7 @@ class _CheckboxGridState extends State<CheckboxGrid> {
                     text: text[index],
                     color: blackColor.withOpacity(0.6),
                     weight: FontWeight.w700,
-                    size: 10,
+                    size: 12,
                     fontFamily: 'Raleway'),
                 //Container()
                 // const Spacer(

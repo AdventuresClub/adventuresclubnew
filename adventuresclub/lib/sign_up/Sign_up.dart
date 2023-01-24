@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:adventuresclub/sign_up/sign_in.dart';
@@ -5,15 +7,11 @@ import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/grid/checkbox_grid.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/text_fields.dart';
-import 'package:adventuresclub/widgets/text_fields/tf_image.dart';
-import 'package:adventuresclub/widgets/text_fields/tf_with_Size_image.dart';
-import 'package:adventuresclub/widgets/text_fields/tf_with_suffixText.dart';
 import 'package:adventuresclub/widgets/text_fields/tf_with_suffix_icon.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -571,10 +569,10 @@ String country = '';
     flagSize: 25,
     
     backgroundColor: Colors.white,
-    textStyle: TextStyle(fontSize: 16, color: Colors.blueGrey),
+    textStyle: const TextStyle(fontSize: 16, color: Colors.blueGrey),
     bottomSheetHeight: 500, // Optional. Country list modal height
     //Optional. Sets the border radius for the bottomsheet.
-      borderRadius: BorderRadius.only(
+      borderRadius: const BorderRadius.only(
       topLeft: Radius.circular(20.0),
       topRight: Radius.circular(20.0),
     ),
@@ -592,11 +590,12 @@ String country = '';
       ),
     ),
   ),
-  onSelect: (Country country) => setState(() {
-    countryName = country.displayName.toString();
-  })
-  //print('Select country: ${country.displayName}'),
-  
+  onSelect: (Country country) { 
+    return
+    setState(() {
+    countryName == country.displayName ;// country.displayName.toString();
+  });
+  }
 ),
         tileColor: whiteColor,
         selectedTileColor: whiteColor,
@@ -648,58 +647,57 @@ String country = '';
                                   color: whiteColor,
                                   child: Row(
                                     children: [
-                                      Expanded(
-                                        flex: 3,
-                                        child: CupertinoPicker(
-                                          itemExtent: 82.0,
-                                          diameterRatio: 22,
-                                          magnification: 1.6,
-                                          backgroundColor: whiteColor,
-                                          onSelectedItemChanged: (int index) {
-                                            print(index + 1);
-                                            setState(() {
-                                              ft = (index + 1);
-                                              heightController.text =
-                                                  "$ft' $inches\"";
-                                            });
-                                          },
-                                          selectionOverlay: const CupertinoPickerDefaultSelectionOverlay(
-                                            background: transparentColor,
+                                      Stack(
+                                        children: [
+                                          SizedBox(
+                                               width: MediaQuery.of(context).size.width/1.3,
+                                            
+                                            child: CupertinoPicker(
+                                              itemExtent: 82.0,
+                                              diameterRatio: 22,
+                                              backgroundColor: whiteColor,
+                                              onSelectedItemChanged: (int index) {
+                                                print(index + 1);
+                                                setState(() {
+                                                  ft = (index + 1);
+                                                  heightController.text =
+                                                      "$ft' $inches\"";
+                                                });
+                                              },
+                                              selectionOverlay: const CupertinoPickerDefaultSelectionOverlay(
+                                                background: transparentColor,
+                                              ),
+                                              children: List.generate(3, (index) {
+                                                return  Center(
+                                                        child: MyText(text:genderText[index],size:14,color:blackTypeColor4),
+                                                        
+                                                     
+                                                );
+                                              }),
+                                            ),
                                           ),
-                                          children: List.generate(3, (index) {
-                                            return Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  padding: const EdgeInsets.symmetric(vertical: 10),
-                                                  decoration: BoxDecoration(
-                                                    border: Border(top:BorderSide(color:  
-                                                    index == 0  ?
-                                                    blackColor.withOpacity(0.7) : 
-                                                    index == 1 ?
-                                                     blackColor.withOpacity(0.7):
-                                                     index == 2 ?
-                                                       blackColor.withOpacity(0.7):
-                                                   transparentColor
-                                                     ,width: 1),
-                                                  bottom:BorderSide(color: index == 0  ?
-                                                      blackColor.withOpacity(0.7) : 
-                                                    index == 1 ?
-                                                     blackColor.withOpacity(0.7):
-                                                     index == 2 ?
-                                                       blackColor.withOpacity(0.7):
-                                                   
-                                                    transparentColor,width: 1))
-                                                  ),
-                                                  child: Center(
-                                                    child: MyText(text:genderText[index],size:8,color:blackTypeColor4),
-                                                    
-                                                  ),
-                                                ),
-                                              ],
-                                            );
-                                          }),
-                                        ),
+                                            Positioned(
+                                            top:70,
+                                          
+                                            child: Container(
+                                              height: 60,
+                                              width: MediaQuery.of(context).size.width/1.2,
+                                                      padding: const EdgeInsets.symmetric(vertical: 16),
+                                                      decoration: BoxDecoration(
+                                                        border: Border(top:BorderSide(color:  
+                                                       
+                                                        blackColor.withOpacity(0.7)
+                                                         ,width: 1.5),
+                                                      bottom:BorderSide(color: 
+                                                          blackColor.withOpacity(0.7)  
+                                                       
+                                                       
+                                                        ,width: 1.5))
+                                                      ),
+                                                      
+                                                      ),
+                                          )
+                                        ],
                                       ),
                                      
                                     ],
@@ -770,58 +768,56 @@ String country = '';
                                   color: whiteColor,
                                   child: Row(
                                     children: [
-                                      Expanded(
-                                        flex: 3,
-                                        child: CupertinoPicker(
-                                          itemExtent: 82.0,
-                                          diameterRatio: 22,
-                                          backgroundColor: whiteColor,
-                                          onSelectedItemChanged: (int index) {
-                                            print(index + 1);
-                                            setState(() {
-                                              ft = (index + 1);
-                                              heightController.text =
-                                                  "$ft' $inches\"";
-                                            });
-                                          },
-                                          selectionOverlay: const CupertinoPickerDefaultSelectionOverlay(
-                                            background: transparentColor,
+                                      Stack(
+                                        children: [
+                                          SizedBox(
+                                            width: MediaQuery.of(context).size.width/1.3,
+                                            
+                                            child: CupertinoPicker(
+                                              itemExtent: 82.0,
+                                              diameterRatio: 22,
+                                              backgroundColor: whiteColor,
+                                              onSelectedItemChanged: (int index) {
+                                                print(index + 1);
+                                                setState(() {
+                                                  ft = (index + 1);
+                                                  heightController.text =
+                                                      "$ft' $inches\"";
+                                                });
+                                              },
+                                              selectionOverlay: const CupertinoPickerDefaultSelectionOverlay(
+                                                background: transparentColor,
+                                              ),
+                                              children: List.generate(3, (index) {
+                                                return  Center(
+                                                        child: MyText(text:pickWeight[index],size:14,color:blackTypeColor4),
+                                                       
+                                                );
+                                              }),
+                                            ),
                                           ),
-                                          children: List.generate(3, (index) {
-                                            return Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  padding: const EdgeInsets.symmetric(vertical: 16),
-                                                  decoration: BoxDecoration(
-                                                    border: Border(top:BorderSide(color:  
-                                                    index == 0  ?
-                                                    blackColor.withOpacity(0.7) : 
-                                                    index == 1 ?
-                                                     blackColor.withOpacity(0.7):
-                                                     index == 2 ?
-                                                       blackColor.withOpacity(0.7):
-                                                   transparentColor
-                                                     ,width: 1.5),
-                                                  bottom:BorderSide(color: index == 0  ?
-                                                      blackColor.withOpacity(0.7) : 
-                                                    index == 1 ?
-                                                     blackColor.withOpacity(0.7):
-                                                     index == 2 ?
-                                                       blackColor.withOpacity(0.7):
-                                                   
-                                                    transparentColor,width: 1.5))
-                                                  ),
-                                                  child: Center(
-                                                    child: MyText(text:pickWeight[index],size:14,color:blackTypeColor4),
-                                                    
-                                                  ),
-                                                ),
-                                              ],
-                                            );
-                                          }),
-                                        ),
-                                      ),
+                                          Positioned(
+                                            top:70,
+                                          
+                                            child: Container(
+                                              height: 60,
+                                              width: MediaQuery.of(context).size.width/1.2,
+                                                      padding: const EdgeInsets.symmetric(vertical: 16),
+                                                      decoration: BoxDecoration(
+                                                        border: Border(top:BorderSide(color:  
+                                                       
+                                                        blackColor.withOpacity(0.7)
+                                                         ,width: 1.5),
+                                                      bottom:BorderSide(color: 
+                                                          blackColor.withOpacity(0.7)  
+                                                       
+                                                       
+                                                        ,width: 1.5))
+                                                      ),
+                                                      
+                                                      ),
+                                          )
+                                    ]),
                                      
                                     ],
                                   ),
@@ -891,57 +887,58 @@ Widget pickingHeight (context,String genderName){
                                   color: whiteColor,
                                   child: Row(
                                     children: [
-                                      Expanded(
-                                        flex: 3,
-                                        child: CupertinoPicker(
-                                          itemExtent: 82.0,
-                                          diameterRatio: 22,
-                                          backgroundColor: whiteColor,
-                                          onSelectedItemChanged: (int index) {
-                                            print(index + 1);
-                                            setState(() {
-                                              ft = (index + 1);
-                                              heightController.text =
-                                                  "$ft' $inches\"";
-                                            });
-                                          },
-                                          selectionOverlay: const CupertinoPickerDefaultSelectionOverlay(
-                                            background: transparentColor,
-                                          ),
-                                          children: List.generate(3, (index) {
-                                            return Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  padding: const EdgeInsets.symmetric(vertical: 16),
-                                                  decoration: BoxDecoration(
-                                                    border: Border(top:BorderSide(color:  
-                                                    index == 0  ?
-                                                    blackColor.withOpacity(0.7) : 
-                                                    index == 1 ?
-                                                     blackColor.withOpacity(0.7):
-                                                     index == 2 ?
-                                                       blackColor.withOpacity(0.7):
-                                                   transparentColor
-                                                     ,width: 1.5),
-                                                  bottom:BorderSide(color: index == 0  ?
-                                                      blackColor.withOpacity(0.7) : 
-                                                    index == 1 ?
-                                                     blackColor.withOpacity(0.7):
-                                                     index == 2 ?
-                                                       blackColor.withOpacity(0.7):
-                                                   
-                                                    transparentColor,width: 1.5))
-                                                  ),
-                                                  child: Center(
-                                                    child: MyText(text:pickHeight[index],size:14,color:blackTypeColor4),
-                                                    
-                                                  ),
+                                      Stack(
+                                        children: [
+                                          SizedBox(
+                                             width: MediaQuery.of(context).size.width/1.3,
+                                                
+                                    
+                                              child: CupertinoPicker(
+                                                itemExtent: 82.0,
+                                                diameterRatio: 22,
+                                                backgroundColor: whiteColor,
+                                                onSelectedItemChanged: (int index) {
+                                                  print(index + 1);
+                                                  setState(() {
+                                                    ft = (index + 1);
+                                                    heightController.text =
+                                                        "$ft' $inches\"";
+                                                  });
+                                                },
+                                                selectionOverlay: const CupertinoPickerDefaultSelectionOverlay(
+                                                  background: transparentColor,
                                                 ),
-                                              ],
-                                            );
-                                          }),
-                                        ),
+                                                children: List.generate(3, (index) {
+                                                  return  Center(
+                                                          child: MyText(text:pickHeight[index],size:14,color:blackTypeColor4),
+                                                          
+                                                       
+                                                  );
+                                                }),
+                                              ),
+                                          ),
+                                           Positioned(
+                                            top:70,
+                                          
+                                            child: Container(
+                                              height: 60,
+                                              width: MediaQuery.of(context).size.width/1.2,
+                                                      padding: const EdgeInsets.symmetric(vertical: 16),
+                                                      decoration: BoxDecoration(
+                                                        border: Border(top:BorderSide(color:  
+                                                       
+                                                        blackColor.withOpacity(0.7)
+                                                         ,width: 1.5),
+                                                      bottom:BorderSide(color: 
+                                                          blackColor.withOpacity(0.7)  
+                                                       
+                                                       
+                                                        ,width: 1.5))
+                                                      ),
+                                                      
+                                                      ),
+                                          )
+                                        ],
                                       ),
                                      
                                     ],

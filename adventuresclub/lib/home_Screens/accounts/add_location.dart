@@ -3,6 +3,7 @@ import 'package:adventuresclub/home_Screens/accounts/submitting_info.dart';
 import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
+import 'package:adventuresclub/widgets/text_fields/multiline_field.dart';
 import 'package:flutter/material.dart';
 
 class AddLocation extends StatefulWidget {
@@ -147,7 +148,8 @@ class _AddLocationState extends State<AddLocation> {
                   TFWithSize('Enter Website Link', controller, 14, lightGreyColor, 1),
                   
                   const SizedBox(height: 20,),
-      
+                  MultiLineField('write description in brief', 5, lightGreyColor),
+                    const SizedBox(height: 20,),
                   ButtonIconLess('Submit', bluishColor, whiteColor, 1.5, 17, 16, goToSubInfo)
           ],),
         ),

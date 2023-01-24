@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/book_ticket.dart';
 import 'package:adventuresclub/home_Screens/plan%20_for_future.dart';
@@ -16,13 +18,36 @@ class Details extends StatefulWidget {
 class _DetailsState extends State<Details> {
   final PageController _pageViewController = PageController(initialPage: 0);
 
-  int _activePage = 0;
+   int _activePage = 0;
   int index = 0;
   @override
   void dispose() {
     super.dispose();
     _pageViewController.dispose(); // dispose the PageController
+    
+    _timer?.cancel();
   }
+  int _currentPage = 0;
+late Timer _timer;
+
+
+ @override
+void initState() {
+  super.initState();
+  _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
+    if (_activePage < 6) {
+      _activePage++;
+    } else {
+      _activePage = 0;
+    }
+
+    _pageViewController.animateToPage(
+      _activePage,
+      duration: const Duration(milliseconds: 350),
+      curve: Curves.easeIn,
+    );
+  });
+}
   abc(){}
   goToPlan(){
     Navigator.of(context).push(MaterialPageRoute(builder: (_){
@@ -52,28 +77,41 @@ class _DetailsState extends State<Details> {
           children: [
             SizedBox(
               height: 230,
-              child: PageView.builder(
-                    controller: _pageViewController,
-                    onPageChanged: (index) {
-                      setState(() {
-                        _activePage = index;
-                      });
-                    },
-                    itemCount: 5,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        
-                        decoration:  BoxDecoration(
-                        
-                          borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(72)),
-                          image: DecorationImage(
-                            colorFilter:
-                    ColorFilter.mode(Colors.grey.withOpacity(0.2), BlendMode.darken),
-                
-                            image: const ExactAssetImage('images/River-rafting.png'),fit: BoxFit.cover)
-                        ),
-                      );
-                    }),
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  PageView.builder(
+                        controller: _pageViewController,
+                        onPageChanged: (index) {
+                          setState(() {
+                            _activePage = index;
+                          });
+                        },
+                        itemCount: 5,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            
+                            decoration:  BoxDecoration(
+                            
+                              borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(72)),
+                              image: DecorationImage(
+                                colorFilter:
+                        ColorFilter.mode(Colors.grey.withOpacity(0.2), BlendMode.darken),
+                    
+                                image: const ExactAssetImage('images/River-rafting.png'),fit: BoxFit.cover)
+                            ),
+                          );
+                        }),
+                        Positioned(
+                          bottom: -10,
+                          right: 70,
+                          child: Image(image:  ExactAssetImage('images/heart.png',),height: 30,) ),
+                                Positioned(
+                          bottom: -10,
+                          right: 30,
+                          child: Image(image:  ExactAssetImage('images/forward.png',),height: 34,)  )
+                ],
+              ),
             ),
         
             Positioned(
@@ -96,16 +134,16 @@ class _DetailsState extends State<Details> {
                                       curve: Curves.easeIn);
                                 },
                                 child: CircleAvatar(
-                                  radius:7.5 ,
+                                  radius:6.5 ,
                                   backgroundColor: _activePage == index
-                                        ? Colors.red
+                                        ? Colors.orange
                                         : whiteColor,
                                   child: CircleAvatar(
                                     radius: _activePage != index ? 4.5 : 5.5,
                                     // check if a dot is connected to the current page
                                     // if true, give it a different color
                                     backgroundColor: _activePage == index
-                                        ? Colors.red
+                                        ? Colors.orange
                                         : transparentColor.withOpacity(0.1)
                                   ),
                                 ),

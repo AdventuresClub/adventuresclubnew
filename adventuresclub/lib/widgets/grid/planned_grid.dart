@@ -50,7 +50,7 @@ void goToProvider() {
           physics: const ScrollPhysics(),
           shrinkWrap: true,
           mainAxisSpacing: 0.2,
-          childAspectRatio:0.84,
+          childAspectRatio: 0.84,
           crossAxisSpacing: 0.2,
           crossAxisCount: 2,
           children: List.generate(
@@ -69,7 +69,7 @@ void goToProvider() {
                     shrinkWrap: true,
                     physics: const ClampingScrollPhysics(),
                         children: [
-                          
+                         
                          Stack(
                            children: [
                              Padding(

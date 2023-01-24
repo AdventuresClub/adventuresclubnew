@@ -172,6 +172,11 @@ class _AccountState extends State<Account> {
                   return const HealthCondition();
                 }));
                } 
+               if(tile1Text[index] == 'Notification'){
+                Navigator.of(context).push(MaterialPageRoute(builder: (_){
+                  return const Notifications();
+                }));
+               } 
               //  if(tile1Text[index] == 'Payment'){
               //   Navigator.of(context).push(MaterialPageRoute(builder: (_){
               //     return const Payment();

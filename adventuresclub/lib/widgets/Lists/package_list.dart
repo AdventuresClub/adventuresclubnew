@@ -65,7 +65,7 @@ goTo(){
         Positioned(
             bottom: 55,
             right:50,
-            child: MyText(text:widget.cost,size: 33,weight: FontWeight.w900,),
+            child: MyText(text:widget.cost,size: 24,weight: FontWeight.w900,),
             ),
           Positioned(
             left: 15,
@@ -89,12 +89,14 @@ goTo(){
               direction: Axis.vertical,
               children: List.generate(5, (index) {
               return Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   
-                  const CircleAvatar(
-                    radius: 10,
+                   CircleAvatar(
+                    radius: 8,
                     backgroundColor: whiteColor,
-                    child:Icon(Icons.check,color: Colors.green,)
+                    child: text[index] != 3 ? const Image(image: ExactAssetImage('images/ic_green_check.png')):
+                    const Image(image: ExactAssetImage('images/ic_red_cross.png'))
                   ),
                   const SizedBox(width: 10,),
                   MyText(text: text[index],size: 12,height: 2.2,),

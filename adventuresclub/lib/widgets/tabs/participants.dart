@@ -17,7 +17,7 @@ class _ParticipantsState extends State<Participants> {
     return Column(
 children: const [
   SizedBox(height: 15,),
-  SearchContainer('Search client by name or order id', 1.1, 'images/pin.png', false,false,'oman',14),
+  SearchContainer('Search client by name or order id', 1.1,8, 'images/pin.png', false,false,'oman',14),
   ParticipantsList()
 ],
     );

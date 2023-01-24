@@ -1,6 +1,6 @@
 import 'package:adventuresclub/constants.dart';
 
-import 'package:adventuresclub/home_Screens/visit_details.dart';
+import 'package:adventuresclub/home_Screens/visit/visit_details.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -26,6 +26,7 @@ class _VisitListState extends State<VisitList> {
   'SQU',
   'fort',
   ];
+  
   @override
   Widget build(BuildContext context) {
     return ListView.builder(

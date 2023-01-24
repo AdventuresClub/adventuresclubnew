@@ -16,7 +16,7 @@ class _MyServicesGridState extends State<MyServicesGrid> {
   ];
   List text = [
     'Muscat, Oman',
-    '50 Participants'
+    'Accepted'
   ];
    goToAd(){
   Navigator.of(context).push(MaterialPageRoute(builder: (_){
@@ -68,14 +68,7 @@ class _MyServicesGridState extends State<MyServicesGrid> {
                                       fit: BoxFit.cover)),
                              ),
                            ),
-                            const Positioned(
-                                bottom: 15,
-                                right: 10,
-                                child:CircleAvatar(
-                                  radius: 20,
-                                  backgroundColor: greyColor1   ,
-                                  child: Icon(Icons.favorite,color: whiteColor,)) 
-                                ),
+                           
                          ],
                        ),
                        const SizedBox(height:10),
@@ -100,9 +93,12 @@ class _MyServicesGridState extends State<MyServicesGrid> {
                            Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                         Image(image: ExactAssetImage(images[index]),height: 12,),
+                         Image(image: ExactAssetImage(images[index]),height: 12,color: images[index] == 'images/user.png' ? 
+                         Colors.green:
+                         greyColor
+                          ),
                           const SizedBox(width:5),
-                            MyText(text: text[index],color: greyColor,size: 9,height: 1.6,),
+                            MyText(text: text[index],color: text[index] == 'Accepted'? Colors.green: bluishColor,size: 9,height: 1.6,),
                             
                           ],);
                         

@@ -131,27 +131,37 @@ List activitesInclude = ['Transportation from gathering area','Snacks','Bike Rid
         child: Column(
         children: <Widget>[
           Container(
-            child: const TabBar(
+            width: MediaQuery.of(context).size.width,
+            child:  const TabBar(
               padding: EdgeInsets.all(0),
               labelPadding: EdgeInsets.all(0),
               labelColor: blackColor,
               labelStyle: TextStyle(fontSize: 14,fontWeight: FontWeight.bold,fontFamily: 'Roboto'),
               indicatorColor: greenishColor,
-        
+              isScrollable: true,
               unselectedLabelStyle:  TextStyle(fontSize: 14,fontWeight: FontWeight.w400,fontFamily: 'Roboto'),
               indicatorSize: TabBarIndicatorSize.label,
               unselectedLabelColor: greyColor,
               tabs: [
-                Tab(text: 'Description',),
-                Tab(text: 'Program'),
-                 Tab(text: 'Gathering Location'),
-                Tab(text: 'Chat'),
+                SizedBox(
+                   width:90.0,
+                  child:  Tab(text: 'Description',)),
+                SizedBox(
+                   width: 70.0,
+                  child:  Tab(text: 'Program')),
+               SizedBox(
+                width: 120.0,
+                child:   Tab(text: 'Gathering Location'),
+              ),
+                SizedBox(
+                   width: 60.0,
+                  child:  Tab(text: 'Chat')),
               ],
             ),
           ),
           SizedBox(
               height: MediaQuery.of(context).size.height *
-                  1.2, //height of TabBarView
+                  1.5, //height of TabBarView
                   width: MediaQuery.of(context).size.width ,
               child: TabBarView(children: <Widget>[
               Padding(
@@ -305,6 +315,7 @@ List activitesInclude = ['Transportation from gathering area','Snacks','Bike Rid
 
       ],),
         ),),
+     
             Card(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         elevation: 1,
@@ -336,24 +347,82 @@ List activitesInclude = ['Transportation from gathering area','Snacks','Bike Rid
           child: Column(children: [
          Align(
         alignment: Alignment.centerLeft,
-        child: MyText(text: 'Information',color:greyColor.withOpacity(0.6),weight: FontWeight.w500,fontFamily: 'Roboto',)),
+        child: MyText(text: 'Information',color:greyColor.withOpacity(0.4),weight: FontWeight.w500,fontFamily: 'Roboto',)),
          
          MyText(text: 'you will need an acceptable fitness to do  this canyon. It is long  canyon and requires  lots of bouldering around on uneven terrain',size:12,color:greyColor.withOpacity(0.3),weight: FontWeight.w400,fontFamily: 'Roboto',height: 1.5,),
       ],),
         ),),
-         Card(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        elevation: 1,
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(children: [
-         Align(
-        alignment: Alignment.centerLeft,
-        child: MyText(text: 'Terms and conditions ',color:greyColor.withOpacity(0.6),weight: FontWeight.w500,fontFamily: 'Roboto',)),
-         
-         MyText(text: 'Minimum seat reservations : Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer fermentum nunc vehicula ligula placerat, et fermentum turpis ornare. Nullam ultricies pretium faucibus. In pulvinar rhoncus libero, eget lacinia sem condimentum ut. Nullam rutrum id mauris a venenatis. Aenean ipsum ante, iaculis iaculis ante quis',color:greyColor.withOpacity(0.3),weight: FontWeight.w400,fontFamily: 'Roboto',height: 1.5,size: 12,),
-      ],),
-        ),),
+           ClipRRect(
+            borderRadius: BorderRadius.circular(26),
+             child: Card(
+               child: ClipRRect(
+                  borderRadius: BorderRadius.circular(26),
+                 child: ExpansionTile(
+                  collapsedIconColor: blackTypeColor3,
+                  tilePadding: EdgeInsets.symmetric(horizontal:10),
+                            title:  Text(
+                 'Terms and conditions',
+                 style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500,color: greyColor.withOpacity(0.4)),
+                            ),
+                            children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: MyText(text: 'The highest peak in Al-Hajar mountain range and in all of Oman,Jebel Shams(Mountain of the sun) towers above the northern town in Al-Hamra. Rising to about 10,000 feet(3,000 meters).',color:greyColor.withOpacity(0.4),weight: FontWeight.w400,fontFamily: 'Roboto',height: 1.5,size: 12,),
+                    ),
+                  
+                     
+                            ],
+                          ),
+               ),
+             ),
+           ),
+           ClipRRect(
+            borderRadius: BorderRadius.circular(26),
+             child: Card(
+               child: ClipRRect(
+                  borderRadius: BorderRadius.circular(26),
+                 child: ExpansionTile(
+                  tilePadding: EdgeInsets.symmetric(horizontal:10),
+                            title:  Text(
+                 'Pre-request',
+                 style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500,color: greyColor.withOpacity(0.4)),
+                            ),
+                            children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: MyText(text: 'The highest peak in Al-Hajar mountain range and in all of Oman,Jebel Shams(Mountain of the sun) towers above the northern town in Al-Hamra. Rising to about 10,000 feet(3,000 meters).',color:greyColor.withOpacity(0.4),weight: FontWeight.w400,fontFamily: 'Roboto',height: 1.5,size: 12,),
+                    ),
+                  
+                     
+                            ],
+                          ),
+               ),
+             ),
+           ),
+           ClipRRect(
+            borderRadius: BorderRadius.circular(26),
+             child: Card(
+               child: ClipRRect(
+                  borderRadius: BorderRadius.circular(26),
+                 child: ExpansionTile(
+                  tilePadding: EdgeInsets.symmetric(horizontal:10),
+                            title:  Text(
+                 'Minimum Requirement',
+                 style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500 , color:greyColor.withOpacity(0.4)),
+                            ),
+                            children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: MyText(text: 'The highest peak in Al-Hajar mountain range and in all of Oman,Jebel Shams(Mountain of the sun) towers above the northern town in Al-Hamra. Rising to about 10,000 feet(3,000 meters).',color:greyColor.withOpacity(0.4),weight: FontWeight.w400,fontFamily: 'Roboto',height: 1.5,size: 12,),
+                    ),
+                  
+                     
+                            ],
+                          ),
+               ),
+             ),
+           ),
+      
                   ],
                 ),
               ),
@@ -455,9 +524,25 @@ List activitesInclude = ['Transportation from gathering area','Snacks','Bike Rid
          MyText(text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",color:blackColor,weight: FontWeight.w400,),
         const SizedBox(height: 10,),
               
-        Align(
-        alignment: Alignment.centerLeft,
-        child: MyText(text: 'Full Address',color:blackColor,weight: FontWeight.w500,size: 17,)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Align(
+            alignment: Alignment.centerLeft,
+            child: MyText(text: 'Full Address',color:blackColor,weight: FontWeight.w500,size: 17,)),
+            Row(children: [
+              MyText(text: 'Get Direction',color: greyColor,),
+              Card(
+                elevation: 1,
+                shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(64)),
+                child: const CircleAvatar(
+                  radius: 14,
+                  backgroundColor: whiteColor,
+                  child:Image(image:ExactAssetImage('images/location-arrow.png'),height: 15,),),
+              )
+            ],)
+          ],
+        ),
          const SizedBox(height: 10,),
               
           RichText(

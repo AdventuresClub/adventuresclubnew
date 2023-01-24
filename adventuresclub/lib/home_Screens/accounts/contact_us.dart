@@ -40,13 +40,13 @@ abc(){}
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              TFWithSize('Kenneth Guiterrez', controller, 16, lightGreyColor, 1.2),
+              TFWithSize('AdventuresClub', controller, 16, lightGreyColor, 1.2),
              const SizedBox(height: 15,),
              
-              TFWithSize('Kenneth Guiterrez', controller, 16, lightGreyColor, 1.2),
+              TFWithSize('96123588', controller, 16, lightGreyColor, 1.2),
              const SizedBox(height: 15,),
              
-              TFWithSize('Kenneth Guiterrez', controller, 16, lightGreyColor, 1.2),
+              TFWithSize('info@adventureclub.net', controller, 16, lightGreyColor, 1.2),
              const SizedBox(height: 15,),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal:8.0),
@@ -84,14 +84,14 @@ abc(){}
               ),
           ),),
             ), const SizedBox(height: 15,),
-              TFWithSize('Kenneth Guiterrez', controller, 16, lightGreyColor, 1.2),
+              TFWithSize('Subject', controller, 16, lightGreyColor, 1.2),
              const SizedBox(height: 15,),
              const Padding(
                padding: EdgeInsets.symmetric(horizontal:8.0),
                child: MultiLineField('Start writing here', 5, lightGreyColor),
              ),
                  const SizedBox(height: 20,),
-                 ButtonIconLess('Send to admin@adventuresclub.us', bluishColor, whiteColor, 1.3, 17, 16, abc),
+                 ButtonIconLess('Send', bluishColor, whiteColor, 1.3, 17, 16, abc),
            const SizedBox(height: 20,),
         
           Row(
@@ -117,7 +117,7 @@ abc(){}
             children:  [
            const Image(image: ExactAssetImage('images/icon-location-on.png'),height: 25,),
            
-           MyText(text: 'Alkudh 6th, Muscat, Oman',color: bluishColor,),
+           MyText(text: 'Alkudh 6th, Muscat, Oman',color: greyColor,),
           ],),
           ],),
         ),

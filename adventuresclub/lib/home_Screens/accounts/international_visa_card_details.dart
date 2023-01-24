@@ -38,7 +38,8 @@ class _InternationalVisaCardDetailsState extends State<InternationalVisaCardDeta
           child: Container(
             
             decoration: BoxDecoration(
-              border: Border.all(color: greyColor.withOpacity(0.6))
+              borderRadius: BorderRadius.circular(4),
+              border: Border.all(color: greyColor3.withOpacity(0.5))
             ),
             child: Column(children: [
             ListTile(
@@ -92,7 +93,7 @@ class _InternationalVisaCardDetailsState extends State<InternationalVisaCardDeta
                 width: MediaQuery.of(context).size.width/2.6,
                 padding: const EdgeInsets.symmetric(horizontal: 0,vertical: 10),
                 decoration: BoxDecoration(
-                  border: Border.all(color: greyColor.withOpacity(0.6)),
+                  border: Border.all(color: greyColor3.withOpacity(0.6)),
                   color: greyColor.withOpacity(0.2)
                 ),
                 child: Center(child: MyText(text: 'OMR',color: blackTypeColor3,weight: FontWeight.w400,))),
@@ -101,7 +102,7 @@ class _InternationalVisaCardDetailsState extends State<InternationalVisaCardDeta
                 width: MediaQuery.of(context).size.width/2.6,
                 padding: const EdgeInsets.symmetric(horizontal: 0,vertical: 10),
                 decoration: BoxDecoration(
-                  border: Border.all(color: greyColor.withOpacity(0.6)),
+                  border: Border.all(color: greyColor3.withOpacity(0.6)),
                   color: greyColor.withOpacity(0.2)
                 ),
                 child: Center(child: MyText(text: '38.41',color: blackTypeColor3,weight: FontWeight.w400,))),],),
@@ -110,14 +111,14 @@ class _InternationalVisaCardDetailsState extends State<InternationalVisaCardDeta
                   onTap: goTo,
                   child: Container(
                     width: 110,
-                    padding: EdgeInsets.symmetric(vertical: 10,horizontal: 18),
+                    padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 18),
                      decoration: BoxDecoration(
                     border: Border.all(color: blueButtonColor),
                     color: whiteColor
                   ),
                     child:  Center(child: MyText(text: 'Proceed',color:blueButtonColor,weight: FontWeight.w400,))),
                 ),
-                SizedBox(height: 10,)
+                const SizedBox(height: 10,)
           ],),
           
           ),

@@ -1,5 +1,6 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 
 class DropdownWithTI extends StatefulWidget {
@@ -8,7 +9,8 @@ class DropdownWithTI extends StatefulWidget {
   final showBorder;
   final width;
   final bool show;
-  const DropdownWithTI(this.text,this.expanded,this.showBorder,this.width,this.show,{super.key});
+  final showIcon;
+  const DropdownWithTI(this.text,this.expanded,this.showBorder,this.width,this.show,this.showIcon,{super.key});
 
   @override
   State<DropdownWithTI> createState() => _DropdownWithTIState();
@@ -22,12 +24,12 @@ class _DropdownWithTIState extends State<DropdownWithTI> {
     return Container(
                   width: MediaQuery.of(context).size.width/widget.width,
           padding: const EdgeInsets.symmetric(horizontal: 2,vertical: 0),
-            
+            height: 40,
           decoration: BoxDecoration(
             color: Colors.transparent,
             borderRadius: BorderRadius.circular(2),
               border:widget.showBorder?
-              Border.all(color: greyColor3): Border.all(color: whiteColor)
+              Border.all(color: greyColor3.withOpacity(0.4)): Border.all(color: whiteColor)
           ),
           child: widget.show ? DropdownButtonHideUnderline(
             child:
@@ -36,7 +38,9 @@ class _DropdownWithTIState extends State<DropdownWithTI> {
                     isExpanded: widget.expanded,
                   
                     value:dropdownValue,
-                    icon:  const Icon(Icons.arrow_drop_down),
+                    icon: widget.showIcon ?  
+                    const Image(image: ExactAssetImage('images/chevron-right.png'), height:10,)
+                     :const Icon(Icons.arrow_drop_down),
                     
                     elevation: 16,
                     style: const TextStyle(color: blackTypeColor,fontWeight: FontWeight.w500),
@@ -51,7 +55,7 @@ class _DropdownWithTIState extends State<DropdownWithTI> {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Padding(
-                          padding: const EdgeInsets.only(left:8.0),
+                          padding: const EdgeInsets.only(left:0.0),
                           child: Text(value),
                         ),
                       );
@@ -76,7 +80,7 @@ class _DropdownWithTIState extends State<DropdownWithTI> {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Padding(
-                          padding: const EdgeInsets.only(left:8.0),
+                          padding: const EdgeInsets.only(left:0.0),
                           child: Text(value),
                         ),
                       );

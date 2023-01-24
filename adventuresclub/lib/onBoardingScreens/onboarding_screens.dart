@@ -67,7 +67,7 @@ return const SignUp();
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
            
-              Text('Adventure Club',
+              Text('Adventures Club',
                   style: TextStyle(fontSize: 20, color: Colors.white,fontFamily: 'Raleway',fontWeight: FontWeight.bold)),
               SizedBox(height: 20),
               Padding(
@@ -97,7 +97,7 @@ return const SignUp();
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children:  [
            
-              const Text('Adventure Club',
+              const Text('Adventures Club',
                   style: TextStyle(fontSize: 20, color: Colors.white,fontFamily: 'Raleway',fontWeight: FontWeight.bold)),
               const SizedBox(height: 20),
               Padding(
@@ -138,7 +138,7 @@ return const SignUp();
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children:   [
            
-              const Text('Adventure Club',
+              const Text('Adventures Club',
                   style: TextStyle(fontSize: 20, color: Colors.white,fontFamily: 'Raleway',fontWeight: FontWeight.bold)),
               const SizedBox(height: 20),
               Padding(
@@ -179,7 +179,7 @@ return const SignUp();
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children:  [
            
-              const Text('Adventure Club',
+              const Text('Adventures Club',
                   style: TextStyle(fontSize: 20, color: Colors.white,fontFamily: 'Raleway',fontWeight: FontWeight.bold)),
               const SizedBox(height: 20),
               Padding(
@@ -223,7 +223,7 @@ return const SignUp();
             children: 
               [
            
-              const Text('Adventure Club',
+              const Text('Adventures Club',
                   style: TextStyle(fontSize: 20, color: Colors.white,fontFamily: 'Raleway',fontWeight: FontWeight.bold)),
               const SizedBox(height: 20),
               Padding(

@@ -12,13 +12,17 @@ class ChooseLanguage extends StatefulWidget {
 
 class _ChooseLanguageState extends State<ChooseLanguage> {
   
-  bool value = false;
+ List<bool> value = [true,false];
   bool value1 = false;
   goToOnboardingScreens(){
     Navigator.of(context).push(MaterialPageRoute(builder: (_){
       return const OnBoardingScreens();
     }));
   }
+  List text = [
+    'English',
+    'Arabic'
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,49 +45,60 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                  const SizedBox(height:20),
               MyText(text: 'Choose Language', weight: FontWeight.bold,color: blackColor,size: 20,fontFamily: 'Raleway',),
                   const SizedBox(height:20),
-         
-              Padding(
-                padding: const EdgeInsets.only(top:20.0),
-                child: CheckboxListTile(
-                  visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-                  activeColor: bluishColor,
-                  value: value, onChanged: ((bool? valuee) {
-                  setState(() {
-                    value = valuee!;
-                  });
-                }),
-                checkboxShape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32)
-                ),
-                side: const BorderSide(width:1 ,color: blackColor,),
-                title: MyText(text:'English',color: greyColor,fontFamily: 'Raleway',),
-                ),
-              ),
-              const Divider(indent: 10,
-              endIndent: 0,
-              color: greyColor,
-              ),
-              CheckboxListTile(
+         Padding(
+           padding: const EdgeInsets.only(top:20.0),
+           child: Wrap(children: List.generate(2, (index){ return
+            Column(
+              children: [
+                CheckboxListTile(
+                        visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+                        activeColor: bluishColor,
+                        value: value[index], onChanged: ((bool? valuee) {
+                      
+                        setState(() {
+                          value[index] = valuee!;
+                    
+                        });
+                      }),
+                      checkboxShape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(32)
+                      ),
+                      side: const BorderSide(width:1 ,color: blackColor,),
+                      title: MyText(text:text[index],color: greyColor,fontFamily: 'Raleway',),
+                      ),
                   
-                  visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-                  activeColor: bluishColor,
-                  value: value1, onChanged: ((bool? value2) {
-                  setState(() {
-                    value1 = value2!;
-                  });
-                }),
-                side: const BorderSide(width: 1),
+                const Divider(indent: 10,
+                endIndent: 0,
+                color: greyColor,
+                ),
+              ],
+            );
+           }) 
+           ,),
+         ),
+              
+           
+              // CheckboxListTile(
+                  
+              //     visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+              //     activeColor: bluishColor,
+              //     value: value1, onChanged: ((bool? value2) {
+              //     setState(() {
+              //       value1 = value2!;
+              //     });
+              //   }),
+              //   side: const BorderSide(width: 1),
                 
-                checkboxShape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32)
-                ),
-                title: MyText(text:'Arabic',color: greyColor,fontFamily: 'Raleway',),
-                ),
+              //   checkboxShape: RoundedRectangleBorder(
+              //     borderRadius: BorderRadius.circular(32)
+              //   ),
+              //   title: MyText(text:'Arabic',color: greyColor,fontFamily: 'Raleway',),
+              //   ),
             
-              const Divider(indent: 10,
-              endIndent: 0,
-              color: greyColor,
-              ),
+              // const Divider(indent: 10,
+              // endIndent: 0,
+              // color: greyColor,
+              // ),
            const SizedBox(height:20),
           Padding(
             padding: const EdgeInsets.only(top:20.0,bottom: 20),

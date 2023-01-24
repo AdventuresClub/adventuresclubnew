@@ -1,4 +1,5 @@
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/forgot_pass/forgot_pass.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:adventuresclub/sign_up/Sign_up.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
@@ -117,6 +118,11 @@ class _SignInState extends State<SignIn> {
       return const SignUp();
     }));
   }
+   goToForgotPass(){
+    Navigator.of(context).push(MaterialPageRoute(builder: (_){
+      return const ForgotPass();
+    }));
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -158,14 +164,20 @@ class _SignInState extends State<SignIn> {
                     child: Button('Sign In', greenishColor, greenishColor ,whiteColor, 18, enterOTP, Icons.add, whiteColor, false, 1.3,'Raleway',FontWeight.w600,16),
                   ),
                    const SizedBox(height:20),
-                       Align(
-                                alignment: Alignment.center,
-                                child: MyText(text:'Forgot Username?',weight: FontWeight.w500,color: whiteColor,size: 14,)),
+                       GestureDetector(
+                        onTap: goToForgotPass,
+                         child: Align(
+                                  alignment: Alignment.center,
+                                  child: MyText(text:'Forgot Username?',weight: FontWeight.w500,color: whiteColor,size: 14,)),
+                       ),
                    
                    const SizedBox(height:20),
-                       Align(
-                                alignment: Alignment.center,
-                                child: MyText(text:'Forgot Password?',weight: FontWeight.w500,color: whiteColor,size: 14,)),
+                       GestureDetector(
+                        onTap: goToForgotPass,
+                         child: Align(
+                                  alignment: Alignment.center,
+                                  child: MyText(text:'Forgot Password?',weight: FontWeight.w500,color: whiteColor,size: 14,)),
+                       ),
                  
                         //  Align(
                         //   alignment: Alignment.bottomCenter,

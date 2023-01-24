@@ -47,6 +47,8 @@ class _VisitState extends State<Visit> {
     return const  AddLocation();
   }));
  }
+ 
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +58,7 @@ class _VisitState extends State<Visit> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SearchContainer('what are you looking for?',1.3,'images/maskGroup51.png',false,false,'oman',14),
+                const SearchContainer('what are you looking for?',1.3,8,'images/maskGroup51.png',false,false,'oman',14),
                 const SizedBox(width: 3,),
                 GestureDetector(
                   onTap: () {

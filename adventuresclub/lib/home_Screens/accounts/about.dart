@@ -1,9 +1,9 @@
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/widgets/buttons/button.dart';
+import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
 import 'package:adventuresclub/widgets/grid/provided_adventure_grid.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class About extends StatefulWidget {
   const About({super.key});
@@ -13,6 +13,7 @@ class About extends StatefulWidget {
 }
 
 class _AboutState extends State<About> {
+  abc(){}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +28,7 @@ class _AboutState extends State<About> {
               height: 20,
             ),
           ),
-          title: MyText(text: 'Alexander',color: bluishColor,),
+          title: MyText(text: 'Service Provider Profile',color: bluishColor,),
       
       ),
       body: SingleChildScrollView(
@@ -39,21 +40,34 @@ class _AboutState extends State<About> {
                      Container(
              padding: const EdgeInsets.only(bottom: 15),
                       child:Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const CircleAvatar(
-                            radius: 35,
-                            child: Image(image: ExactAssetImage('images/Ellipse.png'),fit: BoxFit.cover,),),
+                          Row(
+                            children: [
+                              const CircleAvatar(
+                                radius: 35,
+                                child: Image(image: ExactAssetImage('images/Ellipse.png'),fit: BoxFit.cover,),),
       const SizedBox(width: 15,),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                MyText(text: 'Alexander',weight: FontWeight.w500,color: blackColor,size: 18,),
+                           
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    MyText(text: 'Alexander',weight: FontWeight.w500,color: blackColor,size: 18,),
+                                    
+                                MyText(text: 'Travel Instructor',weight: FontWeight.w400,color: greyColor,size: 14,),
                                 
-                            MyText(text: 'Travel Instructor',weight: FontWeight.w400,color: greyColor,size: 18,),
-                            
-                            MyText(text: 'County, City',weight: FontWeight.w400,color: blackColor,size: 12,),
+                                MyText(text: 'County, City',weight: FontWeight.w400,color: blackColor,size: 12,),
+                                const SizedBox(height: 10,),
+                                Button('Chat', Colors.blue, Colors.blue, whiteColor, 14, abc, Icons.add, whiteColor, false,3.6, 'Roboto', FontWeight.w400, 21)
+                                  ],
+                                ),
                               ],
-                            ),
+                          ),
+                       const Align(
+                        
+                        alignment: Alignment.centerRight,
+                        child: Image(image: ExactAssetImage('images/forward.png')))
+                       
                         ],
                       )
                      ) ,

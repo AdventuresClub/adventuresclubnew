@@ -3,6 +3,7 @@ import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ChatList extends StatefulWidget {
   const ChatList({super.key});
@@ -40,6 +41,7 @@ class _ChatListState extends State<ChatList> {
   'Be available tomorrow in morning',
   'Be available tomorrow in morning',
   ];
+  void doNothing(BuildContext context) {}
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -50,7 +52,25 @@ class _ChatListState extends State<ChatList> {
         
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
-          return Column(
+          return Slidable(
+  key: const ValueKey(0),
+
+ 
+  endActionPane:  ActionPane(
+    motion: const ScrollMotion(),
+    children: [
+       SlidableAction(
+        onPressed: doNothing,
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.red,
+        icon: Icons.delete,
+        label: '',
+      ),
+     
+    ],
+  ),
+
+  child: Column(
             children: [
               GestureDetector(
         //  onTap: goToAdCategory,
@@ -77,7 +97,7 @@ class _ChatListState extends State<ChatList> {
               Divider(thickness: 2,
               indent: 22,)
             ],
-          );
+          ));
         });
   }
 }

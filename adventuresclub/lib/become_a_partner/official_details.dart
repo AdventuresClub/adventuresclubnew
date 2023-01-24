@@ -13,6 +13,7 @@ class OfficialDetail extends StatefulWidget {
 class _OfficialDetailState extends State<OfficialDetail> {
     TextEditingController controller = TextEditingController();
 bool value = false;
+bool value1 = false;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -35,6 +36,7 @@ bool value = false;
                  onChanged: (bool? value1){
 setState(() {
   value = value1!;
+  value1 = false;
 });
                 }),
                 MyText(text: 'I’m not licensed yet, will sooner get license',color: blackTypeColor,align: TextAlign.center,),
@@ -43,12 +45,13 @@ setState(() {
             ),
               Row(
               children: [
-                Checkbox(value: value,
+                Checkbox(value: value1,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
                 
-                 onChanged: (bool? value1){
+                 onChanged: (bool? value2){
 setState(() {
-  value = value1!;
+  value1 = value2!;
+  value = false;
 });
                 }),
                 MyText(text: 'Yes! I am lincensed',color: blackTypeColor,align: TextAlign.center,),

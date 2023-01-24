@@ -1,4 +1,6 @@
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/home_Screens/accounts/my_adventures.dart';
+import 'package:adventuresclub/home_Screens/visit/review_ad.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,11 @@ class VisitDetails extends StatefulWidget {
 
 class _VisitDetailsState extends State<VisitDetails> {
   abc(){}
+   goToReAd(){
+  Navigator.of(context).push(MaterialPageRoute(builder: (_){
+    return const  ReviewAd();
+  }));
+ }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +56,7 @@ class _VisitDetailsState extends State<VisitDetails> {
                       children: [
                        MyText(text: 'Kings country imperial',weight: FontWeight.bold,color: blackTypeColor,),
                                 const SizedBox(height:10),
-                       Button('Share your Review', transparentColor, bluishColor, bluishColor, 12, abc, Icons.add, whiteColor, false, 2.5, 'Roboto', FontWeight.w400,19)      
+                       Button('Share your Review', transparentColor, bluishColor, bluishColor, 12, goToReAd, Icons.add, whiteColor, false, 2.5, 'Roboto', FontWeight.w400,19)      
                     ],),
       
                   MyText(text: 'Omani Food : 1.5 mi',color: greyColor,),

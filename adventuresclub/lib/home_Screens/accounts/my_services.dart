@@ -47,7 +47,7 @@ class _MyServicesState extends State<MyServices> {
               child:
             const Padding(
               padding: EdgeInsets.only(bottom:20.0),
-              child: SearchContainer('Search Adventures',1.1, 'images/path.png', true,false,'oman',14),
+              child: SearchContainer('Search Adventures',1.1, 8,'images/path.png', true,false,'oman',14),
             ),
             ),
           ),

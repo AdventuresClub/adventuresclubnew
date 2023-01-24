@@ -1,8 +1,7 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class NotificationsList extends StatefulWidget {
   const NotificationsList({super.key});
@@ -40,6 +39,7 @@ class _NotificationsListState extends State<NotificationsList> {
   'May 25, 2019 at 12:02 am',
   'May 25, 2019 at 12:02 am',
   ];
+  void doNothing(BuildContext context) {}
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -50,7 +50,25 @@ class _NotificationsListState extends State<NotificationsList> {
         
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
-          return Column(
+          return Slidable(
+  key: const ValueKey(0),
+
+ 
+  endActionPane:  ActionPane(
+    motion: const ScrollMotion(),
+    children: [
+       SlidableAction(
+        onPressed: doNothing,
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.red,
+        icon: Icons.delete,
+        label: '',
+      ),
+     
+    ],
+  ),
+
+  child: Column(
             children: [
               GestureDetector(
         //  onTap: goToAdCategory,
@@ -78,7 +96,7 @@ class _NotificationsListState extends State<NotificationsList> {
               color: greyColor.withOpacity(0.2),
               )
             ],
-          );
+          ));
         });
   }
 }

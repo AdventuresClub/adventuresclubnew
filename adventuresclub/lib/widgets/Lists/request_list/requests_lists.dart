@@ -86,7 +86,7 @@ class _RequestsListState extends State<RequestsList> {
                 ],
                ),
 
-               const Divider(),
+               const Divider(thickness: 1,color: greyColor,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,

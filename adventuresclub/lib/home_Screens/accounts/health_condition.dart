@@ -165,90 +165,63 @@ class _HealthConditionState extends State<HealthCondition> {
                                     color: whiteColor,
                                     child: Row(
                                       children: [
-                                        Expanded(
-                                          flex: 3,
-                                          child: CupertinoPicker(
-                                            itemExtent: 82.0,
-                                            diameterRatio: 22,
-                                            backgroundColor: whiteColor,
-                                            onSelectedItemChanged: (int index) {
-                                              print(index + 1);
-                                              setState(() {
-                                                ft = (index + 1);
-                                                heightController.text =
-                                                    "$ft' $inches\"";
-                                              });
-                                            },
-                                            selectionOverlay: const CupertinoPickerDefaultSelectionOverlay(
-                                              background: transparentColor,
+                                        Stack(
+                                          children: [
+                                            SizedBox(
+                                                  width: MediaQuery.of(context).size.width/1.3,
+                                              child: CupertinoPicker(
+                                                itemExtent: 82.0,
+                                                diameterRatio: 22,
+                                                backgroundColor: whiteColor,
+                                                onSelectedItemChanged: (int index) {
+                                                  print(index + 1);
+                                                  setState(() {
+                                                    ft = (index + 1);
+                                                    heightController.text =
+                                                        "$ft' $inches\"";
+                                                  });
+                                                },
+                                                selectionOverlay: const CupertinoPickerDefaultSelectionOverlay(
+                                                  background: transparentColor,
+                                                ),
+                                                children: showWidget== true ? 
+                                                List.generate(3, (index) {
+                                                  return  Center(
+                                                          child: MyText(text:pickWeight[index],size:14,color:blackTypeColor4),
+                                                          
+                                                       
+                                                  );
+                                                }):  List.generate(pickHeight.length, (index) {
+                                                  return Center(
+                                                          child: MyText(text:pickHeight[index],size:14,color:blackTypeColor4),
+                                                          
+                                                       
+                                                  );
+                                                })
+                                              ),
                                             ),
-                                            children: showWidget== true ? 
-                                            List.generate(3, (index) {
-                                              return Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: [
-                                                  Container(
-                                                    padding: const EdgeInsets.symmetric(vertical: 16),
-                                                    decoration: BoxDecoration(
-                                                      border: Border(top:BorderSide(color:  
-                                                      index == 0  ?
-                                                      blackColor.withOpacity(0.7) : 
-                                                      index == 1 ?
-                                                       blackColor.withOpacity(0.7):
-                                                       index == 2 ?
-                                                         blackColor.withOpacity(0.7):
-                                                     transparentColor
-                                                       ,width: 1.5),
-                                                    bottom:BorderSide(color: index == 0  ?
-                                                        blackColor.withOpacity(0.7) : 
-                                                      index == 1 ?
-                                                       blackColor.withOpacity(0.7):
-                                                       index == 2 ?
-                                                         blackColor.withOpacity(0.7):
-                                                     
-                                                      transparentColor,width: 1.5))
-                                                    ),
-                                                    child: Center(
-                                                      child: MyText(text:pickWeight[index],size:14,color:blackTypeColor4),
+                                            Positioned(
+                                            top:70,
+                                          
+                                            child: Container(
+                                              height: 60,
+                                              width: MediaQuery.of(context).size.width/1.2,
+                                                      padding: const EdgeInsets.symmetric(vertical: 16),
+                                                      decoration: BoxDecoration(
+                                                        border: Border(top:BorderSide(color:  
+                                                       
+                                                        blackColor.withOpacity(0.7)
+                                                         ,width: 1.5),
+                                                      bottom:BorderSide(color: 
+                                                          blackColor.withOpacity(0.7)  
+                                                       
+                                                       
+                                                        ,width: 1.5))
+                                                      ),
                                                       
-                                                    ),
-                                                  ),
-                                                ],
-                                              );
-                                            }):  List.generate(pickHeight.length, (index) {
-                                              return Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: [
-                                                  Container(
-                                                    padding: const EdgeInsets.symmetric(vertical: 16),
-                                                    decoration: BoxDecoration(
-                                                      border: Border(top:BorderSide(color:  
-                                                      index == 0  ?
-                                                      blackColor.withOpacity(0.7) : 
-                                                      index == 1 ?
-                                                       blackColor.withOpacity(0.7):
-                                                       index == 2 ?
-                                                         blackColor.withOpacity(0.7):
-                                                     transparentColor
-                                                       ,width: 1.5),
-                                                    bottom:BorderSide(color: index == 0  ?
-                                                        blackColor.withOpacity(0.7) : 
-                                                      index == 1 ?
-                                                       blackColor.withOpacity(0.7):
-                                                       index == 2 ?
-                                                         blackColor.withOpacity(0.7):
-                                                     
-                                                      transparentColor,width: 1.5))
-                                                    ),
-                                                    child: Center(
-                                                      child: MyText(text:pickHeight[index],size:14,color:blackTypeColor4),
-                                                      
-                                                    ),
-                                                  ),
-                                                ],
-                                              );
-                                            })
-                                          ),
+                                                      ),
+                                          )
+                                          ],
                                         ),
                                        
                                       ],

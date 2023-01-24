@@ -26,6 +26,7 @@ class _ClientRequestListState extends State<ClientRequestList> {
     'Registrations:',
     'Unit Cost:',
     'Total Cost:',
+    'Payable cost variance:',
     'Payment Channel:',
     'Health Con.:',
     'Height & Weight:',
@@ -39,6 +40,7 @@ class _ClientRequestListState extends State<ClientRequestList> {
     '30 Sep, 2020',
     '2 Adults, 3 Youngsters',
     '\$ 400.50',
+    'CMR 40.00',
     '\$ 1500.50',
     'Wire Transfer',
     'Back bone issue.',
@@ -108,11 +110,11 @@ class _ClientRequestListState extends State<ClientRequestList> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SquareButton('Book Again', bluishColor, whiteColor, 4, 20, 11, abc),
+                     SquareButton('Book Again', bluishColor, whiteColor, 3.7,21, 12, abc),
                   
-                  SquareButton('Rate Now', Colors.amber, whiteColor, 4, 20, 11, goToMyAd),
+                  SquareButton('Rate Now', yellowcolor, whiteColor, 3.7,21, 12, goToMyAd),
                   
-                  SquareButton('Chat Provider', blueColor, whiteColor, 4, 20, 11, abc),
+                  SquareButton('Chat Provider', blueColor1, whiteColor, 3.7, 21, 12, abc),
                 ],
               ),
             ],),
