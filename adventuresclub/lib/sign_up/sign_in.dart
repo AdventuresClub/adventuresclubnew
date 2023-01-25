@@ -151,7 +151,7 @@ class _SignInState extends State<SignIn> {
                    Image.asset('images/whitelogo.png',height: 120,width: 320,),
                     
                          const SizedBox(height:20),
-                  TextFields('Email or Username', emailController,17,whiteColor
+                  TextFields('Email or Username', emailController,17,whiteColor,true
                   
                   ),
                           const  SizedBox(height:20),
@@ -161,7 +161,7 @@ class _SignInState extends State<SignIn> {
                       
                   Padding(
                     padding: const EdgeInsets.only(top:20.0),
-                    child: Button('Sign In', greenishColor, greenishColor ,whiteColor, 18, enterOTP, Icons.add, whiteColor, false, 1.3,'Raleway',FontWeight.w600,16),
+                    child: Button('Sign In', greenishColor, greenishColor ,whiteColor, 18, goToNavigation, Icons.add, whiteColor, false, 1.3,'Raleway',FontWeight.w600,16),
                   ),
                    const SizedBox(height:20),
                        GestureDetector(

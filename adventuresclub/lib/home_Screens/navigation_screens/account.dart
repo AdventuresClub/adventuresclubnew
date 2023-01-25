@@ -148,7 +148,18 @@ class _AccountState extends State<Account> {
                           }));
                           }
                         },
-                        child: Image(image: ExactAssetImage(images[i]),height: 40,width: 40,)),
+                        child: Stack(
+                  clipBehavior: Clip.none,
+                  children:[ Image(image: ExactAssetImage(images[i]),height: 30,width: 30,),
+                  images[i] == 'images/points.png' ?
+                  Positioned(
+                    bottom:-5,
+                    right: -12,
+                    child: CircleAvatar(
+                      radius: 8,
+                      backgroundColor: redColor,child:MyText(text: '12',color: whiteColor,size: 6,)))
+                      : SizedBox()
+            ]), ),
                        MyText(text: text[i],color: bluishColor,)
                       ],)
                     ],),
@@ -220,7 +231,18 @@ class _AccountState extends State<Account> {
                 }));
                }
               }),
-              leading: Image(image: ExactAssetImage(tile1[index]),height: tile1Text[index] == 'My Points' ? 35 : 25  ,width: 35,color: greyColor,),
+              leading: Stack(
+                  clipBehavior: Clip.none,
+                  children:[  Image(image: ExactAssetImage(tile1[index]),height: tile1Text[index] == 'My Points' ? 35 : 25  ,width: 35,color: greyColor,),  
+                  tile1Text[index] == 'Notification' ?
+                  Positioned(
+                    top:-5,
+                    right: -1,
+                    child: CircleAvatar(
+                      radius: 8,
+                      backgroundColor: redColor,child:MyText(text: '12',color: whiteColor,size: 6,)))
+                      : SizedBox()
+            ]),
               title:MyText(text: tile1Text[index],color: greyColor,size: 14,weight: FontWeight.w500,),
               trailing: tile1Text[index] == 'Settings' ? SizedBox(
                 width: 90,

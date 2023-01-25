@@ -33,9 +33,9 @@ bool value1 = false;
                 Checkbox(value: value,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
                 
-                 onChanged: (bool? value1){
+                 onChanged: (bool? valuee1){
 setState(() {
-  value = value1!;
+  value = valuee1!;
   value1 = false;
 });
                 }),
@@ -58,7 +58,10 @@ setState(() {
              
               ],
             ),
-                   const SizedBox(height:20),
+            if (value1 == true)
+                   Column(
+                     children: [
+                       const SizedBox(height:20),
         TFWithSize('Enter CR name', controller, 12, lightGreyColor, 1),
             const SizedBox(height:20),
         TFWithSize('Enter CR number', controller, 12, lightGreyColor, 1),
@@ -80,7 +83,9 @@ setState(() {
             const SizedBox(height: 10,),
             MyText(text: 'Attach CR copy',color: blackTypeColor1,align: TextAlign.center,),
           ]),),
-        )
+        ),
+                     ],
+                   )
       ]
     );
   }

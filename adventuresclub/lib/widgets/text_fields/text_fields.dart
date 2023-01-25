@@ -7,13 +7,15 @@ class TextFields extends StatefulWidget {
   final bool? edit;
   final TextInputType? show;
   final double verticalPadding;
-
+  final bool trim;
+  // ignore: prefer_typing_uninitialized_variables
   final fillColor;
   const TextFields(
     this.hintText,
     this.controller,
     this.verticalPadding,
-    this.fillColor, {
+    this.fillColor,
+    this.trim, {
     Key? key,
     this.edit = true,
     this.show = TextInputType.text,
@@ -33,7 +35,20 @@ class _TextFieldsState extends State<TextFields> {
         keyboardType: widget.show,
         controller: widget.controller,
        style: const TextStyle(decoration:TextDecoration.none,),
+            onChanged: (val) {
+              if(widget.trim == true){
+            final trimVal = val.trim();
+            if (val != trimVal) {
+              setState(() {
+                widget.controller!.text = trimVal;
+                widget.controller!.selection = TextSelection.fromPosition(TextPosition(offset: trimVal.length));
+              });
+            }
+          }
+          },
+          
         decoration: InputDecoration(
+          
             contentPadding: EdgeInsets.symmetric(
                 vertical: widget.verticalPadding, horizontal: 15),
             hintText: widget.hintText,

@@ -41,13 +41,13 @@ class _CustomerProfileState extends State<CustomerProfile> {
               ),
                   const SizedBox(height:20),
          
-              TextFields('Old Password', controller,15,whiteColor
+              TextFields('Old Password', controller,15,whiteColor,true
         
         ),
-         TextFields('New Password', controller,15,whiteColor
+         TextFields('New Password', controller,15,whiteColor,true
         
         ),
-         TextFields('Confirm New Password', controller,15,whiteColor
+         TextFields('Confirm New Password', controller,15,whiteColor,true
         
         ),
             

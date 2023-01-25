@@ -1,6 +1,7 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/payment_methods/one_pay_method.dart';
-import 'package:adventuresclub/home_Screens/payment_methods/payment_methods.dart';
 import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
@@ -18,20 +19,18 @@ class PackageList extends StatefulWidget {
 
 class _PackageListState extends State<PackageList> {
   List text = [
-  'Lorem ipsum dummy ds',
+  'This is first includes',
   
-  'Lorem ipsum dummy ds',
-  
-  'Lorem ipsum dummy ds',
-  
-  'Lorem ipsum dummy ds',
-  
-  'Lorem ipsum dummy ds',
+  'This is first excludes',
 ];
 abc(){}
 
 List images= ['images/greenrectangle.png',
 'images/orangerectangle.png',
+
+];
+List iconImages= ['images/ic_green_check.png',
+'images/ic_red_cross.png',
 
 ];
 List<String> costText = ['\$100.00',
@@ -88,7 +87,7 @@ goTo(){
             child: Column(children: [
             Wrap(
               direction: Axis.vertical,
-              children: List.generate(5, (index) {
+              children: List.generate(2, (index) {
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -96,9 +95,7 @@ goTo(){
                    CircleAvatar(
                     radius: 8,
                     backgroundColor: whiteColor,
-                    child: text[index] != 3 ? const Image(image: ExactAssetImage('images/ic_green_check.png')):
-                    const Image(image: ExactAssetImage('images/ic_red_cross.png'))
-                  ),
+                    child:  Image(image: ExactAssetImage(iconImages[index]))),
                   const SizedBox(width: 10,),
                   MyText(text: text[index],size: 12,height: 2.2,),
                 ],

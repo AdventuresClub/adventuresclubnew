@@ -39,13 +39,13 @@ class _ProfileState extends State<Profile> {
               ),
                   const SizedBox(height:20),
          
-              TextFields('Old Password', controller,15,whiteColor
+              TextFields('Old Password', controller,15,whiteColor,true
         
         ),
-         TextFields('New Password', controller,15,whiteColor
+         TextFields('New Password', controller,15,whiteColor,true
         
         ),
-         TextFields('Confirm New Password', controller,15,whiteColor
+         TextFields('Confirm New Password', controller,15,whiteColor,true
         
         ),
             
@@ -113,16 +113,16 @@ class _ProfileState extends State<Profile> {
                   padding: const EdgeInsets.symmetric(horizontal:8.0,vertical: 15),
                   child: Column(
                     children: [
-                      TextFields('Kenneth Gutierrez', controller,15,greyProfileColor,
+                      TextFields('Kenneth Gutierrez', controller,15,greyProfileColor,true
           
           ),
            Divider(indent: 4,endIndent: 4,color: greyColor.withOpacity(0.5),),
-           TextFields('+44-3658789456', controller,15,greyProfileColor,
+           TextFields('+44-3658789456', controller,15,greyProfileColor,true
           
           ),
           
            Divider(indent: 4,endIndent: 4,color: greyColor.withOpacity(0.5),),
-           TextFields('demo@xyz.com', controller,15,greyProfileColor,
+           TextFields('demo@xyz.com', controller,15,greyProfileColor,true
           
           ),
           

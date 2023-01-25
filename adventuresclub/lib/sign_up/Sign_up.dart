@@ -10,6 +10,7 @@ import 'package:adventuresclub/widgets/text_fields/text_fields.dart';
 import 'package:adventuresclub/widgets/text_fields/tf_with_suffix_icon.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:country_picker/country_picker.dart';
+import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -53,12 +54,12 @@ String country = '';
   bool valuea = false;
   bool termsValue = false;
   var formattedDate;
-  
+  final countryPicker = const FlCountryCodePicker();
   TextEditingController heightController = TextEditingController();
   int ft = 0;
   int inches = 0;
   String cm = '';
-
+String getCode = '';
    DateTime? pickedDate;
   @override
   void initState() {
@@ -239,11 +240,11 @@ String country = '';
                 width: 320,
               ),
               const SizedBox(height: 20),
-              TextFields('Username', userNameController, 17, whiteColor),
+              TextFields('Username', userNameController, 17, whiteColor,true),
               const SizedBox(height: 20),
 
               TextFields(
-                  'Enter Email Password', emailController, 17, whiteColor),
+                  'Enter Email Password', emailController, 17, whiteColor,true),
                   const SizedBox(height: 20),
               TFWithSiffixIcon(
                   'Password', Icons.visibility_off, weight2Controller, true),
@@ -452,43 +453,65 @@ String country = '';
           ),
           child:   Row(
                   children: [
-                    CountryCodePicker(
-                          showFlagMain: false,
-                          showFlagDialog: true,
-                          hideSearch: false,
-                          padding: EdgeInsets.zero,
-                          dialogSize:  Size(
-                            MediaQuery.of(context).size.width/1.2,MediaQuery.of(context).size.height/1.1
-                          ),
-                          barrierColor: blackColor.withOpacity(0.1),
-                          onChanged: (cc) {
-                            setState(() {
-                              countryCode = cc.dialCode!;
-                            });
-                          },
-                          showFlag: false,
-                          searchStyle: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: greyColor,
-                          ),
-                          textStyle: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: greyColor,
-                          ),
-                          // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
-                          initialSelection: 'US',
-                          // ignore: prefer_const_literals_to_create_immutables
-                          favorite: ['+1', 'US'],
-                          // optional. Shows only country name and flag
-                          showCountryOnly: false,
-                          // optional. Shows only country name and flag when popup is closed.
-                          showOnlyCountryWhenClosed: false,
-                          // optional. aligns the flag and the Text left
-                          alignLeft: false,
+                    GestureDetector(
+    onTap: () async {
+        final code = await countryPicker.showPicker(context: context);
+        if (code != null) {
+          
+          setState(() {
+            getCode == code.toString();
+          },);
+           print(code);
+        }
+    },
+    child: Container(
+      padding: const EdgeInsets.symmetric(
+          horizontal: 8.0, vertical: 4.0),
+      margin: const EdgeInsets.symmetric(horizontal: 12.0),
+      decoration: const BoxDecoration(
+          color:whiteColor,
+          borderRadius: BorderRadius.all(Radius.circular(5.0))),
+      child: Text('+1'   ,
+          style: const TextStyle(color: Colors.black)),
+    ),
+  ),
+                    // CountryCodePicker(
+                    //       showFlagMain: false,
+                    //       showFlagDialog: true,
+                    //       hideSearch: false,
+                    //       padding: EdgeInsets.zero,
+                    //       dialogSize:  Size(
+                    //         MediaQuery.of(context).size.width/1.2,MediaQuery.of(context).size.height/1.1
+                    //       ),
+                    //       barrierColor: blackColor.withOpacity(0.1),
+                    //       onChanged: (cc) {
+                    //         setState(() {
+                    //           countryCode = cc.dialCode!;
+                    //         });
+                    //       },
+                    //       showFlag: false,
+                    //       searchStyle: const TextStyle(
+                    //         fontSize: 14,
+                    //         fontWeight: FontWeight.w500,
+                    //         color: greyColor,
+                    //       ),
+                    //       textStyle: const TextStyle(
+                    //         fontSize: 14,
+                    //         fontWeight: FontWeight.w500,
+                    //         color: greyColor,
+                    //       ),
+                    //       // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
+                    //       initialSelection: 'US',
+                    //       // ignore: prefer_const_literals_to_create_immutables
+                    //       favorite: ['+1', 'US'],
+                    //       // optional. Shows only country name and flag
+                    //       showCountryOnly: false,
+                    //       // optional. Shows only country name and flag when popup is closed.
+                    //       showOnlyCountryWhenClosed: false,
+                    //       // optional. aligns the flag and the Text left
+                    //       alignLeft: false,
                         
-                        ),
+                    //     ),
                  
                 Container(color: blackColor.withOpacity(0.6),
                 height: 37,

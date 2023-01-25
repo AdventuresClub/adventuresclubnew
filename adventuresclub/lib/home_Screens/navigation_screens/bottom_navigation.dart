@@ -4,6 +4,7 @@ import 'package:adventuresclub/home_Screens/navigation_screens/home.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/visit.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/planned.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/requests.dart';
+import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({Key? key}) : super(key: key);
@@ -65,11 +66,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 
               ),
               BottomNavigationBarItem(
-                icon: Image.asset(
-                  'images/calender.png',
-                 height: 25,
-                  width: 25,
-                ),
+                icon:  Image.asset(
+                    'images/calender.png',
+                   height: 25,
+                    width: 25,
+                  ),
+                 
+            
                   label: 'Planned',
                 //  ),
                 activeIcon: Image.asset(
@@ -81,22 +84,38 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 
               ),
                BottomNavigationBarItem(
-                icon: Image.asset(
+                icon:  Stack(
+                  clipBehavior: Clip.none,
+                  children:[ Image.asset(
                   'images/compass.png',
                 height: 25,
                   width: 25,
                 ),
-               
+                 Positioned(
+                    top:-5,
+                    right: -12,
+                    child: CircleAvatar(
+                      radius: 8,
+                      backgroundColor: redColor,child:MyText(text: '24',color: whiteColor,size: 6,)))
+            ]),
 
                   label: 'Requests',
                 //  ),
-                activeIcon: Image.asset(
+                activeIcon: Stack(
+                    clipBehavior: Clip.none,
+                  children:[ Image.asset(
                   'images/compass.png',
                  height: 25,
                   width: 25,
                   color: greenishColor,
                 ),
-                
+                Positioned(
+                    top:-5,
+                    right: -12,
+                    child: CircleAvatar(
+                      radius: 10,
+                      backgroundColor: redColor,child:MyText(text: '24',color: whiteColor,size: 8,)))
+            ]), 
               ),
                BottomNavigationBarItem(
                 icon: Image.asset(
@@ -115,20 +134,37 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 
               ),
                BottomNavigationBarItem(
-                icon: Image.asset(
+                icon:  Stack(
+                  clipBehavior: Clip.none,
+                  children:[ Image.asset(
                   'images/account.png',
                  height: 25,
                   width: 25,
                 ),
+                 Positioned(
+                    top:-5,
+                    right: -12,
+                    child: CircleAvatar(
+                      radius: 8,
+                      backgroundColor: redColor,child:MyText(text: '12',color: whiteColor,size: 6,)))
+            ]), 
                   label: 'Account',
                 //  ),
-                activeIcon: Image.asset(
+                activeIcon:Stack(
+                  clipBehavior: Clip.none,
+                  children:[  Image.asset(
                   'images/account.png',
                   height: 25,
                   width: 25,
                   color: greenishColor,
                 ),
-                
+                Positioned(
+                    top:-5,
+                    right: -12,
+                    child: CircleAvatar(
+                      radius: 8,
+                      backgroundColor: redColor,child:MyText(text: '12',color: whiteColor,size: 6,)))
+            ]),  
               ),
             ],
             backgroundColor: whiteColor,

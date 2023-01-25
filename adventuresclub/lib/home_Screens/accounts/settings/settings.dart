@@ -64,7 +64,7 @@ TextEditingController heightController = TextEditingController();
                   value = value1!;
                 });
               },
-              title: MyText(text: 'App Notificaton',color: blackColor.withOpacity(0.7),weight: FontWeight.w500,),
+              title: MyText(text: 'App Notification',color: blackColor.withOpacity(0.7),weight: FontWeight.w500,size: 14,),
               ),
              pickCountry(context, 'Country Location'),
             const Divider(),
@@ -151,7 +151,7 @@ TextEditingController heightController = TextEditingController();
 ),
         tileColor: whiteColor,
         selectedTileColor: whiteColor,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 15),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 10),
         title: MyText(text: countryName,color: blackColor.withOpacity(0.7),size: 14,weight: FontWeight.w500,),
          trailing:SizedBox(
           width: 92,
@@ -266,7 +266,7 @@ TextEditingController heightController = TextEditingController();
     
         tileColor: greyProfileColor,
         selectedTileColor: greyProfileColor,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 15),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 10),
              leading: MyText(text: 'Change Language',color: blackColor.withOpacity(0.7),weight: FontWeight.w500,size: 14,),
                  
         trailing:SizedBox(
