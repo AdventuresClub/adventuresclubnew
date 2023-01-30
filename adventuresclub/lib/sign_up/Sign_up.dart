@@ -63,6 +63,9 @@ class _SignUpState extends State<SignUp> {
   String contactCountry = "";
   dynamic ccCode;
   int countryId = 0;
+  var getWeight= '10KG (22 Pounds)';
+  var getheight =  '50CM (19.7Inch)';
+  var getGender = 'Male';
   List<GetCountry> countriesList1 = [];
 
   @override
@@ -890,6 +893,8 @@ class _SignUpState extends State<SignUp> {
                                         backgroundColor: whiteColor,
                                         onSelectedItemChanged: (int index) {
                                           print(index + 1);
+                                            getGender = genderText[index];
+                                           getGender == null ? cont = false : cont = true;
                                           setState(() {
                                             ft = (index + 1);
                                             heightController.text =
@@ -962,7 +967,7 @@ class _SignUpState extends State<SignUp> {
           selectedTileColor: whiteColor,
           contentPadding: const EdgeInsets.symmetric(horizontal: 15),
           title: MyText(
-            text: genderName,
+            text: getGender.toString(),
             color: blackColor.withOpacity(0.6),
             size: 14,
             weight: FontWeight.w500,
@@ -1023,6 +1028,8 @@ class _SignUpState extends State<SignUp> {
                                       onSelectedItemChanged: (int index) {
                                         print(index + 1);
                                         setState(() {
+                                                             getWeight = pickWeight[index];
+                        getWeight== null ? cont = false : cont = true;
                                           ft = (index + 1);
                                           heightController.text =
                                               "$ft' $inches\"";
@@ -1092,7 +1099,7 @@ class _SignUpState extends State<SignUp> {
           selectedTileColor: whiteColor,
           contentPadding: const EdgeInsets.symmetric(horizontal: 15),
           title: MyText(
-            text: genderName,
+            text: getWeight.toString(),
             color: blackColor.withOpacity(0.6),
             size: 14,
             weight: FontWeight.w500,
@@ -1153,6 +1160,8 @@ class _SignUpState extends State<SignUp> {
                                         backgroundColor: whiteColor,
                                         onSelectedItemChanged: (int index) {
                                           print(index + 1);
+                                                             getheight = pickHeight[index];
+                        getheight== null ? cont = false : cont = true;
                                           setState(() {
                                             ft = (index + 1);
                                             heightController.text =
@@ -1225,7 +1234,7 @@ class _SignUpState extends State<SignUp> {
           selectedTileColor: whiteColor,
           contentPadding: const EdgeInsets.symmetric(horizontal: 15),
           title: MyText(
-            text: genderName,
+            text: getheight.toString(),
             color: blackColor.withOpacity(0.6),
             size: 14,
             weight: FontWeight.w500,
