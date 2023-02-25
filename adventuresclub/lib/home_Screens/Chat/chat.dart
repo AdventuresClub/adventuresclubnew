@@ -14,14 +14,16 @@ class _ChatState extends State<Chat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: greyProfileColor,
-       appBar:AppBar(
-        backgroundColor: whiteColor,
-        iconTheme: const IconThemeData(color: blackColor),
-        title: MyText(text: 'Chat',color: blackColor,),
-        centerTitle: true,
-      ),
-      body:const ChatList()
-    );
+        backgroundColor: greyProfileColor,
+        appBar: AppBar(
+          backgroundColor: whiteColor,
+          iconTheme: const IconThemeData(color: blackColor),
+          title: MyText(
+            text: 'Chat',
+            color: blackColor,
+          ),
+          centerTitle: true,
+        ),
+        body: const ChatList());
   }
 }

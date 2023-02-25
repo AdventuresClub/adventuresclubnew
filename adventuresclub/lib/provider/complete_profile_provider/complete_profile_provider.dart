@@ -1,12 +1,12 @@
 import 'dart:developer';
 
-
 import 'package:adventuresclub/complete_profile/description.dart';
 import 'package:adventuresclub/complete_profile/cost.dart';
 import 'package:adventuresclub/complete_profile/banner_page.dart';
 import 'package:adventuresclub/complete_profile/program.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:flutter/material.dart';
+
 class CompleteProfileProvider with ChangeNotifier {
   CompleteProfileProvider({Key? key});
   int currentIndex = 0;
@@ -17,29 +17,25 @@ class CompleteProfileProvider with ChangeNotifier {
   TextEditingController aboutController = TextEditingController();
   TextEditingController aboutMeController = TextEditingController();
   TextEditingController iLiveInController = TextEditingController();
- 
+
   String locationMessage = "Getting location ...";
   String userLocation = "";
   bool loading = false;
   double lat = 0;
   double lng = 0;
   DateTime? selectedDate;
- // var dateFormat = DateFormat.yMMMMd('en_US');
+  // var dateFormat = DateFormat.yMMMMd('en_US');
   List<String> mediaFiles = [];
   final List<Map<String, dynamic>> steps = [
     {
-    
       'heading': 'Just follow simple four steps to list up your adventure',
-      'child':const BannerPage()
+      'child': const BannerPage()
     },
-   
     {
-      
       'heading': 'Just follow simple four steps to list up your adventure',
       'child': const Description()
     },
-     {
-      
+    {
       'heading': 'Just follow simple four steps to list up your adventure',
       'child': const Program()
     },
@@ -61,7 +57,7 @@ class CompleteProfileProvider with ChangeNotifier {
     selectedGender = gender;
     notifyListeners();
   }
-    // void nextScreen(BuildContext context) {
+  // void nextScreen(BuildContext context) {
   //   if (currentIndex == 7) {
   //     Navigator.push(
   //       context,
@@ -83,22 +79,33 @@ class CompleteProfileProvider with ChangeNotifier {
   //   notifyListeners();
   // }
 
-void nextStep(BuildContext context) {
-   
-   if(currentStep == 0){
- 
-     currentStep++;
-   }else if (currentStep == 1) {
-      
-     currentStep++;
-   }else if (currentStep == 2) {
-     
-     currentStep++;
-   }else if (currentStep == 3) {
-     Navigator.of(context).push(MaterialPageRoute(builder: (_){return const BottomNavigation();}));
-    
-   }
-   else {
+  void nextStep(BuildContext context) {
+    if (currentStep == 0) {
+      currentStep++;
+    } else if (currentStep == 1) {
+      currentStep++;
+    } else if (currentStep == 2) {
+      currentStep++;
+    } else if (currentStep == 3) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+        return const BottomNavigation();
+      }));
+    } else {
+      currentStep--;
+    }
+    notifyListeners();
+  }
+
+  void back(BuildContext context) {
+    if (currentStep == 3) {
+      currentStep--;
+    } else if (currentStep == 2) {
+      currentStep--;
+    } else if (currentStep == 1) {
+      currentStep--;
+    } else if (currentStep == 0) {
+      Navigator.of(context).pop();
+    } else {
       currentStep--;
     }
     notifyListeners();

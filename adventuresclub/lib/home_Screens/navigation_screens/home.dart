@@ -24,10 +24,13 @@ class _HomeState extends State<Home> {
           children: [
             const StackHome(),
             const SizedBox(
-              height: 30,
+              height: 35,
             ),
             const SizedBox(
-              height: 110,
+              height: 10,
+            ),
+            const SizedBox(
+              height: 120,
               child: TopList(),
             ),
             Padding(
@@ -42,9 +45,10 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 233,
-              child: RecommendedActivity(),
+            Container(
+              alignment: Alignment.centerLeft,
+              height: 200,
+              child: const RecommendedActivity(),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),

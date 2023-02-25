@@ -13,12 +13,16 @@ class MyServices extends StatefulWidget {
 }
 
 class _MyServicesState extends State<MyServices> {
- 
- goTo(){
-  Navigator.of(context).push(MaterialPageRoute(builder: (_){
-    return const CompleteProfile();
-  }));
- }
+  void goTo() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return const CompleteProfile();
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,36 +31,45 @@ class _MyServicesState extends State<MyServices> {
         elevation: 1.5,
         centerTitle: true,
         leading: IconButton(
-            onPressed:  () => Navigator.pop(context),
-            icon: Image.asset(
-             'images/backArrow.png',
-              height: 20,
-            ),
+          onPressed: () => Navigator.pop(context),
+          icon: Image.asset(
+            'images/backArrow.png',
+            height: 20,
           ),
-          title: MyText(text: 'My Services',color: bluishColor,),
-      actions:  [GestureDetector(
-        onTap: goTo,
-        child: Image(image: ExactAssetImage('images/add-circle.png'),width: 25,height: 25,)),
-      SizedBox(width: 15,)
-      
-      ],
-      bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(58.0),
-            child: Theme(
-              data: Theme.of(context).copyWith(accentColor: Colors.white),
-              child:
-            const Padding(
-              padding: EdgeInsets.only(bottom:20.0),
-              child: SearchContainer('Search Adventures',1.1, 8,'images/path.png', true,false,'oman',14),
-            ),
+        ),
+        title: MyText(
+          text: 'My Services',
+          color: bluishColor,
+        ),
+        actions: [
+          GestureDetector(
+              onTap: goTo,
+              child: const Image(
+                image: ExactAssetImage('images/add-circle.png'),
+                width: 25,
+                height: 25,
+              )),
+          const SizedBox(
+            width: 15,
+          )
+        ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(58.0),
+          child: Theme(
+            data: Theme.of(context).copyWith(accentColor: Colors.white),
+            child: const Padding(
+              padding: EdgeInsets.only(bottom: 20.0),
+              child: SearchContainer('Search Adventures', 1.1, 8,
+                  'images/path.png', true, false, 'oman', 14),
             ),
           ),
         ),
-      body:SingleChildScrollView(
-        child: Column(children: const [
-            MyServicesGrid()
-        ],),
-      )
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: const [MyServicesGrid()],
+        ),
+      ),
     );
   }
 }

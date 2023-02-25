@@ -15,7 +15,7 @@ const greyColorShade800 = Color(0xff303030);
 const greyColor = Color(0xFF707070);
 const greyShadeColor = Color(0xFF979797);
 
-const lightGreyColor = Color(0xFFEEEEEE); 
+const lightGreyColor = Color(0xFFEEEEEE);
 const blueColor = Color(0xFF7EC8E3);
 const greyBackgroundColor = Color(0xFF0F0F0F);
 
@@ -46,3 +46,7 @@ const bluishColor = Color(0xFF1C3947);
 
 const blueButtonColor = Color(0xFF1D7FFF);
 const blueTextColor = Color(0xFF4BAFAC);
+
+class Constants {
+  String userID = "";
+}

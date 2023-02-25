@@ -1,11 +1,10 @@
-
 import 'package:adventuresclub/constants.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class MyText extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
-  var text, color, weight, align, decoration, fontFamily,fontStyle;
+  var text, color, weight, align, decoration, fontFamily, fontStyle;
   double? size, height;
   double? paddingTop, paddingLeft, paddingRight, paddingBottom, letterSpacing;
 
@@ -52,9 +51,9 @@ class MyText extends StatelessWidget {
             color: color,
             fontWeight: weight,
             decoration: decoration,
-          
-           // fontFamily: fontFamily ?? GoogleFonts.poppins().fontFamily,
-           fontStyle: fontStyle,
+
+            // fontFamily: fontFamily ?? GoogleFonts.poppins().fontFamily,
+            fontStyle: fontStyle,
             height: height,
             letterSpacing: letterSpacing,
           ),

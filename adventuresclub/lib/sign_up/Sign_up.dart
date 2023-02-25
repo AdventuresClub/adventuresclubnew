@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, avoid_print, avoid_function_literals_in_foreach_calls
 
 import 'dart:convert';
-
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:adventuresclub/models/get_country.dart';
@@ -63,16 +62,21 @@ class _SignUpState extends State<SignUp> {
   String contactCountry = "";
   dynamic ccCode;
   int countryId = 0;
-  var getWeight= '10KG (22 Pounds)';
-  var getheight =  '50CM (19.7Inch)';
+  int currentLocationId = 0;
+  var getWeight = '10KG (22 Pounds)';
+  var getheight = '50CM (19.7Inch)';
   var getGender = 'Male';
+  String userID = "";
   List<GetCountry> countriesList1 = [];
+  Map mapCountry = {};
+  Map userRegistration = {};
+  List<String> healthC = [];
 
   @override
   void initState() {
     super.initState();
     formattedDate = 'DOB';
-    //getCountries();
+    getCountries();
   }
 
   List genderText = ['Male', 'Female', 'Other'];
@@ -106,6 +110,95 @@ class _SignUpState extends State<SignUp> {
         formattedDate = "${date.day}-${date.month}-${date.year}";
         currentDate = pickedDate!;
       });
+    }
+  }
+
+  void goToHome() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return const BottomNavigation();
+        },
+      ),
+    );
+  }
+
+  void goToSignIn() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return const SignIn();
+        },
+      ),
+    );
+  }
+
+  Future getCountries() async {
+    var response = await http.get(Uri.parse(
+        "https://adventuresclub.net/adventureClub/api/v1/get_countries"));
+    if (response.statusCode == 200) {
+      mapCountry = json.decode(response.body);
+      List<dynamic> result = mapCountry['data'];
+      result.forEach((element) {
+        GetCountry gc = GetCountry(
+          element['country'],
+          element['flag'],
+          element['code'],
+          element['id'],
+        );
+        countriesList1.add(gc);
+      });
+    }
+  }
+
+  void getOtp() async {
+    enterOTP();
+    try {
+      var response = await http.post(
+          Uri.parse("https://adventuresclub.net/adventureClub/api/v1/get_otp"),
+          body: {
+            'mobile_code': ccCode,
+            'mobile': numController.text,
+            'forgot_password': "0"
+          });
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      //print(decodedResponse['data']['user_id']);
+      //dynamic typedata = response.body!['data'];
+
+      setState(() {
+        // dynamic typedata = response.body['data'];
+        userID = decodedResponse['data']['user_id'];
+      });
+      print(response.statusCode);
+      print(response.body);
+      print(response.headers);
+      print(decodedResponse['data']['user_id']);
+      print(userID);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  void verifyOtp() async {
+    //otpController.clear();
+    Navigator.of(context).pop();
+    try {
+      var response = await http.post(
+          Uri.parse(
+              "https://adventuresclub.net/adventureClub/api/v1/verify_otp"),
+          body: {
+            'user_id': "27",
+            'otp': otpController.text,
+            'forgot_password': "0"
+          });
+      setState(() {
+        //userID = response.body.
+      });
+      print(response.statusCode);
+      print(response.body);
+      print(response.headers);
+    } catch (e) {
+      print(e.toString());
     }
   }
 
@@ -177,7 +270,7 @@ class _SignUpState extends State<SignUp> {
                           greyColorShade400,
                           whiteColor,
                           16,
-                          goToHome,
+                          verifyOtp, //goToHome,
                           Icons.add,
                           whiteColor,
                           false,
@@ -194,66 +287,82 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  void goToHome() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return const BottomNavigation();
-        },
-      ),
-    );
-  }
-
-  void goToSignIn() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return const SignIn();
-        },
-      ),
-    );
-  }
-
-  Map mapCountry = {};
-  Future getCountries() async {
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_countries"));
-    if (response.statusCode == 200) {
-      mapCountry = json.decode(response.body);
-      List<dynamic> result = mapCountry['data'];
-      result.forEach((element) {
-        GetCountry gc = GetCountry(
-          element['country'],
-          element['flag'],
-          element['code'],
-          element['id'],
-        );
-        countriesList1.add(gc);
-      });
+  // register phone numer
+  // user_id created
+  // otp verify
+  // registration process
+  void register() async {
+    try {
+      var response = await http.post(
+          Uri.parse("https://adventuresclub.net/adventureClub/api/v1/register"),
+          body: {
+            "name": userNameController.text,
+            "email": emailController
+                .text, //"hamza@gmail.com", //emailController.text,
+            "nationality": nationalityController.text,
+            "password":
+                passController.text, //"Upendra@321", //passController.text,
+            "now_in": currentLocation,
+            "mobile": numController.text, //"3344374923", //"3214181273",
+            // numController.text,
+            "health_conditions": healthC.toString(),
+            "height": heightController.text,
+            "weight": getWeight,
+            "mobile_code": ccCode,
+            "user_id": "27",
+            "dob": dobController.text, //"1993-10-30", //dobController.text,
+            "country_id": currentLocationId.toString(), //"2",
+            "device_id": "1",
+            "nationality_id": countryId.toString() //"5",
+          });
+      goToHome();
+      print(response.statusCode);
+      print(response.body);
+    } catch (e) {
+      print(e);
     }
+    //  if (response.statusCode == 200) {
+    // userRegistration = json.decode(response.body);
+    // List<dynamic> result = userRegistration['data'];
+    // result.forEach((element) {
+    //   userNameController.text = element['name'];
+    //   emailController.text = element['email'];
+    //   nationalityController.text = element['nationality'];
+    //   passController.text = element['password'];
+    //   currentLocation = element['now_in'];
+    //   numController.text = element['mobile'];
+    //   healthC = element['health_conditions'];
+    //   heightController.text = element['height'];
+    //   getWeight = element['weight'];
+    //   ccCode = element['mobile_code'];
+    // });
+    //getGender = result['']
+    // }
   }
 
-  void addCountry(String country, bool show) {
+  void addCountry(String country, bool show, int id) {
     Navigator.of(context).pop();
     if (show == true) {
       setState(() {
         selectedCountry = country;
-        //countryId = id;
+        countryId = id;
       });
     } else {
       setState(() {
         currentLocation = country;
-        //countryId = id;
+        currentLocationId = id;
       });
     }
   }
 
   void getC(String country, dynamic code) {
     Navigator.of(context).pop();
-    setState(() {
-      countryCode = country;
-      ccCode = code;
-    });
+    setState(
+      () {
+        countryCode = country;
+        ccCode = code;
+      },
+    );
   }
 
   abc() {}
@@ -275,13 +384,14 @@ class _SignUpState extends State<SignUp> {
               children: [
                 const SizedBox(height: 20),
                 Align(
-                    alignment: Alignment.centerLeft,
-                    child: MyText(
-                        text: ' Registration',
-                        weight: FontWeight.w600,
-                        color: whiteColor,
-                        size: 24,
-                        fontFamily: 'Raleway')),
+                  alignment: Alignment.centerLeft,
+                  child: MyText(
+                      text: ' Registration',
+                      weight: FontWeight.w600,
+                      color: whiteColor,
+                      size: 24,
+                      fontFamily: 'Raleway'),
+                ),
                 const SizedBox(height: 20),
                 Image.asset(
                   'images/whitelogo.png',
@@ -302,7 +412,7 @@ class _SignUpState extends State<SignUp> {
                     whiteColor, true),
                 const SizedBox(height: 20),
                 TFWithSiffixIcon(
-                    'Password', Icons.visibility_off, weight2Controller, true),
+                    'Password', Icons.visibility_off, passController, true),
                 const SizedBox(height: 20),
                 pickCountry(context, selectedCountry, true),
                 const SizedBox(height: 20),
@@ -323,17 +433,18 @@ class _SignUpState extends State<SignUp> {
                         borderRadius: BorderRadius.circular(10),
                         color: whiteColor),
                     child: ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 0, horizontal: 10),
-                        leading: Text(
-                          formattedDate.toString(),
-                          style: TextStyle(color: blackColor.withOpacity(0.6)),
-                        ),
-                        trailing: Icon(
-                          Icons.calendar_today,
-                          color: blackColor.withOpacity(0.6),
-                          size: 20,
-                        )),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 0, horizontal: 10),
+                      leading: Text(
+                        formattedDate.toString(),
+                        style: TextStyle(color: blackColor.withOpacity(0.6)),
+                      ),
+                      trailing: Icon(
+                        Icons.calendar_today,
+                        color: blackColor.withOpacity(0.6),
+                        size: 20,
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -439,13 +550,17 @@ class _SignUpState extends State<SignUp> {
                   ],
                 ),
                 const SizedBox(height: 20),
+                // MaterialButton(
+                //   onPressed: register,
+                //   child: Text("register"),
+                // ),
                 Button(
                     'Register',
                     greenishColor,
                     greenishColor,
                     whiteColor,
                     18,
-                    enterOTP,
+                    register,
                     Icons.add,
                     whiteColor,
                     false,
@@ -508,133 +623,135 @@ class _SignUpState extends State<SignUp> {
                   GestureDetector(
                     onTap: () async {
                       showModalBottomSheet(
-                          context: context,
-                          builder: (context) {
-                            return Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Column(
-                                children: [
-                                  Row(children: const [
-                                    Text(
-                                      "Select Your Country",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                          fontFamily: 'Raleway-Black'),
-                                    )
-                                  ]),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Container(
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      border: Border.all(
-                                        color: blackColor.withOpacity(0.5),
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 16.0),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            "'Country',",
-                                            style: TextStyle(
-                                              color:
-                                                  blackColor.withOpacity(0.6),
-                                            ),
-                                          ),
-                                          Text(
-                                            "'Code' ",
-                                            style: TextStyle(
-                                              color:
-                                                  blackColor.withOpacity(0.6),
-                                            ),
-                                          ),
-                                          Text(
-                                            " or ",
-                                            style: TextStyle(
-                                              color:
-                                                  blackColor.withOpacity(0.6),
-                                            ),
-                                          ),
-                                          Text(
-                                            " 'Dial Code'",
-                                            style: TextStyle(
-                                              color:
-                                                  blackColor.withOpacity(0.6),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 100,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.search,
-                                                color:
-                                                    blackColor.withOpacity(0.5),
-                                              )
-                                            ],
-                                          )
-                                        ],
-                                      ),
+                        context: context,
+                        builder: (context) {
+                          return Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Column(
+                              children: [
+                                Row(children: const [
+                                  Text(
+                                    "Select Your Country",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        fontFamily: 'Raleway-Black'),
+                                  )
+                                ]),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Container(
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
+                                      color: blackColor.withOpacity(0.5),
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Expanded(
-                                    child: ListView.builder(
-                                      itemCount: countriesList1.length,
-                                      itemBuilder: ((context, index) {
-                                        return ListTile(
-                                          // leading: Image.network(countriesList1[index].flag),
-                                          title: Text(
-                                            countriesList1[index].country,
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                color: blackColor,
-                                                fontFamily: 'Raleway'),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16.0),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          "'Country',",
+                                          style: TextStyle(
+                                            color: blackColor.withOpacity(0.6),
                                           ),
-                                          trailing: Text(
-                                            countriesList1[index].code,
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                color: blackColor,
-                                                fontFamily: 'Raleway'),
+                                        ),
+                                        Text(
+                                          "'Code' ",
+                                          style: TextStyle(
+                                            color: blackColor.withOpacity(0.6),
                                           ),
-                                          onTap: () {
-                                            getC(countriesList1[index].country,
-                                                countriesList1[index].code);
-                                            // addCountry(
-                                            //   countriesList1[index].country,
-                                            // );
-                                          },
-                                        );
-                                      }),
+                                        ),
+                                        Text(
+                                          " or ",
+                                          style: TextStyle(
+                                            color: blackColor.withOpacity(0.6),
+                                          ),
+                                        ),
+                                        Text(
+                                          " 'Dial Code'",
+                                          style: TextStyle(
+                                            color: blackColor.withOpacity(0.6),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 100,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Icons.search,
+                                              color:
+                                                  blackColor.withOpacity(0.5),
+                                            )
+                                          ],
+                                        )
+                                      ],
                                     ),
                                   ),
-                                ],
-                              ),
-                            );
-                          });
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Expanded(
+                                  child: ListView.builder(
+                                    itemCount: countriesList1.length,
+                                    itemBuilder: ((context, index) {
+                                      return ListTile(
+                                        // leading: Image.network(countriesList1[index].flag),
+                                        title: Text(
+                                          countriesList1[index].country,
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              color: blackColor,
+                                              fontFamily: 'Raleway'),
+                                        ),
+                                        trailing: Text(
+                                          countriesList1[index].code,
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              color: blackColor,
+                                              fontFamily: 'Raleway'),
+                                        ),
+                                        onTap: () {
+                                          getC(countriesList1[index].country,
+                                              countriesList1[index].code);
+                                          // addCountry(
+                                          //   countriesList1[index].country,
+                                          // );
+                                        },
+                                      );
+                                    }),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
                     },
                     child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 6.0, vertical: 4.0),
-                        margin: const EdgeInsets.symmetric(horizontal: 12.0),
-                        decoration: const BoxDecoration(
-                            color: whiteColor,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5.0))),
-                        child: ccCode != null
-                            ? Text(ccCode,
-                                style: TextStyle(color: Colors.black))
-                            : const Text("+1",
-                                style: TextStyle(color: Colors.black))),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 6.0, vertical: 4.0),
+                      margin: const EdgeInsets.symmetric(horizontal: 12.0),
+                      decoration: const BoxDecoration(
+                        color: whiteColor,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5.0),
+                        ),
+                      ),
+                      child: ccCode != null
+                          ? Text(ccCode,
+                              style: const TextStyle(color: Colors.black))
+                          : const Text(
+                              "+1",
+                              style: TextStyle(color: Colors.black),
+                            ),
+                    ),
                   ),
                   // CountryCodePicker(
                   //       showFlagMain: false,
@@ -729,11 +846,17 @@ class _SignUpState extends State<SignUp> {
             ),
           ),
         ),
-        trailing: MyText(
-          text: 'Send OTP',
-          weight: FontWeight.bold,
-          color: bluishColor,
-          size: 14,
+        trailing: GestureDetector(
+          onTap: getOtp,
+          child: SizedBox(
+            height: 40,
+            child: MyText(
+              text: 'Send OTP',
+              weight: FontWeight.bold,
+              color: bluishColor,
+              size: 14,
+            ),
+          ),
         ),
       ),
     );
@@ -758,6 +881,7 @@ class _SignUpState extends State<SignUp> {
                       addCountry(
                         countriesList1[index].country,
                         show,
+                        countriesList1[index].id,
                       );
                     },
                   );
@@ -893,8 +1017,10 @@ class _SignUpState extends State<SignUp> {
                                         backgroundColor: whiteColor,
                                         onSelectedItemChanged: (int index) {
                                           print(index + 1);
-                                            getGender = genderText[index];
-                                           getGender == null ? cont = false : cont = true;
+                                          getGender = genderText[index];
+                                          getGender == null
+                                              ? cont = false
+                                              : cont = true;
                                           setState(() {
                                             ft = (index + 1);
                                             heightController.text =
@@ -1028,8 +1154,10 @@ class _SignUpState extends State<SignUp> {
                                       onSelectedItemChanged: (int index) {
                                         print(index + 1);
                                         setState(() {
-                                                             getWeight = pickWeight[index];
-                        getWeight== null ? cont = false : cont = true;
+                                          getWeight = pickWeight[index];
+                                          getWeight == null
+                                              ? cont = false
+                                              : cont = true;
                                           ft = (index + 1);
                                           heightController.text =
                                               "$ft' $inches\"";
@@ -1160,8 +1288,10 @@ class _SignUpState extends State<SignUp> {
                                         backgroundColor: whiteColor,
                                         onSelectedItemChanged: (int index) {
                                           print(index + 1);
-                                                             getheight = pickHeight[index];
-                        getheight== null ? cont = false : cont = true;
+                                          getheight = pickHeight[index];
+                                          getheight == null
+                                              ? cont = false
+                                              : cont = true;
                                           setState(() {
                                             ft = (index + 1);
                                             heightController.text =

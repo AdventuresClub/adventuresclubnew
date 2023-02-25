@@ -14,14 +14,16 @@ class _NotificationsState extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: greyProfileColor,
-       appBar:AppBar(
-        backgroundColor: whiteColor,
-        iconTheme: const IconThemeData(color: blackColor),
-        title: MyText(text: 'Notifications',color: blackColor,),
-        centerTitle: true,
-      ),
-      body:const NotificationsList()
-    );
+        backgroundColor: greyProfileColor,
+        appBar: AppBar(
+          backgroundColor: whiteColor,
+          iconTheme: const IconThemeData(color: blackColor),
+          title: MyText(
+            text: 'Notifications',
+            color: blackColor,
+          ),
+          centerTitle: true,
+        ),
+        body: const NotificationsList());
   }
 }

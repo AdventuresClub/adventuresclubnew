@@ -2,6 +2,6 @@ class GetCountry {
   String country;
   String flag;
   dynamic code;
-  dynamic id;
+  int id;
   GetCountry(this.country, this.flag, this.code, this.id);
 }
