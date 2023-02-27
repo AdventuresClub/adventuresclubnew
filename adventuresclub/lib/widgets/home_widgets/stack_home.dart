@@ -5,16 +5,21 @@ import 'dart:convert';
 
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/Chat/chat.dart';
+import 'package:adventuresclub/models/filter_data_model/activities_inc_model.dart';
 import 'package:adventuresclub/models/filter_data_model/category_filter_model.dart';
 import 'package:adventuresclub/models/filter_data_model/countries_filter.dart';
+import 'package:adventuresclub/models/filter_data_model/filter_data_model.dart';
+import 'package:adventuresclub/models/filter_data_model/region_model.dart';
 import 'package:adventuresclub/models/filter_data_model/sector_filter_model.dart';
 import 'package:adventuresclub/models/filter_data_model/service_types_filter.dart';
+import 'package:adventuresclub/models/services/aimed_for_model.dart';
 import 'package:adventuresclub/widgets/dropdowns/dropdown_with_tI.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/search_container.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../../models/filter_data_model/durations_model.dart';
 import '../../models/filter_data_model/level_filter_mode.dart';
 
 class StackHome extends StatefulWidget {
@@ -133,6 +138,12 @@ class _StackHomeState extends State<StackHome> {
     }
   }
 
+  List<DurationsModel> durationFilter = [];
+  List<ActivitiesIncludeModel> activitiesFilter = [];
+  List<RegionFilterModel> regionFilter = [];
+  List<AimedForModel> aimedFilter = [];
+  List<FilterDataModel> fDM = [];
+
   void getFilter() async {
     var response = await http.get(Uri.parse(
         "https://adventuresclub.net/adventureClub/api/v1/filter_modal_data"));
@@ -143,63 +154,124 @@ class _StackHomeState extends State<StackHome> {
         List<dynamic> sectorData = result['sectors'];
         sectorData.forEach((data) {
           SectorFilterModel sm = SectorFilterModel(
-              int.tryParse(data['id'].toString()) ?? 0,
-              data['sector'],
-              data['image'],
-              int.tryParse(data['status'].toString()) ?? 0);
+            int.tryParse(data['id'].toString()) ?? 0,
+            data['sector'],
+            data['image'],
+            int.tryParse(data['status'].toString()) ?? 0,
+            data['created_at'],
+            data['updated_at'],
+            data['deleted_at'] ?? "",
+          );
           filterSectors.add(sm);
         });
       } else if (result['categories'] != null) {
-        List<dynamic> sectorData = result['category'];
+        List<dynamic> sectorData = result['categories'];
         sectorData.forEach((cateGory) {
-          CategoryFilterModel cm = CategoryFilterModel(cateGory['id'],
-              cateGory['category'], cateGory['image'], cateGory['status']);
+          int c = int.tryParse(cateGory['id'].toString()) ?? 0;
+          CategoryFilterModel cm = CategoryFilterModel(
+            c,
+            cateGory['category'],
+            cateGory['image'],
+            cateGory['status'],
+            cateGory['created_at'],
+            cateGory['updated_at'],
+            cateGory['deleted_at'] ?? "",
+          );
           categoryFilter.add(cm);
         });
       } else if (result['service_types'] != null) {
-        List<dynamic> sectorData = result['type'];
+        List<dynamic> sectorData = result['service_types'];
         sectorData.forEach((type) {
           ServiceTypeFilterModel st = ServiceTypeFilterModel(
             int.tryParse(type['id'].toString()) ?? 0,
             type['type'],
             type['image'],
             int.tryParse(type['status'].toString()) ?? 0,
+            type['created_at'],
+            type['updated_at'],
+            type['deleted_at'] ?? "",
           );
           serviceFilter.add(st);
         });
       } else if (result['aimed_for'] != null) {
-        List<dynamic> sectorData = result['category'];
-        sectorData.forEach((cateGory) {
-          CategoryFilterModel cm = CategoryFilterModel(cateGory['id'],
-              cateGory['category'], cateGory['image'], cateGory['status']);
-          categoryFilter.add(cm);
-        });
+        List<dynamic> aimedF = result['aimed_for'];
+        // sectorData.forEach((cateGory) {
+        //   CategoryFilterModel cm = CategoryFilterModel(cateGory['id'],
+        //       cateGory['category'], cateGory['image'], cateGory['status'],
+        //        cateGory['created_at'],
+        //     cateGory['updated_at'],
+        //     cateGory['deleted_at'],
+        //       );
+        //   categoryFilter.add(cm);
+        // });
       } else if (result['countries'] != null) {
-        List<dynamic> sectorData = result['country'];
+        List<dynamic> sectorData = result['countries'];
         sectorData.forEach((country) {
+          int cb = int.tryParse(country['created_by'].toString()) ?? 0;
           CountriesFilterModel cf = CountriesFilterModel(
             int.tryParse(country['id'].toString()) ?? 0,
             country['country'],
             country['short_name'],
             country['code'],
             country['currency'],
+            country['description'],
             country['flag'],
             country['status'],
-            country['image'],
+            cb,
+            country['created_at'],
+            country['updated_at'],
+            country['deleted_at'] ?? "",
           );
           countriesFilter.add(cf);
         });
       } else if (result['levels'] != null) {
-        List<dynamic> sectorData = result['level'];
+        List<dynamic> sectorData = result['levels'];
         sectorData.forEach((level) {
           LevelFilterModel lm = LevelFilterModel(
-              int.tryParse(level['id'].toString()) ?? 0,
-              level['level'],
-              level['image'],
-              level['status']);
+            int.tryParse(level['id'].toString()) ?? 0,
+            level['level'],
+            level['image'],
+            level['status'],
+            level['created_at'],
+            level['updated_at'],
+            level['deleted_at'] ?? "",
+          );
           levelFilter.add(lm);
         });
+      } else if (result['durations'] != null) {
+        List<dynamic> d = result['durations'];
+        d.forEach((dur) {
+          int id = int.tryParse(dur['id'].toString()) ?? 0;
+          DurationsModel dm = DurationsModel(id, dur['duration'].toString());
+          durationFilter.add(dm);
+        });
+      } else if (result['activities_including']) {
+        List<dynamic> a = result['activities_including'];
+        a.forEach((act) {
+          int id = int.tryParse(act['id'].toString()) ?? 0;
+          ActivitiesIncludeModel activities =
+              ActivitiesIncludeModel(id, act['id'].toString());
+          activitiesFilter.add(activities);
+        });
+      } else if (result['regions']) {
+        List<dynamic> r = result['regions'];
+        r.forEach((reg) {
+          int id = int.tryParse(reg['id'].toString()) ?? 0;
+          RegionFilterModel rm = RegionFilterModel(id, reg['region']);
+          regionFilter.add(rm);
+        });
       }
+      FilterDataModel fm = FilterDataModel(
+          filterSectors,
+          categoryFilter,
+          serviceFilter,
+          aimedFilter,
+          countriesFilter,
+          levelFilter,
+          durationFilter,
+          activitiesFilter,
+          regionFilter);
+      fDM.add(fm);
       // else if (result['durations'] != null) {
       //   List<dynamic> sectorData = result['duration'];
       //   sectorData.forEach((cateGory) {

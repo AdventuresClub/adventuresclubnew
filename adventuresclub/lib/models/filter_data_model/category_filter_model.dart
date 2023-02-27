@@ -3,5 +3,9 @@ class CategoryFilterModel {
   String category;
   String image;
   int status;
-  CategoryFilterModel(this.id, this.category, this.image, this.status);
+  String ca;
+  String ua;
+  String da;
+  CategoryFilterModel(this.id, this.category, this.image, this.status, this.ca,
+      this.ua, this.da);
 }

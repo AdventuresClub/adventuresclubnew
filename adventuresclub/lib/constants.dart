@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const kPrimaryColor = Color(0xffE8E8E8);
 const kSecondaryColor = Color(0xff193447);
@@ -22,31 +23,32 @@ const greyBackgroundColor = Color(0xFF0F0F0F);
 const greyProfileColor = Color(0xFFF6F6F6);
 const greyProfileColor1 = Color(0xFFf5f5f5);
 const greyColor3 = Color(0xFF92908E);
-
 const redColor = Color(0xFFDF5252);
 const greenColor1 = Color(0xFF07A24B);
 const greycolor4 = Color(0xFFBCBCBC);
-
 const yellowcolor = Color(0xFFFFB04E);
 const blueColor1 = Color(0xFF1D7FFF);
 const greyColor2 = Color(0xFF737D6D);
 const greyTextColor = Color(0xFF565656);
 const greyishColor = Color(0xFF333631);
 const blackTypeColor = Color(0xFF131313);
-
 const blackTypeColor2 = Color(0xFF2A2A2A);
 const blackTypeColor1 = Color(0xFF2D2926);
 const blackTypeColor3 = Color(0xFF2C2E2B);
-
 const blackTypeColor4 = Color(0xFF121212);
 const greyColor1 = Color(0xFFE9E9E9);
 const searchTextColor = Color(0xFF3E474F);
-
 const bluishColor = Color(0xFF1C3947);
-
 const blueButtonColor = Color(0xFF1D7FFF);
 const blueTextColor = Color(0xFF4BAFAC);
 
 class Constants {
   String userID = "";
+  String countryId = "";
+  static SharedPreferences? prefs;
+
+  static getPrefs() async {
+    prefs ??= await SharedPreferences.getInstance();
+    return prefs;
+  }
 }

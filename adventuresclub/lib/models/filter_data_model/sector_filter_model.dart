@@ -3,5 +3,9 @@ class SectorFilterModel {
   String sector;
   String image;
   int status;
-  SectorFilterModel(this.id, this.sector, this.image, this.status);
+  String ca;
+  String ua;
+  String da;
+  SectorFilterModel(
+      this.id, this.sector, this.image, this.status, this.ca, this.ua, this.da);
 }

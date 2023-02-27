@@ -4,9 +4,24 @@ class CountriesFilterModel {
   String sName;
   String code;
   String currency;
+  String des;
   String flag;
   String status;
-  String image;
-  CountriesFilterModel(this.id, this.country, this.sName, this.code,
-      this.currency, this.flag, this.status, this.image);
+  int createdBy;
+  String ca;
+  String ua;
+  String da;
+  CountriesFilterModel(
+      this.id,
+      this.country,
+      this.sName,
+      this.code,
+      this.currency,
+      this.des,
+      this.flag,
+      this.status,
+      this.createdBy,
+      this.ca,
+      this.ua,
+      this.da);
 }

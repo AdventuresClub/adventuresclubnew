@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/sign_up/Sign_up.dart';
 import 'package:adventuresclub/sign_up/sign_in.dart';
@@ -23,25 +22,28 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
-      if (_activePage < 4) {
-        _activePage++;
-      } else {
-        _activePage = 0;
-      }
-      _pageViewController.animateToPage(
-        _activePage,
-        duration: const Duration(milliseconds: 350),
-        curve: Curves.easeIn,
-      );
-    });
+    _timer = Timer.periodic(
+      const Duration(seconds: 5),
+      (Timer timer) {
+        if (_activePage < 4) {
+          _activePage++;
+        } else {
+          _activePage = 0;
+        }
+        _pageViewController.animateToPage(
+          _activePage,
+          duration: const Duration(milliseconds: 350),
+          curve: Curves.easeIn,
+        );
+      },
+    );
   }
 
   @override
   void dispose() {
     super.dispose();
     _pageViewController.dispose(); // dispose the PageController
-    _timer?.cancel();
+    _timer.cancel();
   }
 
   void goToSignUp() {
@@ -56,96 +58,109 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
 
   List<Widget> pages = [
     Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                colorFilter: ColorFilter.mode(
-                    blackColor.withOpacity(0.4), BlendMode.darken),
-                image: const ExactAssetImage('images/climb.png'),
-                fit: BoxFit.cover)),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 40.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text('Adventures Club',
+      decoration: BoxDecoration(
+        image: DecorationImage(
+            colorFilter:
+                ColorFilter.mode(blackColor.withOpacity(0.4), BlendMode.darken),
+            image: const ExactAssetImage('images/climb.png'),
+            fit: BoxFit.cover),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 40.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: const [
+            Text(
+              'Adventures Club',
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontFamily: 'Raleway',
+                  fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 20),
+              child: Text(
+                  'Find adventure near you, connect with cool people, and get outside.',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                      fontFamily: 'Raleway',
-                      fontWeight: FontWeight.bold)),
-              SizedBox(height: 20),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 20),
-                child: Text(
-                    'Find adventure near you, connect with cool people, and get outside.',
+                    fontSize: 22,
+                    color: Colors.white,
+                    height: 1.3,
+                    fontFamily: 'Raleway',
+                  )),
+            ),
+            SizedBox(height: 2)
+          ],
+        ),
+      ),
+    ),
+    Container(
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+        image: DecorationImage(
+            colorFilter:
+                ColorFilter.mode(blackColor.withOpacity(0.4), BlendMode.darken),
+            image: const ExactAssetImage('images/freerider.png'),
+            fit: BoxFit.cover),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 40.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Adventures Club',
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontFamily: 'Raleway',
+                  fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 20),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 35.0, vertical: 20),
+              child: Column(
+                children: const [
+                  Text(
+                    'Life is ...',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 22,
                       color: Colors.white,
                       height: 1.3,
                       fontFamily: 'Raleway',
-                    )),
-              ),
-              SizedBox(height: 2)
-            ],
-          ),
-        )),
-    Container(
-        decoration: BoxDecoration(
-            color: Colors.transparent,
-            image: DecorationImage(
-                colorFilter: ColorFilter.mode(
-                    blackColor.withOpacity(0.4), BlendMode.darken),
-                image: const ExactAssetImage('images/freerider.png'),
-                fit: BoxFit.cover)),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 40.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text('Adventures Club',
-                  style: TextStyle(
-                      fontSize: 20,
+                    ),
+                  ),
+                  Text(
+                    'Crazy, busy and messy',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 22,
                       color: Colors.white,
+                      height: 1.3,
                       fontFamily: 'Raleway',
-                      fontWeight: FontWeight.bold)),
-              const SizedBox(height: 20),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 35.0, vertical: 20),
-                child: Column(
-                  children: const [
-                    Text('Life is ...',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 22,
-                          color: Colors.white,
-                          height: 1.3,
-                          fontFamily: 'Raleway',
-                        )),
-                    Text('Crazy, busy and messy',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 22,
-                          color: Colors.white,
-                          height: 1.3,
-                          fontFamily: 'Raleway',
-                        )),
-                  ],
-                ),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 2)
-            ],
-          ),
-        )),
+            ),
+            const SizedBox(height: 2)
+          ],
+        ),
+      ),
+    ),
     Container(
         decoration: BoxDecoration(
-            color: Colors.transparent,
-            image: DecorationImage(
-                colorFilter: ColorFilter.mode(
-                    blackColor.withOpacity(0.4), BlendMode.darken),
-                image: const ExactAssetImage('images/pexels-photo.png'),
-                fit: BoxFit.cover)),
+          color: Colors.transparent,
+          image: DecorationImage(
+              colorFilter: ColorFilter.mode(
+                  blackColor.withOpacity(0.4), BlendMode.darken),
+              image: const ExactAssetImage('images/pexels-photo.png'),
+              fit: BoxFit.cover),
+        ),
         child: Padding(
           padding: const EdgeInsets.only(top: 40.0),
           child: Column(
@@ -187,149 +202,159 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
           ),
         )),
     Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                colorFilter: ColorFilter.mode(
-                    blackColor.withOpacity(0.4), BlendMode.darken),
-                image: const ExactAssetImage('images/man.png'),
-                fit: BoxFit.cover)),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 40.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text('Adventures Club',
-                  style: TextStyle(
-                      fontSize: 20,
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              colorFilter: ColorFilter.mode(
+                  blackColor.withOpacity(0.4), BlendMode.darken),
+              image: const ExactAssetImage('images/man.png'),
+              fit: BoxFit.cover)),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 40.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text('Adventures Club',
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.bold)),
+            const SizedBox(height: 20),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 35.0, vertical: 20),
+              child: Column(
+                children: const [
+                  Text('Spending time',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.white,
+                        height: 1.3,
+                        fontFamily: 'Raleway',
+                      )),
+                  Text(
+                    'Outdoors',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 22,
                       color: Colors.white,
+                      height: 1.3,
                       fontFamily: 'Raleway',
-                      fontWeight: FontWeight.bold)),
-              const SizedBox(height: 20),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 35.0, vertical: 20),
-                child: Column(
-                  children: const [
-                    Text('Spending time',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 22,
-                          color: Colors.white,
-                          height: 1.3,
-                          fontFamily: 'Raleway',
-                        )),
-                    Text('Outdoors',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 22,
-                          color: Colors.white,
-                          height: 1.3,
-                          fontFamily: 'Raleway',
-                        )),
-                  ],
-                ),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 2)
-            ],
-          ),
-        )),
+            ),
+            const SizedBox(height: 2)
+          ],
+        ),
+      ),
+    ),
     Container(
-        decoration: BoxDecoration(
-            color: Colors.transparent,
-            image: DecorationImage(
-                colorFilter: ColorFilter.mode(
-                    blackColor.withOpacity(0.4), BlendMode.darken),
-                image: const ExactAssetImage('images/swimming.png'),
-                fit: BoxFit.cover)),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 40.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text('Adventures Club',
-                  style: TextStyle(
-                      fontSize: 20,
+      decoration: BoxDecoration(
+          color: Colors.transparent,
+          image: DecorationImage(
+              colorFilter: ColorFilter.mode(
+                  blackColor.withOpacity(0.4), BlendMode.darken),
+              image: const ExactAssetImage('images/swimming.png'),
+              fit: BoxFit.cover)),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 40.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text('Adventures Club',
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontFamily: 'Raleway',
+                    fontWeight: FontWeight.bold)),
+            const SizedBox(height: 20),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 35.0, vertical: 20),
+              child: Column(
+                children: const [
+                  Text('Create real human',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.white,
+                        height: 1.3,
+                        fontFamily: 'Raleway',
+                      )),
+                  Text(
+                    'connection',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 22,
                       color: Colors.white,
+                      height: 1.3,
                       fontFamily: 'Raleway',
-                      fontWeight: FontWeight.bold)),
-              const SizedBox(height: 20),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 35.0, vertical: 20),
-                child: Column(
-                  children: const [
-                    Text('Create real human',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 22,
-                          color: Colors.white,
-                          height: 1.3,
-                          fontFamily: 'Raleway',
-                        )),
-                    Text('connection',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 22,
-                          color: Colors.white,
-                          height: 1.3,
-                          fontFamily: 'Raleway',
-                        )),
-                  ],
-                ),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 2)
-            ],
-          ),
-        )),
+            ),
+            const SizedBox(height: 2)
+          ],
+        ),
+      ),
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-      decoration: const BoxDecoration(),
-      child: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 0),
-            child: PageView.builder(
-                controller: _pageViewController,
-                onPageChanged: (index) {
-                  setState(() {
-                    _activePage = index;
-                  });
-                },
-                itemCount: pages.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return pages[index];
-                }),
-          ),
-          Positioned(
-            bottom: 50,
-            right: 40,
-            child: Button(
-                'Get Started',
-                whiteColor,
-                whiteColor,
-                blackColor,
-                18,
-                goToSignUp,
-                Icons.add,
-                whiteColor,
-                false,
-                1.3,
-                'Raleway',
-                FontWeight.w600,
-                16),
-          ),
-          Positioned(
+      body: Container(
+        decoration: const BoxDecoration(),
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 0),
+              child: PageView.builder(
+                  controller: _pageViewController,
+                  onPageChanged: (index) {
+                    setState(() {
+                      _activePage = index;
+                    });
+                  },
+                  itemCount: pages.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return pages[index];
+                  }),
+            ),
+            Positioned(
+              bottom: 50,
+              right: 40,
+              child: Button(
+                  'Get Started',
+                  whiteColor,
+                  whiteColor,
+                  blackColor,
+                  18,
+                  goToSignUp,
+                  Icons.add,
+                  whiteColor,
+                  false,
+                  1.3,
+                  'Raleway',
+                  FontWeight.w600,
+                  16),
+            ),
+            Positioned(
               bottom: 15,
               left: 75,
               child: GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                    return const SignIn();
-                  }));
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) {
+                        return const SignIn();
+                      },
+                    ),
+                  );
                 },
                 child: const Text.rich(
                   TextSpan(
@@ -351,9 +376,11 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                     ],
                   ),
                 ),
-              ))
-        ],
+              ),
+            )
+          ],
+        ),
       ),
-    ));
+    );
   }
 }

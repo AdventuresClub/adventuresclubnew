@@ -144,7 +144,7 @@ class _CostState extends State<Cost> {
               lightGreyColor,
               3.4,
             ),
-            const DdButton(5.5)
+            DdButton(5.5)
           ],
         ),
         const SizedBox(height: 15),

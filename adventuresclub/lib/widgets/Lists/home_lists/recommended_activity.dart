@@ -49,7 +49,6 @@ class _RecommendedActivityState extends State<RecommendedActivity> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getServicesList();
   }

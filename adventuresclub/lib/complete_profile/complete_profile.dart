@@ -49,147 +49,148 @@ class _CompleteProfileState extends State<CompleteProfile> {
         ),
       ),
       body: Consumer<CompleteProfileProvider>(
-          builder: (context, provider, child) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0, left: 20, bottom: 15),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: MyText(
-                  text:
-                      'Just follow simple four steps to list up your adventure',
-                  size: 12,
-                  weight: FontWeight.w500,
-                  color: greyColor,
+        builder: (context, provider, child) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0, left: 20, bottom: 15),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: MyText(
+                    text:
+                        'Just follow simple four steps to list up your adventure',
+                    size: 12,
+                    weight: FontWeight.w500,
+                    color: greyColor,
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 20,
-              ),
-              child: Consumer<CompleteProfileProvider>(
-                builder: (context, provider, child) {
-                  return StepProgressIndicator(
-                    padding: 0,
-                    totalSteps: provider.steps.length,
-                    currentStep: provider.currentStep + 1,
-                    size: 60,
-                    selectedColor: bluishColor,
-                    unselectedColor: greyColor,
-                    customStep: (index, color, _) => color == bluishColor
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 12),
-                                    decoration: BoxDecoration(
-                                        color: bluishColor,
-                                        borderRadius:
-                                            BorderRadius.circular(65)),
-                                    child: Center(
-                                        child: MyText(
-                                      text: text1[index],
-                                      color: whiteColor,
-                                      weight: FontWeight.w500,
-                                      fontFamily: 'Roboto',
-                                    )),
-                                  ),
-                                  const Expanded(
-                                    child: Divider(
-                                      color: bluishColor,
-                                      thickness: 7,
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 20,
+                ),
+                child: Consumer<CompleteProfileProvider>(
+                  builder: (context, provider, child) {
+                    return StepProgressIndicator(
+                      padding: 0,
+                      totalSteps: provider.steps.length,
+                      currentStep: provider.currentStep + 1,
+                      size: 60,
+                      selectedColor: bluishColor,
+                      unselectedColor: greyColor,
+                      customStep: (index, color, _) => color == bluishColor
+                          ? Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16, vertical: 12),
+                                      decoration: BoxDecoration(
+                                          color: bluishColor,
+                                          borderRadius:
+                                              BorderRadius.circular(65)),
+                                      child: Center(
+                                          child: MyText(
+                                        text: text1[index],
+                                        color: whiteColor,
+                                        weight: FontWeight.w500,
+                                        fontFamily: 'Roboto',
+                                      )),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: MyText(
-                                    text: text[index],
-                                    color: bluishColor,
-                                    weight: FontWeight.w500,
-                                    fontFamily: 'Roboto',
-                                    size: 10,
-                                  )),
-                            ],
-                          )
-                        : Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 12),
-                                    decoration: BoxDecoration(
-                                        color: greyColor3,
-                                        borderRadius:
-                                            BorderRadius.circular(65)),
-                                    child: Center(
-                                        child: MyText(
-                                            text: text1[index],
-                                            color: whiteColor,
-                                            weight: FontWeight.w500,
-                                            fontFamily: 'Roboto')),
-                                  ),
-                                  if (index != 3)
                                     const Expanded(
                                       child: Divider(
-                                        color: greyColor,
+                                        color: bluishColor,
                                         thickness: 7,
                                       ),
                                     ),
-                                ],
-                              ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: MyText(
-                                  text: text[index],
-                                  color: greyColor,
-                                  weight: FontWeight.w500,
-                                  fontFamily: 'Roboto',
-                                  size: 10,
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ),
-                  );
-                },
+                                Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: MyText(
+                                      text: text[index],
+                                      color: bluishColor,
+                                      weight: FontWeight.w500,
+                                      fontFamily: 'Roboto',
+                                      size: 10,
+                                    )),
+                              ],
+                            )
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16, vertical: 12),
+                                      decoration: BoxDecoration(
+                                          color: greyColor3,
+                                          borderRadius:
+                                              BorderRadius.circular(65)),
+                                      child: Center(
+                                          child: MyText(
+                                              text: text1[index],
+                                              color: whiteColor,
+                                              weight: FontWeight.w500,
+                                              fontFamily: 'Roboto')),
+                                    ),
+                                    if (index != 3)
+                                      const Expanded(
+                                        child: Divider(
+                                          color: greyColor,
+                                          thickness: 7,
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: MyText(
+                                    text: text[index],
+                                    color: greyColor,
+                                    weight: FontWeight.w500,
+                                    fontFamily: 'Roboto',
+                                    size: 10,
+                                  ),
+                                ),
+                              ],
+                            ),
+                    );
+                  },
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Expanded(
-              child: Consumer<CompleteProfileProvider>(
-                builder: (context, provider, child) {
-                  return ListView(
-                    shrinkWrap: true,
-                    physics: const BouncingScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 0,
-                    ),
-                    children: [
-                      SizedBox(
-                        child: provider.steps[provider.currentStep]['child'],
+              const SizedBox(
+                height: 15,
+              ),
+              Expanded(
+                child: Consumer<CompleteProfileProvider>(
+                  builder: (context, provider, child) {
+                    return ListView(
+                      shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 0,
                       ),
-                    ],
-                  );
-                },
+                      children: [
+                        SizedBox(
+                          child: provider.steps[provider.currentStep]['child'],
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
-        );
-      }),
+            ],
+          );
+        },
+      ),
       bottomNavigationBar: BottomButton(
           bgColor: whiteColor,
           onTap: () => completeProfileProvider.nextStep(context)),

@@ -50,6 +50,7 @@ dependencies:
   fl_country_code_picker: ^0.0.4
   http: ^0.13.5
   image_picker: ^0.8.6+1
+  shared_preferences: ^2.0.18
 
 dev_dependencies:
   flutter_test:

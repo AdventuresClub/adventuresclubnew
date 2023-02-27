@@ -1,4 +1,20 @@
+// ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls
+
+import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/models/category/category_model.dart';
+import 'package:adventuresclub/models/create_adventure/regions_model.dart';
+import 'package:adventuresclub/models/filter_data_model/activities_inc_model.dart';
+import 'package:adventuresclub/models/filter_data_model/category_filter_model.dart';
+import 'package:adventuresclub/models/filter_data_model/countries_filter.dart';
+import 'package:adventuresclub/models/filter_data_model/durations_model.dart';
+import 'package:adventuresclub/models/filter_data_model/filter_data_model.dart';
+import 'package:adventuresclub/models/filter_data_model/level_filter_mode.dart';
+import 'package:adventuresclub/models/filter_data_model/region_model.dart';
+import 'package:adventuresclub/models/filter_data_model/sector_filter_model.dart';
+import 'package:adventuresclub/models/filter_data_model/service_types_filter.dart';
+import 'package:adventuresclub/models/services/aimed_for_model.dart';
+import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/dropdown_button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
@@ -6,6 +22,8 @@ import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
 import 'package:adventuresclub/widgets/text_fields/multiline_field.dart';
 import 'package:adventuresclub/widgets/text_fields/tf_with_Size_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 class Description extends StatefulWidget {
   const Description({super.key});
@@ -15,13 +33,37 @@ class Description extends StatefulWidget {
 }
 
 class _DescriptionState extends State<Description> {
-  TextEditingController controller = TextEditingController();
-  List text = [
-    'Country',
-    'Country',
-    'Country',
-    'Country',
+  TextEditingController nameController = TextEditingController();
+  int countryId = 0;
+  Map mapFilter = {};
+  List<SectorFilterModel> filterSectors = [];
+  List<CategoryFilterModel> categoryFilter = [];
+  List<ServiceTypeFilterModel> serviceFilter = [];
+  List<CountriesFilterModel> countriesFilter = [];
+  List<LevelFilterModel> levelFilter = [];
+  List<DurationsModel> durationFilter = [];
+  List<ActivitiesIncludeModel> activitiesFilter = [];
+  List<RegionFilterModel> regionFilter = [];
+  List<AimedForModel> aimedFilter = [];
+  List<FilterDataModel> fDM = [];
+
+  List<String> countryList = [
+    "Oman",
+    "India",
   ];
+  List<String> cList = [
+    "Category",
+    "Land",
+    "Water",
+    "Sky",
+    "Transport",
+    "Accomodation"
+  ];
+  List<CategoryModel> categoryList = [];
+  List<RegionsModel> regionList = [];
+  List<String> rList = [];
+  List<String> serviceSector = ["Training", "Tour"];
+  List<String> sFilterList = [];
   List days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
   List aimedText = [
     'kids',
@@ -45,8 +87,8 @@ class _DescriptionState extends State<Description> {
     'Climbing',
     'Swimming',
   ];
-  List<bool> daysValue = [false, false, false, false, false, false, false];
 
+  List<bool> daysValue = [false, false, false, false, false, false, false];
   List<bool> activityValue = [
     false,
     false,
@@ -62,7 +104,7 @@ class _DescriptionState extends State<Description> {
   List<bool> dependencyValue = [false, false, false];
   bool value = false;
   abc() {}
-  addActivites() {
+  void addActivites() {
     showDialog(
         context: context,
         builder: (context) {
@@ -152,42 +194,252 @@ class _DescriptionState extends State<Description> {
         });
   }
 
+  // void getData() async {
+  //   SharedPreferences prefs = await Constants.getPrefs();
+  //   p
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+    rList.insert(0, "Region");
+    // cList.insert(0, "Category");
+    getData();
+    getRegions();
+    getFilter();
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    super.dispose();
+  }
+
+  void parseRegions(List<RegionsModel> rm) {
+    rm.forEach(
+      (element) {
+        if (element.region.isNotEmpty) {
+          rList.add(element.region);
+        }
+      },
+    );
+  }
+
+  void parseCategories(List<CategoryModel> cm) {
+    cm.forEach(
+      (element) {
+        if (element.category.isNotEmpty) {
+          cList.add(element.category);
+        }
+      },
+    );
+  }
+
+  void getData() async {
+    countryId =
+        Provider.of<CompleteProfileProvider>(context, listen: false).countryId;
+    // categoryList =
+    //     Provider.of<CompleteProfileProvider>(context, listen: false).pCM;
+  }
+
+  void getFilter() async {
+    var response = await http.get(Uri.parse(
+        "https://adventuresclub.net/adventureClub/api/v1/filter_modal_data"));
+    if (response.statusCode == 200) {
+      mapFilter = json.decode(response.body);
+      dynamic result = mapFilter['data'];
+      List<dynamic> sectorData = result['sectors'];
+      sectorData.forEach((data) {
+        SectorFilterModel sm = SectorFilterModel(
+          int.tryParse(data['id'].toString()) ?? 0,
+          data['sector'],
+          data['image'],
+          int.tryParse(data['status'].toString()) ?? 0,
+          data['created_at'],
+          data['updated_at'],
+          data['deleted_at'] ?? "",
+        );
+        filterSectors.add(sm);
+      });
+      List<dynamic> cat = result['categories'];
+      cat.forEach((cateGory) {
+        int c = int.tryParse(cateGory['id'].toString()) ?? 0;
+        CategoryFilterModel cm = CategoryFilterModel(
+          c,
+          cateGory['category'],
+          cateGory['image'],
+          cateGory['status'],
+          cateGory['created_at'],
+          cateGory['updated_at'],
+          cateGory['deleted_at'] ?? "",
+        );
+        categoryFilter.add(cm);
+      });
+      List<dynamic> serv = result['service_types'];
+      serv.forEach((type) {
+        ServiceTypeFilterModel st = ServiceTypeFilterModel(
+          int.tryParse(type['id'].toString()) ?? 0,
+          type['type'],
+          type['image'],
+          int.tryParse(type['status'].toString()) ?? 0,
+          type['created_at'],
+          type['updated_at'],
+          type['deleted_at'] ?? "",
+        );
+        serviceFilter.add(st);
+      });
+      //List<dynamic> aimedF = result['aimed_for'];
+      List<dynamic> count = result['countries'];
+      count.forEach((country) {
+        int cb = int.tryParse(country['created_by'].toString()) ?? 0;
+        CountriesFilterModel cf = CountriesFilterModel(
+          int.tryParse(country['id'].toString()) ?? 0,
+          country['country'],
+          country['short_name'],
+          country['code'],
+          country['currency'],
+          country['description'] ?? "",
+          country['flag'],
+          country['status'],
+          cb,
+          country['created_at'],
+          country['updated_at'],
+          country['deleted_at'] ?? "",
+        );
+        countriesFilter.add(cf);
+      });
+      List<dynamic> lev = result['levels'];
+      lev.forEach((level) {
+        LevelFilterModel lm = LevelFilterModel(
+          int.tryParse(level['id'].toString()) ?? 0,
+          level['level'],
+          level['image'],
+          level['status'],
+          level['created_at'],
+          level['updated_at'],
+          level['deleted_at'] ?? "",
+        );
+        levelFilter.add(lm);
+      });
+      List<dynamic> d = result['durations'];
+      d.forEach((dur) {
+        int id = int.tryParse(dur['id'].toString()) ?? 0;
+        DurationsModel dm = DurationsModel(id, dur['duration'].toString());
+        durationFilter.add(dm);
+      });
+      List<dynamic> a = result['activities_including'];
+      a.forEach((act) {
+        int id = int.tryParse(act['id'].toString()) ?? 0;
+        ActivitiesIncludeModel activities =
+            ActivitiesIncludeModel(id, act['id'].toString());
+        activitiesFilter.add(activities);
+      });
+      List<dynamic> r = result['regions'];
+      r.forEach((reg) {
+        int id = int.tryParse(reg['id'].toString()) ?? 0;
+        RegionFilterModel rm = RegionFilterModel(id, reg['region']);
+        regionFilter.add(rm);
+      });
+      FilterDataModel fm = FilterDataModel(
+          filterSectors,
+          categoryFilter,
+          serviceFilter,
+          aimedFilter,
+          countriesFilter,
+          levelFilter,
+          durationFilter,
+          activitiesFilter,
+          regionFilter);
+      fDM.add(fm);
+    }
+  }
+
+  void getRegions() async {
+    try {
+      var response = await http.post(
+          Uri.parse(
+              "https://adventuresclub.net/adventureClub/api/v1/get_regions"),
+          body: {
+            'country_id': "1",
+          });
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      List<dynamic> rm = decodedResponse['data'];
+      rm.forEach((element) {
+        int cId = int.tryParse(element['country_id'].toString()) ?? 0;
+        int rId = int.tryParse(element['region_id'].toString()) ?? 0;
+        RegionsModel r = RegionsModel(
+          cId,
+          element['country'].toString() ?? "",
+          rId,
+          element['region'].toString() ?? "",
+        );
+        regionList.add(r);
+      });
+      parseRegions(regionList);
+      print(response.statusCode);
+      print(response.body);
+      print(response.headers);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // return Container(
-    //   child: Text("test"),
-    // );
-
     return SingleChildScrollView(
       child: Column(
         children: [
           const SizedBox(height: 20),
-          TFWithSize('Adventure Name', controller, 12, lightGreyColor, 1),
+          TFWithSize('Adventure Name', nameController, 12, lightGreyColor, 1),
           const SizedBox(height: 20),
+          GestureDetector(onTap: getRegions, child: Text("Test")),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [DdButton(2.4), DdButton(2.4)],
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [DdButton(2.4), DdButton(2.4)],
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [DdButton(2.4), DdButton(2.4)],
+            children: [
+              DdButton(
+                2.4,
+                dropDown: "Oman",
+                dropDownList: countryList,
+              ),
+              DdButton(
+                2.4,
+                dropDown: "Region",
+                dropDownList: rList,
+              )
+            ],
           ),
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const DdButton(2.4),
-              TFWithSize('Available Seats', controller, 16, lightGreyColor, 2.4)
+              DdButton(
+                2.4,
+                dropDown: "Training",
+                dropDownList: serviceSector,
+              ),
+              DdButton(
+                2.4,
+                dropDown: "Category",
+                dropDownList: cList,
+              ),
             ],
           ),
           const SizedBox(height: 20),
-          MultiLineField('Type Information', 4, lightGreyColor, controller),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [DdButton(2.4), DdButton(2.4)],
+          // ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // DdButton(2.4),
+              TFWithSize(
+                  'Available Seats', nameController, 16, lightGreyColor, 2.4)
+            ],
+          ),
+          const SizedBox(height: 20),
+          MultiLineField('Type Information', 4, lightGreyColor, nameController),
           const Divider(),
           Align(
             alignment: Alignment.centerLeft,
@@ -261,7 +513,7 @@ class _DescriptionState extends State<Description> {
               Expanded(
                 child: TFWithSizeImage(
                     'Start Date',
-                    controller,
+                    nameController,
                     16,
                     lightGreyColor,
                     2.5,
@@ -271,7 +523,7 @@ class _DescriptionState extends State<Description> {
               Expanded(
                 child: TFWithSizeImage(
                     'End Date',
-                    controller,
+                    nameController,
                     16,
                     lightGreyColor,
                     2.5,
@@ -435,7 +687,7 @@ class _DescriptionState extends State<Description> {
               const SizedBox(
                 width: 10,
               ),
-              TFWithSize('2', controller, 16, lightGreyColor, 7.2)
+              TFWithSize('2', nameController, 16, lightGreyColor, 7.2)
             ],
           ),
         ],

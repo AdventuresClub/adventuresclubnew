@@ -2,8 +2,10 @@ import 'package:adventuresclub/constants.dart';
 import 'package:flutter/material.dart';
 
 class DdButton extends StatefulWidget {
+  String? dropDown;
+  final List<String>? dropDownList;
   final double width;
-  const DdButton(this.width, {super.key});
+  DdButton(this.width, {this.dropDown = "Oman", this.dropDownList, super.key});
 
   @override
   State<DdButton> createState() => _DdButtonState();
@@ -11,6 +13,7 @@ class DdButton extends StatefulWidget {
 
 class _DdButtonState extends State<DdButton> {
   String dropdownValue = 'One';
+  String country = "";
   List<String> list = <String>['One', 'Two', 'Three', 'Four'];
 
   @override
@@ -27,20 +30,24 @@ class _DdButtonState extends State<DdButton> {
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           isExpanded: true,
-          value: dropdownValue,
+          value: widget.dropDown,
           icon: const Image(
-            image: ExactAssetImage('images/drop_down.png'),
-            height: 12,
+            image: ExactAssetImage(
+              'images/drop_down.png',
+            ),
+            height: 10,
+            // width: 5,
           ),
-          elevation: 16,
+          elevation: 12,
           style: const TextStyle(color: blackTypeColor),
           onChanged: (String? value) {
             // This is called when the user selects an item.
             setState(() {
-              value = value!;
+              widget.dropDown = value as String;
             });
           },
-          items: list.map<DropdownMenuItem<String>>((String value) {
+          items: widget.dropDownList!
+              .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
               child: Text(value),

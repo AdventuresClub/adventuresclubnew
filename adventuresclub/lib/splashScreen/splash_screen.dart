@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:adventuresclub/choose_language.dart';
+import 'package:adventuresclub/check_profile.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -18,7 +18,9 @@ class SplashScreenState extends State<SplashScreen> {
       () {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const ChooseLanguage()),
+          MaterialPageRoute(
+              builder: (context) => const CheckProfile() //ChooseLanguage(),
+              ),
         );
       },
     );

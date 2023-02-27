@@ -1,10 +1,11 @@
 import 'dart:developer';
-
+import 'dart:io';
 import 'package:adventuresclub/complete_profile/description.dart';
 import 'package:adventuresclub/complete_profile/cost.dart';
 import 'package:adventuresclub/complete_profile/banner_page.dart';
 import 'package:adventuresclub/complete_profile/program.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
+import 'package:adventuresclub/models/category/category_model.dart';
 import 'package:flutter/material.dart';
 
 class CompleteProfileProvider with ChangeNotifier {
@@ -17,13 +18,18 @@ class CompleteProfileProvider with ChangeNotifier {
   TextEditingController aboutController = TextEditingController();
   TextEditingController aboutMeController = TextEditingController();
   TextEditingController iLiveInController = TextEditingController();
-
+  List<CategoryModel> pCM = [];
   String locationMessage = "Getting location ...";
   String userLocation = "";
   bool loading = false;
   double lat = 0;
   double lng = 0;
+  File adventureOne = File("");
+  File adventureTwo = File("");
   DateTime? selectedDate;
+  String name = "";
+  int countryId = 0;
+  int id = 0;
   // var dateFormat = DateFormat.yMMMMd('en_US');
   List<String> mediaFiles = [];
   final List<Map<String, dynamic>> steps = [

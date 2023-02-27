@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/adventure_category.dart';
+import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import '../../../models/category/category_model.dart';
 
 class TopList extends StatefulWidget {
@@ -57,6 +59,10 @@ class _TopListState extends State<TopList> {
     getCategory();
   }
 
+  void listAdd(List<CategoryModel> pc) {
+    Provider.of<CompleteProfileProvider>(context, listen: false).pCM = pc;
+  }
+
   Future getCategory() async {
     setState(() {
       loading = false;
@@ -74,6 +80,7 @@ class _TopListState extends State<TopList> {
           int.tryParse(element['status'].toString()) ?? 0,
         );
         pCM.add(cm);
+        listAdd(pCM);
       });
     }
     setState(() {
@@ -83,6 +90,7 @@ class _TopListState extends State<TopList> {
 
   @override
   Widget build(BuildContext context) {
+    // final pCM = Provider.of<CompleteProfileProvider>(context, listen: false)
     return loading
         ? Center(
             child: Column(
