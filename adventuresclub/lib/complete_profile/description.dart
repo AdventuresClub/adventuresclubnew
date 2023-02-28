@@ -17,6 +17,7 @@ import 'package:adventuresclub/models/services/aimed_for_model.dart';
 import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/dropdown_button.dart';
+import 'package:adventuresclub/widgets/dropdowns/region_dropdown.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
 import 'package:adventuresclub/widgets/text_fields/multiline_field.dart';
@@ -24,6 +25,8 @@ import 'package:adventuresclub/widgets/text_fields/tf_with_Size_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+
+import '../widgets/dropdowns/service_sector.dart';
 
 class Description extends StatefulWidget {
   const Description({super.key});
@@ -34,8 +37,17 @@ class Description extends StatefulWidget {
 
 class _DescriptionState extends State<Description> {
   TextEditingController nameController = TextEditingController();
+  TextEditingController infoController = TextEditingController();
+  TextEditingController seatsController = TextEditingController();
+  TextEditingController startDateController = TextEditingController();
+  TextEditingController endDateController = TextEditingController();
   int countryId = 0;
   Map mapFilter = {};
+  bool particularWeekDays = false;
+  bool particularDay = false;
+  DateTime currentDate = DateTime.now();
+  var formattedDate;
+  var endDate;
   List<SectorFilterModel> filterSectors = [];
   List<CategoryFilterModel> categoryFilter = [];
   List<ServiceTypeFilterModel> serviceFilter = [];
@@ -46,37 +58,46 @@ class _DescriptionState extends State<Description> {
   List<RegionFilterModel> regionFilter = [];
   List<AimedForModel> aimedFilter = [];
   List<FilterDataModel> fDM = [];
+  DateTime? pickedDate;
 
   List<String> countryList = [
     "Oman",
     "India",
   ];
   List<String> cList = [
-    "Category",
-    "Land",
-    "Water",
-    "Sky",
-    "Transport",
-    "Accomodation"
+    // "Service Category",
+    // "Land",
+    // "Water",
+    // "Sky",
+    // "Transport",
+    // "Accomodation"
   ];
   List<CategoryModel> categoryList = [];
   List<RegionsModel> regionList = [];
   List<String> rList = [];
   List<String> serviceSector = ["Training", "Tour"];
   List<String> sFilterList = [];
+  List<String> durationList = [];
+  List<String> levelList = [];
+  List<String> activityList = [];
   List days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
   List aimedText = [
     'kids',
-    'Ladies',
     'Gents',
-    'Families',
-    'Everyone',
+    'Ladies',
+    'Adults',
+    'Mixed Gender',
+    'Girls',
   ];
   List dependencyText = [
-    'Weather',
+    'Licensed',
+    'Weather Conditions',
     'Health Conditions',
-    'License',
+    'Heat',
+    'Chillness',
+    'Climate',
   ];
+  List<bool> dependencyValue = [false, false, false, false, false, false];
   List activityText = [
     'Transportation for gathering area',
     'Drinks ',
@@ -90,19 +111,18 @@ class _DescriptionState extends State<Description> {
 
   List<bool> daysValue = [false, false, false, false, false, false, false];
   List<bool> activityValue = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false
+    //false,
+    // false,
+    // false,
+    // false,
+    // false,
+    // false,
+    // false,
+    // false
   ];
 
-  List<bool> aimedValue = [false, false, false, false, false];
-  List<bool> dependencyValue = [false, false, false];
-  bool value = false;
+  List<bool> aimedValue = [false, false, false, false, false, false];
+
   abc() {}
   void addActivites() {
     showDialog(
@@ -112,6 +132,7 @@ class _DescriptionState extends State<Description> {
             backgroundColor: Colors.transparent,
             child: SizedBox(
               height: MediaQuery.of(context).size.height / 1.5,
+              width: MediaQuery.of(context).size.width / 1.2,
               child: Card(
                   elevation: 5,
                   shape: RoundedRectangleBorder(
@@ -136,9 +157,9 @@ class _DescriptionState extends State<Description> {
                         ),
                         const SizedBox(height: 30),
                         Wrap(
-                          children: List.generate(activityText.length, (index) {
+                          children: List.generate(activityList.length, (index) {
                             return SizedBox(
-                              width: MediaQuery.of(context).size.width / 1,
+                              //width: MediaQuery.of(context).size.width / 1,
                               child: Column(
                                 children: [
                                   CheckboxListTile(
@@ -150,14 +171,15 @@ class _DescriptionState extends State<Description> {
                                         horizontal: 0, vertical: -4),
                                     activeColor: greyProfileColor,
                                     checkColor: bluishColor,
+                                    selected: activityValue[index],
                                     value: activityValue[index],
-                                    onChanged: ((bool? value2) {
+                                    onChanged: (value) {
                                       setState(() {
-                                        activityValue[index] = value2!;
+                                        activityValue[index] = value!;
                                       });
-                                    }),
+                                    },
                                     title: MyText(
-                                      text: activityText[index],
+                                      text: activityList[index],
                                       color: greyColor,
                                       fontFamily: 'Raleway',
                                       size: 18,
@@ -203,6 +225,12 @@ class _DescriptionState extends State<Description> {
   void initState() {
     super.initState();
     rList.insert(0, "Region");
+    sFilterList.insert(0, "Service Type");
+    durationList.insert(0, "Duration");
+    levelList.insert(0, "Select Level");
+    cList.insert(0, "Service Category");
+    formattedDate = 'Start Date';
+    endDate = "End Date";
     // cList.insert(0, "Category");
     getData();
     getRegions();
@@ -212,6 +240,8 @@ class _DescriptionState extends State<Description> {
   @override
   void dispose() {
     nameController.dispose();
+    infoController.dispose();
+    seatsController.dispose();
     super.dispose();
   }
 
@@ -225,7 +255,7 @@ class _DescriptionState extends State<Description> {
     );
   }
 
-  void parseCategories(List<CategoryModel> cm) {
+  void parseCategories(List<CategoryFilterModel> cm) {
     cm.forEach(
       (element) {
         if (element.category.isNotEmpty) {
@@ -233,6 +263,41 @@ class _DescriptionState extends State<Description> {
         }
       },
     );
+  }
+
+  void parseService(List<ServiceTypeFilterModel> st) {
+    st.forEach((element) {
+      if (element.type.isNotEmpty) {
+        sFilterList.add(element.type);
+      }
+    });
+  }
+
+  void parseDuration(List<DurationsModel> dm) {
+    dm.forEach((element) {
+      if (element.duration.isNotEmpty) {
+        durationList.add(element.duration);
+      }
+    });
+  }
+
+  void parseLevel(List<LevelFilterModel> lm) {
+    lm.forEach((element) {
+      if (element.level.isNotEmpty) {
+        levelList.add(element.level);
+      }
+    });
+  }
+
+  void parseActivity(List<ActivitiesIncludeModel> am) {
+    am.forEach((element) {
+      if (element.activity.isNotEmpty) {
+        activityList.add(element.activity);
+      }
+    });
+    activityList.forEach((element) {
+      activityValue.add(false);
+    });
   }
 
   void getData() async {
@@ -331,7 +396,7 @@ class _DescriptionState extends State<Description> {
       a.forEach((act) {
         int id = int.tryParse(act['id'].toString()) ?? 0;
         ActivitiesIncludeModel activities =
-            ActivitiesIncludeModel(id, act['id'].toString());
+            ActivitiesIncludeModel(id, act['activity'].toString());
         activitiesFilter.add(activities);
       });
       List<dynamic> r = result['regions'];
@@ -351,6 +416,12 @@ class _DescriptionState extends State<Description> {
           activitiesFilter,
           regionFilter);
       fDM.add(fm);
+      parseService(serviceFilter);
+      parseDuration(durationFilter);
+      parseLevel(levelFilter);
+      parseCategories(categoryFilter);
+      parseLevel(levelFilter);
+      parseActivity(activitiesFilter);
     }
   }
 
@@ -384,6 +455,29 @@ class _DescriptionState extends State<Description> {
     }
   }
 
+  Future<void> _selectDate(BuildContext context, var givenDate) async {
+    pickedDate = await showDatePicker(
+        context: context,
+        initialDate: currentDate,
+        firstDate: DateTime(DateTime.now().day - 1),
+        lastDate: DateTime(2050));
+    if (pickedDate != null && pickedDate != currentDate) {
+      if (givenDate == 'Start Date') {
+        setState(() {
+          var date = DateTime.parse(pickedDate.toString());
+          formattedDate = "${date.day}-${date.month}-${date.year}";
+          currentDate = pickedDate!;
+        });
+      } else {
+        setState(() {
+          var date = DateTime.parse(pickedDate.toString());
+          endDate = "${date.day}-${date.month}-${date.year}";
+          currentDate = pickedDate!;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -391,20 +485,70 @@ class _DescriptionState extends State<Description> {
         children: [
           const SizedBox(height: 20),
           TFWithSize('Adventure Name', nameController, 12, lightGreyColor, 1),
+          //const SizedBox(height: 20),
+          // GestureDetector(onTap: getRegions, child: const Text("Test")),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: DdButton(
+                  2.4,
+                  dropDown: "Oman",
+                  dropDownList: countryList,
+                ),
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Expanded(child: RegionDropDown(regionFilter)),
+              // DdButton(
+              //   2.4,
+              //   dropDown: "Region",
+              //   dropDownList: rList,
+              // )
+            ],
+          ),
           const SizedBox(height: 20),
-          GestureDetector(onTap: getRegions, child: Text("Test")),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: ServiceSectorDropDown(filterSectors),
+              ),
+              // const SizedBox(
+              //   width: 5,
+              // ),
+              // Expanded(
+              //   child: ServiceSectorDropDown(cList),
+              // ),
+              // DdButton(
+              //   2.4,
+              //   dropDown: "Training",
+              //   dropDownList: serviceSector,
+              // ),
+              // DdButton(
+              //   2.4,
+              //   dropDown: "Service Category",
+              //   dropDownList: cList,
+              // ),
+            ],
+          ),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               DdButton(
                 2.4,
-                dropDown: "Oman",
-                dropDownList: countryList,
+                dropDown: "Service Type",
+                dropDownList: sFilterList,
               ),
               DdButton(
                 2.4,
-                dropDown: "Region",
-                dropDownList: rList,
+                dropDown: "Duration",
+                dropDownList: durationList,
               )
             ],
           ),
@@ -414,32 +558,15 @@ class _DescriptionState extends State<Description> {
             children: [
               DdButton(
                 2.4,
-                dropDown: "Training",
-                dropDownList: serviceSector,
+                dropDown: "Select Level",
+                dropDownList: levelList,
               ),
-              DdButton(
-                2.4,
-                dropDown: "Category",
-                dropDownList: cList,
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [DdButton(2.4), DdButton(2.4)],
-          // ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // DdButton(2.4),
               TFWithSize(
-                  'Available Seats', nameController, 16, lightGreyColor, 2.4)
+                  'Available Seats', seatsController, 16, lightGreyColor, 2.4)
             ],
           ),
           const SizedBox(height: 20),
-          MultiLineField('Type Information', 4, lightGreyColor, nameController),
+          MultiLineField('Type Information', 4, lightGreyColor, infoController),
           const Divider(),
           Align(
             alignment: Alignment.centerLeft,
@@ -452,12 +579,12 @@ class _DescriptionState extends State<Description> {
           Row(
             children: [
               Checkbox(
-                  value: value,
+                  value: particularWeekDays,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24)),
                   onChanged: (bool? value1) {
                     setState(() {
-                      value = value1!;
+                      particularWeekDays = value1!;
                     });
                   }),
               MyText(
@@ -476,62 +603,144 @@ class _DescriptionState extends State<Description> {
                     text: days[index],
                     color: blackTypeColor,
                     align: TextAlign.center,
-                    size: 9,
+                    size: 14,
                   ),
                   Checkbox(
-                      value: daysValue[index],
-                      onChanged: (bool? value1) {
-                        setState(() {
-                          daysValue[index] = value1!;
-                        });
-                      }),
+                    value: daysValue[index],
+                    onChanged: (bool? value) {
+                      setState(
+                        () {
+                          daysValue[index] = value!;
+                        },
+                      );
+                    },
+                  ),
                 ],
               );
             }),
           ),
-          Row(
-            children: [
-              Checkbox(
-                  value: value,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24)),
-                  onChanged: (bool? value1) {
-                    setState(() {
-                      value = value1!;
-                    });
-                  }),
-              MyText(
-                text: 'Every particular calendar date',
-                color: blackTypeColor,
-                align: TextAlign.center,
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Expanded(
-                child: TFWithSizeImage(
-                    'Start Date',
-                    nameController,
-                    16,
-                    lightGreyColor,
-                    2.5,
-                    Icons.calendar_month_outlined,
-                    bluishColor),
-              ),
-              Expanded(
-                child: TFWithSizeImage(
-                    'End Date',
-                    nameController,
-                    16,
-                    lightGreyColor,
-                    2.5,
-                    Icons.calendar_month_outlined,
-                    bluishColor),
-              ),
-            ],
-          ),
+          particularWeekDays
+              ? Container()
+              : SizedBox(
+                  height: 110,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Checkbox(
+                              value: particularDay,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24)),
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  particularDay = value!;
+                                });
+                              }),
+                          MyText(
+                            text: 'Every particular calendar date',
+                            color: blackTypeColor,
+                            align: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () => _selectDate(context, formattedDate),
+                              child: Container(
+                                height: 50,
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 0),
+                                //width: MediaQuery.of(context).size.width / 1,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: lightGreyColor,
+                                    border: Border.all(
+                                        width: 1,
+                                        color: greyColor.withOpacity(0.2))),
+                                child: ListTile(
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 0, horizontal: 10),
+                                  leading: Text(
+                                    formattedDate.toString(),
+                                    style: TextStyle(
+                                        color: blackColor.withOpacity(0.6)),
+                                  ),
+                                  trailing: Icon(
+                                    Icons.calendar_today,
+                                    color: blackColor.withOpacity(0.6),
+                                    size: 20,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          // GestureDetector(
+                          //   onTap: () => _selectDate(context),
+                          //   child: Expanded(
+                          //     child: TFWithSizeImage(
+                          //         'Start Date',
+                          //         startDateController,
+                          //         16,
+                          //         lightGreyColor,
+                          //         2.5,
+                          //         Icons.calendar_month_outlined,
+                          //         bluishColor),
+                          //   ),
+                          // ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () => _selectDate(context, endDate),
+                              child: Container(
+                                height: 50,
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 0),
+                                //width: MediaQuery.of(context).size.width / 1,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: lightGreyColor,
+                                  border: Border.all(
+                                    width: 1,
+                                    color: greyColor.withOpacity(0.2),
+                                  ),
+                                ),
+                                child: ListTile(
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 0, horizontal: 10),
+                                  leading: Text(
+                                    endDate.toString(),
+                                    style: TextStyle(
+                                        color: blackColor.withOpacity(0.6)),
+                                  ),
+                                  trailing: Icon(
+                                    Icons.calendar_today,
+                                    color: blackColor.withOpacity(0.6),
+                                    size: 20,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          // Expanded(
+                          //   child: TFWithSizeImage(
+                          //       'End Date',
+                          //       endDateController,
+                          //       16,
+                          //       lightGreyColor,
+                          //       2.5,
+                          //       Icons.calendar_month_outlined,
+                          //       bluishColor),
+                          // ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
           const SizedBox(
             height: 20,
           ),
@@ -574,7 +783,10 @@ class _DescriptionState extends State<Description> {
           const SizedBox(
             height: 20,
           ),
-          const Divider(),
+          Divider(
+            thickness: 1.5,
+            color: blackColor.withOpacity(0.5),
+          ),
           const SizedBox(
             height: 20,
           ),
@@ -583,8 +795,9 @@ class _DescriptionState extends State<Description> {
             child: MyText(
               text: 'Aimed For',
               color: blackTypeColor1,
+              size: 16,
               align: TextAlign.center,
-              weight: FontWeight.w500,
+              weight: FontWeight.bold,
             ),
           ),
           Wrap(
@@ -601,8 +814,8 @@ class _DescriptionState extends State<Description> {
                   ),
                   visualDensity:
                       const VisualDensity(horizontal: 0, vertical: -4),
-                  activeColor: greyProfileColor,
-                  checkColor: bluishColor,
+                  activeColor: bluishColor,
+                  checkColor: whiteColor,
                   value: aimedValue[index],
                   onChanged: ((bool? value2) {
                     setState(() {
@@ -611,18 +824,22 @@ class _DescriptionState extends State<Description> {
                   }),
                   title: MyText(
                     text: aimedText[index],
-                    color: blackTypeColor,
+                    color: blackTypeColor.withOpacity(0.5),
                     fontFamily: 'Raleway',
-                    size: 18,
+                    size: 16,
+                    weight: FontWeight.w500,
                   ),
                 ),
               );
             }),
           ),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
-          const Divider(),
+          Divider(
+            thickness: 1.5,
+            color: blackColor.withOpacity(0.4),
+          ),
           const SizedBox(
             height: 20,
           ),
@@ -632,7 +849,8 @@ class _DescriptionState extends State<Description> {
               text: 'Dependency',
               color: blackTypeColor1,
               align: TextAlign.center,
-              weight: FontWeight.w500,
+              weight: FontWeight.bold,
+              size: 16,
             ),
           ),
           Wrap(
@@ -649,8 +867,8 @@ class _DescriptionState extends State<Description> {
                   ),
                   visualDensity:
                       const VisualDensity(horizontal: 0, vertical: -4),
-                  activeColor: greyProfileColor,
-                  checkColor: bluishColor,
+                  activeColor: bluishColor,
+                  checkColor: whiteColor,
                   value: dependencyValue[index],
                   onChanged: ((bool? value2) {
                     setState(() {
@@ -659,35 +877,41 @@ class _DescriptionState extends State<Description> {
                   }),
                   title: MyText(
                     text: dependencyText[index],
-                    color: greyColor,
+                    color: blackTypeColor1.withOpacity(0.5),
                     fontFamily: 'Raleway',
-                    size: 18,
+                    weight: FontWeight.w500,
+                    size: 16,
                   ),
                 ),
               );
             }),
           ),
-          Divider(),
+          Divider(
+            thickness: 1.5,
+            color: blackColor.withOpacity(0.4),
+          ),
           Align(
             alignment: Alignment.centerLeft,
             child: MyText(
-              text: 'Registration Closure By',
-              color: blackTypeColor1,
+              text: 'Registration Closed By',
+              color: greyShadeColor,
               align: TextAlign.center,
               weight: FontWeight.w500,
+              size: 16,
             ),
           ),
           Row(
             children: [
               MyText(
                 text: 'Days before the activity starts',
-                color: blackTypeColor,
+                color: greyShadeColor,
                 align: TextAlign.center,
+                size: 14,
               ),
               const SizedBox(
                 width: 10,
               ),
-              TFWithSize('2', nameController, 16, lightGreyColor, 7.2)
+              TFWithSize('2', nameController, 16, lightGreyColor, 8)
             ],
           ),
         ],

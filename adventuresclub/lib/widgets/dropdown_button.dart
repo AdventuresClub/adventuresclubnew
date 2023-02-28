@@ -35,8 +35,8 @@ class _DdButtonState extends State<DdButton> {
             image: ExactAssetImage(
               'images/drop_down.png',
             ),
-            height: 10,
-            // width: 5,
+            height: 14,
+            width: 16,
           ),
           elevation: 12,
           style: const TextStyle(color: blackTypeColor),

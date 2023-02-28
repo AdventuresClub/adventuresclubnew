@@ -1,12 +1,16 @@
+// ignore_for_file: avoid_print
+
+import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
+import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
-import 'package:adventuresclub/widgets/dropdown_button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
 import 'package:adventuresclub/widgets/text_fields/multiline_field.dart';
-import 'package:adventuresclub/widgets/text_fields/tf_with_Size_image.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class Cost extends StatefulWidget {
   const Cost({super.key});
@@ -17,7 +21,8 @@ class Cost extends StatefulWidget {
 
 class _CostState extends State<Cost> {
   TextEditingController controller = TextEditingController();
-  addActivites() {
+  int countryId = 0;
+  void addActivites() {
     showDialog(
       context: context,
       builder: (context) {
@@ -80,10 +85,49 @@ class _CostState extends State<Cost> {
     );
   }
 
-  goToBottomNavigation() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return const BottomNavigation();
-    }));
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+
+  void goToBottomNavigation() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return const BottomNavigation();
+        },
+      ),
+    );
+  }
+
+  void getData() async {
+    countryId =
+        Provider.of<CompleteProfileProvider>(context, listen: false).countryId;
+  }
+
+  void createService() async {
+    try {
+      var response = await http.post(
+          Uri.parse(
+              "https://adventuresclub.net/adventureClub/api/v1/create_service"),
+          body: {
+            'customer_id': "3",
+            'adventure_name': "",
+            "country_id": countryId.toString(),
+            'region': "",
+
+            // 'mobile_code': ccCode,
+          });
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      print(response.statusCode);
+      print(response.body);
+      print(response.headers);
+      print(decodedResponse['data']['user_id']);
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   abc() {}
@@ -92,7 +136,7 @@ class _CostState extends State<Cost> {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Column(children: [
-        Container(
+        SizedBox(
           width: MediaQuery.of(context).size.width / 1,
           child: TextField(
             decoration: InputDecoration(
@@ -130,21 +174,25 @@ class _CostState extends State<Cost> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            TFWithSize(
-              'Set Cost',
-              controller,
-              16,
-              lightGreyColor,
-              3.4,
+            Expanded(
+              child: TFWithSize(
+                'Set Cost',
+                controller,
+                16,
+                lightGreyColor,
+                3.4,
+              ),
             ),
-            TFWithSize(
-              'Set Cost',
-              controller,
-              16,
-              lightGreyColor,
-              3.4,
+            Expanded(
+              child: TFWithSize(
+                'Set Cost',
+                controller,
+                16,
+                lightGreyColor,
+                3.4,
+              ),
             ),
-            DdButton(5.5)
+            //DdButton(5.5)
           ],
         ),
         const SizedBox(height: 15),

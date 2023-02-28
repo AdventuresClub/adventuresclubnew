@@ -32,6 +32,12 @@ class CompleteProfileProvider with ChangeNotifier {
   int id = 0;
   // var dateFormat = DateFormat.yMMMMd('en_US');
   List<String> mediaFiles = [];
+  //
+
+  int selectedRegionId = 0;
+  String selectedRegion = "";
+  int selectedSectorId = 0;
+  String selectedSector = "";
   final List<Map<String, dynamic>> steps = [
     {
       'heading': 'Just follow simple four steps to list up your adventure',
@@ -55,6 +61,19 @@ class CompleteProfileProvider with ChangeNotifier {
   int currentStep = 0;
   int currentGenderIndex = 0;
   String selectedGender = '';
+
+  void regionSelection(String region, int id) {
+    selectedRegion = region;
+    selectedRegionId = id;
+    notifyListeners();
+  }
+
+  void sectorSelection(String region, int id) {
+    selectedSector = region;
+    selectedRegionId = id;
+    notifyListeners();
+  }
+
   void selectGender(
     int index,
     String gender,
