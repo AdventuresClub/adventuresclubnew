@@ -41,15 +41,19 @@ class _HomeState extends State<Home> {
                   text: 'Recommended Activity',
                   weight: FontWeight.w500,
                   color: greyColor,
-                  size: 14,
+                  size: 16,
                 ),
               ),
             ),
+            const SizedBox(
+              height: 10,
+            ),
             Container(
               alignment: Alignment.centerLeft,
-              height: 200,
+              height: 210,
               child: const RecommendedActivity(),
             ),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Align(

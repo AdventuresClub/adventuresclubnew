@@ -1,45 +1,42 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/models/filter_data_model/sector_filter_model.dart';
 import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../models/filter_data_model/durations_model.dart';
+import '../../models/filter_data_model/service_types_filter.dart';
 
-class ServiceSectorDropDown extends StatefulWidget {
-  final List<SectorFilterModel> sFilter;
-  const ServiceSectorDropDown(this.sFilter, {super.key});
+class DurationDropDown extends StatefulWidget {
+  final List<DurationsModel> dFilter;
+  const DurationDropDown(this.dFilter, {super.key});
 
   @override
-  State<ServiceSectorDropDown> createState() => ServiceSectorDropDownState();
+  State<DurationDropDown> createState() => DurationDropDownState();
 }
 
-class ServiceSectorDropDownState extends State<ServiceSectorDropDown> {
+class DurationDropDownState extends State<DurationDropDown> {
   String country = "";
-  List<String> rList = ["Training", "Tour"];
   //String selectedRegion = "";
   int selectedId = 0;
-  String selectedRegion = "Service Sector";
+  String selectedRegion = "Duration";
   int id = 0;
 
   @override
   void initState() {
     super.initState();
     // parseRegions(widget.rFilter);
-    widget.sFilter.insert(
-        0,
-        SectorFilterModel(
-            7,
-            "Service Sector",
-            "selection_manager1665463304.png",
-            1,
-            "2022-10-11 10:11:44",
-            "2022-10-11 10:11:44",
-            ""));
+    widget.dFilter.insert(
+      0,
+      DurationsModel(
+        7,
+        "Duration",
+      ),
+    );
   }
 
-  void sId(SectorFilterModel sFilter) {
+  void sId(DurationsModel dFilter) {
     Provider.of<CompleteProfileProvider>(context, listen: false)
-        .sectorSelection(sFilter.sector, sFilter.id);
+        .durationSelection(dFilter.duration, dFilter.id);
   }
 
   @override
@@ -72,16 +69,17 @@ class ServiceSectorDropDownState extends State<ServiceSectorDropDown> {
               // selectedId =
             });
           },
-          items: widget.sFilter
-              .map<DropdownMenuItem<String>>((SectorFilterModel sFilter) {
-            return DropdownMenuItem<String>(
-              onTap: () => sId(
-                sFilter,
-              ),
-              value: sFilter.sector,
-              child: Text(sFilter.sector),
-            );
-          }).toList(),
+          items: widget.dFilter.map<DropdownMenuItem<String>>(
+            (DurationsModel dFilter) {
+              return DropdownMenuItem<String>(
+                onTap: () => sId(
+                  dFilter,
+                ),
+                value: dFilter.duration,
+                child: Text(dFilter.duration),
+              );
+            },
+          ).toList(),
         ),
       ),
     );

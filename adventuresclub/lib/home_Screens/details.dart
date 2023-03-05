@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field, prefer_final_fields
+
 import 'dart:async';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/book_ticket.dart';
@@ -28,7 +30,7 @@ class _DetailsState extends State<Details> {
     super.dispose();
     _pageViewController.dispose(); // dispose the PageController
 
-    _timer?.cancel();
+    _timer.cancel();
   }
 
   int _currentPage = 0;

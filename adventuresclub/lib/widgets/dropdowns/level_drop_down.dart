@@ -1,45 +1,40 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/models/filter_data_model/sector_filter_model.dart';
+import 'package:adventuresclub/models/filter_data_model/level_filter_mode.dart';
 import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../models/filter_data_model/service_types_filter.dart';
 
-class ServiceSectorDropDown extends StatefulWidget {
-  final List<SectorFilterModel> sFilter;
-  const ServiceSectorDropDown(this.sFilter, {super.key});
+class LevelDropDown extends StatefulWidget {
+  final List<LevelFilterModel> lFilter;
+  const LevelDropDown(this.lFilter, {super.key});
 
   @override
-  State<ServiceSectorDropDown> createState() => ServiceSectorDropDownState();
+  State<LevelDropDown> createState() => LevelDropDownState();
 }
 
-class ServiceSectorDropDownState extends State<ServiceSectorDropDown> {
+class LevelDropDownState extends State<LevelDropDown> {
   String country = "";
-  List<String> rList = ["Training", "Tour"];
   //String selectedRegion = "";
   int selectedId = 0;
-  String selectedRegion = "Service Sector";
+  String selectedRegion = "Select Level";
   int id = 0;
 
   @override
   void initState() {
     super.initState();
     // parseRegions(widget.rFilter);
-    widget.sFilter.insert(
-        0,
-        SectorFilterModel(
-            7,
-            "Service Sector",
-            "selection_manager1665463304.png",
-            1,
-            "2022-10-11 10:11:44",
-            "2022-10-11 10:11:44",
-            ""));
+    widget.lFilter.insert(
+      0,
+      LevelFilterModel(0, "Select Level", "selection_manager1665463304.png", 1,
+          "2022-10-11 10:11:44", "2022-10-11 10:11:44", ""),
+    );
   }
 
-  void sId(SectorFilterModel sFilter) {
+  void sId(LevelFilterModel lFilter) {
     Provider.of<CompleteProfileProvider>(context, listen: false)
-        .sectorSelection(sFilter.sector, sFilter.id);
+        .levelSelection(lFilter.level, lFilter.id);
   }
 
   @override
@@ -72,16 +67,17 @@ class ServiceSectorDropDownState extends State<ServiceSectorDropDown> {
               // selectedId =
             });
           },
-          items: widget.sFilter
-              .map<DropdownMenuItem<String>>((SectorFilterModel sFilter) {
-            return DropdownMenuItem<String>(
-              onTap: () => sId(
-                sFilter,
-              ),
-              value: sFilter.sector,
-              child: Text(sFilter.sector),
-            );
-          }).toList(),
+          items: widget.lFilter.map<DropdownMenuItem<String>>(
+            (LevelFilterModel lFilter) {
+              return DropdownMenuItem<String>(
+                onTap: () => sId(
+                  lFilter,
+                ),
+                value: lFilter.level,
+                child: Text(lFilter.level),
+              );
+            },
+          ).toList(),
         ),
       ),
     );

@@ -16,9 +16,12 @@ import 'package:adventuresclub/home_Screens/accounts/profile/profile.dart';
 import 'package:adventuresclub/home_Screens/accounts/health_condition.dart';
 import 'package:adventuresclub/home_Screens/accounts/settings/settings.dart';
 import 'package:adventuresclub/models/profile_models/profile_become_partner.dart';
+import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
+import 'package:adventuresclub/sign_up/sign_in.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class Account extends StatefulWidget {
   const Account({super.key});
@@ -349,9 +352,13 @@ class _AccountState extends State<Account> {
                       }));
                     }
                     if (tile1Text[index] == 'Log out') {
+                      //                    void logout() async {
+                      //          Provider.of<CompleteProfileProvider>(context, listen: false).clearAll();
+                      //       getprefs!.clear();
+                      // }
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (_) {
-                        return const CompleteProfile();
+                        return const SignIn();
                       }));
                     }
                   }),

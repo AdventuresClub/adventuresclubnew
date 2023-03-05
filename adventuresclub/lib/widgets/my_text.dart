@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class MyText extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
   var text, color, weight, align, decoration, fontFamily, fontStyle;
-  double? size, height;
+  double? size, height, spacing;
   double? paddingTop, paddingLeft, paddingRight, paddingBottom, letterSpacing;
 
   // ignore: prefer_typing_uninitialized_variables
@@ -47,6 +47,7 @@ class MyText extends StatelessWidget {
         child: Text(
           "$text",
           style: TextStyle(
+            wordSpacing: spacing,
             fontSize: size,
             color: color,
             fontWeight: weight,

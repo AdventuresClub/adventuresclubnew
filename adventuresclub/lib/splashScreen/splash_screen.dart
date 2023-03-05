@@ -36,7 +36,7 @@ class SplashScreenState extends State<SplashScreen> {
                 image: ExactAssetImage('images/logo.png'), fit: BoxFit.cover),
           ),
           width: MediaQuery.of(context).size.width / 1.6,
-          height: MediaQuery.of(context).size.height / 4.6,
+          height: MediaQuery.of(context).size.height / 4,
         ),
       ),
     );

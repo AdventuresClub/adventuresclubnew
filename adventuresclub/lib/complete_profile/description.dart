@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls
+// ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls, prefer_typing_uninitialized_variables
 
 import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
@@ -17,15 +17,19 @@ import 'package:adventuresclub/models/services/aimed_for_model.dart';
 import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/dropdown_button.dart';
+import 'package:adventuresclub/widgets/dropdowns/duration_drop_down.dart';
+import 'package:adventuresclub/widgets/dropdowns/level_drop_down.dart';
 import 'package:adventuresclub/widgets/dropdowns/region_dropdown.dart';
+import 'package:adventuresclub/widgets/dropdowns/service_category.dart';
+import 'package:adventuresclub/widgets/dropdowns/service_type.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
 import 'package:adventuresclub/widgets/text_fields/multiline_field.dart';
-import 'package:adventuresclub/widgets/text_fields/tf_with_Size_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/filter_data_model/aimed_for_filter.dart';
 import '../widgets/dropdowns/service_sector.dart';
 
 class Description extends StatefulWidget {
@@ -36,16 +40,19 @@ class Description extends StatefulWidget {
 }
 
 class _DescriptionState extends State<Description> {
-  TextEditingController nameController = TextEditingController();
   TextEditingController infoController = TextEditingController();
   TextEditingController seatsController = TextEditingController();
   TextEditingController startDateController = TextEditingController();
   TextEditingController endDateController = TextEditingController();
   int countryId = 0;
+  bool loading = false;
   Map mapFilter = {};
+  Map mapAimedFilter = {};
   bool particularWeekDays = false;
   bool particularDay = false;
   DateTime currentDate = DateTime.now();
+  List<int> activityId = [];
+  List<String> activity = [];
   var formattedDate;
   var endDate;
   List<SectorFilterModel> filterSectors = [];
@@ -56,13 +63,14 @@ class _DescriptionState extends State<Description> {
   List<DurationsModel> durationFilter = [];
   List<ActivitiesIncludeModel> activitiesFilter = [];
   List<RegionFilterModel> regionFilter = [];
-  List<AimedForModel> aimedFilter = [];
+  List<AimedForFilter> aimedFilter = [];
+  List<AimedForModel> am = [];
   List<FilterDataModel> fDM = [];
   DateTime? pickedDate;
+  int? currentIndex;
 
   List<String> countryList = [
     "Oman",
-    "India",
   ];
   List<String> cList = [
     // "Service Category",
@@ -82,12 +90,12 @@ class _DescriptionState extends State<Description> {
   List<String> activityList = [];
   List days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
   List aimedText = [
-    'kids',
-    'Gents',
-    'Ladies',
-    'Adults',
-    'Mixed Gender',
-    'Girls',
+    // 'kids',
+    // 'Gents',
+    // 'Ladies',
+    // 'Adults',
+    // 'Mixed Gender',
+    // 'Girls',
   ];
   List dependencyText = [
     'Licensed',
@@ -121,9 +129,50 @@ class _DescriptionState extends State<Description> {
     // false
   ];
 
-  List<bool> aimedValue = [false, false, false, false, false, false];
+  List<bool> aimedValue = [
+    //false, false, false, false, false, false
+  ];
 
-  abc() {}
+  void abc() {
+    Navigator.of(context).pop();
+    List<ActivitiesIncludeModel> a = [];
+    for (int i = 0; i < activityValue.length; i++) {
+      if (activityValue[i]) {
+        a.add(activitiesFilter[i]);
+      }
+    }
+    sId(a);
+  }
+
+  void getCurrentIndex() {
+    int cIndex = Provider.of<CompleteProfileProvider>(context, listen: true)
+        .currentIndex;
+    if (cIndex == 2) {
+      aimed();
+    }
+  }
+
+  void aimed() {
+    List<AimedForFilter> f = [];
+    for (int i = 0; i < aimedValue.length; i++) {
+      if (aimedValue[i]) {
+        f.add(aimedFilter[i]);
+      }
+    }
+    aimedForF(f);
+  }
+
+  void aimedForF(List<AimedForFilter> am) async {
+    List<String> a = [];
+    List<int> id = [];
+    am.forEach((element) {
+      a.add(element.aimedName);
+      id.add(element.id);
+    });
+    Provider.of<CompleteProfileProvider>(context, listen: false)
+        .aimedLevel(a, id);
+  }
+
   void addActivites() {
     showDialog(
         context: context,
@@ -152,7 +201,7 @@ class _DescriptionState extends State<Description> {
                               text: 'Activities Included',
                               weight: FontWeight.bold,
                               color: blackColor,
-                              size: 14,
+                              size: 16,
                               fontFamily: 'Raleway'),
                         ),
                         const SizedBox(height: 30),
@@ -176,10 +225,14 @@ class _DescriptionState extends State<Description> {
                                     onChanged: (value) {
                                       setState(() {
                                         activityValue[index] = value!;
+                                        // activityId
+                                        //     .add(activitiesFilter[index].id);
+                                        // activity.add(
+                                        //     activitiesFilter[index].activity);
                                       });
                                     },
                                     title: MyText(
-                                      text: activityList[index],
+                                      text: activitiesFilter[index].activity,
                                       color: greyColor,
                                       fontFamily: 'Raleway',
                                       size: 18,
@@ -216,6 +269,17 @@ class _DescriptionState extends State<Description> {
         });
   }
 
+  void sId(List<ActivitiesIncludeModel> activity) async {
+    List<String> a = [];
+    List<int> id = [];
+    activity.forEach((element) {
+      a.add(element.activity);
+      id.add(element.id);
+    });
+    Provider.of<CompleteProfileProvider>(context, listen: false)
+        .activityLevel(a, id);
+  }
+
   // void getData() async {
   //   SharedPreferences prefs = await Constants.getPrefs();
   //   p
@@ -239,7 +303,6 @@ class _DescriptionState extends State<Description> {
 
   @override
   void dispose() {
-    nameController.dispose();
     infoController.dispose();
     seatsController.dispose();
     super.dispose();
@@ -300,6 +363,21 @@ class _DescriptionState extends State<Description> {
     });
   }
 
+  void parseAimed(List<AimedForFilter> am) {
+    am.forEach((element) {
+      if (element.aimedName.isNotEmpty) {
+        aimedText.add(element.aimedName);
+      }
+    });
+    aimedText.forEach((element) {
+      aimedValue.add(false);
+    });
+  }
+
+  // void parseAimedFor(List<>) {
+
+  // }
+
   void getData() async {
     countryId =
         Provider.of<CompleteProfileProvider>(context, listen: false).countryId;
@@ -307,7 +385,33 @@ class _DescriptionState extends State<Description> {
     //     Provider.of<CompleteProfileProvider>(context, listen: false).pCM;
   }
 
+  void aimedFor() async {
+    var response = await http.get(Uri.parse(
+        "https://adventuresclub.net/adventureClub/api/v1/getServiceFor"));
+    if (response.statusCode == 200) {
+      mapAimedFilter = json.decode(response.body);
+      List<dynamic> result = mapAimedFilter['message'];
+      result.forEach((element) {
+        int id = int.tryParse(element['id'].toString()) ?? 0;
+        AimedForFilter amf = AimedForFilter(
+            id,
+            element['AimedName'].toString() ?? "",
+            element['image'].toString() ?? "",
+            element['created_at'].toString() ?? "",
+            element['updated_at'].toString() ?? "",
+            element['deleted_at'].toString() ?? "",
+            0);
+        aimedFilter.add(amf);
+      });
+      parseAimed(aimedFilter);
+    }
+  }
+
   void getFilter() async {
+    aimedFor();
+    setState(() {
+      loading = true;
+    });
     var response = await http.get(Uri.parse(
         "https://adventuresclub.net/adventureClub/api/v1/filter_modal_data"));
     if (response.statusCode == 200) {
@@ -409,19 +513,21 @@ class _DescriptionState extends State<Description> {
           filterSectors,
           categoryFilter,
           serviceFilter,
-          aimedFilter,
+          am,
           countriesFilter,
           levelFilter,
           durationFilter,
           activitiesFilter,
           regionFilter);
       fDM.add(fm);
-      parseService(serviceFilter);
-      parseDuration(durationFilter);
-      parseLevel(levelFilter);
-      parseCategories(categoryFilter);
-      parseLevel(levelFilter);
+      // parseService(serviceFilter);
+      // parseDuration(durationFilter);
+      // parseLevel(levelFilter);
+      // parseCategories(categoryFilter);
       parseActivity(activitiesFilter);
+      setState(() {
+        loading = false;
+      });
     }
   }
 
@@ -476,446 +582,509 @@ class _DescriptionState extends State<Description> {
         });
       }
     }
+    getDates(formattedDate.toString(), endDate.toString());
+  }
+
+  void getDates(String startDate, String endData) {
+    Provider.of<CompleteProfileProvider>(context, listen: false).startDate =
+        startDate;
+    Provider.of<CompleteProfileProvider>(context, listen: false).endDate =
+        endData;
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const SizedBox(height: 20),
-          TFWithSize('Adventure Name', nameController, 12, lightGreyColor, 1),
-          //const SizedBox(height: 20),
-          // GestureDetector(onTap: getRegions, child: const Text("Test")),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: DdButton(
-                  2.4,
-                  dropDown: "Oman",
-                  dropDownList: countryList,
-                ),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Expanded(child: RegionDropDown(regionFilter)),
-              // DdButton(
-              //   2.4,
-              //   dropDown: "Region",
-              //   dropDownList: rList,
-              // )
-            ],
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: ServiceSectorDropDown(filterSectors),
-              ),
-              // const SizedBox(
-              //   width: 5,
-              // ),
-              // Expanded(
-              //   child: ServiceSectorDropDown(cList),
-              // ),
-              // DdButton(
-              //   2.4,
-              //   dropDown: "Training",
-              //   dropDownList: serviceSector,
-              // ),
-              // DdButton(
-              //   2.4,
-              //   dropDown: "Service Category",
-              //   dropDownList: cList,
-              // ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              DdButton(
-                2.4,
-                dropDown: "Service Type",
-                dropDownList: sFilterList,
-              ),
-              DdButton(
-                2.4,
-                dropDown: "Duration",
-                dropDownList: durationList,
-              )
-            ],
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              DdButton(
-                2.4,
-                dropDown: "Select Level",
-                dropDownList: levelList,
-              ),
-              TFWithSize(
-                  'Available Seats', seatsController, 16, lightGreyColor, 2.4)
-            ],
-          ),
-          const SizedBox(height: 20),
-          MultiLineField('Type Information', 4, lightGreyColor, infoController),
-          const Divider(),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: MyText(
-              text: 'Service Plan',
-              color: blackTypeColor1,
-              align: TextAlign.center,
-            ),
-          ),
-          Row(
-            children: [
-              Checkbox(
-                  value: particularWeekDays,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24)),
-                  onChanged: (bool? value1) {
-                    setState(() {
-                      particularWeekDays = value1!;
-                    });
-                  }),
-              MyText(
-                text: 'Every particular week days',
-                color: blackTypeColor,
-                align: TextAlign.center,
-              ),
-            ],
-          ),
-          Wrap(
-            direction: Axis.horizontal,
-            children: List.generate(days.length, (index) {
-              return Column(
+    return loading
+        ? Column(
+            children: const [CircularProgressIndicator(), Text("Loading...")],
+          )
+        : Consumer<CompleteProfileProvider>(
+            builder: (context, provider, child) {
+            return SingleChildScrollView(
+              child: Column(
                 children: [
-                  MyText(
-                    text: days[index],
-                    color: blackTypeColor,
-                    align: TextAlign.center,
-                    size: 14,
+                  const SizedBox(height: 20),
+                  TFWithSize('Adventure Name', provider.adventureNameController,
+                      12, lightGreyColor, 1),
+                  const SizedBox(height: 30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: DdButton(
+                          2.4,
+                          dropDown: "Oman",
+                          dropDownList: countryList,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(child: RegionDropDown(regionFilter)),
+                    ],
                   ),
-                  Checkbox(
-                    value: daysValue[index],
-                    onChanged: (bool? value) {
-                      setState(
-                        () {
-                          daysValue[index] = value!;
-                        },
-                      );
-                    },
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: ServiceSectorDropDown(filterSectors),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(child: ServiceCategoryDropDown(categoryFilter))
+                      // const SizedBox(
+                      //   width: 5,
+                      // ),
+                      // Expanded(
+                      //   child: ServiceSectorDropDown(cList),
+                      // ),
+                      // DdButton(
+                      //   2.4,
+                      //   dropDown: "Training",
+                      //   dropDownList: serviceSector,
+                      // ),
+                      // DdButton(
+                      //   2.4,
+                      //   dropDown: "Service Category",
+                      //   dropDownList: cList,
+                      // ),
+                    ],
                   ),
-                ],
-              );
-            }),
-          ),
-          particularWeekDays
-              ? Container()
-              : SizedBox(
-                  height: 110,
-                  child: Column(
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: ServiceTypeDropDown(serviceFilter),
+                      ),
+                      // DdButton(
+                      //   2.4,
+                      //   dropDown: "Service Type",
+                      //   dropDownList: sFilterList,
+                      // ),
+                      // DdButton(
+                      //   2.4,
+                      //   dropDown: "Duration",
+                      //   dropDownList: durationList,
+                      // ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(child: DurationDropDown(durationFilter))
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  // DdButton(
+                  //   2.4,
+                  //   dropDown: "Select Level",
+                  //   dropDownList: levelList,
+                  // ),
+                  Column(
                     children: [
                       Row(
                         children: [
-                          Checkbox(
-                              value: particularDay,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(24)),
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  particularDay = value!;
-                                });
-                              }),
-                          MyText(
-                            text: 'Every particular calendar date',
-                            color: blackTypeColor,
-                            align: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () => _selectDate(context, formattedDate),
-                              child: Container(
-                                height: 50,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 0),
-                                //width: MediaQuery.of(context).size.width / 1,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: lightGreyColor,
-                                    border: Border.all(
-                                        width: 1,
-                                        color: greyColor.withOpacity(0.2))),
-                                child: ListTile(
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 0, horizontal: 10),
-                                  leading: Text(
-                                    formattedDate.toString(),
-                                    style: TextStyle(
-                                        color: blackColor.withOpacity(0.6)),
-                                  ),
-                                  trailing: Icon(
-                                    Icons.calendar_today,
-                                    color: blackColor.withOpacity(0.6),
-                                    size: 20,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          // GestureDetector(
-                          //   onTap: () => _selectDate(context),
-                          //   child: Expanded(
-                          //     child: TFWithSizeImage(
-                          //         'Start Date',
-                          //         startDateController,
-                          //         16,
-                          //         lightGreyColor,
-                          //         2.5,
-                          //         Icons.calendar_month_outlined,
-                          //         bluishColor),
-                          //   ),
-                          // ),
+                          Expanded(child: LevelDropDown(levelFilter)),
                           const SizedBox(
                             width: 10,
                           ),
                           Expanded(
-                            child: GestureDetector(
-                              onTap: () => _selectDate(context, endDate),
-                              child: Container(
-                                height: 50,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 0),
-                                //width: MediaQuery.of(context).size.width / 1,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: lightGreyColor,
-                                  border: Border.all(
-                                    width: 1,
-                                    color: greyColor.withOpacity(0.2),
-                                  ),
-                                ),
-                                child: ListTile(
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 0, horizontal: 10),
-                                  leading: Text(
-                                    endDate.toString(),
-                                    style: TextStyle(
-                                        color: blackColor.withOpacity(0.6)),
-                                  ),
-                                  trailing: Icon(
-                                    Icons.calendar_today,
-                                    color: blackColor.withOpacity(0.6),
-                                    size: 20,
-                                  ),
-                                ),
-                              ),
-                            ),
+                            child: TFWithSize(
+                                'Available Seats',
+                                provider.availableSeats,
+                                16,
+                                lightGreyColor,
+                                2.4),
                           ),
-                          // Expanded(
-                          //   child: TFWithSizeImage(
-                          //       'End Date',
-                          //       endDateController,
-                          //       16,
-                          //       lightGreyColor,
-                          //       2.5,
-                          //       Icons.calendar_month_outlined,
-                          //       bluishColor),
-                          // ),
                         ],
                       ),
+                      const SizedBox(height: 20),
+                      MultiLineField('Type Information', 1, lightGreyColor,
+                          provider.infoController),
+                      const Divider(),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: MyText(
+                          text: 'Service Plan',
+                          color: blackTypeColor1,
+                          align: TextAlign.center,
+                        ),
+                      ),
+                      particularDay
+                          ? Container()
+                          : SizedBox(
+                              height: 120,
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Checkbox(
+                                          value: particularWeekDays,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(24)),
+                                          onChanged: (bool? value1) {
+                                            setState(() {
+                                              particularWeekDays = value1!;
+                                              provider.particularWeekDay =
+                                                  value1;
+                                            });
+                                          }),
+                                      MyText(
+                                        text: 'Every particular week days',
+                                        color: blackTypeColor,
+                                        align: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
+                                  Wrap(
+                                    direction: Axis.horizontal,
+                                    children:
+                                        List.generate(days.length, (index) {
+                                      return Column(
+                                        children: [
+                                          MyText(
+                                            text: days[index],
+                                            color: blackTypeColor,
+                                            align: TextAlign.center,
+                                            size: 14,
+                                          ),
+                                          Checkbox(
+                                            value: daysValue[index],
+                                            onChanged: (bool? value) {
+                                              setState(
+                                                () {
+                                                  // if () {
+
+                                                  // }
+                                                  daysValue[index] = value!;
+                                                },
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    }),
+                                  ),
+                                ],
+                              ),
+                            ),
                     ],
                   ),
-                ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Divider(),
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    MyText(
-                        text: 'Activities Includes',
-                        weight: FontWeight.w500,
-                        color: blackTypeColor1),
-                    MyText(
-                        text: '20 Activities included',
-                        weight: FontWeight.w400,
-                        color: blackTypeColor),
-                  ],
-                ),
-                Button(
-                    'Add Activities',
-                    bluishColor,
-                    bluishColor,
-                    whiteColor,
-                    14,
-                    addActivites,
-                    Icons.arrow_forward,
-                    whiteColor,
-                    true,
-                    2.5,
-                    'Roboto',
-                    FontWeight.w400,
-                    16)
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Divider(
-            thickness: 1.5,
-            color: blackColor.withOpacity(0.5),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: MyText(
-              text: 'Aimed For',
-              color: blackTypeColor1,
-              size: 16,
-              align: TextAlign.center,
-              weight: FontWeight.bold,
-            ),
-          ),
-          Wrap(
-            direction: Axis.vertical,
-            children: List.generate(aimedText.length, (index) {
-              return SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: CheckboxListTile(
-                  contentPadding: const EdgeInsets.only(
-                      left: 0, top: 5, bottom: 5, right: 25),
-                  side: const BorderSide(color: bluishColor),
-                  checkboxShape: const RoundedRectangleBorder(
-                    side: BorderSide(color: bluishColor),
+                  particularWeekDays
+                      ? Container()
+                      : SizedBox(
+                          height: 110,
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Checkbox(
+                                      value: particularDay,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(24)),
+                                      onChanged: (bool? value) {
+                                        setState(() {
+                                          particularDay = value!;
+                                          provider.particularDay = value;
+                                        });
+                                      }),
+                                  MyText(
+                                    text: 'Every particular calendar date',
+                                    color: blackTypeColor,
+                                    align: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap: () =>
+                                          _selectDate(context, formattedDate),
+                                      child: Container(
+                                        height: 50,
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 0),
+                                        //width: MediaQuery.of(context).size.width / 1,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: lightGreyColor,
+                                          border: Border.all(
+                                            width: 1,
+                                            color: greyColor.withOpacity(0.2),
+                                          ),
+                                        ),
+                                        child: ListTile(
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  vertical: 0, horizontal: 10),
+                                          leading: Text(
+                                            formattedDate.toString(),
+                                            style: TextStyle(
+                                                color: blackColor
+                                                    .withOpacity(0.6)),
+                                          ),
+                                          trailing: Icon(
+                                            Icons.calendar_today,
+                                            color: blackColor.withOpacity(0.6),
+                                            size: 20,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  // GestureDetector(
+                                  //   onTap: () => _selectDate(context),
+                                  //   child: Expanded(
+                                  //     child: TFWithSizeImage(
+                                  //         'Start Date',
+                                  //         startDateController,
+                                  //         16,
+                                  //         lightGreyColor,
+                                  //         2.5,
+                                  //         Icons.calendar_month_outlined,
+                                  //         bluishColor),
+                                  //   ),
+                                  // ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap: () =>
+                                          _selectDate(context, endDate),
+                                      child: Container(
+                                        height: 50,
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 0),
+                                        //width: MediaQuery.of(context).size.width / 1,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: lightGreyColor,
+                                          border: Border.all(
+                                            width: 1,
+                                            color: greyColor.withOpacity(0.2),
+                                          ),
+                                        ),
+                                        child: ListTile(
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  vertical: 0, horizontal: 10),
+                                          leading: Text(
+                                            endDate.toString(),
+                                            style: TextStyle(
+                                                color: blackColor
+                                                    .withOpacity(0.6)),
+                                          ),
+                                          trailing: Icon(
+                                            Icons.calendar_today,
+                                            color: blackColor.withOpacity(0.6),
+                                            size: 20,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  // Expanded(
+                                  //   child: TFWithSizeImage(
+                                  //       'End Date',
+                                  //       endDateController,
+                                  //       16,
+                                  //       lightGreyColor,
+                                  //       2.5,
+                                  //       Icons.calendar_month_outlined,
+                                  //       bluishColor),
+                                  // ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                  const Divider(),
+                  // activities container
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            MyText(
+                                text: 'Activities Includes',
+                                weight: FontWeight.w500,
+                                color: blackTypeColor1),
+                            MyText(
+                                text: '20 Activities included',
+                                weight: FontWeight.w400,
+                                color: blackTypeColor),
+                          ],
+                        ),
+                        Button(
+                            'Add Activities',
+                            bluishColor,
+                            bluishColor,
+                            whiteColor,
+                            14,
+                            addActivites,
+                            Icons.arrow_forward,
+                            whiteColor,
+                            true,
+                            2.5,
+                            'Roboto',
+                            FontWeight.w400,
+                            16)
+                      ],
+                    ),
                   ),
-                  visualDensity:
-                      const VisualDensity(horizontal: 0, vertical: -4),
-                  activeColor: bluishColor,
-                  checkColor: whiteColor,
-                  value: aimedValue[index],
-                  onChanged: ((bool? value2) {
-                    setState(() {
-                      aimedValue[index] = value2!;
-                    });
-                  }),
-                  title: MyText(
-                    text: aimedText[index],
-                    color: blackTypeColor.withOpacity(0.5),
-                    fontFamily: 'Raleway',
-                    size: 16,
-                    weight: FontWeight.w500,
+                  const SizedBox(
+                    height: 20,
                   ),
-                ),
-              );
-            }),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Divider(
-            thickness: 1.5,
-            color: blackColor.withOpacity(0.4),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: MyText(
-              text: 'Dependency',
-              color: blackTypeColor1,
-              align: TextAlign.center,
-              weight: FontWeight.bold,
-              size: 16,
-            ),
-          ),
-          Wrap(
-            direction: Axis.vertical,
-            children: List.generate(dependencyText.length, (index) {
-              return SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: CheckboxListTile(
-                  contentPadding: const EdgeInsets.only(
-                      left: 0, top: 5, bottom: 5, right: 25),
-                  side: const BorderSide(color: bluishColor),
-                  checkboxShape: const RoundedRectangleBorder(
-                    side: BorderSide(color: bluishColor),
+                  Divider(
+                    thickness: 1.5,
+                    color: blackColor.withOpacity(0.5),
                   ),
-                  visualDensity:
-                      const VisualDensity(horizontal: 0, vertical: -4),
-                  activeColor: bluishColor,
-                  checkColor: whiteColor,
-                  value: dependencyValue[index],
-                  onChanged: ((bool? value2) {
-                    setState(() {
-                      dependencyValue[index] = value2!;
-                    });
-                  }),
-                  title: MyText(
-                    text: dependencyText[index],
-                    color: blackTypeColor1.withOpacity(0.5),
-                    fontFamily: 'Raleway',
-                    weight: FontWeight.w500,
-                    size: 16,
+                  const SizedBox(
+                    height: 20,
                   ),
-                ),
-              );
-            }),
-          ),
-          Divider(
-            thickness: 1.5,
-            color: blackColor.withOpacity(0.4),
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: MyText(
-              text: 'Registration Closed By',
-              color: greyShadeColor,
-              align: TextAlign.center,
-              weight: FontWeight.w500,
-              size: 16,
-            ),
-          ),
-          Row(
-            children: [
-              MyText(
-                text: 'Days before the activity starts',
-                color: greyShadeColor,
-                align: TextAlign.center,
-                size: 14,
+                  // aimed for
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: MyText(
+                      text: 'Aimed For',
+                      color: blackTypeColor1,
+                      size: 16,
+                      align: TextAlign.center,
+                      weight: FontWeight.bold,
+                    ),
+                  ),
+                  Wrap(
+                    direction: Axis.vertical,
+                    children: List.generate(aimedText.length, (index) {
+                      return SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: CheckboxListTile(
+                          contentPadding: const EdgeInsets.only(
+                              left: 0, top: 5, bottom: 5, right: 25),
+                          side: const BorderSide(color: bluishColor),
+                          checkboxShape: const RoundedRectangleBorder(
+                            side: BorderSide(color: bluishColor),
+                          ),
+                          visualDensity:
+                              const VisualDensity(horizontal: 0, vertical: -4),
+                          activeColor: bluishColor,
+                          checkColor: whiteColor,
+                          value: aimedValue[index],
+                          onChanged: ((bool? value) {
+                            setState(() {
+                              aimedValue[index] = value!;
+                            });
+                          }),
+                          title: MyText(
+                            text:
+                                //aimedText[index],
+                                aimedFilter[index].aimedName,
+                            color: blackTypeColor.withOpacity(0.5),
+                            fontFamily: 'Raleway',
+                            size: 16,
+                            weight: FontWeight.w500,
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Divider(
+                    thickness: 1.5,
+                    color: blackColor.withOpacity(0.4),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: MyText(
+                      text: 'Dependency',
+                      color: blackTypeColor1,
+                      align: TextAlign.center,
+                      weight: FontWeight.bold,
+                      size: 16,
+                    ),
+                  ),
+                  Wrap(
+                    direction: Axis.vertical,
+                    children: List.generate(dependencyText.length, (index) {
+                      return SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: CheckboxListTile(
+                          contentPadding: const EdgeInsets.only(
+                              left: 0, top: 5, bottom: 5, right: 25),
+                          side: const BorderSide(color: bluishColor),
+                          checkboxShape: const RoundedRectangleBorder(
+                            side: BorderSide(color: bluishColor),
+                          ),
+                          visualDensity:
+                              const VisualDensity(horizontal: 0, vertical: -4),
+                          activeColor: bluishColor,
+                          checkColor: whiteColor,
+                          value: dependencyValue[index],
+                          onChanged: ((bool? value2) {
+                            setState(() {
+                              dependencyValue[index] = value2!;
+                            });
+                          }),
+                          title: MyText(
+                            text: dependencyText[index],
+                            color: blackTypeColor1.withOpacity(0.5),
+                            fontFamily: 'Raleway',
+                            weight: FontWeight.w500,
+                            size: 16,
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
+                  Divider(
+                    thickness: 1.5,
+                    color: blackColor.withOpacity(0.4),
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: MyText(
+                      text: 'Registration Closed By',
+                      color: greyShadeColor,
+                      align: TextAlign.center,
+                      weight: FontWeight.w500,
+                      size: 16,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      MyText(
+                        text: 'Days before the activity starts',
+                        color: greyShadeColor,
+                        align: TextAlign.center,
+                        size: 14,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      TFWithSize('2', provider.daysBeforeActController, 16,
+                          lightGreyColor, 8)
+                    ],
+                  ),
+                ],
               ),
-              const SizedBox(
-                width: 10,
-              ),
-              TFWithSize('2', nameController, 16, lightGreyColor, 8)
-            ],
-          ),
-        ],
-      ),
-    );
+            );
+          });
   }
 }

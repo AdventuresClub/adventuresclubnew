@@ -1,13 +1,14 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/models/filter_data_model/sector_filter_model.dart';
 import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/filter_data_model/category_filter_model.dart';
+
 class ServiceCategoryDropDown extends StatefulWidget {
-  final List<SectorFilterModel> sFilter;
-  const ServiceCategoryDropDown(this.sFilter, {super.key});
+  final List<CategoryFilterModel> cFilter;
+  const ServiceCategoryDropDown(this.cFilter, {super.key});
 
   @override
   State<ServiceCategoryDropDown> createState() =>
@@ -25,11 +26,11 @@ class ServiceCategoryDropDownState extends State<ServiceCategoryDropDown> {
   void initState() {
     super.initState();
     // parseRegions(widget.rFilter);
-    widget.sFilter.insert(
+    widget.cFilter.insert(
         0,
-        SectorFilterModel(
+        CategoryFilterModel(
             7,
-            "Service Sector",
+            "Service Category",
             "selection_manager1665463304.png",
             1,
             "2022-10-11 10:11:44",
@@ -37,9 +38,9 @@ class ServiceCategoryDropDownState extends State<ServiceCategoryDropDown> {
             ""));
   }
 
-  void sId(SectorFilterModel sFilter) {
+  void sId(CategoryFilterModel cFilter) {
     Provider.of<CompleteProfileProvider>(context, listen: false)
-        .regionSelection(sFilter.sector, sFilter.id);
+        .categorySelection(cFilter.category, cFilter.id);
   }
 
   @override
@@ -72,14 +73,14 @@ class ServiceCategoryDropDownState extends State<ServiceCategoryDropDown> {
               // selectedId =
             });
           },
-          items: widget.sFilter
-              .map<DropdownMenuItem<String>>((SectorFilterModel sFilter) {
+          items: widget.cFilter
+              .map<DropdownMenuItem<String>>((CategoryFilterModel cFilter) {
             return DropdownMenuItem<String>(
               onTap: () => sId(
-                sFilter,
+                cFilter,
               ),
-              value: sFilter.sector,
-              child: Text(sFilter.sector),
+              value: cFilter.category,
+              child: Text(cFilter.category),
             );
           }).toList(),
         ),
