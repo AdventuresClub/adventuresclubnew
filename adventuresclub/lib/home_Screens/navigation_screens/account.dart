@@ -156,7 +156,7 @@ class _AccountState extends State<Account> {
     resultRequest = Provider.of<ServicesProvider>(context).resultRequest;
     totalNotication = Provider.of<ServicesProvider>(context).totalNotication;
     return Scaffold(
-      backgroundColor: greyProfileColor,
+      backgroundColor: Colors.grey.withOpacity(0.1),
       body: ListView(
         children: [
           const SizedBox(
@@ -164,10 +164,13 @@ class _AccountState extends State<Account> {
           ),
           Column(
             children: [
+              const SizedBox(
+                height: 10,
+              ),
               GestureDetector(
                 onTap: getProfile,
                 child: Container(
-                  color: greyProfileColor,
+                  color: transparentColor,
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -192,8 +195,10 @@ class _AccountState extends State<Account> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 MyText(
-                                  text: 'Become a partner',
-                                  color: blackColor,
+                                  text: 'Already a partner',
+                                  size: 16,
+                                  fontFamily: 'Raleway',
+                                  color: greyColor.withOpacity(0.8),
                                 ),
                                 const Icon(
                                   Icons.arrow_forward_ios,
@@ -208,7 +213,7 @@ class _AccountState extends State<Account> {
                           ? GestureDetector(
                               onTap: goToProfile,
                               child: const CircleAvatar(
-                                radius: 40,
+                                radius: 38,
                                 backgroundImage:
                                     ExactAssetImage('images/avatar2.png'),
                               ),
@@ -216,7 +221,7 @@ class _AccountState extends State<Account> {
                           : GestureDetector(
                               onTap: goToProfile,
                               child: CircleAvatar(
-                                radius: 40,
+                                radius: 38,
                                 backgroundImage: NetworkImage(profileUrl),
                               ),
                             ),
@@ -233,7 +238,7 @@ class _AccountState extends State<Account> {
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         for (int i = 0; i < 3; i++)
                           Column(
@@ -294,9 +299,12 @@ class _AccountState extends State<Account> {
                                   ],
                                 ),
                               ),
+                              const SizedBox(
+                                height: 5,
+                              ),
                               MyText(
                                 text: text[i],
-                                color: bluishColor,
+                                color: greyColor.withOpacity(0.9),
                               )
                             ],
                           )
@@ -352,29 +360,41 @@ class _AccountState extends State<Account> {
                     //   }));
                     //  }
                     if (tile1Text[index] == 'Settings') {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (_) {
-                        return const Settings();
-                      }));
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) {
+                            return const Settings();
+                          },
+                        ),
+                      );
                     }
                     if (tile1Text[index] == 'Invite Friends') {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (_) {
-                        return const CompleteProfile();
-                      }));
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) {
+                            return const CompleteProfile();
+                          },
+                        ),
+                      );
                     }
                     if (tile1Text[index] == 'About us') {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (_) {
-                        return const AboutUs();
-                      }));
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) {
+                            return const AboutUs();
+                          },
+                        ),
+                      );
                     }
                     if (tile1Text[index] == 'Contact us') {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (_) {
-                        return const ContactUs();
-                        //const MyServicesAdDetails();
-                      }));
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) {
+                            return const ContactUs();
+                            //const MyServicesAdDetails();
+                          },
+                        ),
+                      );
                     }
                     if (tile1Text[index] == 'Log out') {
                       //                    void logout() async {
@@ -392,7 +412,7 @@ class _AccountState extends State<Account> {
                       image: ExactAssetImage(tile1[index]),
                       height: tile1Text[index] == 'My Points' ? 35 : 25,
                       width: 35,
-                      color: greyColor,
+                      color: greyColor.withOpacity(0.9),
                     ),
                     tile1Text[index] == 'Notification'
                         ? Positioned(
@@ -412,23 +432,26 @@ class _AccountState extends State<Account> {
                   ]),
                   title: MyText(
                     text: tile1Text[index],
-                    color: greyColor,
+                    color: greyColor.withOpacity(0.9),
                     size: 14,
                     weight: FontWeight.w500,
                   ),
                   trailing: tile1Text[index] == 'Settings'
                       ? SizedBox(
-                          width: 90,
+                          width: 60,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               MyText(
-                                text: 'Oman',
-                                color: greyColor,
+                                text: 'OMAN',
+                                color: greyColor.withOpacity(0.9),
+                                weight: FontWeight.w500,
                               ),
                               const Image(
-                                image:
-                                    ExactAssetImage('images/maskGroup51.png'),
+                                image: ExactAssetImage(
+                                  'images/maskGroup51.png',
+                                ),
+                                height: 15,
                               )
                             ],
                           ),

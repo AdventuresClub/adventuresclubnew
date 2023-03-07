@@ -10,6 +10,7 @@ const kPrimaryColor = Color(0xffE8E8E8);
 const kSecondaryColor = Color(0xff193447);
 const blackColor = Color(0xff000000);
 const whiteColor = Color(0xffFFFFFF);
+const textFieldNewColor = Color(0xFFE4E9F8);
 
 const transparentColor = Color(0x00000000);
 

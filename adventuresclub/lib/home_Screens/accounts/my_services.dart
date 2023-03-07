@@ -263,7 +263,7 @@ class _MyServicesState extends State<MyServices> {
           ),
         ),
         title: MyText(
-          text: 'My Services',
+          text: 'My services',
           color: bluishColor,
           weight: FontWeight.w500,
           fontFamily: "Roboto",

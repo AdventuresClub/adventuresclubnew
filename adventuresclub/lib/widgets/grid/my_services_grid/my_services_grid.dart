@@ -34,12 +34,12 @@ class _MyServicesGridState extends State<MyServicesGrid> {
         (MediaQuery.of(context).size.height - kToolbarHeight - 24) / 6.75;
     final double itemWidth = MediaQuery.of(context).size.width / 4.5;
     return Padding(
-      padding: const EdgeInsets.only(top: 12.0, bottom: 12),
+      padding: const EdgeInsets.only(top: 12.0, bottom: 12,left: 5,right: 5),
       child: GridView.count(
         physics: const ScrollPhysics(),
         shrinkWrap: true,
         mainAxisSpacing: 2,
-        childAspectRatio: 0.9,
+        childAspectRatio: 0.83,
         crossAxisSpacing: 2,
         crossAxisCount: 2,
         children: List.generate(
@@ -48,6 +48,7 @@ class _MyServicesGridState extends State<MyServicesGrid> {
             return GestureDetector(
               onTap: () => goToAd(widget.gSm[index]),
               child: Card(
+                  
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(12))),
                 child: Padding(
@@ -97,7 +98,7 @@ class _MyServicesGridState extends State<MyServicesGrid> {
                                           .adventureName, //'Hill Climbing',
                                       color: blackColor,
                                       size: 14,
-                                      weight: FontWeight.bold,
+                                      weight: FontWeight.w500,
                                       fontFamily: 'Roboto',
                                     ),
                                   ),
@@ -126,10 +127,10 @@ class _MyServicesGridState extends State<MyServicesGrid> {
                                       MyText(
                                         text: widget.gSm[index]
                                             .geoLocation, //text[index],
-                                        color: bluishColor,
-                                        size: 12,
+                                        color: greyColor.withOpacity(0.6),
+                                        size: 10,
                                         height: 1.6,
-                                        weight: FontWeight.w500,
+                                        weight: FontWeight.w400,
                                       ),
                                     ],
                                   ),
@@ -148,11 +149,10 @@ class _MyServicesGridState extends State<MyServicesGrid> {
                                         text: widget.gSm[index].status == 1
                                             ? "Accepted"
                                             : "Pending",
-                                        color: const Color.fromARGB(
-                                            255, 24, 107, 27),
-                                        size: 12,
+                                        color: const Color.fromARGB(255, 37, 153, 41),
+                                        size: 10,
                                         height: 1.6,
-                                        weight: FontWeight.w500,
+                                        weight: FontWeight.w400,
                                       ),
                                     ],
                                   ),
