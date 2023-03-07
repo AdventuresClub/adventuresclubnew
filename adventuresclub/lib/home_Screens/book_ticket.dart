@@ -3,14 +3,14 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/requests.dart';
-import 'package:adventuresclub/models/home_services/home_services_model.dart';
+import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class BookTicket extends StatefulWidget {
-  final HomeServicesModel gm;
+  final ServicesModel gm;
   const BookTicket(this.gm, {super.key});
 
   @override
@@ -50,7 +50,7 @@ class _BookTicketState extends State<BookTicket> {
     super.initState();
     formattedDate = 'Birthday';
     setState(() {
-      text2.insert(0, widget.gm.sm[index].costInc);
+      text2.insert(0, widget.gm.costInc);
       //text2.insert(0, tPerson());
 
       //  userId = Constants.userID;
@@ -125,7 +125,7 @@ class _BookTicketState extends State<BookTicket> {
           Uri.parse(
               "https://adventuresclub.net/adventureClub/api/v1/book_service"),
           body: {
-            "service_id": widget.gm.sm[index].id.toString(),
+            "service_id": widget.gm.id.toString(),
             "user_id": "27",
             "adult": "2", //_m, //"2",
             "kids": "1", //_n, //"1", //,

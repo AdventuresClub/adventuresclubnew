@@ -23,6 +23,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
     text4.insert(3, widget.sm.availableSeats.toString());
     text4.insert(4, widget.sm.duration);
     text4.insert(5, widget.sm.startDate);
+    //text6.insert(0, widget.sm.points);
     text6.insert(1, widget.sm.serviceSector);
     // this needs checking
     text6.insert(2, widget.sm.serviceCategory);
@@ -50,7 +51,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
     //'Oman', 'Salalah', 'Sea', '70', '36 hours', '25 Jul 2020'
   ];
   List text5 = [
-    '4.8 (1048 Reviews)',
+    'Ratings : ',
     'Service Sector  :',
     'Service Type :',
     'Level  :',

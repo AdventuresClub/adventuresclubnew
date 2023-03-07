@@ -369,13 +369,13 @@ class _PlannedState extends State<Planned> {
   }
 
   void goToDetails(HomeServicesModel gm) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return Details(gm: gm);
-        },
-      ),
-    );
+    // Navigator.of(context).push(
+    //   MaterialPageRoute(
+    //     builder: (_) {
+    //       return Details(gm: gm);
+    //     },
+    //   ),
+    // );
   }
 
   void goToProvider() {

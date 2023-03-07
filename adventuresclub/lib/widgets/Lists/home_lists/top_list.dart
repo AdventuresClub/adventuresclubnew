@@ -146,6 +146,7 @@ class _TopListState extends State<TopList> {
                       )
                     ]),
               );
-            });
+            },
+          );
   }
 }

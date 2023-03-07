@@ -10,10 +10,11 @@ import 'package:adventuresclub/widgets/tabs/details_tabs/details_tabs.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 
+import '../models/home_services/services_model.dart';
 import '../models/services/get_services_model.dart';
 
 class Details extends StatefulWidget {
-  final HomeServicesModel? gm;
+  final ServicesModel? gm;
   const Details({this.gm, super.key});
 
   @override
@@ -85,7 +86,7 @@ class _DetailsState extends State<Details> {
         iconTheme: const IconThemeData(color: whiteColor),
         centerTitle: true,
         title: MyText(
-          text: widget.gm!.sm[index].adventureName,
+          text: widget.gm!.adventureName,
           weight: FontWeight.bold,
           color: whiteColor,
           size: 32,
@@ -108,7 +109,7 @@ class _DetailsState extends State<Details> {
                               _activePage = index;
                             });
                           },
-                          itemCount: widget.gm!.sm[index].images.length,
+                          itemCount: widget.gm!.images.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
                               decoration: BoxDecoration(

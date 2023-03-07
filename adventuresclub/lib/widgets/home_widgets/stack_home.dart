@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_function_literals_in_foreach_calls
+// ignore_for_file: avoid_function_literals_in_foreach_calls, avoid_print
 
 import 'dart:async';
 import 'dart:convert';
@@ -792,9 +792,12 @@ class _StackHomeState extends State<StackHome> {
                       // width: MediaQuery.of(context).size.width / 1.1,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                            image:
-                                //ExactAssetImage('images/maskGroup1.png'),
-                                NetworkImage(banners[index])),
+                          image:
+                              //ExactAssetImage('images/maskGroup1.png'),
+                              NetworkImage(
+                            "${"https://adventuresclub.net/adventureClub/public/uploads/"}${banners[index]}",
+                          ),
+                        ),
                       ),
                     );
                   });

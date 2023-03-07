@@ -1,5 +1,6 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/adventure_chat_details.dart';
+import 'package:adventuresclub/models/home_services/services_model.dart';
 
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:another_stepper/another_stepper.dart';
@@ -8,7 +9,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../../../models/home_services/home_services_model.dart';
 
 class DetailsTab extends StatefulWidget {
-  final HomeServicesModel gm;
+  final ServicesModel gm;
   const DetailsTab(this.gm, {Key? key}) : super(key: key);
 
   @override
@@ -60,16 +61,16 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
       //   widget.gm.duration,
       //   widget.gm.startDate
       // ]);
-      text4.insert(0, widget.gm.sm[0].country);
-      text4.insert(1, widget.gm.sm[0].region);
-      text4.insert(2, widget.gm.sm[0].serviceCategory);
-      text4.insert(3, widget.gm.sm[0].aSeats.toString());
-      text4.insert(4, widget.gm.sm[0].duration);
-      text4.insert(5, widget.gm.sm[0].availability[0].st);
-      text6.insert(1, widget.gm.sm[0].serviceSector);
-      text6.insert(2, widget.gm.sm[0].serviceType);
-      text6.insert(3, widget.gm.sm[0].serviceLevel);
-      text6.insert(4, widget.gm.sm[0].availability[0].ed.substring(0, 11));
+      text4.insert(0, widget.gm.country);
+      text4.insert(1, widget.gm.region);
+      text4.insert(2, widget.gm.serviceCategory);
+      text4.insert(3, widget.gm.aSeats.toString());
+      text4.insert(4, widget.gm.duration);
+      text4.insert(5, widget.gm.availability[0].st);
+      text6.insert(1, widget.gm.serviceSector);
+      text6.insert(2, widget.gm.serviceType);
+      text6.insert(3, widget.gm.serviceLevel);
+      text6.insert(4, widget.gm.availability[0].ed);
     });
   }
 
@@ -251,7 +252,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   MyText(
-                                      text: widget.gm.sm[0].adventureName,
+                                      text: widget.gm.adventureName,
                                       //'River Rafting',
                                       weight: FontWeight.w500,
                                       color: blackColor,
@@ -271,8 +272,8 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   MyText(
-                                    text: "${widget.gm.sm[0].costInc} "
-                                        "${widget.gm.sm[0].currency}",
+                                    text: "${widget.gm.costInc} "
+                                        "${widget.gm.currency}",
                                     //'\$150.00',
                                     weight: FontWeight.w600, color: blackColor,
                                     size: 14, fontFamily: 'Roboto',
@@ -280,8 +281,8 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                   Align(
                                       alignment: Alignment.centerLeft,
                                       child: MyText(
-                                        text: "${widget.gm.sm[0].costInc} "
-                                            "${widget.gm.sm[0].currency}",
+                                        text: "${widget.gm.costInc} "
+                                            "${widget.gm.currency}",
                                         //'\$18.18',
                                         weight: FontWeight.w600,
                                         color: blackColor,
@@ -373,8 +374,8 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                             ? Align(
                                                 alignment: Alignment.centerLeft,
                                                 child: RatingBar.builder(
-                                                  initialRating: convert(
-                                                      widget.gm.sm[0].stars),
+                                                  initialRating:
+                                                      convert(widget.gm.stars),
                                                   itemSize: 12,
                                                   minRating: 1,
                                                   direction: Axis.horizontal,
@@ -440,7 +441,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                               const SizedBox(height: 5),
                               Wrap(
                                 children: List.generate(
-                                    widget.gm.sm[0].am
+                                    widget.gm.am
                                         .length, //activitesInclude.length,
                                     (index) {
                                   return Padding(
@@ -456,7 +457,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                           width: 5,
                                         ),
                                         MyText(
-                                          text: widget.gm.sm[0].availability,
+                                          text: widget.gm.availability,
                                           color: greyColorShade400,
                                           weight: FontWeight.w500,
                                           fontFamily: 'Roboto',
@@ -489,8 +490,8 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                   )),
                               const SizedBox(height: 5),
                               Wrap(
-                                children: List.generate(
-                                    widget.gm.sm[0].am.length, (index) {
+                                children:
+                                    List.generate(widget.gm.am.length, (index) {
                                   return Padding(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 4.0),
@@ -504,8 +505,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                           width: 5,
                                         ),
                                         MyText(
-                                          text: widget
-                                              .gm.sm[0].am[index].aimedName,
+                                          text: widget.gm.am[index].aimedName,
                                           //text: aimedFor[index],
                                           color: greyColorShade400,
                                           weight: FontWeight.w500,
@@ -539,11 +539,10 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                   )),
                               const SizedBox(height: 5),
                               Wrap(
-                                children:
-                                    List.generate(widget.gm.sm[0].da.length,
-                                        //widget.gm.dependencies.length,
+                                children: List.generate(widget.gm.da.length,
+                                    //widget.gm.dependencies.length,
 
-                                        (index) {
+                                    (index) {
                                   return Padding(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 4.0),
@@ -557,7 +556,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                           width: 5,
                                         ),
                                         MyText(
-                                          text: widget.gm.sm[0].adventureName,
+                                          text: widget.gm.adventureName,
                                           //text: aimedFor[index],
                                           color: greyColorShade400,
                                           weight: FontWeight.w500,
@@ -621,7 +620,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: MyText(
-                                    text: widget.gm.sm[0].tnc,
+                                    text: widget.gm.tnc,
                                     // text:
                                     //     'The highest peak in Al-Hajar mountain range and in all of Oman,Jebel Shams(Mountain of the sun) towers above the northern town in Al-Hamra. Rising to about 10,000 feet(3,000 meters).',
                                     color: greyColor.withOpacity(0.4),
@@ -654,7 +653,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: MyText(
-                                    text: widget.gm.sm[0].preRequisites,
+                                    text: widget.gm.preRequisites,
                                     // text:
                                     //     'The highest peak in Al-Hajar mountain range and in all of Oman,Jebel Shams(Mountain of the sun) towers above the northern town in Al-Hamra. Rising to about 10,000 feet(3,000 meters).',
                                     color: greyColor.withOpacity(0.4),
@@ -688,7 +687,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: MyText(
-                                    text: widget.gm.sm[0].mRequirements,
+                                    text: widget.gm.mRequirements,
                                     // text:
                                     //     'The highest peak in Al-Hajar mountain range and in all of Oman,Jebel Shams(Mountain of the sun) towers above the northern town in Al-Hamra. Rising to about 10,000 feet(3,000 meters).',
                                     color: greyColor.withOpacity(0.4),
@@ -736,7 +735,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                             MyText(
                               //text:"${widget.gm.lat}${" ,"} ${widget.gm.lng}",
                               text:
-                                  "${widget.gm.sm[0].startDate} ${" - "} ${widget.gm.sm[0].endDate} ${" - "} ${widget.gm.sm[0].adventureName}",
+                                  "${widget.gm.startDate} ${" - "} ${widget.gm.endDate} ${" - "} ${widget.gm.adventureName}",
                               //text: '6:00 AM - 6:30 AM - Gathering',
                               color: blackColor,
                               weight: FontWeight.bold,
@@ -865,7 +864,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                         height: 10,
                       ),
                       MyText(
-                        text: widget.gm.sm[0].writeInformation,
+                        text: widget.gm.writeInformation,
                         // text:
                         //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
                         color: blackColor,
@@ -920,7 +919,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                               fontSize: 14),
                           children: <TextSpan>[
                             TextSpan(
-                                text: widget.gm.sm[0].sAddress,
+                                text: widget.gm.sAddress,
                                 // text:
                                 //     ' Al Ghubra Street , PC 133 , Muscat 1101',
                                 style: const TextStyle(
@@ -939,7 +938,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                               fontSize: 14),
                           children: <TextSpan>[
                             TextSpan(
-                                text: widget.gm.sm[0].region,
+                                text: widget.gm.region,
                                 //text: ' Omani',
                                 style: const TextStyle(
                                     fontSize: 14, color: blackColor)),
@@ -957,7 +956,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                               fontSize: 14),
                           children: <TextSpan>[
                             TextSpan(
-                                text: widget.gm.sm[0].country,
+                                text: widget.gm.country,
                                 //text: ' Oman',
                                 style: const TextStyle(
                                     fontSize: 14, color: blackColor)),
@@ -976,7 +975,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                           children: <TextSpan>[
                             TextSpan(
                                 text:
-                                    "${widget.gm.sm[0].lat}${" ,"} ${widget.gm.sm[0].lng}",
+                                    "${widget.gm.lat}${" ,"} ${widget.gm.lng}",
                                 //text: ' 60.25455415, 54.2555125',
                                 style: const TextStyle(
                                     fontSize: 14, color: blackColor)),

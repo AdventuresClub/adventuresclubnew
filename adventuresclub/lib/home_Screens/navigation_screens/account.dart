@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
-
 import 'package:adventuresclub/become_a_partner/become_partner.dart';
 import 'package:adventuresclub/complete_profile/complete_profile.dart';
 import 'package:adventuresclub/constants.dart';
@@ -16,7 +15,7 @@ import 'package:adventuresclub/home_Screens/accounts/profile/profile.dart';
 import 'package:adventuresclub/home_Screens/accounts/health_condition.dart';
 import 'package:adventuresclub/home_Screens/accounts/settings/settings.dart';
 import 'package:adventuresclub/models/profile_models/profile_become_partner.dart';
-import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
+import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/sign_up/sign_in.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
@@ -67,13 +66,23 @@ class _AccountState extends State<Account> {
   String lastName = "";
   ProfileBecomePartner gBp = ProfileBecomePartner(0, 0, "", "", "", "", "", "",
       "", "", 0, 0, "", "", "", "", "", "", "", 0, "", "", "", "", "", "");
+  String resultService = "";
+  String resultRequest = "";
+  String totalNotication = "";
   @override
   void initState() {
     super.initState();
     getProfile();
   }
 
+  // void getNotificationNum() {
+  //   Provider.of<ServicesProvider>(context).resultService = resultService;
+  //   Provider.of<ServicesProvider>(context).resultRequest = resultRequest;
+  //   Provider.of<ServicesProvider>(context).totalNotication = totalNotication;
+  // }
+
   void getProfile() async {
+    //  getNotificationNum();
     try {
       var response = await http.post(
           Uri.parse("https://adventuresclub.net/adventureClub/api/v1/login"),
@@ -143,6 +152,9 @@ class _AccountState extends State<Account> {
 
   @override
   Widget build(BuildContext context) {
+    resultService = Provider.of<ServicesProvider>(context).resultService;
+    resultRequest = Provider.of<ServicesProvider>(context).resultRequest;
+    totalNotication = Provider.of<ServicesProvider>(context).totalNotication;
     return Scaffold(
       backgroundColor: greyProfileColor,
       body: ListView(
@@ -229,45 +241,58 @@ class _AccountState extends State<Account> {
                               GestureDetector(
                                 onTap: () {
                                   if (text[i] == 'Favorite') {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(builder: (_) {
-                                      return const Favorite();
-                                    }));
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return const Favorite();
+                                        },
+                                      ),
+                                    );
                                   }
                                   if (text[i] == 'My Services') {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(builder: (_) {
-                                      return const MyServices();
-                                    }));
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return const MyServices();
+                                        },
+                                      ),
+                                    );
                                   }
                                   if (text[i] == 'Client Requests') {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(builder: (_) {
-                                      return const ClientsRequests();
-                                    }));
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return const ClientsRequests();
+                                        },
+                                      ),
+                                    );
                                   }
                                 },
-                                child:
-                                    Stack(clipBehavior: Clip.none, children: [
-                                  Image(
-                                    image: ExactAssetImage(images[i]),
-                                    height: 30,
-                                    width: 30,
-                                  ),
-                                  images[i] == 'images/points.png'
-                                      ? Positioned(
-                                          bottom: -5,
-                                          right: -12,
-                                          child: CircleAvatar(
-                                              radius: 8,
+                                child: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    Image(
+                                      image: ExactAssetImage(images[i]),
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    resultService.isNotEmpty
+                                        ? Positioned(
+                                            bottom: -5,
+                                            right: -12,
+                                            child: CircleAvatar(
+                                              radius: 10,
                                               backgroundColor: redColor,
                                               child: MyText(
-                                                text: '12',
+                                                text: resultService, //'12',
                                                 color: whiteColor,
-                                                size: 6,
-                                              )))
-                                      : SizedBox()
-                                ]),
+                                                size: 8,
+                                              ),
+                                            ),
+                                          )
+                                        : const SizedBox()
+                                  ],
+                                ),
                               ),
                               MyText(
                                 text: text[i],
@@ -371,16 +396,18 @@ class _AccountState extends State<Account> {
                     ),
                     tile1Text[index] == 'Notification'
                         ? Positioned(
-                            top: -5,
-                            right: -1,
+                            top: -8,
+                            right: -3,
                             child: CircleAvatar(
-                                radius: 8,
-                                backgroundColor: redColor,
-                                child: MyText(
-                                  text: '12',
-                                  color: whiteColor,
-                                  size: 6,
-                                )))
+                              radius: 10,
+                              backgroundColor: redColor,
+                              child: MyText(
+                                text: totalNotication, //'12',
+                                color: whiteColor,
+                                size: 8,
+                              ),
+                            ),
+                          )
                         : const SizedBox()
                   ]),
                   title: MyText(

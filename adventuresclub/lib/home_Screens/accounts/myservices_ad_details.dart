@@ -25,10 +25,14 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
     '\$ 80.20',
     'Excluding gears and other taxes',
   ];
-  goToReviews() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return const Reviews();
-    }));
+  void goToReviews(String id) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return Reviews(id);
+        },
+      ),
+    );
   }
 
   @override
@@ -67,7 +71,7 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
                   height: MediaQuery.of(context).size.height / 4.8,
                   child: const MyServicesList()),
               GestureDetector(
-                onTap: goToReviews,
+                onTap: () => goToReviews(widget.sm.serviceId.toString()),
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 4.0, vertical: 5),
