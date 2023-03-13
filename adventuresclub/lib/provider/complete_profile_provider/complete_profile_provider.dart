@@ -8,6 +8,8 @@ import 'package:adventuresclub/models/category/category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../../constants.dart';
+
 class CompleteProfileProvider with ChangeNotifier {
   CompleteProfileProvider({Key? key});
   int currentIndex = 0;
@@ -47,9 +49,7 @@ class CompleteProfileProvider with ChangeNotifier {
   File adventureOne = File("");
   File adventureTwo = File("");
   DateTime? selectedDate;
-  String name = "";
-  int countryId = 0;
-  int id = 0;
+
   // var dateFormat = DateFormat.yMMMMd('en_US');
   List<String> mediaFiles = [];
   //
@@ -258,9 +258,9 @@ class CompleteProfileProvider with ChangeNotifier {
           // "created_at": "2023-03-02 11:12:34",
           // "updated_at": "2023-03-02 11:12:34"
           body: {
-            'customer_id': "27",
+            'customer_id': Constants.userId, //"27",
             'adventure_name': adventureNameController.text,
-            "country": countryId.toString(),
+            "country": Constants.countryId,
             'region': selectedRegionId.toString(),
             "service_sector": selectedSectorId.toString(), //"",
             "service_category": selectedCategoryId.toString(), //"",
@@ -291,7 +291,7 @@ class CompleteProfileProvider with ChangeNotifier {
             // this is a wrong field only for testing purposes....
             "gathering_start_time": gatheringDate, //"",
             "program_description": scheduleDesController.text, //"",
-            "service_for": "4", //["1", "4", "5", "7"], //"",
+            "service_for": "1,2,5", //"4", //["1", "4", "5", "7"], //"",
             "dependency": "2", //["1", "2", "3"],
             "banners": adventureOne.toString(), //"",
             "latitude": lat.toString(), //"",

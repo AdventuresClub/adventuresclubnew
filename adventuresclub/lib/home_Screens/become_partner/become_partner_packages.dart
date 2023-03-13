@@ -50,7 +50,7 @@ class _BecomePartnerPackagesState extends State<BecomePartnerPackages> {
               "https://adventuresclub.net/adventureClub/api/v1/update_subscription"),
           body: {
             'user_id': "27",
-            'packages_id ': "1",
+            'packages_id': "1",
             "order_id": orderId,
             "payment_type": "card",
             "payment_status": "pending",

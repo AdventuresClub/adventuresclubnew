@@ -1,7 +1,10 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
 import 'dart:convert';
 
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/adventure_category.dart';
+import 'package:adventuresclub/models/filter_data_model/category_filter_model.dart';
 import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +21,10 @@ class TopList extends StatefulWidget {
 }
 
 class _TopListState extends State<TopList> {
+  Map Mapcategory = {};
+  List<CategoryModel> pCM = [];
+  CategoryModel category = CategoryModel(0, "Category", "images/logo.png", 0);
+  List<CategoryFilterModel> categoryFilter = [];
   bool loading = false;
   List text = [
     'Categories',
@@ -32,7 +39,7 @@ class _TopListState extends State<TopList> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return AdventureCategory(pCM);
+          return const AdventureCategory();
         },
       ),
     );
@@ -48,10 +55,6 @@ class _TopListState extends State<TopList> {
     'images/lake.png',
   ];
 
-  Map Mapcategory = {};
-  List<CategoryModel> pCM = [];
-  CategoryModel category = CategoryModel(0, "Category", "", 0);
-
   @override
   void initState() {
     super.initState();
@@ -59,11 +62,19 @@ class _TopListState extends State<TopList> {
     getCategory();
   }
 
+  void getFilters() {
+    setState(() {
+      categoryFilter = Constants.categoryFilter;
+    });
+  }
+
   void listAdd(List<CategoryModel> pc) {
     Provider.of<CompleteProfileProvider>(context, listen: false).pCM = pc;
   }
 
   Future getCategory() async {
+    getFilters();
+    // pCM.clear();
     setState(() {
       loading = false;
     });
@@ -71,6 +82,7 @@ class _TopListState extends State<TopList> {
         "https://adventuresclub.net/adventureClub/api/v1/categories"));
     if (response.statusCode == 200) {
       Mapcategory = json.decode(response.body);
+      categoryFilter.forEach((i) {});
       List<dynamic> result = Mapcategory['data'];
       result.forEach((element) {
         CategoryModel cm = CategoryModel(
@@ -80,7 +92,7 @@ class _TopListState extends State<TopList> {
           int.tryParse(element['status'].toString()) ?? 0,
         );
         pCM.add(cm);
-        listAdd(pCM);
+        //listAdd(pCM);
       });
     }
     setState(() {
@@ -90,7 +102,7 @@ class _TopListState extends State<TopList> {
 
   @override
   Widget build(BuildContext context) {
-    // final pCM = Provider.of<CompleteProfileProvider>(context, listen: false)
+    // final ffpCM = Provider.of<CompleteProfileProvider>(context, listen: false)
     return loading
         ? Center(
             child: Column(
@@ -107,44 +119,44 @@ class _TopListState extends State<TopList> {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 14.0),
                 child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // if (pCM[index].category == "Category")
-                      //   GestureDetector(
-                      //
-                      //     child: const CircleAvatar(
-                      //       backgroundColor: transparentColor,
-                      //       radius: 23,
-                      //       child: Image(
-                      //         image: ExactAssetImage('images/maskGroup44.png'),
-                      //         fit: BoxFit.cover,
-                      //       ),
-                      //     ),
-                      //   ),
-                      CircleAvatar(
-                          backgroundColor: transparentColor,
-                          radius: 23,
-                          child: pCM[index].category == "Category"
-                              ? GestureDetector(
-                                  onTap: () => goToAdCategory(pCM),
-                                  child: const Image(
-                                    image: ExactAssetImage(
-                                        'images/maskGroup44.png'),
-                                    fit: BoxFit.cover,
-                                  ),
-                                )
-                              : Image(
-                                  image: NetworkImage(pCM[index].image),
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // if (pCM[index].category == "Category")
+                    //   GestureDetector(
+                    //
+                    //     child: const CircleAvatar(
+                    //       backgroundColor: transparentColor,
+                    //       radius: 23,
+                    //       child: Image(
+                    //         image: ExactAssetImage('images/maskGroup44.png'),
+                    //         fit: BoxFit.cover,
+                    //       ),
+                    //     ),
+                    //   ),
+                    CircleAvatar(
+                        backgroundColor: transparentColor,
+                        radius: 23,
+                        child: pCM[index].category == "Category"
+                            ? GestureDetector(
+                                onTap: () => goToAdCategory(pCM),
+                                child: const Image(
+                                  image: ExactAssetImage('images/logo.png'),
                                   fit: BoxFit.cover,
-                                )),
-                      const SizedBox(height: 5),
-                      MyText(
-                        text: pCM[index].category, //text[index],
-                        color: blackColor,
-                        size: 12,
-                        weight: FontWeight.w500,
-                      )
-                    ]),
+                                ),
+                              )
+                            : Image(
+                                image: NetworkImage(pCM[index].image),
+                                fit: BoxFit.cover,
+                              )),
+                    const SizedBox(height: 10),
+                    MyText(
+                      text: pCM[index].category, //text[index],
+                      color: blackColor,
+                      size: 12,
+                      weight: FontWeight.w600,
+                    )
+                  ],
+                ),
               );
             },
           );

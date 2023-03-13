@@ -57,6 +57,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     super.initState();
     getServicesList();
     getNotificationBadge();
+    Constants.getFilter();
   }
 
   void getNotificationBadge() async {
@@ -65,7 +66,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           Uri.parse(
               "https://adventuresclub.net/adventureClub/api/v1/get_notification_list_budge"),
           body: {
-            'user_id': "27",
+            'user_id': Constants.userId.toString(), //"27",
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       List<dynamic> result = decodedResponse['data'];

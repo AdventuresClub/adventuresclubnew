@@ -94,12 +94,6 @@ class _CostState extends State<Cost> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    getData();
-  }
-
-  @override
   void dispose() {
     super.dispose();
     controller.dispose(); // dispose the PageController
@@ -116,11 +110,6 @@ class _CostState extends State<Cost> {
     );
   }
 
-  void getData() async {
-    countryId =
-        Provider.of<CompleteProfileProvider>(context, listen: false).countryId;
-  }
-
   void createService() async {
     try {
       var response = await http.post(
@@ -129,7 +118,7 @@ class _CostState extends State<Cost> {
           body: {
             'customer_id': "3",
             'adventure_name': "",
-            "country_id": countryId.toString(),
+            "country_id": Constants.countryId,
             'region': "",
 
             // 'mobile_code': ccCode,

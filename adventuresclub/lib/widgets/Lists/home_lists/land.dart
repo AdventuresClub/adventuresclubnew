@@ -14,6 +14,7 @@ import 'package:adventuresclub/models/services/included_activities_model.dart';
 import 'package:adventuresclub/models/services/manish_model.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:adventuresclub/widgets/services_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
@@ -130,7 +131,8 @@ class LandState extends State<Land> {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () => goToDetails(gm[index]),
-                child: Card(
+                child: //ServicesCard(gm[index]),
+                    Card(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8)),
                   elevation: 2,
@@ -221,33 +223,8 @@ class LandState extends State<Land> {
                                           height: 1.3,
                                         ),
                                         const SizedBox(width: 10),
-                                        // MyText(
-                                        //   text: gm[index]
-                                        //       .aimedFor[index]
-                                        //       .aimedName,
-                                        //   color: redColor,
-                                        //   size: 10,
-                                        //   height: 1.3,
-                                        // ),
                                       ],
                                     ),
-                                    // Row(
-                                    //   children: [
-                                    //     MyText(
-                                    //       text: 'Mixed...',
-                                    //       color: redColor,
-                                    //       size: 10,
-                                    //       height: 1.3,
-                                    //     ),
-                                    //     const SizedBox(width: 5),
-                                    //     MyText(
-                                    //       text: 'Girls',
-                                    //       color: redColor,
-                                    //       size: 10,
-                                    //       height: 1.3,
-                                    //     ),
-                                    //   ],
-                                    // ),
                                   ],
                                 ),
                               ),

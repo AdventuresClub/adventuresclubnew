@@ -4,9 +4,10 @@ import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:adventuresclub/models/get_country.dart';
+import 'package:adventuresclub/models/health_condition_model.dart';
+import 'package:adventuresclub/models/weightnheight_model.dart';
 import 'package:adventuresclub/sign_up/sign_in.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
-import 'package:adventuresclub/widgets/grid/checkbox_grid.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/text_fields.dart';
 import 'package:adventuresclub/widgets/text_fields/tf_with_suffix_icon.dart';
@@ -15,6 +16,7 @@ import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -34,10 +36,10 @@ class _SignUpState extends State<SignUp> {
   TextEditingController dobController = TextEditingController();
   TextEditingController nootpController = TextEditingController();
   TextEditingController weightController = TextEditingController();
-  TextEditingController weight1Controller = TextEditingController();
-  TextEditingController weight2Controller = TextEditingController();
   TextEditingController numController = TextEditingController();
-  bool? showVerificationScreen = false;
+  List<bool> healthValue = [];
+  List<WnHModel> weightList = [];
+  List<WnHModel> heightList = [];
   String phoneNumber = "";
   String countryCode = "+1";
   bool cont = false;
@@ -62,15 +64,17 @@ class _SignUpState extends State<SignUp> {
   String contactCountry = "";
   dynamic ccCode;
   int countryId = 0;
+  int nationalityId = 0;
   int currentLocationId = 0;
-  var getWeight = '10KG (22 Pounds)';
-  var getheight = '50CM (19.7Inch)';
+  var getWeight = 'Weight';
+  var getheight = 'Height';
   var getGender = 'Male';
-  String userID = "";
-  List<GetCountry> countriesList1 = [];
+  int userID = 0;
+  List<GetCountryModel> countriesList1 = [];
   Map mapCountry = {};
   Map userRegistration = {};
   List<String> healthC = [];
+  List<HealthConditionModel> healthList = [];
 
   @override
   void initState() {
@@ -79,24 +83,24 @@ class _SignUpState extends State<SignUp> {
     getCountries();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    inController.dispose();
+    nationalityController.dispose();
+    locationController.dispose();
+    emailController.dispose();
+    passController.dispose();
+    otpController.dispose();
+    userNameController.dispose();
+    dobController.dispose();
+    nootpController.dispose();
+    weightController.dispose();
+    numController.dispose();
+  }
+
   List genderText = ['Male', 'Female', 'Other'];
-  List pickWeight = [
-    '10KG (22 Pounds)',
-    '11KG (24.2 Pounds)',
-    '12KG (26.4 Pounds)'
-  ];
-  List pickHeight = [
-    '50CM (19.7Inch)',
-    '51CM (20Inch)',
-    '52CM (20.5Inch)',
-    '53CM (20.8Inch)',
-    '54CM (21.30Inch)',
-    '55CM (20Inch)',
-    '56CM (20Inch)',
-    '57CM (22.4Inch)',
-    '58CM (22.8Inch)',
-    '59CM (23.2Inch)',
-  ];
+
   DateTime currentDate = DateTime.now();
   Future<void> _selectDate(BuildContext context) async {
     pickedDate = await showDatePicker(
@@ -107,7 +111,9 @@ class _SignUpState extends State<SignUp> {
     if (pickedDate != null && pickedDate != currentDate) {
       setState(() {
         var date = DateTime.parse(pickedDate.toString());
-        formattedDate = "${date.day}-${date.month}-${date.year}";
+        String m = date.month < 10 ? "0${date.month}" : "${date.month}";
+        String d = date.day < 10 ? "0${date.day}" : "${date.day}";
+        formattedDate = "${date.year}-${m}-${d}";
         currentDate = pickedDate!;
       });
     }
@@ -134,13 +140,14 @@ class _SignUpState extends State<SignUp> {
   }
 
   Future getCountries() async {
+    getHealth();
     var response = await http.get(Uri.parse(
         "https://adventuresclub.net/adventureClub/api/v1/get_countries"));
     if (response.statusCode == 200) {
       mapCountry = json.decode(response.body);
       List<dynamic> result = mapCountry['data'];
       result.forEach((element) {
-        GetCountry gc = GetCountry(
+        GetCountryModel gc = GetCountryModel(
           element['country'],
           element['flag'],
           element['code'],
@@ -151,28 +158,78 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
+  Future getWeightNHeight() async {
+    var response = await http.get(Uri.parse(
+        "https://adventuresclub.net/adventureClub/api/v1/get_heights_weights"));
+    if (response.statusCode == 200) {
+      mapCountry = json.decode(response.body);
+      dynamic result = mapCountry['data'];
+      List<dynamic> height = result['heights'];
+      height.forEach((h) {
+        int id = int.tryParse(h['Id'].toString()) ?? 0;
+        WnHModel heightModel = WnHModel(
+          id,
+          h['heightName'].toString() ?? "",
+          h['image'].toString() ?? "",
+          h['deleted_at'].toString() ?? "",
+          h['created_at'].toString() ?? "",
+          h['updated_at'].toString() ?? "",
+        );
+        heightList.add(heightModel);
+      });
+      List<dynamic> weight = result['weights'];
+      weight.forEach((w) {
+        int id = int.tryParse(w['Id'].toString()) ?? 0;
+        WnHModel weightModel = WnHModel(
+          id,
+          w['weightName'].toString() ?? "",
+          w['image'].toString() ?? "",
+          w['deleted_at'].toString() ?? "",
+          w['created_at'].toString() ?? "",
+          w['updated_at'].toString() ?? "",
+        );
+        weightList.add(weightModel);
+      });
+    }
+  }
+
+  Future getHealth() async {
+    getWeightNHeight();
+    var response = await http.get(Uri.parse(
+        "https://adventuresclub.net/adventureClub/api/v1/get_healths"));
+    if (response.statusCode == 200) {
+      mapCountry = json.decode(response.body);
+      List<dynamic> result = mapCountry['data'];
+      result.forEach((element) {
+        HealthConditionModel hc =
+            HealthConditionModel(element['id'], element['name']);
+        healthList.add(hc);
+      });
+    }
+    getHealthValues();
+  }
+
+  void getHealthValues() {
+    healthList.forEach((element) {
+      healthValue.add(false);
+    });
+  }
+
   void getOtp() async {
     enterOTP();
     try {
       var response = await http.post(
           Uri.parse("https://adventuresclub.net/adventureClub/api/v1/get_otp"),
           body: {
-            'mobile_code': ccCode,
+            'mobile_code': ccCode.toString(), //ccCode.toString(),
             'mobile': numController.text,
-            'forgot_password': "0"
+            'forgot_password': "0",
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-      //print(decodedResponse['data']['user_id']);
-      //dynamic typedata = response.body!['data'];
-
       setState(() {
-        // dynamic typedata = response.body['data'];
         userID = decodedResponse['data']['user_id'];
       });
       print(response.statusCode);
-      print(response.body);
-      print(response.headers);
-      print(decodedResponse['data']['user_id']);
       print(userID);
     } catch (e) {
       print(e.toString());
@@ -180,26 +237,23 @@ class _SignUpState extends State<SignUp> {
   }
 
   void verifyOtp() async {
-    //otpController.clear();
     Navigator.of(context).pop();
     try {
       var response = await http.post(
           Uri.parse(
               "https://adventuresclub.net/adventureClub/api/v1/verify_otp"),
           body: {
-            'user_id': "27",
+            'user_id': userID.toString(),
             'otp': otpController.text,
             'forgot_password': "0"
           });
-      setState(() {
-        //userID = response.body.
-      });
       print(response.statusCode);
       print(response.body);
       print(response.headers);
     } catch (e) {
       print(e.toString());
     }
+    otpController.clear();
   }
 
   void enterOTP() {
@@ -287,11 +341,8 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  // register phone numer
-  // user_id created
-  // otp verify
-  // registration process
   void register() async {
+    SharedPreferences prefs = await Constants.getPrefs();
     try {
       var response = await http.post(
           Uri.parse("https://adventuresclub.net/adventureClub/api/v1/register"),
@@ -299,24 +350,45 @@ class _SignUpState extends State<SignUp> {
             "name": userNameController.text,
             "email": emailController
                 .text, //"hamza@gmail.com", //emailController.text,
-            "nationality": nationalityController.text,
+            "nationality":
+                nationalityId.toString(), //nationalityController.text,
             "password":
                 passController.text, //"Upendra@321", //passController.text,
-            "now_in": currentLocation,
+            "now_in": currentLocationId
+                .toString(), //currentLocationId.toString(), //currentLocation,
             "mobile": numController.text, //"3344374923", //"3214181273",
             // numController.text,
-            "health_conditions": healthC.toString(),
-            "height": heightController.text,
+            "health_conditions": "8,2,6", //healthC.toString(),
+            "height": getheight,
             "weight": getWeight,
-            "mobile_code": ccCode,
-            "user_id": "27",
-            "dob": dobController.text, //"1993-10-30", //dobController.text,
+            "mobile_code": ccCode.toString(),
+            "user_id": userID.toString(), //"27",
+            "dob": formattedDate
+                .toString(), //dobController.text, //"1993-10-30", //dobController.text,
             "country_id": currentLocationId.toString(), //"2",
             "device_id": "1",
             "nationality_id": countryId.toString() //"5",
           });
-      goToHome();
       print(response.statusCode);
+      if (response.statusCode == 200) {
+        prefs.setString("name", userNameController.text);
+        prefs.setInt("countryId", countryId);
+        prefs.setInt("userId", userID);
+        prefs.setString("email", emailController.text);
+        prefs.setString("password", passController.text);
+        parseData(userNameController.text, countryId, userID,
+            emailController.text, passController.text);
+        goToHome();
+      }
+
+      void showMessage(BuildContext context, String message) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(response.body),
+          ),
+        );
+      }
+
       print(response.body);
     } catch (e) {
       print(e);
@@ -340,12 +412,23 @@ class _SignUpState extends State<SignUp> {
     // }
   }
 
+  void parseData(
+      String name, int countryId, int id, String email, String pass) {
+    setState(() {
+      Constants.userId = id;
+      Constants.name = name;
+      Constants.countryId = countryId;
+      Constants.emailId = email;
+      Constants.password = pass;
+    });
+  }
+
   void addCountry(String country, bool show, int id) {
     Navigator.of(context).pop();
     if (show == true) {
       setState(() {
         selectedCountry = country;
-        countryId = id;
+        nationalityId = id;
       });
     } else {
       setState(() {
@@ -355,12 +438,13 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
-  void getC(String country, dynamic code) {
+  void getC(String country, dynamic code, int id) {
     Navigator.of(context).pop();
     setState(
       () {
         countryCode = country;
         ccCode = code;
+        countryId = id;
       },
     );
   }
@@ -399,12 +483,12 @@ class _SignUpState extends State<SignUp> {
                   width: 320,
                 ),
                 const SizedBox(height: 20),
-                GestureDetector(
-                    onTap: getCountries,
-                    child: const Text(
-                      "Test",
-                      style: TextStyle(color: whiteColor),
-                    )),
+                // GestureDetector(
+                //     onTap: getCountries,
+                //     child: const Text(
+                //       "Test",
+                //       style: TextStyle(color: whiteColor),
+                //     )),
                 TextFields(
                     'Username', userNameController, 17, whiteColor, true),
                 const SizedBox(height: 20),
@@ -464,7 +548,7 @@ class _SignUpState extends State<SignUp> {
                           alignment: Alignment.centerLeft,
                           child: MyText(
                             text: 'Health Condition',
-                            weight: FontWeight.w500,
+                            weight: FontWeight.bold,
                             color: blackColor.withOpacity(0.5),
                             size: 16,
                           ),
@@ -473,9 +557,56 @@ class _SignUpState extends State<SignUp> {
                       const SizedBox(
                         height: 10,
                       ),
-                      const Padding(
-                        padding: EdgeInsets.only(bottom: 12.0),
-                        child: CheckboxGrid(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 0, vertical: 5),
+                        child: GridView.count(
+                          padding: const EdgeInsets.only(top: 0, bottom: 10),
+                          shrinkWrap: true,
+                          physics: const ScrollPhysics(),
+                          mainAxisSpacing: 0,
+                          childAspectRatio: 5.5,
+                          crossAxisSpacing: 2,
+                          crossAxisCount: 2,
+                          children: List.generate(
+                            healthList.length, // widget.profileURL.length,
+                            (index) {
+                              return Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 15.0),
+                                    child: SizedBox(
+                                      width: 15,
+                                      child: Transform.scale(
+                                        scale: 0.8,
+                                        child: Checkbox(
+                                            activeColor: whiteColor,
+                                            checkColor: bluishColor,
+                                            hoverColor: bluishColor,
+                                            focusColor: bluishColor,
+                                            value: healthValue[index],
+                                            onChanged: (bool? value1) {
+                                              setState(() {
+                                                healthValue[index] = value1!;
+                                              });
+                                            }),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  MyText(
+                                      text: healthList[index].healthCondition,
+                                      color: blackColor.withOpacity(0.6),
+                                      weight: FontWeight.w700,
+                                      size: 12,
+                                      fontFamily: 'Raleway'),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -702,7 +833,11 @@ class _SignUpState extends State<SignUp> {
                                     itemCount: countriesList1.length,
                                     itemBuilder: ((context, index) {
                                       return ListTile(
-                                        // leading: Image.network(countriesList1[index].flag),
+                                        leading: Image.network(
+                                          "${"https://adventuresclub.net/adventureClub/public/"}${countriesList1[index].flag}",
+                                          height: 25,
+                                          width: 40,
+                                        ),
                                         title: Text(
                                           countriesList1[index].country,
                                           style: const TextStyle(
@@ -718,8 +853,10 @@ class _SignUpState extends State<SignUp> {
                                               fontFamily: 'Raleway'),
                                         ),
                                         onTap: () {
-                                          getC(countriesList1[index].country,
-                                              countriesList1[index].code);
+                                          getC(
+                                              countriesList1[index].country,
+                                              countriesList1[index].code,
+                                              countriesList1[index].id);
                                           // addCountry(
                                           //   countriesList1[index].country,
                                           // );
@@ -1152,25 +1289,28 @@ class _SignUpState extends State<SignUp> {
                                       diameterRatio: 22,
                                       backgroundColor: whiteColor,
                                       onSelectedItemChanged: (int index) {
-                                        print(index + 1);
+                                        //print(index + 1);
                                         setState(() {
-                                          getWeight = pickWeight[index];
-                                          getWeight == null
-                                              ? cont = false
-                                              : cont = true;
-                                          ft = (index + 1);
-                                          heightController.text =
-                                              "$ft' $inches\"";
+                                          getWeight =
+                                              weightList[index].heightName;
+                                          // getWeight == null
+                                          //     ? cont = false
+                                          //     : cont = true;
+                                          // ft = (index + 1);
+                                          // heightController.text =
+                                          //     "$ft' $inches\"";
                                         });
                                       },
                                       selectionOverlay:
                                           const CupertinoPickerDefaultSelectionOverlay(
                                         background: transparentColor,
                                       ),
-                                      children: List.generate(3, (index) {
+                                      children: List.generate(weightList.length,
+                                          (index) {
                                         return Center(
                                           child: MyText(
-                                              text: pickWeight[index],
+                                              text:
+                                                  weightList[index].heightName,
                                               size: 14,
                                               color: blackTypeColor4),
                                         );
@@ -1206,13 +1346,13 @@ class _SignUpState extends State<SignUp> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               TextButton(
-                                  onPressed: () {},
+                                  onPressed: () => Navigator.of(context).pop(),
                                   child: MyText(
                                     text: 'Cancel',
                                     color: bluishColor,
                                   )),
                               TextButton(
-                                  onPressed: () {},
+                                  onPressed: () => Navigator.of(context).pop(),
                                   child: MyText(
                                     text: 'Ok',
                                     color: bluishColor,
@@ -1287,8 +1427,9 @@ class _SignUpState extends State<SignUp> {
                                         diameterRatio: 22,
                                         backgroundColor: whiteColor,
                                         onSelectedItemChanged: (int index) {
-                                          print(index + 1);
-                                          getheight = pickHeight[index];
+                                          // print(index + 1);
+                                          getheight =
+                                              heightList[index].heightName;
                                           getheight == null
                                               ? cont = false
                                               : cont = true;
@@ -1302,10 +1443,12 @@ class _SignUpState extends State<SignUp> {
                                             const CupertinoPickerDefaultSelectionOverlay(
                                           background: transparentColor,
                                         ),
-                                        children: List.generate(3, (index) {
+                                        children: List.generate(
+                                            heightList.length, (index) {
                                           return Center(
                                             child: MyText(
-                                                text: pickHeight[index],
+                                                text: heightList[index]
+                                                    .heightName,
                                                 size: 14,
                                                 color: blackTypeColor4),
                                           );
@@ -1343,13 +1486,13 @@ class _SignUpState extends State<SignUp> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               TextButton(
-                                  onPressed: () {},
+                                  onPressed: () => Navigator.of(context).pop(),
                                   child: MyText(
                                     text: 'Cancel',
                                     color: bluishColor,
                                   )),
                               TextButton(
-                                  onPressed: () {},
+                                  onPressed: () => Navigator.of(context).pop(),
                                   child: MyText(
                                     text: 'Ok',
                                     color: bluishColor,
@@ -1364,7 +1507,7 @@ class _SignUpState extends State<SignUp> {
           selectedTileColor: whiteColor,
           contentPadding: const EdgeInsets.symmetric(horizontal: 15),
           title: MyText(
-            text: getheight.toString(),
+            text: getheight,
             color: blackColor.withOpacity(0.6),
             size: 14,
             weight: FontWeight.w500,

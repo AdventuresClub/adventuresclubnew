@@ -3,38 +3,51 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../models/filter_data_model/durations_model.dart';
+import '../../models/services/aimed_for_model.dart';
 
-class DurationDropDown extends StatefulWidget {
-  final List<DurationsModel> dFilter;
+class AimedForDropDown extends StatefulWidget {
+  final List<AimedForModel> cFilter;
   final bool show;
-  const DurationDropDown(this.dFilter, {this.show = false, super.key});
+  const AimedForDropDown(this.cFilter, {this.show = false, super.key});
 
   @override
-  State<DurationDropDown> createState() => DurationDropDownState();
+  State<AimedForDropDown> createState() => AimedForDropDownState();
 }
 
-class DurationDropDownState extends State<DurationDropDown> {
+class AimedForDropDownState extends State<AimedForDropDown> {
   String country = "";
   //String selectedRegion = "";
   int selectedId = 0;
-  String selectedRegion = "5 Minutes";
+  String selectedCategory = "Kids";
   int id = 0;
 
   @override
   void initState() {
     super.initState();
-    selectedRegion = widget.dFilter[0].duration;
-  }
-
-  void sId(DurationsModel dFilter) {
-    Provider.of<CompleteProfileProvider>(context, listen: false)
-        .durationSelection(dFilter.duration, dFilter.id);
-  }
-
-  void fId(DurationsModel sFilter) {
     setState(() {
-      selectedRegion = sFilter.duration;
+      selectedCategory = widget.cFilter[0].aimedName;
+    });
+    // parseRegions(widget.rFilter);
+    // widget.cFilter.insert(
+    //     0,
+    //     CategoryFilterModel(
+    //         7,
+    //         "Service Category",
+    //         "selection_manager1665463304.png",
+    //         1,
+    //         "2022-10-11 10:11:44",
+    //         "2022-10-11 10:11:44",
+    //         ""));
+  }
+
+  void sId(AimedForModel cFilter) {
+    Provider.of<CompleteProfileProvider>(context, listen: false)
+        .categorySelection(cFilter.aimedName, cFilter.id);
+  }
+
+  void fId(AimedForModel sFilter) {
+    setState(() {
+      selectedCategory = sFilter.aimedName;
     });
   }
 
@@ -45,7 +58,7 @@ class DurationDropDownState extends State<DurationDropDown> {
             child: DropdownButtonHideUnderline(
               child: DropdownButton<String>(
                 isExpanded: true,
-                value: selectedRegion,
+                value: selectedCategory,
                 icon: Transform.translate(
                   offset: const Offset(-20, 4),
                   child: const Image(
@@ -65,18 +78,17 @@ class DurationDropDownState extends State<DurationDropDown> {
                 onChanged: (String? value) {
                   // This is called when the user selects an item.
                   setState(() {
-                    selectedRegion = value as String;
+                    selectedCategory = value as String;
                   });
                 },
-                items: widget.dFilter
-                    .map<DropdownMenuItem<String>>((DurationsModel cFilter) {
+                items: widget.cFilter
+                    .map<DropdownMenuItem<String>>((AimedForModel cFilter) {
                   return DropdownMenuItem<String>(
                     onTap: () => fId(cFilter),
-                    value: cFilter.duration,
+                    value: cFilter.aimedName,
                     child: Transform.translate(
-                      offset: const Offset(4, 2),
-                      child: Text(cFilter.duration),
-                    ),
+                        offset: const Offset(4, 2),
+                        child: Text(cFilter.aimedName)),
                   );
                 }).toList(),
               ),
@@ -93,7 +105,7 @@ class DurationDropDownState extends State<DurationDropDown> {
             child: DropdownButtonHideUnderline(
               child: DropdownButton<String>(
                 isExpanded: true,
-                value: selectedRegion,
+                value: selectedCategory,
                 icon: const Image(
                   image: ExactAssetImage(
                     'images/drop_down.png',
@@ -106,21 +118,20 @@ class DurationDropDownState extends State<DurationDropDown> {
                 onChanged: (String? value) {
                   // This is called when the user selects an item.
                   setState(() {
-                    selectedRegion = value as String;
+                    selectedCategory = value as String;
                     // selectedId =
                   });
                 },
-                items: widget.dFilter.map<DropdownMenuItem<String>>(
-                  (DurationsModel dFilter) {
-                    return DropdownMenuItem<String>(
-                      onTap: () => sId(
-                        dFilter,
-                      ),
-                      value: dFilter.duration,
-                      child: Text(dFilter.duration),
-                    );
-                  },
-                ).toList(),
+                items: widget.cFilter
+                    .map<DropdownMenuItem<String>>((AimedForModel cFilter) {
+                  return DropdownMenuItem<String>(
+                    onTap: () => sId(
+                      cFilter,
+                    ),
+                    value: cFilter.aimedName,
+                    child: Text(cFilter.aimedName),
+                  );
+                }).toList(),
               ),
             ),
           );

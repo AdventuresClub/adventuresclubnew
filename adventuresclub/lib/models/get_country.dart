@@ -1,7 +1,7 @@
-class GetCountry {
+class GetCountryModel {
   String country;
   String flag;
   dynamic code;
   int id;
-  GetCountry(this.country, this.flag, this.code, this.id);
+  GetCountryModel(this.country, this.flag, this.code, this.id);
 }

@@ -25,6 +25,15 @@ class _CompleteProfileState extends State<CompleteProfile> {
     'Payment Setup',
     'Select Package',
   ];
+
+  void checkIndex() {
+    int index = Provider.of<CompleteProfileProvider>(context, listen: false)
+        .currentIndex;
+    if (index == 1) {}
+    Provider.of<CompleteProfileProvider>(context, listen: false)
+        .nextStep(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final completeProfileProvider =
@@ -191,9 +200,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
           );
         },
       ),
-      bottomNavigationBar: BottomButton(
-          bgColor: whiteColor,
-          onTap: () => completeProfileProvider.nextStep(context)),
+      bottomNavigationBar: BottomButton(bgColor: whiteColor, onTap: checkIndex),
     );
   }
 }

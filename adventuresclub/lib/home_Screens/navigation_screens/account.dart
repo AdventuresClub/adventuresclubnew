@@ -69,6 +69,7 @@ class _AccountState extends State<Account> {
   String resultService = "";
   String resultRequest = "";
   String totalNotication = "";
+  bool loading = false;
   @override
   void initState() {
     super.initState();
@@ -82,17 +83,19 @@ class _AccountState extends State<Account> {
   // }
 
   void getProfile() async {
-    //  getNotificationNum();
+    setState(() {
+      loading = true;
+    });
     try {
       var response = await http.post(
           Uri.parse("https://adventuresclub.net/adventureClub/api/v1/login"),
           body: {
-            'email': "hamza@gmail.com",
-            'password': "Upendra@321",
+            'email': Constants.emailId, //"hamza@gmail.com",
+            'password': Constants.password, //"Upendra@321",
             'device_id': "0"
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-      dynamic partnerInfo = decodedResponse['data']['become_partner'] ?? "";
+      dynamic partnerInfo = decodedResponse['data'];
       int id = int.tryParse(partnerInfo['id'].toString()) ?? 0;
       int userId = int.tryParse(partnerInfo['user_id'].toString()) ?? 0;
       int debitCard = int.tryParse(partnerInfo['debit_card'].toString()) ?? 0;
@@ -126,9 +129,9 @@ class _AccountState extends State<Account> {
         partnerInfo['created_at'].toString() ?? "",
         partnerInfo['updated_at'].toString() ?? "",
       );
-
       setState(
         () {
+          loading = false;
           gBp = bp;
           //status = decodedResponse['data']['become_partner'] ?? "";
           firstName = decodedResponse['data']['name'] ?? "";
@@ -145,6 +148,18 @@ class _AccountState extends State<Account> {
       MaterialPageRoute(
         builder: (_) {
           return const Profile();
+        },
+      ),
+    );
+  }
+
+  void logout() {
+    Constants.clear();
+    print(Constants.userId);
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return const SignIn();
         },
       ),
     );
@@ -175,40 +190,44 @@ class _AccountState extends State<Account> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          MyText(
-                            text: firstName, //'Kenneth Gutierrez',
-                            color: blackColor,
-                            weight: FontWeight.bold,
-                            size: 22,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.of(context)
-                                  .push(MaterialPageRoute(builder: (_) {
-                                return const BecomePartnerNew();
-                              }));
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                      loading
+                          ? const Text("Loading")
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 MyText(
-                                  text: 'Already a partner',
-                                  size: 16,
-                                  fontFamily: 'Raleway',
-                                  color: greyColor.withOpacity(0.8),
+                                  text: firstName, //'Kenneth Gutierrez',
+                                  color: blackColor,
+                                  weight: FontWeight.bold,
+                                  size: 22,
+                                  fontFamily: "Raleway",
                                 ),
-                                const Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: bluishColor,
-                                )
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(builder: (_) {
+                                      return const BecomePartnerNew();
+                                    }));
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      MyText(
+                                        text: 'Already a partner',
+                                        size: 18,
+                                        //fontFamily: 'Raleway',
+                                        weight: FontWeight.w600,
+                                        color: greyColor.withOpacity(1),
+                                      ),
+                                      const Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: bluishColor,
+                                      )
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
                       profileUrl != null
                           ? GestureDetector(
                               onTap: goToProfile,
@@ -304,7 +323,7 @@ class _AccountState extends State<Account> {
                               ),
                               MyText(
                                 text: text[i],
-                                color: greyColor.withOpacity(0.9),
+                                color: greyColor.withOpacity(1),
                               )
                             ],
                           )
@@ -323,8 +342,8 @@ class _AccountState extends State<Account> {
                   visualDensity:
                       const VisualDensity(horizontal: 0, vertical: -3),
                   contentPadding:
-                      const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-                  horizontalTitleGap: 1,
+                      const EdgeInsets.symmetric(vertical: 2, horizontal: 20),
+                  horizontalTitleGap: 2,
                   onTap: (() {
                     if (tile1Text[index] == 'My Points') {
                       Navigator.of(context)
@@ -397,14 +416,12 @@ class _AccountState extends State<Account> {
                       );
                     }
                     if (tile1Text[index] == 'Log out') {
+                      logout();
                       //                    void logout() async {
                       //          Provider.of<CompleteProfileProvider>(context, listen: false).clearAll();
                       //       getprefs!.clear();
                       // }
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (_) {
-                        return const SignIn();
-                      }));
+
                     }
                   }),
                   leading: Stack(clipBehavior: Clip.none, children: [
@@ -412,7 +429,7 @@ class _AccountState extends State<Account> {
                       image: ExactAssetImage(tile1[index]),
                       height: tile1Text[index] == 'My Points' ? 35 : 25,
                       width: 35,
-                      color: greyColor.withOpacity(0.9),
+                      color: greyColor.withOpacity(1),
                     ),
                     tile1Text[index] == 'Notification'
                         ? Positioned(
@@ -432,9 +449,9 @@ class _AccountState extends State<Account> {
                   ]),
                   title: MyText(
                     text: tile1Text[index],
-                    color: greyColor.withOpacity(0.9),
-                    size: 14,
-                    weight: FontWeight.w500,
+                    color: greyColor.withOpacity(1),
+                    size: 15,
+                    weight: FontWeight.w700,
                   ),
                   trailing: tile1Text[index] == 'Settings'
                       ? SizedBox(
@@ -443,16 +460,16 @@ class _AccountState extends State<Account> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               MyText(
-                                text: 'OMAN',
+                                text: Constants.country, //'OMAN',
                                 color: greyColor.withOpacity(0.9),
                                 weight: FontWeight.w500,
                               ),
-                              const Image(
-                                image: ExactAssetImage(
-                                  'images/maskGroup51.png',
-                                ),
-                                height: 15,
-                              )
+                              // const Image(
+                              //   image: ExactAssetImage(
+                              //     'images/maskGroup51.png',
+                              //   ),
+                              //   height: 15,
+                              // )
                             ],
                           ),
                         )

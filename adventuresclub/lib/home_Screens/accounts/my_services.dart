@@ -144,8 +144,8 @@ class _MyServicesState extends State<MyServices> {
           Uri.parse(
               "https://adventuresclub.net/adventureClub/api/v1/myserviceapi"),
           body: {
-            'owner': "3",
-            'country_id': "2",
+            'owner': Constants.userId.toString(), //"3",
+            'country_id': "2", //Constants.countryId.toString(), //"2",
             //'forgot_password': "0"
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
@@ -265,7 +265,7 @@ class _MyServicesState extends State<MyServices> {
         title: MyText(
           text: 'My services',
           color: bluishColor,
-          weight: FontWeight.w500,
+          weight: FontWeight.w700,
           fontFamily: "Roboto",
         ),
         actions: [

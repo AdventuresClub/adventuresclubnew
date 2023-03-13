@@ -1,5 +1,6 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
+import 'package:adventuresclub/provider/filter_provider.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/splashScreen/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,9 @@ void main() async {
           ),
           ChangeNotifierProvider(
             create: (_) => ServicesProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => FilterProvider(),
           ),
         ],
         child: const MyApp(),
@@ -38,7 +42,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Roboto'),
+      theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Raleway'),
       home: FutureBuilder(
         future: getApp(),
         builder: (context, asppsnapshot) {

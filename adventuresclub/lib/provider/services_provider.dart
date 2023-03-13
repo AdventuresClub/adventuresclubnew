@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:adventuresclub/models/filter_data_model/category_filter_model.dart';
 import 'package:adventuresclub/models/home_services/home_services_model.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
@@ -9,6 +10,7 @@ import 'package:adventuresclub/models/services/availability_model.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import '../constants.dart';
 import '../models/home_services/become_partner.dart';
 
 class ServicesProvider with ChangeNotifier {
@@ -17,17 +19,17 @@ class ServicesProvider with ChangeNotifier {
   String resultRequest = "";
   String totalNotication = "";
   String id = "1";
-  List<AvailabilityModel> gAccomodoationAvaiModel = [];
+
   List<AvailabilityModel> gTransportAvaiModel = [];
   List<AvailabilityModel> gSkyAvaiModel = [];
   List<AvailabilityModel> gWaterAvaiModel = [];
   List<AvailabilityModel> gLandAvaiModel = [];
-  List<ServiceImageModel> gAccomodationServImgModel = [];
+
   List<ServiceImageModel> gTransportServImgModel = [];
   List<ServiceImageModel> gSkyServImgModel = [];
   List<ServiceImageModel> gWaterServImgModel = [];
   List<ServiceImageModel> gLandServImgModel = [];
-  List<AimedForModel> gAccomodationAimedfm = [];
+
   List<AimedForModel> gTransportAimedfm = [];
   List<AimedForModel> gSkyAimedfm = [];
   List<AimedForModel> gWaterAimedfm = [];
@@ -54,13 +56,58 @@ class ServicesProvider with ChangeNotifier {
   List<ServicesModel> allSky = [];
   List<ServicesModel> allWater = [];
   List<ServicesModel> allLand = [];
+  List<CategoryFilterModel> categoryFilter = [];
+
+  void getCategory(List<CategoryFilterModel> cm) {
+    cm = categoryFilter;
+  }
+
+  void clearAll() {
+    // gAccomodoationAvaiModel.clear();
+    // gTransportAvaiModel.clear();
+    // gSkyAvaiModel.clear();
+    // gWaterAvaiModel.clear();
+    // gLandAvaiModel.clear();
+    // gAccomodationServImgModel.clear();
+    // gTransportServImgModel.clear();
+    // gSkyServImgModel.clear();
+    // gWaterServImgModel.clear();
+    // gLandServImgModel.clear();
+    // gAccomodationAimedfm.clear();
+    gTransportAimedfm.clear();
+    gSkyAimedfm.clear();
+    gWaterAimedfm.clear();
+    gLandAimedfm.clear();
+    nBp.clear();
+    transportBp.clear();
+    skyBp.clear();
+    waterBp.clear();
+    landBp.clear();
+    gAccomodationSModel.clear();
+    gTransportSModel.clear();
+    gSkyServicesModel.clear();
+    gWaterServicesModel.clear();
+    gLandServicesModel.clear();
+    accomodation.clear();
+    transport.clear();
+    sky.clear();
+    water.clear();
+    land.clear();
+    gm.clear();
+    allServices.clear();
+    allAccomodation.clear();
+    allTransport.clear();
+    allSky.clear();
+    allWater.clear();
+    allLand.clear();
+  }
 
   Future getServicesList() async {
     var response = await http.post(
         Uri.parse(
             "https://adventuresclub.net/adventureClub/api/v1/get_allservices"),
         body: {
-          "country_id": id,
+          "country_id": Constants.countryId.toString(), //id,
         });
     if (response.statusCode == 200) {
       var getServicesMap = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
@@ -70,6 +117,7 @@ class ServicesProvider with ChangeNotifier {
           String acc = element['category'].toString() ?? "";
           List<dynamic> s = element['services'];
           s.forEach((services) {
+            List<AvailabilityModel> gAccomodoationAvaiModel = [];
             List<dynamic> available = services['availability'];
             available.forEach((a) {
               AvailabilityModel am = AvailabilityModel(
@@ -84,6 +132,7 @@ class ServicesProvider with ChangeNotifier {
                   b['cr_number'].toString() ?? "",
                   b['description'].toString() ?? "");
             });
+            List<AimedForModel> gAccomodationAimedfm = [];
             List<dynamic> aF = services['aimed_for'];
             aF.forEach((a) {
               AimedForModel afm = AimedForModel(
@@ -97,6 +146,7 @@ class ServicesProvider with ChangeNotifier {
               );
               gAccomodationAimedfm.add(afm);
             });
+            List<ServiceImageModel> gAccomodationServImgModel = [];
             List<dynamic> image = services['images'];
             image.forEach((i) {
               ServiceImageModel sm = ServiceImageModel(
@@ -159,8 +209,8 @@ class ServicesProvider with ChangeNotifier {
               services['baseurl'].toString() ?? "",
               gAccomodationServImgModel,
             );
-            gAccomodationSModel.add(nSm);
-            allServices.add(nSm);
+            // gAccomodationSModel.add(nSm);
+            // allServices.add(nSm);
             allAccomodation.add(nSm);
           });
           HomeServicesModel adv = HomeServicesModel(acc, gAccomodationSModel);

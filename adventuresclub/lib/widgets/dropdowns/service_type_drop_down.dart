@@ -3,38 +3,53 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../models/filter_data_model/durations_model.dart';
+import '../../models/filter_data_model/service_types_filter.dart';
 
-class DurationDropDown extends StatefulWidget {
-  final List<DurationsModel> dFilter;
+class ServiceTypeDropDown extends StatefulWidget {
+  final List<ServiceTypeFilterModel> sFilter;
   final bool show;
-  const DurationDropDown(this.dFilter, {this.show = false, super.key});
+  const ServiceTypeDropDown(this.sFilter, {this.show = false, super.key});
 
   @override
-  State<DurationDropDown> createState() => DurationDropDownState();
+  State<ServiceTypeDropDown> createState() => ServiceTypeDropDownState();
 }
 
-class DurationDropDownState extends State<DurationDropDown> {
+class ServiceTypeDropDownState extends State<ServiceTypeDropDown> {
   String country = "";
   //String selectedRegion = "";
   int selectedId = 0;
-  String selectedRegion = "5 Minutes";
+  String selectedRegion = "Hike";
   int id = 0;
 
   @override
   void initState() {
     super.initState();
-    selectedRegion = widget.dFilter[0].duration;
-  }
-
-  void sId(DurationsModel dFilter) {
-    Provider.of<CompleteProfileProvider>(context, listen: false)
-        .durationSelection(dFilter.duration, dFilter.id);
-  }
-
-  void fId(DurationsModel sFilter) {
     setState(() {
-      selectedRegion = sFilter.duration;
+      selectedRegion = widget.sFilter[0].type;
+    });
+
+    // parseRegions(widget.rFilter);
+    // widget.sFilter.insert(
+    //   0,
+    //   ServiceTypeFilterModel(
+    //       7,
+    //       "Service Type",
+    //       "selection_manager1665463304.png",
+    //       1,
+    //       "2022-10-11 10:11:44",
+    //       "2022-10-11 10:11:44",
+    //       ""),
+    // );
+  }
+
+  void sId(ServiceTypeFilterModel sFilter) {
+    Provider.of<CompleteProfileProvider>(context, listen: false)
+        .typeSelection(sFilter.type, sFilter.id);
+  }
+
+  void fId(ServiceTypeFilterModel sFilter) {
+    setState(() {
+      selectedRegion = sFilter.type;
     });
   }
 
@@ -47,7 +62,7 @@ class DurationDropDownState extends State<DurationDropDown> {
                 isExpanded: true,
                 value: selectedRegion,
                 icon: Transform.translate(
-                  offset: const Offset(-20, 4),
+                  offset: const Offset(-30, 4),
                   child: const Image(
                     image: ExactAssetImage(
                       'images/drop_down.png',
@@ -68,17 +83,18 @@ class DurationDropDownState extends State<DurationDropDown> {
                     selectedRegion = value as String;
                   });
                 },
-                items: widget.dFilter
-                    .map<DropdownMenuItem<String>>((DurationsModel cFilter) {
-                  return DropdownMenuItem<String>(
-                    onTap: () => fId(cFilter),
-                    value: cFilter.duration,
-                    child: Transform.translate(
-                      offset: const Offset(4, 2),
-                      child: Text(cFilter.duration),
-                    ),
-                  );
-                }).toList(),
+                items: widget.sFilter.map<DropdownMenuItem<String>>(
+                  (ServiceTypeFilterModel sFilter) {
+                    return DropdownMenuItem<String>(
+                      onTap: () => fId(sFilter),
+                      value: sFilter.type,
+                      child: Transform.translate(
+                        offset: const Offset(4, 2),
+                        child: Text(sFilter.type),
+                      ),
+                    );
+                  },
+                ).toList(),
               ),
             ),
           )
@@ -110,14 +126,14 @@ class DurationDropDownState extends State<DurationDropDown> {
                     // selectedId =
                   });
                 },
-                items: widget.dFilter.map<DropdownMenuItem<String>>(
-                  (DurationsModel dFilter) {
+                items: widget.sFilter.map<DropdownMenuItem<String>>(
+                  (ServiceTypeFilterModel sFilter) {
                     return DropdownMenuItem<String>(
                       onTap: () => sId(
-                        dFilter,
+                        sFilter,
                       ),
-                      value: dFilter.duration,
-                      child: Text(dFilter.duration),
+                      value: sFilter.type,
+                      child: Text(sFilter.type),
                     );
                   },
                 ).toList(),

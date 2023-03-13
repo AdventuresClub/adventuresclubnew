@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls
+
 import 'dart:convert';
 
 import 'package:adventuresclub/constants.dart';
@@ -8,6 +10,8 @@ import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/buttons/square_button.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+import '../Chat_list.dart/show_chat.dart';
 
 class ReqCompletedList extends StatefulWidget {
   const ReqCompletedList({super.key});
@@ -20,6 +24,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
   Map Ulist = {};
   List<ServiceImageModel> gSim = [];
   List<UpcomingRequestsModel> uRequestList = [];
+  Map mapChat = {};
 
   @override
   initState() {
@@ -29,7 +34,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
 
   Future getReqList() async {
     var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_requests?user_id=27&type=1"));
+        "https://adventuresclub.net/adventureClub/api/v1/get_requests?user_id=${Constants.userId}&type=1"));
     try {
       if (response.statusCode == 200) {
         Ulist = json.decode(response.body);
@@ -86,6 +91,31 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
     }
   }
 
+  // void getChats() async {
+  //   // setState(() {
+  //   //   loading = true;
+  //   // });
+  //   try {
+  //     var response = await http.get(
+  //       Uri.parse(
+  //           "https://adventuresclub.net/adventureClub/newreceiverchat/3/1/3"),
+  //     );
+  //     if (response.statusCode == 200) {
+  //       mapChat = json.decode(response.body);
+  //       List<dynamic> result = mapChat['data'];
+  //       result.forEach((element) {});
+  //     }
+  //     // setState(() {
+  //     //   loading = false;
+  //     // });
+  //     print(response.statusCode);
+  //     print(response.body);
+  //     print(response.headers);
+  //   } catch (e) {
+  //     print(e.toString());
+  //   }
+  // }
+
   // Future getReqList() async {
   //   var response = await http.get(Uri.parse(
   //       "https://adventuresclub.net/adventureClub/api/v1/get_requests?user_id=27&type=1"));
@@ -103,10 +133,14 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
   // }
 
   abc() {}
-  goToMyAd() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return const MyAdventures();
-    }));
+  void goToMyAd() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return const MyAdventures();
+        },
+      ),
+    );
   }
 
   List text = [
@@ -133,6 +167,18 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
     '\$ 1500.50',
     'Debit/Credit Card'
   ];
+
+  void selected(BuildContext context, int serviceId, int providerId) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return ShowChat(
+              "https://adventuresclub.net/adventureClub/newreceiverchat/${Constants.userId}/${serviceId}/${providerId}");
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -152,7 +198,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       MyText(
-                        text: 'Location Name',
+                        text: uRequestList[index].region, //'Location Name',
                         color: blackColor,
                       ),
                       MyText(
@@ -167,10 +213,12 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const CircleAvatar(
-                        radius: 26,
-                        backgroundImage: ExactAssetImage('images/airrides.png'),
-                      ),
+                      CircleAvatar(
+                          radius: 26,
+                          backgroundImage:
+                              //ExactAssetImage('images/airrides.png'),
+                              NetworkImage(
+                                  "${"https://adventuresclub.net/adventureClub/public/"}${uRequestList[index].sImage[0].imageUrl}}")),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 12.0, vertical: 3),
@@ -401,12 +449,53 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SquareButton('Book Again', bluishColor, whiteColor, 3.7,
+                      SquareButton('View Details', bluishColor, whiteColor, 3.7,
                           21, 12, abc),
                       SquareButton('Rate Now', yellowcolor, whiteColor, 3.7, 21,
                           12, goToMyAd),
-                      SquareButton('Chat Provider', blueColor1, whiteColor, 3.7,
-                          21, 12, abc),
+                      GestureDetector(
+                        onTap: () => selected(
+                            context,
+                            uRequestList[index].serviceId,
+                            uRequestList[index].providerId),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height / 21,
+                          width: MediaQuery.of(context).size.width / 3.8,
+                          decoration: const BoxDecoration(
+                            color: blueColor1,
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                          ),
+                          child: Center(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Text(
+                                    'Chat Provider',
+                                    style: TextStyle(
+                                        color: whiteColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      // SquareButton(
+                      //     'Chat Provider',
+                      //     blueColor1,
+                      //     whiteColor,
+                      //     3.7,
+                      //     21,
+                      //     12,
+                      //     () => selected(
+                      //         context,
+                      //         uRequestList[index].serviceId.toString(),
+                      //         uRequestList[index].providerId.toString())),
                     ],
                   ),
                 ],

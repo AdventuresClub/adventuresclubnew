@@ -1,6 +1,7 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/reviews.dart';
 import 'package:adventuresclub/models/my_services/my_services_model.dart';
+import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/Lists/my_services_list.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/tabs/my_services_tabs.dart';
@@ -35,6 +36,17 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
     );
   }
 
+  void selected(BuildContext context, int serviceId, int providerId) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return ShowChat(
+              "https://adventuresclub.net/adventureClub/chatlist/${Constants.userId}/$serviceId/$providerId");
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,12 +65,16 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
           text: widget.sm.adventureName, //'Hill Climbing',
           color: bluishColor,
         ),
-        actions: const [
-          Icon(
-            Icons.message,
-            color: bluishColor,
+        actions: [
+          GestureDetector(
+            onTap: () =>
+                selected(context, widget.sm.serviceId, widget.sm.providerId),
+            child: const Icon(
+              Icons.message,
+              color: bluishColor,
+            ),
           ),
-          SizedBox(width: 10)
+          const SizedBox(width: 10)
         ],
       ),
       body: SingleChildScrollView(

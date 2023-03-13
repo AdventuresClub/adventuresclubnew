@@ -1,28 +1,40 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/models/health_condition_model.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 
 class CheckboxGrid extends StatefulWidget {
-  const CheckboxGrid({Key? key}) : super(key: key);
+  final List<HealthConditionModel> hc;
+  const CheckboxGrid(this.hc, {Key? key}) : super(key: key);
 
   @override
-  _CheckboxGridState createState() => _CheckboxGridState();
+  CheckboxGridState createState() => CheckboxGridState();
 }
 
-class _CheckboxGridState extends State<CheckboxGrid> {
+class CheckboxGridState extends State<CheckboxGrid> {
+  @override
+  void initState() {
+    super.initState();
+    widget.hc.forEach((element) {
+      value.add(false);
+    });
+  }
+
   List<bool> value = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false
+    // false,
+    // false,
+    // false,
+    // false,
+    // false,
+    // false,
+    // false,
+    // false,
+    // false,
+    // false,
+    // false,
+    // false
   ];
   List<String> text = [
     'Good Condition',
@@ -40,9 +52,9 @@ class _CheckboxGridState extends State<CheckboxGrid> {
   ];
   @override
   Widget build(BuildContext context) {
-    final double itemHeight =
-        (MediaQuery.of(context).size.height - kToolbarHeight - 24) / 9.75;
-    final double itemWidth = MediaQuery.of(context).size.width / 4.5;
+    // final double itemHeight =
+    //     (MediaQuery.of(context).size.height - kToolbarHeight - 24) / 9.75;
+    // final double itemWidth = MediaQuery.of(context).size.width / 4.5;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0),
       child: GridView.count(
@@ -54,12 +66,12 @@ class _CheckboxGridState extends State<CheckboxGrid> {
         crossAxisSpacing: 2,
         crossAxisCount: 2,
         children: List.generate(
-          value.length, // widget.profileURL.length,
+          widget.hc.length, // widget.profileURL.length,
           (index) {
             return Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left:12.0),
+                  padding: const EdgeInsets.only(left: 12.0),
                   child: SizedBox(
                     width: 15,
                     child: Transform.scale(
@@ -78,13 +90,15 @@ class _CheckboxGridState extends State<CheckboxGrid> {
                     ),
                   ),
                 ),
-                SizedBox(width: 10,),
+                const SizedBox(
+                  width: 10,
+                ),
                 // Expanded(
                 //   child: SizedBox.shrink(),
                 //   flex: 1,
                 // ),
                 MyText(
-                    text: text[index],
+                    text: widget.hc[index].healthCondition,
                     color: blackColor.withOpacity(0.6),
                     weight: FontWeight.w700,
                     size: 12,

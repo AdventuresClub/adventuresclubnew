@@ -3,5 +3,7 @@ class CategoryModel {
   String category;
   String image;
   int status;
-  CategoryModel(this.id, this.category, this.image, this.status);
+  String? imageInserted;
+  CategoryModel(this.id, this.category, this.image, this.status,
+      {this.imageInserted});
 }

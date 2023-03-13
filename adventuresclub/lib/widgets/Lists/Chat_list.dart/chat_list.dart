@@ -3,10 +3,12 @@
 import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/notifications/notifications_list_model.dart';
+import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class ChatList extends StatefulWidget {
   const ChatList({super.key});
@@ -17,6 +19,7 @@ class ChatList extends StatefulWidget {
 
 class _ChatListState extends State<ChatList> {
   bool loading = false;
+  Map mapChat = {};
   List images = [
     'images/picture1.png',
     'images/picture1.png',
@@ -53,53 +56,52 @@ class _ChatListState extends State<ChatList> {
   @override
   void initState() {
     super.initState();
-    getNotifications();
+    //getChats();
+    selected();
   }
 
-  void getNotifications() async {
-    setState(() {
-      loading = true;
-    });
-    try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/get_notification_list"),
-          body: {
-            'user_id': "27",
-          });
-      if (response.statusCode == 200) {
-        var decodedResponse =
-            jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-        List<dynamic> result = decodedResponse['data'];
-        result.forEach((element) {
-          NotificationsListModel nm = NotificationsListModel(
-            int.tryParse(element['id'].toString()) ?? 0,
-            int.tryParse(element['sender_id'].toString()) ?? 0,
-            int.tryParse(element['user_id'].toString()) ?? 0,
-            element['title'].toString() ?? "",
-            element['message'].toString() ?? "",
-            element['is_approved'].toString() ?? "",
-            element['is_read'].toString() ?? "",
-            element['notification_type'].toString() ?? "",
-            element['created_at'].toString() ?? "",
-            element['raed_at'].toString() ?? "",
-            element['send_at'].toString() ?? "",
-            element['updated_at'].toString() ?? "",
-            element['sender_image'].toString() ?? "",
-          );
-          pNm.add(nm);
-        });
-      }
-      setState(() {
-        loading = false;
-      });
-      print(response.statusCode);
-      print(response.body);
-      print(response.headers);
-    } catch (e) {
-      print(e.toString());
+  void selected() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return const ShowChat(
+          'https://adventuresclub.net/adventureClub/grouplist/3');
+    }));
+  }
+
+  void launchURL() async {
+    const url = 'https://adventuresclub.net/adventureClub/grouplist/3';
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      throw 'Could not launch $url';
     }
   }
+
+  // void getChats() async {
+  //   setState(() {
+  //     loading = true;
+  //   });
+  //   try {
+  //     var response = await http.get(
+  //       Uri.parse("https://adventuresclub.net/adventureClub/grouplist/2"),
+  //     );
+  //     if (response.statusCode == 200) {
+  //       mapChat = json.decode(response.body);
+  //       List<dynamic> result = mapChat['data'];
+  //       result.forEach((element) {});
+  //     }
+  //     // any browser internal browser ... back button and header will be from the application
+
+  //     setState(() {
+  //       loading = false;
+  //     });
+  //     print(response.statusCode);
+  //     print(response.body);
+  //     print(response.headers);
+  //   } catch (e) {
+  //     print(e.toString());
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -156,20 +158,20 @@ class _ChatListState extends State<ChatList> {
                           color: blackColor.withOpacity(0.6),
                           size: 12,
                         ),
-                        trailing: Column(
-                          children: [
-                            CircleAvatar(
-                              radius: 12,
-                              backgroundColor: bluishColor,
-                              child: MyText(
-                                text: '2',
-                                color: whiteColor,
-                                size: 10,
-                                weight: FontWeight.w500,
-                              ),
-                            )
-                          ],
-                        ),
+                        // trailing: Column(
+                        //   children: [
+                        //     CircleAvatar(
+                        //       radius: 12,
+                        //       backgroundColor: bluishColor,
+                        //       child: MyText(
+                        //         text: '2',
+                        //         color: whiteColor,
+                        //         size: 10,
+                        //         weight: FontWeight.w500,
+                        //       ),
+                        //     )
+                        //   ],
+                        // ),
                       ),
                     ),
                     const Divider(

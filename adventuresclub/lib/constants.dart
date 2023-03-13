@@ -1,32 +1,43 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
+import 'dart:convert';
 import 'dart:ui';
 
+import 'package:adventuresclub/models/filter_data_model/activities_inc_model.dart';
+import 'package:adventuresclub/models/filter_data_model/category_filter_model.dart';
+import 'package:adventuresclub/models/filter_data_model/countries_filter.dart';
+import 'package:adventuresclub/models/filter_data_model/durations_model.dart';
+import 'package:adventuresclub/models/filter_data_model/filter_data_model.dart';
+import 'package:adventuresclub/models/filter_data_model/level_filter_mode.dart';
+import 'package:adventuresclub/models/filter_data_model/sector_filter_model.dart';
+import 'package:adventuresclub/models/filter_data_model/service_types_filter.dart';
+import 'package:adventuresclub/models/services/aimed_for_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+
+import 'models/filter_data_model/region_model.dart';
 
 const kPrimaryColor = Color(0xffE8E8E8);
 const kSecondaryColor = Color(0xff193447);
 const blackColor = Color(0xff000000);
 const whiteColor = Color(0xffFFFFFF);
 const textFieldNewColor = Color(0xFFE4E9F8);
-
 const transparentColor = Color(0x00000000);
-
 const greyColorShade400 = Color(0xffBDBDBD);
 const deepSkyBlue = Color(0xff00bfff);
 const argentinianBlue = Color(0xff6CB4EE);
 const greenishColor = Color(0xff1C3947);
 const greyColorShade800 = Color(0xff303030);
-const greyColor = Color(0xFF707070);
+const greyColor = Color.fromARGB(255, 106, 105, 105);
 const greyShadeColor = Color(0xFF979797);
-
 const lightGreyColor = Color(0xFFEEEEEE);
 const blueColor = Color(0xFF7EC8E3);
 const greyBackgroundColor = Color(0xFF0F0F0F);
-
-const greyProfileColor = Color(0xFFF6F6F6);
+const greyProfileColor = Color.fromARGB(255, 231, 230, 230);
 const greyProfileColor1 = Color(0xFFf5f5f5);
 const greyColor3 = Color.fromARGB(255, 128, 126, 123);
 const redColor = Color(0xFFDF5252);
@@ -47,15 +58,43 @@ const searchTextColor = Color(0xFF3E474F);
 const bluishColor = Color(0xFF1C3947);
 const blueButtonColor = Color(0xFF1D7FFF);
 const blueTextColor = Color(0xFF4BAFAC);
+const darkGreen = Color.fromARGB(255, 26, 107, 18);
+const darkRed = Color.fromARGB(255, 176, 37, 37);
 
 class Constants {
-  String userID = "";
-  String countryId = "";
+  static String name = "";
+  static int countryId = 0;
+  static int userId = 0;
+  static String emailId = "";
+  static String password = "";
+  static String country = "";
   static SharedPreferences? prefs;
+  static Map mapFilter = {};
+  static List<SectorFilterModel> filterSectors = [];
+  static List<CategoryFilterModel> categoryFilter = [];
+  static List<ServiceTypeFilterModel> serviceFilter = [];
+  static List<CountriesFilterModel> countriesFilter = [];
+  static List<LevelFilterModel> levelFilter = [];
+  static List<AimedForModel> dummyAm = [];
+  static List<AimedForModel> am = [];
+  static List<DurationsModel> durationFilter = [];
+  static List<ActivitiesIncludeModel> activitiesFilter = [];
+  static List<RegionFilterModel> regionFilter = [];
+  static List<FilterDataModel> fDM = [];
 
   static getPrefs() async {
     prefs ??= await SharedPreferences.getInstance();
     return prefs;
+  }
+
+  static void clear() {
+    prefs!.clear();
+    userId == 0;
+    countryId == 0;
+    name == "";
+    emailId == "";
+    password == "";
+    country = "";
   }
 
   static Future<String> getLocation() async {
@@ -83,23 +122,21 @@ class Constants {
       List<Marker> mapMarkers, String city, String country) async {
     List<Marker> markers = [];
     for (int i = 0; i < mapMarkers.length; i++) {
-      if (mapMarkers[i] != null) {
-        var bitMap = await createMarker(
-          300,
-          150,
-          city,
-          country,
-        );
-        var bitMapDescriptor = BitmapDescriptor.fromBytes(bitMap);
-        markers.add(
-          Marker(
-            markerId: mapMarkers[i].markerId,
-            position: mapMarkers[i].position,
-            icon: bitMapDescriptor,
-            infoWindow: mapMarkers[i].infoWindow,
-          ),
-        );
-      }
+      var bitMap = await createMarker(
+        300,
+        150,
+        city,
+        country,
+      );
+      var bitMapDescriptor = BitmapDescriptor.fromBytes(bitMap);
+      markers.add(
+        Marker(
+          markerId: mapMarkers[i].markerId,
+          position: mapMarkers[i].position,
+          icon: bitMapDescriptor,
+          infoWindow: mapMarkers[i].infoWindow,
+        ),
+      );
     }
     return markers;
   }
@@ -176,5 +213,249 @@ class Constants {
     final img = await pictureRecorder.endRecording().toImage(w, h);
     final data = await img.toByteData(format: ImageByteFormat.png);
     return data!.buffer.asUint8List();
+  }
+
+  static Future<void> getFilter() async {
+    var response = await http.get(Uri.parse(
+        "https://adventuresclub.net/adventureClub/api/v1/filter_modal_data"));
+    if (response.statusCode == 200) {
+      mapFilter = json.decode(response.body);
+      dynamic result = mapFilter['data'];
+      List<dynamic> sectorData = result['sectors'];
+      sectorData.forEach((data) {
+        SectorFilterModel sm = SectorFilterModel(
+          int.tryParse(data['id'].toString()) ?? 0,
+          data['sector'],
+          data['image'],
+          int.tryParse(data['status'].toString()) ?? 0,
+          data['created_at'],
+          data['updated_at'],
+          data['deleted_at'] ?? "",
+        );
+        filterSectors.add(sm);
+      });
+      List<dynamic> cat = result['categories'];
+      cat.forEach((cateGory) {
+        int c = int.tryParse(cateGory['id'].toString()) ?? 0;
+        CategoryFilterModel cm = CategoryFilterModel(
+          c,
+          cateGory['category'],
+          cateGory['image'],
+          cateGory['status'],
+          cateGory['created_at'],
+          cateGory['updated_at'],
+          cateGory['deleted_at'] ?? "",
+        );
+        categoryFilter.add(cm);
+      });
+      List<dynamic> serv = result['service_types'];
+      serv.forEach((type) {
+        ServiceTypeFilterModel st = ServiceTypeFilterModel(
+          int.tryParse(type['id'].toString()) ?? 0,
+          type['type'],
+          type['image'],
+          int.tryParse(type['status'].toString()) ?? 0,
+          type['created_at'],
+          type['updated_at'],
+          type['deleted_at'] ?? "",
+        );
+        serviceFilter.add(st);
+      });
+      //List<dynamic> aimedF = result['aimed_for'];
+      List<dynamic> count = result['countries'];
+      count.forEach((country) {
+        int cb = int.tryParse(country['created_by'].toString()) ?? 0;
+        CountriesFilterModel cf = CountriesFilterModel(
+          int.tryParse(country['id'].toString()) ?? 0,
+          country['country'],
+          country['short_name'],
+          country['code'],
+          country['currency'],
+          country['description'] ?? "",
+          country['flag'],
+          country['status'],
+          cb,
+          country['created_at'],
+          country['updated_at'],
+          country['deleted_at'] ?? "",
+        );
+        countriesFilter.add(cf);
+      });
+      List<dynamic> lev = result['levels'];
+      lev.forEach((level) {
+        LevelFilterModel lm = LevelFilterModel(
+          int.tryParse(level['id'].toString()) ?? 0,
+          level['level'],
+          level['image'],
+          level['status'],
+          level['created_at'],
+          level['updated_at'],
+          level['deleted_at'] ?? "",
+        );
+        levelFilter.add(lm);
+      });
+      List<dynamic> d = result['durations'];
+      d.forEach((dur) {
+        int id = int.tryParse(dur['id'].toString()) ?? 0;
+        DurationsModel dm = DurationsModel(id, dur['duration'].toString());
+        durationFilter.add(dm);
+      });
+      List<dynamic> a = result['activities_including'];
+      a.forEach((act) {
+        int id = int.tryParse(act['id'].toString()) ?? 0;
+        ActivitiesIncludeModel activities =
+            ActivitiesIncludeModel(id, act['activity'].toString());
+        activitiesFilter.add(activities);
+      });
+      List<dynamic> r = result['regions'];
+      r.forEach((reg) {
+        int id = int.tryParse(reg['id'].toString()) ?? 0;
+        RegionFilterModel rm = RegionFilterModel(id, reg['region']);
+        regionFilter.add(rm);
+      });
+      FilterDataModel fm = FilterDataModel(
+          filterSectors,
+          categoryFilter,
+          serviceFilter,
+          am,
+          countriesFilter,
+          levelFilter,
+          durationFilter,
+          activitiesFilter,
+          regionFilter);
+      fDM.add(fm);
+      // parseService(serviceFilter);
+      // parseDuration(durationFilter);
+      // parseLevel(levelFilter);
+      // parseCategories(categoryFilter);
+    }
+  }
+
+  static Future<void> getFilter1(
+    Map mapFilter,
+    List<SectorFilterModel> filterSectors,
+    List<CategoryFilterModel> categoryFilter,
+    List<ServiceTypeFilterModel> serviceFilter,
+    List<CountriesFilterModel> countriesFilter,
+    List<LevelFilterModel> levelFilter,
+    List<DurationsModel> durationFilter,
+    List<ActivitiesIncludeModel> activitiesFilter,
+    List<RegionFilterModel> regionFilter,
+    List<AimedForModel> am,
+    List<FilterDataModel> fDM,
+  ) async {
+    var response = await http.get(Uri.parse(
+        "https://adventuresclub.net/adventureClub/api/v1/filter_modal_data"));
+    if (response.statusCode == 200) {
+      mapFilter = json.decode(response.body);
+      dynamic result = mapFilter['data'];
+      List<dynamic> sectorData = result['sectors'];
+      sectorData.forEach((data) {
+        SectorFilterModel sm = SectorFilterModel(
+          int.tryParse(data['id'].toString()) ?? 0,
+          data['sector'],
+          data['image'],
+          int.tryParse(data['status'].toString()) ?? 0,
+          data['created_at'],
+          data['updated_at'],
+          data['deleted_at'] ?? "",
+        );
+        filterSectors.add(sm);
+      });
+      List<dynamic> cat = result['categories'];
+      cat.forEach((cateGory) {
+        int c = int.tryParse(cateGory['id'].toString()) ?? 0;
+        CategoryFilterModel cm = CategoryFilterModel(
+          c,
+          cateGory['category'],
+          cateGory['image'],
+          cateGory['status'],
+          cateGory['created_at'],
+          cateGory['updated_at'],
+          cateGory['deleted_at'] ?? "",
+        );
+        categoryFilter.add(cm);
+      });
+      List<dynamic> serv = result['service_types'];
+      serv.forEach((type) {
+        ServiceTypeFilterModel st = ServiceTypeFilterModel(
+          int.tryParse(type['id'].toString()) ?? 0,
+          type['type'],
+          type['image'],
+          int.tryParse(type['status'].toString()) ?? 0,
+          type['created_at'],
+          type['updated_at'],
+          type['deleted_at'] ?? "",
+        );
+        serviceFilter.add(st);
+      });
+      //List<dynamic> aimedF = result['aimed_for'];
+      List<dynamic> count = result['countries'];
+      count.forEach((country) {
+        int cb = int.tryParse(country['created_by'].toString()) ?? 0;
+        CountriesFilterModel cf = CountriesFilterModel(
+          int.tryParse(country['id'].toString()) ?? 0,
+          country['country'],
+          country['short_name'],
+          country['code'],
+          country['currency'],
+          country['description'] ?? "",
+          country['flag'],
+          country['status'],
+          cb,
+          country['created_at'],
+          country['updated_at'],
+          country['deleted_at'] ?? "",
+        );
+        countriesFilter.add(cf);
+      });
+      List<dynamic> lev = result['levels'];
+      lev.forEach((level) {
+        LevelFilterModel lm = LevelFilterModel(
+          int.tryParse(level['id'].toString()) ?? 0,
+          level['level'],
+          level['image'],
+          level['status'],
+          level['created_at'],
+          level['updated_at'],
+          level['deleted_at'] ?? "",
+        );
+        levelFilter.add(lm);
+      });
+      List<dynamic> d = result['durations'];
+      d.forEach((dur) {
+        int id = int.tryParse(dur['id'].toString()) ?? 0;
+        DurationsModel dm = DurationsModel(id, dur['duration'].toString());
+        durationFilter.add(dm);
+      });
+      List<dynamic> a = result['activities_including'];
+      a.forEach((act) {
+        int id = int.tryParse(act['id'].toString()) ?? 0;
+        ActivitiesIncludeModel activities =
+            ActivitiesIncludeModel(id, act['activity'].toString());
+        activitiesFilter.add(activities);
+      });
+      List<dynamic> r = result['regions'];
+      r.forEach((reg) {
+        int id = int.tryParse(reg['id'].toString()) ?? 0;
+        RegionFilterModel rm = RegionFilterModel(id, reg['region']);
+        regionFilter.add(rm);
+      });
+      FilterDataModel fm = FilterDataModel(
+          filterSectors,
+          categoryFilter,
+          serviceFilter,
+          am,
+          countriesFilter,
+          levelFilter,
+          durationFilter,
+          activitiesFilter,
+          regionFilter);
+      fDM.add(fm);
+      // parseService(serviceFilter);
+      // parseDuration(durationFilter);
+      // parseLevel(levelFilter);
+      // parseCategories(categoryFilter);
+    }
   }
 }

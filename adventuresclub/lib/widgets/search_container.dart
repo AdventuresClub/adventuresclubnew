@@ -28,7 +28,7 @@ class _SearchContainerState extends State<SearchContainer> {
       width: MediaQuery.of(context).size.width / widget.width,
       height: MediaQuery.of(context).size.width / widget.height,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(34),
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(color: blackColor.withOpacity(0.4), width: 1.7),
         color: whiteColor,
       ),

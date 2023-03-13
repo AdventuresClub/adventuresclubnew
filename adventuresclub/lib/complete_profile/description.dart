@@ -21,16 +21,13 @@ import 'package:adventuresclub/widgets/dropdowns/duration_drop_down.dart';
 import 'package:adventuresclub/widgets/dropdowns/level_drop_down.dart';
 import 'package:adventuresclub/widgets/dropdowns/region_dropdown.dart';
 import 'package:adventuresclub/widgets/dropdowns/service_category.dart';
-import 'package:adventuresclub/widgets/dropdowns/service_type.dart';
+import 'package:adventuresclub/widgets/dropdowns/service_type_drop_down.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
 import 'package:adventuresclub/widgets/text_fields/multiline_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
-
-import '../models/filter_data_model/aimed_for_filter.dart';
-import '../widgets/dropdowns/service_sector.dart';
 
 class Description extends StatefulWidget {
   const Description({super.key});
@@ -63,7 +60,7 @@ class _DescriptionState extends State<Description> {
   List<DurationsModel> durationFilter = [];
   List<ActivitiesIncludeModel> activitiesFilter = [];
   List<RegionFilterModel> regionFilter = [];
-  List<AimedForFilter> aimedFilter = [];
+  List<AimedForModel> aimedFilter = [];
   List<AimedForModel> am = [];
   List<FilterDataModel> fDM = [];
   DateTime? pickedDate;
@@ -153,7 +150,7 @@ class _DescriptionState extends State<Description> {
   }
 
   void aimed() {
-    List<AimedForFilter> f = [];
+    List<AimedForModel> f = [];
     for (int i = 0; i < aimedValue.length; i++) {
       if (aimedValue[i]) {
         f.add(aimedFilter[i]);
@@ -162,7 +159,7 @@ class _DescriptionState extends State<Description> {
     aimedForF(f);
   }
 
-  void aimedForF(List<AimedForFilter> am) async {
+  void aimedForF(List<AimedForModel> am) async {
     List<String> a = [];
     List<int> id = [];
     am.forEach((element) {
@@ -296,7 +293,6 @@ class _DescriptionState extends State<Description> {
     formattedDate = 'Start Date';
     endDate = "End Date";
     // cList.insert(0, "Category");
-    getData();
     getRegions();
     getFilter();
   }
@@ -363,7 +359,7 @@ class _DescriptionState extends State<Description> {
     });
   }
 
-  void parseAimed(List<AimedForFilter> am) {
+  void parseAimed(List<AimedForModel> am) {
     am.forEach((element) {
       if (element.aimedName.isNotEmpty) {
         aimedText.add(element.aimedName);
@@ -374,17 +370,6 @@ class _DescriptionState extends State<Description> {
     });
   }
 
-  // void parseAimedFor(List<>) {
-
-  // }
-
-  void getData() async {
-    countryId =
-        Provider.of<CompleteProfileProvider>(context, listen: false).countryId;
-    // categoryList =
-    //     Provider.of<CompleteProfileProvider>(context, listen: false).pCM;
-  }
-
   void aimedFor() async {
     var response = await http.get(Uri.parse(
         "https://adventuresclub.net/adventureClub/api/v1/getServiceFor"));
@@ -393,14 +378,16 @@ class _DescriptionState extends State<Description> {
       List<dynamic> result = mapAimedFilter['message'];
       result.forEach((element) {
         int id = int.tryParse(element['id'].toString()) ?? 0;
-        AimedForFilter amf = AimedForFilter(
-            id,
-            element['AimedName'].toString() ?? "",
-            element['image'].toString() ?? "",
-            element['created_at'].toString() ?? "",
-            element['updated_at'].toString() ?? "",
-            element['deleted_at'].toString() ?? "",
-            0);
+        AimedForModel amf = AimedForModel(
+          id,
+          element['AimedName'].toString() ?? "",
+          element['image'].toString() ?? "",
+          element['created_at'].toString() ?? "",
+          element['updated_at'].toString() ?? "",
+          element['deleted_at'].toString() ?? "",
+          0,
+          //  selected: false,
+        );
         aimedFilter.add(amf);
       });
       parseAimed(aimedFilter);
@@ -444,6 +431,7 @@ class _DescriptionState extends State<Description> {
         );
         categoryFilter.add(cm);
       });
+
       List<dynamic> serv = result['service_types'];
       serv.forEach((type) {
         ServiceTypeFilterModel st = ServiceTypeFilterModel(
@@ -627,9 +615,11 @@ class _DescriptionState extends State<Description> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-                        child: ServiceSectorDropDown(filterSectors),
-                      ),
+                      // const Expanded(
+                      //   child: ServiceSectorDropDown(
+                      //       //filterSectors
+                      //       ),
+                      // ),
                       const SizedBox(
                         width: 10,
                       ),
@@ -967,7 +957,7 @@ class _DescriptionState extends State<Description> {
                   ),
                   Wrap(
                     direction: Axis.vertical,
-                    children: List.generate(aimedText.length, (index) {
+                    children: List.generate(aimedFilter.length, (index) {
                       return SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: CheckboxListTile(

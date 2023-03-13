@@ -118,7 +118,6 @@ class _ClientsRequestsState extends State<ClientsRequests> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getClient();
   }
@@ -132,7 +131,7 @@ class _ClientsRequestsState extends State<ClientsRequests> {
           Uri.parse(
               "https://adventuresclub.net/adventureClub/api/v1/get_client_requests"),
           body: {
-            'partner_id': "3",
+            'partner_id': "3", //Constants.userId, //"3",
             'country_id': "1",
             // 'mobile_code': ccCode,
           });
@@ -274,6 +273,7 @@ class _ClientsRequestsState extends State<ClientsRequests> {
         title: MyText(
           text: 'Client Requests',
           color: bluishColor,
+          weight: FontWeight.bold,
         ),
       ),
       body: SingleChildScrollView(

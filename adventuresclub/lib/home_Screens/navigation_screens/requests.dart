@@ -23,16 +23,17 @@ class _RequestsState extends State<Requests> {
         backgroundColor: whiteColor,
         elevation: 1.5,
         centerTitle: true,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: Image.asset(
-            'images/backArrow.png',
-            height: 20,
-          ),
-        ),
+        // leading: IconButton(
+        //   onPressed: () => Navigator.pop(context),
+        //   icon: Image.asset(
+        //     'images/backArrow.png',
+        //     height: 20,
+        //   ),
+        // ),
         title: MyText(
           text: 'Requests ',
           color: bluishColor,
+          weight: FontWeight.bold,
         ),
       ),
       //  AppBar(

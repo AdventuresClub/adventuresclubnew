@@ -8,7 +8,8 @@ import '../../models/filter_data_model/service_types_filter.dart';
 
 class LevelDropDown extends StatefulWidget {
   final List<LevelFilterModel> lFilter;
-  const LevelDropDown(this.lFilter, {super.key});
+  final bool show;
+  const LevelDropDown(this.lFilter, {this.show = false, super.key});
 
   @override
   State<LevelDropDown> createState() => LevelDropDownState();
@@ -18,18 +19,14 @@ class LevelDropDownState extends State<LevelDropDown> {
   String country = "";
   //String selectedRegion = "";
   int selectedId = 0;
-  String selectedRegion = "Select Level";
+  String selectedRegion = "Elementary";
   int id = 0;
 
   @override
   void initState() {
     super.initState();
     // parseRegions(widget.rFilter);
-    widget.lFilter.insert(
-      0,
-      LevelFilterModel(0, "Select Level", "selection_manager1665463304.png", 1,
-          "2022-10-11 10:11:44", "2022-10-11 10:11:44", ""),
-    );
+    selectedRegion = widget.lFilter[0].level;
   }
 
   void sId(LevelFilterModel lFilter) {
@@ -37,49 +34,97 @@ class LevelDropDownState extends State<LevelDropDown> {
         .levelSelection(lFilter.level, lFilter.id);
   }
 
+  void fId(LevelFilterModel sFilter) {
+    setState(() {
+      selectedRegion = sFilter.level;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      decoration: BoxDecoration(
-          color: lightGreyColor,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: greyColor.withOpacity(0.2),
-          )),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          isExpanded: true,
-          value: selectedRegion,
-          icon: const Image(
-            image: ExactAssetImage(
-              'images/drop_down.png',
-            ),
-            height: 14,
-            width: 16,
-          ),
-          elevation: 12,
-          style: const TextStyle(color: blackTypeColor),
-          onChanged: (String? value) {
-            // This is called when the user selects an item.
-            setState(() {
-              selectedRegion = value as String;
-              // selectedId =
-            });
-          },
-          items: widget.lFilter.map<DropdownMenuItem<String>>(
-            (LevelFilterModel lFilter) {
-              return DropdownMenuItem<String>(
-                onTap: () => sId(
-                  lFilter,
+    return widget.show
+        ? SizedBox(
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                isExpanded: true,
+                value: selectedRegion,
+                icon: Transform.translate(
+                  offset: const Offset(-20, 4),
+                  child: const Image(
+                    image: ExactAssetImage(
+                      'images/drop_down.png',
+                    ),
+                    fit: BoxFit.cover,
+                    height: 10,
+                    width: 18,
+                  ),
                 ),
-                value: lFilter.level,
-                child: Text(lFilter.level),
-              );
-            },
-          ).toList(),
-        ),
-      ),
-    );
+                elevation: 12,
+                style: const TextStyle(
+                    color: blackTypeColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14),
+                onChanged: (String? value) {
+                  // This is called when the user selects an item.
+                  setState(() {
+                    selectedRegion = value as String;
+                  });
+                },
+                items: widget.lFilter
+                    .map<DropdownMenuItem<String>>((LevelFilterModel cFilter) {
+                  return DropdownMenuItem<String>(
+                    onTap: () => fId(cFilter),
+                    value: cFilter.level,
+                    child: Transform.translate(
+                      offset: const Offset(4, 2),
+                      child: Text(cFilter.level),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          )
+        : Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            decoration: BoxDecoration(
+                color: lightGreyColor,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: greyColor.withOpacity(0.2),
+                )),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                isExpanded: true,
+                value: selectedRegion,
+                icon: const Image(
+                  image: ExactAssetImage(
+                    'images/drop_down.png',
+                  ),
+                  height: 14,
+                  width: 16,
+                ),
+                elevation: 12,
+                style: const TextStyle(color: blackTypeColor),
+                onChanged: (String? value) {
+                  // This is called when the user selects an item.
+                  setState(() {
+                    selectedRegion = value as String;
+                    // selectedId =
+                  });
+                },
+                items: widget.lFilter.map<DropdownMenuItem<String>>(
+                  (LevelFilterModel lFilter) {
+                    return DropdownMenuItem<String>(
+                      onTap: () => sId(
+                        lFilter,
+                      ),
+                      value: lFilter.level,
+                      child: Text(lFilter.level),
+                    );
+                  },
+                ).toList(),
+              ),
+            ),
+          );
   }
 }

@@ -33,6 +33,8 @@ class _SignInState extends State<SignIn> {
   int countryId = 0;
   String countryName = "";
   int userId = 0;
+  String email = "";
+  String password = "";
 
   void enterOTP() {
     showDialog(
@@ -117,11 +119,15 @@ class _SignInState extends State<SignIn> {
         });
   }
 
-  void parseData(String name, int countryId, int id) {
-    Provider.of<CompleteProfileProvider>(context, listen: false).name = name;
-    Provider.of<CompleteProfileProvider>(context, listen: false).countryId =
-        countryId;
-    Provider.of<CompleteProfileProvider>(context, listen: false).id = id;
+  void parseData(
+      String name, int countryId, int id, String email, String pass) {
+    setState(() {
+      Constants.userId = id;
+      Constants.name = name;
+      Constants.countryId = countryId;
+      Constants.emailId = email;
+      Constants.password = pass;
+    });
   }
 
   void login() async {
@@ -140,10 +146,14 @@ class _SignInState extends State<SignIn> {
         name = decodedResponse['data']['name'];
         countryId = decodedResponse['data']['country_id'];
         userId = decodedResponse['data']['id'];
+        email = emailController.text;
+        password = passController.text;
         prefs.setString("name", name);
         prefs.setInt("countryId", countryId);
         prefs.setInt("userId", userId);
-        parseData(name, countryId, userId);
+        prefs.setString("email", email);
+        prefs.setString("password", password);
+        parseData(name, countryId, userId, email, password);
         goToNavigation();
       }
       print(response.statusCode);
@@ -252,7 +262,6 @@ class _SignInState extends State<SignIn> {
                       size: 14,
                     )),
               ),
-
               const SizedBox(height: 20),
               GestureDetector(
                 onTap: goToForgotPass,

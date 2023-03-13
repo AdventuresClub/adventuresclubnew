@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/getFavourite/get_favourite.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
+import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -69,6 +70,19 @@ class _FavListState extends State<FavList> {
       });
     }
   }
+
+  void selected(BuildContext context, int serviceId, int providerId) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return ShowChat(
+              "https://adventuresclub.net/adventureClub/newreceiverchat/27/${serviceId}/${providerId}");
+        },
+      ),
+    );
+  }
+
+  //{CommonConstantUrl.ChatUrl}newreceiverchat/{Settings.UserId}/{completedDataModel.service_id}/{completedDataModel.provider_id}";
 
   void doNothing(BuildContext context) {}
   @override
@@ -228,12 +242,12 @@ class _FavListState extends State<FavList> {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
-                                SizedBox(
+                              children: [
+                                const SizedBox(
                                   height: 10,
                                 ),
 
-                                CircleAvatar(
+                                const CircleAvatar(
                                     radius: 18,
                                     backgroundColor: Colors.red,
                                     child: Icon(
@@ -241,16 +255,27 @@ class _FavListState extends State<FavList> {
                                       color: whiteColor,
                                       size: 18,
                                     )),
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
 
                                 // Image(image:  ExactAssetImage('images/line.png'),width: 40,),
-                                Text(
-                                  'Chat',
-                                  style: TextStyle(
-                                      color: bluishColor, fontFamily: 'Roboto'),
+                                GestureDetector(
+                                  onTap: () => selected(
+                                      context,
+                                      nm[index].serviceId,
+                                      nm[index].providerId),
+                                  child: Icon(
+                                    Icons.chat,
+                                    color: blackColor.withOpacity(0.5),
+                                    size: 30,
+                                  ),
                                 ),
+                                // Text(
+                                //   'Chat',
+                                //   style: TextStyle(
+                                //       color: bluishColor, fontFamily: 'Roboto'),
+                                // ),
                               ],
                             )
                           ],

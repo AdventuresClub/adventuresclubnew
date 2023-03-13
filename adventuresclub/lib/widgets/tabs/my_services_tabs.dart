@@ -1,5 +1,4 @@
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/models/filter_data_model/activities_inc_model.dart';
 import 'package:adventuresclub/models/my_services/my_services_model.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/tabs/participants.dart';
@@ -197,7 +196,9 @@ class _MyServicesTabState extends State<MyServicesTab> {
                                         text: TextSpan(
                                           text: text5[index],
                                           style: TextStyle(
-                                            color: index == 0 ?Colors.amber: greyColor,
+                                            color: index == 0
+                                                ? Colors.amber
+                                                : greyColor,
                                             fontSize: 12,
                                             height: 1.5,
                                           ),
@@ -223,7 +224,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
                       ),
                       const SizedBox(height: 10),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal:12.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
                         child: Column(
                           children: [
                             Align(
@@ -249,8 +250,9 @@ class _MyServicesTabState extends State<MyServicesTab> {
                                       const EdgeInsets.symmetric(vertical: 4.0),
                                   child: Row(
                                     children: [
-                                       CircleAvatar(
-                                        backgroundColor: greyColor.withOpacity(0.8),
+                                      CircleAvatar(
+                                        backgroundColor:
+                                            greyColor.withOpacity(0.8),
                                         radius: 5,
                                       ),
                                       const SizedBox(
@@ -379,40 +381,40 @@ class _MyServicesTabState extends State<MyServicesTab> {
                               ),
                             ),
                             Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 4.0),
-                                    child: Row(
-                                      children: [
-                                         const Icon(Icons.medication_outlined),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        MyText(
-                                          text: 'First Aid',
-                                               //aimedFor[index],
-                                          color: greyColor.withOpacity(0.8),
-                                          weight: FontWeight.w400,
-                                          fontFamily: 'Roboto',
-                                          size: 12,
-                                        ),
-                                        const SizedBox(
-                                          width: 15,
-                                        ),
-                                          const Icon(Icons.garage_outlined),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        MyText(
-                                          text: 'Gears',
-                                               //aimedFor[index],
-                                          color: greyColor.withOpacity(0.8),
-                                          weight: FontWeight.w400,
-                                          fontFamily: 'Roboto',
-                                          size: 12,
-                                        ),
-                                      ],
-                                    ),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 4.0),
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.medication_outlined),
+                                  const SizedBox(
+                                    width: 5,
                                   ),
+                                  MyText(
+                                    text: 'First Aid',
+                                    //aimedFor[index],
+                                    color: greyColor.withOpacity(0.8),
+                                    weight: FontWeight.w400,
+                                    fontFamily: 'Roboto',
+                                    size: 12,
+                                  ),
+                                  const SizedBox(
+                                    width: 15,
+                                  ),
+                                  const Icon(Icons.garage_outlined),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  MyText(
+                                    text: 'Gears',
+                                    //aimedFor[index],
+                                    color: greyColor.withOpacity(0.8),
+                                    weight: FontWeight.w400,
+                                    fontFamily: 'Roboto',
+                                    size: 12,
+                                  ),
+                                ],
+                              ),
+                            ),
                             // Wrap(
                             //   direction: Axis.horizontal,
                             //   children: List.generate(
@@ -457,41 +459,41 @@ class _MyServicesTabState extends State<MyServicesTab> {
                             ),
                             const SizedBox(height: 5),
                             Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 4.0),
-                                    child: Row(
-                                      children: [
-                                         const Icon(Icons.child_care),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        MyText(
-                                          text: 'Kids',
-                                               //aimedFor[index],
-                                          color: greyColor.withOpacity(0.8),
-                                          weight: FontWeight.w400,
-                                          fontFamily: 'Roboto',
-                                          size: 12,
-                                        ),
-                                        const SizedBox(
-                                          width: 15,
-                                        ),
-                                          const Icon(Icons.man),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        MyText(
-                                          text: 'Gents',
-                                               //aimedFor[index],
-                                          color: greyColor.withOpacity(0.8),
-                                          weight: FontWeight.w400,
-                                          fontFamily: 'Roboto',
-                                          size: 12,
-                                        ),
-                                      ],
-                                    ),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 4.0),
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.child_care),
+                                  const SizedBox(
+                                    width: 5,
                                   ),
-                           
+                                  MyText(
+                                    text: 'Kids',
+                                    //aimedFor[index],
+                                    color: greyColor.withOpacity(0.8),
+                                    weight: FontWeight.w400,
+                                    fontFamily: 'Roboto',
+                                    size: 12,
+                                  ),
+                                  const SizedBox(
+                                    width: 15,
+                                  ),
+                                  const Icon(Icons.man),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  MyText(
+                                    text: 'Gents',
+                                    //aimedFor[index],
+                                    color: greyColor.withOpacity(0.8),
+                                    weight: FontWeight.w400,
+                                    fontFamily: 'Roboto',
+                                    size: 12,
+                                  ),
+                                ],
+                              ),
+                            ),
+
                             // Wrap(
                             //   children:
                             //       List.generate(widget.sm.am.length, (index) {
@@ -536,39 +538,39 @@ class _MyServicesTabState extends State<MyServicesTab> {
                                   fontFamily: 'Roboto',
                                 )),
                             const SizedBox(height: 5),
-                             Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 4.0),
-                                    child: Row(
-                                      children: [
-                                         const Icon(Icons.local_police_outlined),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        MyText(
-                                          text: 'Licensed',
-                                          color: greyColor.withOpacity(0.8),
-                                          weight: FontWeight.w400,
-                                          fontFamily: 'Roboto',
-                                          size: 12,
-                                        ),
-                                        const SizedBox(
-                                          width: 15,
-                                        ),
-                                          const Icon(Icons.cloud_outlined),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        MyText(
-                                          text: 'Weather Conditions',
-                                          color: greyColor.withOpacity(0.8),
-                                          weight: FontWeight.w400,
-                                          fontFamily: 'Roboto',
-                                          size: 12,
-                                        ),
-                                      ],
-                                    ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 4.0),
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.local_police_outlined),
+                                  const SizedBox(
+                                    width: 5,
                                   ),
+                                  MyText(
+                                    text: 'Licensed',
+                                    color: greyColor.withOpacity(0.8),
+                                    weight: FontWeight.w400,
+                                    fontFamily: 'Roboto',
+                                    size: 12,
+                                  ),
+                                  const SizedBox(
+                                    width: 15,
+                                  ),
+                                  const Icon(Icons.cloud_outlined),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  MyText(
+                                    text: 'Weather Conditions',
+                                    color: greyColor.withOpacity(0.8),
+                                    weight: FontWeight.w400,
+                                    fontFamily: 'Roboto',
+                                    size: 12,
+                                  ),
+                                ],
+                              ),
+                            ),
                             // Wrap(
                             //   children: List.generate(2, (index) {
                             //     return Padding(
@@ -607,10 +609,10 @@ class _MyServicesTabState extends State<MyServicesTab> {
                                   text: 'Terms and conditions ',
                                   color: greyColor,
                                   weight: FontWeight.w500,
-                                  fontFamily: 'Roboto', 
+                                  fontFamily: 'Roboto',
                                   size: 16,
                                 )),
-                               const SizedBox(height:10),
+                            const SizedBox(height: 10),
                             MyText(
                               text: widget.sm
                                   .tnc, //'Minimum seat reservations : Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer fermentum nunc vehicula ligula placerat, et fermentum turpis ornare. Nullam ultricies pretium faucibus. In pulvinar rhoncus libero, eget lacinia sem condimentum ut. Nullam rutrum id mauris a venenatis. Aenean ipsum ante, iaculis iaculis ante quis',
@@ -626,7 +628,9 @@ class _MyServicesTabState extends State<MyServicesTab> {
                               text: TextSpan(
                                 text: 'Pre-Requesits :',
                                 style: const TextStyle(
-                                    color: greyColor, fontSize: 16,fontWeight: FontWeight.w500),
+                                    color: greyColor,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500),
                                 children: <TextSpan>[
                                   TextSpan(
                                       text: widget.sm
@@ -643,7 +647,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
                             RichText(
                               text: TextSpan(
                                 text: 'Minimum Requirement  :',
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontWeight: FontWeight.w500,
                                     color: greyColor,
                                     fontSize: 16),

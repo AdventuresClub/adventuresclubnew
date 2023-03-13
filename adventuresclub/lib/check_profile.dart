@@ -1,9 +1,7 @@
 // ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls, use_build_context_synchronously
 
 import 'package:adventuresclub/choose_language.dart';
-import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'constants.dart';
 import 'home_Screens/navigation_screens/bottom_navigation.dart';
@@ -42,11 +40,15 @@ class CheckProfileState extends State<CheckProfile> {
     );
   }
 
-  void parseData(String name, int countryId, int id) {
-    Provider.of<CompleteProfileProvider>(context, listen: false).name = name;
-    Provider.of<CompleteProfileProvider>(context, listen: false).countryId =
-        countryId;
-    Provider.of<CompleteProfileProvider>(context, listen: false).id = id;
+  void parseData(
+      String name, int countryId, int id, String email, String pass) {
+    setState(() {
+      Constants.userId = id;
+      Constants.name = name;
+      Constants.countryId = countryId;
+      Constants.emailId = email;
+      Constants.password = pass;
+    });
   }
 
   void checkProfile() async {
@@ -54,8 +56,10 @@ class CheckProfileState extends State<CheckProfile> {
     int userId = prefs.getInt("userId") ?? 0;
     int countryId = prefs.getInt("countryId") ?? 0;
     String name = prefs.getString("name") ?? "";
+    String email = prefs.getString("email") ?? "";
+    String password = prefs.getString("password") ?? "";
     if (userId != 0) {
-      parseData(name, countryId, userId);
+      parseData(name, countryId, userId, email, password);
       //prefs.setString("name", )
       goToNavigation();
     } else {

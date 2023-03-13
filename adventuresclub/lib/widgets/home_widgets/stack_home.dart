@@ -13,17 +13,25 @@ import 'package:adventuresclub/models/filter_data_model/region_model.dart';
 import 'package:adventuresclub/models/filter_data_model/sector_filter_model.dart';
 import 'package:adventuresclub/models/filter_data_model/service_types_filter.dart';
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
-import 'package:adventuresclub/widgets/dropdowns/dropdown_with_tI.dart';
+import 'package:adventuresclub/widgets/dropdowns/aimed_for_drop_down.dart';
+import 'package:adventuresclub/widgets/dropdowns/country_drop_down.dart';
+import 'package:adventuresclub/widgets/dropdowns/duration_drop_down.dart';
+import 'package:adventuresclub/widgets/dropdowns/level_drop_down.dart';
+import 'package:adventuresclub/widgets/dropdowns/region_dropdown.dart';
+import 'package:adventuresclub/widgets/dropdowns/service_category.dart';
+import 'package:adventuresclub/widgets/dropdowns/service_sector_drop_down.dart';
+import 'package:adventuresclub/widgets/dropdowns/service_type_drop_down.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/search_container.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 import '../../models/filter_data_model/durations_model.dart';
 import '../../models/filter_data_model/level_filter_mode.dart';
 
 class StackHome extends StatefulWidget {
-  const StackHome({
+  final List<String> images;
+  const StackHome(
+    this.images, {
     super.key,
   });
 
@@ -39,16 +47,47 @@ class _StackHomeState extends State<StackHome> {
   late Timer _timer;
   bool value = false;
   Map mapFilter = {};
+  Map mapAimedFilter = {};
   List<SectorFilterModel> filterSectors = [];
   List<CategoryFilterModel> categoryFilter = [];
   List<ServiceTypeFilterModel> serviceFilter = [];
   List<CountriesFilterModel> countriesFilter = [];
   List<LevelFilterModel> levelFilter = [];
+  List<AimedForModel> dummyAm = [];
+  List<AimedForModel> am = [];
   String categoryDropDown = 'One';
   List<String> list = <String>['One', 'Two', 'Three', 'Four'];
   String selectedCatergoryFilter = "Training";
   List<String> images = [];
-  List<String> banners = [];
+  List<DurationsModel> durationFilter = [];
+  List<ActivitiesIncludeModel> activitiesFilter = [];
+  List<RegionFilterModel> regionFilter = [];
+  List<FilterDataModel> fDM = [];
+
+  @override
+  void initState() {
+    super.initState();
+    if (filterSectors.isEmpty) {
+      getFilters();
+    }
+    aimedFor();
+    _timer = Timer.periodic(
+      const Duration(seconds: 5),
+      (Timer timer) {
+        if (_activePage < 2) {
+          _activePage++;
+        } else {
+          _activePage = 0;
+        }
+        _pageViewController.animateToPage(
+          _activePage,
+          duration: const Duration(milliseconds: 350),
+          curve: Curves.easeIn,
+        );
+      },
+    );
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -64,25 +103,6 @@ class _StackHomeState extends State<StackHome> {
         },
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
-      if (_activePage < 2) {
-        _activePage++;
-      } else {
-        _activePage = 0;
-      }
-      _pageViewController.animateToPage(
-        _activePage,
-        duration: const Duration(milliseconds: 350),
-        curve: Curves.easeIn,
-      );
-      getBanners();
-      getFilter();
-    });
   }
 
   abc() {}
@@ -117,242 +137,111 @@ class _StackHomeState extends State<StackHome> {
     ),
   ];
 
-  void getBanners() async {
-    try {
-      var response = await http.post(
-          Uri.parse("https://adventuresclub.net/adventureClub/api/v1/banners"),
-          body: {
-            'country_id': "1",
-          });
-      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-      dynamic result = decodedResponse['data'];
-      List<dynamic> images = result['banner'];
-      images.forEach(((element) {
-        banners.add(element);
-      }));
-      print(response.statusCode);
-      print(response.body);
-      print(response.headers);
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
-  List<DurationsModel> durationFilter = [];
-  List<ActivitiesIncludeModel> activitiesFilter = [];
-  List<RegionFilterModel> regionFilter = [];
-  List<AimedForModel> aimedFilter = [];
-  List<FilterDataModel> fDM = [];
-
-  void getFilter() async {
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/filter_modal_data"));
-    if (response.statusCode == 200) {
-      mapFilter = json.decode(response.body);
-      dynamic result = mapFilter['data'];
-      if (result['sectors'] != null) {
-        List<dynamic> sectorData = result['sectors'];
-        sectorData.forEach((data) {
-          SectorFilterModel sm = SectorFilterModel(
-            int.tryParse(data['id'].toString()) ?? 0,
-            data['sector'],
-            data['image'],
-            int.tryParse(data['status'].toString()) ?? 0,
-            data['created_at'],
-            data['updated_at'],
-            data['deleted_at'] ?? "",
-          );
-          filterSectors.add(sm);
-        });
-      } else if (result['categories'] != null) {
-        List<dynamic> sectorData = result['categories'];
-        sectorData.forEach((cateGory) {
-          int c = int.tryParse(cateGory['id'].toString()) ?? 0;
-          CategoryFilterModel cm = CategoryFilterModel(
-            c,
-            cateGory['category'],
-            cateGory['image'],
-            cateGory['status'],
-            cateGory['created_at'],
-            cateGory['updated_at'],
-            cateGory['deleted_at'] ?? "",
-          );
-          categoryFilter.add(cm);
-        });
-      } else if (result['service_types'] != null) {
-        List<dynamic> sectorData = result['service_types'];
-        sectorData.forEach((type) {
-          ServiceTypeFilterModel st = ServiceTypeFilterModel(
-            int.tryParse(type['id'].toString()) ?? 0,
-            type['type'],
-            type['image'],
-            int.tryParse(type['status'].toString()) ?? 0,
-            type['created_at'],
-            type['updated_at'],
-            type['deleted_at'] ?? "",
-          );
-          serviceFilter.add(st);
-        });
-      } else if (result['aimed_for'] != null) {
-        List<dynamic> aimedF = result['aimed_for'];
-        // sectorData.forEach((cateGory) {
-        //   CategoryFilterModel cm = CategoryFilterModel(cateGory['id'],
-        //       cateGory['category'], cateGory['image'], cateGory['status'],
-        //        cateGory['created_at'],
-        //     cateGory['updated_at'],
-        //     cateGory['deleted_at'],
-        //       );
-        //   categoryFilter.add(cm);
-        // });
-      } else if (result['countries'] != null) {
-        List<dynamic> sectorData = result['countries'];
-        sectorData.forEach((country) {
-          int cb = int.tryParse(country['created_by'].toString()) ?? 0;
-          CountriesFilterModel cf = CountriesFilterModel(
-            int.tryParse(country['id'].toString()) ?? 0,
-            country['country'],
-            country['short_name'],
-            country['code'],
-            country['currency'],
-            country['description'],
-            country['flag'],
-            country['status'],
-            cb,
-            country['created_at'],
-            country['updated_at'],
-            country['deleted_at'] ?? "",
-          );
-          countriesFilter.add(cf);
-        });
-      } else if (result['levels'] != null) {
-        List<dynamic> sectorData = result['levels'];
-        sectorData.forEach((level) {
-          LevelFilterModel lm = LevelFilterModel(
-            int.tryParse(level['id'].toString()) ?? 0,
-            level['level'],
-            level['image'],
-            level['status'],
-            level['created_at'],
-            level['updated_at'],
-            level['deleted_at'] ?? "",
-          );
-          levelFilter.add(lm);
-        });
-      } else if (result['durations'] != null) {
-        List<dynamic> d = result['durations'];
-        d.forEach((dur) {
-          int id = int.tryParse(dur['id'].toString()) ?? 0;
-          DurationsModel dm = DurationsModel(id, dur['duration'].toString());
-          durationFilter.add(dm);
-        });
-      } else if (result['activities_including']) {
-        List<dynamic> a = result['activities_including'];
-        a.forEach((act) {
-          int id = int.tryParse(act['id'].toString()) ?? 0;
-          ActivitiesIncludeModel activities =
-              ActivitiesIncludeModel(id, act['id'].toString());
-          activitiesFilter.add(activities);
-        });
-      } else if (result['regions']) {
-        List<dynamic> r = result['regions'];
-        r.forEach((reg) {
-          int id = int.tryParse(reg['id'].toString()) ?? 0;
-          RegionFilterModel rm = RegionFilterModel(id, reg['region']);
-          regionFilter.add(rm);
-        });
-      }
-      FilterDataModel fm = FilterDataModel(
-          filterSectors,
-          categoryFilter,
-          serviceFilter,
-          aimedFilter,
-          countriesFilter,
-          levelFilter,
-          durationFilter,
-          activitiesFilter,
-          regionFilter);
-      fDM.add(fm);
-      // else if (result['durations'] != null) {
-      //   List<dynamic> sectorData = result['duration'];
-      //   sectorData.forEach((cateGory) {
-      //     CategoryFilterModel cm = CategoryFilterModel(cateGory['id'],
-      //         cateGory['category'], cateGory['image'], cateGory['status']);
-      //     categoryFilter.add(cm);
-      //   });
-      // } else if (result['activities_including'] != null) {
-      //   List<dynamic> sectorData = result['category'];
-      //   sectorData.forEach((cateGory) {
-      //     CategoryFilterModel cm = CategoryFilterModel(cateGory['id'],
-      //         cateGory['category'], cateGory['image'], cateGory['status']);
-      //     categoryFilter.add(cm);
-      //   });
-      // } else if (result['regions'] != null) {
-      //   List<dynamic> sectorData = result['category'];
-      //   sectorData.forEach((cateGory) {
-      //     CategoryFilterModel cm = CategoryFilterModel(cateGory['id'],
-      //         cateGory['category'], cateGory['image'], cateGory['status']);
-      //     categoryFilter.add(cm);
-      //   });
-      // }
-      // GetCountry gc = GetCountry(
-      //   element['country'],
-      //   element['flag'],
-      //   element['code'],
-      //   element['id'],
-      // );
-      // countriesList1.add(gc);
-    }
-  }
-
   void selectedCategory(String cf) {
     setState(() {
       selectedCatergoryFilter = cf;
     });
   }
 
+  void clearAll() {
+    filterSectors.clear();
+    categoryFilter.clear();
+    serviceFilter.clear();
+    countriesFilter.clear();
+    levelFilter.clear();
+    durationFilter.clear();
+    activitiesFilter.clear();
+    regionFilter.clear();
+    dummyAm.clear();
+    fDM.clear();
+  }
+
+  void getFilters() {
+    setState(() {
+      Constants.getFilter1(
+        mapFilter,
+        filterSectors,
+        categoryFilter,
+        serviceFilter,
+        countriesFilter,
+        levelFilter,
+        durationFilter,
+        activitiesFilter,
+        regionFilter,
+        dummyAm,
+        fDM,
+      );
+    });
+  }
+
+  void aimedFor() async {
+    var response = await http.get(Uri.parse(
+        "https://adventuresclub.net/adventureClub/api/v1/getServiceFor"));
+    if (response.statusCode == 200) {
+      mapAimedFilter = json.decode(response.body);
+      List<dynamic> result = mapAimedFilter['message'];
+      result.forEach((element) {
+        int id = int.tryParse(element['id'].toString()) ?? 0;
+        AimedForModel amf = AimedForModel(
+          id,
+          element['AimedName'].toString() ?? "",
+          element['image'].toString() ?? "",
+          element['created_at'].toString() ?? "",
+          element['updated_at'].toString() ?? "",
+          element['deleted_at'].toString() ?? "",
+          0,
+          //  selected: false,
+        );
+        am.add(amf);
+      });
+    }
+  }
+
   void addActivites() {
     showGeneralDialog(
-        context: context,
-        barrierDismissible: true,
-        transitionDuration: const Duration(milliseconds: 500),
-        barrierLabel: MaterialLocalizations.of(context).dialogLabel,
-        barrierColor: Colors.black.withOpacity(0.5),
-        pageBuilder: (context, _, __) {
-          return Padding(
-            padding: EdgeInsets.only(
-                left: 6.0,
-                right: 6.0,
-                bottom: MediaQuery.of(context).size.height / 4.8,
-                top: 30),
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width / 1.4,
-              height: MediaQuery.of(context).size.height / 1,
-              child: Card(
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(22)),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(left: 15.0, top: 10, bottom: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 0),
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const SizedBox(width: 40),
-                              Center(
-                                  child: MyText(
-                                      text: 'Filter',
-                                      weight: FontWeight.bold,
-                                      color: blackColor,
-                                      size: 18,
-                                      fontFamily: 'Raleway')),
-                              const Align(
+      context: context,
+      barrierDismissible: true,
+      transitionDuration: const Duration(milliseconds: 500),
+      barrierLabel: MaterialLocalizations.of(context).dialogLabel,
+      barrierColor: Colors.black.withOpacity(0.5),
+      pageBuilder: (context, _, __) {
+        return Padding(
+          padding: EdgeInsets.only(
+              left: 6.0,
+              right: 6.0,
+              bottom: MediaQuery.of(context).size.height / 4.8,
+              top: 30),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width / 1.4,
+            height: MediaQuery.of(context).size.height / 1,
+            child: Card(
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(22)),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 15.0, top: 0, bottom: 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      // const SizedBox(height: 0),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const SizedBox(width: 40),
+                            Center(
+                              child: MyText(
+                                  text: 'Filter',
+                                  weight: FontWeight.bold,
+                                  color: blackColor,
+                                  size: 20,
+                                  fontFamily: 'Raleway'),
+                            ),
+                            GestureDetector(
+                              onTap: Navigator.of(context).pop,
+                              child: const Align(
                                 alignment: Alignment.centerRight,
                                 child: CircleAvatar(
                                   radius: 14,
@@ -363,365 +252,502 @@ class _StackHomeState extends State<StackHome> {
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 30.0, left: 5),
-                          child: Column(
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              const SizedBox(height: 5),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      MyText(
-                                          text: 'Sector',
-                                          color: greyColor,
-                                          weight: FontWeight.w600,
-                                          size: 12),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                6.1,
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 2, vertical: 0),
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                            color: Colors.transparent,
-                                            borderRadius:
-                                                BorderRadius.circular(2),
-                                            border:
-                                                Border.all(color: whiteColor)),
-                                        child:
-                                            //?
-                                            DropdownButtonHideUnderline(
-                                          child: DropdownButton<String>(
-                                            isExpanded: false,
-                                            value: selectedCatergoryFilter,
-                                            icon: const Image(
-                                              image: ExactAssetImage(
-                                                  'images/chevron-right.png'),
-                                              height: 10,
-                                            ),
-                                            elevation: 16,
-                                            style: const TextStyle(
-                                                color: blackTypeColor,
-                                                fontWeight: FontWeight.w500),
-                                            onChanged: (value) =>
-                                                selectedCategory(value!),
-                                            // (String? value) {
-                                            //   // This is called when the user selects an item.
-                                            //   setState(() {
-                                            //     value = value!;
-                                            //   });
-                                            // },
-                                            items: filterSectors
-                                                .map<DropdownMenuItem<String>>(
-                                                    (SectorFilterModel value) {
-                                              return DropdownMenuItem<String>(
-                                                value: value.sector,
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 0.0),
-                                                  child: Text(value.sector),
-                                                ),
-                                              );
-                                            }).toList(),
-                                          ),
-                                        ),
-                                        // : DropdownButton<String>(
-                                        //     isExpanded: true,
-                                        //     value: dropdownValue,
-                                        //     icon: const Icon(
-                                        //       Icons.arrow_drop_down,
-                                        //       size: 8,
-                                        //     ),
-                                        //     elevation: 16,
-                                        //     style: const TextStyle(
-                                        //         color: blackTypeColor, fontWeight: FontWeight.w500),
-                                        //     onChanged: (String? value) {
-                                        //       // This is called when the user selects an item.
-                                        //       setState(() {
-                                        //         value = value!;
-                                        //       });
-                                        //     },
-                                        //     items: categoryFilter.map<DropdownMenuItem<String>>((String value) {
-                                        //       return DropdownMenuItem<String>(
-                                        //         value: value,
-                                        //         child: Padding(
-                                        //           padding: const EdgeInsets.only(left: 0.0),
-                                        //           child: Text(value),
-                                        //         ),
-                                        //       );
-                                        //     }).toList(),
-                                        //   ),
-                                      ),
-                                      // const DropdownWithTI('Training', false,
-                                      //     false, 6.1, true, true),
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      MyText(
-                                          text: 'Category',
-                                          color: greyColor,
-                                          weight: FontWeight.w600,
-                                          size: 12),
-                                      const DropdownWithTI('Training', false,
-                                          false, 6.1, true, true),
-                                    ],
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      MyText(
-                                          text: 'Type',
-                                          color: greyColor,
-                                          weight: FontWeight.w600,
-                                          size: 12),
-                                      const DropdownWithTI('Training', false,
-                                          false, 6.1, true, true),
-                                    ],
-                                  ),
-                                ],
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    MyText(
+                                        text: 'Sector',
+                                        color: greyColor,
+                                        weight: FontWeight.w700,
+                                        size: 12),
+                                    ServiceSectorDropDown(
+                                      filterSectors,
+                                      show: true,
+                                    ),
+                                  ],
+                                ),
                               ),
-                              const SizedBox(
-                                height: 10,
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    MyText(
+                                        text: 'Category',
+                                        color: greyColor,
+                                        weight: FontWeight.w600,
+                                        size: 12),
+                                    ServiceCategoryDropDown(
+                                      categoryFilter,
+                                      show: true,
+                                    )
+                                  ],
+                                ),
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      MyText(
-                                          text: 'Aimed For',
-                                          color: greyColor,
-                                          weight: FontWeight.w600,
-                                          size: 12),
-                                      const DropdownWithTI('Training', false,
-                                          false, 6.1, true, true),
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      MyText(
-                                          text: 'Country',
-                                          weight: FontWeight.w600,
-                                          color: greyColor,
-                                          size: 12),
-                                      const DropdownWithTI('Training', false,
-                                          false, 6.1, true, true),
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      MyText(
-                                          text: 'Region',
-                                          weight: FontWeight.w600,
-                                          color: greyColor,
-                                          size: 12),
-                                      const DropdownWithTI('Training', false,
-                                          false, 6.1, true, true),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      MyText(
-                                          text: 'Aimed',
-                                          weight: FontWeight.w600,
-                                          color: greyColor,
-                                          size: 12),
-                                      const DropdownWithTI('Training', false,
-                                          false, 6.1, true, true),
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      MyText(
-                                          text: 'Duration',
-                                          weight: FontWeight.w600,
-                                          color: greyColor,
-                                          size: 12),
-                                      const DropdownWithTI('Training', false,
-                                          false, 6.1, true, true),
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      MyText(
-                                          text: 'Budget',
-                                          color: greyColor,
-                                          weight: FontWeight.w600,
-                                          size: 12),
-                                      const DropdownWithTI('Training', false,
-                                          false, 6.1, true, true),
-                                    ],
-                                  ),
-                                ],
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    MyText(
+                                        text: 'Type',
+                                        color: greyColor,
+                                        weight: FontWeight.w600,
+                                        size: 12),
+                                    ServiceTypeDropDown(
+                                      serviceFilter,
+                                      show: true,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        MyText(
-                          text: 'Activities Included',
-                          color: blackTypeColor4,
-                          weight: FontWeight.bold,
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        GridView.count(
-                          padding: const EdgeInsets.only(left: 0),
-                          shrinkWrap: true,
-                          mainAxisSpacing: 0,
-                          childAspectRatio: 3.5,
-                          crossAxisSpacing: 0,
-                          crossAxisCount: 3,
-                          children: List.generate(text.length, (index) {
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                MyText(
-                                  text: text[index],
-                                  color: greyColor,
-                                  size: 12,
-                                ),
-                                SizedBox(
-                                  width: 7,
-                                ),
-                                SizedBox(
-                                  width: 15,
-                                  child: Checkbox(
-                                      value: value,
-                                      onChanged: ((bool? value) {
-                                        setState(() {
-                                          value = value!;
-                                        });
-                                      })),
-                                ),
-                              ],
-                            );
-                          }),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        MyText(
-                          text: 'Provider Name',
-                          color: blackTypeColor3,
-                          weight: FontWeight.bold,
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        const SearchContainer('Search by provider name', 1.2, 8,
-                            'images/bin.png', false, false, 'abc', 14),
-                        const SizedBox(
-                          height: 3,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              GestureDetector(
-                                //    onTap: goTo,
-                                child: Container(
-                                    width: 110,
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 15, horizontal: 18),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12),
-                                        border: Border.all(color: redColor),
-                                        color: whiteColor),
-                                    child: Center(
-                                        child: MyText(
-                                      text: 'Clear Filter',
-                                      color: redColor,
-                                      weight: FontWeight.bold,
-                                      size: 14,
-                                    ))),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    MyText(
+                                        text: 'Aimed For',
+                                        color: greyColor,
+                                        weight: FontWeight.w700,
+                                        size: 12),
+                                    AimedForDropDown(
+                                      am,
+                                      show: true,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    MyText(
+                                        text: 'Country',
+                                        color: greyColor,
+                                        weight: FontWeight.w600,
+                                        size: 12),
+                                    CountriesDropDown(
+                                      countriesFilter,
+                                      show: true,
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    MyText(
+                                        text: 'Region',
+                                        color: greyColor,
+                                        weight: FontWeight.w600,
+                                        size: 12),
+                                    RegionDropDown(
+                                      regionFilter,
+                                      show: true,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    MyText(
+                                        text: 'Level',
+                                        color: greyColor,
+                                        weight: FontWeight.w700,
+                                        size: 12),
+                                    LevelDropDown(
+                                      levelFilter,
+                                      show: true,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    MyText(
+                                        text: 'Duration',
+                                        color: greyColor,
+                                        weight: FontWeight.w600,
+                                        size: 12),
+                                    DurationDropDown(
+                                      durationFilter,
+                                      show: true,
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    MyText(
+                                        text: 'Budget',
+                                        color: greyColor,
+                                        weight: FontWeight.w600,
+                                        size: 12),
+                                    ServiceCategoryDropDown(
+                                      categoryFilter,
+                                      show: true,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(right: 30.0, left: 5),
+                      //   child: Column(
+                      //     children: [
+                      //       const SizedBox(height: 5),
+                      //       Row(
+                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //         children: [
+                      //           Column(
+                      //             crossAxisAlignment: CrossAxisAlignment.start,
+                      //             mainAxisAlignment: MainAxisAlignment.start,
+                      //             children: [
+                      //               Row(
+                      //                 mainAxisAlignment:
+                      //                     MainAxisAlignment.spaceBetween,
+                      //                 children: [
+
+                      //                   const SizedBox(
+                      //                     width: 10,
+                      //                   ),
+                      //                   //Expanded(child: ServiceCategoryDropDown(categoryFilter))
+                      //                   // const SizedBox(
+                      //                   //   width: 5,
+                      //                   // ),
+                      //                   // Expanded(
+                      //                   //   child: ServiceSectorDropDown(cList),
+                      //                   // ),
+                      //                   // DdButton(
+                      //                   //   2.4,
+                      //                   //   dropDown: "Training",
+                      //                   //   dropDownList: serviceSector,
+                      //                   // ),
+                      //                   // DdButton(
+                      //                   //   2.4,
+                      //                   //   dropDown: "Service Category",
+                      //                   //   dropDownList: cList,
+                      //                   // ),
+                      //                 ],
+                      //               ),
+                      //               // const DropdownWithTI('Training', false,
+                      //               //     false, 6.1, true, true),
+                      //             ],
+                      //           ),
+                      //           // Column(
+                      //           //   mainAxisAlignment: MainAxisAlignment.start,
+                      //           //   crossAxisAlignment: CrossAxisAlignment.start,
+                      //           //   children: [
+                      //           //     MyText(
+                      //           //         text: 'Category',
+                      //           //         color: greyColor,
+                      //           //         weight: FontWeight.w600,
+                      //           //         size: 12),
+                      //           //     const DropdownWithTI('Training', false,
+                      //           //         false, 6.1, true, true),
+                      //           //   ],
+                      //           // ),
+                      //           // Column(
+                      //           //   crossAxisAlignment: CrossAxisAlignment.start,
+                      //           //   mainAxisAlignment: MainAxisAlignment.start,
+                      //           //   children: [
+                      //           //     MyText(
+                      //           //         text: 'Type',
+                      //           //         color: greyColor,
+                      //           //         weight: FontWeight.w600,
+                      //           //         size: 12),
+                      //     const DropdownWithTI('Training', false,
+                      //         false, 6.1, true, true),
+                      //           //   ],
+                      //           // ),
+                      //         ],
+                      //       ),
+                      //       // const SizedBox(
+                      //       //   height: 10,
+                      //       // ),
+                      //       // Row(
+                      //       //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //       //   children: [
+                      //       //     Column(
+                      //       //       mainAxisAlignment: MainAxisAlignment.start,
+                      //       //       crossAxisAlignment: CrossAxisAlignment.start,
+                      //       //       children: [
+                      //       //         MyText(
+                      //       //             text: 'Aimed For',
+                      //       //             color: greyColor,
+                      //       //             weight: FontWeight.w600,
+                      //       //             size: 12),
+                      //       //         const DropdownWithTI('Training', false,
+                      //       //             false, 6.1, true, true),
+                      //       //       ],
+                      //       //     ),
+                      //       //     Column(
+                      //       //       mainAxisAlignment: MainAxisAlignment.start,
+                      //       //       crossAxisAlignment: CrossAxisAlignment.start,
+                      //       //       children: [
+                      //       //         MyText(
+                      //       //             text: 'Country',
+                      //       //             weight: FontWeight.w600,
+                      //       //             color: greyColor,
+                      //       //             size: 12),
+                      //       //         const DropdownWithTI('Training', false,
+                      //       //             false, 6.1, true, true),
+                      //       //       ],
+                      //       //     ),
+                      //       //     Column(
+                      //       //       mainAxisAlignment: MainAxisAlignment.start,
+                      //       //       crossAxisAlignment: CrossAxisAlignment.start,
+                      //       //       children: [
+                      //       //         MyText(
+                      //       //             text: 'Region',
+                      //       //             weight: FontWeight.w600,
+                      //       //             color: greyColor,
+                      //       //             size: 12),
+                      //       //         const DropdownWithTI('Training', false,
+                      //       //             false, 6.1, true, true),
+                      //       //       ],
+                      //       //     ),
+                      //       //   ],
+                      //       // ),
+                      //       // const SizedBox(
+                      //       //   height: 10,
+                      //       // ),
+                      //       // Row(
+                      //       //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //       //   children: [
+                      //       //     Column(
+                      //       //       mainAxisAlignment: MainAxisAlignment.start,
+                      //       //       crossAxisAlignment: CrossAxisAlignment.start,
+                      //       //       children: [
+                      //       //         MyText(
+                      //       //             text: 'Aimed',
+                      //       //             weight: FontWeight.w600,
+                      //       //             color: greyColor,
+                      //       //             size: 12),
+                      //       //         const DropdownWithTI('Training', false,
+                      //       //             false, 6.1, true, true),
+                      //       //       ],
+                      //       //     ),
+                      //       //     Column(
+                      //       //       mainAxisAlignment: MainAxisAlignment.start,
+                      //       //       crossAxisAlignment: CrossAxisAlignment.start,
+                      //       //       children: [
+                      //       //         MyText(
+                      //       //             text: 'Duration',
+                      //       //             weight: FontWeight.w600,
+                      //       //             color: greyColor,
+                      //       //             size: 12),
+                      //       //         const DropdownWithTI('Training', false,
+                      //       //             false, 6.1, true, true),
+                      //       //       ],
+                      //       //     ),
+                      //       //     Column(
+                      //       //       mainAxisAlignment: MainAxisAlignment.start,
+                      //       //       crossAxisAlignment: CrossAxisAlignment.start,
+                      //       //       children: [
+                      //       //         MyText(
+                      //       //             text: 'Budget',
+                      //       //             color: greyColor,
+                      //       //             weight: FontWeight.w600,
+                      //       //             size: 12),
+                      //       //         const DropdownWithTI('Training', false,
+                      //       //             false, 6.1, true, true),
+                      //       //       ],
+                      //       //     ),
+                      //       //   ],
+                      //       // ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // const SizedBox(
+                      //   height: 15,
+                      // ),
+                      // MyText(
+                      //   text: 'Activities Included',
+                      //   color: blackTypeColor4,
+                      //   weight: FontWeight.bold,
+                      // ),
+                      // const SizedBox(
+                      //   height: 15,
+                      // ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: MyText(
+                            text: 'Acitivites Includes',
+                            weight: FontWeight.bold,
+                            color: blackColor,
+                            size: 16,
+                            fontFamily: 'Raleway'),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      GridView.count(
+                        padding: const EdgeInsets.only(left: 0),
+                        shrinkWrap: true,
+                        mainAxisSpacing: 0,
+                        childAspectRatio: 3.5,
+                        crossAxisSpacing: 0,
+                        crossAxisCount: 3,
+                        children: List.generate(text.length, (index) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              MyText(
+                                text: text[index],
+                                color: greyColor,
+                                size: 12,
+                              ),
+                              const SizedBox(
+                                width: 7,
                               ),
                               SizedBox(
-                                width: 10,
+                                width: 15,
+                                child: Checkbox(
+                                  value: value,
+                                  onChanged: ((bool? value) {
+                                    setState(() {
+                                      value = value!;
+                                    });
+                                  }),
+                                ),
                               ),
-                              Container(
-                                width: 110,
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 15, horizontal: 18),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(color: bluishColor),
-                                    color: bluishColor),
-                                child: Center(
-                                    child: MyText(
+                            ],
+                          );
+                        }),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      MyText(
+                        text: 'Provider Name',
+                        color: blackTypeColor3,
+                        weight: FontWeight.bold,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      const SearchContainer('Search by provider name', 1.2, 8,
+                          'images/bin.png', false, false, 'abc', 14),
+                      const SizedBox(
+                        height: 3,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            GestureDetector(
+                              //    onTap: goTo,
+                              child: Container(
+                                  width: 130,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 15, horizontal: 18),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(color: redColor),
+                                      color: whiteColor),
+                                  child: Center(
+                                      child: MyText(
+                                    text: 'Clear Filter',
+                                    color: redColor,
+                                    weight: FontWeight.bold,
+                                    size: 14,
+                                  ))),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              width: 110,
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 15, horizontal: 18),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(color: bluishColor),
+                                  color: bluishColor),
+                              child: Center(
+                                child: MyText(
                                   text: 'Search',
                                   color: whiteColor,
                                   weight: FontWeight.bold,
                                   size: 14,
-                                )),
+                                ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  )),
-            ),
-          );
-        });
+                      ),
+                    ],
+                  ),
+                )),
+          ),
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return
+        // loading
+        //     ? Column(
+        //         children: const [
+        //           CircularProgressIndicator(),
+        //           Text("Loading..."),
+        //         ],
+        //       )
+        //     :
+        Stack(
       clipBehavior: Clip.none,
       children: [
         Container(
-          height: MediaQuery.of(context).size.height / 4.2,
+          height: MediaQuery.of(context).size.height / 4,
           width: MediaQuery.of(context).size.width,
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -771,89 +797,131 @@ class _StackHomeState extends State<StackHome> {
             ],
           ),
         ),
+        // widget.images.isEmpty
+        //     ? Positioned(
+        //         top: 100,
+        //         left: 15,
+        //         right: 15,
+        //         child: SizedBox(
+        //           height: MediaQuery.of(context).size.height / 5,
+        //           child: PageView.builder(
+        //             controller: _pageViewController,
+        //             onPageChanged: (index) {
+        //               setState(
+        //                 () {
+        //                   _activePage = index;
+        //                 },
+        //               );
+        //             },
+        //             itemCount: 1,
+        //             itemBuilder: (BuildContext context, int index) {
+        //               return ListView.builder(
+        //                 itemBuilder: (context, index) {
+        //                   return Container(
+        //                     height: MediaQuery.of(context).size.height / 6,
+        //                     width: MediaQuery.of(context).size.width / 1.1,
+        //                     decoration: BoxDecoration(
+        //                       color: whiteColor,
+        //                       borderRadius: BorderRadius.circular(16),
+        //                       image: const DecorationImage(
+        //                         image: ExactAssetImage('images/maskGroup1.png'),
+        //                         //   //   NetworkImage(
+        //                         //   // "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${widget.images[0]}",
+        //                       ),
+        //                     ),
+        //                   );
+        //                 },
+        //               );
+        //             },
+        //           ),
+        //         ),
+        //       )
         Positioned(
           top: 100,
           left: 15,
           right: 15,
           child: SizedBox(
-            height: MediaQuery.of(context).size.height / 6,
+            height: MediaQuery.of(context).size.height / 5,
             child: PageView.builder(
-                controller: _pageViewController,
-                onPageChanged: (index) {
-                  setState(() {
+              controller: _pageViewController,
+              onPageChanged: (index) {
+                setState(
+                  () {
                     _activePage = index;
-                  });
-                },
-                itemCount: banners.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ListView.builder(itemBuilder: (context, index) {
+                  },
+                );
+              },
+              itemCount: widget.images.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
                     return Container(
-                      // height: MediaQuery.of(context).size.height / 6,
-                      // width: MediaQuery.of(context).size.width / 1.1,
+                      height: MediaQuery.of(context).size.height / 6,
+                      width: MediaQuery.of(context).size.width / 1.1,
                       decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image:
-                              //ExactAssetImage('images/maskGroup1.png'),
-                              NetworkImage(
-                            "${"https://adventuresclub.net/adventureClub/public/uploads/"}${banners[index]}",
-                          ),
-                        ),
+                        borderRadius: BorderRadius.circular(16),
+                        image: widget.images.isEmpty
+                            ? const DecorationImage(
+                                image: ExactAssetImage('images/maskGroup1.png'),
+                                //   //   NetworkImage(
+                                //   // "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${widget.images[0]}",
+                              )
+                            : DecorationImage(
+                                image:
+                                    //ExactAssetImage('images/maskGroup1.png'),
+                                    NetworkImage(
+                                  "${"https://adventuresclub.net/adventureClub/public/"}${widget.images[0]}",
+                                ),
+                                fit: BoxFit.cover,
+                              ),
                       ),
                     );
-                  });
-                  //pages[index];
-                }),
+                  },
+                );
+              },
+            ),
           ),
-
-          // Container(
-          //   height: MediaQuery.of(context).size.height / 6,
-          //   width: MediaQuery.of(context).size.width / 1.1,
-          //   decoration: const BoxDecoration(
-          //     image: DecorationImage(
-          //       image: ExactAssetImage('images/maskGroup1.png'),
-          //     ),
-          //   ),
-          // ),
         ),
         Positioned(
           bottom: -55,
           left: 0,
           right: 0,
           height: 40,
-          child: Container(
-              child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List<Widget>.generate(
-              2,
-              (index) => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: InkWell(
-                  onTap: () {
-                    _pageViewController.animateToPage(index,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeIn);
-                  },
-                  child: Stack(
-                    children: [
-                      CircleAvatar(
-                        radius: 6.5,
-                        backgroundColor:
-                            _activePage == index ? greenishColor : greyColor,
-                      ),
-                      CircleAvatar(
-                        radius: _activePage != index ? 3.5 : 5.5,
-                        // check if a dot is connected to the current page
-                        // if true, give it a different color
-                        backgroundColor: _activePage == index
-                            ? greenishColor
-                            : transparentColor,
-                      ),
-                    ],
+          child: SizedBox(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List<Widget>.generate(
+                widget.images.length,
+                (index) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: InkWell(
+                    onTap: () {
+                      _pageViewController.animateToPage(index,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeIn);
+                    },
+                    child: Stack(
+                      children: [
+                        CircleAvatar(
+                          radius: 6,
+                          backgroundColor:
+                              _activePage == index ? greenishColor : greyColor,
+                        ),
+                        CircleAvatar(
+                          radius: _activePage != index ? 6 : 7,
+                          // check if a dot is connected to the current page
+                          // if true, give it a different color
+                          backgroundColor:
+                              _activePage == index ? greenishColor : whiteColor,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          )),
+          ),
         ),
       ],
     );

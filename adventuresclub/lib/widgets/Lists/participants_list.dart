@@ -7,6 +7,7 @@ import 'package:adventuresclub/widgets/buttons/square_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/getParticipants/get_participants_model.dart';
+import 'Chat_list.dart/show_chat.dart';
 
 class ParticipantsList extends StatefulWidget {
   final List<GetParticipantsModel> gm;
@@ -71,6 +72,19 @@ class _ParticipantsListState extends State<ParticipantsList> {
     // '5ft 2″ (62″) | 60 Kg.',
     // ''
   ];
+
+  void selected(BuildContext context, int serviceId, int providerId) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return ShowChat(
+              "https://adventuresclub.net/adventureClub/newreceiverchat/${Constants.userId}/$serviceId/$providerId");
+        },
+      ),
+    );
+  }
+
+  //// https://adventuresclub.net/adventureClub/newchat/3/2/6 //provider = 3 , service = 2 , member/userId = 6
 
   @override
   Widget build(BuildContext context) {
@@ -361,8 +375,40 @@ class _ParticipantsListState extends State<ParticipantsList> {
                           )
                         ],
                       )),
-                      SquareButton('Chat Client', blueButtonColor, whiteColor,
-                          3.1, 21, 13, abc),
+                      GestureDetector(
+                        onTap: () => selected(
+                            context,
+                            widget.gm[index].serviceId,
+                            widget.gm[index].providerId),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height / 21,
+                          width: MediaQuery.of(context).size.width / 3.8,
+                          decoration: const BoxDecoration(
+                            color: blueColor1,
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                          ),
+                          child: Center(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Text(
+                                    'Chat Client',
+                                    style: TextStyle(
+                                        color: whiteColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      // SquareButton('Chat Client', blueButtonColor, whiteColor,
+                      //     3.1, 21, 13, abc),
                     ],
                   ),
                 ],

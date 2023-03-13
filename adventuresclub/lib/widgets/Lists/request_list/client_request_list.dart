@@ -1,9 +1,12 @@
+// ignore_for_file: avoid_print
+
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/my_adventures.dart';
+import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/buttons/square_button.dart';
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
 import '../../../models/getClientRequest/get_client_request_model.dart';
 
 class ClientRequestList extends StatefulWidget {
@@ -63,6 +66,39 @@ class _ClientRequestListState extends State<ClientRequestList> {
     '5ft 2″ (62″) | 60 Kg.',
     'printing & typesetting industry.'
   ];
+
+  void selected(BuildContext context, int serviceId) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return ShowChat(
+              "https://adventuresclub.net/adventureClub/newreceiverchat/${Constants.userId}/${serviceId}/3");
+        },
+      ),
+    );
+  }
+
+  void decline(String userId, String serviceId, String providerId) async {
+    try {
+      var response = await http.post(
+          Uri.parse(
+              "https://adventuresclub.net/adventureClub/api/v1/cancelrequest"),
+          body: {
+            'user_id': userId, //"3", //Constants.userId, //"27",
+            'service_id': serviceId,
+            'id': providerId,
+          });
+      // setState(() {
+      //   favourite = true;
+      // });
+      print(response.statusCode);
+      print(response.body);
+      print(response.headers);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -84,6 +120,7 @@ class _ClientRequestListState extends State<ClientRequestList> {
                       text: widget.rm[index].region, //'Location Name',
                       color: blackColor,
                       size: 12,
+                      weight: FontWeight.w700,
                     ),
                     MyText(
                       text: widget.rm[index]
@@ -121,7 +158,7 @@ class _ClientRequestListState extends State<ClientRequestList> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 MyText(
-                                  text: 'Booking ID: ',
+                                  text: 'Booking ID : ',
                                   color: blackColor,
                                   weight: FontWeight.w500,
                                   size: 12,
@@ -139,7 +176,7 @@ class _ClientRequestListState extends State<ClientRequestList> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 MyText(
-                                  text: 'UserName:',
+                                  text: 'UserName :',
                                   color: blackColor,
                                   weight: FontWeight.w500,
                                   size: 12,
@@ -381,12 +418,73 @@ class _ClientRequestListState extends State<ClientRequestList> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    SquareButton('Book Again', bluishColor, whiteColor, 3.7, 21,
-                        12, abc),
-                    SquareButton('Rate Now', yellowcolor, whiteColor, 3.7, 21,
-                        12, goToMyAd),
-                    SquareButton('Chat Provider', blueColor1, whiteColor, 3.7,
-                        21, 12, abc),
+                    GestureDetector(
+                      onTap: () => selected(
+                        context,
+                        widget.rm[index].serviceId,
+                        //widget.rm[index].providerId
+                      ),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height / 21,
+                        width: MediaQuery.of(context).size.width / 3.8,
+                        decoration: const BoxDecoration(
+                          color: blueColor1,
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                        ),
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Text(
+                                  'Chat Client',
+                                  style: TextStyle(
+                                      color: whiteColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SquareButton(
+                        'Accept', darkGreen, whiteColor, 3.7, 21, 12, abc),
+                    GestureDetector(
+                      onTap: () => decline(
+                          widget.rm[index].bookingUser.toString(),
+                          widget.rm[index].serviceId.toString(),
+                          widget.rm[index].id.toString()
+                          //widget.rm[index].providerId
+                          ),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height / 21,
+                        width: MediaQuery.of(context).size.width / 3.8,
+                        decoration: const BoxDecoration(
+                          color: darkRed,
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                        ),
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Text(
+                                  'Decline',
+                                  style: TextStyle(
+                                      color: whiteColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ],

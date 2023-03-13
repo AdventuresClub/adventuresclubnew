@@ -2,8 +2,8 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/view_details.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
-
 import '../../models/category/category_model.dart';
+import '../../models/filter_data_model/category_filter_model.dart';
 
 class AdventureCategoryGrid extends StatefulWidget {
   final List<CategoryModel> pCM;
@@ -14,10 +14,16 @@ class AdventureCategoryGrid extends StatefulWidget {
 }
 
 class _AdventureCategoryGridState extends State<AdventureCategoryGrid> {
-  void goToDetails() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return const ViewDetails();
-    }));
+  List<CategoryFilterModel> pCM = [];
+
+  void goToDetails(String type) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return ViewDetails(type);
+        },
+      ),
+    );
   }
 
   List<String> text = [
@@ -57,20 +63,25 @@ class _AdventureCategoryGridState extends State<AdventureCategoryGrid> {
           widget.pCM.length, //text.length, // widget.profileURL.length,
           (index) {
             return GestureDetector(
-              onTap: goToDetails,
+              onTap: () => goToDetails(widget.pCM[index].category),
               child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
                     image: DecorationImage(
-                        image: NetworkImage(widget.pCM[index].category),
-                        fit: BoxFit.cover)),
+                        image: NetworkImage(
+                            //"${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${
+                            widget.pCM[index].image
+                            //}
+                            //"
+                            ),
+                        fit: BoxFit.fill)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     MyText(
                       text: widget.pCM[index].category,
                       color: blackColor,
-                      weight: FontWeight.w500,
+                      weight: FontWeight.bold,
                       size: 16,
                       align: TextAlign.center,
                     ),
