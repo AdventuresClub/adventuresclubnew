@@ -55,6 +55,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
         title: MyText(
           text: 'Create Adventure',
           color: bluishColor,
+          weight: FontWeight.bold,
         ),
       ),
       body: Consumer<CompleteProfileProvider>(
@@ -69,8 +70,8 @@ class _CompleteProfileState extends State<CompleteProfile> {
                   child: MyText(
                     text:
                         'Just follow simple four steps to list up your adventure',
-                    size: 12,
-                    weight: FontWeight.w500,
+                    size: 14,
+                    weight: FontWeight.w600,
                     color: greyColor,
                   ),
                 ),
@@ -106,8 +107,9 @@ class _CompleteProfileState extends State<CompleteProfile> {
                                           child: MyText(
                                         text: text1[index],
                                         color: whiteColor,
-                                        weight: FontWeight.w500,
+                                        weight: FontWeight.w700,
                                         fontFamily: 'Roboto',
+                                        size: 12,
                                       )),
                                     ),
                                     const Expanded(
@@ -123,9 +125,9 @@ class _CompleteProfileState extends State<CompleteProfile> {
                                     child: MyText(
                                       text: text[index],
                                       color: bluishColor,
-                                      weight: FontWeight.w500,
+                                      weight: FontWeight.w700,
                                       fontFamily: 'Roboto',
-                                      size: 10,
+                                      size: 12,
                                     )),
                               ],
                             )
@@ -144,10 +146,12 @@ class _CompleteProfileState extends State<CompleteProfile> {
                                               BorderRadius.circular(65)),
                                       child: Center(
                                           child: MyText(
-                                              text: text1[index],
-                                              color: whiteColor,
-                                              weight: FontWeight.w500,
-                                              fontFamily: 'Roboto')),
+                                        text: text1[index],
+                                        color: whiteColor,
+                                        weight: FontWeight.w700,
+                                        fontFamily: 'Roboto',
+                                        size: 12,
+                                      )),
                                     ),
                                     if (index != 3)
                                       const Expanded(
@@ -163,9 +167,9 @@ class _CompleteProfileState extends State<CompleteProfile> {
                                   child: MyText(
                                     text: text[index],
                                     color: greyColor,
-                                    weight: FontWeight.w500,
+                                    weight: FontWeight.w700,
                                     fontFamily: 'Roboto',
-                                    size: 10,
+                                    size: 12,
                                   ),
                                 ),
                               ],

@@ -9,7 +9,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class BannerPage extends StatefulWidget {
-  const BannerPage({super.key});
+  final Function sendImages;
+  const BannerPage(this.sendImages, {super.key});
 
   @override
   State<BannerPage> createState() => _BannerPageState();
@@ -20,7 +21,7 @@ class _BannerPageState extends State<BannerPage> {
   File pickedMedia = File("");
   File pickedMediaSecond = File("");
   final picker = ImagePicker();
-  List<File> imagesList = [];
+  List<File> imageList = [];
 
   void addMedia() async {
     showDialog(
@@ -60,15 +61,18 @@ class _BannerPageState extends State<BannerPage> {
         maxHeight: 300);
     if (photo != null && pickedMedia.path.isEmpty) {
       pickedMedia = File(photo.path);
-      addImage();
+      imageList[0] = pickedMedia;
+      // addImage();
       //imagesList.add(pickedMedia);
     } else {
       pickedMediaSecond = File(photo!.path);
-      addSecondImage();
+      imageList[1] = pickedMediaSecond;
+      //addSecondImage();
     }
     setState(() {
       loading = false;
     });
+    widget.sendImages(imageList);
   }
 
   void addImage() {

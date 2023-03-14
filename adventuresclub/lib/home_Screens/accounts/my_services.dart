@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:adventuresclub/become_a_partner/create_services/create_new_services.dart';
 import 'package:adventuresclub/complete_profile/complete_profile.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/my_services/my_services_model.dart';
@@ -35,7 +36,7 @@ class _MyServicesState extends State<MyServices> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return const CompleteProfile();
+          return const CreateNewServices(); //CompleteProfile();
         },
       ),
     );

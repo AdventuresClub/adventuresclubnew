@@ -18,10 +18,10 @@ class _AdventureChatDetailsState extends State<AdventureChatDetails> {
   void initState() {
     super.initState();
     //getChats();
-    selected(context);
+    selected();
   }
 
-  void selected(BuildContext context) {
+  void selected() {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {

@@ -72,10 +72,11 @@ class CompleteProfileProvider with ChangeNotifier {
   List<String> aimedFor = [];
 
   final List<Map<String, dynamic>> steps = [
-    {
-      'heading': 'Just follow simple four steps to list up your adventure',
-      'child': const BannerPage()
-    },
+    // {
+    //   'heading': 'Just follow simple four steps to list up your adventure',
+    //   'child': const
+    //    BannerPage()
+    // },
     {
       'heading': 'Just follow simple four steps to list up your adventure',
       'child': const Description()

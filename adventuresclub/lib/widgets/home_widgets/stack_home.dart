@@ -853,31 +853,26 @@ class _StackHomeState extends State<StackHome> {
               },
               itemCount: widget.images.length,
               itemBuilder: (BuildContext context, int index) {
-                return ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      height: MediaQuery.of(context).size.height / 6,
-                      width: MediaQuery.of(context).size.width / 1.1,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        image: widget.images.isEmpty
-                            ? const DecorationImage(
-                                image: ExactAssetImage('images/maskGroup1.png'),
-                                //   //   NetworkImage(
-                                //   // "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${widget.images[0]}",
-                              )
-                            : DecorationImage(
-                                image:
-                                    //ExactAssetImage('images/maskGroup1.png'),
-                                    NetworkImage(
-                                  "${"https://adventuresclub.net/adventureClub/public/"}${widget.images[0]}",
-                                ),
-                                fit: BoxFit.cover,
-                              ),
-                      ),
-                    );
-                  },
+                return Container(
+                  height: MediaQuery.of(context).size.height / 6,
+                  width: MediaQuery.of(context).size.width / 1.1,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    image: widget.images.isEmpty
+                        ? const DecorationImage(
+                            image: ExactAssetImage('images/maskGroup1.png'),
+                            //   //   NetworkImage(
+                            //   // "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${widget.images[0]}",
+                          )
+                        : DecorationImage(
+                            image:
+                                //ExactAssetImage('images/maskGroup1.png'),
+                                NetworkImage(
+                              "${"https://adventuresclub.net/adventureClub/public/"}${widget.images[index]}",
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                  ),
                 );
               },
             ),

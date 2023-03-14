@@ -1,6 +1,7 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/adventure_chat_details.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
+import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:another_stepper/another_stepper.dart';
 import 'package:flutter/material.dart';
@@ -1026,7 +1027,10 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                     ),
                   ),
                   // 4th Tab /////////
-                  AdventureChatDetails(widget.gm.serviceId.toString())
+                  ShowChat(
+                      "https://adventuresclub.net/adventureClub/receiverlist/27/'${widget.gm.serviceId.toString()}'"),
+                  //AdventureChatDetails(widget.gm.serviceId.toString())
+                  // "https://adventuresclub.net/adventureClub/receiverlist/27/'${widget.serviceId}'"
                 ],
               ),
             ),

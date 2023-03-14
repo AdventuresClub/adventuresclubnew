@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:adventuresclub/widgets/buttons/bottom_button.dart';
