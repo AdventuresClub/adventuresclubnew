@@ -14,6 +14,7 @@ import 'package:adventuresclub/models/filter_data_model/region_model.dart';
 import 'package:adventuresclub/models/filter_data_model/sector_filter_model.dart';
 import 'package:adventuresclub/models/filter_data_model/service_types_filter.dart';
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
+import 'package:adventuresclub/models/weightnheight_model.dart';
 import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/dropdown_button.dart';
@@ -25,6 +26,7 @@ import 'package:adventuresclub/widgets/dropdowns/service_type_drop_down.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
 import 'package:adventuresclub/widgets/text_fields/multiline_field.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
@@ -65,7 +67,8 @@ class _DescriptionState extends State<Description> {
   List<FilterDataModel> fDM = [];
   DateTime? pickedDate;
   int? currentIndex;
-
+  var getCountry = 'Oman';
+  List<WnHModel> weightList = [];
   List<String> countryList = [
     "Oman",
   ];
@@ -598,16 +601,18 @@ class _DescriptionState extends State<Description> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-                        child: DdButton(
-                          2.4,
-                          dropDown: "Oman",
-                          dropDownList: countryList,
-                        ),
-                      ),
+                      pickingWeight(context, 'Oman'),
+                      // Expanded(
+                      //   child: DdButton(
+                      //     2.4,
+                      //     dropDown: "Oman",
+                      //     dropDownList: countryList,
+                      //   ),
+                      // ),
                       const SizedBox(
                         width: 10,
                       ),
+                  //    Description(regionFilter),
                       Expanded(child: RegionDropDown(regionFilter)),
                     ],
                   ),
@@ -623,7 +628,9 @@ class _DescriptionState extends State<Description> {
                       const SizedBox(
                         width: 10,
                       ),
-                      Expanded(child: ServiceCategoryDropDown(categoryFilter))
+                      Expanded(
+                        child: ServiceCategoryDropDown(categoryFilter),
+                      )
                       // const SizedBox(
                       //   width: 5,
                       // ),
@@ -1076,5 +1083,153 @@ class _DescriptionState extends State<Description> {
               ),
             );
           });
+  }
+
+  Widget pickingWeight(context, String getName) {
+    return GestureDetector(
+      onTap: () => showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            backgroundColor: Colors.transparent,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
+            child: Container(
+              height: 300,
+              color: whiteColor,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: MyText(
+                          text: 'Oman',
+                          weight: FontWeight.bold,
+                          color: blackColor,
+                          size: 20,
+                          fontFamily: 'Raleway'),
+                    ),
+                  ),
+                  
+                  Container(
+                    height: 200,
+                    color: whiteColor,
+                    child: Row(
+                      children: [
+                        Stack(
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width / 1.3,
+                              child: CupertinoPicker(
+                                itemExtent: 82.0,
+                                diameterRatio: 22,
+                                backgroundColor: whiteColor,
+                                onSelectedItemChanged: (int index) {
+                                  //print(index + 1);
+                                  setState(() {
+                            
+                                    getCountry = countryList[index];
+                                  
+                                    // getWeight == null
+                                    //     ? cont = false
+                                    //     : cont = true;
+                                    // ft = (index + 1);
+                                    // heightController.text =
+                                    //     "$ft' $inches\"";
+                                  });
+                                },
+                                selectionOverlay:
+                                    const CupertinoPickerDefaultSelectionOverlay(
+                                  background: transparentColor,
+                                ),
+                                children: List.generate(
+                                  countryList.length,
+                                  (index) {
+                                    return Center(
+                                      child: MyText(
+                                          text: countryList[index],
+                                          size: 14,
+                                          color: blackTypeColor4),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: 70,
+                              child: Container(
+                                height: 60,
+                                width: MediaQuery.of(context).size.width / 1.2,
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16),
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    top: BorderSide(
+                                        color: blackColor.withOpacity(0.7),
+                                        width: 1.5),
+                                    bottom: BorderSide(
+                                        color: blackColor.withOpacity(0.7),
+                                        width: 1.5),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      TextButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: MyText(
+                            text: 'Cancel',
+                            color: bluishColor,
+                          )),
+                      TextButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: MyText(
+                            text: 'Ok',
+                            color: bluishColor,
+                          )),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+      child: Container(
+        width: MediaQuery.of(context).size.width / 2.4,
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        decoration: BoxDecoration(
+          color: greyProfileColor,
+          border: Border.all(color: greyColor.withOpacity(0.7), width: 1.5),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            MyText(
+              text: getCountry.toString(),
+              color: blackColor.withOpacity(0.6),
+              size: 14,
+              weight: FontWeight.w500,
+            ),
+            const Image(
+              image: ExactAssetImage('images/ic_drop_down.png'),
+              height: 16,
+              width: 16,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
