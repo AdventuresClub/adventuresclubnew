@@ -17,11 +17,11 @@ import 'package:adventuresclub/models/services/aimed_for_model.dart';
 import 'package:adventuresclub/models/weightnheight_model.dart';
 import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
-import 'package:adventuresclub/widgets/dropdown_button.dart';
 import 'package:adventuresclub/widgets/dropdowns/duration_drop_down.dart';
 import 'package:adventuresclub/widgets/dropdowns/level_drop_down.dart';
 import 'package:adventuresclub/widgets/dropdowns/region_dropdown.dart';
 import 'package:adventuresclub/widgets/dropdowns/service_category.dart';
+import 'package:adventuresclub/widgets/dropdowns/service_sector_drop_down.dart';
 import 'package:adventuresclub/widgets/dropdowns/service_type_drop_down.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
@@ -597,7 +597,7 @@ class _DescriptionState extends State<Description> {
                   const SizedBox(height: 20),
                   TFWithSize('Adventure Name', provider.adventureNameController,
                       12, lightGreyColor, 1),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -612,7 +612,7 @@ class _DescriptionState extends State<Description> {
                       const SizedBox(
                         width: 10,
                       ),
-                  //    Description(regionFilter),
+                      //    Description(regionFilter),
                       Expanded(child: RegionDropDown(regionFilter)),
                     ],
                   ),
@@ -625,18 +625,18 @@ class _DescriptionState extends State<Description> {
                       //       //filterSectors
                       //       ),
                       // ),
-                      const SizedBox(
-                        width: 10,
-                      ),
+                      // const SizedBox(
+                      //   width: 10,
+                      // ),
                       Expanded(
                         child: ServiceCategoryDropDown(categoryFilter),
-                      )
-                      // const SizedBox(
-                      //   width: 5,
-                      // ),
-                      // Expanded(
-                      //   child: ServiceSectorDropDown(cList),
-                      // ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                        child: ServiceSectorDropDown(filterSectors),
+                      ),
                       // DdButton(
                       //   2.4,
                       //   dropDown: "Training",
@@ -1112,7 +1112,6 @@ class _DescriptionState extends State<Description> {
                           fontFamily: 'Raleway'),
                     ),
                   ),
-                  
                   Container(
                     height: 200,
                     color: whiteColor,
@@ -1129,9 +1128,8 @@ class _DescriptionState extends State<Description> {
                                 onSelectedItemChanged: (int index) {
                                   //print(index + 1);
                                   setState(() {
-                            
                                     getCountry = countryList[index];
-                                  
+
                                     // getWeight == null
                                     //     ? cont = false
                                     //     : cont = true;

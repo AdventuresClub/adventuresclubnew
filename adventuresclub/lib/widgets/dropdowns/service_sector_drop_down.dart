@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/constants_create_new_services.dart';
 import 'package:adventuresclub/models/filter_data_model/sector_filter_model.dart';
 import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:flutter/material.dart';
@@ -31,14 +32,21 @@ class ServiceSectorDropDownState extends State<ServiceSectorDropDown> {
     });
   }
 
-  void sId(SectorFilterModel sFilter) {
-    Provider.of<CompleteProfileProvider>(context, listen: false)
-        .sectorSelection(sFilter.sector, sFilter.id);
-  }
+  // void sId1(SectorFilterModel sFilter) {
+  //   Provider.of<CompleteProfileProvider>(context, listen: false)
+  //       .sectorSelection(sFilter.sector, sFilter.id);
+  // }
 
   void fId(SectorFilterModel sFilter) {
     setState(() {
       selectedSector = sFilter.sector;
+    });
+  }
+
+  void sId(SectorFilterModel rFilter) {
+    setState(() {
+      ConstantsCreateNewServices.selectedSector = rFilter.sector;
+      ConstantsCreateNewServices.selectedSectorId = rFilter.id;
     });
   }
 

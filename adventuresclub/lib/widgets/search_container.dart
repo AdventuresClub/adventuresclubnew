@@ -59,15 +59,16 @@ class _SearchContainerState extends State<SearchContainer> {
             children: [
               if (widget.countryName == true)
                 Text(
-                  widget.country,
+                  Constants.country,
                   style: TextStyle(
                       color: searchTextColor.withOpacity(0.8),
                       fontSize: widget.fontSize),
                 ),
               if (widget.value == true)
-                Image(
-                  image: ExactAssetImage(widget.image),
-                  height: 20,
+                Image.network(
+                  "${"https://adventuresclub.net/adventureClub/public/"}${Constants.countryFlag}",
+                  height: 15,
+                  width: 15,
                 ),
               const SizedBox(
                 width: 5,

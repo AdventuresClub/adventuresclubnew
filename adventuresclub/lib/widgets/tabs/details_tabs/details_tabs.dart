@@ -324,15 +324,16 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                               borderRadius: BorderRadius.circular(12)),
                           elevation: 1,
                           child: Padding(
-                            padding: const EdgeInsets.all(12.0),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 6.0, vertical: 16),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Expanded(
-                                  flex: 6,
+                                  flex: 8,
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
+                                        CrossAxisAlignment.start,
                                     children: List.generate(
                                       text1.length,
                                       (index) {
@@ -342,15 +343,15 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                                 // country
                                                 text1[index],
                                             style: const TextStyle(
-                                                color: greyColorShade400,
-                                                fontSize: 12,
+                                                color: greyColor2,
+                                                fontSize: 14,
                                                 height: 1.5),
                                             children: <TextSpan>[
                                               TextSpan(
                                                   //text: widget.gm.country,
                                                   text: text4[index],
                                                   style: const TextStyle(
-                                                      fontSize: 12,
+                                                      fontSize: 14,
                                                       // fontWeight: FontWeight.w300,
                                                       color: blackColor,
                                                       height: 1.5)),
@@ -362,14 +363,15 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 4,
+                                  flex: 6,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Wrap(
                                         alignment: WrapAlignment.start,
                                         crossAxisAlignment:
-                                            WrapCrossAlignment.end,
+                                            WrapCrossAlignment.start,
                                         direction: Axis.vertical,
                                         children: List.generate(text5.length,
                                             (index) {
@@ -381,7 +383,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                                     initialRating: convert(
                                                         widget.gm.stars),
                                                     itemSize: 12,
-                                                    minRating: 1,
+                                                    minRating: 0,
                                                     direction: Axis.horizontal,
                                                     allowHalfRating: true,
                                                     itemCount: 5,
@@ -404,15 +406,15 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                                   text: TextSpan(
                                                     text: text5[index],
                                                     style: const TextStyle(
-                                                      color: greyColorShade400,
-                                                      fontSize: 12,
+                                                      color: greyColor2,
+                                                      fontSize: 14,
                                                       height: 1.5,
                                                     ),
                                                     children: <TextSpan>[
                                                       TextSpan(
                                                           text: text6[index],
                                                           style: const TextStyle(
-                                                              fontSize: 12,
+                                                              fontSize: 14,
                                                               color: blackColor,
                                                               height: 1.5)),
                                                     ],
@@ -439,17 +441,18 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                     alignment: Alignment.centerLeft,
                                     child: MyText(
                                       text: 'Information',
-                                      color: greyColor.withOpacity(0.6),
+                                      color: greyColor2,
                                       weight: FontWeight.w500,
                                       fontFamily: 'Roboto',
+                                      size: 16,
                                     )),
                                 const SizedBox(height: 5),
                                 MyText(
                                   text: widget.gm.writeInformation,
-                                  color: greyColorShade400,
+                                  color: greyColor2,
                                   weight: FontWeight.w500,
                                   fontFamily: 'Roboto',
-                                  size: 12,
+                                  size: 14,
                                 ),
                               ],
                             ),
@@ -490,7 +493,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                             width: 5,
                                           ),
                                           MyText(
-                                            text: widget.gm.availability[0],
+                                            text: widget.gm.availability,
                                             color: greyColorShade400,
                                             weight: FontWeight.w500,
                                             fontFamily: 'Roboto',
@@ -540,7 +543,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                           MyText(
                                             text: widget.gm.am[index].aimedName,
                                             //text: aimedFor[index],
-                                            color: greyColorShade400,
+                                            color: greyColor2,
                                             weight: FontWeight.w500,
                                             fontFamily: 'Roboto',
                                             size: 12,
@@ -582,16 +585,16 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                       child: Row(
                                         children: [
                                           const CircleAvatar(
-                                            backgroundColor: greyColorShade400,
+                                            backgroundColor: greyColor2,
                                             radius: 5,
                                           ),
                                           const SizedBox(
                                             width: 5,
                                           ),
                                           MyText(
-                                            text: widget.gm.adventureName,
+                                            text: widget.gm.da,
                                             //text: aimedFor[index],
-                                            color: greyColorShade400,
+                                            color: greyColor2,
                                             weight: FontWeight.w500,
                                             fontFamily: 'Roboto',
                                             size: 12,
@@ -605,35 +608,6 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                             ),
                           ),
                         ),
-                        Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                          elevation: 1,
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Column(
-                              children: [
-                                Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: MyText(
-                                      text: 'Information',
-                                      color: greyColor.withOpacity(0.4),
-                                      weight: FontWeight.w500,
-                                      fontFamily: 'Roboto',
-                                    )),
-                                MyText(
-                                  text:
-                                      'you will need an acceptable fitness to do  this canyon. It is long  canyon and requires  lots of bouldering around on uneven terrain',
-                                  size: 12,
-                                  color: greyColor.withOpacity(0.3),
-                                  weight: FontWeight.w400,
-                                  fontFamily: 'Roboto',
-                                  height: 1.5,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
                         ClipRRect(
                           borderRadius: BorderRadius.circular(26),
                           child: Card(
@@ -642,13 +616,13 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                               child: ExpansionTile(
                                 collapsedIconColor: blackTypeColor3,
                                 tilePadding:
-                                    EdgeInsets.symmetric(horizontal: 10),
-                                title: Text(
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                title: const Text(
                                   'Terms and conditions',
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w500,
-                                      color: greyColor.withOpacity(0.4)),
+                                      color: greyColor2),
                                 ),
                                 children: <Widget>[
                                   Padding(
@@ -657,41 +631,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                       text: widget.gm.tnc,
                                       // text:
                                       //     'The highest peak in Al-Hajar mountain range and in all of Oman,Jebel Shams(Mountain of the sun) towers above the northern town in Al-Hamra. Rising to about 10,000 feet(3,000 meters).',
-                                      color: greyColor.withOpacity(0.4),
-                                      weight: FontWeight.w400,
-                                      fontFamily: 'Roboto',
-                                      height: 1.5,
-                                      size: 12,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(26),
-                          child: Card(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(26),
-                              child: ExpansionTile(
-                                tilePadding:
-                                    EdgeInsets.symmetric(horizontal: 10),
-                                title: Text(
-                                  'Pre-requisites',
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w500,
-                                      color: greyColor.withOpacity(0.4)),
-                                ),
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: MyText(
-                                      text: widget.gm.preRequisites,
-                                      // text:
-                                      //     'The highest peak in Al-Hajar mountain range and in all of Oman,Jebel Shams(Mountain of the sun) towers above the northern town in Al-Hamra. Rising to about 10,000 feet(3,000 meters).',
-                                      color: greyColor.withOpacity(0.4),
+                                      color: greyColor2,
                                       weight: FontWeight.w400,
                                       fontFamily: 'Roboto',
                                       height: 1.5,
@@ -711,12 +651,46 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                               child: ExpansionTile(
                                 tilePadding:
                                     const EdgeInsets.symmetric(horizontal: 10),
-                                title: Text(
+                                title: const Text(
+                                  'Pre-requisites',
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      color: greyColor2),
+                                ),
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: MyText(
+                                      text: widget.gm.preRequisites,
+                                      // text:
+                                      //     'The highest peak in Al-Hajar mountain range and in all of Oman,Jebel Shams(Mountain of the sun) towers above the northern town in Al-Hamra. Rising to about 10,000 feet(3,000 meters).',
+                                      color: greyColor2,
+                                      weight: FontWeight.w400,
+                                      fontFamily: 'Roboto',
+                                      height: 1.5,
+                                      size: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(26),
+                          child: Card(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(26),
+                              child: ExpansionTile(
+                                tilePadding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                title: const Text(
                                   'Minimum Requirement',
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w500,
-                                      color: greyColor.withOpacity(0.4)),
+                                      color: greyColor2),
                                 ),
                                 children: <Widget>[
                                   Padding(
@@ -725,7 +699,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                       text: widget.gm.mRequirements,
                                       // text:
                                       //     'The highest peak in Al-Hajar mountain range and in all of Oman,Jebel Shams(Mountain of the sun) towers above the northern town in Al-Hamra. Rising to about 10,000 feet(3,000 meters).',
-                                      color: greyColor.withOpacity(0.4),
+                                      color: greyColor2,
                                       weight: FontWeight.w400,
                                       fontFamily: 'Roboto',
                                       height: 1.5,

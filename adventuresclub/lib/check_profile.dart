@@ -40,14 +40,17 @@ class CheckProfileState extends State<CheckProfile> {
     );
   }
 
-  void parseData(
-      String name, int countryId, int id, String email, String pass) {
+  void parseData(String name, int countryId, int id, String email, String pass,
+      String country, String flag, String userRole) {
     setState(() {
       Constants.userId = id;
       Constants.name = name;
       Constants.countryId = countryId;
       Constants.emailId = email;
       Constants.password = pass;
+      Constants.country = country;
+      Constants.countryFlag = flag;
+      Constants.userRole = userRole;
     });
   }
 
@@ -58,8 +61,12 @@ class CheckProfileState extends State<CheckProfile> {
     String name = prefs.getString("name") ?? "";
     String email = prefs.getString("email") ?? "";
     String password = prefs.getString("password") ?? "";
+    String country = prefs.getString("country") ?? "";
+    String countryFlag = prefs.getString("countryFlag") ?? "";
+    String userRole = prefs.getString("userRole") ?? "";
     if (userId != 0) {
-      parseData(name, countryId, userId, email, password);
+      parseData(name, countryId, userId, email, password, country, countryFlag,
+          userRole);
       //prefs.setString("name", )
       goToNavigation();
     } else {

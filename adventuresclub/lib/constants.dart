@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_function_literals_in_foreach_calls
+// ignore_for_file: avoid_function_literals_in_foreach_calls, avoid_print
 
 import 'dart:convert';
 import 'dart:ui';
@@ -11,7 +11,11 @@ import 'package:adventuresclub/models/filter_data_model/filter_data_model.dart';
 import 'package:adventuresclub/models/filter_data_model/level_filter_mode.dart';
 import 'package:adventuresclub/models/filter_data_model/sector_filter_model.dart';
 import 'package:adventuresclub/models/filter_data_model/service_types_filter.dart';
+import 'package:adventuresclub/models/packages_become_partner/bp_excluded_model.dart';
+import 'package:adventuresclub/models/packages_become_partner/bp_includes_model.dart';
+import 'package:adventuresclub/models/profile_models/profile_become_partner.dart';
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
+import 'package:adventuresclub/models/user_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
@@ -19,7 +23,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import 'models/create_adventure/regions_model.dart';
 import 'models/filter_data_model/region_model.dart';
+import 'models/packages_become_partner/packages_become_partner_model.dart';
 
 const kPrimaryColor = Color(0xffE8E8E8);
 const kSecondaryColor = Color(0xff193447);
@@ -64,12 +70,21 @@ const darkRed = Color.fromARGB(255, 176, 37, 37);
 class Constants {
   static String name = "";
   static int countryId = 0;
+  static String userRole = "3";
   static int userId = 0;
   static String emailId = "";
   static String password = "";
   static String country = "";
+  static String countryFlag = "";
+  static String phone = "";
+  static int resultService = 0;
+  static int resultRequest = 0;
+  static int resultAccount = 0;
+  static int totalNotication = 0;
   static SharedPreferences? prefs;
   static Map mapFilter = {};
+  static Map mapAimedFilter = {};
+  static bool partnerRequest = false;
   static List<SectorFilterModel> filterSectors = [];
   static List<CategoryFilterModel> categoryFilter = [];
   static List<ServiceTypeFilterModel> serviceFilter = [];
@@ -81,6 +96,44 @@ class Constants {
   static List<ActivitiesIncludeModel> activitiesFilter = [];
   static List<RegionFilterModel> regionFilter = [];
   static List<FilterDataModel> fDM = [];
+  static List<RegionsModel> regionList = [];
+  static List<PackagesBecomePartnerModel> gBp = [];
+  static Map getPackages = {};
+  static List<BpIncludesModel> gIList = [];
+  static List<BpExcludesModel> gEList = [];
+  static UserProfileModel profile = UserProfileModel(
+      0,
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      0,
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      0,
+      "",
+      0,
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      0,
+      "",
+      "",
+      "",
+      "",
+      ProfileBecomePartner(0, 0, "", "", "", "", "", "", "", "", 0, 0, "", "",
+          "", "", "", "", "", 0, "", "", "", "", "", ""));
 
   static getPrefs() async {
     prefs ??= await SharedPreferences.getInstance();
@@ -215,7 +268,145 @@ class Constants {
     return data!.buffer.asUint8List();
   }
 
+  static void getProfile() async {
+    SharedPreferences prefs = await Constants.getPrefs();
+    try {
+      var response = await http.post(
+          Uri.parse("https://adventuresclub.net/adventureClub/api/v1/login"),
+          body: {
+            'email': Constants.emailId, //"hamza@gmail.com",
+            'password': Constants.password, //"Upendra@321",
+            'device_id': "0"
+          });
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      dynamic userData = decodedResponse['data'];
+      int userLoginId = int.tryParse(userData['id'].toString()) ?? 0;
+      int countryId = int.tryParse(userData['country_id'].toString()) ?? 0;
+      int languageId = int.tryParse(userData['language_id'].toString()) ?? 0;
+      int currencyId = int.tryParse(userData['currency_id'].toString()) ?? 0;
+      int addedFrom = int.tryParse(userData['added_from'].toString()) ?? 0;
+      dynamic partnerInfo = decodedResponse['data']["become_partner"];
+      int id = int.tryParse(partnerInfo['id'].toString()) ?? 0;
+      int userId = int.tryParse(partnerInfo['user_id'].toString()) ?? 0;
+      int debitCard = int.tryParse(partnerInfo['debit_card'].toString()) ?? 0;
+      int visaCard = int.tryParse(partnerInfo['visa_card'].toString()) ?? 0;
+      int packagesId = int.tryParse(partnerInfo['packages_id'].toString()) ?? 0;
+      ProfileBecomePartner bp = ProfileBecomePartner(
+        id,
+        userId,
+        partnerInfo['company_name'].toString() ?? "",
+        partnerInfo['address'].toString() ?? "",
+        partnerInfo['location'].toString() ?? "",
+        partnerInfo['description'].toString() ?? "",
+        partnerInfo['license'].toString() ?? "",
+        partnerInfo['cr_name'].toString() ?? "",
+        partnerInfo['cr_number'].toString() ?? "",
+        partnerInfo['cr_copy'].toString() ?? "",
+        debitCard,
+        visaCard,
+        partnerInfo['payon_arrival'].toString() ?? "",
+        partnerInfo['paypal'].toString() ?? "",
+        partnerInfo['bankname'].toString() ?? "",
+        partnerInfo['account_holdername'].toString() ?? "",
+        partnerInfo['account_number'].toString() ?? "",
+        partnerInfo['is_online'].toString() ?? "",
+        partnerInfo['is_approved'].toString() ?? "",
+        packagesId,
+        partnerInfo['start_date'].toString() ?? "",
+        partnerInfo['end_date'].toString() ?? "",
+        partnerInfo['is_wiretransfer'].toString() ?? "",
+        partnerInfo['is_free_used'].toString() ?? "",
+        partnerInfo['created_at'].toString() ?? "",
+        partnerInfo['updated_at'].toString() ?? "",
+      );
+      UserProfileModel up = UserProfileModel(
+          userLoginId,
+          userData['users_role'].toString() ?? "",
+          userData['profile_image'].toString() ?? "",
+          userData['name'].toString() ?? "",
+          userData['height'].toString() ?? "",
+          userData['weight'].toString() ?? "",
+          userData['email'].toString() ?? "",
+          countryId,
+          userData['region_id'].toString() ?? "",
+          userData['city_id'].toString() ?? "",
+          userData['now_in'].toString() ?? "",
+          userData['mobile'].toString() ?? "",
+          userData['mobile_verified_at'].toString() ?? "",
+          userData['dob'].toString() ?? "",
+          userData['gender'].toString() ?? "",
+          languageId,
+          userData['nationality_id'].toString() ?? "",
+          currencyId,
+          userData['app_notification'].toString() ?? "",
+          userData['points'].toString() ?? "",
+          userData['health_conditions'].toString() ?? "",
+          userData['health_conditions_id'].toString() ?? "",
+          userData['email_verified_at'].toString() ?? "",
+          userData['mobile_code'].toString() ?? "",
+          userData['status'].toString() ?? "",
+          addedFrom,
+          userData['created_at'].toString() ?? "",
+          userData['updated_at'].toString() ?? "",
+          userData['deleted_at'].toString() ?? "",
+          userData['device_id'].toString() ?? "",
+          bp);
+      profile = up;
+      Constants.userRole = up.userRole;
+      prefs.setString("userRole", up.userRole);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  static Future getPackagesApi() async {
+    var response = await http.get(Uri.parse(
+        "https://adventuresclub.net/adventureClub/api/v1/get_packages"));
+    if (response.statusCode == 200) {
+      getPackages = json.decode(response.body);
+      List<dynamic> result = getPackages['data'];
+      result.forEach((element) {
+        List<dynamic> included = element['includes'];
+        included.forEach((i) {
+          BpIncludesModel iList = BpIncludesModel(
+            int.tryParse(i['id'].toString()) ?? 0,
+            int.tryParse(i['package_id'].toString()) ?? 0,
+            i['title'].toString(),
+            int.tryParse(i['detail_type'].toString()) ?? 0,
+          );
+          gIList.add(iList);
+        });
+        List<dynamic> excluded = element['Exclude'];
+        excluded.forEach((e) {
+          BpExcludesModel eList = BpExcludesModel(
+            int.tryParse(e['id'].toString()) ?? 0,
+            int.tryParse(e['package_id'].toString()) ?? 0,
+            e['title'].toString() ?? "",
+            e['detail_type'].toString() ?? "",
+          );
+          gEList.add(eList);
+        });
+        PackagesBecomePartnerModel pBp = PackagesBecomePartnerModel(
+            int.tryParse(element['id'].toString()) ?? 0,
+            element['title'].toString() ?? "",
+            element['symbol'].toString() ?? "",
+            element['duration'].toString() ?? "",
+            element['cost'].toString() ?? "",
+            int.tryParse(element['days'].toString()) ?? 0,
+            int.tryParse(element['status'].toString()) ?? 0,
+            element['created_at'].toString() ?? "",
+            element['updated_at'].toString() ?? "",
+            element['deleted_at'].toString() ?? "",
+            gIList,
+            gEList);
+        gBp.add(pBp);
+      });
+    }
+  }
+
   static Future<void> getFilter() async {
+    getRegions();
+    getProfile();
     var response = await http.get(Uri.parse(
         "https://adventuresclub.net/adventureClub/api/v1/filter_modal_data"));
     if (response.statusCode == 200) {
@@ -328,6 +519,59 @@ class Constants {
       // parseDuration(durationFilter);
       // parseLevel(levelFilter);
       // parseCategories(categoryFilter);
+    }
+  }
+
+  static void getRegions() async {
+    aimedFor();
+    try {
+      var response = await http.post(
+          Uri.parse(
+              "https://adventuresclub.net/adventureClub/api/v1/get_regions"),
+          body: {
+            'country_id': "1",
+          });
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      List<dynamic> rm = decodedResponse['data'];
+      rm.forEach((element) {
+        int cId = int.tryParse(element['country_id'].toString()) ?? 0;
+        int rId = int.tryParse(element['region_id'].toString()) ?? 0;
+        RegionsModel r = RegionsModel(
+          cId,
+          element['country'].toString() ?? "",
+          rId,
+          element['region'].toString() ?? "",
+        );
+        regionList.add(r);
+      });
+      print(response.statusCode);
+      print(response.body);
+      print(response.headers);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  static void aimedFor() async {
+    var response = await http.get(Uri.parse(
+        "https://adventuresclub.net/adventureClub/api/v1/getServiceFor"));
+    if (response.statusCode == 200) {
+      mapAimedFilter = json.decode(response.body);
+      List<dynamic> result = mapAimedFilter['message'];
+      result.forEach((element) {
+        int id = int.tryParse(element['id'].toString()) ?? 0;
+        AimedForModel amf = AimedForModel(
+          id,
+          element['AimedName'].toString() ?? "",
+          element['image'].toString() ?? "",
+          element['created_at'].toString() ?? "",
+          element['updated_at'].toString() ?? "",
+          element['deleted_at'].toString() ?? "",
+          0,
+          //  selected: false,
+        );
+        am.add(amf);
+      });
     }
   }
 
@@ -457,5 +701,16 @@ class Constants {
       // parseLevel(levelFilter);
       // parseCategories(categoryFilter);
     }
+  }
+
+  static void showMessage(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          style: const TextStyle(fontWeight: FontWeight.w500),
+        ),
+      ),
+    );
   }
 }

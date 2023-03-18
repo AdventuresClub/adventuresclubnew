@@ -781,8 +781,8 @@ class _StackHomeState extends State<StackHome> {
               const SizedBox(
                 width: 8,
               ),
-              const SearchContainer('Search adventure name', 1.4, 8,
-                  'images/maskGroup51.png', true, true, 'Oman', 12),
+              SearchContainer('Search adventure name', 1.4, 8,
+                  'images/maskGroup51.png', true, true, Constants.country, 12),
               const SizedBox(
                 width: 8,
               ),

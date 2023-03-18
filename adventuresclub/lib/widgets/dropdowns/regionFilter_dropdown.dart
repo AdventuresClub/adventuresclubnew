@@ -1,44 +1,59 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/constants_create_new_services.dart';
-import 'package:adventuresclub/models/filter_data_model/level_filter_mode.dart';
-import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
+import 'package:adventuresclub/models/create_adventure/regions_model.dart';
+import 'package:adventuresclub/models/filter_data_model/region_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class LevelDropDown extends StatefulWidget {
-  final List<LevelFilterModel> lFilter;
+class RegionFilterDropDown extends StatefulWidget {
+  final List<RegionFilterModel> rFilter;
   final bool show;
-  const LevelDropDown(this.lFilter, {this.show = false, super.key});
+  const RegionFilterDropDown(this.rFilter, {this.show = false, super.key});
 
   @override
-  State<LevelDropDown> createState() => LevelDropDownState();
+  State<RegionFilterDropDown> createState() => RegionFilterDropDownState();
 }
 
-class LevelDropDownState extends State<LevelDropDown> {
+class RegionFilterDropDownState extends State<RegionFilterDropDown> {
   String country = "";
+  List<String> rList = [];
   //String selectedRegion = "";
   int selectedId = 0;
-  String selectedRegion = "Elementary";
+  String selectedRegion = "Muscat";
   int id = 0;
 
   @override
   void initState() {
     super.initState();
     // parseRegions(widget.rFilter);
-    selectedRegion = widget.lFilter[0].level;
+    selectedRegion = widget.rFilter[0].regions;
   }
 
-  void sId(LevelFilterModel lFilter) {
+  void parseRegions(List<RegionFilterModel> rm) {
+    rm.forEach(
+      (element) {
+        if (element.regions.isNotEmpty) {
+          rList.add(element.regions);
+        }
+      },
+    );
+  }
+
+  // void sId1(RegionsModel rFilter) {
+  //   Provider.of<CompleteProfileProvider>(context, listen: false)
+  //       .regionSelection(rFilter.region, rFilter.countryId);
+  // }
+
+  void fId(RegionFilterModel sFilter) {
     setState(() {
-      ConstantsCreateNewServices.selectedlevel = lFilter.level;
-      ConstantsCreateNewServices.selectedlevelId = lFilter.id;
+      selectedRegion = sFilter.regions;
     });
   }
 
-  void fId(LevelFilterModel sFilter) {
+  void sId(RegionFilterModel rFilter) {
     setState(() {
-      selectedRegion = sFilter.level;
+      ConstantsCreateNewServices.selectedRegion = rFilter.regions;
+      ConstantsCreateNewServices.selectedRegionId = rFilter.id;
     });
   }
 
@@ -48,6 +63,7 @@ class LevelDropDownState extends State<LevelDropDown> {
         ? SizedBox(
             child: DropdownButtonHideUnderline(
               child: DropdownButton<String>(
+                //  hint: const Text("Select Region"),
                 isExpanded: true,
                 value: selectedRegion,
                 icon: Transform.translate(
@@ -72,14 +88,14 @@ class LevelDropDownState extends State<LevelDropDown> {
                     selectedRegion = value as String;
                   });
                 },
-                items: widget.lFilter
-                    .map<DropdownMenuItem<String>>((LevelFilterModel cFilter) {
+                items: widget.rFilter
+                    .map<DropdownMenuItem<String>>((RegionFilterModel cFilter) {
                   return DropdownMenuItem<String>(
                     onTap: () => fId(cFilter),
-                    value: cFilter.level,
+                    value: cFilter.regions,
                     child: Transform.translate(
                       offset: const Offset(4, 2),
-                      child: Text(cFilter.level),
+                      child: Text(cFilter.regions),
                     ),
                   );
                 }).toList(),
@@ -114,17 +130,16 @@ class LevelDropDownState extends State<LevelDropDown> {
                     // selectedId =
                   });
                 },
-                items: widget.lFilter.map<DropdownMenuItem<String>>(
-                  (LevelFilterModel lFilter) {
-                    return DropdownMenuItem<String>(
-                      onTap: () => sId(
-                        lFilter,
-                      ),
-                      value: lFilter.level,
-                      child: Text(lFilter.level),
-                    );
-                  },
-                ).toList(),
+                items: widget.rFilter
+                    .map<DropdownMenuItem<String>>((RegionFilterModel rFilter) {
+                  return DropdownMenuItem<String>(
+                    onTap: () => sId(
+                      rFilter,
+                    ),
+                    value: rFilter.regions,
+                    child: Text(rFilter.regions),
+                  );
+                }).toList(),
               ),
             ),
           );

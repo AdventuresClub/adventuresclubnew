@@ -1,13 +1,15 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, avoid_function_literals_in_foreach_calls, avoid_print
 
 import 'dart:convert';
-
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/contact_us.dart';
 import 'package:adventuresclub/home_Screens/accounts/settings/privacy.dart';
+import 'package:adventuresclub/home_Screens/accounts/settings/provicy_policy.dart';
 import 'package:adventuresclub/home_Screens/accounts/settings/terms_and_conditions.dart';
+import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:adventuresclub/models/get_country.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
+import 'package:adventuresclub/sign_up/terms_condition.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +54,7 @@ class _SettingsState extends State<Settings> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return const Privacy();
+          return const PrivacyPolicy();
         },
       ),
     );
@@ -84,17 +86,26 @@ class _SettingsState extends State<Settings> {
     Provider.of<ServicesProvider>(context, listen: false).clearAll();
   }
 
-  void addCountry(String country, int id) async {
+  void addCountry(String country, int id, String flag) async {
     clearAll();
     Navigator.of(context).pop();
     SharedPreferences prefs = await Constants.getPrefs();
     prefs.setInt("countryId", id);
+    prefs.setString("country", country);
+    prefs.setString("countryFlag", flag);
     setState(() {
-      selectedCountry = country;
       Constants.countryId = id;
       Constants.country = country;
+      Constants.countryFlag = flag;
     });
-    getServicesList();
+    // getServicesList();
+    homePage();
+  }
+
+  void homePage() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return const BottomNavigation();
+    }));
   }
 
   @override
@@ -115,6 +126,7 @@ class _SettingsState extends State<Settings> {
         title: MyText(
           text: 'Settings',
           color: bluishColor,
+          weight: FontWeight.bold,
         ),
       ),
       body: Padding(
@@ -149,13 +161,13 @@ class _SettingsState extends State<Settings> {
                       if (text[index] == 'Privacy') {
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (_) {
-                          return const Privacy();
+                          return const PrivacyPolicy();
                         }));
                       }
                       if (text[index] == 'Terms and Conditions') {
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (_) {
-                          return const TermsAndConditions();
+                          return const TermsConditions(); //TermsAndConditions();
                         }));
                       }
                       if (text[index] == 'Contact us') {
@@ -208,6 +220,7 @@ class _SettingsState extends State<Settings> {
                       addCountry(
                         countriesList1[index].country,
                         countriesList1[index].id,
+                        countriesList1[index].flag,
                       );
                     },
                   );

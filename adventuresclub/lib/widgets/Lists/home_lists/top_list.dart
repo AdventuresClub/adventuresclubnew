@@ -68,10 +68,6 @@ class _TopListState extends State<TopList> {
     });
   }
 
-  void listAdd(List<CategoryModel> pc) {
-    Provider.of<CompleteProfileProvider>(context, listen: false).pCM = pc;
-  }
-
   Future getCategory() async {
     getFilters();
     // pCM.clear();

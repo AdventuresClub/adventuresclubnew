@@ -21,6 +21,7 @@ class _NotificationsState extends State<Notifications> {
           title: MyText(
             text: 'Notifications',
             color: blackColor,
+            weight: FontWeight.bold,
           ),
           centerTitle: true,
         ),

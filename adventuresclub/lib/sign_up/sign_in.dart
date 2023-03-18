@@ -1,19 +1,19 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, use_build_context_synchronously
 
 import 'dart:convert';
 
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/forgot_pass/forgot_pass.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
-import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
+import 'package:adventuresclub/models/profile_models/profile_become_partner.dart';
+import 'package:adventuresclub/models/user_profile_model.dart';
 import 'package:adventuresclub/sign_up/Sign_up.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
-import 'package:adventuresclub/widgets/text_fields/text_fields.dart';
+import 'package:adventuresclub/widgets/text_fields/space_text_field.dart';
 import 'package:adventuresclub/widgets/text_fields/tf_with_suffix_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignIn extends StatefulWidget {
@@ -30,11 +30,14 @@ class _SignInState extends State<SignIn> {
   List<bool> value = [false, false, false, false, false, false];
   bool valuea = false;
   String name = "";
+  String error = "";
   int countryId = 0;
   String countryName = "";
   int userId = 0;
   String email = "";
   String password = "";
+  ProfileBecomePartner pbp = ProfileBecomePartner(0, 0, "", "", "", "", "", "",
+      "", "", 0, 0, "", "", "", "", "", "", "", 0, "", "", "", "", "", "");
 
   void enterOTP() {
     showDialog(
@@ -133,34 +136,125 @@ class _SignInState extends State<SignIn> {
   void login() async {
     SharedPreferences prefs = await Constants.getPrefs();
     try {
-      var response = await http.post(
-          Uri.parse("https://adventuresclub.net/adventureClub/api/v1/login"),
-          body: {
-            'email': emailController.text,
-            'password': passController.text,
-            'device_id': "0",
-          });
-      if (response.statusCode == 200) {
-        var decodedResponse =
-            jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-        name = decodedResponse['data']['name'];
-        countryId = decodedResponse['data']['country_id'];
-        userId = decodedResponse['data']['id'];
-        email = emailController.text;
-        password = passController.text;
-        prefs.setString("name", name);
-        prefs.setInt("countryId", countryId);
-        prefs.setInt("userId", userId);
-        prefs.setString("email", email);
-        prefs.setString("password", password);
-        parseData(name, countryId, userId, email, password);
-        goToNavigation();
+      if (emailController.text.isNotEmpty) {
+        if (passController.text.isNotEmpty) {
+          var response = await http.post(
+              Uri.parse(
+                  "https://adventuresclub.net/adventureClub/api/v1/login"),
+              body: {
+                'email': emailController.text,
+                'password': passController.text,
+                'device_id': "0",
+              });
+          if (response.statusCode == 200) {
+            var decodedResponse =
+                jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+            dynamic userData = decodedResponse['data'];
+            int userLoginId = int.tryParse(userData['id'].toString()) ?? 0;
+            int countryId =
+                int.tryParse(userData['country_id'].toString()) ?? 0;
+            int languageId =
+                int.tryParse(userData['language_id'].toString()) ?? 0;
+            int currencyId =
+                int.tryParse(userData['currency_id'].toString()) ?? 0;
+            int addedFrom =
+                int.tryParse(userData['added_from'].toString()) ?? 0;
+            dynamic partnerInfo = decodedResponse['data']["become_partner"];
+            if (partnerInfo != null) {
+              int id = int.tryParse(partnerInfo['id'].toString()) ?? 0;
+              int userId = int.tryParse(partnerInfo['user_id'].toString()) ?? 0;
+              int debitCard =
+                  int.tryParse(partnerInfo['debit_card'].toString()) ?? 0;
+              int visaCard =
+                  int.tryParse(partnerInfo['visa_card'].toString()) ?? 0;
+              int packagesId =
+                  int.tryParse(partnerInfo['packages_id'].toString()) ?? 0;
+              ProfileBecomePartner bp = ProfileBecomePartner(
+                id,
+                userId,
+                partnerInfo['company_name'].toString() ?? "",
+                partnerInfo['address'].toString() ?? "",
+                partnerInfo['location'].toString() ?? "",
+                partnerInfo['description'].toString() ?? "",
+                partnerInfo['license'].toString() ?? "",
+                partnerInfo['cr_name'].toString() ?? "",
+                partnerInfo['cr_number'].toString() ?? "",
+                partnerInfo['cr_copy'].toString() ?? "",
+                debitCard,
+                visaCard,
+                partnerInfo['payon_arrival'].toString() ?? "",
+                partnerInfo['paypal'].toString() ?? "",
+                partnerInfo['bankname'].toString() ?? "",
+                partnerInfo['account_holdername'].toString() ?? "",
+                partnerInfo['account_number'].toString() ?? "",
+                partnerInfo['is_online'].toString() ?? "",
+                partnerInfo['is_approved'].toString() ?? "",
+                packagesId,
+                partnerInfo['start_date'].toString() ?? "",
+                partnerInfo['end_date'].toString() ?? "",
+                partnerInfo['is_wiretransfer'].toString() ?? "",
+                partnerInfo['is_free_used'].toString() ?? "",
+                partnerInfo['created_at'].toString() ?? "",
+                partnerInfo['updated_at'].toString() ?? "",
+              );
+              pbp = bp;
+            }
+            UserProfileModel up = UserProfileModel(
+                userLoginId,
+                userData['users_role'].toString() ?? "",
+                userData['profile_image'].toString() ?? "",
+                userData['name'].toString() ?? "",
+                userData['height'].toString() ?? "",
+                userData['weight'].toString() ?? "",
+                userData['email'].toString() ?? "",
+                countryId,
+                userData['region_id'].toString() ?? "",
+                userData['city_id'].toString() ?? "",
+                userData['now_in'].toString() ?? "",
+                userData['mobile'].toString() ?? "",
+                userData['mobile_verified_at'].toString() ?? "",
+                userData['dob'].toString() ?? "",
+                userData['gender'].toString() ?? "",
+                languageId,
+                userData['nationality_id'].toString() ?? "",
+                currencyId,
+                userData['app_notification'].toString() ?? "",
+                userData['points'].toString() ?? "",
+                userData['health_conditions'].toString() ?? "",
+                userData['health_conditions_id'].toString() ?? "",
+                userData['email_verified_at'].toString() ?? "",
+                userData['mobile_code'].toString() ?? "",
+                userData['status'].toString() ?? "",
+                addedFrom,
+                userData['created_at'].toString() ?? "",
+                userData['updated_at'].toString() ?? "",
+                userData['deleted_at'].toString() ?? "",
+                userData['device_id'].toString() ?? "",
+                pbp);
+            Constants.profile = up;
+            Constants.userRole = up.userRole;
+            prefs.setString("userRole", up.userRole);
+            parseData(
+                up.name, up.countryId, up.id, up.email, passController.text);
+            //Constants.userRole = "3";
+            goToNavigation();
+          } else {
+            dynamic body = jsonDecode(response.body);
+
+            // error = decodedError['data']['name'];
+            Constants.showMessage(context, body['message'].toString());
+          }
+          print(response.statusCode);
+          print(response.body);
+          print(response.headers);
+        } else {
+          Constants.showMessage(context, "Please Enter Password");
+        }
+      } else {
+        Constants.showMessage(context, "Please Enter Email");
       }
-      print(response.statusCode);
-      print(response.body);
-      print(response.headers);
     } catch (e) {
-      print(e.toString());
+      /// print(e.toString());
     }
   }
 
@@ -227,7 +321,7 @@ class _SignInState extends State<SignIn> {
                 width: 320,
               ),
               const SizedBox(height: 20),
-              TextFields(
+              SpaceTextFields(
                   'Email or Username', emailController, 17, whiteColor, true),
               const SizedBox(height: 20),
               TFWithSiffixIcon(

@@ -5,12 +5,8 @@ import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/banners/banners_model.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
-import 'package:adventuresclub/widgets/Lists/home_lists/accomodation.dart';
-import 'package:adventuresclub/widgets/Lists/home_lists/land.dart';
-import 'package:adventuresclub/widgets/Lists/home_lists/sky.dart';
+import 'package:adventuresclub/widgets/Lists/home_lists/service_List.dart';
 import 'package:adventuresclub/widgets/Lists/home_lists/top_list.dart';
-import 'package:adventuresclub/widgets/Lists/home_lists/transport.dart';
-import 'package:adventuresclub/widgets/Lists/home_lists/water.dart';
 import 'package:adventuresclub/widgets/home_widgets/stack_home.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
@@ -99,7 +95,7 @@ class _HomeState extends State<Home> {
                 height: 10,
               ),
               const SizedBox(
-                height: 110,
+                height: 125,
                 child: TopList(),
               ),
               // Padding(
@@ -125,7 +121,7 @@ class _HomeState extends State<Home> {
               // ),
               // const SizedBox(height: 10),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: MyText(
@@ -143,7 +139,7 @@ class _HomeState extends State<Home> {
               Container(
                 alignment: Alignment.centerLeft,
                 height: 210,
-                child: const Accomodation(),
+                child: const ServiceList('Accomodation'),
               ),
               const SizedBox(
                 height: 10,
@@ -167,7 +163,7 @@ class _HomeState extends State<Home> {
               Container(
                 alignment: Alignment.centerLeft,
                 height: 210,
-                child: const Transport(),
+                child: const ServiceList('Transport'),
               ),
               const SizedBox(
                 height: 10,
@@ -191,7 +187,7 @@ class _HomeState extends State<Home> {
               Container(
                 alignment: Alignment.centerLeft,
                 height: 210,
-                child: const Sky(),
+                child: const ServiceList('Sky'),
               ),
               const SizedBox(
                 height: 10,
@@ -215,7 +211,7 @@ class _HomeState extends State<Home> {
               Container(
                 alignment: Alignment.centerLeft,
                 height: 210,
-                child: const Water(),
+                child: const ServiceList('Water'),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -236,7 +232,7 @@ class _HomeState extends State<Home> {
               Container(
                 alignment: Alignment.centerLeft,
                 height: 210,
-                child: const Land(),
+                child: const ServiceList('Land'),
               ),
             ],
           ),

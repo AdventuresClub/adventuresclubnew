@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/constants_create_new_services.dart';
 import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,8 +29,10 @@ class DurationDropDownState extends State<DurationDropDown> {
   }
 
   void sId(DurationsModel dFilter) {
-    Provider.of<CompleteProfileProvider>(context, listen: false)
-        .durationSelection(dFilter.duration, dFilter.id);
+    setState(() {
+      ConstantsCreateNewServices.selectedDuration = dFilter.duration;
+      ConstantsCreateNewServices.selectedDurationId = dFilter.id;
+    });
   }
 
   void fId(DurationsModel sFilter) {

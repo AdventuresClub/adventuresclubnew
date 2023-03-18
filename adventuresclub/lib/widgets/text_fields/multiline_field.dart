@@ -20,8 +20,8 @@ class _MultiLineFieldState extends State<MultiLineField> {
       controller: widget.controller,
       maxLines: widget.lines,
       decoration: InputDecoration(
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+          // contentPadding:
+          //     const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
           hintText: widget.hinttext,
           hintStyle: const TextStyle(
               color: blackColor,

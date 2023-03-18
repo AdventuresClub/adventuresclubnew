@@ -54,16 +54,12 @@ class _NotificationsListState extends State<NotificationsList> {
   void doNothing(BuildContext context) {}
   bool loading = false;
   List<NotificationsListModel> pNm = [];
-  Map getPackages = {};
-  List<PackagesBecomePartnerModel> gBp = [];
-  List<BpIncludesModel> gIList = [];
-  List<BpExcludesModel> gEList = [];
+  List<PackagesBecomePartnerModel> packageList = [];
 
   @override
   void initState() {
     super.initState();
     getNotifications();
-    getPackagesApi();
   }
 
   void getNotifications() async {
@@ -75,29 +71,31 @@ class _NotificationsListState extends State<NotificationsList> {
           Uri.parse(
               "https://adventuresclub.net/adventureClub/api/v1/get_notification_list"),
           body: {
-            'user_id': "27",
+            'user_id': Constants.userId.toString(), //"27",
           });
       if (response.statusCode == 200) {
         var decodedResponse =
             jsonDecode(utf8.decode(response.bodyBytes)) as Map;
         List<dynamic> result = decodedResponse['data'];
         result.forEach((element) {
-          NotificationsListModel nm = NotificationsListModel(
-            int.tryParse(element['id'].toString()) ?? 0,
-            int.tryParse(element['sender_id'].toString()) ?? 0,
-            int.tryParse(element['user_id'].toString()) ?? 0,
-            element['title'].toString() ?? "",
-            element['message'].toString() ?? "",
-            element['is_approved'].toString() ?? "",
-            element['is_read'].toString() ?? "",
-            element['notification_type'].toString() ?? "",
-            element['created_at'].toString() ?? "",
-            element['raed_at'].toString() ?? "",
-            element['send_at'].toString() ?? "",
-            element['updated_at'].toString() ?? "",
-            element['sender_image'].toString() ?? "",
-          );
-          pNm.add(nm);
+          if (element['title'] != "Login") {
+            NotificationsListModel nm = NotificationsListModel(
+              int.tryParse(element['id'].toString()) ?? 0,
+              int.tryParse(element['sender_id'].toString()) ?? 0,
+              int.tryParse(element['user_id'].toString()) ?? 0,
+              element['title'].toString() ?? "",
+              element['message'].toString() ?? "",
+              element['is_approved'].toString() ?? "",
+              element['is_read'].toString() ?? "",
+              element['notification_type'].toString() ?? "",
+              element['created_at'].toString() ?? "",
+              element['raed_at'].toString() ?? "",
+              element['send_at'].toString() ?? "",
+              element['updated_at'].toString() ?? "",
+              element['sender_image'].toString() ?? "",
+            );
+            pNm.add(nm);
+          } else {}
         });
       }
       setState(() {
@@ -108,49 +106,12 @@ class _NotificationsListState extends State<NotificationsList> {
     }
   }
 
-  Future getPackagesApi() async {
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_packages"));
-    if (response.statusCode == 200) {
-      getPackages = json.decode(response.body);
-      List<dynamic> result = getPackages['data'];
-      result.forEach((element) {
-        List<dynamic> included = element['includes'];
-        included.forEach((i) {
-          BpIncludesModel iList = BpIncludesModel(
-            int.tryParse(i['id'].toString()) ?? 0,
-            int.tryParse(i['package_id'].toString()) ?? 0,
-            i['title'].toString(),
-            int.tryParse(i['detail_type'].toString()) ?? 0,
-          );
-          gIList.add(iList);
-        });
-        List<dynamic> excluded = element['Exclude'];
-        excluded.forEach((e) {
-          BpExcludesModel eList = BpExcludesModel(
-            int.tryParse(e['id'].toString()) ?? 0,
-            int.tryParse(e['package_id'].toString()) ?? 0,
-            e['title'].toString() ?? "",
-            e['detail_type'].toString() ?? "",
-          );
-          gEList.add(eList);
-        });
-        PackagesBecomePartnerModel pBp = PackagesBecomePartnerModel(
-            int.tryParse(element['id'].toString()) ?? 0,
-            element['title'].toString() ?? "",
-            element['symbol'].toString() ?? "",
-            element['duration'].toString() ?? "",
-            element['cost'].toString() ?? "",
-            int.tryParse(element['days'].toString()) ?? 0,
-            int.tryParse(element['status'].toString()) ?? 0,
-            element['created_at'].toString() ?? "",
-            element['updated_at'].toString() ?? "",
-            element['deleted_at'].toString() ?? "",
-            gIList,
-            gEList);
-        gBp.add(pBp);
-      });
-    }
+  void getList() async {
+    await Constants.getPackagesApi();
+    setState(() {
+      packageList = Constants.gBp;
+    });
+    packagesList(Constants.gBp);
   }
 
   void packagesList(List<PackagesBecomePartnerModel> bp) {
@@ -196,46 +157,78 @@ class _NotificationsListState extends State<NotificationsList> {
                   ),
                   child: Column(
                     children: [
-                      GestureDetector(
-                        onTap: () => packagesList(gBp),
-                        child: ListTile(
-                          leading: ClipRRect(
-                            borderRadius: BorderRadius.circular(32),
-                            child: CircleAvatar(
-                                backgroundImage:
-                                    //ExactAssetImage(images[index]),
-                                    NetworkImage(pNm[index].senderImage)),
-                          ),
-                          title: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: MyText(
-                              text: pNm[index].title, //text[index],
-                              color: blackColor,
+                      if (pNm[index].title == "Your request has been approved")
+                        GestureDetector(
+                          onTap: getList, //() => packagesList(gBp),
+                          child: ListTile(
+                            leading: ClipRRect(
+                              borderRadius: BorderRadius.circular(32),
+                              child: CircleAvatar(
+                                  backgroundImage:
+                                      //ExactAssetImage(images[index]),
+                                      NetworkImage(pNm[index].senderImage)),
+                            ),
+                            title: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: MyText(
+                                text: pNm[index].title, //text[index],
+                                color: blackColor,
+                                weight: FontWeight.w700,
+                                size: 14,
+                              ),
+                            ),
+                            subtitle: MyText(
+                              text: pNm[index].message, //subText[index],
+                              color: blackColor.withOpacity(0.6),
                               weight: FontWeight.w500,
-                              size: 14,
+                              size: 13,
+                            ),
+                            // trailing: Column(
+                            //   children: [
+                            //     CircleAvatar(
+                            //       radius: 12,
+                            //       backgroundColor: bluishColor,
+                            //       child: MyText(
+                            //         text: '2',
+                            //         color: whiteColor,
+                            //         size: 10,
+                            //         weight: FontWeight.w500,
+                            //       ),
+                            //     )
+                            //   ],
+                            // ),
+                          ),
+                        ),
+                      if (pNm[index].title != "Your request has been approved")
+                        GestureDetector(
+                          onTap: () {},
+                          child: ListTile(
+                            leading: ClipRRect(
+                              borderRadius: BorderRadius.circular(32),
+                              child: CircleAvatar(
+                                  backgroundImage:
+                                      //ExactAssetImage(images[index]),
+                                      NetworkImage(pNm[index].senderImage)),
+                            ),
+                            title: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: MyText(
+                                text: pNm[index].title, //text[index],
+                                color: blackColor,
+                                weight: FontWeight.w700,
+                                size: 14,
+                              ),
+                            ),
+                            subtitle: MyText(
+                              text: pNm[index].message, //subText[index],
+                              color: blackColor.withOpacity(0.6),
+                              weight: FontWeight.w500,
+                              size: 13,
                             ),
                           ),
-                          subtitle: MyText(
-                            text: pNm[index].message, //subText[index],
-                            color: blackColor.withOpacity(0.6),
-                            size: 12,
-                          ),
-                          // trailing: Column(
-                          //   children: [
-                          //     CircleAvatar(
-                          //       radius: 12,
-                          //       backgroundColor: bluishColor,
-                          //       child: MyText(
-                          //         text: '2',
-                          //         color: whiteColor,
-                          //         size: 10,
-                          //         weight: FontWeight.w500,
-                          //       ),
-                          //     )
-                          //   ],
-                          // ),
                         ),
-                      ),
                       const Divider(
                         thickness: 2,
                         indent: 22,

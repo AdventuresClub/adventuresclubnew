@@ -49,14 +49,7 @@ class _ServicesCardState extends State<ServicesCard> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     image: DecorationImage(
-                        // colorFilter: ColorFilter.mode(
-                        //     Colors.black.withOpacity(0.1),
-                        //     BlendMode.darken),
-                        image:
-                            //  ExactAssetImage(
-                            //   'images/overseas.png',
-                            // ),
-                            NetworkImage(
+                        image: NetworkImage(
                           "${"https://adventuresclub.net/adventureClub/public/uploads/"}${widget.gm.images[0].imageUrl}",
                         ),
                         fit: BoxFit.cover),

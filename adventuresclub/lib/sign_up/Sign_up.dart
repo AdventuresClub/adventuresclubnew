@@ -1,12 +1,14 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, avoid_print, avoid_function_literals_in_foreach_calls
+// ignore_for_file: prefer_typing_uninitialized_variables, avoid_print, avoid_function_literals_in_foreach_calls, unused_element
 
 import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/home_Screens/accounts/settings/provicy_policy.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:adventuresclub/models/get_country.dart';
 import 'package:adventuresclub/models/health_condition_model.dart';
 import 'package:adventuresclub/models/weightnheight_model.dart';
 import 'package:adventuresclub/sign_up/sign_in.dart';
+import 'package:adventuresclub/sign_up/terms_condition.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/text_fields.dart';
@@ -75,6 +77,8 @@ class _SignUpState extends State<SignUp> {
   Map userRegistration = {};
   List<String> healthC = [];
   List<HealthConditionModel> healthList = [];
+  String flag = "";
+  String userRole = "";
 
   @override
   void initState() {
@@ -341,55 +345,110 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
+  void showMessage(String message) {}
+
   void register() async {
     SharedPreferences prefs = await Constants.getPrefs();
     try {
-      var response = await http.post(
-          Uri.parse("https://adventuresclub.net/adventureClub/api/v1/register"),
-          body: {
-            "name": userNameController.text,
-            "email": emailController
-                .text, //"hamza@gmail.com", //emailController.text,
-            "nationality":
-                nationalityId.toString(), //nationalityController.text,
-            "password":
-                passController.text, //"Upendra@321", //passController.text,
-            "now_in": currentLocationId
-                .toString(), //currentLocationId.toString(), //currentLocation,
-            "mobile": numController.text, //"3344374923", //"3214181273",
-            // numController.text,
-            "health_conditions": "8,2,6", //healthC.toString(),
-            "height": getheight,
-            "weight": getWeight,
-            "mobile_code": ccCode.toString(),
-            "user_id": userID.toString(), //"27",
-            "dob": formattedDate
-                .toString(), //dobController.text, //"1993-10-30", //dobController.text,
-            "country_id": currentLocationId.toString(), //"2",
-            "device_id": "1",
-            "nationality_id": countryId.toString() //"5",
-          });
-      print(response.statusCode);
-      if (response.statusCode == 200) {
-        prefs.setString("name", userNameController.text);
-        prefs.setInt("countryId", countryId);
-        prefs.setInt("userId", userID);
-        prefs.setString("email", emailController.text);
-        prefs.setString("password", passController.text);
-        parseData(userNameController.text, countryId, userID,
-            emailController.text, passController.text);
-        goToHome();
+      if (termsValue) {
+        if (userNameController.text.isNotEmpty) {
+          if (emailController.text.isNotEmpty) {
+            if (passController.text.isNotEmpty) {
+              if (nationalityId > 0) {
+                if (currentLocationId > 0) {
+                  if (numController.text.isNotEmpty) {
+                    if (formattedDate != null) {
+                      if (genderText.isNotEmpty) {
+                        if (healthList.isNotEmpty) {
+                          if (getheight.isNotEmpty && getWeight.isNotEmpty) {
+                            var response = await http.post(
+                                Uri.parse(
+                                    "https://adventuresclub.net/adventureClub/api/v1/register"),
+                                body: {
+                                  "name": userNameController.text,
+                                  "email": emailController
+                                      .text, //"hamza@gmail.com", //emailController.text,
+                                  "nationality": nationalityId
+                                      .toString(), //nationalityController.text,
+                                  "password": passController
+                                      .text, //"Upendra@321", //passController.text,
+                                  "now_in": currentLocationId
+                                      .toString(), //currentLocationId.toString(), //currentLocation,
+                                  "mobile": numController
+                                      .text, //"3344374923", //"3214181273",
+                                  // numController.text,
+                                  "health_conditions":
+                                      "8,2,6", //healthC.toString(),
+                                  "height": getheight,
+                                  "weight": getWeight,
+                                  "mobile_code": ccCode.toString(),
+                                  "user_id": userID.toString(), //"27",
+                                  "dob": formattedDate
+                                      .toString(), //dobController.text, //"1993-10-30", //dobController.text,
+                                  "country_id":
+                                      currentLocationId.toString(), //"2",
+                                  "device_id": "1",
+                                  "nationality_id": countryId.toString() //"5",
+                                });
+                            // print(response.statusCode);
+                            if (response.statusCode == 200) {
+                              prefs.setString("name", userNameController.text);
+                              prefs.setInt("countryId", countryId);
+                              prefs.setInt("userId", userID);
+                              prefs.setString("email", emailController.text);
+                              prefs.setString("password", passController.text);
+                              prefs.setString("country", countryCode);
+                              prefs.setString("countryFlag", flag);
+                              prefs.setString(
+                                  "phoneNumber", numController.text);
+                              prefs.setString("userRole", "3");
+                              parseData(
+                                  userNameController.text,
+                                  countryId,
+                                  userID,
+                                  emailController.text,
+                                  passController.text,
+                                  countryCode,
+                                  flag,
+                                  numController.text);
+                              goToHome();
+                            } else {
+                              message(response.body.toString());
+                            }
+                          } else {
+                            message("Please Select Height & Weight");
+                          }
+                        } else {
+                          message("Please Select Your Health Condition");
+                        }
+                      } else {
+                        message("Please Select Your Gender");
+                      }
+                    } else {
+                      message("Please Enter DOB");
+                    }
+                  } else {
+                    message("Please Enter your phone");
+                  }
+                } else {
+                  message("Please Select Your Location");
+                }
+              } else {
+                message("Please Select Nationality");
+              }
+            } else {
+              message("Please Enter Password");
+            }
+          } else {
+            message("Please Enter Email");
+          }
+        } else {
+          message("Please Enter Username");
+        }
+//        print(response.body);
+      } else {
+        message("Please Agree with terms & Conditions");
       }
-
-      void showMessage(BuildContext context, String message) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(response.body),
-          ),
-        );
-      }
-
-      print(response.body);
     } catch (e) {
       print(e);
     }
@@ -412,14 +471,25 @@ class _SignUpState extends State<SignUp> {
     // }
   }
 
-  void parseData(
-      String name, int countryId, int id, String email, String pass) {
+  void message(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
+  }
+
+  void parseData(String name, int countryId, int id, String email, String pass,
+      String countryCode, String countryFlag, String phoneNum) {
     setState(() {
       Constants.userId = id;
       Constants.name = name;
       Constants.countryId = countryId;
       Constants.emailId = email;
       Constants.password = pass;
+      Constants.country = countryCode;
+      Constants.countryFlag = countryFlag;
+      Constants.phone = phoneNum;
     });
   }
 
@@ -438,14 +508,35 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
-  void getC(String country, dynamic code, int id) {
+  void getC(String country, dynamic code, int id, String countryflag) {
     Navigator.of(context).pop();
     setState(
       () {
         countryCode = country;
         ccCode = code;
         countryId = id;
+        flag = countryflag;
       },
+    );
+  }
+
+  void terms() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return const TermsConditions();
+        },
+      ),
+    );
+  }
+
+  void goToPrivacy() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return const PrivacyPolicy();
+        },
+      ),
     );
   }
 
@@ -453,7 +544,6 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(
@@ -492,8 +582,7 @@ class _SignUpState extends State<SignUp> {
                 TextFields(
                     'Username', userNameController, 17, whiteColor, true),
                 const SizedBox(height: 20),
-                TextFields('Enter Email Password', emailController, 17,
-                    whiteColor, true),
+                TextFields('Email', emailController, 17, whiteColor, true),
                 const SizedBox(height: 20),
                 TFWithSiffixIcon(
                     'Password', Icons.visibility_off, passController, true),
@@ -578,7 +667,7 @@ class _SignUpState extends State<SignUp> {
                                     child: SizedBox(
                                       width: 15,
                                       child: Transform.scale(
-                                        scale: 0.8,
+                                        scale: 1.2,
                                         child: Checkbox(
                                             activeColor: whiteColor,
                                             checkColor: bluishColor,
@@ -600,7 +689,7 @@ class _SignUpState extends State<SignUp> {
                                       text: healthList[index].healthCondition,
                                       color: blackColor.withOpacity(0.6),
                                       weight: FontWeight.w700,
-                                      size: 12,
+                                      size: 13,
                                       fontFamily: 'Raleway'),
                                 ],
                               );
@@ -618,10 +707,7 @@ class _SignUpState extends State<SignUp> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width / 2.4,
                       child: pickingWeight(context, 'Weight in Kg'),
-                      //TfImage('Weight in kg','images/ic_drop_down.png',1,nationalityController,)),
                     ),
-                    // const SizedBox(height: 20),
-                    // TfImage("I'm now in ",'images/ic_drop_down.png',1,inController),
                     SizedBox(
                         width: MediaQuery.of(context).size.width / 2.4,
                         child: pickingHeight(context, 'Height in CM')),
@@ -640,51 +726,74 @@ class _SignUpState extends State<SignUp> {
                             termsValue = value!;
                           });
                         })),
-                    const Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                              text: 'I have read ',
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  color: greyColor3,
-                                  fontFamily: 'Raleway')),
-                          TextSpan(
+                    Row(
+                      children: [
+                        MyText(
+                          text: 'I have read ',
+                          size: 12,
+                        ),
+                        GestureDetector(
+                          onTap: terms,
+                          child: MyText(
                             text: 'Terms & Conditions',
-                            style: TextStyle(
-                                fontSize: 12,
-                                decoration: TextDecoration.underline,
-                                fontWeight: FontWeight.w500,
-                                color: greyColor3,
-                                fontFamily: 'Raleway'),
+                            size: 14,
                           ),
-                          TextSpan(
-                            text: ' & ',
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: greyColor3,
-                                fontFamily: 'Raleway'),
+                        ),
+                        MyText(
+                          text: ' & ',
+                          size: 12,
+                        ),
+                        GestureDetector(
+                          onTap: goToPrivacy,
+                          child: MyText(
+                            text: ' Privacy policy',
+                            size: 14,
                           ),
-                          TextSpan(
-                            text: 'Privacy policy',
-                            style: TextStyle(
-                                fontSize: 12,
-                                decoration: TextDecoration.underline,
-                                fontWeight: FontWeight.w500,
-                                color: greyColor3,
-                                fontFamily: 'Raleway'),
-                          ),
-                        ],
-                      ),
-                    ),
+                        ),
+                      ],
+                    )
+                    // Text.rich(
+                    //   TextSpan(
+                    //     children: [
+                    //       const TextSpan(
+                    //           text: 'I have read ',
+                    //           style: TextStyle(
+                    //               fontSize: 12,
+                    //               color: greyColor3,
+                    //               fontFamily: 'Raleway')),
+                    //       TextSpan(
+                    //         onEnter: (event) => terms,
+                    //         text: 'Terms & Conditions',
+                    //         style: const TextStyle(
+                    //             fontSize: 12,
+                    //             decoration: TextDecoration.underline,
+                    //             fontWeight: FontWeight.w500,
+                    //             color: greyColor3,
+                    //             fontFamily: 'Raleway'),
+                    //       ),
+                    //       const TextSpan(
+                    //         text: ' & ',
+                    //         style: TextStyle(
+                    //             fontSize: 12,
+                    //             fontWeight: FontWeight.w500,
+                    //             color: greyColor3,
+                    //             fontFamily: 'Raleway'),
+                    //       ),
+                    //       const TextSpan(
+                    //         text: 'Privacy policy',
+                    //         style: TextStyle(
+                    //             fontSize: 12,
+                    //             decoration: TextDecoration.underline,
+                    //             fontWeight: FontWeight.w500,
+                    //             color: greyColor3,
+                    //             fontFamily: 'Raleway'),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
                 const SizedBox(height: 20),
-                // MaterialButton(
-                //   onPressed: register,
-                //   child: Text("register"),
-                // ),
                 Button(
                     'Register',
                     greenishColor,
@@ -722,7 +831,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -856,10 +965,8 @@ class _SignUpState extends State<SignUp> {
                                           getC(
                                               countriesList1[index].country,
                                               countriesList1[index].code,
-                                              countriesList1[index].id);
-                                          // addCountry(
-                                          //   countriesList1[index].country,
-                                          // );
+                                              countriesList1[index].id,
+                                              countriesList1[index].flag);
                                         },
                                       );
                                     }),
@@ -1008,21 +1115,103 @@ class _SignUpState extends State<SignUp> {
         onTap: () => showModalBottomSheet(
             context: context,
             builder: (context) {
-              return ListView.builder(
-                itemCount: countriesList1.length,
-                itemBuilder: ((context, index) {
-                  return ListTile(
-                    // leading: Image.network(countriesList1[index].flag),
-                    title: Text(countriesList1[index].country),
-                    onTap: () {
-                      addCountry(
-                        countriesList1[index].country,
-                        show,
-                        countriesList1[index].id,
-                      );
-                    },
-                  );
-                }),
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Row(children: const [
+                      Text(
+                        "Select Your Country",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            fontFamily: 'Raleway-Black'),
+                      )
+                    ]),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: blackColor.withOpacity(0.5),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              "'Country',",
+                              style: TextStyle(
+                                color: blackColor.withOpacity(0.6),
+                              ),
+                            ),
+                            Text(
+                              "'Code' ",
+                              style: TextStyle(
+                                color: blackColor.withOpacity(0.6),
+                              ),
+                            ),
+                            Text(
+                              " or ",
+                              style: TextStyle(
+                                color: blackColor.withOpacity(0.6),
+                              ),
+                            ),
+                            Text(
+                              " 'Dial Code'",
+                              style: TextStyle(
+                                color: blackColor.withOpacity(0.6),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 100,
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.search,
+                                  color: blackColor.withOpacity(0.5),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: countriesList1.length,
+                        itemBuilder: ((context, index) {
+                          return ListTile(
+                            leading: Image.network(
+                              "${"https://adventuresclub.net/adventureClub/public/"}${countriesList1[index].flag}",
+                              height: 25,
+                              width: 40,
+                            ),
+                            title: Text(countriesList1[index].country),
+                            onTap: () {
+                              addCountry(
+                                countriesList1[index].country,
+                                show,
+                                countriesList1[index].id,
+                              );
+                            },
+                          );
+                        }),
+                      ),
+                    ),
+                  ],
+                ),
               );
             }),
         tileColor: whiteColor,

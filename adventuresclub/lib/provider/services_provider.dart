@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_function_literals_in_foreach_calls
+// ignore_for_file: avoid_function_literals_in_foreach_calls, unused_local_variable
 
 import 'dart:convert';
 
@@ -15,25 +15,7 @@ import '../models/home_services/become_partner.dart';
 
 class ServicesProvider with ChangeNotifier {
   ServicesProvider({Key? key});
-  String resultService = "";
-  String resultRequest = "";
-  String totalNotication = "";
-  String id = "1";
 
-  List<AvailabilityModel> gTransportAvaiModel = [];
-  List<AvailabilityModel> gSkyAvaiModel = [];
-  List<AvailabilityModel> gWaterAvaiModel = [];
-  List<AvailabilityModel> gLandAvaiModel = [];
-
-  List<ServiceImageModel> gTransportServImgModel = [];
-  List<ServiceImageModel> gSkyServImgModel = [];
-  List<ServiceImageModel> gWaterServImgModel = [];
-  List<ServiceImageModel> gLandServImgModel = [];
-
-  List<AimedForModel> gTransportAimedfm = [];
-  List<AimedForModel> gSkyAimedfm = [];
-  List<AimedForModel> gWaterAimedfm = [];
-  List<AimedForModel> gLandAimedfm = [];
   List<BecomePartner> nBp = [];
   List<BecomePartner> transportBp = [];
   List<BecomePartner> skyBp = [];
@@ -44,12 +26,12 @@ class ServicesProvider with ChangeNotifier {
   List<ServicesModel> gSkyServicesModel = [];
   List<ServicesModel> gWaterServicesModel = [];
   List<ServicesModel> gLandServicesModel = [];
-  List<HomeServicesModel> accomodation = [];
-  List<HomeServicesModel> transport = [];
-  List<HomeServicesModel> sky = [];
-  List<HomeServicesModel> water = [];
-  List<HomeServicesModel> land = [];
-  List<HomeServicesModel> gm = [];
+  // List<HomeServicesModel> accomodation = [];
+  // List<HomeServicesModel> transport = [];
+  // List<HomeServicesModel> sky = [];
+  // List<HomeServicesModel> water = [];
+  // List<HomeServicesModel> land = [];
+  // List<HomeServicesModel> gm = [];
   List<ServicesModel> allServices = [];
   List<ServicesModel> allAccomodation = [];
   List<ServicesModel> allTransport = [];
@@ -63,21 +45,11 @@ class ServicesProvider with ChangeNotifier {
   }
 
   void clearAll() {
-    // gAccomodoationAvaiModel.clear();
-    // gTransportAvaiModel.clear();
-    // gSkyAvaiModel.clear();
-    // gWaterAvaiModel.clear();
-    // gLandAvaiModel.clear();
-    // gAccomodationServImgModel.clear();
-    // gTransportServImgModel.clear();
-    // gSkyServImgModel.clear();
-    // gWaterServImgModel.clear();
-    // gLandServImgModel.clear();
-    // gAccomodationAimedfm.clear();
-    gTransportAimedfm.clear();
-    gSkyAimedfm.clear();
-    gWaterAimedfm.clear();
-    gLandAimedfm.clear();
+    allAccomodation.clear();
+    allTransport.clear();
+    allSky.clear();
+    allWater.clear();
+    allLand.clear();
     nBp.clear();
     transportBp.clear();
     skyBp.clear();
@@ -88,18 +60,7 @@ class ServicesProvider with ChangeNotifier {
     gSkyServicesModel.clear();
     gWaterServicesModel.clear();
     gLandServicesModel.clear();
-    accomodation.clear();
-    transport.clear();
-    sky.clear();
-    water.clear();
-    land.clear();
-    gm.clear();
     allServices.clear();
-    allAccomodation.clear();
-    allTransport.clear();
-    allSky.clear();
-    allWater.clear();
-    allLand.clear();
   }
 
   Future getServicesList() async {
@@ -209,18 +170,19 @@ class ServicesProvider with ChangeNotifier {
               services['baseurl'].toString() ?? "",
               gAccomodationServImgModel,
             );
-            // gAccomodationSModel.add(nSm);
-            // allServices.add(nSm);
+            //gAccomodationSModel.add(nSm);
+            allServices.add(nSm);
             allAccomodation.add(nSm);
           });
           HomeServicesModel adv = HomeServicesModel(acc, gAccomodationSModel);
-          accomodation.add(adv);
-          accomodation.forEach((acco) {
-            gm.add(acco);
-          });
+          // accomodation.add(adv);
+          // accomodation.forEach((acco) {
+          //   gm.add(acco);
+          // });
         } else if (element['category'] == "Transport") {
           List<dynamic> t = element['services'];
           t.forEach((tServices) {
+            List<AvailabilityModel> gTransportAvaiModel = [];
             List<dynamic> tAvailable = tServices['availability'];
             tAvailable.forEach((aS) {
               AvailabilityModel tAM = AvailabilityModel(
@@ -235,6 +197,7 @@ class ServicesProvider with ChangeNotifier {
                   bS['cr_number'].toString() ?? "",
                   bS['description'].toString() ?? "");
             });
+            List<AimedForModel> gTransportAimedfm = [];
             List<dynamic> tAimedFor = tServices['aimed_for'];
             tAimedFor.forEach((atransport) {
               AimedForModel transportAimed = AimedForModel(
@@ -248,6 +211,7 @@ class ServicesProvider with ChangeNotifier {
               );
               gTransportAimedfm.add(transportAimed);
             });
+            List<ServiceImageModel> gTransportServImgModel = [];
             List<dynamic> timage = tServices['images'];
             timage.forEach((ti) {
               ServiceImageModel transportServiceImage = ServiceImageModel(
@@ -310,25 +274,26 @@ class ServicesProvider with ChangeNotifier {
               tServices['baseurl'].toString() ?? "",
               gTransportServImgModel,
             );
-            gTransportSModel.add(tServicesModelList);
+            //gTransportSModel.add(tServicesModelList);
             allServices.add(tServicesModelList);
             allTransport.add(tServicesModelList);
           });
           HomeServicesModel transportList = HomeServicesModel(
               element['category'].toString() ?? "", gTransportSModel);
-          transport.add(transportList);
+          //transport.add(transportList);
           // transport.forEach((trans) {
           //   gm.add(trans);
           // });
         } else if (element['category'] == "Sky") {
           List<dynamic> skyList = element['services'];
           skyList.forEach((skyServices) {
+            List<AvailabilityModel> gSkyAvaiModel = [];
             List<dynamic> tAvailable = skyServices['availability'];
             tAvailable.forEach((skyAvailable) {
               AvailabilityModel tAM = AvailabilityModel(
                   skyAvailable['start_date'].toString() ?? "",
                   skyAvailable['end_date'].toString() ?? "");
-              gTransportAvaiModel.add(tAM);
+              gSkyAvaiModel.add(tAM);
             });
             List<dynamic> skyBecomePartnerList = skyServices['become_partner'];
             skyBecomePartnerList.forEach((skyBecomePartner) {
@@ -337,6 +302,7 @@ class ServicesProvider with ChangeNotifier {
                   skyBecomePartner['cr_number'].toString() ?? "",
                   skyBecomePartner['description'].toString() ?? "");
             });
+            List<AimedForModel> gSkyAimedfm = [];
             List<dynamic> skyAimedForList = skyServices['aimed_for'];
             skyAimedForList.forEach((skyAimedFor) {
               AimedForModel skyAimed = AimedForModel(
@@ -350,6 +316,7 @@ class ServicesProvider with ChangeNotifier {
               );
               gSkyAimedfm.add(skyAimed);
             });
+            List<ServiceImageModel> gSkyServImgModel = [];
             List<dynamic> skyImages = skyServices['images'];
             skyImages.forEach((skyImages) {
               ServiceImageModel skyServiceImage = ServiceImageModel(
@@ -412,19 +379,20 @@ class ServicesProvider with ChangeNotifier {
               skyServices['baseurl'].toString() ?? "",
               gSkyServImgModel,
             );
-            gSkyServicesModel.add(skyServicesModelList);
+            // gSkyServicesModel.add(skyServicesModelList);
             allServices.add(skyServicesModelList);
             allSky.add(skyServicesModelList);
           });
           HomeServicesModel skyListHome = HomeServicesModel(
               element['category'].toString() ?? "", gSkyServicesModel);
-          sky.add(skyListHome);
-          sky.forEach((ski) {
-            gm.add(ski);
-          });
+          // sky.add(skyListHome);
+          // sky.forEach((ski) {
+          //   gm.add(ski);
+          // });
         } else if (element['category'] == "Water") {
           List<dynamic> waterList = element['services'];
           waterList.forEach((waterServices) {
+            List<AvailabilityModel> gWaterAvaiModel = [];
             List<dynamic> wAvailable = waterServices['availability'];
             wAvailable.forEach((waterAvailable) {
               AvailabilityModel wAM = AvailabilityModel(
@@ -440,6 +408,7 @@ class ServicesProvider with ChangeNotifier {
                   waterBecomePartner['cr_number'].toString() ?? "",
                   waterBecomePartner['description'].toString() ?? "");
             });
+            List<AimedForModel> gWaterAimedfm = [];
             List<dynamic> waterAimedForList = waterServices['aimed_for'];
             waterAimedForList.forEach((waterAimedFor) {
               AimedForModel waterAimed = AimedForModel(
@@ -453,6 +422,7 @@ class ServicesProvider with ChangeNotifier {
               );
               gWaterAimedfm.add(waterAimed);
             });
+            List<ServiceImageModel> gWaterServImgModel = [];
             List<dynamic> waterImages = waterServices['images'];
             waterImages.forEach((waterImages) {
               ServiceImageModel waterServiceImage = ServiceImageModel(
@@ -515,18 +485,16 @@ class ServicesProvider with ChangeNotifier {
               waterServices['baseurl'].toString() ?? "",
               gWaterServImgModel,
             );
-            gWaterServicesModel.add(waterServicesModelList);
+            // gWaterServicesModel.add(waterServicesModelList);
             allServices.add(waterServicesModelList);
+            allWater.add(waterServicesModelList);
           });
           HomeServicesModel waterListHome = HomeServicesModel(
               element['category'].toString() ?? "", gWaterServicesModel);
-          water.add(waterListHome);
-          water.forEach((element) {
-            gm.add(element);
-          });
         } else if (element['category'] == "LAND") {
           List<dynamic> landList = element['services'];
           landList.forEach((landServices) {
+            List<AvailabilityModel> gLandAvaiModel = [];
             List<dynamic> lAvailable = landServices['availability'];
             lAvailable.forEach((landAvailable) {
               AvailabilityModel lAM = AvailabilityModel(
@@ -542,6 +510,7 @@ class ServicesProvider with ChangeNotifier {
                   landBecomePartner['cr_number'].toString() ?? "",
                   landBecomePartner['description'].toString() ?? "");
             });
+            List<AimedForModel> gLandAimedfm = [];
             List<dynamic> landAimedForList = landServices['aimed_for'];
             landAimedForList.forEach((landAimedFor) {
               AimedForModel landAimed = AimedForModel(
@@ -555,6 +524,7 @@ class ServicesProvider with ChangeNotifier {
               );
               gLandAimedfm.add(landAimed);
             });
+            List<ServiceImageModel> gLandServImgModel = [];
             List<dynamic> landImages = landServices['images'];
             landImages.forEach((lImages) {
               ServiceImageModel landServiceImage = ServiceImageModel(
@@ -617,16 +587,16 @@ class ServicesProvider with ChangeNotifier {
               landServices['baseurl'].toString() ?? "",
               gLandServImgModel,
             );
-            gLandServicesModel.add(landServicesModelList);
+            // gLandServicesModel.add(landServicesModelList);
             allServices.add(landServicesModelList);
             allLand.add(landServicesModelList);
           });
           HomeServicesModel landListHome = HomeServicesModel(
               element['category'].toString() ?? "", gLandServicesModel);
-          land.add(landListHome);
-          land.forEach((element) {
-            gm.add(element);
-          });
+          // land.add(landListHome);
+          // land.forEach((element) {
+          //   gm.add(element);
+          // });
         }
       });
     }

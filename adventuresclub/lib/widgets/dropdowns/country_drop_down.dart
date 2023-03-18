@@ -41,8 +41,8 @@ class CountriesDropDownState extends State<CountriesDropDown> {
   }
 
   void sId(CountriesFilterModel cFilter) {
-    Provider.of<CompleteProfileProvider>(context, listen: false)
-        .categorySelection(cFilter.country, cFilter.id);
+    // Provider.of<CompleteProfileProvider>(context, listen: false)
+    //     .categorySelection(cFilter.country, cFilter.id);
   }
 
   void fId(CountriesFilterModel sFilter) {

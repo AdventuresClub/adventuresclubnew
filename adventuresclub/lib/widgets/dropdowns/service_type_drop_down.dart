@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/constants_create_new_services.dart';
 import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -42,14 +43,16 @@ class ServiceTypeDropDownState extends State<ServiceTypeDropDown> {
     // );
   }
 
-  void sId(ServiceTypeFilterModel sFilter) {
-    Provider.of<CompleteProfileProvider>(context, listen: false)
-        .typeSelection(sFilter.type, sFilter.id);
-  }
-
   void fId(ServiceTypeFilterModel sFilter) {
     setState(() {
       selectedRegion = sFilter.type;
+    });
+  }
+
+  void sId(ServiceTypeFilterModel sFilter) {
+    setState(() {
+      ConstantsCreateNewServices.selectedServiceType = sFilter.type;
+      ConstantsCreateNewServices.serviceTypeId = sFilter.id;
     });
   }
 

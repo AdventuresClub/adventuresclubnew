@@ -25,6 +25,7 @@ class _CostState extends State<Cost> {
   TextEditingController controller = TextEditingController();
   TextEditingController iLiveInController = TextEditingController();
   int countryId = 0;
+  TextEditingController scheduleController = TextEditingController();
   String locationMessage = "Getting location ...";
   String userlocation = "";
   bool loading = false;
@@ -222,9 +223,8 @@ class _CostState extends State<Cost> {
   abc() {}
   @override
   Widget build(BuildContext context) {
-    return Consumer<CompleteProfileProvider>(
-        builder: (context, provider, child) {
-      return Padding(
+    return SingleChildScrollView(
+      child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(children: [
           SizedBox(
@@ -263,8 +263,8 @@ class _CostState extends State<Cost> {
           const SizedBox(
             height: 20,
           ),
-          TFWithSize('Type Specific Address/Location', provider.specificAddress,
-              15, lightGreyColor, 1),
+          TFWithSize('Type Specific Address/Location', scheduleController, 15,
+              lightGreyColor, 1),
           const Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -272,7 +272,7 @@ class _CostState extends State<Cost> {
               Expanded(
                 child: TFWithSize(
                   'Set Cost',
-                  provider.setCost1,
+                  scheduleController,
                   16,
                   lightGreyColor,
                   3.4,
@@ -284,7 +284,7 @@ class _CostState extends State<Cost> {
               Expanded(
                 child: TFWithSize(
                   'Set Cost',
-                  provider.setCost2,
+                  scheduleController,
                   16,
                   lightGreyColor,
                   3.4,
@@ -302,16 +302,16 @@ class _CostState extends State<Cost> {
                 weight: FontWeight.w500,
               )),
           const SizedBox(height: 20),
-          MultiLineField('Type Pre-Requisites….', 5, lightGreyColor,
-              provider.preReqController),
+          MultiLineField(
+              'Type Pre-Requisites….', 5, lightGreyColor, scheduleController),
           const SizedBox(height: 20),
           MultiLineField('Type Minimum Requirement....', 5, lightGreyColor,
-              provider.minController),
+              scheduleController),
           const SizedBox(height: 20),
           MultiLineField('Type Terms & Conditions.....', 4, lightGreyColor,
-              provider.tncController),
+              scheduleController),
         ]),
-      );
-    });
+      ),
+    );
   }
 }

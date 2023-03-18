@@ -2,7 +2,6 @@
 import 'dart:io';
 import 'package:adventuresclub/complete_profile/description.dart';
 import 'package:adventuresclub/complete_profile/cost.dart';
-import 'package:adventuresclub/complete_profile/banner_page.dart';
 import 'package:adventuresclub/complete_profile/program.dart';
 import 'package:adventuresclub/models/category/category_model.dart';
 import 'package:flutter/material.dart';
@@ -55,17 +54,7 @@ class CompleteProfileProvider with ChangeNotifier {
   //
 
   int selectedRegionId = 0;
-  String selectedRegion = "";
-  int selectedSectorId = 0;
-  String selectedSector = "";
-  int selectedCategoryId = 0;
-  String selectedCategory = "";
-  int serviceTypeId = 0;
-  String selectedServiceType = "";
-  int selectedDurationId = 0;
-  String selectedDuration = "";
-  int selectedlevelId = 0;
-  String selectedlevel = "";
+
   List<int> activityId = [];
   List<String> activity = [];
   List<int> aimedForId = [];
@@ -96,41 +85,42 @@ class CompleteProfileProvider with ChangeNotifier {
   int currentGenderIndex = 0;
   String selectedGender = '';
 
-  void regionSelection(String region, int id) {
-    selectedRegion = region;
-    selectedRegionId = id;
-    notifyListeners();
-  }
+// this functionality has been removed
+  // void regionSelection(String region, int id) {
+  //   selectedRegion = region;
+  //   selectedRegionId = id;
+  //   notifyListeners();
+  // }
 
-  void sectorSelection(String region, int id) {
-    selectedSector = region;
-    selectedSectorId = id;
-    notifyListeners();
-  }
+  // void sectorSelection(String region, int id) {
+  //   selectedSector = region;
+  //   selectedSectorId = id;
+  //   notifyListeners();
+  // }
 
-  void categorySelection(String region, int id) {
-    selectedCategory = region;
-    selectedCategoryId = id;
-    notifyListeners();
-  }
+  // void categorySelection(String region, int id) {
+  //   selectedCategory = region;
+  //   selectedCategoryId = id;
+  //   notifyListeners();
+  // }
 
-  void typeSelection(String region, int id) {
-    selectedServiceType = region;
-    serviceTypeId = id;
-    notifyListeners();
-  }
+  // void typeSelection(String region, int id) {
+  //   selectedServiceType = region;
+  //   serviceTypeId = id;
+  //   notifyListeners();
+  // }
 
-  void durationSelection(String region, int id) {
-    selectedDuration = region;
-    selectedDurationId = id;
-    notifyListeners();
-  }
+  // void durationSelection(String region, int id) {
+  //   selectedDuration = region;
+  //   selectedDurationId = id;
+  //   notifyListeners();
+  // }
 
-  void levelSelection(String region, int id) {
-    selectedlevel = region;
-    selectedlevelId = id;
-    notifyListeners();
-  }
+  // void levelSelection(String region, int id) {
+  //   selectedlevel = region;
+  //   selectedlevelId = id;
+  //   notifyListeners();
+  // }
 
   void activityLevel(List<String> region, List<int> id) {
     for (var element in region) {
@@ -263,11 +253,11 @@ class CompleteProfileProvider with ChangeNotifier {
             'adventure_name': adventureNameController.text,
             "country": Constants.countryId,
             'region': selectedRegionId.toString(),
-            "service_sector": selectedSectorId.toString(), //"",
-            "service_category": selectedCategoryId.toString(), //"",
-            "service_type": serviceTypeId.toString(), //"",
-            "service_level": selectedlevelId.toString(), //"",
-            "duration": selectedDurationId.toString(), //"",
+            // "service_sector": selectedSectorId.toString(), //"",
+            // "service_category": selectedCategoryId.toString(), //"",
+            // "service_type": serviceTypeId.toString(), //"",
+            // "service_level": selectedlevelId.toString(), //"",
+            // "duration": selectedDurationId.toString(), //"",
             "available_seats": availableSeats.text, //"",
             "start_date": startDate, //"",
             "end_date": endDate, //"",

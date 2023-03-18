@@ -186,7 +186,7 @@ class _DetailsState extends State<Details> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List<Widget>.generate(
-                        5,
+                        widget.gm!.images.length,
                         (index) => Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 5),
                           child: InkWell(

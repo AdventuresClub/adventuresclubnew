@@ -40,8 +40,8 @@ class RegionDropDownState extends State<RegionDropDown> {
   }
 
   void sId(RegionFilterModel rFilter) {
-    Provider.of<CompleteProfileProvider>(context, listen: false)
-        .regionSelection(rFilter.regions, rFilter.id);
+    // Provider.of<CompleteProfileProvider>(context, listen: false)
+    //     .regionSelection(rFilter.regions, rFilter.id);
   }
 
   void fId(RegionFilterModel sFilter) {

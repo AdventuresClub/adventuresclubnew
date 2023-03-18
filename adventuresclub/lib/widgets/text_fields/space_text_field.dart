@@ -2,7 +2,7 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/text_fields/no_space.dart';
 import 'package:flutter/material.dart';
 
-class TextFields extends StatefulWidget {
+class SpaceTextFields extends StatefulWidget {
   final String hintText;
   final TextEditingController? controller;
   final bool? edit;
@@ -11,7 +11,7 @@ class TextFields extends StatefulWidget {
   final bool trim;
   // ignore: prefer_typing_uninitialized_variables
   final fillColor;
-  const TextFields(
+  const SpaceTextFields(
     this.hintText,
     this.controller,
     this.verticalPadding,
@@ -23,10 +23,10 @@ class TextFields extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<TextFields> createState() => _TextFieldsState();
+  State<SpaceTextFields> createState() => _SpaceTextFieldsState();
 }
 
-class _TextFieldsState extends State<TextFields> {
+class _SpaceTextFieldsState extends State<SpaceTextFields> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(

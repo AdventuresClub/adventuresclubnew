@@ -58,6 +58,12 @@ class _BottomNavigationState extends State<BottomNavigation> {
     getServicesList();
     getNotificationBadge();
     Constants.getFilter();
+    // if (Constants.partnerRequest) {
+    //   setState(() {
+    //     Constants.partnerRequest == false;
+    //   });
+    //   Constants.getProfile();
+    // }
   }
 
   void getNotificationBadge() async {
@@ -74,11 +80,16 @@ class _BottomNavigationState extends State<BottomNavigation> {
         setState(() {
           totalNotication = element['total_notification'].toString() ?? "";
           resultAccount = element['resultAccount'].toString() ?? "";
-          resultService = element['total_notification'].toString() ?? "";
-          resultRequest = element['total_notification'].toString() ?? "";
+          resultService = element['resultService'].toString() ?? "";
+          resultRequest = element['resultRequest'].toString() ?? "";
         });
-        notificationNumber(resultRequest, resultRequest, totalNotication);
       });
+      notificationNumber(
+        convertToInt(totalNotication),
+        convertToInt(resultAccount),
+        convertToInt(resultService),
+        convertToInt(resultRequest),
+      );
 
       print(response.statusCode);
       print(response.body);
@@ -88,11 +99,26 @@ class _BottomNavigationState extends State<BottomNavigation> {
     }
   }
 
+  int convertToInt(String s) {
+    int t = int.tryParse(s) ?? 0;
+    return t;
+  }
+
+  double convert(String rating) {
+    double result = double.parse(rating);
+    return result;
+  }
+
   void notificationNumber(
-      String serviceCounter, String requestCounter, String totalN) {
-    serviceCounter = Provider.of<ServicesProvider>(context).resultService;
-    requestCounter = Provider.of<ServicesProvider>(context).resultRequest;
-    totalN = Provider.of<ServicesProvider>(context).totalNotication;
+    int totalN,
+    int account,
+    int serviceCounter,
+    int requestCounter,
+  ) {
+    Constants.totalNotication = totalN;
+    Constants.resultAccount = account;
+    Constants.resultService = serviceCounter;
+    Constants.resultRequest = requestCounter;
   }
 
   @override
@@ -156,10 +182,12 @@ class _BottomNavigationState extends State<BottomNavigation> {
                       child: MyText(
                         text: resultRequest,
                         color: whiteColor,
-                        size: 8,
+                        weight: FontWeight.bold,
+                        size: 9,
                       )))
             ]),
             label: 'Requests',
+
             //  ),
             activeIcon: Stack(
               clipBehavior: Clip.none,
@@ -170,7 +198,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                   width: 25,
                   color: greenishColor,
                 ),
-                resultRequest.isNotEmpty
+                Constants.resultRequest > 0
                     ? Positioned(
                         top: -5,
                         right: -12,
@@ -178,7 +206,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                           radius: 10,
                           backgroundColor: redColor,
                           child: MyText(
-                            text: resultRequest,
+                            text: resultRequest.toString(),
                             color: whiteColor,
                             size: 10,
                           ),
@@ -210,7 +238,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 height: 25,
                 width: 25,
               ),
-              resultAccount.isNotEmpty
+              Constants.resultAccount > 0
                   ? Positioned(
                       top: -5,
                       right: -12,
@@ -218,9 +246,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
                         radius: 10,
                         backgroundColor: redColor,
                         child: MyText(
-                          text: resultAccount, //'12',
+                          text: resultAccount.toString(), //'12',
                           color: whiteColor,
-                          size: 8,
+                          weight: FontWeight.bold,
+                          size: 9,
                         ),
                       ),
                     )
@@ -244,7 +273,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
                       child: MyText(
                         text: resultAccount, //'12',
                         color: whiteColor,
-                        size: 10,
+                        weight: FontWeight.bold,
+                        size: 9,
                       )))
             ]),
           ),

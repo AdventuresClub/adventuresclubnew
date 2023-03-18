@@ -33,8 +33,8 @@ class _TFWithSizeState extends State<TFWithSize> {
         keyboardType: widget.show,
         controller: widget.controller,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(
-              vertical: widget.verticalPadding, horizontal: 18),
+          // contentPadding: EdgeInsets.symmetric(
+          //     vertical: widget.verticalPadding, horizontal: 18),
           hintText: widget.hintText,
           hintStyle: TextStyle(
               color: blackColor.withOpacity(0.5),

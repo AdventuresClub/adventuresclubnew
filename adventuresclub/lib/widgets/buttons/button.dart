@@ -57,17 +57,15 @@ class _ButtonState extends State<Button> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                
                 Text(
                   widget.name,
                   style: TextStyle(
                       color: widget.textColor,
                       fontWeight: widget.fontWeight,
-                      letterSpacing:0.8,
-                      fontFamily:widget.fontFamily,
+                      letterSpacing: 0.8,
+                      fontFamily: widget.fontFamily,
                       fontSize: widget.fontSize),
                 ),
-                
                 const SizedBox(width: 3),
                 if (widget.showIcon == true)
                   Icon(

@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/constants_create_new_services.dart';
 import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -42,14 +43,21 @@ class ServiceCategoryDropDownState extends State<ServiceCategoryDropDown> {
     //         ""));
   }
 
-  void sId(CategoryFilterModel cFilter) {
-    Provider.of<CompleteProfileProvider>(context, listen: false)
-        .categorySelection(cFilter.category, cFilter.id);
-  }
+  // void sId1(CategoryFilterModel cFilter) {
+  //   Provider.of<CompleteProfileProvider>(context, listen: false)
+  //       .categorySelection(cFilter.category, cFilter.id);
+  // }
 
   void fId(CategoryFilterModel sFilter) {
     setState(() {
       selectedCategory = sFilter.category;
+    });
+  }
+
+  void sId(CategoryFilterModel rFilter) {
+    setState(() {
+      ConstantsCreateNewServices.selectedCategory = rFilter.category;
+      ConstantsCreateNewServices.selectedCategoryId = rFilter.id;
     });
   }
 

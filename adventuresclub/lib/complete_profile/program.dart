@@ -13,11 +13,12 @@ class Program extends StatefulWidget {
 }
 
 class _ProgramState extends State<Program> {
-  TextEditingController controller = TextEditingController();
+  TextEditingController scheduleController = TextEditingController();
   var formattedDate;
   var endDate;
   DateTime? pickedDate;
   DateTime currentDate = DateTime.now();
+  bool particularWeekDay = false;
 
   abc() {}
 
@@ -50,172 +51,168 @@ class _ProgramState extends State<Program> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CompleteProfileProvider>(
-        builder: (context, provider, child) {
-      return Column(
-        children: [
-          const SizedBox(height: 20),
-          TFWithSize('Schedule Title', provider.scheduleController, 12,
-              lightGreyColor, 1),
-          const SizedBox(height: 20),
-          GestureDetector(
-            onTap: () => _selectDate(context, formattedDate),
-            child: Container(
-              height: 50,
-              padding: const EdgeInsets.symmetric(vertical: 0),
-              //width: MediaQuery.of(context).size.width / 1,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: lightGreyColor,
-                border: Border.all(
-                  width: 1,
-                  color: greyColor.withOpacity(0.2),
-                ),
+    return Column(
+      children: [
+        const SizedBox(height: 20),
+        TFWithSize('Schedule Title', scheduleController, 12, lightGreyColor, 1),
+        const SizedBox(height: 20),
+        GestureDetector(
+          onTap: () => _selectDate(context, formattedDate),
+          child: Container(
+            height: 50,
+            padding: const EdgeInsets.symmetric(vertical: 0),
+            //width: MediaQuery.of(context).size.width / 1,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: lightGreyColor,
+              border: Border.all(
+                width: 1,
+                color: greyColor.withOpacity(0.2),
               ),
-              child: ListTile(
-                contentPadding:
-                    const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                leading: Text(
-                  formattedDate.toString(),
-                  style: TextStyle(color: blackColor.withOpacity(0.6)),
-                ),
-                trailing: Icon(
-                  Icons.calendar_today,
-                  color: blackColor.withOpacity(0.6),
-                  size: 20,
-                ),
+            ),
+            child: ListTile(
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+              leading: Text(
+                formattedDate.toString(),
+                style: TextStyle(color: blackColor.withOpacity(0.6)),
+              ),
+              trailing: Icon(
+                Icons.calendar_today,
+                color: blackColor.withOpacity(0.6),
+                size: 20,
               ),
             ),
           ),
-          const SizedBox(height: 20),
-          provider.particularWeekDay
-              ? Container()
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () => _selectDate(context, formattedDate),
-                        child: Container(
-                          height: 50,
-                          padding: const EdgeInsets.symmetric(vertical: 0),
-                          //width: MediaQuery.of(context).size.width / 1,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: lightGreyColor,
-                            border: Border.all(
-                              width: 1,
-                              color: greyColor.withOpacity(0.2),
-                            ),
+        ),
+        const SizedBox(height: 20),
+        particularWeekDay
+            ? Container()
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => _selectDate(context, formattedDate),
+                      child: Container(
+                        height: 50,
+                        padding: const EdgeInsets.symmetric(vertical: 0),
+                        //width: MediaQuery.of(context).size.width / 1,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: lightGreyColor,
+                          border: Border.all(
+                            width: 1,
+                            color: greyColor.withOpacity(0.2),
                           ),
-                          child: ListTile(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 0, horizontal: 10),
-                            leading: Text(
-                              formattedDate.toString(),
-                              style:
-                                  TextStyle(color: blackColor.withOpacity(0.6)),
-                            ),
-                            trailing: Icon(
-                              Icons.calendar_today,
-                              color: blackColor.withOpacity(0.6),
-                              size: 20,
-                            ),
+                        ),
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 0, horizontal: 10),
+                          leading: Text(
+                            formattedDate.toString(),
+                            style:
+                                TextStyle(color: blackColor.withOpacity(0.6)),
+                          ),
+                          trailing: Icon(
+                            Icons.calendar_today,
+                            color: blackColor.withOpacity(0.6),
+                            size: 20,
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () => _selectDate(context, endDate),
-                        child: Container(
-                          height: 50,
-                          padding: const EdgeInsets.symmetric(vertical: 0),
-                          //width: MediaQuery.of(context).size.width / 1,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: lightGreyColor,
-                            border: Border.all(
-                              width: 1,
-                              color: greyColor.withOpacity(0.2),
-                            ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => _selectDate(context, endDate),
+                      child: Container(
+                        height: 50,
+                        padding: const EdgeInsets.symmetric(vertical: 0),
+                        //width: MediaQuery.of(context).size.width / 1,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: lightGreyColor,
+                          border: Border.all(
+                            width: 1,
+                            color: greyColor.withOpacity(0.2),
                           ),
-                          child: ListTile(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 0, horizontal: 10),
-                            leading: Text(
-                              endDate.toString(),
-                              style:
-                                  TextStyle(color: blackColor.withOpacity(0.6)),
-                            ),
-                            trailing: Icon(
-                              Icons.calendar_today,
-                              color: blackColor.withOpacity(0.6),
-                              size: 20,
-                            ),
+                        ),
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 0, horizontal: 10),
+                          leading: Text(
+                            endDate.toString(),
+                            style:
+                                TextStyle(color: blackColor.withOpacity(0.6)),
+                          ),
+                          trailing: Icon(
+                            Icons.calendar_today,
+                            color: blackColor.withOpacity(0.6),
+                            size: 20,
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
-          // Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: [
-          //       Expanded(
-          //         child: TFWithSizeImage(
-          //             'Start Date',
-          //             controller,
-          //             16,
-          //             lightGreyColor,
-          //             2.4,
-          //             Icons.calendar_month_outlined,
-          //             bluishColor),
-          //       ),
-          //       const SizedBox(
-          //         width: 10,
-          //       ),
-          //       Expanded(
-          //           child: TFWithSizeImage(
-          //               'End Date',
-          //               controller,
-          //               16,
-          //               lightGreyColor,
-          //               2.4,
-          //               Icons.access_time,
-          //               bluishColor)),
-          //     ],
-          //   ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TFWithSize('Schedule Description', provider.scheduleDesController,
-                  12, lightGreyColor, 1.4),
-              //const Image(image: ExactAssetImage('images/add-circle.png'))
-            ],
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              const Image(
-                  image: ExactAssetImage('images/add-circle.png'), height: 20),
-              const SizedBox(
-                width: 5,
+                  ),
+                ],
               ),
-              MyText(
-                text: 'Add More Schedule',
-                color: bluishColor,
-              )
-            ],
-          ),
-          const SizedBox(height: 20),
-        ],
-      );
-    });
+        // Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     children: [
+        //       Expanded(
+        //         child: TFWithSizeImage(
+        //             'Start Date',
+        //             controller,
+        //             16,
+        //             lightGreyColor,
+        //             2.4,
+        //             Icons.calendar_month_outlined,
+        //             bluishColor),
+        //       ),
+        //       const SizedBox(
+        //         width: 10,
+        //       ),
+        //       Expanded(
+        //           child: TFWithSizeImage(
+        //               'End Date',
+        //               controller,
+        //               16,
+        //               lightGreyColor,
+        //               2.4,
+        //               Icons.access_time,
+        //               bluishColor)),
+        //     ],
+        //   ),
+        const SizedBox(height: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TFWithSize('Schedule Description', scheduleController, 12,
+                lightGreyColor, 1.4),
+            //const Image(image: ExactAssetImage('images/add-circle.png'))
+          ],
+        ),
+        const SizedBox(height: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            const Image(
+                image: ExactAssetImage('images/add-circle.png'), height: 20),
+            const SizedBox(
+              width: 5,
+            ),
+            MyText(
+              text: 'Add More Schedule',
+              color: bluishColor,
+            )
+          ],
+        ),
+        const SizedBox(height: 20),
+      ],
+    );
   }
 }

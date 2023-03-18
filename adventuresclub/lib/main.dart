@@ -1,6 +1,4 @@
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
-import 'package:adventuresclub/provider/filter_provider.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/splashScreen/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -13,15 +11,15 @@ void main() async {
     (_) => runApp(
       MultiProvider(
         providers: [
-          ChangeNotifierProvider(
-            create: (_) => CompleteProfileProvider(),
-          ),
+          // ChangeNotifierProvider(
+          //   create: (_) => CompleteProfileProvider(),
+          // ),
           ChangeNotifierProvider(
             create: (_) => ServicesProvider(),
           ),
-          ChangeNotifierProvider(
-            create: (_) => FilterProvider(),
-          ),
+          // ChangeNotifierProvider(
+          //   create: (_) => FilterProvider(),
+          // ),
         ],
         child: const MyApp(),
       ),

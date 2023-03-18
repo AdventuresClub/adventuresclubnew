@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/services/aimed_for_model.dart';
@@ -41,8 +40,8 @@ class AimedForDropDownState extends State<AimedForDropDown> {
   }
 
   void sId(AimedForModel cFilter) {
-    Provider.of<CompleteProfileProvider>(context, listen: false)
-        .categorySelection(cFilter.aimedName, cFilter.id);
+    // Provider.of<CompleteProfileProvider>(context, listen: false)
+    //     .categorySelection(cFilter.aimedName, cFilter.id);
   }
 
   void fId(AimedForModel sFilter) {

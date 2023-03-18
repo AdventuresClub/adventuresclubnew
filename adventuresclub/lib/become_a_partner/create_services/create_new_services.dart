@@ -1,14 +1,19 @@
-import 'dart:io';
+// ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls
 
+import 'dart:io';
+import 'package:adventuresclub/become_a_partner/create_services/create_services_description.dart';
 import 'package:adventuresclub/complete_profile/banner_page.dart';
 import 'package:adventuresclub/complete_profile/cost.dart';
-import 'package:adventuresclub/complete_profile/description.dart';
 import 'package:adventuresclub/complete_profile/program.dart';
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/constants_create_new_services.dart';
+import 'package:adventuresclub/models/services/aimed_for_model.dart';
 import 'package:adventuresclub/widgets/buttons/bottom_button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
 import 'package:flutter/material.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
+import 'package:http/http.dart' as http;
 
 class CreateNewServices extends StatefulWidget {
   const CreateNewServices({super.key});
@@ -18,25 +23,69 @@ class CreateNewServices extends StatefulWidget {
 }
 
 class _CreateNewServicesState extends State<CreateNewServices> {
+  TextEditingController adventureName = TextEditingController();
+  TextEditingController availableSeatsController = TextEditingController();
+  TextEditingController infoController = TextEditingController();
+  String selectedRegion = "";
+  int selectedSectorId = 0;
   List text = ['Banner', 'Description', 'Program', 'Cost/GeoLoc'];
   List text1 = ['1', '2', '3', '4'];
   int count = 0;
   List<File> imageList = [];
+  List<AimedForModel> aimedFilter = [];
+  List<bool> aimedValue = [];
+  List aimedText = [];
 
-  final List<Map<String, dynamic>> steps = [
-    {
-      'heading': 'Just follow simple four steps to list up your adventure',
-      'child': const Description()
-    },
-    {
-      'heading': 'Just follow simple four steps to list up your adventure',
-      'child': const Program()
-    },
-    {
-      'heading': 'Just follow simple four steps to list up your adventure',
-      'child': const Cost()
-    },
-  ];
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  @override
+  void dispose() {
+    infoController.dispose();
+    adventureName.dispose();
+    availableSeatsController.dispose();
+    super.dispose();
+  }
+
+  void getData() {
+    aimedFilter = Constants.am;
+    parseAimed(Constants.am);
+  }
+
+  void parseAimed(List<AimedForModel> am) {
+    am.forEach((element) {
+      if (element.aimedName.isNotEmpty) {
+        aimedText.add(element.aimedName);
+      }
+    });
+    aimedText.forEach((element) {
+      aimedValue.add(false);
+    });
+  }
+
+  void aimed() {
+    List<AimedForModel> f = [];
+    for (int i = 0; i < aimedValue.length; i++) {
+      if (aimedValue[i]) {
+        f.add(aimedFilter[i]);
+      }
+    }
+    aimedForF(f);
+  }
+
+  void aimedForF(List<AimedForModel> am) async {
+    List<String> a = [];
+    List<int> id = [];
+    am.forEach((element) {
+      a.add(element.aimedName);
+      id.add(element.id);
+    });
+    // Provider.of<CompleteProfileProvider>(context, listen: false)
+    //     .aimedLevel(a, id);
+  }
 
   void next() {
     if (count == 0 && imageList.length < 2) {
@@ -44,17 +93,93 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     }
     setState(() {
       count++;
+      ConstantsCreateNewServices.number++;
     });
+    print(count);
   }
 
   void previous() {
+    if (count == 0) {
+      Navigator.of(context).pop();
+    }
     setState(() {
       count--;
+      ConstantsCreateNewServices.number--;
     });
   }
 
   void getImages(List<File> imgList) {
     imageList = imgList;
+  }
+
+  void getDescriptionData(TextEditingController name) {
+    name = adventureName;
+  }
+
+  void createService() async {
+    try {
+      var response = await http.post(
+          Uri.parse(
+              "https://adventuresclub.net/adventureClub/api/v1/create_service"),
+          body: {
+            'customer_id': Constants.userId, //"27",
+            'adventure_name':
+                adventureName.text, //adventureNameController.text,
+            "country": Constants.countryId,
+            'region': ConstantsCreateNewServices.selectedRegionId
+                .toString(), //selectedRegionId.toString(),
+            "service_sector": ConstantsCreateNewServices.selectedSectorId
+                .toString(), //selectedSectorId.toString(), //"",
+            "service_category": ConstantsCreateNewServices.selectedCategoryId
+                .toString(), //"", //selectedCategoryId.toString(), //"",
+            "service_type": ConstantsCreateNewServices.serviceTypeId
+                .toString(), // //serviceTypeId.toString(), //"",
+            "service_level": ConstantsCreateNewServices.selectedlevelId
+                .toString(), //selectedlevelId.toString(), //"",
+            "duration": ConstantsCreateNewServices.selectedDurationId
+                .toString(), //selectedDurationId.toString(), //"",
+            "available_seats": availableSeatsController.text, //"",
+            "start_date": ConstantsCreateNewServices.startDate
+                .toString(), //startDate, //"",
+            "end_date":
+                ConstantsCreateNewServices.endDate.toString(), //endDate, //"",
+            "write_information": "", //infoController.text, //"",
+            "service_plan": "",
+            "cost_inc": "", //setCost1.text, //"",
+            "cost_exc": "", //setCost2.text, //"",
+            "currency": "1", //  %%% this is hardcoded
+            "pre_requisites": "", //preReqController.text, //"",
+            "minimum_requirements": "", //minController.text, //"",
+            "terms_conditions": "", //tncController.text, //"",
+            "recommended": "1", // this is hardcoded
+            // this key needs to be discussed,
+            "service_plan_days": "", //// %%%%this needs discussion
+            "particular_date": "", //gatheringDate, //"",
+            "schedule_title": "", //scheduleController.text, //"",
+            // schedule title in array is skipped
+            "gathering_date": "", //gatheringDate, //"",
+            // api did not accept list here
+            "activities": ConstantsCreateNewServices.selectedActivitesId
+                .toString(), //"5", // activityId, //"",
+            "specific_address": "", //iLiveInController.text, //"",
+            // this is a wrong field only for testing purposes....
+            "gathering_start_time": "", //gatheringDate, //"",
+            "program_description": "", //scheduleDesController.text, //"",
+            "service_for": "1,2,5", //"4", //["1", "4", "5", "7"], //"",
+            "dependency": "2", //["1", "2", "3"],
+            "banners": "", //adventureOne.toString(), //"",
+            "latitude": "", //lat.toString(), //"",
+            "longitude": "", //lng.toString(), //"",
+            // 'mobile_code': ccCode,
+          });
+      // var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      print(response.statusCode);
+      print(response.body);
+      print(response.headers);
+      // print(decodedResponse['data']['user_id']);
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   @override
@@ -193,7 +318,47 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                 index: count,
                 children: [
                   BannerPage(getImages),
-                  const Description(),
+                  CreateServicesDescription(
+                    TFWithSize('Available Seats', availableSeatsController, 16,
+                        lightGreyColor, 2.4),
+                    adventureName,
+                    infoController,
+                    Wrap(
+                      direction: Axis.vertical,
+                      children: List.generate(aimedFilter.length, (index) {
+                        return SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: CheckboxListTile(
+                            contentPadding: const EdgeInsets.only(
+                                left: 0, top: 0, bottom: 0, right: 25),
+                            side: const BorderSide(color: bluishColor),
+                            checkboxShape: const RoundedRectangleBorder(
+                              side: BorderSide(color: bluishColor),
+                            ),
+                            visualDensity: const VisualDensity(
+                                horizontal: 0, vertical: -4),
+                            activeColor: bluishColor,
+                            checkColor: whiteColor,
+                            value: aimedValue[index],
+                            onChanged: ((bool? value) {
+                              setState(() {
+                                aimedValue[index] = value!;
+                              });
+                            }),
+                            title: MyText(
+                              text:
+                                  //aimedText[index],
+                                  aimedFilter[index].aimedName,
+                              color: blackTypeColor.withOpacity(0.5),
+                              fontFamily: 'Raleway',
+                              size: 16,
+                              weight: FontWeight.w500,
+                            ),
+                          ),
+                        );
+                      }),
+                    ),
+                  ),
                   const Program(),
                   const Cost(),
                 ],
