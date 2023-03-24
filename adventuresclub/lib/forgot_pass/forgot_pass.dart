@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/forgot_pass/recovery_password.dart';
 import 'package:adventuresclub/sign_up/sign_in.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:country_picker/country_picker.dart';
@@ -80,6 +81,16 @@ class _ForgotPassState extends State<ForgotPass> {
     );
   }
 
+  void forgetPage(String userid, String otpId) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return RecoveryPassword(userid, otpId);
+        },
+      ),
+    );
+  }
+
   void verifyOtp() async {
     Navigator.of(context).pop();
     try {
@@ -91,6 +102,13 @@ class _ForgotPassState extends State<ForgotPass> {
             'otp': otpController.text,
             'forgot_password': "0"
           });
+      if (response.statusCode == 200) {
+        forgetPage(userID.toString(), otpController.text);
+        message("OTP Verfied");
+      } else {
+        dynamic body = jsonDecode(response.body);
+        message(body['message'].toString());
+      }
       print(response.statusCode);
       print(response.body);
       print(response.headers);
@@ -98,74 +116,6 @@ class _ForgotPassState extends State<ForgotPass> {
       print(e.toString());
     }
     otpController.clear();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        children: [
-          const SizedBox(height: 20),
-          Align(
-              alignment: Alignment.centerLeft,
-              child: MyText(
-                text: 'Forgot Password',
-                weight: FontWeight.w600,
-                color: bluishColor,
-                size: 20,
-              )),
-          const SizedBox(
-            height: 30,
-          ),
-          const Image(
-            image: ExactAssetImage('images/logo.png'),
-            height: 150,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Align(
-              alignment: Alignment.centerLeft,
-              child: MyText(
-                text:
-                    "By sending an OTP we'll verify that you are real, so please select an option.",
-                weight: FontWeight.bold,
-                color: greyColor,
-                size: 12,
-              )),
-          const SizedBox(
-            height: 20,
-          ),
-          phoneNumberField(context),
-          const SizedBox(
-            height: 20,
-          ),
-          GestureDetector(
-            onTap: goToSignIn,
-            child: const Align(
-              alignment: Alignment.center,
-              child: Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "Got Remember? ",
-                      style: TextStyle(color: greyColor),
-                    ),
-                    TextSpan(
-                      text: 'Sign In',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: bluishColor),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    ));
   }
 
   void getOtp() async {
@@ -179,14 +129,29 @@ class _ForgotPassState extends State<ForgotPass> {
             'forgot_password': "0",
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-      setState(() {
-        userID = decodedResponse['data']['user_id'];
-      });
-      print(response.statusCode);
-      print(userID);
+      if (response.statusCode == 200) {
+        setState(() {
+          userID = decodedResponse['data']['user_id'];
+        });
+        dynamic body = jsonDecode(response.body);
+        message(body['message'].toString());
+        print(response.statusCode);
+        print(userID);
+      } else {
+        dynamic body = jsonDecode(response.body);
+        message(body['message'].toString());
+      }
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  void message(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
   }
 
   void enterOTP() {
@@ -272,6 +237,74 @@ class _ForgotPassState extends State<ForgotPass> {
         );
       },
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        children: [
+          const SizedBox(height: 20),
+          Align(
+              alignment: Alignment.centerLeft,
+              child: MyText(
+                text: 'Forgot Password',
+                weight: FontWeight.w600,
+                color: bluishColor,
+                size: 20,
+              )),
+          const SizedBox(
+            height: 30,
+          ),
+          const Image(
+            image: ExactAssetImage('images/logo.png'),
+            height: 150,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Align(
+              alignment: Alignment.centerLeft,
+              child: MyText(
+                text:
+                    "By sending an OTP we'll verify that you are real, so please select an option.",
+                weight: FontWeight.bold,
+                color: greyColor,
+                size: 12,
+              )),
+          const SizedBox(
+            height: 20,
+          ),
+          phoneNumberField(context),
+          const SizedBox(
+            height: 20,
+          ),
+          GestureDetector(
+            onTap: goToSignIn,
+            child: const Align(
+              alignment: Alignment.center,
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "Got Remember? ",
+                      style: TextStyle(color: greyColor),
+                    ),
+                    TextSpan(
+                      text: 'Sign In',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: bluishColor),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ));
   }
 
   Widget phoneNumberField(context) {

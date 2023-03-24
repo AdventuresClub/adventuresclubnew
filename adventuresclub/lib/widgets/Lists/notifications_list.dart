@@ -118,7 +118,7 @@ class _NotificationsListState extends State<NotificationsList> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return BecomePartnerPackages(bp);
+          return const BecomePartnerPackages();
         },
       ),
     );

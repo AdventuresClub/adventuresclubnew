@@ -61,12 +61,16 @@ class _BannerPageState extends State<BannerPage> {
         maxHeight: 300);
     if (photo != null && pickedMedia.path.isEmpty) {
       pickedMedia = File(photo.path);
-      imageList[0] = pickedMedia;
+      if (imageList.isEmpty) {
+        imageList.add(pickedMedia);
+      }
+      //imageList[0] = pickedMedia;
       // addImage();
       //imagesList.add(pickedMedia);
     } else {
       pickedMediaSecond = File(photo!.path);
-      imageList[1] = pickedMediaSecond;
+      imageList.add(pickedMediaSecond);
+      // imageList[1] = pickedMediaSecond;
       //addSecondImage();
     }
     setState(() {
@@ -89,145 +93,147 @@ class _BannerPageState extends State<BannerPage> {
   Widget build(BuildContext context) {
     return loading
         ? const Text("loading....")
-        : Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  const Image(
-                      image: ExactAssetImage('images/add-circle.png'),
-                      height: 20),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  MyText(
-                    text: 'Add More',
-                    color: bluishColor,
-                  )
-                ],
-              ),
-              Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    children: [
-                      pickedMedia.path.isEmpty
-                          ? Container(
-                              padding: const EdgeInsets.all(20),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: blackTypeColor.withOpacity(0.2)),
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: lightGreyColor),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const SizedBox(height: 20),
-                                  GestureDetector(
-                                    onTap: addMedia,
-                                    child: const Center(
-                                      child: Image(
-                                        image: ExactAssetImage(
-                                            'images/upload.png'),
-                                        height: 45,
+        : SingleChildScrollView(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    const Image(
+                        image: ExactAssetImage('images/add-circle.png'),
+                        height: 20),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    MyText(
+                      text: 'Add More',
+                      color: bluishColor,
+                    )
+                  ],
+                ),
+                Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Column(
+                      children: [
+                        pickedMedia.path.isEmpty
+                            ? Container(
+                                padding: const EdgeInsets.all(20),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: blackTypeColor.withOpacity(0.2)),
+                                    borderRadius: BorderRadius.circular(12),
+                                    color: lightGreyColor),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const SizedBox(height: 20),
+                                    GestureDetector(
+                                      onTap: addMedia,
+                                      child: const Center(
+                                        child: Image(
+                                          image: ExactAssetImage(
+                                              'images/upload.png'),
+                                          height: 45,
+                                        ),
                                       ),
                                     ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    MyText(
+                                      text: 'Tap to browse',
+                                      color: greyColor,
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    MyText(
+                                      text:
+                                          'Add banner(image) to effectively adventure',
+                                      color: greyColor,
+                                      align: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : Container(
+                                padding: const EdgeInsets.all(20),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: blackTypeColor.withOpacity(0.2)),
+                                    borderRadius: BorderRadius.circular(12),
+                                    color: lightGreyColor),
+                                child: Center(
+                                  child: Image.file(
+                                    pickedMedia,
+                                    fit: BoxFit.fill,
+                                    height: 150,
+                                    width: 300,
                                   ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  MyText(
-                                    text: 'Tap to browse',
-                                    color: greyColor,
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  MyText(
-                                    text:
-                                        'Add banner(image) to effectively adventure',
-                                    color: greyColor,
-                                    align: TextAlign.center,
-                                  ),
-                                ],
-                              ),
-                            )
-                          : Container(
-                              padding: const EdgeInsets.all(20),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: blackTypeColor.withOpacity(0.2)),
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: lightGreyColor),
-                              child: Center(
-                                child: Image.file(
-                                  pickedMedia,
-                                  fit: BoxFit.fill,
-                                  height: 150,
-                                  width: 300,
                                 ),
                               ),
-                            ),
-                      const SizedBox(height: 20),
-                      pickedMediaSecond.path.isEmpty
-                          ? Container(
-                              padding: const EdgeInsets.all(20),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: blackTypeColor.withOpacity(0.2)),
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: lightGreyColor),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const SizedBox(height: 20),
-                                  GestureDetector(
-                                    onTap: addMedia,
-                                    child: const Center(
-                                      child: Image(
-                                        image: ExactAssetImage(
-                                            'images/upload.png'),
-                                        height: 45,
+                        const SizedBox(height: 20),
+                        pickedMediaSecond.path.isEmpty
+                            ? Container(
+                                padding: const EdgeInsets.all(20),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: blackTypeColor.withOpacity(0.2)),
+                                    borderRadius: BorderRadius.circular(12),
+                                    color: lightGreyColor),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const SizedBox(height: 20),
+                                    GestureDetector(
+                                      onTap: addMedia,
+                                      child: const Center(
+                                        child: Image(
+                                          image: ExactAssetImage(
+                                              'images/upload.png'),
+                                          height: 45,
+                                        ),
                                       ),
                                     ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    MyText(
+                                      text: 'Tap to browse',
+                                      color: greyColor,
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    MyText(
+                                      text:
+                                          'Add banner(image) to effectively adventure',
+                                      color: greyColor,
+                                      align: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : Container(
+                                padding: const EdgeInsets.all(20),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: blackTypeColor.withOpacity(0.2)),
+                                    borderRadius: BorderRadius.circular(12),
+                                    color: lightGreyColor),
+                                child: Center(
+                                  child: Image.file(
+                                    pickedMediaSecond,
+                                    fit: BoxFit.fill,
+                                    height: 150,
+                                    width: 300,
                                   ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  MyText(
-                                    text: 'Tap to browse',
-                                    color: greyColor,
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  MyText(
-                                    text:
-                                        'Add banner(image) to effectively adventure',
-                                    color: greyColor,
-                                    align: TextAlign.center,
-                                  ),
-                                ],
-                              ),
-                            )
-                          : Container(
-                              padding: const EdgeInsets.all(20),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: blackTypeColor.withOpacity(0.2)),
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: lightGreyColor),
-                              child: Center(
-                                child: Image.file(
-                                  pickedMediaSecond,
-                                  fit: BoxFit.fill,
-                                  height: 150,
-                                  width: 300,
                                 ),
                               ),
-                            ),
-                    ],
-                  ))
-            ],
+                      ],
+                    ))
+              ],
+            ),
           );
   }
 }

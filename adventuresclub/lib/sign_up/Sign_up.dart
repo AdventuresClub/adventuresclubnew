@@ -1439,133 +1439,133 @@ class _SignUpState extends State<SignUp> {
       decoration: BoxDecoration(
           color: whiteColor, borderRadius: BorderRadius.circular(8)),
       child: ListTile(
-          onTap: () => showDialog(
-              context: context,
-              builder: (context) {
-                return Dialog(
-                    backgroundColor: Colors.transparent,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(22)),
-                    child: Container(
-                      height: 300,
-                      color: whiteColor,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 16.0),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: MyText(
-                                  text: 'Weight in Kg',
-                                  weight: FontWeight.bold,
-                                  color: blackColor,
-                                  size: 20,
-                                  fontFamily: 'Raleway'),
-                            ),
+        onTap: () => showDialog(
+            context: context,
+            builder: (context) {
+              return Dialog(
+                  backgroundColor: Colors.transparent,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(22)),
+                  child: Container(
+                    height: 300,
+                    color: whiteColor,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: MyText(
+                                text: 'Weight in Kg',
+                                weight: FontWeight.bold,
+                                color: blackColor,
+                                size: 20,
+                                fontFamily: 'Raleway'),
                           ),
-                          Container(
-                            height: 200,
-                            color: whiteColor,
-                            child: Row(
-                              children: [
-                                Stack(children: [
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 1.3,
-                                    child: CupertinoPicker(
-                                      itemExtent: 82.0,
-                                      diameterRatio: 22,
-                                      backgroundColor: whiteColor,
-                                      onSelectedItemChanged: (int index) {
-                                        //print(index + 1);
-                                        setState(() {
-                                          getWeight =
-                                              weightList[index].heightName;
-                                          // getWeight == null
-                                          //     ? cont = false
-                                          //     : cont = true;
-                                          // ft = (index + 1);
-                                          // heightController.text =
-                                          //     "$ft' $inches\"";
-                                        });
-                                      },
-                                      selectionOverlay:
-                                          const CupertinoPickerDefaultSelectionOverlay(
-                                        background: transparentColor,
-                                      ),
-                                      children: List.generate(weightList.length,
-                                          (index) {
-                                        return Center(
-                                          child: MyText(
-                                              text:
-                                                  weightList[index].heightName,
-                                              size: 14,
-                                              color: blackTypeColor4),
-                                        );
-                                      }),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 70,
-                                    child: Container(
-                                      height: 60,
-                                      width: MediaQuery.of(context).size.width /
-                                          1.2,
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 16),
-                                      decoration: BoxDecoration(
-                                          border: Border(
-                                              top: BorderSide(
-                                                  color: blackColor
-                                                      .withOpacity(0.7),
-                                                  width: 1.5),
-                                              bottom: BorderSide(
-                                                  color: blackColor
-                                                      .withOpacity(0.7),
-                                                  width: 1.5))),
-                                    ),
-                                  )
-                                ]),
-                              ],
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                        ),
+                        Container(
+                          height: 200,
+                          color: whiteColor,
+                          child: Row(
                             children: [
-                              TextButton(
-                                  onPressed: () => Navigator.of(context).pop(),
-                                  child: MyText(
-                                    text: 'Cancel',
-                                    color: bluishColor,
-                                  )),
-                              TextButton(
-                                  onPressed: () => Navigator.of(context).pop(),
-                                  child: MyText(
-                                    text: 'Ok',
-                                    color: bluishColor,
-                                  )),
+                              Stack(children: [
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width / 1.3,
+                                  child: CupertinoPicker(
+                                    itemExtent: 82.0,
+                                    diameterRatio: 22,
+                                    backgroundColor: whiteColor,
+                                    onSelectedItemChanged: (int index) {
+                                      //print(index + 1);
+                                      setState(() {
+                                        getWeight =
+                                            weightList[index].heightName;
+                                        // getWeight == null
+                                        //     ? cont = false
+                                        //     : cont = true;
+                                        // ft = (index + 1);
+                                        // heightController.text =
+                                        //     "$ft' $inches\"";
+                                      });
+                                    },
+                                    selectionOverlay:
+                                        const CupertinoPickerDefaultSelectionOverlay(
+                                      background: transparentColor,
+                                    ),
+                                    children: List.generate(weightList.length,
+                                        (index) {
+                                      return Center(
+                                        child: MyText(
+                                            text: weightList[index].heightName,
+                                            size: 14,
+                                            color: blackTypeColor4),
+                                      );
+                                    }),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 70,
+                                  child: Container(
+                                    height: 60,
+                                    width:
+                                        MediaQuery.of(context).size.width / 1.2,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 16),
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            top: BorderSide(
+                                                color:
+                                                    blackColor.withOpacity(0.7),
+                                                width: 1.5),
+                                            bottom: BorderSide(
+                                                color:
+                                                    blackColor.withOpacity(0.7),
+                                                width: 1.5))),
+                                  ),
+                                )
+                              ]),
                             ],
-                          )
-                        ],
-                      ),
-                    ));
-              }),
-          tileColor: whiteColor,
-          selectedTileColor: whiteColor,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 15),
-          title: MyText(
-            text: getWeight.toString(),
-            color: blackColor.withOpacity(0.6),
-            size: 14,
-            weight: FontWeight.w500,
-          ),
-          trailing: const Image(
-            image: ExactAssetImage('images/ic_drop_down.png'),
-            height: 16,
-            width: 16,
-          )),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            TextButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: MyText(
+                                  text: 'Cancel',
+                                  color: bluishColor,
+                                )),
+                            TextButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: MyText(
+                                  text: 'Ok',
+                                  color: bluishColor,
+                                )),
+                          ],
+                        )
+                      ],
+                    ),
+                  ));
+            }),
+        tileColor: whiteColor,
+        selectedTileColor: whiteColor,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 15),
+        title: MyText(
+          text: getWeight.toString(),
+          color: blackColor.withOpacity(0.6),
+          size: 14,
+          weight: FontWeight.w500,
+        ),
+        trailing: const Image(
+          image: ExactAssetImage('images/ic_drop_down.png'),
+          height: 16,
+          width: 16,
+        ),
+      ),
     );
   }
 

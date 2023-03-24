@@ -14,6 +14,8 @@ import 'package:adventuresclub/widgets/search_container.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../become_partner/become_partner_packages.dart';
+
 class MyServices extends StatefulWidget {
   const MyServices({super.key});
 
@@ -33,13 +35,83 @@ class _MyServicesState extends State<MyServices> {
   }
 
   void goTo() {
+    if (Constants.expired == false) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) {
+            return const CreateNewServices(); //CompleteProfile();
+          },
+        ),
+      );
+    } else if (Constants.expired == true) {
+      requestSent();
+    }
+  }
+
+  void requestSent() async {
+    showDialog(
+      context: context,
+      builder: (ctx) => SimpleDialog(
+        title: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            children: [
+              const Text(
+                "Alert",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                "Your Subscription exprired. Please renew to extend the subscription",
+                style: TextStyle(fontSize: 16),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  MaterialButton(
+                    onPressed: packagesList,
+                    child: MyText(
+                      text: "Yes",
+                      weight: FontWeight.bold,
+                      color: blackColor,
+                    ),
+                  ),
+                  MaterialButton(
+                    onPressed: cancel,
+                    child: MyText(
+                      text: "No",
+                      weight: FontWeight.bold,
+                      color: blackColor,
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+        children: [],
+      ),
+    );
+  }
+
+  void packagesList() {
+    cancel();
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return const CreateNewServices(); //CompleteProfile();
+          return const BecomePartnerPackages(
+            //bp,
+            show: true,
+          );
         },
       ),
     );
+  }
+
+  void cancel() {
+    Navigator.of(context).pop();
   }
 
 // 0:
@@ -145,9 +217,10 @@ class _MyServicesState extends State<MyServices> {
           Uri.parse(
               "https://adventuresclub.net/adventureClub/api/v1/myserviceapi"),
           body: {
-            'owner': Constants.userId.toString(), //"3",
-            'country_id': Constants.countryId
-                .toString(), //"2", //Constants.countryId.toString(), //"2",
+            'owner': "3", //Constants.userId.toString(), //"3",
+            'country_id': "1", //Constants.countryId
+            //.toString(),
+            //"2", //Constants.countryId.toString(), //"2",
             //'forgot_password': "0"
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;

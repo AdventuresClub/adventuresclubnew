@@ -2,9 +2,9 @@
 
 import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/constants_create_new_services.dart';
 import 'package:adventuresclub/google_page.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
-import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
@@ -12,10 +12,18 @@ import 'package:adventuresclub/widgets/text_fields/multiline_field.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 
 class Cost extends StatefulWidget {
-  const Cost({super.key});
+  final TextEditingController iliveController;
+  final TextEditingController specificAddress;
+  final TextEditingController costOne;
+  final TextEditingController costTwo;
+  final TextEditingController preRequisites;
+  final TextEditingController minimumRequirement;
+  final TextEditingController terms;
+  const Cost(this.iliveController, this.specificAddress, this.costOne,
+      this.costTwo, this.preRequisites, this.minimumRequirement, this.terms,
+      {super.key});
 
   @override
   State<Cost> createState() => _CostState();
@@ -23,7 +31,7 @@ class Cost extends StatefulWidget {
 
 class _CostState extends State<Cost> {
   TextEditingController controller = TextEditingController();
-  TextEditingController iLiveInController = TextEditingController();
+
   int countryId = 0;
   TextEditingController scheduleController = TextEditingController();
   String locationMessage = "Getting location ...";
@@ -153,7 +161,7 @@ class _CostState extends State<Cost> {
             setState(() {
               loading = false;
             });
-            iLiveInController.text = myLoc;
+            widget.iliveController.text = myLoc;
             userlocation = myLoc;
             //addLocation(iLiveInController);
           }
@@ -202,7 +210,7 @@ class _CostState extends State<Cost> {
 
   void setLocation(String loc, double lt, double lg) {
     Navigator.of(context).pop();
-    iLiveInController.text = loc;
+    widget.iliveController.text = loc;
     lat = lt;
     lng = lg;
     setState(
@@ -210,14 +218,14 @@ class _CostState extends State<Cost> {
         userlocation = loc;
       },
     );
-    addLocation(iLiveInController, lat, lng);
+    addLocation(lat, lng);
   }
 
-  void addLocation(TextEditingController te, lat, lng) {
-    Provider.of<CompleteProfileProvider>(context, listen: false)
-        .getLocationController = iLiveInController;
-    Provider.of<CompleteProfileProvider>(context, listen: false).lat = lat;
-    Provider.of<CompleteProfileProvider>(context, listen: false).lng = lng;
+  void addLocation(lat, lng) {
+    setState(() {
+      ConstantsCreateNewServices.lat = lat;
+      ConstantsCreateNewServices.lng = lng;
+    });
   }
 
   abc() {}
@@ -230,7 +238,7 @@ class _CostState extends State<Cost> {
           SizedBox(
             width: MediaQuery.of(context).size.width / 1,
             child: TextField(
-              controller: iLiveInController,
+              controller: widget.iliveController,
               decoration: InputDecoration(
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -263,8 +271,8 @@ class _CostState extends State<Cost> {
           const SizedBox(
             height: 20,
           ),
-          TFWithSize('Type Specific Address/Location', scheduleController, 15,
-              lightGreyColor, 1),
+          TFWithSize('Type Specific Address/Location', widget.specificAddress,
+              15, lightGreyColor, 1),
           const Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -272,7 +280,7 @@ class _CostState extends State<Cost> {
               Expanded(
                 child: TFWithSize(
                   'Set Cost',
-                  scheduleController,
+                  widget.costOne,
                   16,
                   lightGreyColor,
                   3.4,
@@ -284,7 +292,7 @@ class _CostState extends State<Cost> {
               Expanded(
                 child: TFWithSize(
                   'Set Cost',
-                  scheduleController,
+                  widget.costTwo,
                   16,
                   lightGreyColor,
                   3.4,
@@ -294,22 +302,22 @@ class _CostState extends State<Cost> {
             ],
           ),
           const SizedBox(height: 15),
-          Align(
-              alignment: Alignment.centerLeft,
-              child: MyText(
-                text: 'Terms and conditions',
-                color: blackTypeColor,
-                weight: FontWeight.w500,
-              )),
+          // Align(
+          //     alignment: Alignment.centerLeft,
+          //     child: MyText(
+          //       text: 'Terms and conditions',
+          //       color: blackTypeColor,
+          //       weight: FontWeight.w500,
+          //     )),
           const SizedBox(height: 20),
           MultiLineField(
-              'Type Pre-Requisites….', 5, lightGreyColor, scheduleController),
+              'Type Pre-Requisites….', 5, lightGreyColor, widget.preRequisites),
           const SizedBox(height: 20),
           MultiLineField('Type Minimum Requirement....', 5, lightGreyColor,
-              scheduleController),
+              widget.minimumRequirement),
           const SizedBox(height: 20),
-          MultiLineField('Type Terms & Conditions.....', 4, lightGreyColor,
-              scheduleController),
+          MultiLineField(
+              'Type Terms & Conditions.....', 4, lightGreyColor, widget.terms),
         ]),
       ),
     );

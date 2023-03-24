@@ -718,13 +718,13 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                   // TFWithSize(
                   //     'Enter Paypal id here', payPalId, 12, lightGreyColor, 1),
                   const SizedBox(height: 10),
-                  // MyText(
-                  //   text: "Payment method from Adventorous Club",
-                  //   align: TextAlign.left,
-                  //   //weight: FontWeight.w700,
-                  //   color: blackColor,
-                  //   size: 18,
-                  // ),
+                  MyText(
+                    text: "Payment method from Adventorous Club",
+                    align: TextAlign.left,
+                    //weight: FontWeight.w700,
+                    color: blackColor,
+                    size: 18,
+                  ),
                   const SizedBox(
                     height: 10,
                   ),

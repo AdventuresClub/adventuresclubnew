@@ -64,20 +64,20 @@ class CompleteProfileProvider with ChangeNotifier {
     // {
     //   'heading': 'Just follow simple four steps to list up your adventure',
     //   'child': const
-    //    BannerPage()
+    // //    BannerPage()
+    // // },
+    // {
+    //   'heading': 'Just follow simple four steps to list up your adventure',
+    //   'child': const Description()
     // },
-    {
-      'heading': 'Just follow simple four steps to list up your adventure',
-      'child': const Description()
-    },
-    {
-      'heading': 'Just follow simple four steps to list up your adventure',
-      'child': const Program()
-    },
-    {
-      'heading': 'Just follow simple four steps to list up your adventure',
-      'child': const Cost()
-    },
+    // {
+    //   'heading': 'Just follow simple four steps to list up your adventure',
+    //   'child': const Program()
+    // },
+    // {
+    //   'heading': 'Just follow simple four steps to list up your adventure',
+    //   'child': const Cost()
+    // },
   ];
 
   get lastStep => steps.length - 1;

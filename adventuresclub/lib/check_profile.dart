@@ -67,6 +67,7 @@ class CheckProfileState extends State<CheckProfile> {
     if (userId != 0) {
       parseData(name, countryId, userId, email, password, country, countryFlag,
           userRole);
+      Constants.getProfile();
       //prefs.setString("name", )
       goToNavigation();
     } else {

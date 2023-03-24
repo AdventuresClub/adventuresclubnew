@@ -15,6 +15,7 @@ import 'package:adventuresclub/models/packages_become_partner/bp_excluded_model.
 import 'package:adventuresclub/models/packages_become_partner/bp_includes_model.dart';
 import 'package:adventuresclub/models/profile_models/profile_become_partner.dart';
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
+import 'package:adventuresclub/models/services/dependencies_model.dart';
 import 'package:adventuresclub/models/user_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -69,6 +70,7 @@ const darkRed = Color.fromARGB(255, 176, 37, 37);
 
 class Constants {
   static String name = "";
+  static bool expired = false;
   static int countryId = 0;
   static String userRole = "3";
   static int userId = 0;
@@ -92,15 +94,44 @@ class Constants {
   static List<LevelFilterModel> levelFilter = [];
   static List<AimedForModel> dummyAm = [];
   static List<AimedForModel> am = [];
+  static List<DependenciesModel> dependency = [];
   static List<DurationsModel> durationFilter = [];
   static List<ActivitiesIncludeModel> activitiesFilter = [];
   static List<RegionFilterModel> regionFilter = [];
   static List<FilterDataModel> fDM = [];
   static List<RegionsModel> regionList = [];
+  static List<PackagesBecomePartnerModel> freegBp = [];
   static List<PackagesBecomePartnerModel> gBp = [];
   static Map getPackages = {};
   static List<BpIncludesModel> gIList = [];
   static List<BpExcludesModel> gEList = [];
+  static ProfileBecomePartner pbp = ProfileBecomePartner(
+      0,
+      0,
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      0,
+      0,
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      0,
+      "",
+      "",
+      "",
+      "",
+      "",
+      "");
   static UserProfileModel profile = UserProfileModel(
       0,
       "",
@@ -141,6 +172,7 @@ class Constants {
   }
 
   static void clear() {
+    clearServicesList();
     prefs!.clear();
     userId == 0;
     countryId == 0;
@@ -148,6 +180,18 @@ class Constants {
     emailId == "";
     password == "";
     country = "";
+  }
+
+  static void clearServicesList() {
+    regionFilter.clear();
+    categoryFilter.clear();
+    filterSectors.clear();
+    serviceFilter.clear();
+    durationFilter.clear();
+    regionFilter.clear();
+    levelFilter.clear();
+    activitiesFilter.clear();
+    activitiesFilter.clear();
   }
 
   static Future<String> getLocation() async {
@@ -286,39 +330,43 @@ class Constants {
       int currencyId = int.tryParse(userData['currency_id'].toString()) ?? 0;
       int addedFrom = int.tryParse(userData['added_from'].toString()) ?? 0;
       dynamic partnerInfo = decodedResponse['data']["become_partner"];
-      int id = int.tryParse(partnerInfo['id'].toString()) ?? 0;
-      int userId = int.tryParse(partnerInfo['user_id'].toString()) ?? 0;
-      int debitCard = int.tryParse(partnerInfo['debit_card'].toString()) ?? 0;
-      int visaCard = int.tryParse(partnerInfo['visa_card'].toString()) ?? 0;
-      int packagesId = int.tryParse(partnerInfo['packages_id'].toString()) ?? 0;
-      ProfileBecomePartner bp = ProfileBecomePartner(
-        id,
-        userId,
-        partnerInfo['company_name'].toString() ?? "",
-        partnerInfo['address'].toString() ?? "",
-        partnerInfo['location'].toString() ?? "",
-        partnerInfo['description'].toString() ?? "",
-        partnerInfo['license'].toString() ?? "",
-        partnerInfo['cr_name'].toString() ?? "",
-        partnerInfo['cr_number'].toString() ?? "",
-        partnerInfo['cr_copy'].toString() ?? "",
-        debitCard,
-        visaCard,
-        partnerInfo['payon_arrival'].toString() ?? "",
-        partnerInfo['paypal'].toString() ?? "",
-        partnerInfo['bankname'].toString() ?? "",
-        partnerInfo['account_holdername'].toString() ?? "",
-        partnerInfo['account_number'].toString() ?? "",
-        partnerInfo['is_online'].toString() ?? "",
-        partnerInfo['is_approved'].toString() ?? "",
-        packagesId,
-        partnerInfo['start_date'].toString() ?? "",
-        partnerInfo['end_date'].toString() ?? "",
-        partnerInfo['is_wiretransfer'].toString() ?? "",
-        partnerInfo['is_free_used'].toString() ?? "",
-        partnerInfo['created_at'].toString() ?? "",
-        partnerInfo['updated_at'].toString() ?? "",
-      );
+      if (partnerInfo != null) {
+        int id = int.tryParse(partnerInfo['id'].toString()) ?? 0;
+        int userId = int.tryParse(partnerInfo['user_id'].toString()) ?? 0;
+        int debitCard = int.tryParse(partnerInfo['debit_card'].toString()) ?? 0;
+        int visaCard = int.tryParse(partnerInfo['visa_card'].toString()) ?? 0;
+        int packagesId =
+            int.tryParse(partnerInfo['packages_id'].toString()) ?? 0;
+        ProfileBecomePartner bp = ProfileBecomePartner(
+          id,
+          userId,
+          partnerInfo['company_name'].toString() ?? "",
+          partnerInfo['address'].toString() ?? "",
+          partnerInfo['location'].toString() ?? "",
+          partnerInfo['description'].toString() ?? "",
+          partnerInfo['license'].toString() ?? "",
+          partnerInfo['cr_name'].toString() ?? "",
+          partnerInfo['cr_number'].toString() ?? "",
+          partnerInfo['cr_copy'].toString() ?? "",
+          debitCard,
+          visaCard,
+          partnerInfo['payon_arrival'].toString() ?? "",
+          partnerInfo['paypal'].toString() ?? "",
+          partnerInfo['bankname'].toString() ?? "",
+          partnerInfo['account_holdername'].toString() ?? "",
+          partnerInfo['account_number'].toString() ?? "",
+          partnerInfo['is_online'].toString() ?? "",
+          partnerInfo['is_approved'].toString() ?? "",
+          packagesId,
+          partnerInfo['start_date'].toString() ?? "",
+          partnerInfo['end_date'].toString() ?? "",
+          partnerInfo['is_wiretransfer'].toString() ?? "",
+          partnerInfo['is_free_used'].toString() ?? "",
+          partnerInfo['created_at'].toString() ?? "",
+          partnerInfo['updated_at'].toString() ?? "",
+        );
+        pbp = bp;
+      }
       UserProfileModel up = UserProfileModel(
           userLoginId,
           userData['users_role'].toString() ?? "",
@@ -350,7 +398,7 @@ class Constants {
           userData['updated_at'].toString() ?? "",
           userData['deleted_at'].toString() ?? "",
           userData['device_id'].toString() ?? "",
-          bp);
+          pbp);
       profile = up;
       Constants.userRole = up.userRole;
       prefs.setString("userRole", up.userRole);
@@ -399,12 +447,14 @@ class Constants {
             element['deleted_at'].toString() ?? "",
             gIList,
             gEList);
+        freegBp.add(pBp);
         gBp.add(pBp);
       });
     }
   }
 
   static Future<void> getFilter() async {
+    clearServicesList();
     getRegions();
     getProfile();
     var response = await http.get(Uri.parse(
@@ -553,6 +603,8 @@ class Constants {
   }
 
   static void aimedFor() async {
+    dependeny();
+    am.clear();
     var response = await http.get(Uri.parse(
         "https://adventuresclub.net/adventureClub/api/v1/getServiceFor"));
     if (response.statusCode == 200) {
@@ -571,6 +623,29 @@ class Constants {
           //  selected: false,
         );
         am.add(amf);
+      });
+    }
+  }
+
+  static void dependeny() async {
+    dependency.clear();
+    var response = await http.get(Uri.parse(
+        "https://adventuresclub.net/adventureClub/api/v1/getallDependency"));
+    if (response.statusCode == 200) {
+      mapAimedFilter = json.decode(response.body);
+      List<dynamic> result = mapAimedFilter['message'];
+      result.forEach((element) {
+        int id = int.tryParse(element['id'].toString()) ?? 0;
+        DependenciesModel amf = DependenciesModel(
+          id,
+          element['dependency_name'].toString() ?? "",
+          element['image'].toString() ?? "",
+          element['created_at'].toString() ?? "",
+          element['updated_at'].toString() ?? "",
+          element['deleted_at'].toString() ?? "",
+          //  selected: false,
+        );
+        dependency.add(amf);
       });
     }
   }

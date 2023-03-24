@@ -1,8 +1,11 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls
 
+import 'dart:convert';
 import 'dart:math';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
+import 'package:adventuresclub/models/packages_become_partner/bp_excluded_model.dart';
+import 'package:adventuresclub/models/packages_become_partner/bp_includes_model.dart';
 import 'package:adventuresclub/widgets/Lists/package_list.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +13,8 @@ import '../../models/packages_become_partner/packages_become_partner_model.dart'
 import 'package:http/http.dart' as http;
 
 class BecomePartnerPackages extends StatefulWidget {
-  final List<PackagesBecomePartnerModel> pbp;
-  const BecomePartnerPackages(this.pbp, {super.key});
+  final bool? show;
+  const BecomePartnerPackages({this.show = false, super.key});
 
   @override
   State<BecomePartnerPackages> createState() => _BecomePartnerPackagesState();
@@ -23,6 +26,75 @@ class _BecomePartnerPackagesState extends State<BecomePartnerPackages> {
   String orderId = "";
   String userRole = "";
   bool loading = false;
+  Map getPackages = {};
+  List<BpIncludesModel> gIList = [];
+  List<BpExcludesModel> gEList = [];
+  List<PackagesBecomePartnerModel> freegBp = [];
+  List<PackagesBecomePartnerModel> pbp = [];
+  List<PackagesBecomePartnerModel> packages = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getPackagesApi();
+  }
+
+  Future getPackagesApi() async {
+    setState(() {
+      loading = true;
+    });
+    var response = await http.get(Uri.parse(
+        "https://adventuresclub.net/adventureClub/api/v1/get_packages"));
+    if (response.statusCode == 200) {
+      getPackages = json.decode(response.body);
+      List<dynamic> result = getPackages['data'];
+      result.forEach((element) {
+        List<dynamic> included = element['includes'];
+        included.forEach((i) {
+          BpIncludesModel iList = BpIncludesModel(
+            int.tryParse(i['id'].toString()) ?? 0,
+            int.tryParse(i['package_id'].toString()) ?? 0,
+            i['title'].toString(),
+            int.tryParse(i['detail_type'].toString()) ?? 0,
+          );
+          gIList.add(iList);
+        });
+        List<dynamic> excluded = element['Exclude'];
+        excluded.forEach((e) {
+          BpExcludesModel eList = BpExcludesModel(
+            int.tryParse(e['id'].toString()) ?? 0,
+            int.tryParse(e['package_id'].toString()) ?? 0,
+            e['title'].toString() ?? "",
+            e['detail_type'].toString() ?? "",
+          );
+          gEList.add(eList);
+        });
+        PackagesBecomePartnerModel pBp = PackagesBecomePartnerModel(
+            int.tryParse(element['id'].toString()) ?? 0,
+            element['title'].toString() ?? "",
+            element['symbol'].toString() ?? "",
+            element['duration'].toString() ?? "",
+            element['cost'].toString() ?? "",
+            int.tryParse(element['days'].toString()) ?? 0,
+            int.tryParse(element['status'].toString()) ?? 0,
+            element['created_at'].toString() ?? "",
+            element['updated_at'].toString() ?? "",
+            element['deleted_at'].toString() ?? "",
+            gIList,
+            gEList);
+        if (element['cost'] == "0.00" && widget.show == false) {
+          freegBp.add(pBp);
+          pbp = freegBp;
+        } else if (element['cost'] != "0.00") {
+          packages.add(pBp);
+          pbp = packages;
+        }
+      });
+      setState(() {
+        loading = false;
+      });
+    }
+  }
 
   List<String> imageOneList = [
     'images/greenrectangle.png',
@@ -136,17 +208,22 @@ class _BecomePartnerPackagesState extends State<BecomePartnerPackages> {
           weight: FontWeight.bold,
         ),
       ),
-      body: ListView.builder(
-        itemCount: widget.pbp.length,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () =>
-                update(widget.pbp[index].id.toString(), widget.pbp[index].cost),
-            child: PackageList(imageOneList[index], secondImageList[index],
-                widget.pbp[index].cost, widget.pbp[index].duration),
-          );
-        },
-      ),
+      body: loading
+          ? const Text("Loading..")
+          : ListView.builder(
+              itemCount: pbp.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () =>
+                      update(pbp[index].id.toString(), pbp[index].cost),
+                  child: PackageList(
+                      imageOneList[index],
+                      secondImageList[index],
+                      pbp[index].cost,
+                      pbp[index].duration),
+                );
+              },
+            ),
       // const SizedBox(
       //   height: 10,
       // ),
@@ -155,7 +232,7 @@ class _BecomePartnerPackagesState extends State<BecomePartnerPackages> {
       //   child: PackageList(
       //     'images/greenrectangle.png',
       //     'images/backpic.png',
-      //     "FREE", //" ${"\$"} ${widget.pbp[0].cost}",
+      //     "FREE", //" ${"\$"} ${pbp[0].cost}",
       //     //'\$100',
       //     "${widget.pbp[0].title}  "
       //         "    ${widget.pbp[0].duration}",

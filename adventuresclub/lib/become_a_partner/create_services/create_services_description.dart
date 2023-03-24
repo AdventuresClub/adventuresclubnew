@@ -3,7 +3,6 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/constants_create_new_services.dart';
 import 'package:adventuresclub/models/category/category_model.dart';
-import 'package:adventuresclub/models/create_adventure/regions_model.dart';
 import 'package:adventuresclub/models/filter_data_model/activities_inc_model.dart';
 import 'package:adventuresclub/models/filter_data_model/category_filter_model.dart';
 import 'package:adventuresclub/models/filter_data_model/countries_filter.dart';
@@ -13,7 +12,6 @@ import 'package:adventuresclub/models/filter_data_model/level_filter_mode.dart';
 import 'package:adventuresclub/models/filter_data_model/region_model.dart';
 import 'package:adventuresclub/models/filter_data_model/sector_filter_model.dart';
 import 'package:adventuresclub/models/filter_data_model/service_types_filter.dart';
-import 'package:adventuresclub/models/services/aimed_for_model.dart';
 import 'package:adventuresclub/models/weightnheight_model.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/dropdowns/duration_drop_down.dart';
@@ -30,11 +28,20 @@ import 'package:flutter/material.dart';
 
 class CreateServicesDescription extends StatefulWidget {
   final TextEditingController adventureName;
-  final Widget available;
+  final TextEditingController available;
   final TextEditingController info;
   final Widget aimedFor;
+  final TextEditingController daysBeforeActController;
+  final Widget servicePlan;
+  final Widget dependency;
   const CreateServicesDescription(
-      this.available, this.adventureName, this.info, this.aimedFor,
+      this.adventureName,
+      this.available,
+      this.info,
+      this.aimedFor,
+      this.daysBeforeActController,
+      this.servicePlan,
+      this.dependency,
       {super.key});
 
   @override
@@ -43,35 +50,13 @@ class CreateServicesDescription extends StatefulWidget {
 }
 
 class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
-  TextEditingController adventureName = TextEditingController();
-  TextEditingController availableSeats = TextEditingController();
-  TextEditingController scheduleController = TextEditingController();
-  TextEditingController scheduleDesController = TextEditingController();
-  TextEditingController getLocationController = TextEditingController();
-  TextEditingController gatheringDateController = TextEditingController();
-  TextEditingController specificAddress = TextEditingController();
-  TextEditingController setCost1 = TextEditingController();
-  TextEditingController setCost2 = TextEditingController();
-  TextEditingController preReqController = TextEditingController();
-  TextEditingController minController = TextEditingController();
-  TextEditingController tncController = TextEditingController();
-  TextEditingController adventureNameController = TextEditingController();
-  TextEditingController daysBeforeActController = TextEditingController();
-  TextEditingController seatsController = TextEditingController();
-  TextEditingController startDateController = TextEditingController();
-  TextEditingController endDateController = TextEditingController();
   int countryId = 0;
   bool loading = false;
   Map mapFilter = {};
   Map mapAimedFilter = {};
-  bool particularWeekDays = false;
-  bool particularWeekDay = false;
-  bool particularDay = false;
   DateTime currentDate = DateTime.now();
   List<int> activityId = [];
   List<String> activity = [];
-  var formattedDate;
-  var endDate;
   List<SectorFilterModel> filterSectors = [];
   List<CategoryFilterModel> categoryFilter = [];
   List<ServiceTypeFilterModel> serviceFilter = [];
@@ -83,38 +68,15 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
   List<FilterDataModel> fDM = [];
   List<String> selectedActivites = [];
   List<int> selectedActivitesid = [];
-  DateTime? pickedDate;
   int? currentIndex;
   var getCountry = 'Oman';
   List<WnHModel> weightList = [];
   List<String> countryList = [
     "Oman",
   ];
-  List<String> cList = [
-    // "Service Category",
-    // "Land",
-    // "Water",
-    // "Sky",
-    // "Transport",
-    // "Accomodation"
-  ];
   List<CategoryModel> categoryList = [];
   List<RegionFilterModel> regionList = [];
-  List<String> rList = [];
-  List<String> serviceSector = ["Training", "Tour"];
-  List<String> sFilterList = [];
-  List<String> durationList = [];
-  List<String> levelList = [];
-  List<String> activityList = [];
-  List days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
-  List aimedText = [
-    // 'kids',
-    // 'Gents',
-    // 'Ladies',
-    // 'Adults',
-    // 'Mixed Gender',
-    // 'Girls',
-  ];
+  List aimedText = [];
   List dependencyText = [
     'Licensed',
     'Weather Conditions',
@@ -124,38 +86,13 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
     'Climate',
   ];
   List<bool> dependencyValue = [false, false, false, false, false, false];
-  List activityText = [
-    'Transportation for gathering area',
-    'Drinks ',
-    'Snacks',
-    'Bike Riding',
-    'Sand Bashing',
-    'Sand Skiing',
-    'Climbing',
-    'Swimming',
-  ];
-
-  List<bool> daysValue = [false, false, false, false, false, false, false];
-  List<bool> activityValue = [
-    //false,
-    // false,
-    // false,
-    // false,
-    // false,
-    // false,
-    // false,
-    // false
-  ];
-
-  List<bool> aimedValue = [
-    //false, false, false, false, false, false
-  ];
+  List<String> activityList = [];
+  List<bool> activityValue = [];
+  List<bool> aimedValue = [];
 
   @override
   void initState() {
     super.initState();
-    formattedDate = 'Start Date';
-    endDate = "End Date";
     getData();
   }
 
@@ -297,115 +234,17 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
         });
   }
 
-  // void getData() async {
-  //   SharedPreferences prefs = await Constants.getPrefs();
-  //   p
-  // }
-
-  @override
-  void dispose() {
-    seatsController.dispose();
-    super.dispose();
-  }
-
-  void parseRegions(List<RegionsModel> rm) {
-    rm.forEach(
-      (element) {
-        if (element.region.isNotEmpty) {
-          rList.add(element.region);
-        }
-      },
-    );
-  }
-
-  void parseCategories(List<CategoryFilterModel> cm) {
-    cm.forEach(
-      (element) {
-        if (element.category.isNotEmpty) {
-          cList.add(element.category);
-        }
-      },
-    );
-  }
-
-  void parseService(List<ServiceTypeFilterModel> st) {
-    st.forEach((element) {
-      if (element.type.isNotEmpty) {
-        sFilterList.add(element.type);
-      }
-    });
-  }
-
-  void parseDuration(List<DurationsModel> dm) {
-    dm.forEach((element) {
-      if (element.duration.isNotEmpty) {
-        durationList.add(element.duration);
-      }
-    });
-  }
-
-  void parseLevel(List<LevelFilterModel> lm) {
-    lm.forEach((element) {
-      if (element.level.isNotEmpty) {
-        levelList.add(element.level);
-      }
-    });
-  }
-
   void parseActivity(List<ActivitiesIncludeModel> am) {
     am.forEach((element) {
       if (element.activity.isNotEmpty) {
         activityList.add(element.activity);
       }
     });
-    activityList.forEach((element) {
-      activityValue.add(false);
-    });
-  }
-
-  void parseAimed(List<AimedForModel> am) {
-    am.forEach((element) {
-      if (element.aimedName.isNotEmpty) {
-        aimedText.add(element.aimedName);
-      }
-    });
-    aimedText.forEach((element) {
-      aimedValue.add(false);
-    });
-  }
-
-  Future<void> _selectDate(BuildContext context, var givenDate) async {
-    pickedDate = await showDatePicker(
-        context: context,
-        initialDate: currentDate,
-        firstDate: DateTime(DateTime.now().day - 1),
-        lastDate: DateTime(2050));
-    if (pickedDate != null && pickedDate != currentDate) {
-      if (givenDate == 'Start Date') {
-        setState(() {
-          var date = DateTime.parse(pickedDate.toString());
-          String m = date.month < 10 ? "0${date.month}" : "${date.month}";
-          String d = date.day < 10 ? "0${date.day}" : "${date.day}";
-          formattedDate = "${date.year}-$m-$d";
-        });
-      } else {
-        setState(() {
-          var date = DateTime.parse(pickedDate.toString());
-          String m = date.month < 10 ? "0${date.month}" : "${date.month}";
-          String d = date.day < 10 ? "0${date.day}" : "${date.day}";
-          endDate = "${date.year}-$m-$d";
-          currentDate = pickedDate!;
-        });
-      }
-    }
-    getDates(formattedDate, endDate);
-  }
-
-  void getDates(String sDate, String eDate) {
-    setState(() {
-      ConstantsCreateNewServices.startDate = sDate;
-      ConstantsCreateNewServices.startDate = eDate;
-    });
+    activityList.forEach(
+      (element) {
+        activityValue.add(false);
+      },
+    );
   }
 
   @override
@@ -424,7 +263,6 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                 MultiLineField(
                     'Type Information', 5, lightGreyColor, widget.info),
                 const SizedBox(height: 10),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -433,7 +271,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                       child: Container(
                         //width: MediaQuery.of(context).size.width / 2.4,
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 15),
+                            horizontal: 15, vertical: 20),
                         decoration: BoxDecoration(
                           color: lightGreyColor,
                           border: Border.all(
@@ -451,7 +289,11 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                     const SizedBox(
                       width: 10,
                     ),
-                    Expanded(child: RegionFilterDropDown(regionList)),
+                    Expanded(
+                        child: RegionFilterDropDown(
+                      regionList,
+                      show: true,
+                    )),
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -483,196 +325,21 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                Column(
+                Row(
                   children: [
-                    Row(
-                      children: [
-                        Expanded(child: LevelDropDown(levelFilter)),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: widget.available,
-                        ),
-                      ],
+                    Expanded(child: LevelDropDown(levelFilter)),
+                    const SizedBox(
+                      width: 10,
                     ),
-                    const SizedBox(height: 20),
-                    const Divider(),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: MyText(
-                        text: 'Service Plan',
-                        color: blackTypeColor1,
-                        align: TextAlign.center,
-                      ),
+                    Expanded(
+                      child: TFWithSize('Available Seats', widget.available, 16,
+                          lightGreyColor, 2.4),
                     ),
-                    particularDay
-                        ? Container()
-                        : SizedBox(
-                            height: 120,
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Checkbox(
-                                        value: particularWeekDays,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(24)),
-                                        onChanged: (bool? value1) {
-                                          setState(() {
-                                            particularWeekDays = value1!;
-                                            particularWeekDay = value1;
-                                          });
-                                        }),
-                                    MyText(
-                                      text: 'Every particular week days',
-                                      color: blackTypeColor,
-                                      align: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                                Wrap(
-                                  direction: Axis.horizontal,
-                                  children: List.generate(days.length, (index) {
-                                    return Column(
-                                      children: [
-                                        MyText(
-                                          text: days[index],
-                                          color: blackTypeColor,
-                                          align: TextAlign.center,
-                                          size: 14,
-                                        ),
-                                        Checkbox(
-                                          value: daysValue[index],
-                                          onChanged: (bool? value) {
-                                            setState(
-                                              () {
-                                                // if () {
-
-                                                // }
-                                                daysValue[index] = value!;
-                                              },
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  }),
-                                ),
-                              ],
-                            ),
-                          ),
                   ],
                 ),
-                particularWeekDays
-                    ? Container()
-                    : SizedBox(
-                        height: 110,
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Checkbox(
-                                    value: particularDay,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(24)),
-                                    onChanged: (bool? value) {
-                                      setState(() {
-                                        particularDay = value!;
-                                        particularDay = value;
-                                      });
-                                    }),
-                                MyText(
-                                  text: 'Every particular calendar date',
-                                  color: blackTypeColor,
-                                  align: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Expanded(
-                                  child: GestureDetector(
-                                    onTap: () =>
-                                        _selectDate(context, formattedDate),
-                                    child: Container(
-                                      height: 50,
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 0),
-                                      //width: MediaQuery.of(context).size.width / 1,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: lightGreyColor,
-                                        border: Border.all(
-                                          width: 1,
-                                          color: greyColor.withOpacity(0.2),
-                                        ),
-                                      ),
-                                      child: ListTile(
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                vertical: 0, horizontal: 10),
-                                        leading: Text(
-                                          formattedDate.toString(),
-                                          style: TextStyle(
-                                              color:
-                                                  blackColor.withOpacity(0.6)),
-                                        ),
-                                        trailing: Icon(
-                                          Icons.calendar_today,
-                                          color: blackColor.withOpacity(0.6),
-                                          size: 20,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Expanded(
-                                  child: GestureDetector(
-                                    onTap: () => _selectDate(context, endDate),
-                                    child: Container(
-                                      height: 50,
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 0),
-                                      //width: MediaQuery.of(context).size.width / 1,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: lightGreyColor,
-                                        border: Border.all(
-                                          width: 1,
-                                          color: greyColor.withOpacity(0.2),
-                                        ),
-                                      ),
-                                      child: ListTile(
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                vertical: 0, horizontal: 10),
-                                        leading: Text(
-                                          endDate.toString(),
-                                          style: TextStyle(
-                                              color:
-                                                  blackColor.withOpacity(0.6)),
-                                        ),
-                                        trailing: Icon(
-                                          Icons.calendar_today,
-                                          color: blackColor.withOpacity(0.6),
-                                          size: 20,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                const SizedBox(height: 20),
+                const Divider(),
+                widget.servicePlan,
                 const Divider(),
                 // activities container
                 Container(
@@ -753,39 +420,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                     size: 16,
                   ),
                 ),
-                Wrap(
-                  direction: Axis.vertical,
-                  children: List.generate(dependencyText.length, (index) {
-                    return SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: CheckboxListTile(
-                        contentPadding: const EdgeInsets.only(
-                            left: 0, top: 0, bottom: 0, right: 25),
-                        side: const BorderSide(color: bluishColor),
-                        checkboxShape: const RoundedRectangleBorder(
-                          side: BorderSide(color: bluishColor),
-                        ),
-                        visualDensity:
-                            const VisualDensity(horizontal: 0, vertical: -4),
-                        activeColor: bluishColor,
-                        checkColor: whiteColor,
-                        value: dependencyValue[index],
-                        onChanged: ((bool? value2) {
-                          setState(() {
-                            dependencyValue[index] = value2!;
-                          });
-                        }),
-                        title: MyText(
-                          text: dependencyText[index],
-                          color: blackTypeColor1.withOpacity(0.5),
-                          fontFamily: 'Raleway',
-                          weight: FontWeight.w500,
-                          size: 16,
-                        ),
-                      ),
-                    );
-                  }),
-                ),
+                widget.dependency,
                 Divider(
                   thickness: 1.5,
                   color: blackColor.withOpacity(0.4),
@@ -811,8 +446,8 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                     const SizedBox(
                       width: 10,
                     ),
-                    TFWithSize(
-                        '2', daysBeforeActController, 16, lightGreyColor, 8)
+                    TFWithSize('2', widget.daysBeforeActController, 16,
+                        lightGreyColor, 8)
                   ],
                 ),
               ],

@@ -1,15 +1,12 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 
 import 'dart:convert';
-
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/adventure_category.dart';
 import 'package:adventuresclub/models/filter_data_model/category_filter_model.dart';
-import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 import '../../../models/category/category_model.dart';
 
 class TopList extends StatefulWidget {
@@ -35,16 +32,6 @@ class _TopListState extends State<TopList> {
     'Desert',
     'Mountain',
   ];
-  void goToAdCategory(List<CategoryModel> pCM) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return const AdventureCategory();
-        },
-      ),
-    );
-  }
-
   List images = [
     'images/maskGroup44.png',
     'images/lake.png',
@@ -60,6 +47,16 @@ class _TopListState extends State<TopList> {
     super.initState();
     pCM.insert(0, category);
     getCategory();
+  }
+
+  void goToAdCategory(List<CategoryModel> pCM) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return const AdventureCategory();
+        },
+      ),
+    );
   }
 
   void getFilters() {

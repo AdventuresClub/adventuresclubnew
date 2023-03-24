@@ -17,4 +17,8 @@ class ConstantsCreateNewServices {
   static int number = 0;
   static List<String> selectedActivites = [];
   static List<int> selectedActivitesId = [];
+  static String gatheringDate = "";
+  static double lat = 0;
+  static double lng = 0;
+  static bool particularWeekDays = false;
 }

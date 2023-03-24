@@ -4,13 +4,11 @@ import 'dart:convert';
 
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/banners/banners_model.dart';
-import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/Lists/home_lists/service_List.dart';
 import 'package:adventuresclub/widgets/Lists/home_lists/top_list.dart';
 import 'package:adventuresclub/widgets/home_widgets/stack_home.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
 class Home extends StatefulWidget {
@@ -83,161 +81,159 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: greyProfileColor,
-      body: Consumer<ServicesProvider>(builder: (context, provider, child) {
-        return SingleChildScrollView(
-          child: Column(
-            children: [
-              StackHome(banners),
-              const SizedBox(
-                height: 35,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const SizedBox(
-                height: 125,
-                child: TopList(),
-              ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              //   child: Align(
-              //     alignment: Alignment.centerLeft,
-              //     child: MyText(
-              //       text: 'Recommended Activity',
-              //       weight: FontWeight.bold,
-              //       color: greyColor,
-              //       size: 16,
-              //       fontFamily: "Roboto",
-              //     ),
-              //   ),
-              // ),
-              // const SizedBox(
-              //   height: 10,
-              // ),
-              // Container(
-              //   alignment: Alignment.centerLeft,
-              //   height: 210,
-              //   child: const RecommendedActivity(),
-              // ),
-              // const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: MyText(
-                    text: 'Accomodation',
-                    weight: FontWeight.bold,
-                    color: greyColor,
-                    size: 18,
-                    fontFamily: "Roboto",
-                  ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            StackHome(banners),
+            const SizedBox(
+              height: 35,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const SizedBox(
+              height: 125,
+              child: TopList(),
+            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            //   child: Align(
+            //     alignment: Alignment.centerLeft,
+            //     child: MyText(
+            //       text: 'Recommended Activity',
+            //       weight: FontWeight.bold,
+            //       color: greyColor,
+            //       size: 16,
+            //       fontFamily: "Roboto",
+            //     ),
+            //   ),
+            // ),
+            // const SizedBox(
+            //   height: 10,
+            // ),
+            // Container(
+            //   alignment: Alignment.centerLeft,
+            //   height: 210,
+            //   child: const RecommendedActivity(),
+            // ),
+            // const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: MyText(
+                  text: 'Accomodation',
+                  weight: FontWeight.bold,
+                  color: greyColor,
+                  size: 18,
+                  fontFamily: "Roboto",
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              height: 210,
+              child: const ServiceList('Accomodation'),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Align(
                 alignment: Alignment.centerLeft,
-                height: 210,
-                child: const ServiceList('Accomodation'),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: MyText(
-                    text: 'Transport',
-                    weight: FontWeight.bold,
-                    color: greyColor,
-                    size: 16,
-                    fontFamily: "Roboto",
-                  ),
+                child: MyText(
+                  text: 'Transport',
+                  weight: FontWeight.bold,
+                  color: greyColor,
+                  size: 16,
+                  fontFamily: "Roboto",
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              height: 210,
+              child: const ServiceList('Transport'),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Align(
                 alignment: Alignment.centerLeft,
-                height: 210,
-                child: const ServiceList('Transport'),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: MyText(
-                    text: 'Sky',
-                    weight: FontWeight.bold,
-                    color: greyColor,
-                    size: 16,
-                    fontFamily: "Roboto",
-                  ),
+                child: MyText(
+                  text: 'Sky',
+                  weight: FontWeight.bold,
+                  color: greyColor,
+                  size: 16,
+                  fontFamily: "Roboto",
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              height: 210,
+              child: const ServiceList('Sky'),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Align(
                 alignment: Alignment.centerLeft,
-                height: 210,
-                child: const ServiceList('Sky'),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: MyText(
-                    text: 'Water',
-                    weight: FontWeight.bold,
-                    color: greyColor,
-                    size: 16,
-                    fontFamily: "Roboto",
-                  ),
+                child: MyText(
+                  text: 'Water',
+                  weight: FontWeight.bold,
+                  color: greyColor,
+                  size: 16,
+                  fontFamily: "Roboto",
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              height: 210,
+              child: const ServiceList('Water'),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Align(
                 alignment: Alignment.centerLeft,
-                height: 210,
-                child: const ServiceList('Water'),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: MyText(
-                    text: 'Land',
-                    weight: FontWeight.bold,
-                    color: greyColor,
-                    size: 16,
-                    fontFamily: "Roboto",
-                  ),
+                child: MyText(
+                  text: 'Land',
+                  weight: FontWeight.bold,
+                  color: greyColor,
+                  size: 16,
+                  fontFamily: "Roboto",
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                height: 210,
-                child: const ServiceList('Land'),
-              ),
-            ],
-          ),
-        );
-      }),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              height: 210,
+              child: const ServiceList('Land'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
