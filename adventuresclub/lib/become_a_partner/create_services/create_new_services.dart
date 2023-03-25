@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:adventuresclub/become_a_partner/create_services/create_services_description.dart';
 import 'package:adventuresclub/complete_profile/banner_page.dart';
 import 'package:adventuresclub/complete_profile/cost.dart';
@@ -310,11 +311,9 @@ class _CreateNewServicesState extends State<CreateNewServices> {
           Uri.parse(
               "https://adventuresclub.net/adventureClub/api/v1/create_service"),
         );
-        final httpImage = http.MultipartFile.fromBytes(
-          "test.png",
-          banners[0],
-        );
-        //request.files.add(httpImage);
+        String fileName = "${DateTime.now().millisecondsSinceEpoch.toString()}.png";
+        request.files.add(http.MultipartFile.fromBytes('banner[]', banners[0], filename: fileName));
+
         request.fields.addAll({
           'customer_id': Constants.userId.toString(),
           'adventure_name': adventureName.text,
@@ -378,9 +377,9 @@ class _CreateNewServicesState extends State<CreateNewServices> {
           //     .toString(), //"1,2,5", //"4", //["1", "4", "5", "7"], //"",
           "dependency":
               selectedDependencyId, //selectedDependencyId.toString(), //["1", "2", "3"],
-          "banners[]": "${banners[0]},test032423231108.png",
-          "banner[]":
-              "${banners[0]},test0324232311147.png", //adventureOne.toString(), //"",
+          //"banners[]": "${banners[0]},test032423231108.png",
+          //"banner[]":
+              //"${banners[0]},test0324232311147.png", //adventureOne.toString(), //"",
           // banner image name.
           // we need file name,
           // after bytes array when adding into parameter. send the name of file.
@@ -392,6 +391,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
           // 'mobile_code': ccCode,
         });
         final response = await request.send();
+        
+
         log(response.toString());
         print(response.statusCode);
         // print(response.body);
