@@ -217,8 +217,8 @@ class _MyServicesState extends State<MyServices> {
           Uri.parse(
               "https://adventuresclub.net/adventureClub/api/v1/myserviceapi"),
           body: {
-            'owner': "3", //Constants.userId.toString(), //"3",
-            'country_id': "1", //Constants.countryId
+            'owner': Constants.userId.toString(), //"3",
+            'country_id': Constants.countryId
             //.toString(),
             //"2", //Constants.countryId.toString(), //"2",
             //'forgot_password': "0"
