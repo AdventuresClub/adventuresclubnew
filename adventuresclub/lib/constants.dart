@@ -180,6 +180,8 @@ class Constants {
     emailId == "";
     password == "";
     country = "";
+    countryFlag = "";
+    phone = "";
   }
 
   static void clearServicesList() {
@@ -784,6 +786,43 @@ class Constants {
         content: Text(
           message,
           style: const TextStyle(fontWeight: FontWeight.w500),
+        ),
+      ),
+    );
+  }
+
+  static InputDecoration getInputDecoration() {
+    return InputDecoration(
+      // contentPadding: EdgeInsets.symmetric(
+      //     vertical: widget.verticalPadding, horizontal: 18),
+      //hintText: widget.hintText,
+      hintStyle: TextStyle(
+          color: blackColor.withOpacity(0.5),
+          fontWeight: FontWeight.w500,
+          fontSize: 14,
+          fontFamily: 'Raleway'),
+      //hintMaxLines: widget.hintLines,
+      isDense: true,
+      filled: true,
+      fillColor: lightGreyColor,
+      border: OutlineInputBorder(
+        borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+        borderSide: BorderSide(
+          color: greyTextColor.withOpacity(0.2),
+        ),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+        borderSide: BorderSide(
+          color: greyTextColor.withOpacity(0.2),
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: const BorderRadius.all(
+          Radius.circular(10),
+        ),
+        borderSide: BorderSide(
+          color: greyTextColor.withOpacity(0.2),
         ),
       ),
     );

@@ -3,10 +3,17 @@
 import 'dart:convert';
 
 import 'package:adventuresclub/become_a_partner/create_services/create_new_services.dart';
-import 'package:adventuresclub/complete_profile/complete_profile.dart';
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/models/filter_data_model/programs_model.dart';
+import 'package:adventuresclub/models/home_services/become_partner.dart';
+import 'package:adventuresclub/models/home_services/home_services_model.dart';
+import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/models/my_services/my_services_model.dart';
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
+import 'package:adventuresclub/models/services/availability_model.dart';
+import 'package:adventuresclub/models/services/create_services/availability_plan_model.dart';
+import 'package:adventuresclub/models/services/dependencies_model.dart';
+import 'package:adventuresclub/models/services/included_activities_model.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
 import 'package:adventuresclub/widgets/grid/my_services_grid/my_services_grid.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
@@ -27,6 +34,11 @@ class _MyServicesState extends State<MyServices> {
   List<ServiceImageModel> gSim = [];
   List<AimedForModel> gAfm = [];
   List<MyServicesModel> gSm = [];
+  List<BecomePartner> nBp = [];
+  List<ServicesModel> allServices = [];
+  List<ServicesModel> allAccomodation = [];
+  List<ServicesModel> gAccomodationSModel = [];
+
   bool loading = false;
   @override
   void initState() {
@@ -218,16 +230,101 @@ class _MyServicesState extends State<MyServices> {
               "https://adventuresclub.net/adventureClub/api/v1/myserviceapi"),
           body: {
             'owner': Constants.userId.toString(), //"3",
-            'country_id': Constants.countryId
+            'country_id': Constants.countryId.toString(),
             //.toString(),
             //"2", //Constants.countryId.toString(), //"2",
             //'forgot_password': "0"
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       List<dynamic> result = decodedResponse['data'];
+      // dynamic nullDependency = decodedResponse['data']['dependencies'];
+      // dynamic nullAimed = decodedResponse['data']['aimed_for'];
+      // dynamic nullImages = decodedResponse['data']['images'];
+      // dynamic nullProgrammes = decodedResponse['data']['programs'];
       result.forEach(((element) {
-        if (element['image'] != null) {
-          List<dynamic> image = element['image_url'];
+        List<AvailabilityPlanModel> gAccomodationPlanModel = [];
+        List<AvailabilityModel> gAccomodoationAvaiModel = [];
+        if (element['service_plan'] == 1) {
+          dynamic ga = element['availability'];
+          if (ga != null) {
+            List<dynamic> availablePlan = element['availability'];
+            availablePlan.forEach((ap) {
+              AvailabilityPlanModel amPlan = AvailabilityPlanModel(
+                  ap['id'].toString() ?? "", ap['day'].toString() ?? "");
+              gAccomodationPlanModel.add(amPlan);
+            });
+          }
+        } else {
+          dynamic pga = element['availability'];
+          if (pga != null) {
+            List<dynamic> available = element['availability'];
+            available.forEach((a) {
+              AvailabilityModel am = AvailabilityModel(
+                  a['start_date'].toString() ?? "",
+                  a['end_date'].toString() ?? "");
+              gAccomodoationAvaiModel.add(am);
+            });
+          }
+        }
+        dynamic nullbp = element['become_partner'];
+        if (nullbp != null) {
+          List<dynamic> becomePartner = element['become_partner'];
+          becomePartner.forEach((b) {
+            BecomePartner bp = BecomePartner(
+                b['cr_name'].toString() ?? "",
+                b['cr_number'].toString() ?? "",
+                b['description'].toString() ?? "");
+          });
+        }
+        dynamic nullActivity = element['included_activities'];
+        List<IncludedActivitiesModel> gIAm = [];
+        if (nullActivity != null) {
+          List<dynamic> iActivities = element['included_activities'];
+          iActivities.forEach((iA) {
+            IncludedActivitiesModel iAm = IncludedActivitiesModel(
+              int.tryParse(iA['id'].toString()) ?? 0,
+              int.tryParse(iA['service_id'].toString()) ?? 0,
+              iA['activity_id'].toString() ?? "",
+              iA['activity'].toString() ?? "",
+              iA['image'].toString() ?? "",
+            );
+            gIAm.add(iAm);
+          });
+        }
+        List<DependenciesModel> gdM = [];
+        dynamic dependency = element['dependencies'];
+        if (dependency != null) {
+          dependency.forEach((d) {
+            DependenciesModel dm = DependenciesModel(
+              int.tryParse(d['id'].toString()) ?? 0,
+              d['dependency_name'].toString() ?? "",
+              d['image'].toString() ?? "",
+              d['updated_at'].toString() ?? "",
+              d['created_at'].toString() ?? "",
+              d['deleted_at'].toString() ?? "",
+            );
+            gdM.add(dm);
+          });
+        }
+        List<AimedForModel> gAccomodationAimedfm = [];
+        dynamic aF = element['aimed_for'];
+        if (aF != null) {
+          aF.forEach((a) {
+            AimedForModel afm = AimedForModel(
+              int.tryParse(a['id'].toString()) ?? 0,
+              a['AimedName'].toString() ?? "",
+              a['image'].toString() ?? "",
+              a['created_at'].toString() ?? "",
+              a['updated_at'].toString() ?? "",
+              a['deleted_at'].toString() ?? "",
+              int.tryParse(a['service_id'].toString()) ?? 0,
+            );
+            gAccomodationAimedfm.add(afm);
+          });
+        }
+        List<ServiceImageModel> gAccomodationServImgModel = [];
+        dynamic image = element['images'];
+        if (image != null) {
           image.forEach((i) {
             ServiceImageModel sm = ServiceImageModel(
               int.tryParse(i['id'].toString()) ?? 0,
@@ -236,88 +333,93 @@ class _MyServicesState extends State<MyServices> {
               i['image_url'].toString() ?? "",
               i['thumbnail'].toString() ?? "",
             );
-            gSim.add(sm);
+            gAccomodationServImgModel.add(sm);
           });
         }
-        List<dynamic> aF = element['aimed_for'];
-        aF.forEach((a) {
-          AimedForModel afm = AimedForModel(
-            int.tryParse(a['id'].toString()) ?? 0,
-            a['AimedName'].toString() ?? "",
-            a['image'].toString() ?? "",
-            a['created_at'].toString() ?? "",
-            a['updated_at'].toString() ?? "",
-            a['deleted_at'].toString() ?? "",
-            int.tryParse(a['service_id'].toString()) ?? 0,
-          );
-          gAfm.add(afm);
-        });
-        int id = int.tryParse(element['id'].toString()) ?? 0;
-        int ownerId = int.tryParse(element['owner'].toString()) ?? 0;
-        int cityID = int.tryParse(element['city_id'].toString()) ?? 0;
-        int aSeats = int.tryParse(element["available_seats"].toString()) ?? 0;
-        int points = int.tryParse(element["points"].toString()) ?? 0;
-        int recommended = int.tryParse(element["recommended"].toString()) ?? 0;
-        int serviceId = int.tryParse(element["service_id"].toString()) ?? 0;
-        int providerId = int.tryParse(element["provider_id"].toString()) ?? 0;
-        int status = int.tryParse(element["status"].toString()) ?? 0;
-        MyServicesModel sm = MyServicesModel(
-          id,
-          ownerId,
+        List<ProgrammesModel> gPm = [];
+        dynamic programs = element['programs'];
+        if (programs != null) {
+          programs.forEach((p) {
+            ProgrammesModel pm = ProgrammesModel(
+              int.tryParse(p['id'].toString()) ?? 0,
+              int.tryParse(p['service_id'].toString()) ?? 0,
+              p['title'].toString() ?? "",
+              p['start_datetime'].toString() ?? "",
+              p['end_datetime'].toString() ?? "",
+              p['description'].toString() ?? "",
+            );
+            gPm.add(pm);
+          });
+        }
+        ServicesModel nSm = ServicesModel(
+          int.tryParse(element['id'].toString()) ?? 0,
+          int.tryParse(element['owner'].toString()) ?? 0,
           element['adventure_name'].toString() ?? "",
           element['country'].toString() ?? "",
           element['region'].toString() ?? "",
-          cityID,
+          element['city_id'].toString() ?? "",
           element['service_sector'].toString() ?? "",
           element['service_category'].toString() ?? "",
-          // element['service_type'].toString() ?? "",
+          element['service_type'].toString() ?? "",
           element['service_level'].toString() ?? "",
           element['duration'].toString() ?? "",
-          aSeats,
-          element["start_date"].toString() ?? "",
-          element["end_date"].toString() ?? "",
-          element["latitude"].toString() ?? "",
-          element["longitude"].toString() ?? "",
-          element["write_information"].toString() ?? "",
-          element["service_plan"].toString() ?? "",
-          element["sfor_id"].toString() ?? "",
-          [element["availability"].toString() ?? ""],
-          element["geo_location"].toString() ?? "",
-          element["specific_address"].toString() ?? "",
-          element["cost_inc"].toString() ?? "",
-          element["cost_exc"].toString() ?? "",
-          element["currency"].toString() ?? "",
-          points,
-          element["pre_requisites"].toString() ?? "",
-          element["minimum_requirements"].toString() ?? "",
-          element["terms_conditions"].toString() ?? "",
-          recommended,
-          status,
-          element["image"].toString() ?? "",
-          element["descreption"].toString() ?? "",
-          element["favourite_image"].toString() ?? "",
-          element["created_at"].toString() ?? "",
-          element["updated_at"].toString() ?? "",
-          element["deleted_at"].toString() ?? "",
-          serviceId,
-          providerId,
-          element["provided_name"].toString() ?? "",
-          element["provider_profile"].toString() ?? "",
-          element["including_gerea_and_other_taxes"].toString() ?? "",
-          element["excluding_gerea_and_other_taxes"].toString() ?? "",
-          gSim,
-          gAfm,
-          element["cost_incclude"].toString() ?? "",
-          element["cost_exclude"].toString() ?? "",
+          int.tryParse(element['availability_seats'].toString()) ?? 0,
+          int.tryParse(element['start_date'].toString()) ?? "",
+          int.tryParse(element['end_date'].toString()) ?? "",
+          element['latitude'].toString() ?? "",
+          element['longitude'].toString() ?? "",
+          element['write_information'].toString() ?? "",
+          int.tryParse(element['service_plan'].toString()) ?? 0,
+          int.tryParse(element['sfor_id'].toString()) ?? 0,
+          gAccomodoationAvaiModel,
+          gAccomodationPlanModel,
+          element['geo_location'].toString() ?? "",
+          element['specific_address'].toString() ?? "",
+          element['cost_inc'].toString() ?? "",
+          element['cost_exc'].toString() ?? "",
+          element['currency'].toString() ?? "",
+          int.tryParse(element['points'].toString()) ?? 0,
+          element['pre_requisites'].toString() ?? "",
+          element['minimum_requirements'].toString() ?? "",
+          element['terms_conditions'].toString() ?? "",
+          int.tryParse(element['recommended'].toString()) ?? 0,
+          element['status'].toString() ?? "",
+          element['image'].toString() ?? "",
+          element['descreption]'].toString() ?? "",
+          element['favourite_image'].toString() ?? "",
+          element['created_at'].toString() ?? "",
+          element['updated_at'].toString() ?? "",
+          element['delete_at'].toString() ?? "",
+          int.tryParse(element['provider_id'].toString()) ?? 0,
+          int.tryParse(element['service_id'].toString()) ?? 0,
+          element['provided_name'].toString() ?? "",
+          element['provider_profile'].toString() ?? "",
+          element['including_gerea_and_other_taxes'].toString() ?? "",
+          element['excluding_gerea_and_other_taxes'].toString() ?? "",
+          gIAm,
+          gdM,
+          nBp,
+          gAccomodationAimedfm,
+          gPm,
+          element['stars'].toString() ?? "",
+          int.tryParse(element['is_liked'].toString()) ?? 0,
+          element['baseurl'].toString() ?? "",
+          gAccomodationServImgModel,
+          element['reviewd_by'].toString() ?? "",
+          int.tryParse(element['remaining_seats'].toString()) ?? 0,
         );
-        gSm.add(sm);
+        //gAccomodationSModel.add(nSm);
+        allServices.add(nSm);
+        allAccomodation.add(nSm);
+
+        HomeServicesModel adv = HomeServicesModel("", gAccomodationSModel);
+        setState(() {
+          loading = false;
+        });
+        print(response.statusCode);
+        print(response.body);
+        print(response.headers);
       }));
-      setState(() {
-        loading = false;
-      });
-      print(response.statusCode);
-      print(response.body);
-      print(response.headers);
     } catch (e) {
       print(e.toString());
     }
@@ -371,7 +473,7 @@ class _MyServicesState extends State<MyServices> {
         child: Container(
           color: greyShadeColor.withOpacity(0.1),
           child: Column(
-            children: [MyServicesGrid(gSm)],
+            children: [MyServicesGrid(allServices)],
           ),
         ),
       ),

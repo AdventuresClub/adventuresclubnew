@@ -78,25 +78,74 @@ class _ClientRequestListState extends State<ClientRequestList> {
     );
   }
 
-  void decline(String userId, String serviceId, String providerId) async {
+  // boooking id
+  // provider id
+
+  void decline(String userId, String bookingId, String providerId) async {
     try {
       var response = await http.post(
           Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/cancelrequest"),
+              "https://adventuresclub.net/adventureClub/api/v1/booking_accept"),
           body: {
+            "booking_id": bookingId,
             'user_id': userId, //"3", //Constants.userId, //"27",
-            'service_id': serviceId,
-            'id': providerId,
+            'status': "3",
+            // 'id': "2",
           });
       // setState(() {
       //   favourite = true;
       // });
+      if (response.statusCode == 200) {
+        cancel();
+        message("Cancelled Successfully");
+      }
       print(response.statusCode);
       print(response.body);
       print(response.headers);
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  void accept(
+    String userId,
+    String bookingId,
+  ) async {
+    try {
+      var response = await http.post(
+          Uri.parse(
+              "https://adventuresclub.net/adventureClub/api/v1/booking_accept"),
+          body: {
+            "booking_id": bookingId,
+            'user_id': userId, //"3", //Constants.userId, //"27",
+            'status': "1",
+            // 'id': "2",
+          });
+      // setState(() {
+      //   favourite = true;
+      // });
+      if (response.statusCode == 200) {
+        cancel();
+        message("Accepted Successfully");
+      }
+      print(response.statusCode);
+      print(response.body);
+      print(response.headers);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  void cancel() {
+    Navigator.of(context).pop();
+  }
+
+  void message(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
   }
 
   @override
@@ -450,13 +499,45 @@ class _ClientRequestListState extends State<ClientRequestList> {
                         ),
                       ),
                     ),
-                    SquareButton(
-                        'Accept', darkGreen, whiteColor, 3.7, 21, 12, abc),
+                    GestureDetector(
+                      onTap: () => accept(
+                        widget.rm[index].bookingUser.toString(),
+                        widget.rm[index].bookingId.toString(),
+                        //widget.rm[index].providerId
+                      ),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height / 21,
+                        width: MediaQuery.of(context).size.width / 3.8,
+                        decoration: const BoxDecoration(
+                          color: darkGreen,
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                        ),
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Text(
+                                  'Accept',
+                                  style: TextStyle(
+                                      color: whiteColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    // SquareButton(
+                    //     'Accept', darkGreen, whiteColor, 3.7, 21, 12, abc),
                     GestureDetector(
                       onTap: () => decline(
                           widget.rm[index].bookingUser.toString(),
-                          widget.rm[index].serviceId.toString(),
-                          widget.rm[index].id.toString()
+                          widget.rm[index].bookingId.toString(),
+                          widget.rm[index].ownerId.toString()
                           //widget.rm[index].providerId
                           ),
                       child: Container(

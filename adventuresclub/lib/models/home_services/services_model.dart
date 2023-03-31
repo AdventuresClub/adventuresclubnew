@@ -1,6 +1,10 @@
+import 'package:adventuresclub/models/filter_data_model/programs_model.dart';
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
 import 'package:adventuresclub/models/services/availability_model.dart';
+import 'package:adventuresclub/models/services/dependencies_model.dart';
+import 'package:adventuresclub/models/services/included_activities_model.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
+import '../services/create_services/availability_plan_model.dart';
 import 'become_partner.dart';
 
 class ServicesModel {
@@ -24,6 +28,7 @@ class ServicesModel {
   int sPlan;
   int sForID;
   List<AvailabilityModel> availability; // check
+  List<AvailabilityPlanModel> availabilityPlan;
   String geoLocation;
   String sAddress;
   String costInc;
@@ -47,12 +52,17 @@ class ServicesModel {
   String pProfile;
   String iaot; // new
   String eaot; // new
+  List<IncludedActivitiesModel> activityIncludes;
+  List<DependenciesModel> dependency;
   List<BecomePartner> bp; // new
   List<AimedForModel> am; // new
+  List<ProgrammesModel> programmes;
   String stars;
   int isLiked;
   String baseURL;
   List<ServiceImageModel> images;
+  String reviewdBy;
+  int remainingSeats;
   ServicesModel(
     this.id,
     this.owner,
@@ -74,6 +84,7 @@ class ServicesModel {
     this.sPlan,
     this.sForID,
     this.availability,
+    this.availabilityPlan,
     this.geoLocation,
     this.sAddress,
     this.costInc,
@@ -97,11 +108,16 @@ class ServicesModel {
     this.pProfile,
     this.iaot,
     this.eaot,
+    this.activityIncludes,
+    this.dependency,
     this.bp,
     this.am,
+    this.programmes,
     this.stars,
     this.isLiked,
     this.baseURL,
     this.images,
+    this.reviewdBy,
+    this.remainingSeats,
   );
 }

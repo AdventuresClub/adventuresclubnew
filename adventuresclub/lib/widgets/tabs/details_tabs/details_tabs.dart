@@ -1,5 +1,6 @@
+// ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls
+
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/home_Screens/navigation_screens/adventure_chat_details.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
@@ -18,65 +19,64 @@ class DetailsTab extends StatefulWidget {
 class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
   late TabController _tabController;
   PageController controller = PageController();
+  String x = "";
+  List<String> adventuresPlan = [""];
+  String aPlan = "";
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
     _tabController.addListener(_handleTabSelection);
-    setState(() {
-      // text4.forEach((element) {
-      //   if (element[0]) {
-      //     text4.add(
-      //       widget.gm.country,
-      //     );
-      //   } else if (element[1]) {
-      //     text4.add(
-      //       widget.gm.region,
-      //     );
-      //   } else if (element[2]) {
-      //     text4.add(
-      //       widget.gm.serviceCategory,
-      //     );
-      //   } else if (element[3]) {
-      //     text4.add(
-      //       widget.gm.aSeats,
-      //     );
-      //   } else if (element[4]) {
-      //     text4.add(
-      //       widget.gm.duration,
-      //     );
-      //   } else if (element[5]) {
-      //     text4.add(
-      //       widget.gm.startDate,
-      //     );
-      //   }
-      // });
-      // text4.addAll([
-      //   widget.gm.country,
-      //   widget.gm.region,
-      //   widget.gm.serviceCategory,
-      //   widget.gm.aSeats,
-      //   widget.gm.duration,
-      //   widget.gm.startDate
-      // ]);
-      text4.insert(0, widget.gm.country);
-      text4.insert(1, widget.gm.region);
-      text4.insert(2, widget.gm.serviceCategory);
-      text4.insert(3, widget.gm.aSeats.toString());
-      text4.insert(4, widget.gm.duration);
-      text4.insert(5, widget.gm.availability[0].st);
-      text6.insert(1, widget.gm.serviceSector);
-      text6.insert(2, widget.gm.serviceType);
-      text6.insert(3, widget.gm.serviceLevel);
-      text6.insert(4, widget.gm.availability[0].ed);
-    });
+    if (widget.gm.sPlan == 2) {
+      setState(() {
+        text1.insert(5, "Start Date");
+        text5.insert(4, "End Date");
+        text4.insert(0, widget.gm.country);
+        text4.insert(1, widget.gm.region);
+        text4.insert(2, widget.gm.serviceCategory);
+        text4.insert(3, widget.gm.aSeats.toString());
+        text4.insert(4, widget.gm.duration);
+        text4.insert(5, widget.gm.availability[0].st.substring(0, 10));
+        text6.insert(0, widget.gm.reviewdBy);
+        text6.insert(1, widget.gm.serviceSector);
+        text6.insert(2, widget.gm.serviceType);
+        text6.insert(3, widget.gm.serviceLevel);
+        text6.insert(4, widget.gm.availability[0].ed.substring(0, 10));
+      });
+    }
+    if (widget.gm.sPlan == 1) {
+      getSteps();
+      setState(() {
+        text1.insert(5, "Availability : ");
+        text4.insert(0, widget.gm.country);
+        text4.insert(1, widget.gm.region);
+        text4.insert(2, widget.gm.serviceCategory);
+        text4.insert(3, widget.gm.aSeats.toString());
+        text4.insert(4, widget.gm.duration);
+        text4.insert(5, aPlan);
+        text6.insert(0, widget.gm.reviewdBy);
+        text6.insert(1, widget.gm.serviceSector);
+        text6.insert(2, widget.gm.serviceType);
+        text6.insert(3, widget.gm.serviceLevel);
+        // text6.insert(4, widget.gm.availability[0].ed);
+        // text6.insert(4, widget.gm.availability[0].ed);
+      });
+    }
   }
 
   void _handleTabSelection() {
     setState(() {});
   }
 
+  void getSteps() {
+    widget.gm.availabilityPlan.forEach((element) {
+      adventuresPlan.add(element.day);
+    });
+    aPlan = adventuresPlan.join(", ");
+  }
+
+  List<String> steps = [];
   List text = [
     'Pick and drop from gathering location.',
     'Team introduction (welcome tea).',
@@ -95,53 +95,72 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
     "Getting into the water, hiking though the\ncurves of the Wadi. ",
     "Climbing efferent levels of curves/rocks with\nthe help of the leads.",
   ];
+  String firstValue = "";
   List<StepperData> stepperData = [
     StepperData(
         iconWidget: CircleAvatar(
       radius: 20,
-      backgroundColor: greenishColor,
+      backgroundColor: Colors.blue,
       child: CircleAvatar(
         radius: 23,
-        backgroundColor: whiteColor,
-        child: CircleAvatar(
-          radius: 20,
-          backgroundColor: greenishColor,
-          child: MyText(
-            text: '1',
-            weight: FontWeight.bold,
-          ),
+        backgroundColor: greenishColor,
+        child: MyText(
+          text: "1",
+          weight: FontWeight.bold,
         ),
       ),
     )),
     StepperData(
         iconWidget: CircleAvatar(
       radius: 20,
-      backgroundColor: greenishColor,
+      backgroundColor: Colors.blue,
       child: CircleAvatar(
         radius: 23,
-        backgroundColor: whiteColor,
-        child: CircleAvatar(
-          radius: 20,
-          backgroundColor: greenishColor,
-          child: MyText(
-            text: '2',
-            weight: FontWeight.bold,
-          ),
+        backgroundColor: greenishColor,
+        child: MyText(
+          text: '2',
+          weight: FontWeight.bold,
         ),
       ),
     )),
     StepperData(
         iconWidget: CircleAvatar(
       radius: 20,
-      backgroundColor: greenishColor,
+      backgroundColor: Colors.blue,
+      child: CircleAvatar(
+        radius: 23,
+        backgroundColor: greenishColor,
+        child: MyText(
+          text: '3',
+          weight: FontWeight.bold,
+        ),
+      ),
+    )),
+    StepperData(
+        iconWidget: CircleAvatar(
+      radius: 20,
+      backgroundColor: Colors.blue,
+      child: CircleAvatar(
+        radius: 23,
+        backgroundColor: greenishColor,
+        child: MyText(
+          text: '4',
+          weight: FontWeight.bold,
+        ),
+      ),
+    )),
+    StepperData(
+        iconWidget: CircleAvatar(
+      radius: 20,
+      backgroundColor: Colors.blue,
       child: CircleAvatar(
         radius: 23,
         backgroundColor: whiteColor,
         child: CircleAvatar(
-          radius: 20,
+          radius: 23,
           backgroundColor: greenishColor,
           child: MyText(
-            text: '3',
+            text: '5',
             weight: FontWeight.bold,
           ),
         ),
@@ -154,7 +173,15 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
     'Service Category  :',
     'Available Seats :',
     'Duration :',
-    'Start Date :'
+    //'Start Date :'
+  ];
+  List text11 = [
+    'Country  :',
+    'Region  :',
+    'Service Category  :',
+    'Available Seats :',
+    'Duration :',
+    'Availaibilty :'
   ];
   List text4 = [
     //'Oman', 'Salalah', 'Sea', '70', '36 hours', '25 Jul 2020'
@@ -164,10 +191,10 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
     'Service Sector  :',
     'Service Type :',
     'Level  :',
-    'End Date :',
+    // 'End Date :',
   ];
   List text6 = [
-    '',
+    //,
     // 'Tour',
     // 'Hiking',
     // 'Moderate',
@@ -209,9 +236,9 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                 indicatorColor: greenishColor,
                 isScrollable: true,
                 unselectedLabelStyle: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Roboto"),
                 indicatorSize: TabBarIndicatorSize.label,
                 unselectedLabelColor: greyColor,
                 tabs: [
@@ -237,7 +264,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 15.0, vertical: 15),
+                        horizontal: 3.0, vertical: 0),
                     child: Column(
                       children: [
                         Card(
@@ -485,16 +512,20 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                           vertical: 4.0),
                                       child: Row(
                                         children: [
-                                          const CircleAvatar(
-                                            backgroundColor: greyColorShade400,
-                                            radius: 5,
+                                          Image.network(
+                                            "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${widget.gm.activityIncludes[index].image}",
+                                            height: 18,
+                                            width: 18,
                                           ),
                                           const SizedBox(
                                             width: 5,
                                           ),
                                           MyText(
-                                            text: widget.gm.availability,
-                                            color: greyColorShade400,
+                                            text: widget
+                                                .gm
+                                                .activityIncludes[index]
+                                                .activity,
+                                            color: greyTextColor,
                                             weight: FontWeight.w500,
                                             fontFamily: 'Roboto',
                                             size: 12,
@@ -533,9 +564,10 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                           vertical: 4.0),
                                       child: Row(
                                         children: [
-                                          const CircleAvatar(
-                                            backgroundColor: greyColorShade400,
-                                            radius: 5,
+                                          Image.network(
+                                            "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${widget.gm.am[index].image}",
+                                            height: 18,
+                                            width: 18,
                                           ),
                                           const SizedBox(
                                             width: 5,
@@ -569,30 +601,34 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                     alignment: Alignment.centerLeft,
                                     child: MyText(
                                       text: 'Dependency',
-                                      color: greyColor.withOpacity(0.6),
+                                      color: greyTextColor,
                                       weight: FontWeight.w500,
                                       fontFamily: 'Roboto',
+                                      size: 14,
                                     )),
                                 const SizedBox(height: 5),
                                 Wrap(
-                                  children: List.generate(widget.gm.da.length,
-                                      //widget.gm.dependencies.length,
+                                  children:
+                                      List.generate(widget.gm.dependency.length,
+                                          //widget.gm.dependencies.length,
 
-                                      (index) {
+                                          (index) {
                                     return Padding(
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 4.0),
                                       child: Row(
                                         children: [
-                                          const CircleAvatar(
-                                            backgroundColor: greyColor2,
-                                            radius: 5,
+                                          Image.network(
+                                            "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${widget.gm.dependency[index].name}",
+                                            height: 18,
+                                            width: 18,
                                           ),
                                           const SizedBox(
                                             width: 5,
                                           ),
                                           MyText(
-                                            text: widget.gm.da,
+                                            text: widget
+                                                .gm.dependency[index].dName,
                                             //text: aimedFor[index],
                                             color: greyColor2,
                                             weight: FontWeight.w500,
@@ -716,144 +752,258 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                   ),
                   // program tab
                   // 2 nd Tab /////////
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width / 6,
-                          child: AnotherStepper(
-                            scrollPhysics: const ScrollPhysics(),
-                            stepperList: stepperData,
-                            activeIndex: stepperData.length,
-                            activeBarColor: greyColorShade400,
-                            stepperDirection: Axis.vertical,
-                            iconWidth:
-                                50, // Height that will be applied to all the stepper icons
-                            iconHeight:
-                                50, // Width that will be applied to all the stepper icons
+                  if (widget.gm.sPlan == 1)
+                    ListView.builder(
+                      itemCount: widget.gm.programmes.length,
+                      itemBuilder: ((context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 6),
+                          child: ListTile(
+                            contentPadding: EdgeInsets.all(4),
+                            leading: CircleAvatar(
+                              backgroundColor: greenishColor,
+                              radius: 25,
+                              child: MyText(
+                                text: widget.gm.programmes.length,
+                                weight: FontWeight.bold,
+                              ),
+                            ),
+                            title: MyText(
+                              text: widget.gm.programmes[index].title,
+                              color: blackColor,
+                              weight: FontWeight.bold,
+                              fontFamily: 'Raleway',
+                              size: 16,
+                            ),
+                            subtitle: MyText(
+                              text: widget
+                                  .gm.programmes[index].des, //text[index],
+                              color: greyTextColor,
+                              weight: FontWeight.w500,
+                              fontFamily: 'Raleway',
+                              size: 14,
+                            ),
                           ),
-                        ),
-                        // program
-                        Padding(
-                          padding: const EdgeInsets.only(top: 50.0),
+                        );
+                      }),
+                    ),
+                  if (widget.gm.sPlan == 2)
+                    ListView.builder(
+                      itemCount: widget.gm.programmes.length,
+                      itemBuilder: ((context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 2),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              MyText(
-                                //text:"${widget.gm.lat}${" ,"} ${widget.gm.lng}",
-                                text:
-                                    "${widget.gm.startDate} ${" - "} ${widget.gm.endDate} ${" - "} ${widget.gm.adventureName}",
-                                //text: '6:00 AM - 6:30 AM - Gathering',
-                                color: blackColor,
-                                weight: FontWeight.bold,
-                                fontFamily: 'Raleway',
-                                size: 16,
+                              ListTile(
+                                minVerticalPadding: 10,
+                                contentPadding: const EdgeInsets.all(6),
+                                leading: SizedBox(
+                                  height: 50,
+                                  child: Column(
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundColor: greenishColor,
+                                        radius: 25,
+                                        child: MyText(
+                                          text: widget.gm.programmes.length,
+                                          weight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 0,
+                                      ),
+                                      // Container(
+                                      //   height: 20,
+                                      //   width: 2,
+                                      //   color: blackColor,
+                                      // )
+                                    ],
+                                  ),
+                                ),
+                                title: MyText(
+                                  text: "${widget.gm.programmes[index].title} "
+                                      " ${widget.gm.programmes[index].sD.substring(10, 16)} ${" - "} ${widget.gm.programmes[index].eD.substring(10, 16)} ${" - "} ${widget.gm.programmes[index].sD.substring(0, 10)} ${"-"} ",
+                                  color: blackColor,
+                                  weight: FontWeight.bold,
+                                  fontFamily: 'Raleway',
+                                  size: 16,
+                                ),
+                                subtitle: MyText(
+                                  text: widget
+                                      .gm.programmes[index].des, //text[index],
+                                  color: greyTextColor,
+                                  weight: FontWeight.w500,
+                                  fontFamily: 'Raleway',
+                                  size: 14,
+                                ),
                               ),
-                              Wrap(
-                                direction: Axis.vertical,
-                                children: List.generate(4, (index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 4.0),
-                                    child: Row(
-                                      children: [
-                                        const CircleAvatar(
-                                          backgroundColor: greyColorShade400,
-                                          radius: 5,
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        MyText(
-                                          text: text[index],
-                                          color: greyColorShade400,
-                                          weight: FontWeight.w500,
-                                          fontFamily: 'Raleway',
-                                          size: 12,
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                }),
-                              ),
-                              const SizedBox(height: 25),
-                              MyText(
-                                text: '6:35 AM - 11:30 AM - Journey',
-                                color: blackColor,
-                                weight: FontWeight.bold,
-                                fontFamily: 'Raleway',
-                                size: 16,
-                              ),
-                              Wrap(
-                                direction: Axis.vertical,
-                                children: List.generate(3, (index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 4.0),
-                                    child: Row(
-                                      children: [
-                                        const CircleAvatar(
-                                          backgroundColor: greyColorShade400,
-                                          radius: 5,
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        MyText(
-                                          text: text2[index],
-                                          color: greyColorShade400,
-                                          weight: FontWeight.w500,
-                                          fontFamily: 'Raleway',
-                                          size: 12,
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                }),
-                              ),
-                              const SizedBox(height: 25),
-                              MyText(
-                                text: '6:35 AM - 11:30 AM - Begin Activity',
-                                color: blackColor,
-                                weight: FontWeight.bold,
-                                fontFamily: 'Raleway',
-                                size: 16,
-                              ),
-                              Wrap(
-                                direction: Axis.vertical,
-                                children: List.generate(5, (index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 4.0),
-                                    child: Row(
-                                      children: [
-                                        const CircleAvatar(
-                                          backgroundColor: greyColorShade400,
-                                          radius: 5,
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        MyText(
-                                          text: text3[index],
-                                          color: greyColorShade400,
-                                          weight: FontWeight.w500,
-                                          fontFamily: 'Raleway',
-                                          size: 12,
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                }),
-                              ),
+                              const Divider(
+                                endIndent: 30,
+                                indent: 30,
+                                thickness: 2,
+                              )
                             ],
                           ),
-                        ),
-                      ],
+                        );
+                      }),
                     ),
-                  ),
+                  // program
+                  // Expanded(
+                  //   child: ListView.builder(
+                  //     padding: const EdgeInsets.only(top: 55),
+                  //     itemCount: widget.gm.programmes.length,
+                  //     itemBuilder: (context, index) {
+                  //       return Padding(
+                  //         padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  //         child: ListTile(
+                  //           leading: CircleAvatar(
+                  //             backgroundColor: greenishColor,
+                  //             radius: 25,
+                  //             child: MyText(
+                  //               text: '1',
+                  //               weight: FontWeight.bold,
+                  //             ),
+                  //           ),
+                  //           title:
+
+                  //               //  MyText(
+                  //               //     //text:"${widget.gm.lat}${" ,"} ${widget.gm.lng}",
+                  //               //     text:
+                  //               //         "${widget.gm.programmes[index].sD.substring(10, 16)} ${" - "} ${widget.gm.programmes[index].eD.substring(10, 16)} ${" - "} ${widget.gm.programmes[index].sD.substring(0, 10)} ${"-"} ${widget.gm.programmes[index].title}",
+                  //               //     //text: '6:00 AM - 6:30 AM - Gathering',
+                  //               //     color: blackColor,
+                  //               //     weight: FontWeight.bold,
+                  //               //     fontFamily: 'Raleway',
+                  //               //     size: 16,
+                  //               //   ),
+                  //               // if (widget.gm.sPlan == 1)
+                  //               MyText(
+                  //             //text:"${widget.gm.lat}${" ,"} ${widget.gm.lng}",
+                  //             text: widget.gm.programmes[index].title,
+                  //             //text: '6:00 AM - 6:30 AM - Gathering',
+                  //             color: blackColor,
+                  //             weight: FontWeight.bold,
+                  //             fontFamily: 'Raleway',
+                  //             size: 16,
+                  //           ),
+                  //           subtitle: MyText(
+                  //             text: widget
+                  //                 .gm.programmes[index].des, //text[index],
+                  //             color: greyTextColor,
+                  //             weight: FontWeight.w500,
+                  //             fontFamily: 'Raleway',
+                  //             size: 14,
+                  //           ),
+                  //         ),
+                  //       );
+
+                  //       // Row(
+                  //       //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //       //   mainAxisAlignment: MainAxisAlignment.start,
+                  //       //   children: [
+                  //       //     SizedBox(
+                  //       //       //width: MediaQuery.of(context).size.width / 6,
+                  //       //       child: CircleAvatar(
+                  //       //         backgroundColor: greenishColor,
+                  //       //         radius: 25,
+                  //       //         child: MyText(
+                  //       //           text: '1',
+                  //       //           weight: FontWeight.bold,
+                  //       //         ),
+                  //       //       ),
+                  //       //       // child: AnotherStepper(
+                  //       //       //   verticalGap: 40,
+                  //       //       //   scrollPhysics: const ScrollPhysics(),
+                  //       //       //   stepperList: stepperData,
+                  //       //       //   activeIndex: widget.gm.programmes.length,
+                  //       //       //   activeBarColor: greyColorShade400,
+                  //       //       //   stepperDirection: Axis.vertical,
+                  //       //       //   iconWidth:
+                  //       //       //       50, // Height that will be applied to all the stepper icons
+                  //       //       //   iconHeight:
+                  //       //       //       50, // Width that will be applied to all the stepper icons
+                  //       //       // ),
+                  //       //     ),
+                  //       //     const SizedBox(
+                  //       //       width: 20,
+                  //       //     ),
+                  //       //     Expanded(
+                  //       //       child: Padding(
+                  //       //         padding: const EdgeInsets.only(top: 10.0),
+                  //       //         child: Column(
+                  //       //           crossAxisAlignment:
+                  //       //               CrossAxisAlignment.start,
+                  //       //           mainAxisAlignment: MainAxisAlignment.start,
+                  //       //           children: [
+                  //       //             if (widget.gm.sPlan == 2)
+                  //       //               MyText(
+                  //       //                 //text:"${widget.gm.lat}${" ,"} ${widget.gm.lng}",
+                  //       //                 text:
+                  //       //                     "${widget.gm.programmes[index].sD.substring(10, 16)} ${" - "} ${widget.gm.programmes[index].eD.substring(10, 16)} ${" - "} ${widget.gm.programmes[index].sD.substring(0, 10)} ${"-"} ${widget.gm.programmes[index].title}",
+                  //       //                 //text: '6:00 AM - 6:30 AM - Gathering',
+                  //       //                 color: blackColor,
+                  //       //                 weight: FontWeight.bold,
+                  //       //                 fontFamily: 'Raleway',
+                  //       //                 size: 16,
+                  //       //               ),
+                  //       //             if (widget.gm.sPlan == 1)
+                  //       //               MyText(
+                  //       //                 //text:"${widget.gm.lat}${" ,"} ${widget.gm.lng}",
+                  //       //                 text:
+                  //       //                     widget.gm.programmes[index].title,
+                  //       //                 //text: '6:00 AM - 6:30 AM - Gathering',
+                  //       //                 color: blackColor,
+                  //       //                 weight: FontWeight.bold,
+                  //       //                 fontFamily: 'Raleway',
+                  //       //                 size: 16,
+                  //       //               ),
+                  //       //             // Wrap(
+                  //       //             //   direction: Axis.vertical,
+                  //       //             //   children: List.generate(
+                  //       //             //       widget.gm.programmes[index].length, (index) {
+                  //       //             //     return
+                  //       //             Padding(
+                  //       //               padding: const EdgeInsets.symmetric(
+                  //       //                   vertical: 16.0),
+                  //       //               child: Row(
+                  //       //                 crossAxisAlignment:
+                  //       //                     CrossAxisAlignment.start,
+                  //       //                 children: [
+                  //       //                   const CircleAvatar(
+                  //       //                     backgroundColor: greyColor2,
+                  //       //                     radius: 5,
+                  //       //                   ),
+                  //       //                   const SizedBox(
+                  //       //                     width: 5,
+                  //       //                   ),
+                  //       //                   Expanded(
+                  //       //                     child: MyText(
+                  //       //                       text: widget
+                  //       //                           .gm
+                  //       //                           .programmes[index]
+                  //       //                           .des, //text[index],
+                  //       //                       color: greyTextColor,
+                  //       //                       weight: FontWeight.w500,
+                  //       //                       fontFamily: 'Raleway',
+                  //       //                       size: 14,
+                  //       //                     ),
+                  //       //                   ),
+                  //       //                 ],
+                  //       //               ),
+                  //       //             ),
+                  //       //             //   }),
+                  //       //             // ),
+                  //       //           ],
+                  //       //         ),
+                  //       //       ),
+                  //       //     ),
+                  //       //   ],
+                  //       // );
+                  //     },
+                  //   ),
+                  // ),
+
                   // 3 rd Tab /////////
                   // gathering location
                   Padding(

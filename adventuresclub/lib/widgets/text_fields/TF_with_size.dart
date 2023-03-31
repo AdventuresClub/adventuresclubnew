@@ -8,15 +8,18 @@ class TFWithSize extends StatefulWidget {
   final TextInputType? show;
   final double verticalPadding;
   final Function? function;
-
+  final Function? onEdit;
   final fillColor;
   final double width;
+  final int? hintLines;
   const TFWithSize(this.hintText, this.controller, this.verticalPadding,
       this.fillColor, this.width,
       {Key? key,
       this.edit = true,
       this.show = TextInputType.text,
-      this.function})
+      this.function,
+      this.onEdit,
+      this.hintLines = 2})
       : super(key: key);
 
   @override
@@ -24,11 +27,13 @@ class TFWithSize extends StatefulWidget {
 }
 
 class _TFWithSizeState extends State<TFWithSize> {
+  void abc() {}
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width / widget.width,
       child: TextField(
+        onEditingComplete: () => widget.onEdit,
         autofocus: true,
         keyboardType: widget.show,
         controller: widget.controller,
@@ -41,7 +46,7 @@ class _TFWithSizeState extends State<TFWithSize> {
               fontWeight: FontWeight.w500,
               fontSize: 14,
               fontFamily: 'Raleway'),
-          hintMaxLines: 2,
+          hintMaxLines: widget.hintLines,
           isDense: true,
           filled: true,
           fillColor: widget.fillColor,

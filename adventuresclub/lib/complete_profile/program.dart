@@ -10,8 +10,14 @@ class Program extends StatefulWidget {
   final TextEditingController scheduleDescription;
   final TextEditingController scheduleDescription1;
   final Widget content;
-  const Program(this.scheduleTitle, this.scheduleTitle1,
-      this.scheduleDescription, this.scheduleDescription1, this.content,
+  final Widget button;
+  const Program(
+      this.scheduleTitle,
+      this.scheduleTitle1,
+      this.scheduleDescription,
+      this.scheduleDescription1,
+      this.content,
+      this.button,
       {super.key});
 
   @override
@@ -49,13 +55,19 @@ class _ProgramState extends State<Program> {
 
   @override
   Widget build(BuildContext context) {
-    return
-        // loading
-        //     ? const Center(
-        //         child: Text("Loading..."),
-        //       )
-        //     :
-        widget.content;
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          widget.content,
+          widget.button,
+        ],
+      ),
+    );
+    // loading
+    //     ? const Center(
+    //         child: Text("Loading..."),
+    //       )
+    //     :
     // :
     // SingleChildScrollView(
     //     child: Column(

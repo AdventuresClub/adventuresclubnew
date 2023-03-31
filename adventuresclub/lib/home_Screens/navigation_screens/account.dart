@@ -138,18 +138,32 @@ class _AccountState extends State<Account> {
   }
 
   void convert() {
+    setState(() {
+      loading = true;
+    });
     DateTime dt = DateTime.parse(Constants.profile.bp.endDate);
     //expiryDate = "${dt.year} '-' ${dt.month} '-' ${dt.day}"
     if (today.day > dt.day) {
-      setState(() {});
-    }
-    setState(() {
+      setState(() {
+        loading = false;
+        expired = true;
+        Constants.expired = true;
+      });
+    } else if (today.day < dt.day) {
+      setState(() {
+        loading = false;
+        expired = false;
+        Constants.expired = false;
+      });
+    } else {
+      loading = false;
       expired = false;
       Constants.expired = false;
-    });
+    }
   }
 
   void requestSent() async {
+    //if (widget.gm.sPlan == 1 && text1[index] == "Availability")
     showDialog(
       context: context,
       builder: (ctx) => const SimpleDialog(
@@ -303,6 +317,76 @@ class _AccountState extends State<Account> {
         },
       ),
     );
+  }
+
+  void ex() async {
+    showDialog(
+      context: context,
+      builder: (ctx) => SimpleDialog(
+        title: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            children: [
+              const Text(
+                "Alert",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                "Your Subscription exprired. Please renew to extend the subscription",
+                style: TextStyle(fontSize: 16),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  MaterialButton(
+                    onPressed: packagesList1,
+                    child: MyText(
+                      text: "Yes",
+                      weight: FontWeight.bold,
+                      color: blackColor,
+                    ),
+                  ),
+                  MaterialButton(
+                    onPressed: cancel,
+                    child: MyText(
+                      text: "No",
+                      weight: FontWeight.bold,
+                      color: blackColor,
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+        children: [],
+      ),
+    );
+  }
+
+  void cancel() {
+    Navigator.of(context).pop();
+  }
+
+  void packagesList1() {
+    cancel();
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return const BecomePartnerPackages(
+            //bp,
+            show: true,
+          );
+        },
+      ),
+    );
+  }
+
+  void showExpiry() {
+    ex();
   }
 
   @override
@@ -677,7 +761,7 @@ class _AccountState extends State<Account> {
                           ),
                         ),
                       ),
-                    if (Constants.expired == true)
+                    if (expired)
                       Column(
                         children: [
                           GestureDetector(
@@ -802,13 +886,14 @@ class _AccountState extends State<Account> {
                                               }
                                               if (text[i] ==
                                                   'Client Requests') {
-                                                Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                    builder: (_) {
-                                                      return const ClientsRequests();
-                                                    },
-                                                  ),
-                                                );
+                                                showExpiry();
+                                                // Navigator.of(context).push(
+                                                //   MaterialPageRoute(
+                                                //     builder: (_) {
+                                                //       return const ClientsRequests();
+                                                //     },
+                                                //   ),
+                                                // );
                                               }
                                             },
                                             child: Stack(

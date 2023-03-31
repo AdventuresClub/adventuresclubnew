@@ -284,3 +284,292 @@
   // void getServices() {
   //   ngm = Provider.of<ServicesProvider>(context).allServices;
   // }
+
+
+
+
+          // var response = await http.post(
+        //     Uri.parse(
+        //         "https://adventuresclub.net/adventureClub/api/v1/create_service"),
+        //     body: {
+        //       'customer_id': Constants.userId.toString(), //"27",
+        //       'adventure_name':
+        //           adventureName.text, //adventureNameController.text,
+        //       "country": Constants.countryId.toString(),
+        //       'region': ConstantsCreateNewServices.selectedRegionId
+        //           .toString(), //selectedRegionId.toString(),
+        //       "service_sector": ConstantsCreateNewServices.selectedSectorId
+        //           .toString(), //selectedSectorId.toString(), //"",
+        //       "service_category": ConstantsCreateNewServices.selectedCategoryId
+        //           .toString(), //"", //selectedCategoryId.toString(), //"",
+        //       "service_type": ConstantsCreateNewServices.serviceTypeId
+        //           .toString(), // //serviceTypeId.toString(), //"",
+        //       "service_level": ConstantsCreateNewServices.selectedlevelId
+        //           .toString(), //selectedlevelId.toString(), //"",
+        //       "duration": ConstantsCreateNewServices.selectedDurationId
+        //           .toString(), //selectedDurationId.toString(), //"",
+        //       "available_seats": availableSeatsController.text, //"",
+        //       "start_date": ConstantsCreateNewServices.startDate
+        //           .toString(), //startDate, //"",
+        //       "end_date": ConstantsCreateNewServices.endDate
+        //           .toString(), //endDate, //"",
+        //       "write_information":
+        //           infoController.text, //infoController.text, //"",
+        //       // it is for particular week or calender
+        //       "service_plan": "1", //sPlan, //"1", //"",
+        //       "cost_inc": costOne.text, //setCost1.text, //"",
+        //       "cost_exc": costTwo.text, //setCost2.text, //"",
+        //       "currency": "1", //  %%% this is hardcoded
+        //       "pre_requisites":
+        //           preRequisites.text, //"", //preReqController.text, //"",
+        //       "minimum_requirements":
+        //           minimumRequirement.text, //minController.text, //"",
+        //       "terms_conditions": terms.text, //tncController.text, //"",
+        //       "recommended": "1", // this is hardcoded
+        //       // this key needs to be discussed,
+        //       "service_plan_days": servicePlanId, //selectedActivitesId
+        //       //.toString(), //"1,6,7", //// %%%%this needs discussion
+        //       // "availability": servicePlanId,
+        //       "service_for":
+        //           selectedActivitesId, //selectedActivitesId.toString(),
+        //       "particular_date":
+        //           ConstantsCreateNewServices.startDate, //gatheringDate, //"",
+        //       // this is an array
+        //       "schedule_title[]":
+        //           title, //titleController, //scheduleController.text, //scheduleController.text, //"",
+        //       // schedule title in array is skipped
+        //       // this is an array
+        //       "gathering_date[]": "654", //gatheringDate, //"",
+        //       // api did not accept list here
+        //       "activities":
+        //           selectedActivityIncludesId, //"5", // activityId, //"",
+        //       "specific_address": specificAddressController
+        //           .text, //"", //iLiveInController.text, //"",
+        //       // this is a wrong field only for testing purposes....
+        //       // this is an array
+        //       "gathering_start_time[]": "10",
+        //       // this is an arrayt
+        //       "gathering_end_time[]": "15",
+        //       "" //gatheringDate, //"",
+        //               // this is an array
+        //               "program_description[]":
+        //           schedule, // scheduleControllerList, //scheduleDesController.text, //"",
+        //       // "service_for": selectedActivitesId
+        //       //     .toString(), //"1,2,5", //"4", //["1", "4", "5", "7"], //"",
+        //       "dependency":
+        //           selectedDependencyId, //selectedDependencyId.toString(), //["1", "2", "3"],
+        //       "banner[]": banners[0], //adventureOne.toString(), //"",
+        //       // banner image name.
+        //       // we need file name,
+        //       // after bytes array when adding into parameter. send the name of file.
+        //       //
+        //       "latitude": ConstantsCreateNewServices.lat
+        //           .toString(), //lat.toString(), //"",
+        //       "longitude": ConstantsCreateNewServices.lng
+        //           .toString(), //lng.toString(), //"",
+        //       // 'mobile_code': ccCode,
+        //     });
+        // print(response.statusCode);
+        // print(response.body);
+        // print(response.headers);
+        // close();
+
+
+  //        void myServicesApi() async {
+  //   setState(() {
+  //     loading = true;
+  //   });
+  //   try {
+  //     var response = await http.post(
+  //         Uri.parse(
+  //             "https://adventuresclub.net/adventureClub/api/v1/myserviceapi"),
+  //         body: {
+  //           'owner': Constants.userId.toString(), //"3",
+  //           'country_id': Constants.countryId.toString(),
+  //           //.toString(),
+  //           //"2", //Constants.countryId.toString(), //"2",
+  //           //'forgot_password': "0"
+  //         });
+  //     var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+  //     List<dynamic> result = decodedResponse['data'];
+  //     dynamic ga = decodedResponse['data']['availability'];
+  //     dynamic nullbp = decodedResponse['data']['become_partner'];
+  //     dynamic nullActivity = decodedResponse['data']['included_activities'];
+  //     dynamic nullDependency = decodedResponse['data']['dependencies'];
+  //     dynamic nullAimed = decodedResponse['data']['aimed_for'];
+  //     dynamic nullImages = decodedResponse['data']['images'];
+  //     dynamic nullProgrammes = decodedResponse['data']['programs'];
+  //     List<AvailabilityPlanModel> gAccomodationPlanModel = [];
+  //     List<IncludedActivitiesModel> gIAm = [];
+  //     List<DependenciesModel> gdM = [];
+  //     List<AimedForModel> gAccomodationAimedfm = [];
+  //     List<ServiceImageModel> gAccomodationServImgModel = [];
+  //     List<ProgrammesModel> gPm = [];
+  //     List<AvailabilityModel> gAccomodoationAvaiModel = [];
+  //     result.forEach(((element) {
+  //       if (ga != null) {
+  //         List<dynamic> availablePlan = element['availability'];
+  //         availablePlan.forEach((ap) {
+  //           AvailabilityPlanModel amPlan = AvailabilityPlanModel(
+  //               ap['id'].toString() ?? "", ap['day'].toString() ?? "");
+  //           gAccomodationPlanModel.add(amPlan);
+  //         });
+  //         List<dynamic> available = element['availability'];
+  //         available.forEach((a) {
+  //           AvailabilityModel am = AvailabilityModel(
+  //               a['start_date'].toString() ?? "",
+  //               a['end_date'].toString() ?? "");
+  //           gAccomodoationAvaiModel.add(am);
+  //         });
+  //       }
+  //       if (nullbp != null) {
+  //         List<dynamic> becomePartner = element['become_partner'];
+  //         becomePartner.forEach((b) {
+  //           BecomePartner bp = BecomePartner(
+  //               b['cr_name'].toString() ?? "",
+  //               b['cr_number'].toString() ?? "",
+  //               b['description'].toString() ?? "");
+  //         });
+  //       }
+  //       if (nullActivity != null) {
+  //         List<dynamic> iActivities = element['included_activities'];
+  //         iActivities.forEach((iA) {
+  //           IncludedActivitiesModel iAm = IncludedActivitiesModel(
+  //             int.tryParse(iA['id'].toString()) ?? 0,
+  //             int.tryParse(iA['service_id'].toString()) ?? 0,
+  //             iA['activity_id'].toString() ?? "",
+  //             iA['activity'].toString() ?? "",
+  //             iA['image'].toString() ?? "",
+  //           );
+  //           gIAm.add(iAm);
+  //         });
+  //       }
+  //       if (nullDependency != null) {
+  //         List<dynamic> dependency = element['dependencies'];
+  //         dependency.forEach((d) {
+  //           DependenciesModel dm = DependenciesModel(
+  //             int.tryParse(d['id'].toString()) ?? 0,
+  //             d['dependency_name'].toString() ?? "",
+  //             d['image'].toString() ?? "",
+  //             d['updated_at'].toString() ?? "",
+  //             d['created_at'].toString() ?? "",
+  //             d['deleted_at'].toString() ?? "",
+  //           );
+  //           gdM.add(dm);
+  //         });
+  //       }
+  //       if (nullAimed != null) {
+  //         List<dynamic> aF = element['aimed_for'];
+  //         aF.forEach((a) {
+  //           AimedForModel afm = AimedForModel(
+  //             int.tryParse(a['id'].toString()) ?? 0,
+  //             a['AimedName'].toString() ?? "",
+  //             a['image'].toString() ?? "",
+  //             a['created_at'].toString() ?? "",
+  //             a['updated_at'].toString() ?? "",
+  //             a['deleted_at'].toString() ?? "",
+  //             int.tryParse(a['service_id'].toString()) ?? 0,
+  //           );
+  //           gAccomodationAimedfm.add(afm);
+  //         });
+  //       }
+  //       if (nullImages != null) {
+  //         List<dynamic> image = element['images'];
+  //         image.forEach((i) {
+  //           ServiceImageModel sm = ServiceImageModel(
+  //             int.tryParse(i['id'].toString()) ?? 0,
+  //             int.tryParse(i['service_id'].toString()) ?? 0,
+  //             int.tryParse(i['is_default'].toString()) ?? 0,
+  //             i['image_url'].toString() ?? "",
+  //             i['thumbnail'].toString() ?? "",
+  //           );
+  //           gAccomodationServImgModel.add(sm);
+  //         });
+  //       }
+  //       if (nullProgrammes != null) {
+  //         List<dynamic> programs = element['programs'];
+  //         programs.forEach((p) {
+  //           ProgrammesModel pm = ProgrammesModel(
+  //             int.tryParse(p['id'].toString()) ?? 0,
+  //             int.tryParse(p['service_id'].toString()) ?? 0,
+  //             p['title'].toString() ?? "",
+  //             p['start_datetime'].toString() ?? "",
+  //             p['end_datetime'].toString() ?? "",
+  //             p['description'].toString() ?? "",
+  //           );
+  //           gPm.add(pm);
+  //         });
+  //       }
+  //       ServicesModel nSm = ServicesModel(
+  //         int.tryParse(element['id'].toString()) ?? 0,
+  //         int.tryParse(element['owner'].toString()) ?? 0,
+  //         element['adventure_name'].toString() ?? "",
+  //         element['country'].toString() ?? "",
+  //         element['region'].toString() ?? "",
+  //         element['city_id'].toString() ?? "",
+  //         element['service_sector'].toString() ?? "",
+  //         element['service_category'].toString() ?? "",
+  //         element['service_type'].toString() ?? "",
+  //         element['service_level'].toString() ?? "",
+  //         element['duration'].toString() ?? "",
+  //         int.tryParse(element['availability_seats'].toString()) ?? 0,
+  //         int.tryParse(element['start_date'].toString()) ?? "",
+  //         int.tryParse(element['end_date'].toString()) ?? "",
+  //         element['latitude'].toString() ?? "",
+  //         element['longitude'].toString() ?? "",
+  //         element['write_information'].toString() ?? "",
+  //         int.tryParse(element['service_plan'].toString()) ?? 0,
+  //         int.tryParse(element['sfor_id'].toString()) ?? 0,
+  //         gAccomodoationAvaiModel,
+  //         gAccomodationPlanModel,
+  //         element['geo_location'].toString() ?? "",
+  //         element['specific_address'].toString() ?? "",
+  //         element['cost_inc'].toString() ?? "",
+  //         element['cost_exc'].toString() ?? "",
+  //         element['currency'].toString() ?? "",
+  //         int.tryParse(element['points'].toString()) ?? 0,
+  //         element['pre_requisites'].toString() ?? "",
+  //         element['minimum_requirements'].toString() ?? "",
+  //         element['terms_conditions'].toString() ?? "",
+  //         int.tryParse(element['recommended'].toString()) ?? 0,
+  //         element['status'].toString() ?? "",
+  //         element['image'].toString() ?? "",
+  //         element['descreption]'].toString() ?? "",
+  //         element['favourite_image'].toString() ?? "",
+  //         element['created_at'].toString() ?? "",
+  //         element['updated_at'].toString() ?? "",
+  //         element['delete_at'].toString() ?? "",
+  //         int.tryParse(element['provider_id'].toString()) ?? 0,
+  //         int.tryParse(element['service_id'].toString()) ?? 0,
+  //         element['provided_name'].toString() ?? "",
+  //         element['provider_profile'].toString() ?? "",
+  //         element['including_gerea_and_other_taxes'].toString() ?? "",
+  //         element['excluding_gerea_and_other_taxes'].toString() ?? "",
+  //         gIAm,
+  //         gdM,
+  //         nBp,
+  //         gAccomodationAimedfm,
+  //         gPm,
+  //         element['stars'].toString() ?? "",
+  //         int.tryParse(element['is_liked'].toString()) ?? 0,
+  //         element['baseurl'].toString() ?? "",
+  //         gAccomodationServImgModel,
+  //         element['reviewd_by'].toString() ?? "",
+  //         int.tryParse(element['remaining_seats'].toString()) ?? 0,
+  //       );
+  //       //gAccomodationSModel.add(nSm);
+  //       allServices.add(nSm);
+  //       allAccomodation.add(nSm);
+
+  //       HomeServicesModel adv = HomeServicesModel("", gAccomodationSModel);
+  //       setState(() {
+  //         loading = false;
+  //       });
+  //       print(response.statusCode);
+  //       print(response.body);
+  //       print(response.headers);
+  //     }));
+  //   } catch (e) {
+  //     print(e.toString());
+  //   }
+  // }

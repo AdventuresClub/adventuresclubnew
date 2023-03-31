@@ -1,10 +1,11 @@
-// ignore_for_file: avoid_print, use_build_context_synchronously
+// ignore_for_file: avoid_print, use_build_context_synchronously, avoid_function_literals_in_foreach_calls
 
 import 'dart:convert';
 
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/forgot_pass/forgot_pass.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
+import 'package:adventuresclub/models/get_country.dart';
 import 'package:adventuresclub/models/profile_models/profile_become_partner.dart';
 import 'package:adventuresclub/models/user_profile_model.dart';
 import 'package:adventuresclub/sign_up/Sign_up.dart';
@@ -36,8 +37,16 @@ class _SignInState extends State<SignIn> {
   int userId = 0;
   String email = "";
   String password = "";
+  Map mapCountry = {};
+  List<GetCountryModel> countriesList1 = [];
   ProfileBecomePartner pbp = ProfileBecomePartner(0, 0, "", "", "", "", "", "",
       "", "", 0, 0, "", "", "", "", "", "", "", 0, "", "", "", "", "", "");
+
+  @override
+  void initState() {
+    super.initState();
+    getCountries();
+  }
 
   void enterOTP() {
     showDialog(
@@ -122,6 +131,18 @@ class _SignInState extends State<SignIn> {
         });
   }
 
+  void cId(int id) async {
+    SharedPreferences prefs = await Constants.getPrefs();
+    countriesList1.forEach((element) {
+      if (id == element.id) {
+        setState(() {
+          Constants.countryFlag = element.flag;
+        });
+      }
+    });
+    prefs.setString("countryFlag", Constants.countryFlag);
+  }
+
   void parseData(
       String name, int countryId, int id, String email, String pass) {
     setState(() {
@@ -131,6 +152,24 @@ class _SignInState extends State<SignIn> {
       Constants.emailId = email;
       Constants.password = pass;
     });
+  }
+
+  Future getCountries() async {
+    var response = await http.get(Uri.parse(
+        "https://adventuresclub.net/adventureClub/api/v1/get_countries"));
+    if (response.statusCode == 200) {
+      mapCountry = json.decode(response.body);
+      List<dynamic> result = mapCountry['data'];
+      result.forEach((element) {
+        GetCountryModel gc = GetCountryModel(
+          element['country'],
+          element['flag'],
+          element['code'],
+          element['id'],
+        );
+        countriesList1.add(gc);
+      });
+    }
   }
 
   void login() async {
@@ -239,6 +278,7 @@ class _SignInState extends State<SignIn> {
             prefs.setString("name", up.name);
             prefs.setString("email", emailController.text);
             prefs.setString("password", passController.text);
+            cId(up.countryId);
             parseData(
                 up.name, up.countryId, up.id, up.email, passController.text);
             //Constants.userRole = "3";

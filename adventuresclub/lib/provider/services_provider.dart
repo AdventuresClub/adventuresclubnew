@@ -3,15 +3,19 @@
 import 'dart:convert';
 
 import 'package:adventuresclub/models/filter_data_model/category_filter_model.dart';
+import 'package:adventuresclub/models/filter_data_model/programs_model.dart';
 import 'package:adventuresclub/models/home_services/home_services_model.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
 import 'package:adventuresclub/models/services/availability_model.dart';
+import 'package:adventuresclub/models/services/dependencies_model.dart';
+import 'package:adventuresclub/models/services/included_activities_model.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import '../constants.dart';
 import '../models/home_services/become_partner.dart';
+import '../models/services/create_services/availability_plan_model.dart';
 
 class ServicesProvider with ChangeNotifier {
   ServicesProvider({Key? key});
@@ -78,6 +82,13 @@ class ServicesProvider with ChangeNotifier {
           String acc = element['category'].toString() ?? "";
           List<dynamic> s = element['services'];
           s.forEach((services) {
+            List<AvailabilityPlanModel> gAccomodationPlanModel = [];
+            List<dynamic> availablePlan = services['availability'];
+            availablePlan.forEach((ap) {
+              AvailabilityPlanModel amPlan = AvailabilityPlanModel(
+                  ap['id'].toString() ?? "", ap['day'].toString() ?? "");
+              gAccomodationPlanModel.add(amPlan);
+            });
             List<AvailabilityModel> gAccomodoationAvaiModel = [];
             List<dynamic> available = services['availability'];
             available.forEach((a) {
@@ -92,6 +103,31 @@ class ServicesProvider with ChangeNotifier {
                   b['cr_name'].toString() ?? "",
                   b['cr_number'].toString() ?? "",
                   b['description'].toString() ?? "");
+            });
+            List<IncludedActivitiesModel> gIAm = [];
+            List<dynamic> iActivities = services['included_activities'];
+            iActivities.forEach((iA) {
+              IncludedActivitiesModel iAm = IncludedActivitiesModel(
+                int.tryParse(iA['id'].toString()) ?? 0,
+                int.tryParse(iA['service_id'].toString()) ?? 0,
+                iA['activity_id'].toString() ?? "",
+                iA['activity'].toString() ?? "",
+                iA['image'].toString() ?? "",
+              );
+              gIAm.add(iAm);
+            });
+            List<DependenciesModel> gdM = [];
+            List<dynamic> dependency = services['dependencies'];
+            dependency.forEach((d) {
+              DependenciesModel dm = DependenciesModel(
+                int.tryParse(d['id'].toString()) ?? 0,
+                d['dependency_name'].toString() ?? "",
+                d['image'].toString() ?? "",
+                d['updated_at'].toString() ?? "",
+                d['created_at'].toString() ?? "",
+                d['deleted_at'].toString() ?? "",
+              );
+              gdM.add(dm);
             });
             List<AimedForModel> gAccomodationAimedfm = [];
             List<dynamic> aF = services['aimed_for'];
@@ -119,6 +155,19 @@ class ServicesProvider with ChangeNotifier {
               );
               gAccomodationServImgModel.add(sm);
             });
+            List<ProgrammesModel> gPm = [];
+            List<dynamic> programs = services['programs'];
+            programs.forEach((p) {
+              ProgrammesModel pm = ProgrammesModel(
+                int.tryParse(p['id'].toString()) ?? 0,
+                int.tryParse(p['service_id'].toString()) ?? 0,
+                p['title'].toString() ?? "",
+                p['start_datetime'].toString() ?? "",
+                p['end_datetime'].toString() ?? "",
+                p['description'].toString() ?? "",
+              );
+              gPm.add(pm);
+            });
             ServicesModel nSm = ServicesModel(
               int.tryParse(services['id'].toString()) ?? 0,
               int.tryParse(services['owner'].toString()) ?? 0,
@@ -140,6 +189,7 @@ class ServicesProvider with ChangeNotifier {
               int.tryParse(services['service_plan'].toString()) ?? 0,
               int.tryParse(services['sfor_id'].toString()) ?? 0,
               gAccomodoationAvaiModel,
+              gAccomodationPlanModel,
               services['geo_location'].toString() ?? "",
               services['specific_address'].toString() ?? "",
               services['cost_inc'].toString() ?? "",
@@ -163,12 +213,17 @@ class ServicesProvider with ChangeNotifier {
               services['provider_profile'].toString() ?? "",
               services['including_gerea_and_other_taxes'].toString() ?? "",
               services['excluding_gerea_and_other_taxes'].toString() ?? "",
+              gIAm,
+              gdM,
               nBp,
               gAccomodationAimedfm,
+              gPm,
               services['stars'].toString() ?? "",
               int.tryParse(services['is_liked'].toString()) ?? 0,
               services['baseurl'].toString() ?? "",
               gAccomodationServImgModel,
+              services['reviewd_by'].toString() ?? "",
+              int.tryParse(services['remaining_seats'].toString()) ?? 0,
             );
             //gAccomodationSModel.add(nSm);
             allServices.add(nSm);
@@ -182,6 +237,13 @@ class ServicesProvider with ChangeNotifier {
         } else if (element['category'] == "Transport") {
           List<dynamic> t = element['services'];
           t.forEach((tServices) {
+            List<AvailabilityPlanModel> gTransportPlanModel = [];
+            List<dynamic> availablePlan = tServices['availability'];
+            availablePlan.forEach((ap) {
+              AvailabilityPlanModel tPlan = AvailabilityPlanModel(
+                  ap['id'].toString() ?? "", ap['day'].toString() ?? "");
+              gTransportPlanModel.add(tPlan);
+            });
             List<AvailabilityModel> gTransportAvaiModel = [];
             List<dynamic> tAvailable = tServices['availability'];
             tAvailable.forEach((aS) {
@@ -196,6 +258,31 @@ class ServicesProvider with ChangeNotifier {
                   bS['cr_name'].toString() ?? "",
                   bS['cr_number'].toString() ?? "",
                   bS['description'].toString() ?? "");
+            });
+            List<IncludedActivitiesModel> gIAm = [];
+            List<dynamic> iActivities = tServices['included_activities'];
+            iActivities.forEach((iA) {
+              IncludedActivitiesModel iAm = IncludedActivitiesModel(
+                int.tryParse(iA['id'].toString()) ?? 0,
+                int.tryParse(iA['service_id'].toString()) ?? 0,
+                iA['activity_id'].toString() ?? "",
+                iA['activity'].toString() ?? "",
+                iA['image'].toString() ?? "",
+              );
+              gIAm.add(iAm);
+            });
+            List<DependenciesModel> gdM = [];
+            List<dynamic> dependency = tServices['dependencies'];
+            dependency.forEach((d) {
+              DependenciesModel dm = DependenciesModel(
+                int.tryParse(d['id'].toString()) ?? 0,
+                d['dependency_name'].toString() ?? "",
+                d['image'].toString() ?? "",
+                d['updated_at'].toString() ?? "",
+                d['created_at'].toString() ?? "",
+                d['deleted_at'].toString() ?? "",
+              );
+              gdM.add(dm);
             });
             List<AimedForModel> gTransportAimedfm = [];
             List<dynamic> tAimedFor = tServices['aimed_for'];
@@ -223,6 +310,19 @@ class ServicesProvider with ChangeNotifier {
               );
               gTransportServImgModel.add(transportServiceImage);
             });
+            List<ProgrammesModel> gPm = [];
+            List<dynamic> programs = tServices['programs'];
+            programs.forEach((p) {
+              ProgrammesModel pm = ProgrammesModel(
+                int.tryParse(p['id'].toString()) ?? 0,
+                int.tryParse(p['service_id'].toString()) ?? 0,
+                p['title'].toString() ?? "",
+                p['start_datetime'].toString() ?? "",
+                p['end_datetime'].toString() ?? "",
+                p['description'].toString() ?? "",
+              );
+              gPm.add(pm);
+            });
             ServicesModel tServicesModelList = ServicesModel(
               int.tryParse(tServices['id'].toString()) ?? 0,
               int.tryParse(tServices['owner'].toString()) ?? 0,
@@ -244,6 +344,7 @@ class ServicesProvider with ChangeNotifier {
               int.tryParse(tServices['service_plan'].toString()) ?? 0,
               int.tryParse(tServices['sfor_id'].toString()) ?? 0,
               gTransportAvaiModel,
+              gTransportPlanModel,
               tServices['geo_location'].toString() ?? "",
               tServices['specific_address'].toString() ?? "",
               tServices['cost_inc'].toString() ?? "",
@@ -267,12 +368,17 @@ class ServicesProvider with ChangeNotifier {
               tServices['provider_profile'].toString() ?? "",
               tServices['including_gerea_and_other_taxes'].toString() ?? "",
               tServices['excluding_gerea_and_other_taxes'].toString() ?? "",
+              gIAm,
+              gdM,
               transportBp,
               gTransportAimedfm,
+              gPm,
               tServices['stars'].toString() ?? "",
               int.tryParse(tServices['is_liked'].toString()) ?? 0,
               tServices['baseurl'].toString() ?? "",
               gTransportServImgModel,
+              tServices['reviewd_by'].toString() ?? "",
+              int.tryParse(tServices['remaining_seats'].toString()) ?? 0,
             );
             //gTransportSModel.add(tServicesModelList);
             allServices.add(tServicesModelList);
@@ -287,6 +393,13 @@ class ServicesProvider with ChangeNotifier {
         } else if (element['category'] == "Sky") {
           List<dynamic> skyList = element['services'];
           skyList.forEach((skyServices) {
+            List<AvailabilityPlanModel> gSkyPlanModel = [];
+            List<dynamic> availablePlan = skyServices['availability'];
+            availablePlan.forEach((ap) {
+              AvailabilityPlanModel skyPlan = AvailabilityPlanModel(
+                  ap['id'].toString() ?? "", ap['day'].toString() ?? "");
+              gSkyPlanModel.add(skyPlan);
+            });
             List<AvailabilityModel> gSkyAvaiModel = [];
             List<dynamic> tAvailable = skyServices['availability'];
             tAvailable.forEach((skyAvailable) {
@@ -301,6 +414,31 @@ class ServicesProvider with ChangeNotifier {
                   skyBecomePartner['cr_name'].toString() ?? "",
                   skyBecomePartner['cr_number'].toString() ?? "",
                   skyBecomePartner['description'].toString() ?? "");
+            });
+            List<IncludedActivitiesModel> gIAm = [];
+            List<dynamic> iActivities = skyServices['included_activities'];
+            iActivities.forEach((iA) {
+              IncludedActivitiesModel iAm = IncludedActivitiesModel(
+                int.tryParse(iA['id'].toString()) ?? 0,
+                int.tryParse(iA['service_id'].toString()) ?? 0,
+                iA['activity_id'].toString() ?? "",
+                iA['activity'].toString() ?? "",
+                iA['image'].toString() ?? "",
+              );
+              gIAm.add(iAm);
+            });
+            List<DependenciesModel> gdM = [];
+            List<dynamic> dependency = skyServices['dependencies'];
+            dependency.forEach((d) {
+              DependenciesModel dm = DependenciesModel(
+                int.tryParse(d['id'].toString()) ?? 0,
+                d['dependency_name'].toString() ?? "",
+                d['image'].toString() ?? "",
+                d['updated_at'].toString() ?? "",
+                d['created_at'].toString() ?? "",
+                d['deleted_at'].toString() ?? "",
+              );
+              gdM.add(dm);
             });
             List<AimedForModel> gSkyAimedfm = [];
             List<dynamic> skyAimedForList = skyServices['aimed_for'];
@@ -328,6 +466,19 @@ class ServicesProvider with ChangeNotifier {
               );
               gSkyServImgModel.add(skyServiceImage);
             });
+            List<ProgrammesModel> gPm = [];
+            List<dynamic> programs = skyServices['programs'];
+            programs.forEach((p) {
+              ProgrammesModel pm = ProgrammesModel(
+                int.tryParse(p['id'].toString()) ?? 0,
+                int.tryParse(p['service_id'].toString()) ?? 0,
+                p['title'].toString() ?? "",
+                p['start_datetime'].toString() ?? "",
+                p['end_datetime'].toString() ?? "",
+                p['description'].toString() ?? "",
+              );
+              gPm.add(pm);
+            });
             ServicesModel skyServicesModelList = ServicesModel(
               int.tryParse(skyServices['id'].toString()) ?? 0,
               int.tryParse(skyServices['owner'].toString()) ?? 0,
@@ -349,6 +500,7 @@ class ServicesProvider with ChangeNotifier {
               int.tryParse(skyServices['service_plan'].toString()) ?? 0,
               int.tryParse(skyServices['sfor_id'].toString()) ?? 0,
               gSkyAvaiModel,
+              gSkyPlanModel,
               skyServices['geo_location'].toString() ?? "",
               skyServices['specific_address'].toString() ?? "",
               skyServices['cost_inc'].toString() ?? "",
@@ -372,12 +524,17 @@ class ServicesProvider with ChangeNotifier {
               skyServices['provider_profile'].toString() ?? "",
               skyServices['including_gerea_and_other_taxes'].toString() ?? "",
               skyServices['excluding_gerea_and_other_taxes'].toString() ?? "",
+              gIAm,
+              gdM,
               skyBp,
               gSkyAimedfm,
+              gPm,
               skyServices['stars'].toString() ?? "",
               int.tryParse(skyServices['is_liked'].toString()) ?? 0,
               skyServices['baseurl'].toString() ?? "",
               gSkyServImgModel,
+              skyServices['reviewd_by'].toString() ?? "",
+              int.tryParse(skyServices['remaining_seats'].toString()) ?? 0,
             );
             // gSkyServicesModel.add(skyServicesModelList);
             allServices.add(skyServicesModelList);
@@ -392,6 +549,13 @@ class ServicesProvider with ChangeNotifier {
         } else if (element['category'] == "Water") {
           List<dynamic> waterList = element['services'];
           waterList.forEach((waterServices) {
+            List<AvailabilityPlanModel> gWaterPlanModel = [];
+            List<dynamic> availablePlan = waterServices['availability'];
+            availablePlan.forEach((ap) {
+              AvailabilityPlanModel waterPlan = AvailabilityPlanModel(
+                  ap['id'].toString() ?? "", ap['day'].toString() ?? "");
+              gWaterPlanModel.add(waterPlan);
+            });
             List<AvailabilityModel> gWaterAvaiModel = [];
             List<dynamic> wAvailable = waterServices['availability'];
             wAvailable.forEach((waterAvailable) {
@@ -407,6 +571,31 @@ class ServicesProvider with ChangeNotifier {
                   waterBecomePartner['cr_name'].toString() ?? "",
                   waterBecomePartner['cr_number'].toString() ?? "",
                   waterBecomePartner['description'].toString() ?? "");
+            });
+            List<IncludedActivitiesModel> gIAm = [];
+            List<dynamic> iActivities = waterServices['included_activities'];
+            iActivities.forEach((iA) {
+              IncludedActivitiesModel iAm = IncludedActivitiesModel(
+                int.tryParse(iA['id'].toString()) ?? 0,
+                int.tryParse(iA['service_id'].toString()) ?? 0,
+                iA['activity_id'].toString() ?? "",
+                iA['activity'].toString() ?? "",
+                iA['image'].toString() ?? "",
+              );
+              gIAm.add(iAm);
+            });
+            List<DependenciesModel> gdM = [];
+            List<dynamic> dependency = waterServices['dependencies'];
+            dependency.forEach((d) {
+              DependenciesModel dm = DependenciesModel(
+                int.tryParse(d['id'].toString()) ?? 0,
+                d['dependency_name'].toString() ?? "",
+                d['image'].toString() ?? "",
+                d['updated_at'].toString() ?? "",
+                d['created_at'].toString() ?? "",
+                d['deleted_at'].toString() ?? "",
+              );
+              gdM.add(dm);
             });
             List<AimedForModel> gWaterAimedfm = [];
             List<dynamic> waterAimedForList = waterServices['aimed_for'];
@@ -434,6 +623,19 @@ class ServicesProvider with ChangeNotifier {
               );
               gWaterServImgModel.add(waterServiceImage);
             });
+            List<ProgrammesModel> gPm = [];
+            List<dynamic> programs = waterServices['programs'];
+            programs.forEach((p) {
+              ProgrammesModel pm = ProgrammesModel(
+                int.tryParse(p['id'].toString()) ?? 0,
+                int.tryParse(p['service_id'].toString()) ?? 0,
+                p['title'].toString() ?? "",
+                p['start_datetime'].toString() ?? "",
+                p['end_datetime'].toString() ?? "",
+                p['description'].toString() ?? "",
+              );
+              gPm.add(pm);
+            });
             ServicesModel waterServicesModelList = ServicesModel(
               int.tryParse(waterServices['id'].toString()) ?? 0,
               int.tryParse(waterServices['owner'].toString()) ?? 0,
@@ -455,6 +657,7 @@ class ServicesProvider with ChangeNotifier {
               int.tryParse(waterServices['service_plan'].toString()) ?? 0,
               int.tryParse(waterServices['sfor_id'].toString()) ?? 0,
               gWaterAvaiModel,
+              gWaterPlanModel,
               waterServices['geo_location'].toString() ?? "",
               waterServices['specific_address'].toString() ?? "",
               waterServices['cost_inc'].toString() ?? "",
@@ -478,12 +681,17 @@ class ServicesProvider with ChangeNotifier {
               waterServices['provider_profile'].toString() ?? "",
               waterServices['including_gerea_and_other_taxes'].toString() ?? "",
               waterServices['excluding_gerea_and_other_taxes'].toString() ?? "",
+              gIAm,
+              gdM,
               waterBp,
               gWaterAimedfm,
+              gPm,
               waterServices['stars'].toString() ?? "",
               int.tryParse(waterServices['is_liked'].toString()) ?? 0,
               waterServices['baseurl'].toString() ?? "",
               gWaterServImgModel,
+              waterServices['reviewd_by'].toString() ?? "",
+              int.tryParse(waterServices['remaining_seats'].toString()) ?? 0,
             );
             // gWaterServicesModel.add(waterServicesModelList);
             allServices.add(waterServicesModelList);
@@ -494,6 +702,13 @@ class ServicesProvider with ChangeNotifier {
         } else if (element['category'] == "LAND") {
           List<dynamic> landList = element['services'];
           landList.forEach((landServices) {
+            List<AvailabilityPlanModel> glandPlanModel = [];
+            List<dynamic> availablePlan = landServices['availability'];
+            availablePlan.forEach((ap) {
+              AvailabilityPlanModel landPlan = AvailabilityPlanModel(
+                  ap['id'].toString() ?? "", ap['day'].toString() ?? "");
+              glandPlanModel.add(landPlan);
+            });
             List<AvailabilityModel> gLandAvaiModel = [];
             List<dynamic> lAvailable = landServices['availability'];
             lAvailable.forEach((landAvailable) {
@@ -509,6 +724,31 @@ class ServicesProvider with ChangeNotifier {
                   landBecomePartner['cr_name'].toString() ?? "",
                   landBecomePartner['cr_number'].toString() ?? "",
                   landBecomePartner['description'].toString() ?? "");
+            });
+            List<IncludedActivitiesModel> gIAm = [];
+            List<dynamic> iActivities = landServices['included_activities'];
+            iActivities.forEach((iA) {
+              IncludedActivitiesModel iAm = IncludedActivitiesModel(
+                int.tryParse(iA['id'].toString()) ?? 0,
+                int.tryParse(iA['service_id'].toString()) ?? 0,
+                iA['activity_id'].toString() ?? "",
+                iA['activity'].toString() ?? "",
+                iA['image'].toString() ?? "",
+              );
+              gIAm.add(iAm);
+            });
+            List<DependenciesModel> gdM = [];
+            List<dynamic> dependency = landServices['dependencies'];
+            dependency.forEach((d) {
+              DependenciesModel dm = DependenciesModel(
+                int.tryParse(d['id'].toString()) ?? 0,
+                d['dependency_name'].toString() ?? "",
+                d['image'].toString() ?? "",
+                d['updated_at'].toString() ?? "",
+                d['created_at'].toString() ?? "",
+                d['deleted_at'].toString() ?? "",
+              );
+              gdM.add(dm);
             });
             List<AimedForModel> gLandAimedfm = [];
             List<dynamic> landAimedForList = landServices['aimed_for'];
@@ -536,6 +776,19 @@ class ServicesProvider with ChangeNotifier {
               );
               gLandServImgModel.add(landServiceImage);
             });
+            List<ProgrammesModel> gPm = [];
+            List<dynamic> programs = landServices['programs'];
+            programs.forEach((p) {
+              ProgrammesModel pm = ProgrammesModel(
+                int.tryParse(p['id'].toString()) ?? 0,
+                int.tryParse(p['service_id'].toString()) ?? 0,
+                p['title'].toString() ?? "",
+                p['start_datetime'].toString() ?? "",
+                p['end_datetime'].toString() ?? "",
+                p['description'].toString() ?? "",
+              );
+              gPm.add(pm);
+            });
             ServicesModel landServicesModelList = ServicesModel(
               int.tryParse(landServices['id'].toString()) ?? 0,
               int.tryParse(landServices['owner'].toString()) ?? 0,
@@ -557,6 +810,7 @@ class ServicesProvider with ChangeNotifier {
               int.tryParse(landServices['service_plan'].toString()) ?? 0,
               int.tryParse(landServices['sfor_id'].toString()) ?? 0,
               gLandAvaiModel,
+              glandPlanModel,
               landServices['geo_location'].toString() ?? "",
               landServices['specific_address'].toString() ?? "",
               landServices['cost_inc'].toString() ?? "",
@@ -580,12 +834,17 @@ class ServicesProvider with ChangeNotifier {
               landServices['provider_profile'].toString() ?? "",
               landServices['including_gerea_and_other_taxes'].toString() ?? "",
               landServices['excluding_gerea_and_other_taxes'].toString() ?? "",
+              gIAm,
+              gdM,
               landBp,
               gLandAimedfm,
+              gPm,
               landServices['stars'].toString() ?? "",
               int.tryParse(landServices['is_liked'].toString()) ?? 0,
               landServices['baseurl'].toString() ?? "",
               gLandServImgModel,
+              landServices['reviewd_by'].toString() ?? "",
+              int.tryParse(landServices['remaining_seats'].toString()) ?? 0,
             );
             // gLandServicesModel.add(landServicesModelList);
             allServices.add(landServicesModelList);

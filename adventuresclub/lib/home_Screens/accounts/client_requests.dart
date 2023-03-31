@@ -123,6 +123,7 @@ class _ClientsRequestsState extends State<ClientsRequests> {
   }
 
   void getClient() async {
+    gRM.clear();
     setState(() {
       loading = true;
     });
@@ -132,7 +133,7 @@ class _ClientsRequestsState extends State<ClientsRequests> {
               "https://adventuresclub.net/adventureClub/api/v1/get_client_requests"),
           body: {
             'partner_id': "3", //Constants.userId, //"3",
-            'country_id': Constants.countryId //"1",
+            'country_id': "1", //Constants.countryId //"1",
             // 'mobile_code': ccCode,
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
