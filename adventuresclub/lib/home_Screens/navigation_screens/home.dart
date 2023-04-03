@@ -135,7 +135,7 @@ class _HomeState extends State<Home> {
             ),
             Container(
               alignment: Alignment.centerLeft,
-              height: 210,
+              height: 220,
               child: const ServiceList('Accomodation'),
             ),
             const SizedBox(
@@ -159,7 +159,7 @@ class _HomeState extends State<Home> {
             ),
             Container(
               alignment: Alignment.centerLeft,
-              height: 210,
+              height: 220,
               child: const ServiceList('Transport'),
             ),
             const SizedBox(
@@ -183,7 +183,7 @@ class _HomeState extends State<Home> {
             ),
             Container(
               alignment: Alignment.centerLeft,
-              height: 210,
+              height: 220,
               child: const ServiceList('Sky'),
             ),
             const SizedBox(
@@ -207,7 +207,7 @@ class _HomeState extends State<Home> {
             ),
             Container(
               alignment: Alignment.centerLeft,
-              height: 210,
+              height: 220,
               child: const ServiceList('Water'),
             ),
             Padding(
@@ -228,7 +228,7 @@ class _HomeState extends State<Home> {
             ),
             Container(
               alignment: Alignment.centerLeft,
-              height: 210,
+              height: 220,
               child: const ServiceList('Land'),
             ),
           ],

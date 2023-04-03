@@ -1,14 +1,15 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 
-import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/about.dart';
-import 'package:adventuresclub/home_Screens/details.dart';
 import 'package:adventuresclub/models/home_services/home_services_model.dart';
+import 'package:adventuresclub/models/services/create_services/availability_plan_model.dart';
+import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:adventuresclub/widgets/services_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../models/filter_data_model/programs_model.dart';
 import '../../models/home_services/become_partner.dart';
@@ -20,7 +21,6 @@ import '../../models/services/dependencies_model.dart';
 import '../../models/services/included_activities_model.dart';
 import '../../models/services/manish_model.dart';
 import '../../models/services/service_image_model.dart';
-import 'package:http/http.dart' as http;
 
 class Planned extends StatefulWidget {
   const Planned({super.key});
@@ -49,6 +49,8 @@ class _PlannedState extends State<Planned> {
   List<HomeServicesModel> pGm = [];
   List<ServicesModel> ngSM = [];
   List<BecomePartner> nBp = [];
+  List<ServicesModel> allSer = [];
+  DateTime selDate = DateTime.now();
 
   @override
   void initState() {
@@ -393,8 +395,33 @@ class _PlannedState extends State<Planned> {
     return result;
   }
 
+  List<ServicesModel> getFilterData(List<ServicesModel> data) {
+    List<ServicesModel> filterList = [];
+    data.forEach((element) {
+      if (element.sPlan == 1) {
+        List<AvailabilityPlanModel> availability = element.availabilityPlan;
+        for (AvailabilityPlanModel a in availability) {
+          //availability.forEach((a) {
+          if (Constants.convertDaysNumToString(_selectedDay.weekday) == a.day) {
+            filterList.add(element);
+            break;
+          }
+          //});
+        }
+      } else {
+        if (_selectedDay.isAfter(element.startDate) &&
+            _selectedDay.isBefore(element.endDate)) {
+          filterList.add(element);
+        }
+      }
+    });
+
+    return filterList;
+  }
+
   @override
   Widget build(BuildContext context) {
+    allSer = getFilterData(Provider.of<ServicesProvider>(context).allServices);
     return Scaffold(
       backgroundColor: greyProfileColor,
       body: ListView(
@@ -410,7 +437,7 @@ class _PlannedState extends State<Planned> {
                 daysOfWeekHeight: 20,
                 daysOfWeekStyle: const DaysOfWeekStyle(
                     weekdayStyle: TextStyle(
-                        color: greyColor, fontWeight: FontWeight.w500)),
+                        color: greyColor, fontWeight: FontWeight.w600)),
                 selectedDayPredicate: (day) {
                   // Use `selectedDayPredicate` to determine which day is currently selected.
                   // If this returns true, then `day` will be marked as selected.
@@ -424,13 +451,14 @@ class _PlannedState extends State<Planned> {
                     // Call `setState()` when updating the selected day
                     setState(() {
                       _selectedDay = selectedDay;
-                      _focusedDay = focusedDay;
+                      selectedDay = selDate;
+                      _focusedDay = selDate;
                       day = DateFormat('EEEE').format(_selectedDay);
                       print(day);
                     });
                     //gm.clear();
                     // pGm.clear();
-                    filter();
+                    // filter();
                   }
                 },
                 onFormatChanged: (format) {
@@ -443,7 +471,7 @@ class _PlannedState extends State<Planned> {
                 },
                 onPageChanged: (focusedDay) {
                   // No need to call `setState()` here
-                  _focusedDay = focusedDay;
+                  _focusedDay = selDate;
                 },
                 calendarStyle: const CalendarStyle(
                     todayDecoration: BoxDecoration(color: bluishColor),
@@ -494,7 +522,8 @@ class _PlannedState extends State<Planned> {
                           borderRadius: BorderRadius.circular(32.0)),
                       child: Text(
                         date.day.toString(),
-                        style: const TextStyle(color: blackColor),
+                        style: const TextStyle(
+                            color: blackColor, fontWeight: FontWeight.w600),
                       )),
                 ),
                 firstDay: DateTime.utc(2023, 02, 03),
@@ -522,7 +551,7 @@ class _PlannedState extends State<Planned> {
           const SizedBox(
             height: 5,
           ),
-          gm.isEmpty
+          allSer.isEmpty
               ? const Center(
                   child: Text("No Adventure At this date",
                       style: TextStyle(
@@ -537,259 +566,260 @@ class _PlannedState extends State<Planned> {
                     crossAxisSpacing: 0.2,
                     crossAxisCount: 2,
                     children: List.generate(
-                      gm.length,
+                      allSer.length,
                       (index) {
                         return GestureDetector(
-                          onTap: () => goToDetails(gm[index]),
-                          child: SizedBox(
-                            height: 200,
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16)),
-                              elevation: 2,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    Stack(
-                                      children: [
-                                        Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              2,
-                                          height: 100,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            image: const DecorationImage(
-                                                // colorFilter: ColorFilter.mode(
-                                                //     Colors.black.withOpacity(0.1),
-                                                //     BlendMode.darken),
-                                                image: ExactAssetImage(
-                                                  'images/overseas.png',
-                                                  // ),
-                                                  //   NetworkImage(
-                                                  // "${gm[index].baseURL}${gm[index].images[index].imageUrl}",
-                                                  //gm[index].images[index].imageUrl,
-                                                ),
-                                                fit: BoxFit.cover),
-                                          ),
-                                        ),
-                                        const Positioned(
-                                          bottom: 5,
-                                          right: 5,
-                                          child: CircleAvatar(
-                                            radius: 12,
-                                            backgroundColor: transparentColor,
-                                            child: Image(
-                                              image: ExactAssetImage(
-                                                'images/heart.png',
-                                              ),
-                                              height: 14,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 5),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width /
-                                          2.2,
-                                      child: Row(
-                                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        // crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                MyText(
-                                                  text: gm[index]
-                                                      .sm[index]
-                                                      .adventureName,
-                                                  maxLines: 1,
-                                                  color: blackColor,
-                                                  size: 11,
-                                                  fontFamily: 'Roboto',
-                                                  weight: FontWeight.bold,
-                                                  height: 1.3,
-                                                ),
-                                                MyText(
-                                                  text: gm[index]
-                                                      .sm[index]
-                                                      .geoLocation,
-                                                  //text: 'Dhufar',
-                                                  color: greyColor3,
-                                                  size: 10,
-                                                  height: 1.3,
-                                                ),
-                                                MyText(
-                                                  text: gm[index]
-                                                      .sm[index]
-                                                      .serviceLevel,
-                                                  //text: 'Advanced',
-                                                  color: blackTypeColor3,
-                                                  size: 10,
-                                                  height: 1.3,
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    MyText(
-                                                      text: gm[index]
-                                                          .sm[index]
-                                                          .am[index]
-                                                          .aimedName,
-                                                      color: redColor,
-                                                      size: 10,
-                                                      height: 1.3,
-                                                    ),
-                                                    const SizedBox(width: 10),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          const SizedBox(height: 5),
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                const SizedBox(height: 2),
-                                                Align(
-                                                  alignment:
-                                                      Alignment.centerRight,
-                                                  child: RatingBar.builder(
-                                                    initialRating: convert(
-                                                        gm[index]
-                                                            .sm[index]
-                                                            .stars),
-                                                    itemSize: 10,
-                                                    //minRating: 1,
-                                                    direction: Axis.horizontal,
-                                                    allowHalfRating: true,
-                                                    itemCount: 5,
-                                                    itemPadding:
-                                                        const EdgeInsets
-                                                                .symmetric(
-                                                            horizontal: 1.0),
-                                                    itemBuilder: (context, _) =>
-                                                        const Icon(
-                                                      Icons.star,
-                                                      color: Colors.amber,
-                                                      size: 12,
-                                                    ),
-                                                    onRatingUpdate: (rating) {
-                                                      print(rating);
-                                                    },
-                                                  ),
-                                                ),
-                                                const SizedBox(height: 2),
-                                                MyText(
-                                                  text: 'Earn 0 points',
-                                                  color: blueTextColor,
-                                                  size: 10,
-                                                  height: 1.3,
-                                                ),
-                                                MyText(
-                                                  text: '',
-                                                  color: blueTextColor,
-                                                  size: 10,
-                                                  height: 1.3,
-                                                ),
-                                                MyText(
-                                                  text:
-                                                      "${gm[index].sm[index].costExc} "
-                                                      "${gm[index].sm[index].currency}",
-                                                  //text: 'OMR 20.00',
-                                                  color: blackTypeColor3,
-                                                  size: 10,
-                                                  height: 1.3,
-                                                ),
-                                                const SizedBox(height: 2),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Image(
-                                      image: const ExactAssetImage(
-                                        'images/line.png',
-                                      ),
-                                      width: MediaQuery.of(context).size.width /
-                                          2.4,
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width /
-                                          2.4,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: GestureDetector(
-                                          onTap: goToProvider,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              CircleAvatar(
-                                                  radius: 10,
-                                                  backgroundColor:
-                                                      transparentColor,
-                                                  child: Image(
-                                                    height: 40,
-                                                    width: 50,
-                                                    image: NetworkImage(
-                                                        gm[index]
-                                                            .sm[index]
-                                                            .pProfile),
-                                                    //ExactAssetImage('images/avatar.png'),
-                                                    fit: BoxFit.cover,
-                                                  )),
-                                              const SizedBox(width: 2),
+                          //onTap: () => goToDetails(gm[index]),
+                          child: ServicesCard(allSer[index]),
+                          // child: SizedBox(
+                          //   height: 200,
+                          //   child: Card(
+                          //     shape: RoundedRectangleBorder(
+                          //         borderRadius: BorderRadius.circular(16)),
+                          //     elevation: 2,
+                          //     child: Padding(
+                          //       padding: const EdgeInsets.all(8.0),
+                          //       child: Column(
+                          //         children: [
+                          //           Stack(
+                          //             children: [
+                          //               Container(
+                          //                 width: MediaQuery.of(context)
+                          //                         .size
+                          //                         .width /
+                          //                     2,
+                          //                 height: 100,
+                          //                 decoration: BoxDecoration(
+                          //                   borderRadius:
+                          //                       BorderRadius.circular(8),
+                          //                   image: const DecorationImage(
+                          //                       // colorFilter: ColorFilter.mode(
+                          //                       //     Colors.black.withOpacity(0.1),
+                          //                       //     BlendMode.darken),
+                          //                       image: ExactAssetImage(
+                          //                         'images/overseas.png',
+                          //                         // ),
+                          //                         //   NetworkImage(
+                          //                         // "${gm[index].baseURL}${gm[index].images[index].imageUrl}",
+                          //                         //gm[index].images[index].imageUrl,
+                          //                       ),
+                          //                       fit: BoxFit.cover),
+                          //                 ),
+                          //               ),
+                          //               const Positioned(
+                          //                 bottom: 5,
+                          //                 right: 5,
+                          //                 child: CircleAvatar(
+                          //                   radius: 12,
+                          //                   backgroundColor: transparentColor,
+                          //                   child: Image(
+                          //                     image: ExactAssetImage(
+                          //                       'images/heart.png',
+                          //                     ),
+                          //                     height: 14,
+                          //                   ),
+                          //                 ),
+                          //               ),
+                          //             ],
+                          //           ),
+                          //           const SizedBox(height: 5),
+                          //           SizedBox(
+                          //             width: MediaQuery.of(context).size.width /
+                          //                 2.2,
+                          //             child: Row(
+                          //               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //               // crossAxisAlignment: CrossAxisAlignment.start,
+                          //               children: [
+                          //                 Expanded(
+                          //                   child: Column(
+                          //                     crossAxisAlignment:
+                          //                         CrossAxisAlignment.start,
+                          //                     mainAxisAlignment:
+                          //                         MainAxisAlignment.start,
+                          //                     children: [
+                          //                       MyText(
+                          //                         text: gm[index]
+                          //                             .sm[index]
+                          //                             .adventureName,
+                          //                         maxLines: 1,
+                          //                         color: blackColor,
+                          //                         size: 11,
+                          //                         fontFamily: 'Roboto',
+                          //                         weight: FontWeight.bold,
+                          //                         height: 1.3,
+                          //                       ),
+                          //                       MyText(
+                          //                         text: gm[index]
+                          //                             .sm[index]
+                          //                             .geoLocation,
+                          //                         //text: 'Dhufar',
+                          //                         color: greyColor3,
+                          //                         size: 10,
+                          //                         height: 1.3,
+                          //                       ),
+                          //                       MyText(
+                          //                         text: gm[index]
+                          //                             .sm[index]
+                          //                             .serviceLevel,
+                          //                         //text: 'Advanced',
+                          //                         color: blackTypeColor3,
+                          //                         size: 10,
+                          //                         height: 1.3,
+                          //                       ),
+                          //                       Row(
+                          //                         children: [
+                          //                           MyText(
+                          //                             text: gm[index]
+                          //                                 .sm[index]
+                          //                                 .am[index]
+                          //                                 .aimedName,
+                          //                             color: redColor,
+                          //                             size: 10,
+                          //                             height: 1.3,
+                          //                           ),
+                          //                           const SizedBox(width: 10),
+                          //                         ],
+                          //                       ),
+                          //                     ],
+                          //                   ),
+                          //                 ),
+                          //                 const SizedBox(height: 5),
+                          //                 Expanded(
+                          //                   child: Column(
+                          //                     crossAxisAlignment:
+                          //                         CrossAxisAlignment.end,
+                          //                     mainAxisAlignment:
+                          //                         MainAxisAlignment.start,
+                          //                     children: [
+                          //                       const SizedBox(height: 2),
+                          //                       Align(
+                          //                         alignment:
+                          //                             Alignment.centerRight,
+                          //                         child: RatingBar.builder(
+                          //                           initialRating: convert(
+                          //                               gm[index]
+                          //                                   .sm[index]
+                          //                                   .stars),
+                          //                           itemSize: 10,
+                          //                           //minRating: 1,
+                          //                           direction: Axis.horizontal,
+                          //                           allowHalfRating: true,
+                          //                           itemCount: 5,
+                          //                           itemPadding:
+                          //                               const EdgeInsets
+                          //                                       .symmetric(
+                          //                                   horizontal: 1.0),
+                          //                           itemBuilder: (context, _) =>
+                          //                               const Icon(
+                          //                             Icons.star,
+                          //                             color: Colors.amber,
+                          //                             size: 12,
+                          //                           ),
+                          //                           onRatingUpdate: (rating) {
+                          //                             print(rating);
+                          //                           },
+                          //                         ),
+                          //                       ),
+                          //                       const SizedBox(height: 2),
+                          //                       MyText(
+                          //                         text: 'Earn 0 points',
+                          //                         color: blueTextColor,
+                          //                         size: 10,
+                          //                         height: 1.3,
+                          //                       ),
+                          //                       MyText(
+                          //                         text: '',
+                          //                         color: blueTextColor,
+                          //                         size: 10,
+                          //                         height: 1.3,
+                          //                       ),
+                          //                       MyText(
+                          //                         text:
+                          //                             "${gm[index].sm[index].costExc} "
+                          //                             "${gm[index].sm[index].currency}",
+                          //                         //text: 'OMR 20.00',
+                          //                         color: blackTypeColor3,
+                          //                         size: 10,
+                          //                         height: 1.3,
+                          //                       ),
+                          //                       const SizedBox(height: 2),
+                          //                     ],
+                          //                   ),
+                          //                 ),
+                          //               ],
+                          //             ),
+                          //           ),
+                          //           Image(
+                          //             image: const ExactAssetImage(
+                          //               'images/line.png',
+                          //             ),
+                          //             width: MediaQuery.of(context).size.width /
+                          //                 2.4,
+                          //           ),
+                          //           SizedBox(
+                          //             width: MediaQuery.of(context).size.width /
+                          //                 2.4,
+                          //             child: Padding(
+                          //               padding: const EdgeInsets.all(2.0),
+                          //               child: GestureDetector(
+                          //                 onTap: goToProvider,
+                          //                 child: Row(
+                          //                   mainAxisAlignment:
+                          //                       MainAxisAlignment.start,
+                          //                   crossAxisAlignment:
+                          //                       CrossAxisAlignment.center,
+                          //                   children: [
+                          //                     CircleAvatar(
+                          //                         radius: 10,
+                          //                         backgroundColor:
+                          //                             transparentColor,
+                          //                         child: Image(
+                          //                           height: 40,
+                          //                           width: 50,
+                          //                           image: NetworkImage(
+                          //                               gm[index]
+                          //                                   .sm[index]
+                          //                                   .pProfile),
+                          //                           //ExactAssetImage('images/avatar.png'),
+                          //                           fit: BoxFit.cover,
+                          //                         )),
+                          //                     const SizedBox(width: 2),
 
-                                              //   MyText(text: 'Provided By AdventuresClub',color:blackColor,fontStyle: FontStyle.italic,size: 10,),
-                                              Text.rich(
-                                                TextSpan(
-                                                  children: [
-                                                    const TextSpan(
-                                                        text: "Provided By ",
-                                                        style: TextStyle(
-                                                          color: greyColor,
-                                                          fontSize: 8,
-                                                        )),
-                                                    TextSpan(
-                                                      text: gm[index]
-                                                          .sm[index]
-                                                          .pName,
-                                                      //text: 'AdventuresClub',
-                                                      style: const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: blackTypeColor4,
-                                                        fontSize: 9,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                          //                     //   MyText(text: 'Provided By AdventuresClub',color:blackColor,fontStyle: FontStyle.italic,size: 10,),
+                          //                     Text.rich(
+                          //                       TextSpan(
+                          //                         children: [
+                          //                           const TextSpan(
+                          //                               text: "Provided By ",
+                          //                               style: TextStyle(
+                          //                                 color: greyColor,
+                          //                                 fontSize: 8,
+                          //                               )),
+                          //                           TextSpan(
+                          //                             text: gm[index]
+                          //                                 .sm[index]
+                          //                                 .pName,
+                          //                             //text: 'AdventuresClub',
+                          //                             style: const TextStyle(
+                          //                               fontWeight:
+                          //                                   FontWeight.bold,
+                          //                               color: blackTypeColor4,
+                          //                               fontSize: 9,
+                          //                             ),
+                          //                           ),
+                          //                         ],
+                          //                       ),
+                          //                     ),
+                          //                   ],
+                          //                 ),
+                          //               ),
+                          //             ),
+                          //           ),
+                          //         ],
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                         );
                       },
                     ),

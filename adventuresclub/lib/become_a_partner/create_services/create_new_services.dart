@@ -98,13 +98,21 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   String programeTime = "";
   TimeOfDay time = TimeOfDay.now();
   bool planChecked = false;
-
   List<CreateServicesProgramModel> pm = [];
   String programSchedule = "";
   String programTitle = "";
-  String programSelecteDate = "";
-  String programStartTime = "";
+  String programSelecteDate1 = "";
+  String programSelecteDate2 = "";
+  String programStartTime1 = "";
+  String programStartTime2 = "";
   String programEndTime = "";
+  Duration timeSt = const Duration();
+  Duration endSt = const Duration();
+  List<String> st = [];
+  List<String> et = [];
+  List<String> titleList = [];
+  List<String> descriptionList = [];
+  List<String> d = [];
 
   @override
   void initState() {
@@ -125,7 +133,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   void addProgramData() {
     setState(() {
       pm.add(CreateServicesProgramModel(
-          "", DateTime.now(), DateTime.now(), DateTime.now(), ""));
+          "", DateTime.now(), const Duration(), const Duration(), ""));
     });
   }
 
@@ -280,7 +288,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     }
   }
 
-  void next() {
+  void next() async {
     checkPlan();
     if (count == 0
         //&& imageList.isNotEmpty
@@ -303,6 +311,10 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         availableSeatsController.text.isNotEmpty &&
         sPlan > 0 &&
         planChecked) {
+      await convertProgramData();
+      aimed();
+      servicePlan();
+      dependency();
       setState(() {
         count++;
       });
@@ -375,31 +387,26 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   }
 
   Future<void> convertProgramData() async {
-    List<String> titleList = [];
-    List<String> descriptionList = [];
-    List<String> d = [];
-    List<String> st = [];
-    List<String> et = [];
     pm.forEach((element) {
       titleList.add(element.title);
     });
-    programTitle = titleList.join(",");
+    //programTitle = titleList.join(",");
     pm.forEach((element) {
       descriptionList.add(element.description);
     });
-    programSchedule = descriptionList.join(",");
+    // programSchedule = descriptionList.join(",");
     pm.forEach((element) {
       d.add(element.startDate.toString());
     });
-    programSelecteDate = d.join(",");
+    // programSelecteDate1 = d.join(",");
     pm.forEach((element) {
       st.add(element.startDate.toString());
     });
-    programStartTime = st.join(",");
+    // programStartTime1 = st.join(",");
     pm.forEach((element) {
       et.add(element.endTime.toString());
     });
-    programEndTime = et.join(",");
+    //programEndTime = et.join(",");
   }
 
   void createService() async {
@@ -423,7 +430,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
           "${DateTime.now().millisecondsSinceEpoch.toString()}.png";
       request.files.add(http.MultipartFile.fromBytes('banner[]', banners[0],
           filename: fileName));
-      request.fields.addAll({
+      dynamic programData = {
         'customer_id': Constants.userId.toString(),
         'adventure_name': adventureName.text,
         "country": Constants.countryId.toString(),
@@ -464,27 +471,27 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         "particular_date":
             ConstantsCreateNewServices.startDate, //gatheringDate, //"",
         // this is an array
-        "schedule_title[]":
-            programTitle, //titleController, //scheduleController.text, //scheduleController.text, //"",
+        // "schedule_title[]":
+        //   programTitle, //titleController, //scheduleController.text, //scheduleController.text, //"",
         // schedule title in array is skipped
         // this is an array
-        "gathering_date[]": programSelecteDate, //gatheringDate, //"",
+        //"gathering_date[]": programSelecteDate1, //gatheringDate, //"",
         // api did not accept list here
         "activities": selectedActivityIncludesId, //"5", // activityId, //"",
         "specific_address": specificAddressController
             .text, //"", //iLiveInController.text, //"",
         // this is a wrong field only for testing purposes....
         // this is an array
-        "gathering_start_time[]": programStartTime, //"10",
+        //"gathering_start_time[]": programStartTime2, //"10",
         // this is an arrayt
-        "gathering_end_time[]": programEndTime, //"15",
+        //"gathering_end_time[]": programEndTime, //"15",
         "" //gatheringDate, //"",
                 // this is an array
-                "program_description[]":
-            "scheule 2 , schule 1", // scheduleControllerList, //scheduleDesController.text, //"",
-        // "service_for": selectedActivitesId
-        //     .toString(), //"1,2,5", //"4", //["1", "4", "5", "7"], //"",
-        "dependency":
+                // "program_description[]":
+                //"scheule 2 , schule 1", // scheduleControllerList, //scheduleDesController.text, //"",
+                // "service_for": selectedActivitesId
+                //     .toString(), //"1,2,5", //"4", //["1", "4", "5", "7"], //"",
+                "dependency":
             selectedDependencyId, //selectedDependencyId.toString(), //["1", "2", "3"],
         //"banners[]": "${banners[0]},test032423231108.png",
         //"banner[]":
@@ -498,7 +505,23 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         "longitude":
             ConstantsCreateNewServices.lng.toString(), //lng.toString(), //"",
         // 'mobile_code': ccCode,
+      };
+      st.forEach((element) {
+        programData["gathering_start_time[]"] = element;
       });
+      et.forEach((element) {
+        programData["gathering_end_time[]"] = element;
+      });
+      titleList.forEach((element) {
+        programData["schedule_title[]"] = element;
+      });
+      descriptionList.forEach((element) {
+        programData["program_description[]"] = element;
+      });
+      d.forEach((element) {
+        programData["gathering_date[]"] = element;
+      });
+      request.fields.addAll(programData);
       final response = await request.send();
 
       log(response.toString());

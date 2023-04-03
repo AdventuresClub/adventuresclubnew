@@ -1,6 +1,6 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/reviews.dart';
-import 'package:adventuresclub/models/my_services/my_services_model.dart';
+import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/Lists/my_services_list.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
@@ -8,7 +8,7 @@ import 'package:adventuresclub/widgets/tabs/my_services_tabs.dart';
 import 'package:flutter/material.dart';
 
 class MyServicesAdDetails extends StatefulWidget {
-  final MyServicesModel sm;
+  final ServicesModel sm;
   const MyServicesAdDetails(this.sm, {super.key});
 
   @override
@@ -64,6 +64,7 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
         title: MyText(
           text: widget.sm.adventureName, //'Hill Climbing',
           color: bluishColor,
+          weight: FontWeight.w700,
         ),
         actions: [
           GestureDetector(
@@ -103,7 +104,7 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
                               text: widget.sm.adventureName, //'Hill Climbing',
                               color: greyBackgroundColor,
                               size: 16,
-                              weight: FontWeight.w500,
+                              weight: FontWeight.w600,
                               fontFamily: "Roboto",
                             ),
                             Row(
@@ -141,6 +142,7 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
                             MyText(
                               text: widget.sm.region, //'Muscat Oman',
                               color: greyColor,
+                              weight: FontWeight.w500,
                             )
                           ],
                         ),
@@ -155,7 +157,7 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
                               children: [
                                 MyText(
                                   text: "${widget.sm.currency} "
-                                      "${widget.sm.cInc}", //'\$ 100.50',
+                                      "${widget.sm.costInc}", //'\$ 100.50',
                                   color: blackColor,
                                   weight: FontWeight.bold,
                                   fontFamily: "Roboto",
@@ -167,9 +169,9 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
                                   text:
                                       "including grears & other taxes", //'\$ 100.50',
                                   color: Colors.red[600],
-                                  weight: FontWeight.w500,
+                                  weight: FontWeight.w600,
                                   fontFamily: "Roboto",
-                                  size: 9,
+                                  size: 10,
                                 ),
                               ],
                             ),
@@ -181,7 +183,7 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
                               children: [
                                 MyText(
                                   text: "${widget.sm.currency} "
-                                      "${widget.sm.cExc}", //'\$ 100.50',
+                                      "${widget.sm.costExc}", //'\$ 100.50',
                                   color: blackColor,
                                   weight: FontWeight.bold,
                                   fontFamily: "Roboto",
@@ -193,9 +195,9 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
                                   text:
                                       "excluding grears & other taxes", //'\$ 100.50',
                                   color: Colors.red[600],
-                                  weight: FontWeight.w500,
+                                  weight: FontWeight.w600,
                                   fontFamily: "Roboto",
-                                  size: 9,
+                                  size: 10,
                                 ),
                               ],
                             ),

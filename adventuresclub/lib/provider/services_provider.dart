@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls, unused_local_variable
 
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:adventuresclub/models/filter_data_model/category_filter_model.dart';
 import 'package:adventuresclub/models/filter_data_model/programs_model.dart';
@@ -168,6 +169,15 @@ class ServicesProvider with ChangeNotifier {
               );
               gPm.add(pm);
             });
+            DateTime sDate =
+                DateTime.tryParse(services['start_date'].toString()) ??
+                    DateTime.now();
+            DateTime eDate =
+                DateTime.tryParse(services['end_date'].toString()) ??
+                    DateTime.now();
+            log(sDate.day.toString());
+            //DateTime e
+
             ServicesModel nSm = ServicesModel(
               int.tryParse(services['id'].toString()) ?? 0,
               int.tryParse(services['owner'].toString()) ?? 0,
@@ -181,8 +191,10 @@ class ServicesProvider with ChangeNotifier {
               services['service_level'].toString() ?? "",
               services['duration'].toString() ?? "",
               int.tryParse(services['availability_seats'].toString()) ?? 0,
-              int.tryParse(services['start_date'].toString()) ?? "",
-              int.tryParse(services['end_date'].toString()) ?? "",
+              sDate,
+              eDate,
+              //int.tryParse(services['start_date'].toString()) ?? "",
+              //int.tryParse(services['end_date'].toString()) ?? "",
               services['latitude'].toString() ?? "",
               services['longitude'].toString() ?? "",
               services['write_information'].toString() ?? "",
@@ -323,6 +335,12 @@ class ServicesProvider with ChangeNotifier {
               );
               gPm.add(pm);
             });
+            DateTime sDate =
+                DateTime.tryParse(tServices['start_date'].toString()) ??
+                    DateTime.now();
+            DateTime eDate =
+                DateTime.tryParse(tServices['end_date'].toString()) ??
+                    DateTime.now();
             ServicesModel tServicesModelList = ServicesModel(
               int.tryParse(tServices['id'].toString()) ?? 0,
               int.tryParse(tServices['owner'].toString()) ?? 0,
@@ -336,8 +354,8 @@ class ServicesProvider with ChangeNotifier {
               tServices['service_level'].toString() ?? "",
               tServices['duration'].toString() ?? "",
               int.tryParse(tServices['availability_seats'].toString()) ?? 0,
-              int.tryParse(tServices['start_date'].toString()) ?? "",
-              int.tryParse(tServices['end_date'].toString()) ?? "",
+              sDate,
+              eDate,
               tServices['latitude'].toString() ?? "",
               tServices['longitude'].toString() ?? "",
               tServices['write_information'].toString() ?? "",
@@ -479,6 +497,12 @@ class ServicesProvider with ChangeNotifier {
               );
               gPm.add(pm);
             });
+            DateTime sDate =
+                DateTime.tryParse(skyServices['start_date'].toString()) ??
+                    DateTime.now();
+            DateTime eDate =
+                DateTime.tryParse(skyServices['end_date'].toString()) ??
+                    DateTime.now();
             ServicesModel skyServicesModelList = ServicesModel(
               int.tryParse(skyServices['id'].toString()) ?? 0,
               int.tryParse(skyServices['owner'].toString()) ?? 0,
@@ -492,8 +516,8 @@ class ServicesProvider with ChangeNotifier {
               skyServices['service_level'].toString() ?? "",
               skyServices['duration'].toString() ?? "",
               int.tryParse(skyServices['availability_seats'].toString()) ?? 0,
-              int.tryParse(skyServices['start_date'].toString()) ?? "",
-              int.tryParse(skyServices['end_date'].toString()) ?? "",
+              sDate,
+              eDate,
               skyServices['latitude'].toString() ?? "",
               skyServices['longitude'].toString() ?? "",
               skyServices['write_information'].toString() ?? "",
@@ -636,6 +660,12 @@ class ServicesProvider with ChangeNotifier {
               );
               gPm.add(pm);
             });
+            DateTime sDate =
+                DateTime.tryParse(waterServices['start_date'].toString()) ??
+                    DateTime.now();
+            DateTime eDate =
+                DateTime.tryParse(waterServices['end_date'].toString()) ??
+                    DateTime.now();
             ServicesModel waterServicesModelList = ServicesModel(
               int.tryParse(waterServices['id'].toString()) ?? 0,
               int.tryParse(waterServices['owner'].toString()) ?? 0,
@@ -649,8 +679,8 @@ class ServicesProvider with ChangeNotifier {
               waterServices['service_level'].toString() ?? "",
               waterServices['duration'].toString() ?? "",
               int.tryParse(waterServices['availability_seats'].toString()) ?? 0,
-              int.tryParse(waterServices['start_date'].toString()) ?? "",
-              int.tryParse(waterServices['end_date'].toString()) ?? "",
+              sDate,
+              eDate,
               waterServices['latitude'].toString() ?? "",
               waterServices['longitude'].toString() ?? "",
               waterServices['write_information'].toString() ?? "",
@@ -789,6 +819,12 @@ class ServicesProvider with ChangeNotifier {
               );
               gPm.add(pm);
             });
+            DateTime sDate =
+                DateTime.tryParse(landServices['start_date'].toString()) ??
+                    DateTime.now();
+            DateTime eDate =
+                DateTime.tryParse(landServices['end_date'].toString()) ??
+                    DateTime.now();
             ServicesModel landServicesModelList = ServicesModel(
               int.tryParse(landServices['id'].toString()) ?? 0,
               int.tryParse(landServices['owner'].toString()) ?? 0,
@@ -802,8 +838,8 @@ class ServicesProvider with ChangeNotifier {
               landServices['service_level'].toString() ?? "",
               landServices['duration'].toString() ?? "",
               int.tryParse(landServices['availability_seats'].toString()) ?? 0,
-              int.tryParse(landServices['start_date'].toString()) ?? "",
-              int.tryParse(landServices['end_date'].toString()) ?? "",
+              sDate,
+              eDate,
               landServices['latitude'].toString() ?? "",
               landServices['longitude'].toString() ?? "",
               landServices['write_information'].toString() ?? "",

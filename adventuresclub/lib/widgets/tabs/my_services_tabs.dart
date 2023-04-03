@@ -1,12 +1,12 @@
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/models/my_services/my_services_model.dart';
+import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/tabs/participants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class MyServicesTab extends StatefulWidget {
-  final MyServicesModel sm;
+  final ServicesModel sm;
   const MyServicesTab(this.sm, {super.key});
 
   @override
@@ -14,49 +14,74 @@ class MyServicesTab extends StatefulWidget {
 }
 
 class _MyServicesTabState extends State<MyServicesTab> {
+  String aPlan = "";
   @override
   void initState() {
     super.initState();
-    text4.insert(0, widget.sm.country);
-    text4.insert(1, widget.sm.region);
-    text4.insert(2, widget.sm.serviceCategory);
-    text4.insert(3, widget.sm.availableSeats.toString());
-    text4.insert(4, widget.sm.duration);
-    text4.insert(5, widget.sm.startDate);
-    //text6.insert(0, widget.sm.points);
-    text6.insert(1, widget.sm.serviceSector);
-    // this needs checking
-    text6.insert(2, widget.sm.serviceCategory);
-    text6.insert(3, widget.sm.serviceLevel);
-    text6.insert(4, widget.sm.endDate);
+    if (widget.sm.sPlan == 2) {
+      setState(() {
+        text1.insert(5, "Start Date");
+        text5.insert(4, "End Date");
+        text4.insert(0, widget.sm.country);
+        text4.insert(1, widget.sm.region);
+        text4.insert(2, widget.sm.serviceCategory);
+        text4.insert(3, widget.sm.aSeats.toString());
+        text4.insert(4, widget.sm.duration);
+        text4.insert(5, widget.sm.availability[0].st.substring(0, 10));
+        text6.insert(0, widget.sm.reviewdBy);
+        text6.insert(1, widget.sm.serviceSector);
+        text6.insert(2, widget.sm.serviceType);
+        text6.insert(3, widget.sm.serviceLevel);
+        text6.insert(4, widget.sm.availability[0].ed.substring(0, 10));
+      });
+    }
+    if (widget.sm.sPlan == 1) {
+      setState(() {
+        text1.insert(5, "Availability : ");
+        text4.insert(0, widget.sm.country);
+        text4.insert(1, widget.sm.region);
+        text4.insert(2, widget.sm.serviceCategory);
+        text4.insert(3, widget.sm.aSeats.toString());
+        text4.insert(4, widget.sm.duration);
+        text4.insert(5, aPlan);
+        text6.insert(0, widget.sm.reviewdBy);
+        text6.insert(1, widget.sm.serviceSector);
+        text6.insert(2, widget.sm.serviceType);
+        text6.insert(3, widget.sm.serviceLevel);
+        // text6.insert(4, widget.gm.availability[0].ed);
+        // text6.insert(4, widget.gm.availability[0].ed);
+      });
+    }
   }
 
-  List text6 = [
-    '',
-    // 'Tour',
-    // 'Hiking',
-    // 'Moderate',
-    // '05 Aug 2020',
-  ];
-
   List text1 = [
-    'Country : ',
-    'Region : ',
-    'Service Category : ',
-    'Available Seats: ',
-    'Duration: ',
-    'Start Date: '
+    'Country  :',
+    'Region  :',
+    'Service Category  :',
+    'Available Seats :',
+    'Duration :',
+    //'Start Date :'
+  ];
+  List text11 = [
+    'Country  :',
+    'Region  :',
+    'Service Category  :',
+    'Available Seats :',
+    'Duration :',
+    'Availaibilty :'
   ];
   List text4 = [
     //'Oman', 'Salalah', 'Sea', '70', '36 hours', '25 Jul 2020'
   ];
   List text5 = [
-    '4(2 reviews)',
+    '4.8 (1048 Reviews)',
     'Service Sector  :',
     'Service Type :',
     'Level  :',
-    'End Date :',
+    // 'End Date :',
   ];
+  List text6 = [];
+
   List schedule = [
     ' Pick and drop from gathering location,',
     'Team introduction (welcome tea).',
@@ -117,7 +142,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
                   Tab(
                     text: 'Adventure Details',
                   ),
-                  Tab(text: 'Participants'),
+                  Tab(text: "${'Participants'}"),
                 ],
               ),
             ),
@@ -232,110 +257,219 @@ class _MyServicesTabState extends State<MyServicesTab> {
                                 child: MyText(
                                   text: 'Schedule',
                                   color: greyColor,
-                                  weight: FontWeight.w500,
+                                  weight: FontWeight.w700,
                                   fontFamily: 'Roboto',
                                   size: 16,
                                 )),
-                            const SizedBox(height: 10),
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                child: MyText(
-                                    text: '6:00 AM – 6:30 AM - Gathering',
-                                    weight: FontWeight.w500,
-                                    color: blackColor)),
-                            Wrap(
-                              children: List.generate(schedule.length, (index) {
-                                return Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 4.0),
-                                  child: Row(
-                                    children: [
-                                      CircleAvatar(
-                                        backgroundColor:
-                                            greyColor.withOpacity(0.8),
-                                        radius: 5,
+                            if (widget.sm.sPlan == 1)
+                              SizedBox(
+                                height: widget.sm.programmes.length * 60,
+                                child: ListView.builder(
+                                  itemCount: widget.sm.programmes.length,
+                                  itemBuilder: ((context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 0),
+                                      child: ListTile(
+                                        contentPadding: const EdgeInsets.all(4),
+                                        // leading: CircleAvatar(
+                                        //   backgroundColor: greenishColor,
+                                        //   radius: 25,
+                                        //   child: MyText(
+                                        //     text: widget.sm.programmes.length,
+                                        //     weight: FontWeight.bold,
+                                        //   ),
+                                        // ),
+                                        title: MyText(
+                                          text:
+                                              widget.sm.programmes[index].title,
+                                          color: blackColor,
+                                          weight: FontWeight.bold,
+                                          fontFamily: 'Raleway',
+                                          size: 16,
+                                        ),
+                                        subtitle: MyText(
+                                          text: widget.sm.programmes[index]
+                                              .des, //text[index],
+                                          color: greyTextColor,
+                                          weight: FontWeight.w500,
+                                          fontFamily: 'Raleway',
+                                          size: 14,
+                                        ),
                                       ),
-                                      const SizedBox(
-                                        width: 5,
+                                    );
+                                  }),
+                                ),
+                              ),
+                            if (widget.sm.sPlan == 2)
+                              SizedBox(
+                                height: widget.sm.programmes.length * 60,
+                                child: ListView.builder(
+                                  itemCount: widget.sm.programmes.length,
+                                  itemBuilder: ((context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 2),
+                                      child: Column(
+                                        children: [
+                                          ListTile(
+                                            minVerticalPadding: 0,
+                                            contentPadding:
+                                                const EdgeInsets.all(6),
+                                            leading: SizedBox(
+                                              height: 50,
+                                              child: Column(
+                                                children: const [
+                                                  // CircleAvatar(
+                                                  //   backgroundColor:
+                                                  //       greenishColor,
+                                                  //   radius: 25,
+                                                  //   child: MyText(
+                                                  //     text: widget
+                                                  //         .sm.programmes.length,
+                                                  //     weight: FontWeight.bold,
+                                                  //   ),
+                                                  // ),
+                                                  // const SizedBox(
+                                                  //   height: 0,
+                                                  // ),
+                                                  // Container(
+                                                  //   height: 20,
+                                                  //   width: 2,
+                                                  //   color: blackColor,
+                                                  // )
+                                                ],
+                                              ),
+                                            ),
+                                            title: MyText(
+                                              text:
+                                                  "${widget.sm.programmes[index].title} "
+                                                  " ${widget.sm.programmes[index].sD.substring(10, 16)} ${" - "} ${widget.sm.programmes[index].eD.substring(10, 16)} ${" - "} ${widget.sm.programmes[index].sD.substring(0, 10)} ${"-"} ",
+                                              color: blackColor,
+                                              weight: FontWeight.bold,
+                                              fontFamily: 'Raleway',
+                                              size: 16,
+                                            ),
+                                            subtitle: MyText(
+                                              text: widget.sm.programmes[index]
+                                                  .des, //text[index],
+                                              color: greyTextColor,
+                                              weight: FontWeight.w500,
+                                              fontFamily: 'Raleway',
+                                              size: 14,
+                                            ),
+                                          ),
+                                          const Divider(
+                                            endIndent: 30,
+                                            indent: 30,
+                                            thickness: 2,
+                                          )
+                                        ],
                                       ),
-                                      MyText(
-                                        text: schedule[index],
-                                        color: greyColor.withOpacity(0.8),
-                                        weight: FontWeight.w400,
-                                        fontFamily: 'Roboto',
-                                        size: 12,
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }),
-                            ),
-                            const SizedBox(height: 20),
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                child: MyText(
-                                    text: '6:35 AM -11:30 AM - Journey',
-                                    weight: FontWeight.w500,
-                                    color: blackColor)),
-                            Wrap(
-                              children: List.generate(journey.length, (index) {
-                                return Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 4.0),
-                                  child: Row(
-                                    children: [
-                                      const CircleAvatar(
-                                        backgroundColor: greyColor,
-                                        radius: 5,
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      MyText(
-                                        text: journey[index],
-                                        color: greyColor.withOpacity(0.5),
-                                        weight: FontWeight.w500,
-                                        fontFamily: 'Roboto',
-                                        size: 12,
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }),
-                            ),
-                            const SizedBox(height: 20),
-                            Align(
-                                alignment: Alignment.centerLeft,
-                                child: MyText(
-                                    text: '6:35 AM -11:30 AM - Begin Activity',
-                                    weight: FontWeight.bold,
-                                    color: greenishColor)),
-                            Wrap(
-                              children: List.generate(journey.length, (index) {
-                                return Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 4.0),
-                                  child: Row(
-                                    children: [
-                                      const CircleAvatar(
-                                        backgroundColor: greyColor,
-                                        radius: 5,
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      MyText(
-                                        text: journey[index],
-                                        color: greyColor.withOpacity(0.5),
-                                        weight: FontWeight.w500,
-                                        fontFamily: 'Roboto',
-                                        size: 12,
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }),
-                            ),
+                                    );
+                                  }),
+                                ),
+                              ),
+                            // Align(
+                            //     alignment: Alignment.centerLeft,
+                            //     child: MyText(
+                            //         text: '6:00 AM – 6:30 AM - Gathering',
+                            //         weight: FontWeight.w500,
+                            //         color: blackColor)),
+                            // Wrap(
+                            //   children: List.generate(
+                            //       widget.sm.programmes.length, (index) {
+                            //     return Padding(
+                            //       padding:
+                            //           const EdgeInsets.symmetric(vertical: 4.0),
+                            //       child: Row(
+                            //         children: [
+                            //           CircleAvatar(
+                            //             backgroundColor:
+                            //                 greyColor.withOpacity(0.8),
+                            //             radius: 5,
+                            //           ),
+                            //           const SizedBox(
+                            //             width: 5,
+                            //           ),
+                            //           MyText(
+                            //             text: schedule[index],
+                            //             color: greyColor.withOpacity(0.8),
+                            //             weight: FontWeight.w400,
+                            //             fontFamily: 'Roboto',
+                            //             size: 12,
+                            //           ),
+                            //         ],
+                            //       ),
+                            //     );
+                            //   }),
+                            // ),
+                            // const SizedBox(height: 20),
+                            // Align(
+                            //     alignment: Alignment.centerLeft,
+                            //     child: MyText(
+                            //         text: '6:35 AM -11:30 AM - Journey',
+                            //         weight: FontWeight.w500,
+                            //         color: blackColor)),
+                            // Wrap(
+                            //   children: List.generate(journey.length, (index) {
+                            //     return Padding(
+                            //       padding:
+                            //           const EdgeInsets.symmetric(vertical: 4.0),
+                            //       child: Row(
+                            //         children: [
+                            //           const CircleAvatar(
+                            //             backgroundColor: greyColor,
+                            //             radius: 5,
+                            //           ),
+                            //           const SizedBox(
+                            //             width: 5,
+                            //           ),
+                            //           MyText(
+                            //             text: journey[index],
+                            //             color: greyColor.withOpacity(0.5),
+                            //             weight: FontWeight.w500,
+                            //             fontFamily: 'Roboto',
+                            //             size: 12,
+                            //           ),
+                            //         ],
+                            //       ),
+                            //     );
+                            //   }),
+                            // ),
+                            // const SizedBox(height: 20),
+                            // Align(
+                            //     alignment: Alignment.centerLeft,
+                            //     child: MyText(
+                            //         text: '6:35 AM -11:30 AM - Begin Activity',
+                            //         weight: FontWeight.bold,
+                            //         color: greenishColor)),
+                            // Wrap(
+                            //   children: List.generate(journey.length, (index) {
+                            //     return Padding(
+                            //       padding:
+                            //           const EdgeInsets.symmetric(vertical: 4.0),
+                            //       child: Row(
+                            //         children: [
+                            //           const CircleAvatar(
+                            //             backgroundColor: greyColor,
+                            //             radius: 5,
+                            //           ),
+                            //           const SizedBox(
+                            //             width: 5,
+                            //           ),
+                            //           MyText(
+                            //             text: journey[index],
+                            //             color: greyColor.withOpacity(0.5),
+                            //             weight: FontWeight.w500,
+                            //             fontFamily: 'Roboto',
+                            //             size: 12,
+                            //           ),
+                            //         ],
+                            //       ),
+                            //     );
+                            //   }),
+                            // ),
                             const SizedBox(height: 20),
                             Divider(
                               thickness: 1,
@@ -347,7 +481,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
                               child: MyText(
                                 text: 'Information',
                                 color: greyColor,
-                                weight: FontWeight.w500,
+                                weight: FontWeight.w700,
                                 fontFamily: 'Roboto',
                                 size: 16,
                               ),
@@ -356,7 +490,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
                               alignment: Alignment.bottomLeft,
                               child: MyText(
                                 text: widget.sm
-                                    .writeInfo, //'you will need an acceptable fitness to do  this canyon. It is long  canyon and requires  lots of bouldering around on uneven terrain',
+                                    .writeInformation, //'you will need an acceptable fitness to do  this canyon. It is long  canyon and requires  lots of bouldering around on uneven terrain',
                                 size: 14,
                                 color: greyColor,
                                 weight: FontWeight.w400,
@@ -373,47 +507,44 @@ class _MyServicesTabState extends State<MyServicesTab> {
                             Align(
                               alignment: Alignment.centerLeft,
                               child: MyText(
-                                text: 'Acitivities Include',
+                                text: 'Activities Include',
                                 color: greyColor.withOpacity(0.8),
-                                weight: FontWeight.w400,
+                                weight: FontWeight.w700,
                                 fontFamily: 'Roboto',
                                 size: 16,
                               ),
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 4.0),
-                              child: Row(
-                                children: [
-                                  const Icon(Icons.medication_outlined),
-                                  const SizedBox(
-                                    width: 5,
+                            const SizedBox(height: 5),
+                            Wrap(
+                              children: List.generate(
+                                  widget
+                                      .sm.am.length, //activitesInclude.length,
+                                  (index) {
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 4.0),
+                                  child: Row(
+                                    children: [
+                                      Image.network(
+                                        "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${widget.sm.activityIncludes[index].image}",
+                                        height: 18,
+                                        width: 18,
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      MyText(
+                                        text: widget.sm.activityIncludes[index]
+                                            .activity,
+                                        color: greyTextColor,
+                                        weight: FontWeight.w500,
+                                        fontFamily: 'Roboto',
+                                        size: 12,
+                                      ),
+                                    ],
                                   ),
-                                  MyText(
-                                    text: 'First Aid',
-                                    //aimedFor[index],
-                                    color: greyColor.withOpacity(0.8),
-                                    weight: FontWeight.w400,
-                                    fontFamily: 'Roboto',
-                                    size: 12,
-                                  ),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                  const Icon(Icons.garage_outlined),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  MyText(
-                                    text: 'Gears',
-                                    //aimedFor[index],
-                                    color: greyColor.withOpacity(0.8),
-                                    weight: FontWeight.w400,
-                                    fontFamily: 'Roboto',
-                                    size: 12,
-                                  ),
-                                ],
-                              ),
+                                );
+                              }),
                             ),
                             // Wrap(
                             //   direction: Axis.horizontal,
@@ -458,42 +589,35 @@ class _MyServicesTabState extends State<MyServicesTab> {
                               ),
                             ),
                             const SizedBox(height: 5),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 4.0),
-                              child: Row(
-                                children: [
-                                  const Icon(Icons.child_care),
-                                  const SizedBox(
-                                    width: 5,
+                            Wrap(
+                              children:
+                                  List.generate(widget.sm.am.length, (index) {
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 4.0),
+                                  child: Row(
+                                    children: [
+                                      Image.network(
+                                        "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${widget.sm.am[index].image}",
+                                        height: 18,
+                                        width: 18,
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      MyText(
+                                        text: widget.sm.am[index].aimedName,
+                                        //text: aimedFor[index],
+                                        color: greyColor2,
+                                        weight: FontWeight.w500,
+                                        fontFamily: 'Roboto',
+                                        size: 12,
+                                      ),
+                                    ],
                                   ),
-                                  MyText(
-                                    text: 'Kids',
-                                    //aimedFor[index],
-                                    color: greyColor.withOpacity(0.8),
-                                    weight: FontWeight.w400,
-                                    fontFamily: 'Roboto',
-                                    size: 12,
-                                  ),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                  const Icon(Icons.man),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  MyText(
-                                    text: 'Gents',
-                                    //aimedFor[index],
-                                    color: greyColor.withOpacity(0.8),
-                                    weight: FontWeight.w400,
-                                    fontFamily: 'Roboto',
-                                    size: 12,
-                                  ),
-                                ],
-                              ),
+                                );
+                              }),
                             ),
-
                             // Wrap(
                             //   children:
                             //       List.generate(widget.sm.am.length, (index) {
@@ -538,38 +662,45 @@ class _MyServicesTabState extends State<MyServicesTab> {
                                   fontFamily: 'Roboto',
                                 )),
                             const SizedBox(height: 5),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 4.0),
-                              child: Row(
-                                children: [
-                                  const Icon(Icons.local_police_outlined),
-                                  const SizedBox(
-                                    width: 5,
+                            Wrap(
+                              children:
+                                  List.generate(widget.sm.dependency.length,
+                                      //widget.gm.dependencies.length,
+
+                                      (index) {
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 4.0),
+                                  child: Row(
+                                    children: [
+                                      if (widget
+                                          .sm.dependency[index].name.isEmpty)
+                                        const Icon(
+                                          Icons.power_input,
+                                          size: 20,
+                                        ),
+                                      if (widget
+                                          .sm.dependency[index].name.isNotEmpty)
+                                        Image.network(
+                                          "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${widget.sm.dependency[index].name}",
+                                          height: 18,
+                                          width: 18,
+                                        ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      MyText(
+                                        text: widget.sm.dependency[index].dName,
+                                        //text: aimedFor[index],
+                                        color: greyColor2,
+                                        weight: FontWeight.w500,
+                                        fontFamily: 'Roboto',
+                                        size: 12,
+                                      ),
+                                    ],
                                   ),
-                                  MyText(
-                                    text: 'Licensed',
-                                    color: greyColor.withOpacity(0.8),
-                                    weight: FontWeight.w400,
-                                    fontFamily: 'Roboto',
-                                    size: 12,
-                                  ),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                  const Icon(Icons.cloud_outlined),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  MyText(
-                                    text: 'Weather Conditions',
-                                    color: greyColor.withOpacity(0.8),
-                                    weight: FontWeight.w400,
-                                    fontFamily: 'Roboto',
-                                    size: 12,
-                                  ),
-                                ],
-                              ),
+                                );
+                              }),
                             ),
                             // Wrap(
                             //   children: List.generate(2, (index) {
@@ -603,62 +734,106 @@ class _MyServicesTabState extends State<MyServicesTab> {
                             const SizedBox(
                               height: 10,
                             ),
+                            Divider(
+                              color: greyColor.withOpacity(0.4),
+                            ),
                             Align(
-                                alignment: Alignment.centerLeft,
-                                child: MyText(
-                                  text: 'Terms and conditions ',
-                                  color: greyColor,
-                                  weight: FontWeight.w500,
-                                  fontFamily: 'Roboto',
-                                  size: 16,
-                                )),
+                              alignment: Alignment.centerLeft,
+                              child: MyText(
+                                text: 'Terms and conditions ',
+                                color: greyColor,
+                                weight: FontWeight.w700,
+                                fontFamily: 'Roboto',
+                                size: 16,
+                              ),
+                            ),
                             const SizedBox(height: 10),
-                            MyText(
-                              text: widget.sm
-                                  .tnc, //'Minimum seat reservations : Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer fermentum nunc vehicula ligula placerat, et fermentum turpis ornare. Nullam ultricies pretium faucibus. In pulvinar rhoncus libero, eget lacinia sem condimentum ut. Nullam rutrum id mauris a venenatis. Aenean ipsum ante, iaculis iaculis ante quis',
-                              color: greyColor,
-                              weight: FontWeight.w400,
-                              fontFamily: 'Roboto',
-                              size: 14,
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                text: 'Pre-Requesits :',
-                                style: const TextStyle(
-                                    color: greyColor,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text: widget.sm
-                                          .preReq, //'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer fermentum nunc vehicula ligula placerat, et fermentum turpis ornare. Nullam ultricies pretium faucibus. In pulvinar rhoncus libero, eget lacinia sem condimentum ut. Nullam rutrum id mauris a venenatis. Aenean ipsum ante, iaculis iaculis ante quis',
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          color: greyColor.withOpacity(0.8))),
-                                ],
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: MyText(
+                                text: widget.sm.tnc,
+                                color: greyColor,
+                                weight: FontWeight.w500,
+                                fontFamily: 'Roboto',
+                                size: 16,
                               ),
                             ),
                             const SizedBox(
                               height: 20,
                             ),
-                            RichText(
-                              text: TextSpan(
+                            Divider(
+                              color: greyColor.withOpacity(0.4),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: MyText(
+                                text: 'Pre-Requisites :',
+                                color: greyColor,
+                                weight: FontWeight.w500,
+                                fontFamily: 'Roboto',
+                                size: 16,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: MyText(
+                                text: widget.sm.preRequisites,
+                                color: greyColor,
+                                weight: FontWeight.w700,
+                                fontFamily: 'Roboto',
+                                size: 16,
+                              ),
+                            ),
+                            Divider(
+                              color: greyColor.withOpacity(0.4),
+                            ),
+                            // RichText(
+                            //   text: TextSpan(
+                            //     text: 'Pre-Requisites :',
+                            //     style: const TextStyle(
+                            //         color: greyColor,
+                            //         fontSize: 16,
+                            //         fontWeight: FontWeight.w500),
+                            //     children: <TextSpan>[
+                            //       TextSpan(
+                            //           text: widget.sm
+                            //               .preRequisites, //'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer fermentum nunc vehicula ligula placerat, et fermentum turpis ornare. Nullam ultricies pretium faucibus. In pulvinar rhoncus libero, eget lacinia sem condimentum ut. Nullam rutrum id mauris a venenatis. Aenean ipsum ante, iaculis iaculis ante quis',
+                            //           style: TextStyle(
+                            //               fontSize: 14,
+                            //               color: greyColor.withOpacity(0.8))),
+                            //     ],
+                            //   ),
+                            // ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Divider(
+                              color: greyColor.withOpacity(0.4),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: MyText(
                                 text: 'Minimum Requirement  :',
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: greyColor,
-                                    fontSize: 16),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text: widget.sm
-                                          .minReq, //'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer fermentum nunc vehicula ligula placerat, et fermentum turpis ornare. Nullam ultricies pretium faucibus. In pulvinar rhoncus libero, eget lacinia sem condimentum ut. Nullam rutrum id mauris a venenatis. Aenean ipsum ante, iaculis iaculis ante quis',
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          color: greyColor.withOpacity(0.8))),
-                                ],
+                                color: greyColor,
+                                weight: FontWeight.w700,
+                                fontFamily: 'Roboto',
+                                size: 14,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: MyText(
+                                text: widget.sm.mRequirements,
+                                color: greyColor,
+                                weight: FontWeight.w500,
+                                fontFamily: 'Roboto',
+                                size: 16,
                               ),
                             ),
                           ],

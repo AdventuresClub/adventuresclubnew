@@ -1,7 +1,6 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/services/create_services/create_services_program%20_model.dart';
 import 'package:flutter/material.dart';
-import '../../widgets/text_fields/TF_with_size.dart';
 
 class CreateProgram extends StatefulWidget {
   final Function parseData;
@@ -20,6 +19,9 @@ class _CreateProgramState extends State<CreateProgram> {
   TimeOfDay time = TimeOfDay.now();
   DateTime pickedDate = DateTime.now();
   DateTime currentDate = DateTime.now();
+  Duration timeSt = const Duration();
+  Duration endSt = const Duration();
+
   var formattedDate;
 
   @override
@@ -29,6 +31,10 @@ class _CreateProgramState extends State<CreateProgram> {
   }
 
   void sendData() {
+    Duration durationSt =
+        Duration(hours: startTime.hour, minutes: startTime.minute);
+    Duration durationEt =
+        Duration(hours: endTime.hour, minutes: endTime.minute);
     String title = titleController.text;
     String description = scheduleController.text;
     DateTime sTime = DateTime(
@@ -48,8 +54,8 @@ class _CreateProgramState extends State<CreateProgram> {
     CreateServicesProgramModel pm = CreateServicesProgramModel(
       title,
       sTime,
-      eTime,
-      pickedDate,
+      durationSt,
+      durationEt,
       description,
     );
     widget.parseData(pm, widget.index);
@@ -78,10 +84,12 @@ class _CreateProgramState extends State<CreateProgram> {
     if (t == startTime) {
       setState(() {
         startTime = newTime;
+        timeSt = Duration(hours: newTime.hour, minutes: newTime.minute);
       });
     } else {
       setState(() {
         endTime = newTime;
+        endSt = Duration(hours: newTime.hour, minutes: newTime.minute);
       });
     }
     sendData();

@@ -20,8 +20,8 @@ class ServicesModel {
   String serviceLevel;
   String duration;
   int aSeats;
-  dynamic startDate;
-  dynamic endDate;
+  DateTime startDate;
+  DateTime endDate;
   String lat;
   String lng;
   String writeInformation;

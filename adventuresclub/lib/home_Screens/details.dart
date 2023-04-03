@@ -12,7 +12,8 @@ import 'package:http/http.dart' as http;
 
 class Details extends StatefulWidget {
   final ServicesModel? gm;
-  const Details({this.gm, super.key});
+  final bool? show;
+  const Details({this.gm, this.show, super.key});
 
   @override
   State<Details> createState() => _DetailsState();

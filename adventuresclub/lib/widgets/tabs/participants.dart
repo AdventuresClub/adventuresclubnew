@@ -39,7 +39,7 @@ class _ParticipantsState extends State<Participants> {
           Uri.parse(
               "https://adventuresclub.net/adventureClub/api/v1/get_participant"),
           body: {
-            'service_id': "3", // widget.serviceID.toString(),
+            'service_id': widget.serviceID.toString(),
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       List<dynamic> result = decodedResponse['data'];

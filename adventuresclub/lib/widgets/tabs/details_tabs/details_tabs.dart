@@ -10,7 +10,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class DetailsTab extends StatefulWidget {
   final ServicesModel gm;
-  const DetailsTab(this.gm, {Key? key}) : super(key: key);
+  final bool? show;
+  const DetailsTab(this.gm, {this.show, super.key});
 
   @override
   State<DetailsTab> createState() => _DetailsTabState();
@@ -193,13 +194,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
     'Level  :',
     // 'End Date :',
   ];
-  List text6 = [
-    //,
-    // 'Tour',
-    // 'Hiking',
-    // 'Moderate',
-    // '05 Aug 2020',
-  ];
+  List text6 = [];
   List aimedFor = ['Ladies,', 'Gents'];
 
   List dependencyList = ['Health Conditions', 'License '];
@@ -584,7 +579,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                       ),
                                     );
                                   }),
-                                )
+                                ),
                               ],
                             ),
                           ),
@@ -598,14 +593,15 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                             child: Column(
                               children: [
                                 Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: MyText(
-                                      text: 'Dependency',
-                                      color: greyTextColor,
-                                      weight: FontWeight.w500,
-                                      fontFamily: 'Roboto',
-                                      size: 14,
-                                    )),
+                                  alignment: Alignment.centerLeft,
+                                  child: MyText(
+                                    text: 'Dependency',
+                                    color: greyTextColor,
+                                    weight: FontWeight.w500,
+                                    fontFamily: 'Roboto',
+                                    size: 14,
+                                  ),
+                                ),
                                 const SizedBox(height: 5),
                                 Wrap(
                                   children:
@@ -618,11 +614,19 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                           vertical: 4.0),
                                       child: Row(
                                         children: [
-                                          Image.network(
-                                            "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${widget.gm.dependency[index].name}",
-                                            height: 18,
-                                            width: 18,
-                                          ),
+                                          if (widget.gm.dependency[index].name
+                                              .isEmpty)
+                                            const Icon(
+                                              Icons.power_input,
+                                              size: 20,
+                                            ),
+                                          if (widget.gm.dependency[index].name
+                                              .isNotEmpty)
+                                            Image.network(
+                                              "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${widget.gm.dependency[index].name}",
+                                              height: 18,
+                                              width: 18,
+                                            ),
                                           const SizedBox(
                                             width: 5,
                                           ),
@@ -644,41 +648,42 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                             ),
                           ),
                         ),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(26),
-                          child: Card(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(26),
-                              child: ExpansionTile(
-                                collapsedIconColor: blackTypeColor3,
-                                tilePadding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                title: const Text(
-                                  'Terms and conditions',
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w500,
-                                      color: greyColor2),
-                                ),
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: MyText(
-                                      text: widget.gm.tnc,
-                                      // text:
-                                      //     'The highest peak in Al-Hajar mountain range and in all of Oman,Jebel Shams(Mountain of the sun) towers above the northern town in Al-Hamra. Rising to about 10,000 feet(3,000 meters).',
-                                      color: greyColor2,
-                                      weight: FontWeight.w400,
-                                      fontFamily: 'Roboto',
-                                      height: 1.5,
-                                      size: 12,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
+                        // ClipRRect(
+                        //   borderRadius: BorderRadius.circular(26),
+                        //   child: Card(
+                        //     child: ClipRRect(
+                        //       borderRadius: BorderRadius.circular(26),
+                        //       child: ExpansionTile(
+                        //         collapsedIconColor: blackTypeColor3,
+                        //         tilePadding:
+                        //             const EdgeInsets.symmetric(horizontal: 10),
+                        //         title: const Text(
+                        //           'Terms and conditions',
+                        //           style: TextStyle(
+                        //               fontSize: 16.0,
+                        //               fontWeight: FontWeight.w500,
+                        //               color: greyColor2),
+                        //         ),
+                        //         children: <Widget>[
+                        //           Padding(
+                        //             padding: const EdgeInsets.all(8.0),
+                        //             child: MyText(
+                        //               align: Alignment.centerLeft,
+                        //               text: widget.gm.tnc,
+                        //               // text:
+                        //               //     'The highest peak in Al-Hajar mountain range and in all of Oman,Jebel Shams(Mountain of the sun) towers above the northern town in Al-Hamra. Rising to about 10,000 feet(3,000 meters).',
+                        //               color: greyColor2,
+                        //               weight: FontWeight.w400,
+                        //               fontFamily: 'Roboto',
+                        //               height: 1.5,
+                        //               size: 12,
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                         ClipRRect(
                           borderRadius: BorderRadius.circular(26),
                           child: Card(
