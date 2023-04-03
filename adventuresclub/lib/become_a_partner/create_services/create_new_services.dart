@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls, prefer_typing_uninitialized_variables
 
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
@@ -506,22 +507,33 @@ class _CreateNewServicesState extends State<CreateNewServices> {
             ConstantsCreateNewServices.lng.toString(), //lng.toString(), //"",
         // 'mobile_code': ccCode,
       };
+      String programDataString = jsonEncode(programData);
+      int index = programDataString.indexOf("}");
+      String first = programDataString.substring(0, index);
       st.forEach((element) {
-        programData["gathering_start_time[]"] = element;
+        String i = ",gathering_start_time[]:'$element'";
+        first += i;
       });
-      et.forEach((element) {
-        programData["gathering_end_time[]"] = element;
-      });
-      titleList.forEach((element) {
-        programData["schedule_title[]"] = element;
-      });
-      descriptionList.forEach((element) {
-        programData["program_description[]"] = element;
-      });
-      d.forEach((element) {
-        programData["gathering_date[]"] = element;
-      });
+      first += "}";
+      // programData = jsonDecode(first);
+      log(first);
+      // st.forEach((element) {
+      //   programData["gathering_start_time[]"] = element;
+      // });
+      // et.forEach((element) {
+      //   programData["gathering_end_time[]"] = element;
+      // });
+      // titleList.forEach((element) {
+      //   programData["schedule_title[]"] = element;
+      // });
+      // descriptionList.forEach((element) {
+      //   programData["program_description[]"] = element;
+      // });
+      // d.forEach((element) {
+      //   programData["gathering_date[]"] = element;
+      // });
       request.fields.addAll(programData);
+      log(request.fields.toString());
       final response = await request.send();
 
       log(response.toString());
