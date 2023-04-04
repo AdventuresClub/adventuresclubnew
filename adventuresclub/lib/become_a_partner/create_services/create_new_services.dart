@@ -507,6 +507,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
             ConstantsCreateNewServices.lng.toString(), //lng.toString(), //"",
         // 'mobile_code': ccCode,
       };
+      /*
       String programDataString = jsonEncode(programData);
       int index = programDataString.indexOf("}");
       String first = programDataString.substring(0, index);
@@ -517,9 +518,12 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       first += "}";
       // programData = jsonDecode(first);
       log(first);
-      // st.forEach((element) {
-      //   programData["gathering_start_time[]"] = element;
-      // });
+      */
+      String space = "";
+      st.forEach((element) {
+        programData["gathering_start_time[]$space"] = element;
+        space += " ";
+      });
       // et.forEach((element) {
       //   programData["gathering_end_time[]"] = element;
       // });
