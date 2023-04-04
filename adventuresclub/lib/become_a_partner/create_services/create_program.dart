@@ -108,6 +108,9 @@ class _CreateProgramState extends State<CreateProgram> {
           SizedBox(
             width: MediaQuery.of(context).size.width,
             child: TextField(
+                onChanged: (value) {
+                  sendData();
+                },
                 onEditingComplete: () {
                   FocusScope.of(context).unfocus();
                   sendData();
@@ -234,6 +237,9 @@ class _CreateProgramState extends State<CreateProgram> {
           SizedBox(
             width: MediaQuery.of(context).size.width,
             child: TextField(
+                onChanged: (value) {
+                  sendData();
+                },
                 onEditingComplete: () {
                   FocusScope.of(context).unfocus();
                   sendData();

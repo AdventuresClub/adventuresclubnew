@@ -32,7 +32,8 @@ class _MyServicesTabState extends State<MyServicesTab> {
         text6.insert(1, widget.sm.serviceSector);
         text6.insert(2, widget.sm.serviceType);
         text6.insert(3, widget.sm.serviceLevel);
-        text6.insert(4, widget.sm.availability[0].ed.substring(0, 10));
+        text6.insert(
+            4, widget.sm.availability[0].ed.substring(0, 10) ?? DateTime.now());
       });
     }
     if (widget.sm.sPlan == 1) {

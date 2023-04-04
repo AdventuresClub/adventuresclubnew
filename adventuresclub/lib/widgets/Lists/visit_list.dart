@@ -114,9 +114,12 @@ class _VisitListState extends State<VisitList> {
                                 colorFilter: ColorFilter.mode(
                                     Colors.black.withOpacity(0.2),
                                     BlendMode.darken),
-                                image: const ExactAssetImage(
-                                  'images/image13.png',
+                                image: NetworkImage(
+                                  "${"https://adventuresclub.net/adventureClub/public/uploads/"}${gGv[index].destinationImage}",
                                 ),
+                                // const ExactAssetImage(
+                                //   'images/image13.png',
+                                // ),
                                 fit: BoxFit.cover)),
                       ),
                       const Positioned(
@@ -143,7 +146,7 @@ class _VisitListState extends State<VisitList> {
                             text: gGv[index].destinationName, //text[index],
                             color: blackColor,
                             size: 14,
-                            weight: FontWeight.w500,
+                            weight: FontWeight.w700,
                           ),
                           const SizedBox(width: 20),
                           RatingBar.builder(

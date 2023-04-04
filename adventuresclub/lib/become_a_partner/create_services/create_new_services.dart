@@ -99,7 +99,10 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   String programeTime = "";
   TimeOfDay time = TimeOfDay.now();
   bool planChecked = false;
-  List<CreateServicesProgramModel> pm = [];
+  List<CreateServicesProgramModel> pm = [
+    CreateServicesProgramModel(
+        "", DateTime.now(), const Duration(), const Duration(), "")
+  ];
   String programSchedule = "";
   String programTitle = "";
   String programSelecteDate1 = "";
@@ -123,7 +126,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     formattedDate = 'Start Date';
     endDate = "End Date";
     getData();
-    addProgramData();
+    // addProgramData();
   }
 
   void getProgramData(CreateServicesProgramModel data, int index) {
@@ -312,7 +315,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         availableSeatsController.text.isNotEmpty &&
         sPlan > 0 &&
         planChecked) {
-      await convertProgramData();
+      // await convertProgramData();
       aimed();
       servicePlan();
       dependency();
@@ -507,31 +510,41 @@ class _CreateNewServicesState extends State<CreateNewServices> {
             ConstantsCreateNewServices.lng.toString(), //lng.toString(), //"",
         // 'mobile_code': ccCode,
       };
-      String programDataString = jsonEncode(programData);
-      int index = programDataString.indexOf("}");
-      String first = programDataString.substring(0, index);
+      String space = "";
       st.forEach((element) {
-        String i = ",gathering_start_time[]:'$element'";
-        first += i;
+        programData["gathering_start_time[]$space"] = element;
+        space += " ";
       });
-      first += "}";
-      // programData = jsonDecode(first);
-      log(first);
+      // String programDataString = jsonEncode(programData);
+      // int index = programDataString.indexOf("}");
+      // String first = programDataString.substring(0, index);
       // st.forEach((element) {
-      //   programData["gathering_start_time[]"] = element;
+      //   String i = ",gathering_start_time[]:'$element'";
+      //   first += i;
       // });
-      // et.forEach((element) {
-      //   programData["gathering_end_time[]"] = element;
-      // });
-      // titleList.forEach((element) {
-      //   programData["schedule_title[]"] = element;
-      // });
-      // descriptionList.forEach((element) {
-      //   programData["program_description[]"] = element;
-      // });
-      // d.forEach((element) {
-      //   programData["gathering_date[]"] = element;
-      // });
+      // first += "}";
+      // programData = jsonDecode(first);
+      //log(first);
+      space = "";
+      et.forEach((element) {
+        programData["gathering_end_time[]$space"] = element;
+        space += " ";
+      });
+      space = "";
+      titleList.forEach((element) {
+        programData["schedule_title[]$space"] = element;
+        space += " ";
+      });
+      space = "";
+      descriptionList.forEach((element) {
+        programData["program_description[]$space"] = element;
+        space += " ";
+      });
+      space = "";
+      d.forEach((element) {
+        programData["gathering_date[]$space"] = element;
+        space += " ";
+      });
       request.fields.addAll(programData);
       log(request.fields.toString());
       final response = await request.send();
