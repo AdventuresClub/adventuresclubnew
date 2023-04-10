@@ -80,18 +80,35 @@ class _DetailsState extends State<Details> {
           Uri.parse(
               "https://adventuresclub.net/adventureClub/api/v1/add_favourite"),
           body: {
-            'user_id': Constants.userId, //"27",
+            'user_id': Constants.userId.toString(), //"27",
             'service_id': widget.gm!.serviceId.toString(),
           });
-      setState(() {
-        favourite = true;
-      });
+      if (response.statusCode == 200) {
+        cancel();
+        message("Adventure has been added to your favourites");
+        setState(() {
+          favourite = true;
+        });
+      }
+
       print(response.statusCode);
       print(response.body);
       print(response.headers);
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  void cancel() {
+    Navigator.of(context).pop();
+  }
+
+  void message(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
   }
 
   @override
@@ -122,6 +139,7 @@ class _DetailsState extends State<Details> {
                     clipBehavior: Clip.none,
                     children: [
                       PageView.builder(
+                          reverse: true,
                           controller: _pageViewController,
                           onPageChanged: (index) {
                             setState(() {
@@ -223,15 +241,38 @@ class _DetailsState extends State<Details> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            ButtonIconLess('PLAN FOR FUTURE', whiteColor, greenishColor, 2.5,
-                17, 12, goToPlan),
-            ButtonIconLess('BOOK NOW', greenishColor, whiteColor, 2.5, 17, 12,
-                goToBookTicket),
-          ],
-        ),
+        child: widget.gm!.sPlan == 2
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ButtonIconLess('PLAN FOR FUTURE', whiteColor, greenishColor,
+                      2.5, 17, 12, goToPlan),
+                  ButtonIconLess('BOOK NOW', greenishColor, whiteColor, 2.5, 17,
+                      12, goToBookTicket),
+                ],
+              )
+            : Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(26),
+                  color: bluishColor,
+                ),
+                height: 50,
+                width: MediaQuery.of(context).size.width,
+                child: Center(
+                  child: MyText(
+                    text: "Plan For Future",
+                    size: 16,
+                    weight: FontWeight.w600,
+                  ),
+                ),
+              ),
+        // Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //     children: [
+        //       ButtonIconLess('Plan For Future', greenishColor, whiteColor,
+        //           1.2, 17, 12, goToBookTicket),
+        //     ],
+        //   ),
       ),
     );
   }

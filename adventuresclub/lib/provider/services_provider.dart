@@ -190,7 +190,7 @@ class ServicesProvider with ChangeNotifier {
               services['service_type'].toString() ?? "",
               services['service_level'].toString() ?? "",
               services['duration'].toString() ?? "",
-              int.tryParse(services['availability_seats'].toString()) ?? 0,
+              int.tryParse(services['available_seats'].toString()) ?? 0,
               sDate,
               eDate,
               //int.tryParse(services['start_date'].toString()) ?? "",

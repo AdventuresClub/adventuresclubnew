@@ -21,6 +21,7 @@ import '../../models/services/dependencies_model.dart';
 import '../../models/services/included_activities_model.dart';
 import '../../models/services/manish_model.dart';
 import '../../models/services/service_image_model.dart';
+import '../details.dart';
 
 class Planned extends StatefulWidget {
   const Planned({super.key});
@@ -370,14 +371,14 @@ class _PlannedState extends State<Planned> {
     });
   }
 
-  void goToDetails(HomeServicesModel gm) {
-    // Navigator.of(context).push(
-    //   MaterialPageRoute(
-    //     builder: (_) {
-    //       return Details(gm: gm);
-    //     },
-    //   ),
-    // );
+  void goToDetails(ServicesModel gm) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return Details(gm: gm);
+        },
+      ),
+    );
   }
 
   void goToProvider() {
@@ -569,7 +570,7 @@ class _PlannedState extends State<Planned> {
                       allSer.length,
                       (index) {
                         return GestureDetector(
-                          //onTap: () => goToDetails(gm[index]),
+                          onTap: () => goToDetails(allSer[index]),
                           child: ServicesCard(allSer[index]),
                           // child: SizedBox(
                           //   height: 200,

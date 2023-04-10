@@ -791,11 +791,11 @@ class Constants {
     );
   }
 
-  static InputDecoration getInputDecoration() {
+  static InputDecoration getInputDecoration(String hint) {
     return InputDecoration(
       // contentPadding: EdgeInsets.symmetric(
       //     vertical: widget.verticalPadding, horizontal: 18),
-      //hintText: widget.hintText,
+      hintText: hint,
       hintStyle: TextStyle(
           color: blackColor.withOpacity(0.5),
           fontWeight: FontWeight.w500,

@@ -5,17 +5,11 @@ import 'package:flutter/material.dart';
 
 class ButtonIconLess extends StatefulWidget {
   final String name;
-  // ignore: prefer_typing_uninitialized_variables
   final color;
-
-  // ignore: prefer_typing_uninitialized_variables
   final textColor;
-  // ignore: prefer_typing_uninitialized_variables
   final width;
-  // ignore: prefer_typing_uninitialized_variables
   final height;
   final double fontSize;
-  // ignore: prefer_typing_uninitialized_variables
   final function;
   const ButtonIconLess(this.name, this.color, this.textColor, this.width,
       this.height, this.fontSize, this.function,

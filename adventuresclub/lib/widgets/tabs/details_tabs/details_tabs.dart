@@ -225,7 +225,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                 labelPadding: EdgeInsets.symmetric(horizontal: 4),
                 labelColor: blackColor,
                 labelStyle: TextStyle(
-                  fontSize: 16,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
                 indicatorColor: greenishColor,
@@ -238,22 +238,29 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                 unselectedLabelColor: greyColor,
                 tabs: [
                   SizedBox(
-                      width: 90.0,
-                      child: Tab(
-                        text: 'Description',
-                      )),
-                  SizedBox(width: 70.0, child: Tab(text: 'Program')),
+                    width: 90.0,
+                    child: Tab(
+                      text: 'Description',
+                    ),
+                  ),
+                  SizedBox(
+                    width: 70.0,
+                    child: Tab(text: 'Program'),
+                  ),
                   SizedBox(
                     width: 150.0,
                     child: Tab(text: 'Gathering Location'),
                   ),
-                  SizedBox(width: 60.0, child: Tab(text: 'Chat')),
+                  SizedBox(
+                    width: 60.0,
+                    child: Tab(text: 'Chat'),
+                  ),
                 ],
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height *
-                  1.5, //height of TabBarView
+              height:
+                  MediaQuery.of(context).size.height * 2, //height of TabBarView
               width: MediaQuery.of(context).size.width,
               child: TabBarView(
                 children: <Widget>[
@@ -264,7 +271,8 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                       children: [
                         Card(
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                           elevation: 1,
                           child: Padding(
                             padding: const EdgeInsets.all(12.0),
@@ -305,7 +313,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                     Align(
                                         alignment: Alignment.centerLeft,
                                         child: MyText(
-                                          text: "${widget.gm.costInc} "
+                                          text: "${widget.gm.costExc} "
                                               "${widget.gm.currency}",
                                           //'\$18.18',
                                           weight: FontWeight.w600,
@@ -328,7 +336,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                       fontFamily: 'Roboto',
                                     ),
                                     MyText(
-                                      text: 'Including gears and other taxes',
+                                      text: 'Excluding gears and other taxes',
                                       weight: FontWeight.bold,
                                       color: Colors.red,
                                       size: 10,
@@ -764,7 +772,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 6),
                           child: ListTile(
-                            contentPadding: EdgeInsets.all(4),
+                            contentPadding: const EdgeInsets.all(4),
                             leading: CircleAvatar(
                               backgroundColor: greenishColor,
                               radius: 25,
@@ -815,14 +823,6 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                                           weight: FontWeight.bold,
                                         ),
                                       ),
-                                      const SizedBox(
-                                        height: 0,
-                                      ),
-                                      // Container(
-                                      //   height: 20,
-                                      //   width: 2,
-                                      //   color: blackColor,
-                                      // )
                                     ],
                                   ),
                                 ),
@@ -1157,7 +1157,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                   ),
                   // 4th Tab /////////
                   ShowChat(
-                      "https://adventuresclub.net/adventureClub/receiverlist/27/'${widget.gm.serviceId.toString()}'"),
+                      "https://adventuresclub.net/adventureClub/receiverlist/${widget.gm.providerId}${widget.gm.id}"),
                   //AdventureChatDetails(widget.gm.serviceId.toString())
                   // "https://adventuresclub.net/adventureClub/receiverlist/27/'${widget.serviceId}'"
                 ],

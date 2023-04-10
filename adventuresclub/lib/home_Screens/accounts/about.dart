@@ -249,8 +249,10 @@ class _AboutState extends State<About> {
                                         ),
                                         Button(
                                             'Chat',
-                                            Color.fromARGB(255, 15, 71, 116),
-                                            Color.fromARGB(255, 15, 71, 116),
+                                            const Color.fromARGB(
+                                                255, 15, 71, 116),
+                                            const Color.fromARGB(
+                                                255, 15, 71, 116),
                                             whiteColor,
                                             14,
                                             abc,
@@ -266,10 +268,12 @@ class _AboutState extends State<About> {
                                   ],
                                 ),
                                 const Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Image(
-                                        image: ExactAssetImage(
-                                            'images/forward.png')))
+                                  alignment: Alignment.centerRight,
+                                  child: Image(
+                                    image:
+                                        ExactAssetImage('images/forward.png'),
+                                  ),
+                                )
                               ],
                             )),
                         const SizedBox(

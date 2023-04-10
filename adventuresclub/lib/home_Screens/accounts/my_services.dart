@@ -367,7 +367,7 @@ class _MyServicesState extends State<MyServices> {
           element['service_type'].toString() ?? "",
           element['service_level'].toString() ?? "",
           element['duration'].toString() ?? "",
-          int.tryParse(element['availability_seats'].toString()) ?? 0,
+          int.tryParse(element['available_seats'].toString()) ?? 0,
           sDate,
           eDate,
           element['latitude'].toString() ?? "",
@@ -488,9 +488,10 @@ class _MyServicesState extends State<MyServices> {
               color: greyShadeColor.withOpacity(0.1),
               child: Column(
                 children: [
+                  // Text("test")
                   MyServicesGrid(
                     allServices,
-                  )
+                  ),
                 ],
               ),
             ),

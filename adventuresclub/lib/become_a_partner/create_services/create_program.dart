@@ -117,7 +117,7 @@ class _CreateProgramState extends State<CreateProgram> {
                 },
                 keyboardType: TextInputType.multiline,
                 controller: titleController,
-                decoration: Constants.getInputDecoration()),
+                decoration: Constants.getInputDecoration("Schedule Title")),
           ),
           // TFWithSize(
           //   "Schedule Title",
@@ -246,7 +246,8 @@ class _CreateProgramState extends State<CreateProgram> {
                 },
                 keyboardType: TextInputType.multiline,
                 controller: scheduleController,
-                decoration: Constants.getInputDecoration()),
+                decoration:
+                    Constants.getInputDecoration("Schedule Description")),
           ),
         ],
       ),

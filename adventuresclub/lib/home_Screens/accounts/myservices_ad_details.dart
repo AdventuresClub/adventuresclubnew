@@ -64,7 +64,7 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
         title: MyText(
           text: widget.sm.adventureName, //'Hill Climbing',
           color: bluishColor,
-          weight: FontWeight.w700,
+          weight: FontWeight.w800,
         ),
         actions: [
           GestureDetector(
@@ -86,7 +86,7 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
               SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height / 4.8,
-                  child: const MyServicesList()),
+                  child: MyServicesList(widget.sm)),
               GestureDetector(
                 onTap: () => goToReviews(widget.sm.serviceId.toString()),
                 child: Padding(
@@ -140,7 +140,7 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
                               width: 5,
                             ),
                             MyText(
-                              text: widget.sm.region, //'Muscat Oman',
+                              text: widget.sm.sAddress, //'Muscat Oman',
                               color: greyColor,
                               weight: FontWeight.w500,
                             )

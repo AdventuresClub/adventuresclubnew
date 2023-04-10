@@ -1,6 +1,7 @@
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
 import 'package:adventuresclub/models/services/availability_model.dart';
 import 'package:adventuresclub/models/services/booking_data_model.dart';
+import 'package:adventuresclub/models/services/create_services/availability_plan_model.dart';
 import 'package:adventuresclub/models/services/dependencies_model.dart';
 import 'package:adventuresclub/models/services/included_activities_model.dart';
 import 'package:adventuresclub/models/services/manish_model.dart';
@@ -28,7 +29,8 @@ class GetServicesModel {
   String writeInformation;
   int sPlan;
   int sForID;
-  List<AvailabilityModel> availability; // check
+  List<AvailabilityModel> availability;
+  List<AvailabilityPlanModel> availabilityPlan; // check
   String geoLocation;
   String sAddress;
   String costInc;
@@ -86,6 +88,7 @@ class GetServicesModel {
       this.sPlan,
       this.sForID,
       this.availability,
+      this.availabilityPlan,
       this.geoLocation,
       this.sAddress,
       this.costInc,

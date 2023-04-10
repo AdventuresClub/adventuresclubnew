@@ -63,10 +63,9 @@ class _BannerPageState extends State<BannerPage> {
       pickedMedia = File(photo.path);
       if (imageList.isEmpty) {
         imageList.add(pickedMedia);
+      } else {
+        imageList.add(pickedMedia);
       }
-      //imageList[0] = pickedMedia;
-      // addImage();
-      //imagesList.add(pickedMedia);
     } else {
       pickedMediaSecond = File(photo!.path);
       imageList.add(pickedMediaSecond);

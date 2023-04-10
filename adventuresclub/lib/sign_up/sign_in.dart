@@ -137,10 +137,15 @@ class _SignInState extends State<SignIn> {
       if (id == element.id) {
         setState(() {
           Constants.countryFlag = element.flag;
+          Constants.country = element.country;
         });
       }
     });
-    prefs.setString("countryFlag", Constants.countryFlag);
+    prefs.setString(
+      "countryFlag",
+      Constants.countryFlag,
+    );
+    prefs.setString(("country"), Constants.country);
   }
 
   void parseData(
