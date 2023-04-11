@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:adventuresclub/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -31,6 +33,7 @@ class _ShowChatState extends State<ShowChat> {
           onPageFinished: (String url) {},
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
+            log(request.url);
             return NavigationDecision.navigate;
           },
         ),
