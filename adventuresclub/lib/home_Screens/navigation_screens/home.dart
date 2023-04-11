@@ -183,7 +183,7 @@ class _HomeState extends State<Home> {
             ),
             Container(
               alignment: Alignment.centerLeft,
-              height: 220,
+              height: 235,
               child: const ServiceList('Sky'),
             ),
             const SizedBox(
@@ -207,7 +207,7 @@ class _HomeState extends State<Home> {
             ),
             Container(
               alignment: Alignment.centerLeft,
-              height: 220,
+              height: 230,
               child: const ServiceList('Water'),
             ),
             Padding(

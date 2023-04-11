@@ -1,10 +1,8 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:adventuresclub/home_Screens/accounts/myservices_ad_details.dart';
-import 'package:adventuresclub/home_Screens/details.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/widgets/services_card.dart';
-import 'package:adventuresclub/widgets/tabs/my_services_tabs.dart';
 import 'package:flutter/material.dart';
 
 class MyServicesGrid extends StatefulWidget {
@@ -50,7 +48,7 @@ class _MyServicesGridState extends State<MyServicesGrid> {
         physics: const ScrollPhysics(),
         shrinkWrap: true,
         mainAxisSpacing: 2,
-        childAspectRatio: 0.9,
+        childAspectRatio: 1.05,
         crossAxisSpacing: 2,
         crossAxisCount: 2,
         children: List.generate(

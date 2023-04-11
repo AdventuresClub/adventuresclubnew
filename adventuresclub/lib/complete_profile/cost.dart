@@ -298,6 +298,29 @@ class _CostState extends State<Cost> {
                   3.4,
                 ),
               ),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: Container(
+                  height: 50,
+                  //width: MediaQuery.of(context).size.width / 2.4,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: lightGreyColor,
+                    border: Border.all(
+                        color: greyColor.withOpacity(0.2), width: 1.5),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: MyText(
+                    text: "OMR", //getCountry.toString(),
+                    color: blackTypeColor.withOpacity(0.5),
+                    size: 14,
+                    weight: FontWeight.w500,
+                  ),
+                ),
+              ),
               //DdButton(5.5)
             ],
           ),

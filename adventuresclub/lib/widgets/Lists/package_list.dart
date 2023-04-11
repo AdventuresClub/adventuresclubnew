@@ -1,7 +1,10 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, avoid_print
+// ignore_for_file: prefer_typing_uninitialized_variables, avoid_print, unused_local_variable
+
+import 'dart:convert';
 
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/payment_methods/one_pay_method.dart';
+import 'package:adventuresclub/models/currency_model.dart';
 import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +24,8 @@ class PackageList extends StatefulWidget {
 
 class _PackageListState extends State<PackageList> {
   DateTime t = DateTime.now();
+  String key = "5d7d771c49-103d05e0d0-riwfxc";
+
   List text = [
     'This is first includes',
     'This is first excludes',
@@ -94,6 +99,40 @@ class _PackageListState extends State<PackageList> {
     }
   }
 
+  Map mapCountry = {};
+  double amount = 0;
+
+  List<CurrencyModel> scurrencies = [];
+
+  Future<List<CurrencyModel>> fetchCurrency(String? value) async {
+    final response = await http.get(Uri.parse(
+        'https://api.fastforex.io/fetch-all?api_key=5d7d771c49-103d05e0d0-riwfxc'));
+    mapCountry = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      dynamic result = mapCountry['results'];
+      if (result['OMR'] != null) {
+        // setState(() {
+        //   amount = result.
+        // });
+        print(result);
+      }
+      // result.forEach((element) {
+      //   if (element == "OMR") {
+      //     print(element);
+      //   }
+      // });
+      List<CurrencyModel> currencies = [];
+      // for (var code in data["data"].keys) {
+      //   CurrencyModel currency = CurrencyModel(
+      //       data["data"][code]["code"], data["data"][code]["value"].toDouble());
+      //   currencies.add(currency);
+      // }
+      return currencies;
+    } else {
+      throw Exception('Failed');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -133,13 +172,39 @@ class _PackageListState extends State<PackageList> {
             ),
           ),
           Positioned(
-              bottom: 20,
-              right: 30,
-              child: GestureDetector(
-                onTap: update,
-                child: ButtonIconLess(
-                    'Proceed', bluishColor, whiteColor, 3.2, 17, 14, goTo),
-              )),
+            bottom: 20,
+            right: 30,
+            child: GestureDetector(
+              onTap: () => fetchCurrency("100"),
+              child: Container(
+                height: MediaQuery.of(context).size.height / 16,
+                width: MediaQuery.of(context).size.width / 4,
+                decoration: BoxDecoration(
+                  color: blackColor,
+                  border: Border.all(color: greenishColor),
+                  borderRadius: const BorderRadius.all(Radius.circular(40)),
+                ),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "Proceed",
+                          style: TextStyle(
+                              color: whiteColor,
+                              fontSize: 14,
+                              fontFamily: 'Roboto',
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
           if (widget.cost == "0.00")
             Positioned(
               bottom: 70,

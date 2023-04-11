@@ -4,7 +4,6 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/my_adventures.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
-import 'package:adventuresclub/widgets/buttons/square_button.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../../models/getClientRequest/get_client_request_model.dart';
@@ -21,13 +20,13 @@ class _ClientRequestListState extends State<ClientRequestList> {
   abc() {}
 
   void goToMyAd() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return const MyAdventures();
-        },
-      ),
-    );
+    // Navigator.of(context).push(
+    //   MaterialPageRoute(
+    //     builder: (_) {
+    //       return const MyAdventures();
+    //     },
+    //   ),
+    // );
   }
 
   @override

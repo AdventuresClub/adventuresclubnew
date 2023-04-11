@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:adventuresclub/become_a_partner/create_services/create_plan_one.dart';
 import 'package:adventuresclub/become_a_partner/create_services/create_program.dart';
 import 'package:adventuresclub/become_a_partner/create_services/create_services_description.dart';
 import 'package:adventuresclub/complete_profile/banner_page.dart';
@@ -12,6 +13,7 @@ import 'package:adventuresclub/complete_profile/program.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/constants_create_new_services.dart';
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
+import 'package:adventuresclub/models/services/create_services/create_services_plan_one.dart';
 import 'package:adventuresclub/models/services/create_services/create_services_program%20_model.dart';
 import 'package:adventuresclub/models/services/dependencies_model.dart';
 import 'package:adventuresclub/widgets/buttons/bottom_button.dart';
@@ -103,6 +105,9 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     CreateServicesProgramModel(
         "", DateTime.now(), const Duration(), const Duration(), "")
   ];
+  List<CreateServicesPlanOneModel> onePlan = [
+    CreateServicesPlanOneModel("", "")
+  ];
   String programSchedule = "";
   String programTitle = "";
   String programSelecteDate1 = "";
@@ -117,6 +122,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   List<String> titleList = [];
   List<String> descriptionList = [];
   List<String> d = [];
+  List<String> programOnetitleList = [];
+  List<String> programOnedescriptionList = [];
 
   @override
   void initState() {
@@ -132,6 +139,17 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   void getProgramData(CreateServicesProgramModel data, int index) {
     pm[index] = data;
     //  pm.add(data);
+  }
+
+  void getProgramOneData(CreateServicesPlanOneModel data, int index) {
+    onePlan[index] = data;
+    //  pm.add(data);
+  }
+
+  void addProgramOneData() {
+    setState(() {
+      onePlan.add(CreateServicesPlanOneModel("", ""));
+    });
   }
 
   void addProgramData() {
@@ -278,25 +296,44 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   }
 
   void checkPlan() {
+    print(planChecked);
     if (count == 1 && sPlan == 2) {
-      if (ConstantsCreateNewServices.startDate.isNotEmpty &&
-          ConstantsCreateNewServices.endDate.isNotEmpty) {
+      if (ConstantsCreateNewServices.startDate != "Start Date" &&
+          ConstantsCreateNewServices.endDate != "End Date") {
         setState(() {
           planChecked = true;
         });
-      } else if (ConstantsCreateNewServices.startDate.isEmpty) {
+      } else if (ConstantsCreateNewServices.startDate == "Start Date") {
         message("Start Date Cannot be empty");
-      } else if (ConstantsCreateNewServices.endDate.isEmpty) {
+      } else if (ConstantsCreateNewServices.endDate == "End Date") {
         message("End Date Cannot be empty");
       }
+    } else {
+      checkPlanTwo();
     }
+  }
+
+  void checkPlanTwo() async {
+    servicePlan();
+    if (count == 1 && sPlan == 1) {
+      if (servicePlanId.isNotEmpty) {
+        setState(() {
+          planChecked = true;
+        });
+      } else if (servicePlanId.isEmpty) {
+        message("Please select Particular week days");
+      }
+    }
+    print(servicePlanId);
+  }
+
+  void planTwoCheck() {
+    if (sPlan == 2 && planChecked == false) {}
   }
 
   void next() async {
     checkPlan();
-    if (count == 0
-        //&& imageList.isNotEmpty
-        ) {
+    if (count == 0 && imageList.isNotEmpty) {
       setState(() {
         count++;
       });
@@ -317,7 +354,6 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         planChecked) {
       // await convertProgramData();
       aimed();
-      servicePlan();
       dependency();
       setState(() {
         count++;
@@ -356,13 +392,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         minimumRequirement.text.isNotEmpty) {
       //convertProgramData();
       createService();
-    }
-    // else if (ConstantsCreateNewServices.lat < 0) {
-    //   message("Please enter geolocation");
-    // } else if (ConstantsCreateNewServices.lng < 0) {
-    //   message("Please enter geolocation");
-    // }
-    else if (specificAddressController.text.isEmpty) {
+    } else if (specificAddressController.text.isEmpty) {
       message("Specific Address Cannot be empty");
     } else if (costOne.text.isEmpty) {
       message("Please set cost one");
@@ -391,26 +421,36 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   }
 
   Future<void> convertProgramData() async {
-    pm.forEach((element) {
-      titleList.add(element.title);
-    });
-    //programTitle = titleList.join(",");
-    pm.forEach((element) {
-      descriptionList.add(element.description);
-    });
-    // programSchedule = descriptionList.join(",");
-    pm.forEach((element) {
-      d.add(element.startDate.toString());
-    });
-    // programSelecteDate1 = d.join(",");
-    pm.forEach((element) {
-      st.add(element.startDate.toString());
-    });
-    // programStartTime1 = st.join(",");
-    pm.forEach((element) {
-      et.add(element.endTime.toString());
-    });
-    //programEndTime = et.join(",");
+    if (sPlan == 1) {
+      onePlan.forEach((element) {
+        titleList.add(element.title);
+      });
+      //programTitle = titleList.join(",");
+      onePlan.forEach((element) {
+        descriptionList.add(element.description);
+      });
+    } else {
+      pm.forEach((element) {
+        titleList.add(element.title);
+      });
+      //programTitle = titleList.join(",");
+      pm.forEach((element) {
+        descriptionList.add(element.description);
+      });
+      // programSchedule = descriptionList.join(",");
+      pm.forEach((element) {
+        d.add(element.startDate.toString());
+      });
+      // programSelecteDate1 = d.join(",");
+      pm.forEach((element) {
+        st.add(element.startDate.toString());
+      });
+      // programStartTime1 = st.join(",");
+      pm.forEach((element) {
+        et.add(element.endTime.toString());
+      });
+      //programEndTime = et.join(",");
+    }
   }
 
   void createService() async {
@@ -489,13 +529,13 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         //"gathering_start_time[]": programStartTime2, //"10",
         // this is an arrayt
         //"gathering_end_time[]": programEndTime, //"15",
-        "" //gatheringDate, //"",
-                // this is an array
-                // "program_description[]":
-                //"scheule 2 , schule 1", // scheduleControllerList, //scheduleDesController.text, //"",
-                // "service_for": selectedActivitesId
-                //     .toString(), //"1,2,5", //"4", //["1", "4", "5", "7"], //"",
-                "dependency":
+        //"" //gatheringDate, //"",
+        // this is an array
+        // "program_description[]":
+        //"scheule 2 , schule 1", // scheduleControllerList, //scheduleDesController.text, //"",
+        // "service_for": selectedActivitesId
+        //     .toString(), //"1,2,5", //"4", //["1", "4", "5", "7"], //"",
+        "dependency":
             selectedDependencyId, //selectedDependencyId.toString(), //["1", "2", "3"],
         //"banners[]": "${banners[0]},test032423231108.png",
         //"banner[]":
@@ -587,14 +627,14 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         firstDate: DateTime.now(),
         lastDate: DateTime(2050));
     if (pickedDate != null && pickedDate != currentDate) {
-      if (givenDate == 'Start Date') {
+      if (givenDate == formattedDate) {
         setState(() {
           var date = DateTime.parse(pickedDate.toString());
           String m = date.month < 10 ? "0${date.month}" : "${date.month}";
           String d = date.day < 10 ? "0${date.day}" : "${date.day}";
           formattedDate = "${date.year}-$m-$d";
         });
-      } else if (givenDate == "End Date") {
+      } else if (givenDate == endDate) {
         setState(() {
           var date = DateTime.parse(pickedDate.toString());
           String m = date.month < 10 ? "0${date.month}" : "${date.month}";
@@ -620,50 +660,6 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     });
   }
 
-  void addProgram() {
-    if (ConstantsCreateNewServices.particularWeekDays) {}
-  }
-
-  void addFields() {
-    if (i == 1) {
-      setState(() {
-        i = 2;
-        titleHeading.add("Schedule Title");
-        descriptionHeading.add("Schedule Description");
-        titleController.add(scheduleController1);
-        scheduleControllerList.add(scheduleDescription1);
-      });
-    } else if (i == 2) {
-      setState(() {
-        i = 3;
-        titleHeading.add("Schedule Title");
-        descriptionHeading.add("Schedule Description");
-        titleController.add(scheduleDescription2);
-        scheduleControllerList.add(scheduleDescription2);
-      });
-    } else if (i == 3) {
-      setState(() {
-        loading = true;
-        i = 4;
-        titleHeading.add("Schedule Title");
-        descriptionHeading.add("Schedule Description");
-        titleController.add(scheduleDescription3);
-        scheduleControllerList.add(scheduleDescription3);
-      });
-    } else if (i == 4) {
-      setState(() {
-        loading = true;
-        i = 5;
-        titleHeading.add("Schedule Title");
-        descriptionHeading.add("Schedule Description");
-        titleController.add(scheduleDescription4);
-        scheduleControllerList.add(scheduleDescription4);
-      });
-    } else if (i == 5) {
-      message("Maximum of 5 are allowed");
-    }
-  }
-
   void setId() {
     if (particularWeekDays) {
       setState(() {
@@ -681,20 +677,34 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     print("${"this is a plan id"}${sPlan}");
   }
 
+  void servicePlanfilter() {
+    if (planChecked) {
+      setState(() {
+        planChecked = false;
+      });
+    }
+  }
+
   void addServicePlan() {
+    servicePlanfilter();
     setState(() {
       ConstantsCreateNewServices.particularWeekDays =
           !ConstantsCreateNewServices.particularWeekDays;
       particularWeekDays = !particularWeekDays;
+      // planChecked = !planChecked;
     });
+    print(planChecked);
     setId();
   }
 
   void daysPlan() {
+    servicePlanfilter();
     setState(() {
       particularDay = !particularDay;
       particularWeek = !particularWeek;
+      //planChecked = !planChecked;
     });
+    print(planChecked);
     setId();
 
     //print("${"this is a plan id"}${sPlan}");
@@ -1153,180 +1163,206 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                         }),
                       ),
                     ),
-                    Program(
-                      scheduleController,
-                      scheduleController1,
-                      scheduleDescription,
-                      scheduleDescription1,
-                      Column(
-                        children: [
-                          for (int z = 0; z < pm.length; z++)
-                            CreateProgram(getProgramData, z),
-                          const SizedBox(
-                            height: 10,
+                    particularWeekDays
+                        ? Column(
+                            children: [
+                              for (int y = 0; y < onePlan.length; y++)
+                                CreatePlanOne(getProgramOneData, y),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              GestureDetector(
+                                onTap: addProgramOneData,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    const Image(
+                                        image: ExactAssetImage(
+                                            'images/add-circle.png'),
+                                        height: 20),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    MyText(
+                                      text: 'Add More Schedule',
+                                      color: bluishColor,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )
+                        : Column(
+                            children: [
+                              for (int z = 0; z < pm.length; z++)
+                                CreateProgram(getProgramData, z),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              GestureDetector(
+                                onTap: addProgramData,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    const Image(
+                                        image: ExactAssetImage(
+                                            'images/add-circle.png'),
+                                        height: 20),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    MyText(
+                                      text: 'Add More Schedule',
+                                      color: bluishColor,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      GestureDetector(
-                        onTap: addProgramData,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            const Image(
-                                image: ExactAssetImage('images/add-circle.png'),
-                                height: 20),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            MyText(
-                              text: 'Add More Schedule',
-                              color: bluishColor,
-                            ),
-                          ],
-                        ),
-                      ),
-                      // ListView.builder(
-                      //   itemCount: i,
-                      //   itemBuilder: ((context, index) {
-                      //     return particularWeekDays
-                      //         ? Column(
-                      //             children: [
-                      //               const SizedBox(height: 20),
-                      //               TFWithSize(
-                      //                   titleHeading[index],
-                      //                   titleController[index],
-                      //                   12,
-                      //                   lightGreyColor,
-                      //                   1),
-                      //               const SizedBox(
-                      //                 height: 10,
-                      //               ),
-                      //               TFWithSize(
-                      //                   descriptionHeading[index],
-                      //                   scheduleControllerList[index],
-                      //                   12,
-                      //                   lightGreyColor,
-                      //                   1),
-                      //               const SizedBox(height: 20),
-                      //               GestureDetector(
-                      //                 onTap: addFields,
-                      //                 child: Row(
-                      //                   mainAxisAlignment:
-                      //                       MainAxisAlignment.end,
-                      //                   children: [
-                      //                     const Image(
-                      //                         image: ExactAssetImage(
-                      //                             'images/add-circle.png'),
-                      //                         height: 20),
-                      //                     const SizedBox(
-                      //                       width: 5,
-                      //                     ),
-                      //                     MyText(
-                      //                       text: 'Add More Schedule',
-                      //                       color: bluishColor,
-                      //                     ),
-                      //                   ],
-                      //                 ),
-                      //               ),
-                      //             ],
-                      //           )
-                      //         : Container();
 
-                      //     // Column(
-                      //     //     children: [
-                      //     //       const SizedBox(height: 20),
-                      //     //       TFWithSize(
-                      //     //           titleHeading[index],
-                      //     //           titleController[index],
-                      //     //           12,
-                      //     //           lightGreyColor,
-                      //     //           1),
-                      //     //       const SizedBox(height: 10),
-                      //     //       // const SizedBox(height: 20),
-                      //     //       Column(
-                      //     //         children: [
-                      //     //           programDateList[index],
-                      //     //           const SizedBox(
-                      //     //             height: 10,
-                      //     //           ),
-                      //     //           // programDate(context, formattedDate),
-                      //     //           // GestureDetector(
-                      //     //           //   onTap: () =>
-                      //     //           //       _selectDate(context, formattedDate),
-                      //     //           //   child: Container(
-                      //     //           //     height: 50,
-                      //     //           //     padding: const EdgeInsets.symmetric(
-                      //     //           //         vertical: 0),
-                      //     //           //     //width: MediaQuery.of(context).size.width / 1,
-                      //     //           //     decoration: BoxDecoration(
-                      //     //           //       borderRadius:
-                      //     //           //           BorderRadius.circular(10),
-                      //     //           //       color: lightGreyColor,
-                      //     //           //       border: Border.all(
-                      //     //           //         width: 1,
-                      //     //           //         color: greyColor.withOpacity(0.2),
-                      //     //           //       ),
-                      //     //           //     ),
-                      //     //           //     child: ListTile(
-                      //     //           //       contentPadding:
-                      //     //           //           const EdgeInsets.symmetric(
-                      //     //           //               vertical: 0,
-                      //     //           //               horizontal: 10),
-                      //     //           //       leading: Text(
-                      //     //           //         formattedDate.toString(),
-                      //     //           //         style: TextStyle(
-                      //     //           //             color: blackColor
-                      //     //           //                 .withOpacity(0.6)),
-                      //     //           //       ),
-                      //     //           //       trailing: Icon(
-                      //     //           //         Icons.calendar_today,
-                      //     //           //         color:
-                      //     //           //             blackColor.withOpacity(0.6),
-                      //     //           //         size: 20,
-                      //     //           //       ),
-                      //     //           //     ),
-                      //     //           //   ),
-                      //     //           // ),
-                      //     //           //programTime(context, startTime, endTime),
-                      //     //           programTimeList[index],
-                      //     //           const SizedBox(
-                      //     //             height: 10,
-                      //     //           ),
-                      //     //         ],
-                      //     //       ),
-                      //     //       TFWithSize(
-                      //     //           descriptionHeading[index],
-                      //     //           scheduleControllerList[index],
-                      //     //           12,
-                      //     //           lightGreyColor,
-                      //     //           1),
-                      //     //       const SizedBox(height: 20),
-                      //     //       //addFieldButton(addFields),
-                      //     //       GestureDetector(
-                      //     //         onTap: addFields,
-                      //     //         child: Row(
-                      //     //           mainAxisAlignment:
-                      //     //               MainAxisAlignment.end,
-                      //     //           children: [
-                      //     //             const Image(
-                      //     //                 image: ExactAssetImage(
-                      //     //                     'images/add-circle.png'),
-                      //     //                 height: 20),
-                      //     //             const SizedBox(
-                      //     //               width: 5,
-                      //     //             ),
-                      //     //             MyText(
-                      //     //               text: 'Add More Schedule',
-                      //     //               color: bluishColor,
-                      //     //             ),
-                      //     //           ],
-                      //     //         ),
-                      //     //       ),
-                      //     //     ],
-                      //     //   );
-                      //   }),
-                      // ),
-                    ),
+                    // ListView.builder(
+                    //   itemCount: i,
+                    //   itemBuilder: ((context, index) {
+                    //     return particularWeekDays
+                    //         ? Column(
+                    //             children: [
+                    //               const SizedBox(height: 20),
+                    //               TFWithSize(
+                    //                   titleHeading[index],
+                    //                   titleController[index],
+                    //                   12,
+                    //                   lightGreyColor,
+                    //                   1),
+                    //               const SizedBox(
+                    //                 height: 10,
+                    //               ),
+                    //               TFWithSize(
+                    //                   descriptionHeading[index],
+                    //                   scheduleControllerList[index],
+                    //                   12,
+                    //                   lightGreyColor,
+                    //                   1),
+                    //               const SizedBox(height: 20),
+                    //               GestureDetector(
+                    //                 onTap: addFields,
+                    //                 child: Row(
+                    //                   mainAxisAlignment:
+                    //                       MainAxisAlignment.end,
+                    //                   children: [
+                    //                     const Image(
+                    //                         image: ExactAssetImage(
+                    //                             'images/add-circle.png'),
+                    //                         height: 20),
+                    //                     const SizedBox(
+                    //                       width: 5,
+                    //                     ),
+                    //                     MyText(
+                    //                       text: 'Add More Schedule',
+                    //                       color: bluishColor,
+                    //                     ),
+                    //                   ],
+                    //                 ),
+                    //               ),
+                    //             ],
+                    //           )
+                    //         : Container();
+
+                    //     // Column(
+                    //     //     children: [
+                    //     //       const SizedBox(height: 20),
+                    //     //       TFWithSize(
+                    //     //           titleHeading[index],
+                    //     //           titleController[index],
+                    //     //           12,
+                    //     //           lightGreyColor,
+                    //     //           1),
+                    //     //       const SizedBox(height: 10),
+                    //     //       // const SizedBox(height: 20),
+                    //     //       Column(
+                    //     //         children: [
+                    //     //           programDateList[index],
+                    //     //           const SizedBox(
+                    //     //             height: 10,
+                    //     //           ),
+                    //     //           // programDate(context, formattedDate),
+                    //     //           // GestureDetector(
+                    //     //           //   onTap: () =>
+                    //     //           //       _selectDate(context, formattedDate),
+                    //     //           //   child: Container(
+                    //     //           //     height: 50,
+                    //     //           //     padding: const EdgeInsets.symmetric(
+                    //     //           //         vertical: 0),
+                    //     //           //     //width: MediaQuery.of(context).size.width / 1,
+                    //     //           //     decoration: BoxDecoration(
+                    //     //           //       borderRadius:
+                    //     //           //           BorderRadius.circular(10),
+                    //     //           //       color: lightGreyColor,
+                    //     //           //       border: Border.all(
+                    //     //           //         width: 1,
+                    //     //           //         color: greyColor.withOpacity(0.2),
+                    //     //           //       ),
+                    //     //           //     ),
+                    //     //           //     child: ListTile(
+                    //     //           //       contentPadding:
+                    //     //           //           const EdgeInsets.symmetric(
+                    //     //           //               vertical: 0,
+                    //     //           //               horizontal: 10),
+                    //     //           //       leading: Text(
+                    //     //           //         formattedDate.toString(),
+                    //     //           //         style: TextStyle(
+                    //     //           //             color: blackColor
+                    //     //           //                 .withOpacity(0.6)),
+                    //     //           //       ),
+                    //     //           //       trailing: Icon(
+                    //     //           //         Icons.calendar_today,
+                    //     //           //         color:
+                    //     //           //             blackColor.withOpacity(0.6),
+                    //     //           //         size: 20,
+                    //     //           //       ),
+                    //     //           //     ),
+                    //     //           //   ),
+                    //     //           // ),
+                    //     //           //programTime(context, startTime, endTime),
+                    //     //           programTimeList[index],
+                    //     //           const SizedBox(
+                    //     //             height: 10,
+                    //     //           ),
+                    //     //         ],
+                    //     //       ),
+                    //     //       TFWithSize(
+                    //     //           descriptionHeading[index],
+                    //     //           scheduleControllerList[index],
+                    //     //           12,
+                    //     //           lightGreyColor,
+                    //     //           1),
+                    //     //       const SizedBox(height: 20),
+                    //     //       //addFieldButton(addFields),
+                    //     //       GestureDetector(
+                    //     //         onTap: addFields,
+                    //     //         child: Row(
+                    //     //           mainAxisAlignment:
+                    //     //               MainAxisAlignment.end,
+                    //     //           children: [
+                    //     //             const Image(
+                    //     //                 image: ExactAssetImage(
+                    //     //                     'images/add-circle.png'),
+                    //     //                 height: 20),
+                    //     //             const SizedBox(
+                    //     //               width: 5,
+                    //     //             ),
+                    //     //             MyText(
+                    //     //               text: 'Add More Schedule',
+                    //     //               color: bluishColor,
+                    //     //             ),
+                    //     //           ],
+                    //     //         ),
+                    //     //       ),
+                    //     //     ],
+                    //     //   );
+                    //   }),
+                    // ),
+
                     Cost(
                       iLiveInController,
                       specificAddressController,

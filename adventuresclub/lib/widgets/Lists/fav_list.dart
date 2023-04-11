@@ -36,7 +36,7 @@ class _FavListState extends State<FavList> {
       loading = true;
     });
     var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_favourite?user_id=27"));
+        "https://adventuresclub.net/adventureClub/api/v1/get_favourite?user_id=${Constants.userId}"));
     if (response.statusCode == 200) {
       mapFavourite = json.decode(response.body);
       List<dynamic> result = mapFavourite['data'];
@@ -76,7 +76,7 @@ class _FavListState extends State<FavList> {
       MaterialPageRoute(
         builder: (_) {
           return ShowChat(
-              "https://adventuresclub.net/adventureClub/newreceiverchat/27/${serviceId}/${providerId}");
+              "https://adventuresclub.net/adventureClub/newreceiverchat/${Constants.userId}/${serviceId}/${providerId}");
         },
       ),
     );

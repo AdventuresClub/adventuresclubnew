@@ -126,14 +126,15 @@ class _BookTicketState extends State<BookTicket> {
               "https://adventuresclub.net/adventureClub/api/v1/book_service"),
           body: {
             "service_id": widget.gm.id.toString(),
-            "user_id": "27",
+            "user_id": Constants.userId.toString(),
             "adult": "2", //_m, //"2",
             "kids": "1", //_n, //"1", //,
             "message": "HELLO WORLD", //messageController.text,
             "points": "0", //pointsController.text,
             "booking_date": "2021-07-15", //widget.gm.bookingData[0].createdAt,
             "coupon_applied": "0",
-            "provider_id": '3', //widget.gm.providerId.toString(),
+            "provider_id": widget.gm.providerId
+                .toString(), //widget.gm.providerId.toString(),
             "amount": "2000",
             "promo_code": "", //"PER2Y2Etr",
             "discount_amount": "0",
