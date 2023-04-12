@@ -1,12 +1,14 @@
 // ignore_for_file: must_be_immutable, prefer_interpolation_to_compose_strings, use_build_context_synchronously
 
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -134,6 +136,18 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
   }
 
   void selected(BuildContext context) async {
+    try {
+      String locationData = await Constants.getLocation();
+      List<String> location = locationData.split(':');
+      myLat = double.tryParse(location[0]) ?? 0;
+      myLng = double.tryParse(location[1]) ?? 0;
+      final url =
+          'https://www.google.com/maps/dir/?api=1&origin=$myLat,$myLng&destination=$lt,$ln';
+      await launchUrl(Uri.parse(url));
+    } catch (e) {
+      log(e.toString());
+    }
+/*
     String mapOptions = [
       // 'origin=$originPlaceId',
       // 'origin_place_id=$originPlaceId',
@@ -152,6 +166,7 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
     //           "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$lt$ln&radius=1500&type=restaurant&keyword=cruise&key=AIzaSyCtHdBmvvsOP97AxCzsu1fu8lNb1Dcq9M4");
     //     },
     //   ),
+    */
   }
 
   @override
