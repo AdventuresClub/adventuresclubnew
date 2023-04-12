@@ -108,7 +108,7 @@ class _ParticipantsListState extends State<ParticipantsList> {
           return Card(
             child: Padding(
               padding: const EdgeInsets.only(
-                  top: 15.0, left: 10, right: 10, bottom: 10),
+                  top: 15.0, left: 10, right: 10, bottom: 15),
               child: Column(
                 children: [
                   Row(
@@ -475,6 +475,9 @@ class _ParticipantsListState extends State<ParticipantsList> {
                         ],
                       ),
                     ],
+                  ),
+                  const SizedBox(
+                    height: 5,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

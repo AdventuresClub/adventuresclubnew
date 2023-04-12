@@ -263,13 +263,14 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
             child: TabBarView(
               children: <Widget>[
                 ServiceDescription(
-                  widget.gm,
-                  text1,
-                  text4,
-                  text5,
-                  text6,
-                  convert(widget.gm.stars),
-                ),
+                    widget.gm,
+                    text1,
+                    text4,
+                    text5,
+                    text6,
+                    convert(widget.gm.stars),
+                    widget.gm.reviewdBy.toString(),
+                    widget.gm.id.toString()),
                 // program tab
                 // 2 nd Tab /////////
                 ServicesPlans(widget.gm.sPlan, widget.gm.programmes),

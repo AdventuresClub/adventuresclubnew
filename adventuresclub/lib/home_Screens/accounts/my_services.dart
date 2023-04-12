@@ -409,6 +409,7 @@ class _MyServicesState extends State<MyServices> {
           int.tryParse(element['is_liked'].toString()) ?? 0,
           element['baseurl'].toString() ?? "",
           gAccomodationServImgModel,
+          element['rating'].toString() ?? "",
           element['reviewd_by'].toString() ?? "",
           int.tryParse(element['remaining_seats'].toString()) ?? 0,
         );

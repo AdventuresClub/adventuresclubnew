@@ -234,6 +234,7 @@ class ServicesProvider with ChangeNotifier {
               int.tryParse(services['is_liked'].toString()) ?? 0,
               services['baseurl'].toString() ?? "",
               gAccomodationServImgModel,
+              element['rating'].toString() ?? "",
               services['reviewd_by'].toString() ?? "",
               int.tryParse(services['remaining_seats'].toString()) ?? 0,
             );
@@ -395,6 +396,7 @@ class ServicesProvider with ChangeNotifier {
               int.tryParse(tServices['is_liked'].toString()) ?? 0,
               tServices['baseurl'].toString() ?? "",
               gTransportServImgModel,
+              element['rating'].toString() ?? "",
               tServices['reviewd_by'].toString() ?? "",
               int.tryParse(tServices['remaining_seats'].toString()) ?? 0,
             );
@@ -557,6 +559,7 @@ class ServicesProvider with ChangeNotifier {
               int.tryParse(skyServices['is_liked'].toString()) ?? 0,
               skyServices['baseurl'].toString() ?? "",
               gSkyServImgModel,
+              element['rating'].toString() ?? "",
               skyServices['reviewd_by'].toString() ?? "",
               int.tryParse(skyServices['remaining_seats'].toString()) ?? 0,
             );
@@ -720,6 +723,7 @@ class ServicesProvider with ChangeNotifier {
               int.tryParse(waterServices['is_liked'].toString()) ?? 0,
               waterServices['baseurl'].toString() ?? "",
               gWaterServImgModel,
+              element['rating'].toString() ?? "",
               waterServices['reviewd_by'].toString() ?? "",
               int.tryParse(waterServices['remaining_seats'].toString()) ?? 0,
             );
@@ -879,6 +883,7 @@ class ServicesProvider with ChangeNotifier {
               int.tryParse(landServices['is_liked'].toString()) ?? 0,
               landServices['baseurl'].toString() ?? "",
               gLandServImgModel,
+              element['rating'].toString() ?? "",
               landServices['reviewd_by'].toString() ?? "",
               int.tryParse(landServices['remaining_seats'].toString()) ?? 0,
             );

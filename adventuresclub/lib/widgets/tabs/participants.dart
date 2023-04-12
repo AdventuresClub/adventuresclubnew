@@ -1,7 +1,5 @@
 // ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls
 
-import 'dart:convert';
-
 import 'package:adventuresclub/models/getParticipants/get_participants_model.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
 import 'package:adventuresclub/widgets/Lists/participants_list.dart';

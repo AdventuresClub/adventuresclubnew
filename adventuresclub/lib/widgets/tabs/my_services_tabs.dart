@@ -268,6 +268,8 @@ class _MyServicesTabState extends State<MyServicesTab> {
                     text5,
                     text6,
                     convert(widget.sm.stars),
+                    widget.sm.reviewdBy.toString(),
+                    widget.sm.id.toString(),
                     show: true,
                   ),
                 ),

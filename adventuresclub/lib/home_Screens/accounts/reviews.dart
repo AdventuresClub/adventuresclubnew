@@ -29,6 +29,7 @@ class _ReviewsState extends State<Reviews> {
         title: MyText(
           text: 'Hill Climbing',
           color: bluishColor,
+          weight: FontWeight.bold,
         ),
       ),
       backgroundColor: greyProfileColor,

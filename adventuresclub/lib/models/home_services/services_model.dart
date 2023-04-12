@@ -61,6 +61,7 @@ class ServicesModel {
   int isLiked;
   String baseURL;
   List<ServiceImageModel> images;
+  String rating;
   String reviewdBy;
   int remainingSeats;
   ServicesModel(
@@ -117,6 +118,7 @@ class ServicesModel {
     this.isLiked,
     this.baseURL,
     this.images,
+    this.rating,
     this.reviewdBy,
     this.remainingSeats,
   );

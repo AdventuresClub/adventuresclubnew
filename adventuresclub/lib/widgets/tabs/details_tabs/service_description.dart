@@ -16,9 +16,11 @@ class ServiceDescription extends StatelessWidget {
   final List<dynamic> text5;
   final List<dynamic> text6;
   final double stars;
+  final String reviewedBy;
+  final String id;
   final bool? show;
-  const ServiceDescription(
-      this.gm, this.text1, this.text4, this.text5, this.text6, this.stars,
+  const ServiceDescription(this.gm, this.text1, this.text4, this.text5,
+      this.text6, this.stars, this.reviewedBy, this.id,
       {this.show = false, super.key});
 
   @override
@@ -31,7 +33,15 @@ class ServiceDescription extends StatelessWidget {
                   gm.adventureName, gm.costInc, gm.currency, gm.costExc)
               : Container(),
           // location etc
-          DescriptionDetailsWidget(text1, text4, text5, text6, stars),
+          DescriptionDetailsWidget(
+            text1,
+            text4,
+            text5,
+            text6,
+            stars,
+            reviewedBy,
+            id,
+          ),
           show! ? ServiceScheduleWidget(gm.sPlan, gm.programmes) : Container(),
           // information widget
           DescriptionInformationWidget(gm.writeInformation),

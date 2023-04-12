@@ -13,11 +13,9 @@ import 'package:adventuresclub/models/services/aimed_for_model.dart';
 import 'package:adventuresclub/models/services/availability_model.dart';
 import 'package:adventuresclub/models/services/create_services/availability_plan_model.dart';
 import 'package:adventuresclub/models/services/dependencies_model.dart';
-import 'package:adventuresclub/models/services/get_services_model.dart';
 import 'package:adventuresclub/models/services/included_activities_model.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
-import 'package:adventuresclub/widgets/buttons/square_button.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -91,6 +89,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
       0,
       "",
       images,
+      "",
       "",
       0);
   List<BecomePartner> nBp = [];
@@ -381,6 +380,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
         int.tryParse(result['is_liked'].toString()) ?? 0,
         result['baseurl'].toString() ?? "",
         gAccomodationServImgModel,
+        result['rating'].toString() ?? "",
         result['reviewd_by'].toString() ?? "",
         int.tryParse(result['remaining_seats'].toString()) ?? 0,
       );
