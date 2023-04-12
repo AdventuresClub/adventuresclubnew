@@ -27,6 +27,7 @@ class _ShowChatState extends State<ShowChat> {
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (int progress) {
+            const CircularProgressIndicator();
             // Update loading bar.
           },
           onPageStarted: (String url) {},

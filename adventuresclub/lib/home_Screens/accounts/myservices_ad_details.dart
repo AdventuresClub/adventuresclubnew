@@ -78,142 +78,140 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
           const SizedBox(width: 10)
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          color: greyShadeColor.withOpacity(0.2),
-          child: Column(
-            children: [
-              SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height / 4.8,
-                  child: MyServicesList(widget.sm)),
-              GestureDetector(
-                onTap: () => goToReviews(widget.sm.serviceId.toString()),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 4.0, vertical: 5),
-                  child: Card(
-                      child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            MyText(
-                              text: widget.sm.adventureName, //'Hill Climbing',
-                              color: greyBackgroundColor,
-                              size: 16,
-                              weight: FontWeight.w600,
-                              fontFamily: "Roboto",
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: const [
-                                Image(
-                                  image: ExactAssetImage('images/edit.png'),
-                                  height: 20,
-                                  width: 20,
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Image(
-                                  image: ExactAssetImage('images/bin.png'),
-                                  height: 20,
-                                  width: 20,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          children: [
-                            const Image(
-                              image: ExactAssetImage('images/location-on.png'),
-                              color: greyColor,
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            MyText(
-                              text: widget.sm.sAddress, //'Muscat Oman',
-                              color: greyColor,
-                              weight: FontWeight.w500,
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                MyText(
-                                  text: "${widget.sm.currency} "
-                                      "${widget.sm.costInc}", //'\$ 100.50',
-                                  color: blackColor,
-                                  weight: FontWeight.bold,
-                                  fontFamily: "Roboto",
-                                ),
-                                const SizedBox(
-                                  height: 2,
-                                ),
-                                MyText(
-                                  text:
-                                      "including grears & other taxes", //'\$ 100.50',
-                                  color: Colors.red[600],
-                                  weight: FontWeight.w600,
-                                  fontFamily: "Roboto",
-                                  size: 10,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                MyText(
-                                  text: "${widget.sm.currency} "
-                                      "${widget.sm.costExc}", //'\$ 100.50',
-                                  color: blackColor,
-                                  weight: FontWeight.bold,
-                                  fontFamily: "Roboto",
-                                ),
-                                const SizedBox(
-                                  height: 2,
-                                ),
-                                MyText(
-                                  text:
-                                      "excluding grears & other taxes", //'\$ 100.50',
-                                  color: Colors.red[600],
-                                  weight: FontWeight.w600,
-                                  fontFamily: "Roboto",
-                                  size: 10,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  )),
-                ),
+      body: Container(
+        color: greyShadeColor.withOpacity(0.2),
+        child: Column(
+          children: [
+            SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height / 5.5,
+                child: MyServicesList(widget.sm)),
+            GestureDetector(
+              onTap: () => goToReviews(widget.sm.serviceId.toString()),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 4.0, vertical: 0),
+                child: Card(
+                    child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          MyText(
+                            text: widget.sm.adventureName, //'Hill Climbing',
+                            color: greyBackgroundColor,
+                            size: 16,
+                            weight: FontWeight.w600,
+                            fontFamily: "Roboto",
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: const [
+                              Image(
+                                image: ExactAssetImage('images/edit.png'),
+                                height: 20,
+                                width: 20,
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Image(
+                                image: ExactAssetImage('images/bin.png'),
+                                height: 20,
+                                width: 20,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        children: [
+                          const Image(
+                            image: ExactAssetImage('images/location-on.png'),
+                            color: greyColor,
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          MyText(
+                            text: widget.sm.sAddress, //'Muscat Oman',
+                            color: greyColor,
+                            weight: FontWeight.w500,
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              MyText(
+                                text: "${widget.sm.currency} "
+                                    "${widget.sm.costInc}", //'\$ 100.50',
+                                color: blackColor,
+                                weight: FontWeight.bold,
+                                fontFamily: "Roboto",
+                              ),
+                              const SizedBox(
+                                height: 2,
+                              ),
+                              MyText(
+                                text:
+                                    "including grears & other taxes", //'\$ 100.50',
+                                color: Colors.red[600],
+                                weight: FontWeight.w600,
+                                fontFamily: "Roboto",
+                                size: 10,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              MyText(
+                                text: "${widget.sm.currency} "
+                                    "${widget.sm.costExc}", //'\$ 100.50',
+                                color: blackColor,
+                                weight: FontWeight.bold,
+                                fontFamily: "Roboto",
+                              ),
+                              const SizedBox(
+                                height: 2,
+                              ),
+                              MyText(
+                                text:
+                                    "excluding grears & other taxes", //'\$ 100.50',
+                                color: Colors.red[600],
+                                weight: FontWeight.w600,
+                                fontFamily: "Roboto",
+                                size: 10,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                )),
               ),
-              MyServicesTab(widget.sm)
-            ],
-          ),
+            ),
+            Expanded(child: MyServicesTab(widget.sm))
+          ],
         ),
       ),
     );

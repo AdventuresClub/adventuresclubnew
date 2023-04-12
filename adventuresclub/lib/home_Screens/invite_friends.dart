@@ -1,17 +1,10 @@
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 
-class MyPoints extends StatefulWidget {
-  const MyPoints({super.key});
+class InviteFriends extends StatelessWidget {
+  const InviteFriends({super.key});
 
-  @override
-  State<MyPoints> createState() => _MyPointsState();
-}
-
-class _MyPointsState extends State<MyPoints> {
-  abc() {}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +20,7 @@ class _MyPointsState extends State<MyPoints> {
             ),
           ),
           title: MyText(
-            text: 'My Points',
+            text: 'Invite Friends',
             color: bluishColor,
             weight: FontWeight.bold,
           ),
@@ -42,12 +35,12 @@ class _MyPointsState extends State<MyPoints> {
               Container(
                 height: 150,
                 width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  image: const DecorationImage(
-                      image: ExactAssetImage('images/my_points.png'),
-                      fit: BoxFit.cover),
-                ),
+                // decoration: BoxDecoration(
+                //   borderRadius: BorderRadius.circular(20),
+                //   image: const DecorationImage(
+                //       image: ExactAssetImage('images/my_points.png'),
+                //       fit: BoxFit.cover),
+                // ),
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Column(
@@ -70,10 +63,11 @@ class _MyPointsState extends State<MyPoints> {
               const SizedBox(
                 height: 50,
               ),
-              ButtonIconLess(
-                  'Earn More', bluishColor, whiteColor, 1.8, 16, 16, abc),
+              // ButtonIconLess(
+              //     'Earn More', bluishColor, whiteColor, 1.8, 16, 16, abc),
             ],
           ),
         ));
+    ;
   }
 }

@@ -5,7 +5,6 @@ import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/tabs/details_tabs/service_description.dart';
-import 'package:adventuresclub/widgets/tabs/details_tabs/service_gathering_location.dart';
 import 'package:adventuresclub/widgets/tabs/details_tabs/service_program/service_plans.dart';
 import 'package:another_stepper/another_stepper.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +66,13 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
       });
     }
   }
+
+  static const List<Tab> myTabs = <Tab>[
+    Tab(text: 'Description'),
+    Tab(text: 'Program'),
+    Tab(text: 'Gathering Location'),
+    Tab(text: 'Chat'),
+  ];
 
   void _handleTabSelection() {
     setState(() {});
@@ -198,7 +204,6 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
   ];
   List text6 = [];
   List aimedFor = ['Ladies,', 'Gents'];
-
   List dependencyList = ['Health Conditions', 'License '];
   List activitesInclude = [
     'Transportation from gathering area',
@@ -214,14 +219,11 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4, // length of tabs
+      length: myTabs.length, // length of tabs
       initialIndex: 0,
-      child: Column(
-        children: <Widget>[
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            //color: greyTextColor,
-            child: const TabBar(
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: const TabBar(
               padding: EdgeInsets.all(0),
               labelPadding: EdgeInsets.symmetric(horizontal: 4),
               labelColor: blackColor,
@@ -237,55 +239,169 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                   fontFamily: "Roboto"),
               indicatorSize: TabBarIndicatorSize.label,
               unselectedLabelColor: greyColor,
-              tabs: [
-                SizedBox(
-                  width: 90.0,
-                  child: Tab(
-                    text: 'Description',
+              tabs: myTabs),
+        ),
+        body: TabBarView(
+          children: <Widget>[
+            ServiceDescription(
+              widget.gm,
+              text1,
+              text4,
+              text5,
+              text6,
+              convert(widget.gm.stars),
+            ),
+            // program tab
+            // 2 nd Tab /////////
+            ServicesPlans(widget.gm.sPlan, widget.gm.programmes),
+            // 3 rd Tab /////////
+            // gathering location
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: MyText(
+                        text: 'Description',
+                        color: blackColor,
+                        weight: FontWeight.w500,
+                        size: 17,
+                      )),
+                  const SizedBox(
+                    height: 10,
                   ),
-                ),
-                SizedBox(
-                  width: 70.0,
-                  child: Tab(text: 'Program'),
-                ),
-                SizedBox(
-                  width: 150.0,
-                  child: Tab(text: 'Gathering Location'),
-                ),
-                SizedBox(
-                  width: 60.0,
-                  child: Tab(text: 'Chat'),
-                ),
-              ],
+                  MyText(
+                    text: widget.gm.writeInformation,
+                    // text:
+                    //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+                    color: blackColor,
+                    weight: FontWeight.w400,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: MyText(
+                            text: 'Full Address',
+                            color: blackColor,
+                            weight: FontWeight.w500,
+                            size: 17,
+                          )),
+                      Row(
+                        children: [
+                          MyText(
+                            text: 'Get Direction',
+                            color: greyColor,
+                          ),
+                          Card(
+                            elevation: 1,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(64)),
+                            child: const CircleAvatar(
+                              radius: 14,
+                              backgroundColor: whiteColor,
+                              child: Image(
+                                image: ExactAssetImage(
+                                    'images/location-arrow.png'),
+                                height: 15,
+                              ),
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Address:',
+                      style: TextStyle(
+                          color: greyishColor.withOpacity(0.5), fontSize: 14),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: widget.gm.sAddress,
+                            // text:
+                            //     ' Al Ghubra Street , PC 133 , Muscat 1101',
+                            style: const TextStyle(
+                                fontSize: 14, color: blackColor)),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Region :',
+                      style: TextStyle(
+                          color: greyishColor.withOpacity(0.5), fontSize: 14),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: widget.gm.region,
+                            //text: ' Omani',
+                            style: const TextStyle(
+                                fontSize: 14, color: blackColor)),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Country :',
+                      style: TextStyle(
+                          color: greyishColor.withOpacity(0.5), fontSize: 14),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: widget.gm.country,
+                            //text: ' Oman',
+                            style: const TextStyle(
+                                fontSize: 14, color: blackColor)),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Geo Location :',
+                      style: TextStyle(
+                          color: greyishColor.withOpacity(0.5), fontSize: 14),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: "${widget.gm.lat}${" ,"} ${widget.gm.lng}",
+                            //text: ' 60.25455415, 54.2555125',
+                            style: const TextStyle(
+                                fontSize: 14, color: blackColor)),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 200,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: ExactAssetImage('images/map.png'))),
+                  )
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: TabBarView(
-              children: <Widget>[
-                ServiceDescription(widget.gm, text1, text4, text5, text6,
-                    convert(widget.gm.stars)),
-                // program tab
-                // 2 nd Tab /////////
-                ServicesPlans(widget.gm.sPlan, widget.gm.programmes),
-                // 3 rd Tab /////////
-                // gathering location
-                ServiceGatheringLocation(
-                    widget.gm.writeInformation,
-                    widget.gm.sAddress,
-                    widget.gm.region,
-                    widget.gm.country,
-                    widget.gm.geoLocation,
-                    widget.gm.lat,
-                    widget.gm.lng),
-                // 4th Tab /////////
-                ShowChat(
-                    "https://adventuresclub.net/adventureClub/receiverlist/${widget.gm.providerId}${widget.gm.id}"),
-                //AdventureChatDetails(widget.gm.serviceId.toString())
-                // "https://adventuresclub.net/adventureClub/receiverlist/27/'${widget.serviceId}'"
-              ],
-            ),
-          ),
-        ],
+            // 4th Tab /////////
+            ShowChat(
+                "https://adventuresclub.net/adventureClub/receiverlist/${widget.gm.providerId}${widget.gm.id}"),
+            //AdventureChatDetails(widget.gm.serviceId.toString())
+            // "https://adventuresclub.net/adventureClub/receiverlist/27/'${widget.serviceId}'"
+          ],
+        ),
       ),
     );
   }

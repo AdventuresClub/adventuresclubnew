@@ -8,6 +8,7 @@ import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
 import 'package:adventuresclub/widgets/text_fields/multiline_field.dart';
+import 'package:adventuresclub/widgets/text_fields/tf_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -136,140 +137,151 @@ class _ContactUsState extends State<ContactUs> {
   abc() {}
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: whiteColor,
-          elevation: 1,
-          leading: IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: Image.asset(
-              'images/backArrow.png',
-              height: 20,
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: whiteColor,
+            elevation: 1,
+            leading: IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: Image.asset(
+                'images/backArrow.png',
+                height: 20,
+              ),
             ),
-          ),
-          title: MyText(
-            text: 'Contact Us',
-            color: bluishColor,
-            weight: FontWeight.bold,
-          ),
-          centerTitle: true,
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                TFWithSize(
-                    'AdventuresClub', nameController, 16, lightGreyColor, 1),
-                const SizedBox(
-                  height: 15,
-                ),
-                TFWithSize('96123588', numController, 16, lightGreyColor, 1),
-                const SizedBox(
-                  height: 15,
-                ),
-                TFWithSize('info@adventureclub.net', emailController, 16,
-                    lightGreyColor, 1),
-                const SizedBox(
-                  height: 15,
-                ),
-                purposeListWidget(context, "Select Purpose"),
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                //   child: Container(
-                //     padding:
-                //         const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                //     decoration: BoxDecoration(
-                //         color: lightGreyColor,
-                //         borderRadius: BorderRadius.circular(12),
-                //         border: Border.all(
-                //           color: greyColor.withOpacity(0.2),
-                //         )),
-                //     child: DropdownButtonHideUnderline(
-                //       child: DropdownButton<String>(
-                //         isExpanded: true,
-                //         value: dropdownValue,
-                //         icon: const Icon(Icons.arrow_drop_down),
-                //         elevation: 16,
-                //         style: const TextStyle(color: blackTypeColor),
-                //         onChanged: (String? value) {
-                //           // This is called when the user selects an item.
-                //           setState(() {
-                //             value = value!;
-                //           });
-                //         },
-                //         items:
-                //             list.map<DropdownMenuItem<String>>((String value) {
-                //           return DropdownMenuItem<String>(
-                //             value: value,
-                //             child: Text(value),
-                //           );
-                //         }).toList(),
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                const SizedBox(
-                  height: 15,
-                ),
-                TFWithSize('Subject', subjectController, 16, lightGreyColor, 1),
-                const SizedBox(
-                  height: 15,
-                ),
-                MultiLineField(
-                    'Start writing here', 5, lightGreyColor, messageController),
-                const SizedBox(
-                  height: 20,
-                ),
-                ButtonIconLess(
-                    'Send', bluishColor, whiteColor, 1.3, 17, 16, contactUs),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: const [
-                    CircleAvatar(
-                      backgroundColor: bluishColor,
-                      child:
-                          Image(image: ExactAssetImage('images/phonepic.png')),
-                    ),
-                    CircleAvatar(
-                      backgroundColor: bluishColor,
-                      child: Image(image: ExactAssetImage('images/mail.png')),
-                    ),
-                    CircleAvatar(
-                      backgroundColor: bluishColor,
-                      child: Image(
-                          image: ExactAssetImage('images/feather-mail.png')),
-                    ),
-                    CircleAvatar(
-                      backgroundColor: bluishColor,
-                      child: Image(image: ExactAssetImage('images/skype.png')),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const Image(
-                      image: ExactAssetImage('images/icon-location-on.png'),
-                      height: 25,
-                    ),
-                    MyText(
-                      text: 'Alkudh 6th, Muscat, Oman',
-                      color: greyColor,
-                    ),
-                  ],
-                ),
-              ],
+            title: MyText(
+              text: 'Contact Us',
+              color: bluishColor,
+              weight: FontWeight.bold,
             ),
+            centerTitle: true,
           ),
-        ));
+          body: SingleChildScrollView(
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 14.0, vertical: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TFContainer(
+                      'AdventuresClub', nameController, 16, lightGreyColor, 1),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TFContainer('96123588', numController, 16, lightGreyColor, 1),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TFContainer('info@adventureclub.net', emailController, 16,
+                      lightGreyColor, 1),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  purposeListWidget(context, "Select Purpose"),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  //   child: Container(
+                  //     padding:
+                  //         const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                  //     decoration: BoxDecoration(
+                  //         color: lightGreyColor,
+                  //         borderRadius: BorderRadius.circular(12),
+                  //         border: Border.all(
+                  //           color: greyColor.withOpacity(0.2),
+                  //         )),
+                  //     child: DropdownButtonHideUnderline(
+                  //       child: DropdownButton<String>(
+                  //         isExpanded: true,
+                  //         value: dropdownValue,
+                  //         icon: const Icon(Icons.arrow_drop_down),
+                  //         elevation: 16,
+                  //         style: const TextStyle(color: blackTypeColor),
+                  //         onChanged: (String? value) {
+                  //           // This is called when the user selects an item.
+                  //           setState(() {
+                  //             value = value!;
+                  //           });
+                  //         },
+                  //         items:
+                  //             list.map<DropdownMenuItem<String>>((String value) {
+                  //           return DropdownMenuItem<String>(
+                  //             value: value,
+                  //             child: Text(value),
+                  //           );
+                  //         }).toList(),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TFWithSize(
+                      'Subject', subjectController, 16, lightGreyColor, 1),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  MultiLineField('Start writing here', 5, lightGreyColor,
+                      messageController),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ButtonIconLess(
+                      'Send', bluishColor, whiteColor, 1.3, 17, 16, contactUs),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: const [
+                      CircleAvatar(
+                        backgroundColor: bluishColor,
+                        child: Image(
+                            image: ExactAssetImage('images/phonepic.png')),
+                      ),
+                      CircleAvatar(
+                        backgroundColor: bluishColor,
+                        child: Image(image: ExactAssetImage('images/mail.png')),
+                      ),
+                      CircleAvatar(
+                        backgroundColor: bluishColor,
+                        child: Image(
+                            image: ExactAssetImage('images/feather-mail.png')),
+                      ),
+                      CircleAvatar(
+                        backgroundColor: bluishColor,
+                        child:
+                            Image(image: ExactAssetImage('images/skype.png')),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const Image(
+                        image: ExactAssetImage('images/icon-location-on.png'),
+                        height: 25,
+                      ),
+                      MyText(
+                        text: 'Alkudh 6th, Muscat, Oman',
+                        color: greyColor,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          )),
+    );
   }
 
   Widget purposeListWidget(context, String selected) {

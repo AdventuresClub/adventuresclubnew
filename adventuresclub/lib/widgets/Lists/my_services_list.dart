@@ -26,7 +26,7 @@ class _MyServicesListState extends State<MyServicesList> {
               padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0),
               child: Card(
                 child: Container(
-                  width: MediaQuery.of(context).size.width / 1.4,
+                  width: MediaQuery.of(context).size.width / 1.6,
                   height: 120,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),

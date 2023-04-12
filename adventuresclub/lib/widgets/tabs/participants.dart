@@ -9,8 +9,8 @@ import 'package:adventuresclub/widgets/search_container.dart';
 import 'package:flutter/material.dart';
 
 class Participants extends StatefulWidget {
-  List<GetParticipantsModel> pList;
-  Participants(this.pList, {super.key});
+  final List<GetParticipantsModel> pList;
+  const Participants(this.pList, {super.key});
 
   @override
   State<Participants> createState() => _ParticipantsState();
@@ -25,7 +25,6 @@ class _ParticipantsState extends State<Participants> {
 
   // @override
   // void initState() {
-  //   // TODO: implement initState
   //   // setState(() {
   //   //   widget.pList == gGM;
   //   // });
@@ -37,7 +36,7 @@ class _ParticipantsState extends State<Participants> {
       child: Column(
         children: [
           const SizedBox(
-            height: 15,
+            height: 10,
           ),
           const SearchContainer('Search client by name or order id', 1.1, 8,
               'images/pin.png', false, false, 'oman', 14),

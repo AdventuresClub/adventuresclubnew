@@ -14,6 +14,7 @@ import 'package:adventuresclub/home_Screens/accounts/notifications.dart';
 import 'package:adventuresclub/home_Screens/accounts/profile/profile.dart';
 import 'package:adventuresclub/home_Screens/accounts/health_condition.dart';
 import 'package:adventuresclub/home_Screens/accounts/settings/settings.dart';
+import 'package:adventuresclub/home_Screens/invite_friends.dart';
 import 'package:adventuresclub/models/profile_models/profile_become_partner.dart';
 import 'package:adventuresclub/models/user_profile_model.dart';
 import 'package:adventuresclub/sign_up/sign_in.dart';
@@ -1167,7 +1168,7 @@ class _AccountState extends State<Account> {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (_) {
-                                    return const CompleteProfile();
+                                    return const InviteFriends();
                                   },
                                 ),
                               );
