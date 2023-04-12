@@ -38,6 +38,7 @@ class _ParticipantsListState extends State<ParticipantsList> {
   void initState() {
     super.initState();
     List<GetParticipantsModel> l = widget.gm;
+    titleValue.insert(0, widget.gm[0].bookingId.toString());
   }
 
   List text = [
@@ -76,6 +77,22 @@ class _ParticipantsListState extends State<ParticipantsList> {
       ),
     );
   }
+
+  List<String> title = [
+    "Booking Id : ",
+    "How Old : ",
+    "Nationality : ",
+    "Booked On : ",
+    "Service Date : ",
+    "Registration : ",
+    "Unit Cost : ",
+    "Total Cost : ",
+    "Payable Cost : ",
+    "Weight : ",
+    "Height : ",
+  ];
+
+  List<String> titleValue = [];
 
   //// https://adventuresclub.net/adventureClub/newchat/3/2/6 //provider = 3 , service = 2 , member/userId = 6
 
@@ -121,228 +138,342 @@ class _ParticipantsListState extends State<ParticipantsList> {
                         radius: 28,
                         backgroundImage: ExactAssetImage('images/airrides.png'),
                       ),
-                      Row(
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      // Wrap(
+                      //   direction: Axis.vertical,
+                      //   children: List.generate(title.length, (index) {
+                      //     return Row(
+                      //       mainAxisAlignment: MainAxisAlignment.start,
+                      //       children: [
+                      //         MyText(
+                      //           text: title[index],
+                      //           color: blackColor,
+                      //           weight: FontWeight.w700,
+                      //           size: 14,
+                      //           height: 1.8,
+                      //         ),
+                      //         if (title[index] == "Booking id")
+                      //           MyText(
+                      //             text: widget.gm[index].bookingId,
+                      //             color: greyTextColor,
+                      //             weight: FontWeight.w400,
+                      //             size: 12,
+                      //             height: 1.8,
+                      //           ),
+                      //         if (title[index] == "How Old : ")
+                      //           MyText(
+                      //             text: widget.gm[index].dob,
+                      //             color: greyTextColor,
+                      //             weight: FontWeight.w400,
+                      //             size: 12,
+                      //             height: 1.8,
+                      //           ),
+                      //         if (title[index] == 'Nationality : ')
+                      //           MyText(
+                      //             text: widget.gm[index].nationality,
+                      //             color: greyTextColor,
+                      //             weight: FontWeight.w400,
+                      //             size: 12,
+                      //             height: 1.8,
+                      //           ),
+                      //         if (title[index] == 'Booked On : ')
+                      //           MyText(
+                      //             text: widget.gm[index].bookedOn,
+                      //             color: greyTextColor,
+                      //             weight: FontWeight.w400,
+                      //             size: 12,
+                      //             height: 1.8,
+                      //           ),
+                      //         if (title[index] == 'Service Date : ')
+                      //           MyText(
+                      //             text: widget.gm[index].serviceDate,
+                      //             color: greyTextColor,
+                      //             weight: FontWeight.w400,
+                      //             size: 12,
+                      //             height: 1.8,
+                      //           ),
+                      //         if (title[index] == 'Registrations : ')
+                      //           MyText(
+                      //             text: widget.gm[index].adult,
+                      //             color: greyTextColor,
+                      //             weight: FontWeight.w400,
+                      //             size: 12,
+                      //             height: 1.8,
+                      //           ),
+                      //         if (title[index] == 'Unit Cost : ')
+                      //           MyText(
+                      //             text: widget.gm[index].unitCost,
+                      //             color: greyTextColor,
+                      //             weight: FontWeight.w400,
+                      //             size: 12,
+                      //             height: 1.8,
+                      //           ),
+                      //         if (title[index] == 'Total Cost : ')
+                      //           MyText(
+                      //             text: widget.gm[index].totalCost,
+                      //             color: greyTextColor,
+                      //             weight: FontWeight.w400,
+                      //             size: 12,
+                      //             height: 1.8,
+                      //           ),
+                      //         if (title[index] == 'Payable Cost : ')
+                      //           MyText(
+                      //             text: widget.gm[index].totalCost,
+                      //             color: greyTextColor,
+                      //             weight: FontWeight.w400,
+                      //             size: 12,
+                      //             height: 1.8,
+                      //           ),
+                      //         if (title[index] == 'Weight : ')
+                      //           MyText(
+                      //             text: widget.gm[index].weight,
+                      //             color: greyTextColor,
+                      //             weight: FontWeight.w400,
+                      //             size: 12,
+                      //             height: 1.8,
+                      //           ),
+                      //         if (title[index] == 'Health : ')
+                      //           MyText(
+                      //             text: widget.gm[index].healthConditions,
+                      //             color: greyTextColor,
+                      //             weight: FontWeight.w400,
+                      //             size: 12,
+                      //             height: 1.8,
+                      //           ),
+                      //       ],
+                      //     );
+                      //   }),
+                      // ),
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          MyText(
-                            text: widget.gm[index].adventureName,
-                            color: blackColor,
-                            weight: FontWeight.w700,
-                            size: 14,
-                            height: 1.8,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              MyText(
+                                text: widget.gm[index].adventureName,
+                                color: blackColor,
+                                weight: FontWeight.w700,
+                                size: 14,
+                                height: 1.8,
+                              ),
+                            ],
                           ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              MyText(
+                                text: 'Booking Id : ',
+                                color: blackColor,
+                                weight: FontWeight.w700,
+                                size: 14,
+                                height: 1.8,
+                              ),
+                              MyText(
+                                text: widget.gm[index].bookingId,
+                                color: greyTextColor,
+                                weight: FontWeight.w400,
+                                size: 12,
+                                height: 1.8,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              MyText(
+                                text: 'How Old : ',
+                                color: blackColor,
+                                weight: FontWeight.w700,
+                                size: 14,
+                                height: 1.8,
+                              ),
+                              MyText(
+                                text: widget.gm[index].dob,
+                                color: greyTextColor,
+                                weight: FontWeight.w400,
+                                size: 12,
+                                height: 1.8,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              MyText(
+                                text: 'Nationality : ',
+                                color: blackColor,
+                                weight: FontWeight.w700,
+                                size: 14,
+                                height: 1.8,
+                              ),
+                              MyText(
+                                text: widget.gm[index].nationality,
+                                color: greyTextColor,
+                                weight: FontWeight.w400,
+                                size: 12,
+                                height: 1.8,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              MyText(
+                                text: 'Booked On : ',
+                                color: blackColor,
+                                weight: FontWeight.w700,
+                                size: 14,
+                                height: 1.8,
+                              ),
+                              MyText(
+                                text: widget.gm[index].bookedOn,
+                                color: greyTextColor,
+                                weight: FontWeight.w400,
+                                size: 12,
+                                height: 1.8,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              MyText(
+                                text: 'Service Date : ',
+                                color: blackColor,
+                                weight: FontWeight.w700,
+                                size: 14,
+                                height: 1.8,
+                              ),
+                              MyText(
+                                text: widget.gm[index].serviceDate,
+                                color: greyTextColor,
+                                weight: FontWeight.w400,
+                                size: 12,
+                                height: 1.8,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              MyText(
+                                text: 'Registrations : ',
+                                color: blackColor,
+                                weight: FontWeight.w700,
+                                size: 14,
+                                height: 1.8,
+                              ),
+                              MyText(
+                                text: widget.gm[index].adult,
+                                color: greyTextColor,
+                                weight: FontWeight.w400,
+                                size: 12,
+                                height: 1.8,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              MyText(
+                                text: 'Unit Cost : ',
+                                color: blackColor,
+                                weight: FontWeight.w700,
+                                size: 14,
+                                height: 1.8,
+                              ),
+                              MyText(
+                                overFlow: TextOverflow.ellipsis,
+                                text: widget.gm[index].unitCost,
+                                color: greyTextColor,
+                                weight: FontWeight.w400,
+                                size: 12,
+                                height: 1.8,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              MyText(
+                                text: 'Total Cost : ',
+                                color: blackColor,
+                                weight: FontWeight.w700,
+                                size: 14,
+                                height: 1.8,
+                              ),
+                              MyText(
+                                text: widget.gm[index].totalCost,
+                                color: greyTextColor,
+                                weight: FontWeight.w700,
+                                size: 12,
+                                height: 1.8,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              MyText(
+                                text: 'Payable Cost : ',
+                                color: blackColor,
+                                weight: FontWeight.w700,
+                                size: 14,
+                                height: 1.8,
+                              ),
+                              MyText(
+                                text: "${widget.gm[index].totalCost} ",
+                                color: greyTextColor,
+                                weight: FontWeight.w400,
+                                size: 12,
+                                height: 1.8,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              MyText(
+                                text: 'Weight : ',
+                                color: blackColor,
+                                weight: FontWeight.w700,
+                                size: 14,
+                                height: 1.8,
+                              ),
+                              MyText(
+                                text: "${widget.gm[index].weight} ",
+                                color: greyTextColor,
+                                weight: FontWeight.w400,
+                                size: 12,
+                                height: 1.8,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              MyText(
+                                text: 'Health : ',
+                                color: blackColor,
+                                weight: FontWeight.w700,
+                                size: 14,
+                                height: 1.8,
+                              ),
+                              MyText(
+                                text: "${widget.gm[index].healthConditions} ",
+                                color: greyTextColor,
+                                weight: FontWeight.w400,
+                                size: 12,
+                                height: 1.8,
+                              ),
+                            ],
+                          )
                         ],
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          MyText(
-                            text: 'Booking Id : ',
-                            color: blackColor,
-                            weight: FontWeight.w700,
-                            size: 14,
-                            height: 1.8,
-                          ),
-                          MyText(
-                            text: widget.gm[index].bookingId,
-                            color: greyTextColor,
-                            weight: FontWeight.w400,
-                            size: 12,
-                            height: 1.8,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          MyText(
-                            text: 'How Old : ',
-                            color: blackColor,
-                            weight: FontWeight.w700,
-                            size: 14,
-                            height: 1.8,
-                          ),
-                          MyText(
-                            text: widget.gm[index].dob,
-                            color: greyTextColor,
-                            weight: FontWeight.w400,
-                            size: 12,
-                            height: 1.8,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          MyText(
-                            text: 'Nationality : ',
-                            color: blackColor,
-                            weight: FontWeight.w700,
-                            size: 14,
-                            height: 1.8,
-                          ),
-                          MyText(
-                            text: widget.gm[index].nationality,
-                            color: greyTextColor,
-                            weight: FontWeight.w400,
-                            size: 12,
-                            height: 1.8,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          MyText(
-                            text: 'Booked On : ',
-                            color: blackColor,
-                            weight: FontWeight.w700,
-                            size: 14,
-                            height: 1.8,
-                          ),
-                          MyText(
-                            text: widget.gm[index].bookedOn,
-                            color: greyTextColor,
-                            weight: FontWeight.w400,
-                            size: 12,
-                            height: 1.8,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          MyText(
-                            text: 'Service Date : ',
-                            color: blackColor,
-                            weight: FontWeight.w700,
-                            size: 14,
-                            height: 1.8,
-                          ),
-                          MyText(
-                            text: widget.gm[index].serviceDate,
-                            color: greyTextColor,
-                            weight: FontWeight.w400,
-                            size: 12,
-                            height: 1.8,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          MyText(
-                            text: 'Registrations : ',
-                            color: blackColor,
-                            weight: FontWeight.w700,
-                            size: 14,
-                            height: 1.8,
-                          ),
-                          MyText(
-                            text: widget.gm[index].adult,
-                            color: greyTextColor,
-                            weight: FontWeight.w400,
-                            size: 12,
-                            height: 1.8,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          MyText(
-                            text: 'Unit Cost : ',
-                            color: blackColor,
-                            weight: FontWeight.w700,
-                            size: 14,
-                            height: 1.8,
-                          ),
-                          MyText(
-                            overFlow: TextOverflow.ellipsis,
-                            text: widget.gm[index].unitCost,
-                            color: greyTextColor,
-                            weight: FontWeight.w400,
-                            size: 12,
-                            height: 1.8,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        // mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          MyText(
-                            text: 'Total Cost : ',
-                            color: blackColor,
-                            weight: FontWeight.w700,
-                            size: 14,
-                            height: 1.8,
-                          ),
-                          MyText(
-                            text: widget.gm[index].totalCost,
-                            color: greyTextColor,
-                            weight: FontWeight.w700,
-                            size: 12,
-                            height: 1.8,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          MyText(
-                            text: 'Payable Cost : ',
-                            color: blackColor,
-                            weight: FontWeight.w700,
-                            size: 14,
-                            height: 1.8,
-                          ),
-                          MyText(
-                            text: "${widget.gm[index].totalCost} ",
-                            color: greyTextColor,
-                            weight: FontWeight.w400,
-                            size: 12,
-                            height: 1.8,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          MyText(
-                            text: 'Weight : ',
-                            color: blackColor,
-                            weight: FontWeight.w700,
-                            size: 14,
-                            height: 1.8,
-                          ),
-                          MyText(
-                            text: "${widget.gm[index].weight} ",
-                            color: greyTextColor,
-                            weight: FontWeight.w400,
-                            size: 12,
-                            height: 1.8,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          MyText(
-                            text: 'Health : ',
-                            color: blackColor,
-                            weight: FontWeight.w700,
-                            size: 14,
-                            height: 1.8,
-                          ),
-                          MyText(
-                            text: "${widget.gm[index].healthConditions} ",
-                            color: greyTextColor,
-                            weight: FontWeight.w400,
-                            size: 12,
-                            height: 1.8,
-                          ),
-                        ],
-                      )
                     ],
                   ),
                   Row(
