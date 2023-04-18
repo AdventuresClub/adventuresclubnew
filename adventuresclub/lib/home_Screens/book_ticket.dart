@@ -22,6 +22,10 @@ class _BookTicketState extends State<BookTicket> {
   TextEditingController pointsController = TextEditingController();
   int _n = 0;
   int _m = 0;
+  int totalPerson = 0;
+  double totalCost = 0;
+  String costInc = "";
+  double costIncNum = 0;
   bool value = false;
   var cont = false;
   var formattedDate;
@@ -51,10 +55,12 @@ class _BookTicketState extends State<BookTicket> {
     formattedDate = 'Birthday';
     setState(() {
       text2.insert(0, widget.gm.costInc);
+
       //text2.insert(0, tPerson());
 
       //  userId = Constants.userID;
     });
+    //costIncNum = int.tryParse(costInc)!;
   }
 
   // int tPerson() {
@@ -81,24 +87,22 @@ class _BookTicketState extends State<BookTicket> {
     }
   }
 
-  void add() {
+  void totalValue() {
+    costInc = widget.gm.costInc;
+    costIncNum = double.tryParse(costInc) ?? -1;
     setState(() {
-      _n++;
+      totalCost = totalPerson * costIncNum;
     });
-    // tPerson();
-  }
-
-  void minus() {
-    setState(() {
-      if (_n != 0) _n--;
-    });
-//tPerson();
+    print(totalCost);
   }
 
   void addAdult() {
+    //String costInc = widget.gm.costInc;
+    // int? cost = int.tryParse(costInc);
     setState(() {
       _m++;
     });
+    addPerson();
     //  tPerson();
   }
 
@@ -106,7 +110,29 @@ class _BookTicketState extends State<BookTicket> {
     setState(() {
       if (_m != 0) _m--;
     });
+    addPerson();
     // tPerson();
+  }
+
+  void addPerson() {
+    setState(() {
+      totalPerson = _n + _m;
+    });
+    totalValue();
+  }
+
+  void add() {
+    setState(() {
+      _n++;
+    });
+    addPerson();
+  }
+
+  void minus() {
+    setState(() {
+      if (_n != 0) _n--;
+    });
+    addPerson();
   }
 
   void goToRequests() {
@@ -127,20 +153,21 @@ class _BookTicketState extends State<BookTicket> {
           body: {
             "service_id": widget.gm.id.toString(),
             "user_id": Constants.userId.toString(),
-            "adult": "2", //_m, //"2",
-            "kids": "1", //_n, //"1", //,
-            "message": "HELLO WORLD", //messageController.text,
+            "adult": _m.toString(), //"2",
+            "kids": _n.toString(), //"1", //,
+            "message": messageController.text,
             "points": "0", //pointsController.text,
-            "booking_date": "2021-07-15", //widget.gm.bookingData[0].createdAt,
+            "booking_date": widget.gm.startDate
+                .toString(), //"2021-07-15", //widget.gm.bookingData[0].createdAt,
             "coupon_applied": "0",
             "provider_id": widget.gm.providerId
                 .toString(), //widget.gm.providerId.toString(),
-            "amount": "2000",
+            "amount": totalCost.toString(),
             "promo_code": "", //"PER2Y2Etr",
             "discount_amount": "0",
-            "final_amount": "6000",
+            "final_amount": totalCost.toString(),
           });
-      //goToHome();
+      goToHome();
       print(response.statusCode);
       print(response.body);
     } catch (e) {
@@ -165,6 +192,7 @@ class _BookTicketState extends State<BookTicket> {
         title: MyText(
           text: 'Book Ticket',
           color: greenishColor,
+          weight: FontWeight.bold,
         ),
         centerTitle: true,
         iconTheme: const IconThemeData(color: greenishColor),
@@ -478,25 +506,88 @@ class _BookTicketState extends State<BookTicket> {
                       horizontal: 15.0, vertical: 15),
                   child: Column(
                     children: [
-                      Wrap(
-                          children: List.generate(text.length, (index) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            MyText(
-                                text: text[index],
-                                color: blackTypeColor3,
-                                weight: FontWeight.w500,
-                                fontFamily: 'Roboto'),
-                            MyText(
-                                // text: widget.gm.costInc,
-                                text: text2[index],
-                                color: greyColor,
-                                weight: FontWeight.bold,
-                                fontFamily: 'Roboto'),
-                          ],
-                        );
-                      })),
+                      // Wrap(
+                      //   children: List.generate(
+                      //     text.length,
+                      //     (index) {
+                      //       return
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          MyText(
+                              text: "Per Person",
+                              color: blackTypeColor3,
+                              weight: FontWeight.w500,
+                              fontFamily: 'Roboto'),
+                          MyText(
+                              // text: widget.gm.costInc,
+                              text: widget.gm.costInc,
+                              color: greyColor,
+                              weight: FontWeight.bold,
+                              fontFamily: 'Roboto'),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 2,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          MyText(
+                              text:
+                                  "${'Total Person'} ${"  "} ${"x"} $totalPerson",
+                              color: blackTypeColor3,
+                              weight: FontWeight.w500,
+                              fontFamily: 'Roboto'),
+                          MyText(
+                              // text: widget.gm.costInc,
+                              text: totalCost.toStringAsFixed(2),
+                              color: greyColor,
+                              weight: FontWeight.bold,
+                              fontFamily: 'Roboto'),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 2,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          MyText(
+                              text: 'Promo Code',
+                              color: blackTypeColor3,
+                              weight: FontWeight.w500,
+                              fontFamily: 'Roboto'),
+                          MyText(
+                              // text: widget.gm.costInc,
+                              text: widget.gm.costInc,
+                              color: greyColor,
+                              weight: FontWeight.bold,
+                              fontFamily: 'Roboto'),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 2,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          MyText(
+                              text: 'Points',
+                              color: blackTypeColor3,
+                              weight: FontWeight.w500,
+                              fontFamily: 'Roboto'),
+                          MyText(
+                              // text: widget.gm.costInc,
+                              text: "",
+                              color: greyColor,
+                              weight: FontWeight.bold,
+                              fontFamily: 'Roboto'),
+                        ],
+                      ),
+                      //     },
+                      //   ),
+                      // ),
                       const SizedBox(height: 5),
                       const Divider(),
                       Row(
@@ -509,7 +600,7 @@ class _BookTicketState extends State<BookTicket> {
                               height: 1.5,
                               fontFamily: 'Roboto'),
                           MyText(
-                              text: 'ر.ع 19,350',
+                              text: "$totalCost ${" ر.ع"}", //'ر.ع 19,350',
                               color: bluishColor,
                               weight: FontWeight.bold,
                               size: 16,

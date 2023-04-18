@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_function_literals_in_foreach_calls
+// ignore_for_file: avoid_function_literals_in_foreach_calls, avoid_print
 
 import 'dart:convert';
 
@@ -22,6 +22,13 @@ class _HomeState extends State<Home> {
   List<BannersModel> bannersList = [];
   bool loading = false;
   List<String> banners = [];
+  bool all = true;
+  bool land = true;
+  bool water = true;
+  bool sky = true;
+  bool transport = true;
+  bool accomodation = true;
+  bool training = true;
 
   @override
   void initState() {
@@ -117,120 +124,161 @@ class _HomeState extends State<Home> {
             //   child: const RecommendedActivity(),
             // ),
             // const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: MyText(
-                  text: 'Accomodation',
-                  weight: FontWeight.bold,
-                  color: greyColor,
-                  size: 18,
-                  fontFamily: "Roboto",
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              height: 230,
-              child: const ServiceList('Accomodation'),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: MyText(
-                  text: 'Transport',
-                  weight: FontWeight.bold,
-                  color: greyColor,
-                  size: 16,
-                  fontFamily: "Roboto",
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              height: 230,
-              child: const ServiceList('Transport'),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: MyText(
-                  text: 'Sky',
-                  weight: FontWeight.bold,
-                  color: greyColor,
-                  size: 16,
-                  fontFamily: "Roboto",
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              height: 230,
-              child: const ServiceList('Sky'),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: MyText(
-                  text: 'Water',
-                  weight: FontWeight.bold,
-                  color: greyColor,
-                  size: 16,
-                  fontFamily: "Roboto",
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              height: 230,
-              child: const ServiceList('Water'),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: MyText(
-                  text: 'Land',
-                  weight: FontWeight.bold,
-                  color: greyColor,
-                  size: 16,
-                  fontFamily: "Roboto",
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              height: 230,
-              child: const ServiceList('Land'),
-            ),
+            all
+                ? Column(
+                    children: [
+                      accomodation
+                          ? Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: MyText(
+                                      text: 'Accomodation',
+                                      weight: FontWeight.bold,
+                                      color: greyColor,
+                                      size: 18,
+                                      fontFamily: "Roboto",
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  height: 225,
+                                  child: const ServiceList('Accomodation'),
+                                ),
+                              ],
+                            )
+                          : Container(),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      transport
+                          ? Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: MyText(
+                                      text: 'Transport',
+                                      weight: FontWeight.bold,
+                                      color: greyColor,
+                                      size: 16,
+                                      fontFamily: "Roboto",
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  height: 225,
+                                  child: const ServiceList('Transport'),
+                                ),
+                              ],
+                            )
+                          : Container(),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      sky
+                          ? Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: MyText(
+                                      text: 'Sky',
+                                      weight: FontWeight.bold,
+                                      color: greyColor,
+                                      size: 16,
+                                      fontFamily: "Roboto",
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  height: 225,
+                                  child: const ServiceList('Sky'),
+                                ),
+                              ],
+                            )
+                          : Container(),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      water
+                          ? Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: MyText(
+                                      text: 'Water',
+                                      weight: FontWeight.bold,
+                                      color: greyColor,
+                                      size: 16,
+                                      fontFamily: "Roboto",
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  height: 225,
+                                  child: const ServiceList('Water'),
+                                ),
+                              ],
+                            )
+                          : Container(),
+                      land
+                          ? Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: MyText(
+                                      text: 'Land',
+                                      weight: FontWeight.bold,
+                                      color: greyColor,
+                                      size: 16,
+                                      fontFamily: "Roboto",
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  height: 225,
+                                  child: const ServiceList('Land'),
+                                ),
+                              ],
+                            )
+                          : Container(),
+                    ],
+                  )
+                : Container(),
           ],
         ),
       ),

@@ -192,6 +192,74 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     parseDependency(Constants.dependency);
   }
 
+  void showConfirmation() async {
+    showDialog(
+        context: context,
+        builder: (ctx) => SimpleDialog(
+              contentPadding: const EdgeInsets.all(12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              title: const Icon(
+                Icons.check_circle,
+                size: 80,
+                color: greenColor1,
+              ),
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                const Text(
+                  "Adventure Details has been Submitted",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: blackColor,
+                      fontSize: 18),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                //Text("data"),
+                const Text(
+                  "User will be able to enroll as soon as it confirm",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
+                // text:
+                //     "After approval you'll be notified and have to buy your subscription package",
+                // size: 18,
+                // weight: FontWeight.w500,
+                // color: blackColor.withOpacity(0.6),
+                const SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton(
+                    onPressed: homePage,
+                    style: ElevatedButton.styleFrom(
+                      primary: bluishColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    child: MyText(
+                      text: "Okay, Got it",
+                      weight: FontWeight.bold,
+                      color: whiteColor,
+                    ))
+                //BottomButton(bgColor: blueButtonColor, onTap: homePage)
+              ],
+            ));
+  }
+
+  void homePage() {
+    Navigator.of(context).pop();
+    cancel();
+  }
+
+  void cancel() {
+    Navigator.of(context).pop();
+  }
+
   void parseDependency(List<DependenciesModel> dm) {
     dm.forEach((element) {
       if (element.dName.isNotEmpty) {
@@ -334,6 +402,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   void next() async {
     checkPlan();
     if (count == 0 && imageList.isNotEmpty) {
+      //  createService();
       setState(() {
         count++;
       });
@@ -470,10 +539,12 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         Uri.parse(
             "https://adventuresclub.net/adventureClub/api/v1/create_service"),
       );
-      String fileName =
-          "${DateTime.now().millisecondsSinceEpoch.toString()}.png";
-      request.files.add(http.MultipartFile.fromBytes('banner[]', banners[0],
-          filename: fileName));
+      banners.forEach((element) {
+        String fileName =
+            "${DateTime.now().millisecondsSinceEpoch.toString()}.png";
+        request.files.add(http.MultipartFile.fromBytes('banner[]', element,
+            filename: fileName));
+      });
       dynamic programData = {
         'customer_id': Constants.userId.toString(),
         'adventure_name': adventureName.text,
@@ -593,7 +664,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       print(response.statusCode);
       // print(response.body);
       print(response.headers);
-      close();
+      showConfirmation();
+      //close();
       // } else {
       //   message("Please choose dependencies");
       // }
@@ -617,6 +689,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   }
 
   void close() {
+    ConstantsCreateNewServices.clearAll();
     Navigator.of(context).pop();
   }
 
@@ -1164,7 +1237,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                       ),
                     ),
                     particularWeekDays
-                        ? Column(
+                        ? ListView(
                             children: [
                               for (int y = 0; y < onePlan.length; y++)
                                 CreatePlanOne(getProgramOneData, y),
@@ -1192,7 +1265,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                               ),
                             ],
                           )
-                        : Column(
+                        : ListView(
                             children: [
                               for (int z = 0; z < pm.length; z++)
                                 CreateProgram(getProgramData, z),

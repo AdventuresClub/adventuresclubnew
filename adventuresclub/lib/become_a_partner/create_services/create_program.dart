@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/services/create_services/create_services_program%20_model.dart';
 import 'package:flutter/material.dart';
@@ -86,11 +88,13 @@ class _CreateProgramState extends State<CreateProgram> {
         startTime = newTime;
         timeSt = Duration(hours: newTime.hour, minutes: newTime.minute);
       });
+      print(startTime);
     } else {
       setState(() {
         endTime = newTime;
         endSt = Duration(hours: newTime.hour, minutes: newTime.minute);
       });
+      print(endTime);
     }
     sendData();
   }

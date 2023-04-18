@@ -27,6 +27,7 @@ class DescriptionInformationWidget extends StatelessWidget {
             const SizedBox(height: 5),
             MyText(
               text: writeInformation,
+              align: TextAlign.left,
               color: greyColor2,
               weight: FontWeight.w500,
               fontFamily: 'Roboto',

@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/adventure_category.dart';
+import 'package:adventuresclub/home_Screens/navigation_screens/category_screen.dart';
 import 'package:adventuresclub/models/filter_data_model/category_filter_model.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
@@ -93,6 +94,16 @@ class _TopListState extends State<TopList> {
     });
   }
 
+  void categoryType(String type) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return CategoryScreen(type);
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // final ffpCM = Provider.of<CompleteProfileProvider>(context, listen: false)
@@ -126,21 +137,24 @@ class _TopListState extends State<TopList> {
                     //       ),
                     //     ),
                     //   ),
-                    CircleAvatar(
-                        backgroundColor: transparentColor,
-                        radius: 23,
-                        child: pCM[index].category == "Category"
-                            ? GestureDetector(
-                                onTap: () => goToAdCategory(pCM),
-                                child: const Image(
-                                  image: ExactAssetImage('images/logo.png'),
+                    GestureDetector(
+                      onTap: () => categoryType(pCM[index].category),
+                      child: CircleAvatar(
+                          backgroundColor: transparentColor,
+                          radius: 23,
+                          child: pCM[index].category == "Category"
+                              ? GestureDetector(
+                                  //  onTap: () => goToAdCategory(pCM),
+                                  child: const Image(
+                                    image: ExactAssetImage('images/logo.png'),
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                              : Image(
+                                  image: NetworkImage(pCM[index].image),
                                   fit: BoxFit.cover,
-                                ),
-                              )
-                            : Image(
-                                image: NetworkImage(pCM[index].image),
-                                fit: BoxFit.cover,
-                              )),
+                                )),
+                    ),
                     const SizedBox(height: 10),
                     MyText(
                       text: pCM[index].category, //text[index],
