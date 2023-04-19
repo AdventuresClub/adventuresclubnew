@@ -46,7 +46,6 @@ class _TopListState extends State<TopList> {
   @override
   void initState() {
     super.initState();
-    pCM.insert(0, category);
     getCategory();
   }
 

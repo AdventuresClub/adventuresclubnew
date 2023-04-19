@@ -568,7 +568,7 @@ class _PlannedState extends State<Planned> {
                     physics: const ScrollPhysics(),
                     shrinkWrap: true,
                     mainAxisSpacing: 0.2,
-                    childAspectRatio: 0.84,
+                    childAspectRatio: 0.80,
                     crossAxisSpacing: 0.2,
                     crossAxisCount: 2,
                     children: List.generate(

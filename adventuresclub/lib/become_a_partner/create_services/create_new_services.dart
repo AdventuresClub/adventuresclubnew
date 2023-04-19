@@ -1,6 +1,4 @@
 // ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls, prefer_typing_uninitialized_variables
-
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
@@ -9,7 +7,6 @@ import 'package:adventuresclub/become_a_partner/create_services/create_program.d
 import 'package:adventuresclub/become_a_partner/create_services/create_services_description.dart';
 import 'package:adventuresclub/complete_profile/banner_page.dart';
 import 'package:adventuresclub/complete_profile/cost.dart';
-import 'package:adventuresclub/complete_profile/program.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/constants_create_new_services.dart';
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
@@ -326,6 +323,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     setState(() {
       selectedActivitesId = id.join(",");
     });
+    print(selectedActivitesId);
   }
 
   void servicePlan() {
@@ -406,11 +404,9 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       setState(() {
         count++;
       });
-    }
-    // else if (imageList.isEmpty) {
-    //   message("Images cannot be empty");
-    // }
-    else if (count == 1 &&
+    } else if (imageList.isEmpty) {
+      message("Images cannot be empty");
+    } else if (count == 1 &&
         adventureName.text.isNotEmpty &&
         ConstantsCreateNewServices.selectedRegionId > 0 &&
         ConstantsCreateNewServices.selectedSectorId > 0 &&
@@ -420,10 +416,12 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         ConstantsCreateNewServices.selectedlevelId > 0 &&
         availableSeatsController.text.isNotEmpty &&
         sPlan > 0 &&
+        selectedActivitesId.isNotEmpty &&
+        selectedDependencyId.isNotEmpty &&
         planChecked) {
       // await convertProgramData();
-      aimed();
-      dependency();
+      // aimed();
+      //dependency();
       setState(() {
         count++;
       });
@@ -445,6 +443,10 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       message("Please add availaible seats");
     } else if (sPlan == 0) {
       message("Please select from the service plan");
+    } else if (selectedActivitesId.isEmpty) {
+      message("Please select from aimed for");
+    } else if (selectedDependencyId.isEmpty) {
+      message("Please select Dependency");
     } else if (count == 2 && pm.isNotEmpty) {
       setState(() {
         count++;
@@ -963,6 +965,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                   setState(() {
                                     aimedValue[index] = value!;
                                   });
+                                  aimed();
                                 }),
                                 title: MyText(
                                   text:
@@ -1223,6 +1226,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                 setState(() {
                                   dependencyValue[index] = value2!;
                                 });
+                                dependency();
                               }),
                               title: MyText(
                                 text: dependencyText[index],
