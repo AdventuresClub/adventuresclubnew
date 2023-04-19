@@ -87,7 +87,7 @@ class ServiceListState extends State<ServiceList> {
         : gm.isEmpty
             ? Center(
                 child: MyText(
-                  text: "No Accomodation Adventure Right now",
+                  text: "No Accomodation Adventure Right Now",
                   color: blackColor,
                   weight: FontWeight.w500,
                 ),

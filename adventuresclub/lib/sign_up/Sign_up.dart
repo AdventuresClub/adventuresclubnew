@@ -39,6 +39,7 @@ class _SignUpState extends State<SignUp> {
   TextEditingController nootpController = TextEditingController();
   TextEditingController weightController = TextEditingController();
   TextEditingController numController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
   List<bool> healthValue = [];
   List<WnHModel> weightList = [];
   List<WnHModel> heightList = [];
@@ -543,296 +544,305 @@ class _SignUpState extends State<SignUp> {
   abc() {}
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  colorFilter: ColorFilter.mode(
-                      blackColor.withOpacity(0.6), BlendMode.darken),
-                  image: const ExactAssetImage('images/registrationpic.png'),
-                  fit: BoxFit.cover)),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: MyText(
-                      text: ' Registration',
-                      weight: FontWeight.w600,
-                      color: whiteColor,
-                      size: 24,
-                      fontFamily: 'Raleway'),
-                ),
-                const SizedBox(height: 20),
-                Image.asset(
-                  'images/whitelogo.png',
-                  height: 140,
-                  width: 320,
-                ),
-                const SizedBox(height: 20),
-                // GestureDetector(
-                //     onTap: getCountries,
-                //     child: const Text(
-                //       "Test",
-                //       style: TextStyle(color: whiteColor),
-                //     )),
-                TextFields(
-                    'Username', userNameController, 17, whiteColor, true),
-                const SizedBox(height: 20),
-                TextFields('Email', emailController, 17, whiteColor, true),
-                const SizedBox(height: 20),
-                TFWithSiffixIcon(
-                    'Password', Icons.visibility_off, passController, true),
-                const SizedBox(height: 20),
-                pickCountry(context, selectedCountry, true),
-                const SizedBox(height: 20),
-                pickCountry(context, currentLocation, false),
-                const SizedBox(
-                  height: 20,
-                ),
-                phoneNumberField(context),
-                const SizedBox(
-                  height: 20,
-                ),
-                GestureDetector(
-                  onTap: () => _selectDate(context),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 0),
-                    width: MediaQuery.of(context).size.width / 1,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: whiteColor),
-                    child: ListTile(
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 0, horizontal: 10),
-                      leading: Text(
-                        formattedDate.toString(),
-                        style: TextStyle(color: blackColor.withOpacity(0.6)),
-                      ),
-                      trailing: Icon(
-                        Icons.calendar_today,
-                        color: blackColor.withOpacity(0.6),
-                        size: 20,
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Container(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    colorFilter: ColorFilter.mode(
+                        blackColor.withOpacity(0.6), BlendMode.darken),
+                    image: const ExactAssetImage('images/registrationpic.png'),
+                    fit: BoxFit.cover)),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: MyText(
+                        text: ' Registration',
+                        weight: FontWeight.w600,
+                        color: whiteColor,
+                        size: 24,
+                        fontFamily: 'Raleway'),
+                  ),
+                  const SizedBox(height: 20),
+                  Image.asset(
+                    'images/whitelogo.png',
+                    height: 140,
+                    width: 320,
+                  ),
+                  const SizedBox(height: 20),
+                  // GestureDetector(
+                  //     onTap: getCountries,
+                  //     child: const Text(
+                  //       "Test",
+                  //       style: TextStyle(color: whiteColor),
+                  //     )),
+                  TextFields(
+                      'Username', userNameController, 17, whiteColor, true),
+                  const SizedBox(height: 20),
+                  TextFields('Email', emailController, 17, whiteColor, true),
+                  const SizedBox(height: 20),
+                  TFWithSiffixIcon(
+                      'Password', Icons.visibility_off, passController, true),
+                  const SizedBox(height: 20),
+                  pickCountry(context, selectedCountry, true),
+                  const SizedBox(height: 20),
+                  pickCountry(context, currentLocation, false),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  phoneNumberField(context),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  GestureDetector(
+                    onTap: () => _selectDate(context),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 0),
+                      width: MediaQuery.of(context).size.width / 1,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: whiteColor),
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 0, horizontal: 10),
+                        leading: Text(
+                          formattedDate.toString(),
+                          style: TextStyle(color: blackColor.withOpacity(0.6)),
+                        ),
+                        trailing: Icon(
+                          Icons.calendar_today,
+                          color: blackColor.withOpacity(0.6),
+                          size: 20,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                pickGender(context, 'Gender'),
-                const SizedBox(height: 20),
-                Container(
-                  decoration: BoxDecoration(
-                      color: whiteColor,
-                      borderRadius: BorderRadius.circular(12)),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16.0, top: 16),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: MyText(
-                            text: 'Health Condition',
-                            weight: FontWeight.bold,
-                            color: blackColor.withOpacity(0.5),
-                            size: 16,
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  pickGender(context, 'Gender'),
+                  const SizedBox(height: 20),
+                  Container(
+                    decoration: BoxDecoration(
+                        color: whiteColor,
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16.0, top: 16),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: MyText(
+                              text: 'Health Condition',
+                              weight: FontWeight.bold,
+                              color: blackColor.withOpacity(0.5),
+                              size: 16,
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 0, vertical: 5),
-                        child: GridView.count(
-                          padding: const EdgeInsets.only(top: 0, bottom: 10),
-                          shrinkWrap: true,
-                          physics: const ScrollPhysics(),
-                          mainAxisSpacing: 0,
-                          childAspectRatio: 5.5,
-                          crossAxisSpacing: 2,
-                          crossAxisCount: 2,
-                          children: List.generate(
-                            healthList.length, // widget.profileURL.length,
-                            (index) {
-                              return Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 15.0),
-                                    child: SizedBox(
-                                      width: 15,
-                                      child: Transform.scale(
-                                        scale: 1.2,
-                                        child: Checkbox(
-                                            activeColor: whiteColor,
-                                            checkColor: bluishColor,
-                                            hoverColor: bluishColor,
-                                            focusColor: bluishColor,
-                                            value: healthValue[index],
-                                            onChanged: (bool? value1) {
-                                              setState(() {
-                                                healthValue[index] = value1!;
-                                              });
-                                            }),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 0, vertical: 5),
+                          child: GridView.count(
+                            padding: const EdgeInsets.only(top: 0, bottom: 10),
+                            shrinkWrap: true,
+                            physics: const ScrollPhysics(),
+                            mainAxisSpacing: 0,
+                            childAspectRatio: 5.5,
+                            crossAxisSpacing: 2,
+                            crossAxisCount: 2,
+                            children: List.generate(
+                              healthList.length, // widget.profileURL.length,
+                              (index) {
+                                return Row(
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 15.0),
+                                      child: SizedBox(
+                                        width: 15,
+                                        child: Transform.scale(
+                                          scale: 1.2,
+                                          child: Checkbox(
+                                              activeColor: whiteColor,
+                                              checkColor: bluishColor,
+                                              hoverColor: bluishColor,
+                                              focusColor: bluishColor,
+                                              value: healthValue[index],
+                                              onChanged: (bool? value1) {
+                                                setState(() {
+                                                  healthValue[index] = value1!;
+                                                });
+                                              }),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  MyText(
-                                      text: healthList[index].healthCondition,
-                                      color: blackColor.withOpacity(0.6),
-                                      weight: FontWeight.w700,
-                                      size: 13,
-                                      fontFamily: 'Raleway'),
-                                ],
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width / 2.4,
-                      child: pickingWeight(context, 'Weight in Kg'),
-                    ),
-                    SizedBox(
-                        width: MediaQuery.of(context).size.width / 2.4,
-                        child: pickingHeight(context, 'Height in CM')),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Checkbox(
-                        activeColor: bluishColor,
-                        side: const BorderSide(color: greyColor3, width: 2),
-                        value: termsValue,
-                        onChanged: ((bool? value) {
-                          return setState(() {
-                            termsValue = value!;
-                          });
-                        })),
-                    Row(
-                      children: [
-                        MyText(
-                          text: 'I have read ',
-                          size: 12,
-                        ),
-                        GestureDetector(
-                          onTap: terms,
-                          child: MyText(
-                            text: 'Terms & Conditions',
-                            size: 14,
-                          ),
-                        ),
-                        MyText(
-                          text: ' & ',
-                          size: 12,
-                        ),
-                        GestureDetector(
-                          onTap: goToPrivacy,
-                          child: MyText(
-                            text: ' Privacy policy',
-                            size: 14,
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    MyText(
+                                        text: healthList[index].healthCondition,
+                                        color: blackColor.withOpacity(0.6),
+                                        weight: FontWeight.w700,
+                                        size: 13,
+                                        fontFamily: 'Raleway'),
+                                  ],
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ],
-                    )
-                    // Text.rich(
-                    //   TextSpan(
-                    //     children: [
-                    //       const TextSpan(
-                    //           text: 'I have read ',
-                    //           style: TextStyle(
-                    //               fontSize: 12,
-                    //               color: greyColor3,
-                    //               fontFamily: 'Raleway')),
-                    //       TextSpan(
-                    //         onEnter: (event) => terms,
-                    //         text: 'Terms & Conditions',
-                    //         style: const TextStyle(
-                    //             fontSize: 12,
-                    //             decoration: TextDecoration.underline,
-                    //             fontWeight: FontWeight.w500,
-                    //             color: greyColor3,
-                    //             fontFamily: 'Raleway'),
-                    //       ),
-                    //       const TextSpan(
-                    //         text: ' & ',
-                    //         style: TextStyle(
-                    //             fontSize: 12,
-                    //             fontWeight: FontWeight.w500,
-                    //             color: greyColor3,
-                    //             fontFamily: 'Raleway'),
-                    //       ),
-                    //       const TextSpan(
-                    //         text: 'Privacy policy',
-                    //         style: TextStyle(
-                    //             fontSize: 12,
-                    //             decoration: TextDecoration.underline,
-                    //             fontWeight: FontWeight.w500,
-                    //             color: greyColor3,
-                    //             fontFamily: 'Raleway'),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Button(
-                    'Register',
-                    greenishColor,
-                    greenishColor,
-                    whiteColor,
-                    18,
-                    register,
-                    Icons.add,
-                    whiteColor,
-                    false,
-                    1.3,
-                    'Raleway',
-                    FontWeight.w600,
-                    16),
-                const SizedBox(height: 20),
-                GestureDetector(
-                  onTap: goToSignIn,
-                  child: const Align(
-                    alignment: Alignment.center,
-                    child: Text.rich(
-                      TextSpan(
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width / 2.4,
+                        child: pickingWeight(context, 'Weight in Kg'),
+                      ),
+                      SizedBox(
+                          width: MediaQuery.of(context).size.width / 2.4,
+                          child: pickingHeight(context, 'Height in CM')),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Checkbox(
+                          activeColor: bluishColor,
+                          side: const BorderSide(color: greyColor3, width: 2),
+                          value: termsValue,
+                          onChanged: ((bool? value) {
+                            return setState(() {
+                              termsValue = value!;
+                            });
+                          })),
+                      Row(
                         children: [
-                          TextSpan(
-                              text: 'Already have an account ?',
-                              style: TextStyle(
-                                  color: whiteColor, fontFamily: 'Raleway')),
-                          TextSpan(
-                            text: 'Sign In',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: whiteColor,
-                                fontFamily: 'Raleway'),
+                          MyText(
+                            text: 'I have read ',
+                            size: 12,
+                          ),
+                          GestureDetector(
+                            onTap: terms,
+                            child: MyText(
+                              text: 'Terms & Conditions',
+                              size: 14,
+                            ),
+                          ),
+                          MyText(
+                            text: ' & ',
+                            size: 12,
+                          ),
+                          GestureDetector(
+                            onTap: goToPrivacy,
+                            child: MyText(
+                              text: ' Privacy policy',
+                              size: 14,
+                            ),
                           ),
                         ],
+                      )
+                      // Text.rich(
+                      //   TextSpan(
+                      //     children: [
+                      //       const TextSpan(
+                      //           text: 'I have read ',
+                      //           style: TextStyle(
+                      //               fontSize: 12,
+                      //               color: greyColor3,
+                      //               fontFamily: 'Raleway')),
+                      //       TextSpan(
+                      //         onEnter: (event) => terms,
+                      //         text: 'Terms & Conditions',
+                      //         style: const TextStyle(
+                      //             fontSize: 12,
+                      //             decoration: TextDecoration.underline,
+                      //             fontWeight: FontWeight.w500,
+                      //             color: greyColor3,
+                      //             fontFamily: 'Raleway'),
+                      //       ),
+                      //       const TextSpan(
+                      //         text: ' & ',
+                      //         style: TextStyle(
+                      //             fontSize: 12,
+                      //             fontWeight: FontWeight.w500,
+                      //             color: greyColor3,
+                      //             fontFamily: 'Raleway'),
+                      //       ),
+                      //       const TextSpan(
+                      //         text: 'Privacy policy',
+                      //         style: TextStyle(
+                      //             fontSize: 12,
+                      //             decoration: TextDecoration.underline,
+                      //             fontWeight: FontWeight.w500,
+                      //             color: greyColor3,
+                      //             fontFamily: 'Raleway'),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Button(
+                      'Register',
+                      greenishColor,
+                      greenishColor,
+                      whiteColor,
+                      18,
+                      register,
+                      Icons.add,
+                      whiteColor,
+                      false,
+                      1.3,
+                      'Raleway',
+                      FontWeight.w600,
+                      16),
+                  const SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: goToSignIn,
+                    child: const Align(
+                      alignment: Alignment.center,
+                      child: Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                                text: 'Already have an account ?',
+                                style: TextStyle(
+                                    color: whiteColor, fontFamily: 'Raleway')),
+                            TextSpan(
+                              text: 'Sign In',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: whiteColor,
+                                  fontFamily: 'Raleway'),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -1143,47 +1153,79 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Row(
-                          children: [
-                            Text(
-                              "'Country',",
-                              style: TextStyle(
-                                color: blackColor.withOpacity(0.6),
+                          padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                          child: TextField(
+                            controller: searchController,
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 8),
+                              hintText: "${'Country'}",
+                              filled: true,
+                              fillColor: lightGreyColor,
+                              suffixIcon: GestureDetector(
+                                //onTap: openMap,
+                                child: const Icon(Icons.search),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10.0)),
+                                borderSide: BorderSide(
+                                    color: greyColor.withOpacity(0.2)),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10.0)),
+                                borderSide: BorderSide(
+                                    color: greyColor.withOpacity(0.2)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10.0)),
+                                borderSide: BorderSide(
+                                    color: greyColor.withOpacity(0.2)),
                               ),
                             ),
-                            Text(
-                              "'Code' ",
-                              style: TextStyle(
-                                color: blackColor.withOpacity(0.6),
-                              ),
-                            ),
-                            Text(
-                              " or ",
-                              style: TextStyle(
-                                color: blackColor.withOpacity(0.6),
-                              ),
-                            ),
-                            Text(
-                              " 'Dial Code'",
-                              style: TextStyle(
-                                color: blackColor.withOpacity(0.6),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 100,
-                            ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.search,
-                                  color: blackColor.withOpacity(0.5),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
+                          )
+                          // Row(
+                          //   children: [
+                          //     Text(
+                          //       "'Country',",
+                          //       style: TextStyle(
+                          //         color: blackColor.withOpacity(0.6),
+                          //       ),
+                          //     ),
+                          //     Text(
+                          //       "'Code' ",
+                          //       style: TextStyle(
+                          //         color: blackColor.withOpacity(0.6),
+                          //       ),
+                          //     ),
+                          //     Text(
+                          //       " or ",
+                          //       style: TextStyle(
+                          //         color: blackColor.withOpacity(0.6),
+                          //       ),
+                          //     ),
+                          //     Text(
+                          //       " 'Dial Code'",
+                          //       style: TextStyle(
+                          //         color: blackColor.withOpacity(0.6),
+                          //       ),
+                          //     ),
+                          //     const SizedBox(
+                          //       width: 100,
+                          //     ),
+                          //     Row(
+                          //       children: [
+                          //         Icon(
+                          //           Icons.search,
+                          //           color: blackColor.withOpacity(0.5),
+                          //         )
+                          //       ],
+                          //     )
+                          //   ],
+                          // ),
+                          ),
                     ),
                     const SizedBox(
                       height: 15,

@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls
+// ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls, deprecated_member_use
 
 import 'dart:convert';
 
@@ -237,10 +237,6 @@ class _MyServicesState extends State<MyServices> {
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       List<dynamic> result = decodedResponse['data'];
-      // dynamic nullDependency = decodedResponse['data']['dependencies'];
-      // dynamic nullAimed = decodedResponse['data']['aimed_for'];
-      // dynamic nullImages = decodedResponse['data']['images'];
-      // dynamic nullProgrammes = decodedResponse['data']['programs'];
       result.forEach(((element) {
         List<AvailabilityPlanModel> gAccomodationPlanModel = [];
         List<AvailabilityModel> gAccomodoationAvaiModel = [];
@@ -416,7 +412,6 @@ class _MyServicesState extends State<MyServices> {
         //gAccomodationSModel.add(nSm);
         allServices.add(nSm);
         allAccomodation.add(nSm);
-
         HomeServicesModel adv = HomeServicesModel("", gAccomodationSModel);
         setState(() {
           loading = false;
@@ -482,9 +477,9 @@ class _MyServicesState extends State<MyServices> {
             ),
           ),
         ),
-        body: SingleChildScrollView(
-          child: RefreshIndicator(
-            onRefresh: myServicesApi,
+        body: RefreshIndicator(
+          onRefresh: myServicesApi,
+          child: SingleChildScrollView(
             child: Container(
               color: greyShadeColor.withOpacity(0.1),
               child: Column(

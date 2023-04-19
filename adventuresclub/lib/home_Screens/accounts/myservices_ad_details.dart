@@ -12,6 +12,9 @@ import 'package:adventuresclub/widgets/tabs/my_services_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../../widgets/tabs/details_tabs/dd.dart';
+import '../../widgets/tabs/details_tabs/details_tabs.dart';
+
 class MyServicesAdDetails extends StatefulWidget {
   final ServicesModel sm;
   const MyServicesAdDetails(this.sm, {super.key});
@@ -235,7 +238,14 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
               )),
             ),
             // ),
-            Expanded(child: MyServicesTab(widget.sm))
+            Expanded(
+              child:
+                  // DetailsTab(
+                  //   widget.sm,
+                  //   show: true,
+                  // )
+                  MyServicesTab(widget.sm),
+            )
           ],
         ),
       ),

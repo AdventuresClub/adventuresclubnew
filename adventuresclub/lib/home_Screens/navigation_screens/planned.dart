@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_function_literals_in_foreach_calls
+// ignore_for_file: avoid_function_literals_in_foreach_calls, avoid_print
 
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/about.dart';
@@ -33,6 +33,7 @@ class Planned extends StatefulWidget {
 class _PlannedState extends State<Planned> {
   DateTime _selectedDay = DateTime.now();
   DateTime _focusedDay = DateTime.now();
+
   late CalendarFormat _calendarFormat;
   Map getServicesMap = {};
   bool loading = false;
@@ -436,6 +437,7 @@ class _PlannedState extends State<Planned> {
                 calendarFormat: CalendarFormat.week,
                 daysOfWeekVisible: true,
                 daysOfWeekHeight: 20,
+                pageJumpingEnabled: true,
                 daysOfWeekStyle: const DaysOfWeekStyle(
                     weekdayStyle: TextStyle(
                         color: greyColor, fontWeight: FontWeight.w600)),
@@ -454,6 +456,7 @@ class _PlannedState extends State<Planned> {
                       _selectedDay = selectedDay;
                       selectedDay = selDate;
                       _focusedDay = selDate;
+                      focusedDay = _focusedDay;
                       day = DateFormat('EEEE').format(_selectedDay);
                       print(day);
                     });
@@ -472,7 +475,9 @@ class _PlannedState extends State<Planned> {
                 },
                 onPageChanged: (focusedDay) {
                   // No need to call `setState()` here
-                  _focusedDay = selDate;
+
+                  _focusedDay = _selectedDay;
+                  focusedDay = _focusedDay;
                 },
                 calendarStyle: const CalendarStyle(
                     todayDecoration: BoxDecoration(color: bluishColor),
@@ -527,9 +532,9 @@ class _PlannedState extends State<Planned> {
                             color: blackColor, fontWeight: FontWeight.w600),
                       )),
                 ),
-                firstDay: DateTime.utc(2023, 02, 03),
+                firstDay: DateTime.now().subtract(const Duration(days: 0)),
                 lastDay: DateTime.utc(2030, 3, 14),
-                focusedDay: DateTime.now(),
+                focusedDay: _selectedDay, //DateTime.now(),
               ),
             ),
           ),

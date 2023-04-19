@@ -440,6 +440,95 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
     );
   }
 
+  void showConfirmation(String id) async {
+    showDialog(
+        context: context,
+        builder: (ctx) => SimpleDialog(
+              contentPadding: const EdgeInsets.all(12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              title: MyText(
+                text: "Alert",
+                weight: FontWeight.bold,
+                color: blackColor,
+              ),
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: MyText(
+                    text: "Are you sure you want to delete?",
+                    size: 16,
+                    weight: FontWeight.bold,
+                    color: blackColor,
+                  ),
+                ),
+                // text:
+                //     "After approval you'll be notified and have to buy your subscription package",
+                // size: 18,
+                // weight: FontWeight.w500,
+                // color: blackColor.withOpacity(0.6),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                      onPressed: homePage,
+                      child: MyText(
+                        text: "No",
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => delete(id),
+                      child: MyText(
+                        text: "Yes",
+                      ),
+                    ),
+                  ],
+                )
+                //BottomButton(bgColor: blueButtonColor, onTap: homePage)
+              ],
+            ));
+  }
+
+  void delete(String id) async {
+    Navigator.of(context).pop();
+    try {
+      var response = await http.post(
+          Uri.parse(
+              "https://adventuresclub.net/adventureClub/api/v1/booking_accept"),
+          body: {
+            'booking_id': id,
+            'status': "5",
+            'user_id': Constants.userId.toString(),
+          });
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      if (response.statusCode == 200) {
+        message("Deleted Successfully");
+        homePage();
+      }
+      print(response.statusCode);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  void message(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
+  }
+
+  void homePage() {
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return loading
@@ -492,17 +581,72 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                       .region, //'Location Name',
                                   color: blackColor,
                                 ),
-                                uRequestList[index].status == "1"
-                                    ? MyText(
-                                        text: 'Confirmed',
-                                        color: Colors.green,
+                                Row(
+                                  children: [
+                                    if (uRequestList[index].status == "0")
+                                      MyText(
+                                        text: "Requested", //'Confirmed',
+                                        color: redColor,
                                         weight: FontWeight.bold,
-                                      )
-                                    : MyText(
-                                        text: 'Requested',
-                                        color: yellowcolor,
+                                      ),
+                                    if (uRequestList[index].status == "1")
+                                      MyText(
+                                        text: "Accepted", //'Confirmed',
+                                        color: greenColor1,
                                         weight: FontWeight.bold,
-                                      )
+                                      ),
+                                    if (uRequestList[index].status == "2")
+                                      MyText(
+                                        text: "Paid", //'Confirmed',
+                                        color: greenColor1,
+                                        weight: FontWeight.bold,
+                                      ),
+                                    if (uRequestList[index].status == "3")
+                                      MyText(
+                                        text: "Declined", //'Confirmed',
+                                        color: redColor,
+                                        weight: FontWeight.bold,
+                                      ),
+                                    if (uRequestList[index].status == "4")
+                                      MyText(
+                                        text: "Completed", //'Confirmed',
+                                        color: greenColor1,
+                                        weight: FontWeight.bold,
+                                      ),
+                                    if (uRequestList[index].status == "5")
+                                      MyText(
+                                        text: "Dropped", //'Confirmed',
+                                        color: redColor,
+                                        weight: FontWeight.bold,
+                                      ),
+                                    if (uRequestList[index].status == "6")
+                                      MyText(
+                                        text: "Confirm", //'Confirmed',
+                                        color: greenColor1,
+                                        weight: FontWeight.bold,
+                                      ),
+                                    if (uRequestList[index].status == "7")
+                                      MyText(
+                                        text: "UnPaid", //'Confirmed',
+                                        color: greenColor1,
+                                        weight: FontWeight.bold,
+                                      ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () => showConfirmation(
+                                          uRequestList[index]
+                                              .serviceId
+                                              .toString()),
+                                      child: const Icon(
+                                        Icons.delete_forever_outlined,
+                                        color: redColor,
+                                        size: 20,
+                                      ),
+                                    )
+                                  ],
+                                )
                               ],
                             ),
                             Divider(
@@ -663,7 +807,9 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                               height: 1.8,
                                             ),
                                             MyText(
-                                              text: uRequestList[index].uCost,
+                                              text:
+                                                  "${uRequestList[index].uCost} "
+                                                  " ${uRequestList[index].currency}",
                                               color: greyColor,
                                               weight: FontWeight.w400,
                                               size: 13,
@@ -683,7 +829,9 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                               height: 1.8,
                                             ),
                                             MyText(
-                                              text: uRequestList[index].tCost,
+                                              text:
+                                                  "${uRequestList[index].tCost} "
+                                                  " ${uRequestList[index].currency}",
                                               color: greyColor,
                                               weight: FontWeight.w400,
                                               size: 13,
@@ -703,7 +851,9 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                               height: 1.8,
                                             ),
                                             MyText(
-                                              text: uRequestList[index].tCost,
+                                              text:
+                                                  "${uRequestList[index].tCost} "
+                                                  " ${uRequestList[index].currency}",
                                               color: greyColor,
                                               weight: FontWeight.w400,
                                               size: 13,

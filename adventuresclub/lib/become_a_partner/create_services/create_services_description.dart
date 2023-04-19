@@ -138,98 +138,106 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
     showDialog(
         context: context,
         builder: (context) {
-          return Dialog(
-            backgroundColor: Colors.transparent,
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height / 1.5,
-              // width: MediaQuery.of(context).size.width / 1.2,
-              child: Card(
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(22)),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 5.0, vertical: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 0),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12.0, vertical: 10),
-                          child: MyText(
-                              text: 'Activities Included',
-                              weight: FontWeight.bold,
-                              color: blackColor,
-                              size: 16,
-                              fontFamily: 'Raleway'),
-                        ),
-                        const SizedBox(height: 30),
-                        Wrap(
-                          children: List.generate(
-                              activitiesFilter.length, //activityList.length,
-                              (index) {
-                            return SizedBox(
-                              //width: MediaQuery.of(context).size.width / 1,
-                              child: Column(
-                                children: [
-                                  CheckboxListTile(
-                                    side: const BorderSide(color: bluishColor),
-                                    checkboxShape: const RoundedRectangleBorder(
-                                      side: BorderSide(color: bluishColor),
-                                    ),
-                                    visualDensity: const VisualDensity(
-                                        horizontal: 0, vertical: -4),
-                                    activeColor: greyProfileColor,
-                                    checkColor: bluishColor,
-                                    selected: activityValue[index],
-                                    value: activityValue[index],
-                                    onChanged: (value) {
-                                      setState(() {
-                                        activityValue[index] =
-                                            !activityValue[index];
-                                        // activityId
-                                        //     .add(activitiesFilter[index].id);
-                                        // activity.add(
-                                        //     activitiesFilter[index].activity);
-                                      });
-                                    },
-                                    title: MyText(
-                                      text: activitiesFilter[index].activity,
-                                      color: greyColor,
-                                      fontFamily: 'Raleway',
-                                      size: 18,
-                                      weight: FontWeight.bold,
-                                    ),
+          return StatefulBuilder(
+            builder: ((context, setState) {
+              return Dialog(
+                backgroundColor: Colors.transparent,
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height / 1.8,
+                  // width: MediaQuery.of(context).size.width / 1.2,
+                  child: Card(
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(22)),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 5.0, vertical: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 0),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12.0, vertical: 10),
+                              child: MyText(
+                                  text: 'Activities Included',
+                                  weight: FontWeight.bold,
+                                  color: blackColor,
+                                  size: 16,
+                                  fontFamily: 'Raleway'),
+                            ),
+                            const SizedBox(height: 30),
+                            Wrap(
+                              children: List.generate(
+                                  activitiesFilter
+                                      .length, //activityList.length,
+                                  (index) {
+                                return SizedBox(
+                                  //width: MediaQuery.of(context).size.width / 1,
+                                  child: Column(
+                                    children: [
+                                      CheckboxListTile(
+                                        side: const BorderSide(
+                                            color: bluishColor),
+                                        checkboxShape:
+                                            const RoundedRectangleBorder(
+                                          side: BorderSide(color: bluishColor),
+                                        ),
+                                        visualDensity: const VisualDensity(
+                                            horizontal: 0, vertical: -4),
+                                        activeColor: greyProfileColor,
+                                        checkColor: bluishColor,
+                                        selected: activityValue[index],
+                                        value: activityValue[index],
+                                        onChanged: (value) {
+                                          setState(() {
+                                            activityValue[index] =
+                                                !activityValue[index];
+                                            // activityId
+                                            //     .add(activitiesFilter[index].id);
+                                            // activity.add(
+                                            //     activitiesFilter[index].activity);
+                                          });
+                                        },
+                                        title: MyText(
+                                          text:
+                                              activitiesFilter[index].activity,
+                                          color: greyColor,
+                                          fontFamily: 'Raleway',
+                                          size: 18,
+                                          weight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            );
-                          }),
+                                );
+                              }),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 30.0, vertical: 15),
+                              child: Button(
+                                  'Done',
+                                  greenishColor,
+                                  greyColorShade400,
+                                  whiteColor,
+                                  16,
+                                  abc,
+                                  Icons.add,
+                                  whiteColor,
+                                  false,
+                                  1.3,
+                                  'Raleway',
+                                  FontWeight.w600,
+                                  16),
+                            ),
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 30.0, vertical: 15),
-                          child: Button(
-                              'Done',
-                              greenishColor,
-                              greyColorShade400,
-                              whiteColor,
-                              16,
-                              abc,
-                              Icons.add,
-                              whiteColor,
-                              false,
-                              1.3,
-                              'Raleway',
-                              FontWeight.w600,
-                              16),
-                        ),
-                      ],
-                    ),
-                  )),
-            ),
+                      )),
+                ),
+              );
+            }),
           );
         });
   }
@@ -332,8 +340,14 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                       width: 10,
                     ),
                     Expanded(
-                      child: TFWithSize('Available Seats', widget.available, 16,
-                          lightGreyColor, 2.4),
+                      child: TFWithSize(
+                        'Available Seats',
+                        widget.available,
+                        16,
+                        lightGreyColor,
+                        2.4,
+                        show: TextInputType.number,
+                      ),
                     ),
                   ],
                 ),

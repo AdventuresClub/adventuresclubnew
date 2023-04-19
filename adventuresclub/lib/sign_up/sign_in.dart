@@ -339,130 +339,138 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      extendBody: true,
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  colorFilter: ColorFilter.mode(
-                      blackColor.withOpacity(0.6), BlendMode.darken),
-                  image: const ExactAssetImage('images/login.png'),
-                  fit: BoxFit.cover)),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(height: 20),
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: MyText(
-                      text: 'Sign In',
-                      weight: FontWeight.w600,
-                      color: whiteColor,
-                      size: 24,
-                    )),
-                Image.asset(
-                  'images/whitelogo.png',
-                  height: 120,
-                  width: 320,
-                ),
-                const SizedBox(height: 20),
-                SpaceTextFields(
-                    'Email or Username', emailController, 17, whiteColor, true),
-                const SizedBox(height: 20),
-                TFWithSiffixIcon(
-                    'Password', Icons.visibility_off, passController, true),
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: Button(
-                      'Sign In',
-                      greenishColor,
-                      greenishColor,
-                      whiteColor,
-                      18,
-                      login,
-                      Icons.add,
-                      whiteColor,
-                      false,
-                      1.3,
-                      'Raleway',
-                      FontWeight.w600,
-                      16),
-                ),
-                const SizedBox(height: 20),
-                GestureDetector(
-                  onTap: goToForgotPass,
-                  child: Align(
-                      alignment: Alignment.center,
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        extendBody: true,
+        body: SingleChildScrollView(
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    colorFilter: ColorFilter.mode(
+                        blackColor.withOpacity(0.6), BlendMode.darken),
+                    image: const ExactAssetImage('images/login.png'),
+                    fit: BoxFit.cover)),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 20),
+                  Align(
+                      alignment: Alignment.centerLeft,
                       child: MyText(
-                        text: 'Forgot Username?',
-                        weight: FontWeight.w500,
+                        text: 'Sign In',
+                        weight: FontWeight.w600,
                         color: whiteColor,
-                        size: 14,
+                        size: 24,
                       )),
-                ),
-                const SizedBox(height: 20),
-                GestureDetector(
-                  onTap: goToForgotPass,
-                  child: Align(
-                      alignment: Alignment.center,
-                      child: MyText(
-                        text: 'Forgot Password?',
-                        weight: FontWeight.w500,
-                        color: whiteColor,
-                        size: 14,
-                      )),
-                ),
+                  Image.asset(
+                    'images/whitelogo.png',
+                    height: 120,
+                    width: 320,
+                  ),
+                  const SizedBox(height: 20),
+                  SpaceTextFields('Email or Username', emailController, 17,
+                      whiteColor, true),
+                  const SizedBox(height: 20),
+                  TFWithSiffixIcon(
+                      'Password', Icons.visibility_off, passController, true),
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: Button(
+                        'Sign In',
+                        greenishColor,
+                        greenishColor,
+                        whiteColor,
+                        18,
+                        login,
+                        Icons.add,
+                        whiteColor,
+                        false,
+                        1.3,
+                        'Raleway',
+                        FontWeight.w600,
+                        16),
+                  ),
+                  const SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: goToForgotPass,
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: MyText(
+                          text: 'Forgot Username?',
+                          weight: FontWeight.w500,
+                          color: whiteColor,
+                          size: 14,
+                        )),
+                  ),
+                  const SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: goToForgotPass,
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: MyText(
+                          text: 'Forgot Password?',
+                          weight: FontWeight.w500,
+                          color: whiteColor,
+                          size: 14,
+                        )),
+                  ),
 
-                //  Align(
-                //   alignment: Alignment.bottomCenter,
-                //    child: GestureDetector(
-                //       onTap: goToSignUp,
-                //       child: const Align(
-                //         alignment: Alignment.center,
-                //         child: Text.rich(
-                //         TextSpan(
-                //           children: [
-                //             TextSpan(text: "Don't have an account? ",style: TextStyle(color:whiteColor)),
-                //             TextSpan(
-                //         text: 'Register',
-                //         style: TextStyle(fontWeight: FontWeight.bold, color: whiteColor),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //       ),
-                //     ),
-                //  ),
-              ],
+                  //  Align(
+                  //   alignment: Alignment.bottomCenter,
+                  //    child: GestureDetector(
+                  //       onTap: goToSignUp,
+                  //       child: const Align(
+                  //         alignment: Alignment.center,
+                  //         child: Text.rich(
+                  //         TextSpan(
+                  //           children: [
+                  //             TextSpan(text: "Don't have an account? ",style: TextStyle(color:whiteColor)),
+                  //             TextSpan(
+                  //         text: 'Register',
+                  //         style: TextStyle(fontWeight: FontWeight.bold, color: whiteColor),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //       ),
+                  //     ),
+                  //  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-      bottomNavigationBar: Container(
-        color: transparentColor,
-        height: 40,
-        child: GestureDetector(
-          onTap: goToSignUp,
-          child: const Align(
-            alignment: Alignment.center,
-            child: Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                      text: "Don't have an account? ",
-                      style: TextStyle(color: whiteColor)),
-                  TextSpan(
-                    text: 'Register',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: whiteColor),
-                  ),
-                ],
+        bottomNavigationBar: Container(
+          color: transparentColor,
+          height: 40,
+          child: GestureDetector(
+            onTap: goToSignUp,
+            child: const Align(
+              alignment: Alignment.center,
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                        text: "Don't have an account? ",
+                        style: TextStyle(color: whiteColor)),
+                    TextSpan(
+                      text: 'Register',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: whiteColor),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

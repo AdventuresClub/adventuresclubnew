@@ -69,6 +69,7 @@ const darkGreen = Color.fromARGB(255, 26, 107, 18);
 const darkRed = Color.fromARGB(255, 176, 37, 37);
 
 class Constants {
+  static DateTime usersDOB = DateTime.now();
   static String name = "";
   static bool expired = false;
   static int countryId = 0;

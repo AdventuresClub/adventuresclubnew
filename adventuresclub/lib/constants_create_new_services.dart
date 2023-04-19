@@ -21,4 +21,18 @@ class ConstantsCreateNewServices {
   static double lat = 0;
   static double lng = 0;
   static bool particularWeekDays = false;
+
+  static void clearAll() {
+    selectedActivitesId.clear();
+    startDate = "";
+    endDate = "";
+    selectedRegionId = 0;
+    selectedSectorId = 0;
+    selectedCategoryId = 0;
+    serviceTypeId = 0;
+    selectedDurationId = 0;
+    selectedlevelId = 0;
+    lat = 0;
+    lng = 0;
+  }
 }
