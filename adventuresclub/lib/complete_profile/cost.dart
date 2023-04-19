@@ -279,6 +279,7 @@ class _CostState extends State<Cost> {
             children: [
               Expanded(
                 child: TFWithSize(
+                  show: TextInputType.number,
                   'Set Cost',
                   widget.costOne,
                   16,
@@ -291,6 +292,7 @@ class _CostState extends State<Cost> {
               ),
               Expanded(
                 child: TFWithSize(
+                  show: TextInputType.number,
                   'Set Cost',
                   widget.costTwo,
                   16,

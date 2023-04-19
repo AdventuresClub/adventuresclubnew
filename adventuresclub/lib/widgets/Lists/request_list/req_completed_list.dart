@@ -175,7 +175,10 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
       }
       setState(() {
         loading = false;
+        uRequestList.reversed;
       });
+
+      print(uRequestList);
       print(response.statusCode);
       print(response.body);
     } catch (e) {

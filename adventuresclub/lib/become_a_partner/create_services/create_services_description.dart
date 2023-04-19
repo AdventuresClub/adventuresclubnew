@@ -89,6 +89,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
   List<String> activityList = [];
   List<bool> activityValue = [];
   List<bool> aimedValue = [];
+  int activitiesLength = 0;
 
   @override
   void initState() {
@@ -120,6 +121,9 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
   }
 
   void sId(List<ActivitiesIncludeModel> activity) async {
+    setState(() {
+      activitiesLength = activity.length;
+    });
     activity.forEach((element) {
       selectedActivites.add(element.activity);
       selectedActivitesid.add(element.id);
@@ -135,6 +139,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
   }
 
   void addActivites() {
+    activitiesLength = 0;
     showDialog(
         context: context,
         builder: (context) {
@@ -370,7 +375,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                               color: blackTypeColor1),
                           MyText(
                               text:
-                                  "${selectedActivites.length} ${"Activites Included}"}",
+                                  "$activitiesLength ${"Activites Included}"}",
                               weight: FontWeight.bold,
                               color: blackTypeColor),
                         ],

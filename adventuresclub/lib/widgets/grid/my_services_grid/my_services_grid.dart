@@ -48,7 +48,7 @@ class _MyServicesGridState extends State<MyServicesGrid> {
         physics: const ScrollPhysics(),
         shrinkWrap: true,
         mainAxisSpacing: 2,
-        childAspectRatio: 1.05,
+        childAspectRatio: 0.90,
         crossAxisSpacing: 2,
         crossAxisCount: 2,
         children: List.generate(
