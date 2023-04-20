@@ -1,6 +1,7 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/splashScreen/splash_screen.dart';
+import 'package:adventuresclub/temp_google_map.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -44,7 +45,8 @@ class MyApp extends StatelessWidget {
       home: FutureBuilder(
         future: getApp(),
         builder: (context, asppsnapshot) {
-          return const SplashScreen();
+          return const TempGoogleMap();
+          //return const SplashScreen();
         },
       ),
     );
