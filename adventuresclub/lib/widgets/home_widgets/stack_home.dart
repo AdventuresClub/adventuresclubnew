@@ -41,6 +41,8 @@ class StackHome extends StatefulWidget {
 
 class _StackHomeState extends State<StackHome> {
   final PageController _pageViewController = PageController(initialPage: 0);
+  TextEditingController controller = TextEditingController();
+
   int _activePage = 0;
   int index = 0;
   int _currentPage = 0;
@@ -672,8 +674,16 @@ class _StackHomeState extends State<StackHome> {
                       const SizedBox(
                         height: 15,
                       ),
-                      const SearchContainer('Search by provider name', 1.2, 8,
-                          'images/bin.png', false, false, 'abc', 14),
+                      SearchContainer(
+                          'Search by provider name',
+                          1.2,
+                          8,
+                          controller,
+                          'images/bin.png',
+                          false,
+                          false,
+                          'abc',
+                          14),
                       const SizedBox(
                         height: 3,
                       ),
@@ -781,7 +791,7 @@ class _StackHomeState extends State<StackHome> {
               const SizedBox(
                 width: 8,
               ),
-              SearchContainer('Search adventure name', 1.4, 8,
+              SearchContainer('Search adventure name', 1.4, 8, controller,
                   'images/maskGroup51.png', true, true, Constants.country, 12),
               const SizedBox(
                 width: 8,

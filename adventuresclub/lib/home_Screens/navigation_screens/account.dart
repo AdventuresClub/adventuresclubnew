@@ -295,11 +295,11 @@ class _AccountState extends State<Account> {
     }
   }
 
-  void goToProfile() {
+  void goToProfile(bool expired) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return const Profile();
+          return Profile(expired);
         },
       ),
     );
@@ -482,7 +482,7 @@ class _AccountState extends State<Account> {
                                     ),
                               profileUrl != null
                                   ? GestureDetector(
-                                      onTap: goToProfile,
+                                      onTap: () => goToProfile(expired),
                                       child: const CircleAvatar(
                                         radius: 38,
                                         backgroundImage: ExactAssetImage(
@@ -490,7 +490,7 @@ class _AccountState extends State<Account> {
                                       ),
                                     )
                                   : GestureDetector(
-                                      onTap: goToProfile,
+                                      onTap: () => goToProfile(expired),
                                       child: CircleAvatar(
                                         radius: 38,
                                         backgroundImage:
@@ -575,7 +575,7 @@ class _AccountState extends State<Account> {
                                           ),
                                     profileUrl != null
                                         ? GestureDetector(
-                                            onTap: goToProfile,
+                                            onTap: () => goToProfile(expired),
                                             child: const CircleAvatar(
                                               radius: 35,
                                               backgroundImage: ExactAssetImage(
@@ -583,7 +583,7 @@ class _AccountState extends State<Account> {
                                             ),
                                           )
                                         : GestureDetector(
-                                            onTap: goToProfile,
+                                            onTap: () => goToProfile(expired),
                                             child: CircleAvatar(
                                               radius: 35,
                                               backgroundImage:
@@ -781,7 +781,7 @@ class _AccountState extends State<Account> {
                                         ),
                                   profileUrl != null
                                       ? GestureDetector(
-                                          onTap: goToProfile,
+                                          onTap: () => goToProfile(expired),
                                           child: const CircleAvatar(
                                             radius: 35,
                                             backgroundImage: ExactAssetImage(
@@ -789,7 +789,7 @@ class _AccountState extends State<Account> {
                                           ),
                                         )
                                       : GestureDetector(
-                                          onTap: goToProfile,
+                                          onTap: () => goToProfile(expired),
                                           child: CircleAvatar(
                                             radius: 35,
                                             backgroundImage:
@@ -973,7 +973,7 @@ class _AccountState extends State<Account> {
                                     ),
                               profileUrl != null
                                   ? GestureDetector(
-                                      onTap: goToProfile,
+                                      onTap: () => goToProfile(expired),
                                       child: const CircleAvatar(
                                         radius: 38,
                                         backgroundImage: ExactAssetImage(
@@ -981,7 +981,7 @@ class _AccountState extends State<Account> {
                                       ),
                                     )
                                   : GestureDetector(
-                                      onTap: goToProfile,
+                                      onTap: () => goToProfile(expired),
                                       child: CircleAvatar(
                                         radius: 38,
                                         backgroundImage:

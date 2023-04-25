@@ -45,8 +45,8 @@ class MyApp extends StatelessWidget {
       home: FutureBuilder(
         future: getApp(),
         builder: (context, asppsnapshot) {
-          return const TempGoogleMap();
-          //return const SplashScreen();
+          // return const TempGoogleMap();
+          return const SplashScreen();
         },
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
 import 'package:flutter/material.dart';
 
 class SearchContainer extends StatefulWidget {
@@ -6,13 +7,14 @@ class SearchContainer extends StatefulWidget {
   final hinttext;
   final width;
   final height;
+  final controller;
   final String image;
   final bool value;
   final bool countryName;
   final String country;
   final double fontSize;
-  const SearchContainer(this.hinttext, this.width, this.height, this.image,
-      this.value, this.countryName, this.country, this.fontSize,
+  const SearchContainer(this.hinttext, this.width, this.height, this.controller,
+      this.image, this.value, this.countryName, this.country, this.fontSize,
       {Key? key})
       : super(key: key);
 
@@ -21,10 +23,12 @@ class SearchContainer extends StatefulWidget {
 }
 
 class _SearchContainerState extends State<SearchContainer> {
+  TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 4),
       width: MediaQuery.of(context).size.width / widget.width,
       height: MediaQuery.of(context).size.width / widget.height,
       decoration: BoxDecoration(
@@ -47,12 +51,22 @@ class _SearchContainerState extends State<SearchContainer> {
               const SizedBox(
                 width: 10,
               ),
-              Text(
-                widget.hinttext,
-                style: TextStyle(
-                    color: searchTextColor.withOpacity(0.8),
-                    fontSize: widget.fontSize),
+              SizedBox(
+                width: widget.countryName == true
+                    ? MediaQuery.of(context).size.width / 2.8
+                    : MediaQuery.of(context).size.width / 1.7,
+                child: TextField(
+                  controller: widget.controller,
+                  decoration: InputDecoration(
+                      hintText: widget.hinttext, border: InputBorder.none),
+                ),
               ),
+              // Text(
+              //   widget.hinttext,
+              //   style: TextStyle(
+              //       color: searchTextColor.withOpacity(0.8),
+              //       fontSize: widget.fontSize),
+              // ),
             ],
           ),
           Row(

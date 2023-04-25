@@ -1,9 +1,11 @@
 // ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls, deprecated_member_use
 
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:adventuresclub/become_a_partner/create_services/create_new_services.dart';
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/home_Screens/accounts/myservices_ad_details.dart';
 import 'package:adventuresclub/models/filter_data_model/programs_model.dart';
 import 'package:adventuresclub/models/home_services/become_partner.dart';
 import 'package:adventuresclub/models/home_services/home_services_model.dart';
@@ -18,6 +20,7 @@ import 'package:adventuresclub/models/services/service_image_model.dart';
 import 'package:adventuresclub/widgets/grid/my_services_grid/my_services_grid.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/search_container.dart';
+import 'package:adventuresclub/widgets/services_card.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -31,11 +34,13 @@ class MyServices extends StatefulWidget {
 }
 
 class _MyServicesState extends State<MyServices> {
+  TextEditingController searchController = TextEditingController();
   List<ServiceImageModel> gSim = [];
   List<AimedForModel> gAfm = [];
   List<MyServicesModel> gSm = [];
   List<BecomePartner> nBp = [];
   List<ServicesModel> allServices = [];
+  List<ServicesModel> filteredServices = [];
   List<ServicesModel> allAccomodation = [];
   List<ServicesModel> gAccomodationSModel = [];
 
@@ -44,6 +49,24 @@ class _MyServicesState extends State<MyServices> {
   void initState() {
     super.initState();
     myServicesApi();
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
+  void searchServices(String x) {
+    if (x.isNotEmpty) {
+      filteredServices = allServices
+          .where((element) => element.adventureName.toLowerCase().contains(x))
+          .toList();
+      //log(filteredServices.length.toString());
+    } else {
+      filteredServices = allServices;
+    }
+    setState(() {});
   }
 
   void goTo() {
@@ -415,6 +438,7 @@ class _MyServicesState extends State<MyServices> {
         HomeServicesModel adv = HomeServicesModel("", gAccomodationSModel);
         setState(() {
           loading = false;
+          filteredServices = allServices;
         });
         print(response.statusCode);
         print(response.body);
@@ -423,6 +447,16 @@ class _MyServicesState extends State<MyServices> {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  void goToDetails(ServicesModel gm) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return MyServicesAdDetails(gm);
+        },
+      ),
+    );
   }
 
   @override
@@ -469,10 +503,21 @@ class _MyServicesState extends State<MyServices> {
             preferredSize: const Size.fromHeight(58.0),
             child: Theme(
               data: Theme.of(context).copyWith(accentColor: Colors.white),
-              child: const Padding(
-                padding: EdgeInsets.only(bottom: 20.0, top: 5),
-                child: SearchContainer('Search by provider name', 1.1, 9,
-                    'images/path.png', true, false, 'oman', 14),
+              child:
+                  //  Padding(
+                  //   padding: EdgeInsets.only(bottom: 20.0, top: 5),
+                  //   child: SearchContainer('Search by provider name', 1.1, 9,
+                  //       'images/path.png', true, false, 'oman', 14),
+                  // ),
+                  TextField(
+                onChanged: (value) {
+                  searchServices(value);
+                },
+                textAlign: TextAlign.center,
+                controller: searchController,
+                decoration: const InputDecoration(
+                    hintText: 'Enter 4 Digit Code',
+                    hintStyle: TextStyle(color: blackTypeColor4)),
               ),
             ),
           ),
@@ -485,8 +530,32 @@ class _MyServicesState extends State<MyServices> {
               child: Column(
                 children: [
                   // Text("test")
-                  MyServicesGrid(
-                    allServices,
+                  // MyServicesGrid(
+                  //   filteredServices,
+                  // ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: 12.0, bottom: 12, left: 5, right: 5),
+                    child: GridView.count(
+                      physics: const ScrollPhysics(),
+                      shrinkWrap: true,
+                      mainAxisSpacing: 2,
+                      childAspectRatio: 1.05,
+                      crossAxisSpacing: 2,
+                      crossAxisCount: 2,
+                      children: List.generate(
+                        filteredServices.length, // widget.profileURL.length,
+                        (index) {
+                          return GestureDetector(
+                            onTap: () => goToDetails(filteredServices[index]),
+                            child: ServicesCard(
+                              filteredServices[index],
+                              show: true,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                   ),
                 ],
               ),

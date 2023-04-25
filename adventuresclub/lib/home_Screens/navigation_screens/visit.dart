@@ -13,6 +13,8 @@ class Visit extends StatefulWidget {
 }
 
 class _VisitState extends State<Visit> {
+  TextEditingController controller = TextEditingController();
+
   bool value = false;
   var cont = false;
   int currentIndex = 4;
@@ -58,7 +60,7 @@ class _VisitState extends State<Visit> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SearchContainer('what are you looking for?', 1.3, 8,
+                SearchContainer('what are you looking for?', 1.3, 8, controller,
                     'images/maskGroup51.png', false, false, 'oman', 14),
                 const SizedBox(
                   width: 10,

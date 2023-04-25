@@ -15,6 +15,8 @@ class Participants extends StatefulWidget {
 }
 
 class _ParticipantsState extends State<Participants> {
+  TextEditingController controller = TextEditingController();
+
   List<GetParticipantsModel> gGM = [];
   List<ServiceImageModel> gSim = [];
   bool loading = false;
@@ -36,8 +38,8 @@ class _ParticipantsState extends State<Participants> {
           const SizedBox(
             height: 10,
           ),
-          const SearchContainer('Search client by name or order id', 1.1, 8,
-              'images/pin.png', false, false, 'oman', 14),
+          SearchContainer('Search client by name or order id', 1.1, 8,
+              controller, 'images/pin.png', false, false, 'oman', 14),
           ParticipantsList(widget.pList)
         ],
       ),
