@@ -118,10 +118,14 @@ class ServiceListState extends State<ServiceList> {
                       height: 10,
                     ),
                     SizedBox(
-                        height: 250,
-                        child: getList(gAllServices[i].category, gAllServices)),
+                      height: 250,
+                      child: getList(
+                        gAllServices[i].category,
+                        gAllServices,
+                      ),
+                    ),
                   ],
-                )
+                ),
             ],
           );
     // : allServices.isEmpty

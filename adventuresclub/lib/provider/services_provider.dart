@@ -82,6 +82,7 @@ class ServicesProvider with ChangeNotifier {
       List<dynamic> result = getServicesMap['data'];
       String acc = "";
       result.forEach((element) {
+        List<ServicesModel> all_Services = [];
         acc = element['category'].toString() ?? "";
         categories.add(acc);
         List<dynamic> s = element['services'];
@@ -238,11 +239,12 @@ class ServicesProvider with ChangeNotifier {
             int.tryParse(services['remaining_seats'].toString()) ?? 0,
           );
           allServices.add(nSm);
+          all_Services.add(nSm);
         });
-        HomeServicesModel adv = HomeServicesModel(acc, allServices);
+        HomeServicesModel adv = HomeServicesModel(acc, all_Services);
         gAllServices.add(adv);
       });
-
+      notifyListeners();
       // allServices.forEach((element) {
       //     gAllServices.add(element.serviceCategory, element);
       //   });
