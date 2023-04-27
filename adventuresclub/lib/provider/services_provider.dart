@@ -7,6 +7,7 @@ import 'package:adventuresclub/models/filter_data_model/category_filter_model.da
 import 'package:adventuresclub/models/filter_data_model/programs_model.dart';
 import 'package:adventuresclub/models/home_services/home_services_model.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
+import 'package:adventuresclub/models/search_model.dart';
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
 import 'package:adventuresclub/models/services/availability_model.dart';
 import 'package:adventuresclub/models/services/dependencies_model.dart';
@@ -45,6 +46,37 @@ class ServicesProvider with ChangeNotifier {
   List<ServicesModel> allLand = [];
   List<CategoryFilterModel> categoryFilter = [];
   List<HomeServicesModel> gAllServices = [];
+  String search = "";
+  List<HomeServicesModel> filteredServices = [];
+  List<SearchModel> searchedList = [];
+
+  void setSearch(String x) {
+    if (x.isNotEmpty && x.length >= 3) {
+      for (SearchModel l in searchedList) {
+        List<String> foundAdventures = [];
+        for (int f = 0; f < l.adventureName.length; f++) {
+          if (l.adventureName[f].contains(x)) {
+            foundAdventures.add(l.serviceId[f]);
+          }
+        }
+      }
+      for (HomeServicesModel s in gAllServices) {
+        List<ServicesModel> services = s.sm;
+        List<ServicesModel> foundServices = [];
+        for (ServicesModel i in services) {
+          if (i.adventureName.contains(x)) {
+            foundServices.add(i);
+          }
+        }
+        if (foundServices.isNotEmpty) {
+          gAllServices.add(HomeServicesModel(s.category, foundServices));
+        }
+      }
+    } else {
+      filteredServices = gAllServices;
+    }
+    notifyListeners();
+  }
 
   void getCategory(List<CategoryFilterModel> cm) {
     cm = categoryFilter;
@@ -71,6 +103,8 @@ class ServicesProvider with ChangeNotifier {
   }
 
   Future getServicesList() async {
+    //gAllServices.clear();
+    //getServicesListy1();
     var response = await http.post(
         Uri.parse(
             "https://adventuresclub.net/adventureClub/api/v1/get_allservices"),
@@ -243,7 +277,15 @@ class ServicesProvider with ChangeNotifier {
         });
         HomeServicesModel adv = HomeServicesModel(acc, all_Services);
         gAllServices.add(adv);
+        List<String> serviceId = [];
+        List<String> adventureName = [];
+        all_Services.forEach((element) {
+          serviceId.add(element.id.toString());
+          adventureName.add(element.adventureName);
+        });
+        searchedList.add(SearchModel(acc, serviceId, adventureName));
       });
+      filteredServices = gAllServices;
       notifyListeners();
       // allServices.forEach((element) {
       //     gAllServices.add(element.serviceCategory, element);

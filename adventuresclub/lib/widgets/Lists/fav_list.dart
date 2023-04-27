@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/home_Screens/accounts/about.dart';
 import 'package:adventuresclub/models/getFavourite/get_favourite.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
@@ -54,6 +55,7 @@ class _FavListState extends State<FavList> {
         });
         int serviceId = int.tryParse(element['service_id'].toString()) ?? 0;
         int providerId = int.tryParse(element['provider_id'].toString()) ?? 0;
+        int stars = int.tryParse(element['stars'].toString()) ?? 0;
         GetFavouriteModel gc = GetFavouriteModel(
             serviceId,
             providerId,
@@ -62,13 +64,15 @@ class _FavListState extends State<FavList> {
             element['currency'] ?? "",
             element['provided_name'] ?? "",
             element['provider_profile'] ?? "",
-            gSim);
+            gSim,
+            element['stars'] ?? "");
         nm.add(gc);
       });
       setState(() {
         loading = false;
       });
     }
+    print(response.statusCode);
   }
 
   void selected(BuildContext context, int serviceId, int providerId) {
@@ -83,6 +87,29 @@ class _FavListState extends State<FavList> {
   }
 
   //{CommonConstantUrl.ChatUrl}newreceiverchat/{Settings.UserId}/{completedDataModel.service_id}/{completedDataModel.provider_id}";
+
+  double convert(String rating) {
+    //double r = double.tryParse(rating)
+    double result = double.parse(rating);
+    return result;
+  }
+
+  double convertInt(int rating) {
+    double result = rating.toDouble();
+    return result;
+  }
+
+  void goToProvider(
+    String id,
+  ) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return About(id: id);
+        },
+      ),
+    );
+  }
 
   void doNothing(BuildContext context) {}
   @override
@@ -129,8 +156,9 @@ class _FavListState extends State<FavList> {
                                   colorFilter: ColorFilter.mode(
                                       Colors.black.withOpacity(0.2),
                                       BlendMode.darken),
-                                  image:
-                                      NetworkImage(nm[index].providerProfile),
+                                  image: NetworkImage(
+                                    "${"https://adventuresclub.net/adventureClub/public/uploads/"}${nm[index].sm[index].thumbnail}",
+                                  ),
                                   // const ExactAssetImage(
                                   //   'images/Wadi-Hawar.png',
                                   // ),
@@ -156,24 +184,48 @@ class _FavListState extends State<FavList> {
                                       weight: FontWeight.w500,
                                       fontFamily: 'Roboto'),
                                   const SizedBox(width: 20),
-                                  RatingBar.builder(
-                                    initialRating: 3,
-                                    itemSize: 12,
-                                    minRating: 1,
-                                    direction: Axis.horizontal,
-                                    allowHalfRating: true,
-                                    itemCount: 5,
-                                    itemPadding: const EdgeInsets.symmetric(
-                                        horizontal: 1.0),
-                                    itemBuilder: (context, _) => const Icon(
-                                      Icons.star,
-                                      color: Colors.amber,
-                                      size: 12,
-                                    ),
-                                    onRatingUpdate: (rating) {
-                                      print(rating);
-                                    },
+                                  const SizedBox(
+                                    height: 5,
                                   ),
+                                  if (nm[index].stars != 0)
+                                    RatingBar.builder(
+                                      initialRating: convert(nm[index].stars),
+                                      itemSize: 12,
+                                      minRating: convert(nm[index].stars),
+                                      direction: Axis.horizontal,
+                                      allowHalfRating: true,
+                                      itemCount: 5,
+                                      itemPadding: const EdgeInsets.symmetric(
+                                          horizontal: 1.0),
+                                      itemBuilder: (context, _) => const Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                        size: 12,
+                                      ),
+                                      onRatingUpdate: (rating) {
+                                        print(rating);
+                                      },
+                                    ),
+                                  if (nm[index].stars == 0)
+                                    RatingBar.builder(
+                                      initialRating:
+                                          convertInt(nm[index].stars),
+                                      itemSize: 12,
+                                      minRating: convertInt(nm[index].stars),
+                                      direction: Axis.horizontal,
+                                      allowHalfRating: true,
+                                      itemCount: 5,
+                                      itemPadding: const EdgeInsets.symmetric(
+                                          horizontal: 1.0),
+                                      itemBuilder: (context, _) => const Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                        size: 12,
+                                      ),
+                                      onRatingUpdate: (rating) {
+                                        print(rating);
+                                      },
+                                    ),
                                   const SizedBox(height: 5),
                                   Row(
                                     mainAxisAlignment:
@@ -189,7 +241,7 @@ class _FavListState extends State<FavList> {
                                     ],
                                   ),
                                   const SizedBox(
-                                    height: 2,
+                                    height: 5,
                                   ),
                                   Image(
                                     image: const ExactAssetImage(
@@ -198,32 +250,41 @@ class _FavListState extends State<FavList> {
                                         2.10,
                                   ),
                                   const SizedBox(
-                                    height: 5,
+                                    height: 10,
                                   ),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Row(
-                                        children: [
-                                          const CircleAvatar(
-                                              radius: 11,
+                                      GestureDetector(
+                                        onTap: () => goToProvider(
+                                            nm[index].providerId.toString()),
+                                        child: Row(
+                                          children: [
+                                            CircleAvatar(
+                                              radius: 14,
+                                              backgroundImage: NetworkImage(
+                                                  nm[index].providerProfile),
+                                              // ExactAssetImage(
+                                              //     'images/avatar.png'),
                                               backgroundColor: transparentColor,
-                                              child: Image(
-                                                image:
-                                                    //NetworkImage(nm[index].sm[0].imageUrl)
-                                                    ExactAssetImage(
-                                                        'images/avatar.png'),
-                                                fit: BoxFit.cover,
-                                              )),
-                                          const SizedBox(width: 10),
-                                          MyText(
-                                              text: nm[index]
-                                                  .providerName, //'Alexander',
-                                              color: blackColor,
-                                              size: 11,
-                                              fontFamily: 'Roboto'),
-                                        ],
+                                              // child: Image(
+                                              //   image: NetworkImage(
+                                              //       nm[index].providerProfile),
+                                              //   // ExactAssetImage(
+                                              //   //     'images/avatar.png'),
+                                              //   fit: BoxFit.fill,
+                                              // ),
+                                            ),
+                                            const SizedBox(width: 10),
+                                            MyText(
+                                                text: nm[index]
+                                                    .providerName, //'Alexander',
+                                                color: blackColor,
+                                                size: 12,
+                                                fontFamily: 'Roboto'),
+                                          ],
+                                        ),
                                       ),
                                       const SizedBox(
                                         width: 20,

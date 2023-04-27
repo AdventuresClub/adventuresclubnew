@@ -1159,7 +1159,7 @@ class _SignUpState extends State<SignUp> {
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 8, horizontal: 8),
-                              hintText: "${'Country'}",
+                              hintText: 'Country',
                               filled: true,
                               fillColor: lightGreyColor,
                               suffixIcon: GestureDetector(
@@ -1185,47 +1185,7 @@ class _SignUpState extends State<SignUp> {
                                     color: greyColor.withOpacity(0.2)),
                               ),
                             ),
-                          )
-                          // Row(
-                          //   children: [
-                          //     Text(
-                          //       "'Country',",
-                          //       style: TextStyle(
-                          //         color: blackColor.withOpacity(0.6),
-                          //       ),
-                          //     ),
-                          //     Text(
-                          //       "'Code' ",
-                          //       style: TextStyle(
-                          //         color: blackColor.withOpacity(0.6),
-                          //       ),
-                          //     ),
-                          //     Text(
-                          //       " or ",
-                          //       style: TextStyle(
-                          //         color: blackColor.withOpacity(0.6),
-                          //       ),
-                          //     ),
-                          //     Text(
-                          //       " 'Dial Code'",
-                          //       style: TextStyle(
-                          //         color: blackColor.withOpacity(0.6),
-                          //       ),
-                          //     ),
-                          //     const SizedBox(
-                          //       width: 100,
-                          //     ),
-                          //     Row(
-                          //       children: [
-                          //         Icon(
-                          //           Icons.search,
-                          //           color: blackColor.withOpacity(0.5),
-                          //         )
-                          //       ],
-                          //     )
-                          //   ],
-                          // ),
-                          ),
+                          )),
                     ),
                     const SizedBox(
                       height: 15,

@@ -9,6 +9,7 @@ class GetFavouriteModel {
   String providerName;
   String providerProfile;
   List<ServiceImageModel> sm;
+  dynamic stars;
   GetFavouriteModel(
       this.serviceId,
       this.providerId,
@@ -17,5 +18,6 @@ class GetFavouriteModel {
       this.currency,
       this.providerName,
       this.providerProfile,
-      this.sm);
+      this.sm,
+      this.stars);
 }

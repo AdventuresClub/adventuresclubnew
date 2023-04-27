@@ -166,7 +166,7 @@ class Constants {
       "",
       ProfileBecomePartner(0, 0, "", "", "", "", "", "", "", "", 0, 0, "", "",
           "", "", "", "", "", 0, "", "", "", "", "", ""));
-
+  static bool userExist = false;
   static getPrefs() async {
     prefs ??= await SharedPreferences.getInstance();
     return prefs;
@@ -326,85 +326,88 @@ class Constants {
             'device_id': "0"
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-      dynamic userData = decodedResponse['data'];
-      int userLoginId = int.tryParse(userData['id'].toString()) ?? 0;
-      int countryId = int.tryParse(userData['country_id'].toString()) ?? 0;
-      int languageId = int.tryParse(userData['language_id'].toString()) ?? 0;
-      int currencyId = int.tryParse(userData['currency_id'].toString()) ?? 0;
-      int addedFrom = int.tryParse(userData['added_from'].toString()) ?? 0;
-      dynamic partnerInfo = decodedResponse['data']["become_partner"];
-      if (partnerInfo != null) {
-        int id = int.tryParse(partnerInfo['id'].toString()) ?? 0;
-        int userId = int.tryParse(partnerInfo['user_id'].toString()) ?? 0;
-        int debitCard = int.tryParse(partnerInfo['debit_card'].toString()) ?? 0;
-        int visaCard = int.tryParse(partnerInfo['visa_card'].toString()) ?? 0;
-        int packagesId =
-            int.tryParse(partnerInfo['packages_id'].toString()) ?? 0;
-        ProfileBecomePartner bp = ProfileBecomePartner(
-          id,
-          userId,
-          partnerInfo['company_name'].toString() ?? "",
-          partnerInfo['address'].toString() ?? "",
-          partnerInfo['location'].toString() ?? "",
-          partnerInfo['description'].toString() ?? "",
-          partnerInfo['license'].toString() ?? "",
-          partnerInfo['cr_name'].toString() ?? "",
-          partnerInfo['cr_number'].toString() ?? "",
-          partnerInfo['cr_copy'].toString() ?? "",
-          debitCard,
-          visaCard,
-          partnerInfo['payon_arrival'].toString() ?? "",
-          partnerInfo['paypal'].toString() ?? "",
-          partnerInfo['bankname'].toString() ?? "",
-          partnerInfo['account_holdername'].toString() ?? "",
-          partnerInfo['account_number'].toString() ?? "",
-          partnerInfo['is_online'].toString() ?? "",
-          partnerInfo['is_approved'].toString() ?? "",
-          packagesId,
-          partnerInfo['start_date'].toString() ?? "",
-          partnerInfo['end_date'].toString() ?? "",
-          partnerInfo['is_wiretransfer'].toString() ?? "",
-          partnerInfo['is_free_used'].toString() ?? "",
-          partnerInfo['created_at'].toString() ?? "",
-          partnerInfo['updated_at'].toString() ?? "",
-        );
-        pbp = bp;
+      if (response.statusCode == 200) {
+        dynamic userData = decodedResponse['data'];
+        int userLoginId = int.tryParse(userData['id'].toString()) ?? 0;
+        int countryId = int.tryParse(userData['country_id'].toString()) ?? 0;
+        int languageId = int.tryParse(userData['language_id'].toString()) ?? 0;
+        int currencyId = int.tryParse(userData['currency_id'].toString()) ?? 0;
+        int addedFrom = int.tryParse(userData['added_from'].toString()) ?? 0;
+        dynamic partnerInfo = decodedResponse['data']["become_partner"];
+        if (partnerInfo != null) {
+          int id = int.tryParse(partnerInfo['id'].toString()) ?? 0;
+          int userId = int.tryParse(partnerInfo['user_id'].toString()) ?? 0;
+          int debitCard =
+              int.tryParse(partnerInfo['debit_card'].toString()) ?? 0;
+          int visaCard = int.tryParse(partnerInfo['visa_card'].toString()) ?? 0;
+          int packagesId =
+              int.tryParse(partnerInfo['packages_id'].toString()) ?? 0;
+          ProfileBecomePartner bp = ProfileBecomePartner(
+            id,
+            userId,
+            partnerInfo['company_name'].toString() ?? "",
+            partnerInfo['address'].toString() ?? "",
+            partnerInfo['location'].toString() ?? "",
+            partnerInfo['description'].toString() ?? "",
+            partnerInfo['license'].toString() ?? "",
+            partnerInfo['cr_name'].toString() ?? "",
+            partnerInfo['cr_number'].toString() ?? "",
+            partnerInfo['cr_copy'].toString() ?? "",
+            debitCard,
+            visaCard,
+            partnerInfo['payon_arrival'].toString() ?? "",
+            partnerInfo['paypal'].toString() ?? "",
+            partnerInfo['bankname'].toString() ?? "",
+            partnerInfo['account_holdername'].toString() ?? "",
+            partnerInfo['account_number'].toString() ?? "",
+            partnerInfo['is_online'].toString() ?? "",
+            partnerInfo['is_approved'].toString() ?? "",
+            packagesId,
+            partnerInfo['start_date'].toString() ?? "",
+            partnerInfo['end_date'].toString() ?? "",
+            partnerInfo['is_wiretransfer'].toString() ?? "",
+            partnerInfo['is_free_used'].toString() ?? "",
+            partnerInfo['created_at'].toString() ?? "",
+            partnerInfo['updated_at'].toString() ?? "",
+          );
+          pbp = bp;
+        }
+        UserProfileModel up = UserProfileModel(
+            userLoginId,
+            userData['users_role'].toString() ?? "",
+            userData['profile_image'].toString() ?? "",
+            userData['name'].toString() ?? "",
+            userData['height'].toString() ?? "",
+            userData['weight'].toString() ?? "",
+            userData['email'].toString() ?? "",
+            countryId,
+            userData['region_id'].toString() ?? "",
+            userData['city_id'].toString() ?? "",
+            userData['now_in'].toString() ?? "",
+            userData['mobile'].toString() ?? "",
+            userData['mobile_verified_at'].toString() ?? "",
+            userData['dob'].toString() ?? "",
+            userData['gender'].toString() ?? "",
+            languageId,
+            userData['nationality_id'].toString() ?? "",
+            currencyId,
+            userData['app_notification'].toString() ?? "",
+            userData['points'].toString() ?? "",
+            userData['health_conditions'].toString() ?? "",
+            userData['health_conditions_id'].toString() ?? "",
+            userData['email_verified_at'].toString() ?? "",
+            userData['mobile_code'].toString() ?? "",
+            userData['status'].toString() ?? "",
+            addedFrom,
+            userData['created_at'].toString() ?? "",
+            userData['updated_at'].toString() ?? "",
+            userData['deleted_at'].toString() ?? "",
+            userData['device_id'].toString() ?? "",
+            pbp);
+        profile = up;
+        Constants.userRole = up.userRole;
+        prefs.setString("userRole", up.userRole);
       }
-      UserProfileModel up = UserProfileModel(
-          userLoginId,
-          userData['users_role'].toString() ?? "",
-          userData['profile_image'].toString() ?? "",
-          userData['name'].toString() ?? "",
-          userData['height'].toString() ?? "",
-          userData['weight'].toString() ?? "",
-          userData['email'].toString() ?? "",
-          countryId,
-          userData['region_id'].toString() ?? "",
-          userData['city_id'].toString() ?? "",
-          userData['now_in'].toString() ?? "",
-          userData['mobile'].toString() ?? "",
-          userData['mobile_verified_at'].toString() ?? "",
-          userData['dob'].toString() ?? "",
-          userData['gender'].toString() ?? "",
-          languageId,
-          userData['nationality_id'].toString() ?? "",
-          currencyId,
-          userData['app_notification'].toString() ?? "",
-          userData['points'].toString() ?? "",
-          userData['health_conditions'].toString() ?? "",
-          userData['health_conditions_id'].toString() ?? "",
-          userData['email_verified_at'].toString() ?? "",
-          userData['mobile_code'].toString() ?? "",
-          userData['status'].toString() ?? "",
-          addedFrom,
-          userData['created_at'].toString() ?? "",
-          userData['updated_at'].toString() ?? "",
-          userData['deleted_at'].toString() ?? "",
-          userData['device_id'].toString() ?? "",
-          pbp);
-      profile = up;
-      Constants.userRole = up.userRole;
-      prefs.setString("userRole", up.userRole);
     } catch (e) {
       print(e.toString());
     }

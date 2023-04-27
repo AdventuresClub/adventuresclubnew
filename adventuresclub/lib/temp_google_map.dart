@@ -2,12 +2,14 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/widgets/buttons/my_button.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class TempGoogleMap extends StatefulWidget {
-  const TempGoogleMap({super.key});
+  final Function setLoc;
+  const TempGoogleMap(this.setLoc, {super.key});
 
   @override
   State<TempGoogleMap> createState() => _TempGoogleMapState();
@@ -16,6 +18,7 @@ class TempGoogleMap extends StatefulWidget {
 class _TempGoogleMapState extends State<TempGoogleMap> {
   bool loading = false;
   String myLocation = 'Checking...';
+  String location = "";
   double lat = 0.0, lng = 0.0;
   late GoogleMapController controller;
   List<Marker> markers = [];
@@ -92,7 +95,7 @@ class _TempGoogleMapState extends State<TempGoogleMap> {
           position: LatLng(argument.latitude, argument.longitude),
         ),
       );
-      myLocation = "{${argument.latitude}, ${argument.longitude}}";
+      location = "${argument.latitude}, ${argument.longitude}";
     });
     await controller.animateCamera(
       CameraUpdate.newCameraPosition(
@@ -102,6 +105,10 @@ class _TempGoogleMapState extends State<TempGoogleMap> {
         ),
       ),
     );
+  }
+
+  void save() {
+    widget.setLoc(myLocation, lat, lng, location);
   }
 
   @override
@@ -136,6 +143,13 @@ class _TempGoogleMapState extends State<TempGoogleMap> {
                   style: const TextStyle(color: Colors.white),
                 ),
               ),
+            ),
+          ),
+          Positioned(
+            bottom: 10,
+            child: MyButton(
+              onPressed: () => save(),
+              buttonText: 'Save',
             ),
           ),
         ],

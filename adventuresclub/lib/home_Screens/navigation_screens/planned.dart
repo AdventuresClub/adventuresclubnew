@@ -450,20 +450,19 @@ class _PlannedState extends State<Planned> {
                   return isSameDay(_selectedDay, day);
                 },
                 onDaySelected: (selectedDay, focusedDay) {
-                  if (!isSameDay(_selectedDay, selectedDay)) {
-                    // Call `setState()` when updating the selected day
-                    setState(() {
-                      _selectedDay = selectedDay;
-                      selectedDay = selDate;
-                      _focusedDay = selDate;
-                      focusedDay = _focusedDay;
-                      day = DateFormat('EEEE').format(_selectedDay);
-                      print(day);
-                    });
-                    //gm.clear();
-                    // pGm.clear();
-                    // filter();
-                  }
+                  // if (!isSameDay(_selectedDay, selectedDay)) {
+                  // Call `setState()` when updating the selected day
+                  setState(() {
+                    _selectedDay = selectedDay;
+                    selectedDay = selDate;
+                    _focusedDay = selDate;
+                    focusedDay = _focusedDay;
+                    day = DateFormat('EEEE').format(_selectedDay);
+                    print(day);
+                  });
+                  //gm.clear();
+                  // pGm.clear();
+                  // filter();
                 },
                 onFormatChanged: (format) {
                   if (_calendarFormat != format) {

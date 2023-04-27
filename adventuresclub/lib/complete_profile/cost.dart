@@ -5,6 +5,7 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/constants_create_new_services.dart';
 import 'package:adventuresclub/google_page.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
+import 'package:adventuresclub/temp_google_map.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
@@ -36,6 +37,7 @@ class _CostState extends State<Cost> {
   TextEditingController scheduleController = TextEditingController();
   String locationMessage = "Getting location ...";
   String userlocation = "";
+  String glocation = "";
   bool loading = false;
   double lat = 0;
   double lng = 0;
@@ -208,11 +210,12 @@ class _CostState extends State<Cost> {
     );
   }
 
-  void setLocation(String loc, double lt, double lg) {
+  void setLocation(String loc, double lt, double lg, String location) {
     Navigator.of(context).pop();
     widget.iliveController.text = loc;
     lat = lt;
     lng = lg;
+    glocation = location;
     setState(
       () {
         userlocation = loc;
@@ -228,15 +231,26 @@ class _CostState extends State<Cost> {
     });
   }
 
+  void openGoogle() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (_) {
+          return TempGoogleMap(setLocation);
+        },
+      ),
+    );
+  }
+
   abc() {}
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: Column(children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width / 1,
+            width: MediaQuery.of(context).size.width,
             child: TextField(
               controller: widget.iliveController,
               decoration: InputDecoration(
@@ -246,7 +260,7 @@ class _CostState extends State<Cost> {
                 filled: true,
                 fillColor: lightGreyColor,
                 suffixIcon: GestureDetector(
-                  onTap: openMap,
+                  onTap: openGoogle,
                   child: const Image(
                     image: ExactAssetImage('images/map-symbol.png'),
                     height: 15,
@@ -255,25 +269,36 @@ class _CostState extends State<Cost> {
                 ),
                 border: OutlineInputBorder(
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                  borderSide: BorderSide(color: greyColor.withOpacity(0.2)),
+                  borderSide:
+                      BorderSide(color: greyColor.withOpacity(0.5), width: 1.5),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                  borderSide: BorderSide(color: greyColor.withOpacity(0.2)),
+                  borderSide:
+                      BorderSide(color: greyColor.withOpacity(0.5), width: 1.5),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                  borderSide: BorderSide(color: greyColor.withOpacity(0.2)),
+                  borderSide:
+                      BorderSide(color: greyColor.withOpacity(0.5), width: 1.5),
                 ),
               ),
             ),
           ),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
-          TFWithSize('Type Specific Address/Location', widget.specificAddress,
-              15, lightGreyColor, 1),
-          const Divider(),
+          TFWithSize(
+            'Type Specific Address/Location',
+            widget.specificAddress,
+            15,
+            lightGreyColor,
+            1,
+            type: true,
+          ),
+          const SizedBox(
+            height: 5,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -285,6 +310,7 @@ class _CostState extends State<Cost> {
                   16,
                   lightGreyColor,
                   3.4,
+                  type: true,
                 ),
               ),
               const SizedBox(
@@ -298,6 +324,7 @@ class _CostState extends State<Cost> {
                   16,
                   lightGreyColor,
                   3.4,
+                  type: true,
                 ),
               ),
               const SizedBox(
@@ -312,21 +339,63 @@ class _CostState extends State<Cost> {
                   decoration: BoxDecoration(
                     color: lightGreyColor,
                     border: Border.all(
-                        color: greyColor.withOpacity(0.2), width: 1.5),
+                        color: greyColor.withOpacity(0.5), width: 1.5),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: MyText(
-                    text: "OMR", //getCountry.toString(),
-                    color: blackTypeColor.withOpacity(0.5),
-                    size: 14,
-                    weight: FontWeight.w500,
+                  child: Center(
+                    child: MyText(
+                      text: "OMR", //getCountry.toString(),
+                      color: blackTypeColor.withOpacity(0.5),
+                      size: 14,
+                      weight: FontWeight.w500,
+                    ),
                   ),
                 ),
               ),
+              const SizedBox(height: 5),
               //DdButton(5.5)
             ],
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 2),
+          Row(
+            children: [
+              SizedBox(
+                width: 130,
+                child: MyText(
+                  text: "Including Gears & Other Taxes",
+                  color: redColor,
+                  size: 12,
+                  weight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                width: 130,
+                child: MyText(
+                  text: "Excluding Gears & Other Taxes",
+                  color: redColor,
+                  size: 12,
+                  weight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          // Row(
+          //         children: [
+          //           MyText(
+          //             text: "Including Gears & Other Taxes",
+          //             color: redColor,
+          //             size: 12,
+          //             weight: FontWeight.bold,
+          //           ),
+          //           MyText(
+          //             text: "Excluding Gears & Other Taxes",
+          //             color: redColor,
+          //             size: 12,
+          //             weight: FontWeight.bold,
+          //           )
+          //         ],
+          //       ),
+          const SizedBox(height: 10),
           // Align(
           //     alignment: Alignment.centerLeft,
           //     child: MyText(
@@ -334,15 +403,29 @@ class _CostState extends State<Cost> {
           //       color: blackTypeColor,
           //       weight: FontWeight.w500,
           //     )),
-          const SizedBox(height: 20),
           MultiLineField(
-              'Type Pre-Requisites….', 5, lightGreyColor, widget.preRequisites),
-          const SizedBox(height: 20),
-          MultiLineField('Type Minimum Requirement....', 5, lightGreyColor,
-              widget.minimumRequirement),
-          const SizedBox(height: 20),
+            'Type Pre-Requisites….',
+            5,
+            lightGreyColor,
+            widget.preRequisites,
+            show: true,
+          ),
+          const SizedBox(height: 10),
           MultiLineField(
-              'Type Terms & Conditions.....', 4, lightGreyColor, widget.terms),
+            'Type Minimum Requirement....',
+            5,
+            lightGreyColor,
+            widget.minimumRequirement,
+            show: true,
+          ),
+          const SizedBox(height: 10),
+          MultiLineField(
+            'Type Terms & Conditions.....',
+            4,
+            lightGreyColor,
+            widget.terms,
+            show: true,
+          ),
         ]),
       ),
     );

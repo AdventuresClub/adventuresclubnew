@@ -241,6 +241,7 @@ class _CreateProgramState extends State<CreateProgram> {
           SizedBox(
             width: MediaQuery.of(context).size.width,
             child: TextField(
+                maxLines: 5,
                 onChanged: (value) {
                   sendData();
                 },

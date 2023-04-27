@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/my_adventures.dart';
 import 'package:adventuresclub/home_Screens/details.dart';
+import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:adventuresclub/models/filter_data_model/programs_model.dart';
 import 'package:adventuresclub/models/home_services/become_partner.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
@@ -529,7 +530,9 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
   }
 
   void homePage() {
-    Navigator.of(context).pop();
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return const BottomNavigation();
+    }));
   }
 
   @override

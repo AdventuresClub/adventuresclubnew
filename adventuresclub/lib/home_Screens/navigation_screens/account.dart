@@ -139,45 +139,47 @@ class _AccountState extends State<Account> {
   }
 
   void convert() {
-    setState(() {
-      loading = true;
-    });
-    DateTime dt = DateTime.parse(Constants.profile.bp.endDate);
-    //expiryDate = "${dt.year} '-' ${dt.month} '-' ${dt.day}"
-    if (today.year > dt.year) {
+    if (Constants.profile.userRole == "2") {
       setState(() {
-        loading = false;
-        expired = true;
-        Constants.expired = true;
+        loading = true;
       });
-    } else if (today.year == dt.year && today.month > dt.month) {
-      setState(() {
+      DateTime dt =
+          DateTime.parse(Constants.profile.bp.endDate ?? DateTime.now);
+      if (today.year > dt.year) {
+        setState(() {
+          loading = false;
+          expired = true;
+          Constants.expired = true;
+        });
+      } else if (today.year == dt.year && today.month > dt.month) {
+        setState(() {
+          loading = false;
+          expired = true;
+          Constants.expired = true;
+        });
+      } else if (today.year == dt.year &&
+          today.month == dt.month &&
+          today.day > dt.day) {
+        setState(() {
+          loading = false;
+          expired = true;
+          Constants.expired = true;
+        });
+      }
+      // else if (today.year > dt.year &&
+      //     today.month > dt.month &&
+      //     today.day > dt.day) {
+      //   setState(() {
+      //     loading = false;
+      //     expired = true;
+      //     Constants.expired = false;
+      //   });
+      // }
+      else {
         loading = false;
-        expired = true;
-        Constants.expired = true;
-      });
-    } else if (today.year == dt.year &&
-        today.month == dt.month &&
-        today.day > dt.day) {
-      setState(() {
-        loading = false;
-        expired = true;
-        Constants.expired = true;
-      });
-    }
-    // else if (today.year > dt.year &&
-    //     today.month > dt.month &&
-    //     today.day > dt.day) {
-    //   setState(() {
-    //     loading = false;
-    //     expired = true;
-    //     Constants.expired = false;
-    //   });
-    // }
-    else {
-      loading = false;
-      expired = false;
-      Constants.expired = false;
+        expired = false;
+        Constants.expired = false;
+      }
     }
     print(expired);
   }
@@ -506,7 +508,7 @@ class _AccountState extends State<Account> {
                     // &&
                     // expired == false
                     )
-                      if (expired)
+                      if (expired && Constants.profile.bp.isApproved == "1")
                         Column(
                           children: [
                             GestureDetector(
@@ -714,7 +716,8 @@ class _AccountState extends State<Account> {
                             ),
                           ],
                         ),
-                    if (expired == false)
+                    if (expired == false &&
+                        Constants.profile.bp.isApproved == "1")
                       Column(
                         children: [
                           GestureDetector(
@@ -957,7 +960,7 @@ class _AccountState extends State<Account> {
                                             children: [
                                               MyText(
                                                 text: 'Become A partner',
-                                                size: 18,
+                                                size: 16,
                                                 //fontFamily: 'Raleway',
                                                 weight: FontWeight.w600,
                                                 color: greyColor.withOpacity(1),
@@ -992,31 +995,6 @@ class _AccountState extends State<Account> {
                           ),
                         ),
                       ),
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     Navigator.of(context)
-                    //         .push(MaterialPageRoute(builder: (_) {
-                    //       return const BecomePartnerNew();
-                    //     }));
-                    //   },
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.start,
-                    //     children: [
-                    //       MyText(
-                    //         text: 'Become A partner',
-                    //         size: 18,
-                    //         //fontFamily: 'Raleway',
-                    //         weight: FontWeight.w600,
-                    //         color: greyColor.withOpacity(1),
-                    //       ),
-                    //       const Icon(
-                    //         Icons.arrow_forward_ios,
-                    //         color: bluishColor,
-                    //       )
-                    //     ],
-                    //   ),
-                    // ),
-
                     if (Constants.userRole == "3")
                       Padding(
                         padding: const EdgeInsets.all(12.0),
@@ -1322,6 +1300,8 @@ class _AccountState extends State<Account> {
                           }),
                           leading: Stack(clipBehavior: Clip.none, children: [
                             Image(
+                              height: 30,
+                              width: 30,
                               image: ExactAssetImage(userListIcon[index]),
                             ),
                           ]),

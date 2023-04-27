@@ -387,7 +387,7 @@ class _ServicesCardState extends State<ServicesCard> {
                                     child: RatingBar.builder(
                                       initialRating: convert(widget.gm.stars),
                                       itemSize: 10,
-                                      //minRating: 1,
+                                      minRating: convert(widget.gm.stars),
                                       direction: Axis.horizontal,
                                       allowHalfRating: true,
                                       itemCount: 5,

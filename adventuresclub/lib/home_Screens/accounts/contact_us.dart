@@ -12,6 +12,7 @@ import 'package:adventuresclub/widgets/text_fields/tf_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactUs extends StatefulWidget {
   const ContactUs({super.key});
@@ -40,7 +41,7 @@ class _ContactUsState extends State<ContactUs> {
     setState(() {
       nameController.text = Constants.name;
       emailController.text = Constants.emailId;
-      numController.text = "354133";
+      numController.text = Constants.profile.mobile;
     });
   }
 
@@ -132,6 +133,66 @@ class _ContactUsState extends State<ContactUs> {
       //print(e.toString());
       //    Constants.showMessage(context, e.toString());
     }
+  }
+
+  void launchURL(String type) async {
+    if (type == "ins") {
+      const url = 'https://www.instagram.com/accounts/login/';
+      final uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri);
+      } else {
+        throw 'Could not launch $url';
+      }
+    } else if (type == "whatsapp") {
+      const url = 'https://www.whatsapp.com/';
+      final uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri);
+      } else {
+        throw 'Could not launch $url';
+      }
+    } else if (type == "skype") {
+      const url =
+          'https://login.live.com/login.srf?wa=wsignin1.0&rpsnv=13&ct=1617171723&rver=7.1.6819.0&wp=MBI_SSL&wreply=https%3A%2F%2Flw.skype.com%2Flogin%2Foauth%2Fproxy%3Fclient_id%3D572381%26redirect_uri%3Dhttps%253A%252F%252Fweb.skype.com%252FAuth%252FPostHandler%26state%3Db21ee51c-2d25-49ce-bfc2-57a8f24f3bdf&lc=1033&id=293290&mkt=en-US&psi=skype&lw=1&cobrandid=2befc4b5-19e3-46e8-8347-77317a16a5a5&client_flight=ReservedFlight33%2CReservedFlight67';
+      final uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri);
+      } else {
+        throw 'Could not launch $url';
+      }
+    }
+  }
+
+  void showConfirmation() async {
+    showDialog(
+        context: context,
+        builder: (ctx) => SimpleDialog(
+              contentPadding: const EdgeInsets.all(12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              title: MyText(
+                text: "Specific method is not supported",
+                size: 18,
+                weight: FontWeight.bold,
+                color: blackColor,
+              ),
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton(
+                    onPressed: cancel,
+                    child: MyText(
+                      text: "Ok",
+                    ))
+                //BottomButton(bgColor: blueButtonColor, onTap: homePage)
+              ],
+            ));
+  }
+
+  void cancel() {
+    Navigator.of(context).pop();
   }
 
   abc() {}
@@ -239,44 +300,59 @@ class _ContactUsState extends State<ContactUs> {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
-                      CircleAvatar(
-                        backgroundColor: bluishColor,
-                        child: Image(
-                            image: ExactAssetImage('images/phonepic.png')),
-                      ),
-                      CircleAvatar(
-                        backgroundColor: bluishColor,
-                        child: Image(image: ExactAssetImage('images/mail.png')),
-                      ),
-                      CircleAvatar(
-                        backgroundColor: bluishColor,
-                        child: Image(
-                            image: ExactAssetImage('images/feather-mail.png')),
-                      ),
-                      CircleAvatar(
-                        backgroundColor: bluishColor,
-                        child:
-                            Image(image: ExactAssetImage('images/skype.png')),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      const Image(
-                        image: ExactAssetImage('images/icon-location-on.png'),
-                        height: 25,
+                      GestureDetector(
+                        onTap: showConfirmation,
+                        child: const CircleAvatar(
+                          backgroundColor: bluishColor,
+                          child: Image(
+                              image: ExactAssetImage('images/phonepic.png')),
+                        ),
                       ),
-                      MyText(
-                        text: 'Alkudh 6th, Muscat, Oman',
-                        color: greyColor,
+                      GestureDetector(
+                        onTap: () => launchURL("ins"),
+                        child: const CircleAvatar(
+                          radius: 20,
+                          backgroundColor: bluishColor,
+                          child:
+                              Image(image: ExactAssetImage('images/insta.png')),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => launchURL("whatsapp"),
+                        child: const CircleAvatar(
+                          backgroundColor: bluishColor,
+                          child: Image(
+                              image:
+                                  ExactAssetImage('images/feather-mail.png')),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => launchURL("skype"),
+                        child: const CircleAvatar(
+                          backgroundColor: bluishColor,
+                          child:
+                              Image(image: ExactAssetImage('images/skype.png')),
+                        ),
                       ),
                     ],
                   ),
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //   children: [
+                  //     const Image(
+                  //       image: ExactAssetImage('images/icon-location-on.png'),
+                  //       height: 25,
+                  //     ),
+                  //     MyText(
+                  //       text: Constants.profile.l,
+                  //       color: greyColor,
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
             ),

@@ -30,6 +30,7 @@ class _FavoriteState extends State<Favorite> {
           title: MyText(
             text: 'Favorite',
             color: bluishColor,
+            weight: FontWeight.bold,
           ),
         ),
         body: SingleChildScrollView(

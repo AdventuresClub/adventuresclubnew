@@ -70,7 +70,9 @@ class ServiceListState extends State<ServiceList> {
         itemCount: result.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return ServicesCard(result[index]);
+          return GestureDetector(
+              onTap: () => goToDetails(result[index]),
+              child: ServicesCard(result[index]));
         });
     // return result;
   }
@@ -78,7 +80,7 @@ class ServiceListState extends State<ServiceList> {
   @override
   Widget build(BuildContext context) {
     List<HomeServicesModel> gAllServices =
-        Provider.of<ServicesProvider>(context).gAllServices;
+        Provider.of<ServicesProvider>(context).filteredServices;
     // if (widget.type == "Accomodation") {
     //   gm = Provider.of<ServicesProvider>(context).allAccomodation;
     // } else if (widget.type == "Transport") {
@@ -107,18 +109,20 @@ class ServiceListState extends State<ServiceList> {
               for (int i = 0; i < gAllServices.length; i++)
                 Column(
                   children: [
-                    Center(
+                    Align(
+                      alignment: Alignment.centerLeft,
                       child: MyText(
                         text: gAllServices[i].category,
-                        color: blackColor,
-                        weight: FontWeight.w500,
+                        color: blackColor.withOpacity(0.6),
+                        weight: FontWeight.bold,
+                        size: 18,
                       ),
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
                     SizedBox(
-                      height: 250,
+                      height: 230,
                       child: getList(
                         gAllServices[i].category,
                         gAllServices,

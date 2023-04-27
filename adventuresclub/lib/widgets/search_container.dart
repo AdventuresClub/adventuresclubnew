@@ -1,9 +1,9 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
 import 'package:flutter/material.dart';
 
 class SearchContainer extends StatefulWidget {
-  // ignore: prefer_typing_uninitialized_variables
   final hinttext;
   final width;
   final height;
@@ -19,10 +19,10 @@ class SearchContainer extends StatefulWidget {
       : super(key: key);
 
   @override
-  _SearchContainerState createState() => _SearchContainerState();
+  SearchContainerState createState() => SearchContainerState();
 }
 
-class _SearchContainerState extends State<SearchContainer> {
+class SearchContainerState extends State<SearchContainer> {
   TextEditingController controller = TextEditingController();
 
   @override
@@ -58,7 +58,9 @@ class _SearchContainerState extends State<SearchContainer> {
                 child: TextField(
                   controller: widget.controller,
                   decoration: InputDecoration(
-                      hintText: widget.hinttext, border: InputBorder.none),
+                      hintText: widget.hinttext,
+                      border: InputBorder.none,
+                      hintStyle: const TextStyle(fontSize: 16)),
                 ),
               ),
               // Text(
@@ -75,8 +77,9 @@ class _SearchContainerState extends State<SearchContainer> {
                 Text(
                   Constants.country,
                   style: TextStyle(
-                      color: searchTextColor.withOpacity(0.8),
-                      fontSize: widget.fontSize),
+                    color: searchTextColor.withOpacity(0.8),
+                    fontSize: widget.fontSize,
+                  ),
                 ),
               if (widget.value == true)
                 Image.network(

@@ -61,6 +61,7 @@ class _CreatePlanOneState extends State<CreatePlanOne> {
             SizedBox(
               width: MediaQuery.of(context).size.width,
               child: TextField(
+                  maxLines: 5,
                   onChanged: (value) {
                     sendData();
                   },

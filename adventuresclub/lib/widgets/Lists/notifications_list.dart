@@ -4,8 +4,6 @@ import 'dart:convert';
 import 'dart:core';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/become_partner/become_partner_packages.dart';
-import 'package:adventuresclub/models/packages_become_partner/bp_excluded_model.dart';
-import 'package:adventuresclub/models/packages_become_partner/bp_includes_model.dart';
 import 'package:adventuresclub/models/packages_become_partner/packages_become_partner_model.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
@@ -106,6 +104,37 @@ class _NotificationsListState extends State<NotificationsList> {
     }
   }
 
+  void deleteNotification(String id) async {
+    try {
+      var response = await http.post(
+          Uri.parse(
+              "https://adventuresclub.net/adventureClub/api/v1/delete_notification"),
+          body: {
+            "notification_id": id, //ccCode.toString(),
+          });
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      if (response.statusCode == 200) {
+        cancel();
+      }
+      print(response.statusCode);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  void cancel() {
+    message("Notification has been deleted successfully");
+    Navigator.of(context).pop();
+  }
+
+  void message(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
+  }
+
   void getList() async {
     await Constants.getPackagesApi();
     setState(() {
@@ -147,7 +176,8 @@ class _NotificationsListState extends State<NotificationsList> {
                     motion: const ScrollMotion(),
                     children: [
                       SlidableAction(
-                        onPressed: doNothing,
+                        onPressed: (context) =>
+                            deleteNotification(pNm[index].id.toString()),
                         backgroundColor: Colors.transparent,
                         foregroundColor: Colors.red,
                         icon: Icons.delete,

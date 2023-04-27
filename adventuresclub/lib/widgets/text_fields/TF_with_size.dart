@@ -12,6 +12,7 @@ class TFWithSize extends StatefulWidget {
   final fillColor;
   final double width;
   final int? hintLines;
+  final bool? type;
   const TFWithSize(this.hintText, this.controller, this.verticalPadding,
       this.fillColor, this.width,
       {Key? key,
@@ -19,7 +20,8 @@ class TFWithSize extends StatefulWidget {
       this.show = TextInputType.text,
       this.function,
       this.onEdit,
-      this.hintLines = 2})
+      this.hintLines = 2,
+      this.type = false})
       : super(key: key);
 
   @override
@@ -34,7 +36,6 @@ class _TFWithSizeState extends State<TFWithSize> {
       width: MediaQuery.of(context).size.width / widget.width,
       child: TextField(
         onEditingComplete: () => widget.onEdit,
-        autofocus: true,
         keyboardType: widget.show,
         controller: widget.controller,
         decoration: InputDecoration(
@@ -53,13 +54,19 @@ class _TFWithSizeState extends State<TFWithSize> {
           border: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(10.0)),
             borderSide: BorderSide(
-              color: greyTextColor.withOpacity(0.2),
+              color: widget.type!
+                  ? greyTextColor.withOpacity(0.5)
+                  : greyTextColor.withOpacity(0.2),
+              width: 1.5,
             ),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(10.0)),
             borderSide: BorderSide(
-              color: greyTextColor.withOpacity(0.2),
+              color: widget.type!
+                  ? greyTextColor.withOpacity(0.5)
+                  : greyTextColor.withOpacity(0.2),
+              width: 1.5,
             ),
           ),
           focusedBorder: OutlineInputBorder(
@@ -67,7 +74,10 @@ class _TFWithSizeState extends State<TFWithSize> {
               Radius.circular(10),
             ),
             borderSide: BorderSide(
-              color: greyTextColor.withOpacity(0.2),
+              color: widget.type!
+                  ? greyTextColor.withOpacity(0.5)
+                  : greyTextColor.withOpacity(0.2),
+              width: 1.5,
             ),
           ),
         ),

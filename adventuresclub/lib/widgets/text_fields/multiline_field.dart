@@ -6,8 +6,9 @@ class MultiLineField extends StatefulWidget {
   final int lines;
   final color;
   final TextEditingController? controller;
+  final bool? show;
   const MultiLineField(this.hinttext, this.lines, this.color, this.controller,
-      {super.key});
+      {this.show = false, super.key});
 
   @override
   State<MultiLineField> createState() => _MultiLineFieldState();
@@ -34,15 +35,27 @@ class _MultiLineFieldState extends State<MultiLineField> {
           fillColor: widget.color,
           border: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-            borderSide: BorderSide(color: blackColor.withOpacity(0.2)),
+            borderSide: BorderSide(
+                color: widget.show!
+                    ? greyColor.withOpacity(0.5)
+                    : greyColor.withOpacity(0.2),
+                width: 1.5),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-            borderSide: BorderSide(color: blackColor.withOpacity(0.2)),
+            borderSide: BorderSide(
+                color: widget.show!
+                    ? greyColor.withOpacity(0.5)
+                    : greyColor.withOpacity(0.2),
+                width: 1.5),
           ),
           focusedBorder: OutlineInputBorder(
               borderRadius: const BorderRadius.all(Radius.circular(12)),
-              borderSide: BorderSide(color: blackColor.withOpacity(0.2)))),
+              borderSide: BorderSide(
+                  color: widget.show!
+                      ? greyColor.withOpacity(0.5)
+                      : greyColor.withOpacity(0.2),
+                  width: 1.5))),
     );
   }
 }

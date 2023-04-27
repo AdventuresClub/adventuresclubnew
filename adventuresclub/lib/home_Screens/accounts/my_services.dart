@@ -17,9 +17,7 @@ import 'package:adventuresclub/models/services/create_services/availability_plan
 import 'package:adventuresclub/models/services/dependencies_model.dart';
 import 'package:adventuresclub/models/services/included_activities_model.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
-import 'package:adventuresclub/widgets/grid/my_services_grid/my_services_grid.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
-import 'package:adventuresclub/widgets/search_container.dart';
 import 'package:adventuresclub/widgets/services_card.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -461,13 +459,8 @@ class _MyServicesState extends State<MyServices> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus) {
-          currentFocus.unfocus();
-        }
-      },
+    return RefreshIndicator(
+      onRefresh: myServicesApi,
       child: Scaffold(
         //backgroundColor: greyBackgroundColor.withOpacity(0.9),
         appBar: AppBar(
@@ -522,43 +515,40 @@ class _MyServicesState extends State<MyServices> {
             ),
           ),
         ),
-        body: RefreshIndicator(
-          onRefresh: myServicesApi,
-          child: SingleChildScrollView(
-            child: Container(
-              color: greyShadeColor.withOpacity(0.1),
-              child: Column(
-                children: [
-                  // Text("test")
-                  // MyServicesGrid(
-                  //   filteredServices,
-                  // ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: 12.0, bottom: 12, left: 5, right: 5),
-                    child: GridView.count(
-                      physics: const ScrollPhysics(),
-                      shrinkWrap: true,
-                      mainAxisSpacing: 2,
-                      childAspectRatio: 1.05,
-                      crossAxisSpacing: 2,
-                      crossAxisCount: 2,
-                      children: List.generate(
-                        filteredServices.length, // widget.profileURL.length,
-                        (index) {
-                          return GestureDetector(
-                            onTap: () => goToDetails(filteredServices[index]),
-                            child: ServicesCard(
-                              filteredServices[index],
-                              show: true,
-                            ),
-                          );
-                        },
-                      ),
+        body: SingleChildScrollView(
+          child: Container(
+            color: greyShadeColor.withOpacity(0.1),
+            child: Column(
+              children: [
+                // Text("test")
+                // MyServicesGrid(
+                //   filteredServices,
+                // ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 12.0, bottom: 12, left: 5, right: 5),
+                  child: GridView.count(
+                    physics: const ScrollPhysics(),
+                    shrinkWrap: true,
+                    mainAxisSpacing: 2,
+                    childAspectRatio: 1.05,
+                    crossAxisSpacing: 2,
+                    crossAxisCount: 2,
+                    children: List.generate(
+                      filteredServices.length, // widget.profileURL.length,
+                      (index) {
+                        return GestureDetector(
+                          onTap: () => goToDetails(filteredServices[index]),
+                          child: ServicesCard(
+                            filteredServices[index],
+                            show: true,
+                          ),
+                        );
+                      },
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

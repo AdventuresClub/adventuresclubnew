@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls, prefer_typing_uninitialized_variables
+// ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls, prefer_typing_uninitialized_variables, unused_local_variable
 import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
@@ -32,15 +32,6 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   TextEditingController availableSeatsController = TextEditingController();
   TextEditingController infoController = TextEditingController();
   TextEditingController scheduleController = TextEditingController();
-  TextEditingController scheduleController1 = TextEditingController();
-  TextEditingController scheduleController2 = TextEditingController();
-  TextEditingController scheduleController3 = TextEditingController();
-  TextEditingController scheduleController4 = TextEditingController();
-  TextEditingController scheduleDescription = TextEditingController();
-  TextEditingController scheduleDescription1 = TextEditingController();
-  TextEditingController scheduleDescription2 = TextEditingController();
-  TextEditingController scheduleDescription3 = TextEditingController();
-  TextEditingController scheduleDescription4 = TextEditingController();
   TextEditingController iLiveInController = TextEditingController();
   TextEditingController specificAddressController = TextEditingController();
   TextEditingController costOne = TextEditingController();
@@ -68,8 +59,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   List<int> servicePlanDaysId = [];
   bool particularDay = false;
   // bool particularWeekDay = false;
-  bool particularWeekDays = true;
-  bool particularWeek = true;
+  bool particularWeekDays = false;
+  bool particularWeek = false;
   DateTime? pickedDate;
   var formattedDate;
   var endDate;
@@ -162,15 +153,6 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     adventureName.dispose();
     availableSeatsController.dispose();
     scheduleController.dispose();
-    scheduleController1.dispose();
-    scheduleController2.dispose();
-    scheduleController3.dispose();
-    scheduleController4.dispose();
-    scheduleDescription.dispose();
-    scheduleDescription1.dispose();
-    scheduleDescription2.dispose();
-    scheduleDescription3.dispose();
-    scheduleDescription4.dispose();
     iLiveInController.dispose();
     specificAddressController.dispose();
     costOne.dispose();
@@ -233,7 +215,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                 ElevatedButton(
                     onPressed: homePage,
                     style: ElevatedButton.styleFrom(
-                      primary: bluishColor,
+                      backgroundColor: bluishColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -749,7 +731,6 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         sPlan = 0;
       });
     }
-    print("${"this is a plan id"}${sPlan}");
   }
 
   void servicePlanfilter() {
@@ -832,7 +813,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                 child: MyText(
                   text:
                       'Just follow simple four steps to list up your adventure',
-                  size: 14,
+                  size: 12,
                   weight: FontWeight.w600,
                   color: greyColor,
                 ),
@@ -984,7 +965,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                       daysExpiry,
                       Column(
                         children: [
-                          particularWeek
+                          particularWeek == false
                               ? Column(
                                   children: [
                                     Align(

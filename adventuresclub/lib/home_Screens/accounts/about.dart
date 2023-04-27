@@ -439,6 +439,7 @@ class _AboutState extends State<About> {
                                           height: 2,
                                         ),
                                         MyText(
+                                          overFlow: TextOverflow.fade,
                                           text: "${profile.bp.location}"
                                               "${","}"
                                               "${profile.bp.address}", //'County, City',

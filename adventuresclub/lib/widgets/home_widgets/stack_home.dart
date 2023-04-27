@@ -13,6 +13,7 @@ import 'package:adventuresclub/models/filter_data_model/region_model.dart';
 import 'package:adventuresclub/models/filter_data_model/sector_filter_model.dart';
 import 'package:adventuresclub/models/filter_data_model/service_types_filter.dart';
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
+import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/dropdowns/aimed_for_drop_down.dart';
 import 'package:adventuresclub/widgets/dropdowns/country_drop_down.dart';
 import 'package:adventuresclub/widgets/dropdowns/duration_drop_down.dart';
@@ -25,6 +26,7 @@ import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/search_container.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import '../../models/filter_data_model/durations_model.dart';
 import '../../models/filter_data_model/level_filter_mode.dart';
 
@@ -41,7 +43,7 @@ class StackHome extends StatefulWidget {
 
 class _StackHomeState extends State<StackHome> {
   final PageController _pageViewController = PageController(initialPage: 0);
-  TextEditingController controller = TextEditingController();
+  TextEditingController searchController = TextEditingController();
 
   int _activePage = 0;
   int index = 0;
@@ -678,7 +680,7 @@ class _StackHomeState extends State<StackHome> {
                           'Search by provider name',
                           1.2,
                           8,
-                          controller,
+                          searchController,
                           'images/bin.png',
                           false,
                           false,
@@ -742,6 +744,22 @@ class _StackHomeState extends State<StackHome> {
     );
   }
 
+  // void searchServices(String x) {
+  //   if (x.isNotEmpty) {
+  //     filteredServices = allServices
+  //         .where((element) => element.adventureName.toLowerCase().contains(x))
+  //         .toList();
+  //     //log(filteredServices.length.toString());
+  //   } else {
+  //     filteredServices = allServices;
+  //   }
+  //   setState(() {});
+  // }
+
+  void searchAdventure(String y) {
+    Provider.of<ServicesProvider>(context, listen: false).setSearch(y);
+  }
+
   @override
   Widget build(BuildContext context) {
     return
@@ -757,8 +775,8 @@ class _StackHomeState extends State<StackHome> {
       clipBehavior: Clip.none,
       children: [
         Container(
-          height: MediaQuery.of(context).size.height / 4,
-          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height / 8,
+          width: MediaQuery.of(context).size.height / 1.4,
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: ExactAssetImage('images/homeScreen.png'),
@@ -791,8 +809,77 @@ class _StackHomeState extends State<StackHome> {
               const SizedBox(
                 width: 8,
               ),
-              SearchContainer('Search adventure name', 1.4, 8, controller,
-                  'images/maskGroup51.png', true, true, Constants.country, 12),
+              Container(
+                padding:
+                    const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 4),
+                width: MediaQuery.of(context).size.width / 1.4,
+                height: MediaQuery.of(context).size.height / 16,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                      color: blackColor.withOpacity(0.4), width: 1.7),
+                  color: whiteColor,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        const Icon(
+                          Icons.search,
+                          color: greyColor,
+                          size: 30,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width / 2.8,
+                          child: TextField(
+                            onChanged: (value) {
+                              searchAdventure(value);
+                            },
+                            controller: searchController,
+                            decoration: const InputDecoration(
+                                hintText: "Search Adventure",
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(fontSize: 16)),
+                          ),
+                        ),
+                        // Text(
+                        //   widget.hinttext,
+                        //   style: TextStyle(
+                        //       color: searchTextColor.withOpacity(0.8),
+                        //       fontSize: widget.fontSize),
+                        // ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          Constants.country,
+                          style: TextStyle(
+                            color: searchTextColor.withOpacity(0.8),
+                            fontSize: 12,
+                          ),
+                        ),
+                        Image.network(
+                          "${"https://adventuresclub.net/adventureClub/public/"}${Constants.countryFlag}",
+                          height: 15,
+                          width: 15,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              // SearchContainer('Search adventure name', 1.4, 8, searchController,
+              //     'images/maskGroup51.png', true, true, Constants.country, 12),
               const SizedBox(
                 width: 8,
               ),
