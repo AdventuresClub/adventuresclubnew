@@ -33,29 +33,32 @@ class DescriptionActivitiesWidget extends StatelessWidget {
               shrinkWrap: true,
               mainAxisSpacing: 0,
               childAspectRatio: 4,
-              crossAxisSpacing: 0,
+              crossAxisSpacing: 4,
               crossAxisCount: 3,
               children:
                   List.generate(activities.length, //activitesInclude.length,
                       (index) {
-                return Row(
-                  children: [
-                    Image.network(
-                      "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${activities[index].image}",
-                      height: 18,
-                      width: 18,
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    MyText(
-                      text: activities[index].activity,
-                      color: greyTextColor,
-                      weight: FontWeight.w500,
-                      fontFamily: 'Roboto',
-                      size: 12,
-                    ),
-                  ],
+                return SizedBox(
+                  height: 20,
+                  child: Row(
+                    children: [
+                      Image.network(
+                        "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${activities[index].image}",
+                        height: 18,
+                        width: 18,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      MyText(
+                        text: activities[index].activity,
+                        color: greyTextColor,
+                        weight: FontWeight.w500,
+                        fontFamily: 'Roboto',
+                        size: 12,
+                      ),
+                    ],
+                  ),
                 );
               }),
             )
