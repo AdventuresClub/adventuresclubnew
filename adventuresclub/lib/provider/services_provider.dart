@@ -51,29 +51,24 @@ class ServicesProvider with ChangeNotifier {
   List<SearchModel> searchedList = [];
 
   void setSearch(String x) {
-    if (x.isNotEmpty && x.length >= 3) {
-      for (SearchModel l in searchedList) {
-        List<String> foundAdventures = [];
-        for (int f = 0; f < l.adventureName.length; f++) {
-          if (l.adventureName[f].contains(x)) {
-            foundAdventures.add(l.serviceId[f]);
-          }
-        }
-      }
-      for (HomeServicesModel s in gAllServices) {
-        List<ServicesModel> services = s.sm;
-        List<ServicesModel> foundServices = [];
-        for (ServicesModel i in services) {
-          if (i.adventureName.contains(x)) {
-            foundServices.add(i);
-          }
-        }
-        if (foundServices.isNotEmpty) {
-          gAllServices.add(HomeServicesModel(s.category, foundServices));
+    filteredServices.clear();
+    if (x.isNotEmpty) {
+      List<ServicesModel> filtered = allServices
+          .where((element) =>
+              element.adventureName.toLowerCase().contains(x.toLowerCase()))
+          .toList();
+      for (int i = 0; i < filtered.length; i++) {
+        int index = filteredServices.indexWhere(
+            (element) => element.category == filtered[i].serviceCategory);
+        if (index == -1) {
+          filteredServices.add(
+              HomeServicesModel(filtered[i].serviceCategory, [filtered[i]]));
+        } else {
+          filteredServices[index].sm.add(filtered[i]);
         }
       }
     } else {
-      filteredServices = gAllServices;
+      filteredServices = [...gAllServices];
     }
     notifyListeners();
   }
@@ -103,6 +98,8 @@ class ServicesProvider with ChangeNotifier {
   }
 
   Future getServicesList() async {
+    filteredServices.clear();
+    allServices.clear();
     //gAllServices.clear();
     //getServicesListy1();
     var response = await http.post(
@@ -120,7 +117,6 @@ class ServicesProvider with ChangeNotifier {
         acc = element['category'].toString() ?? "";
         categories.add(acc);
         List<dynamic> s = element['services'];
-        allServices.clear();
         s.forEach((services) {
           List<AvailabilityPlanModel> gAccomodationPlanModel = [];
           List<dynamic> availablePlan = services['availability'];
@@ -285,7 +281,7 @@ class ServicesProvider with ChangeNotifier {
         });
         searchedList.add(SearchModel(acc, serviceId, adventureName));
       });
-      filteredServices = gAllServices;
+      filteredServices = [...gAllServices];
       notifyListeners();
       // allServices.forEach((element) {
       //     gAllServices.add(element.serviceCategory, element);
