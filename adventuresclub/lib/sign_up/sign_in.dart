@@ -284,8 +284,8 @@ class _SignInState extends State<SignIn> {
             prefs.setString("email", emailController.text);
             prefs.setString("password", passController.text);
             cId(up.countryId);
-            parseData(
-                up.name, up.countryId, up.id, up.email, passController.text);
+            parseData(up.name, up.countryId, up.id, emailController.text,
+                passController.text);
             //Constants.userRole = "3";
             goToNavigation();
           } else {

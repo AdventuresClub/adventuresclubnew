@@ -1,8 +1,10 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls, unused_local_variable
 
 import 'dart:convert';
 
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/models/health_condition_model.dart';
+import 'package:adventuresclub/models/weightnheight_model.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:http/http.dart' as http;
@@ -18,8 +20,14 @@ class HealthCondition extends StatefulWidget {
 
 class _HealthConditionState extends State<HealthCondition> {
   TextEditingController kGcontroller = TextEditingController();
-
   TextEditingController cMcontroller = TextEditingController();
+  Map mapCountry = {};
+  List<HealthConditionModel> healthList = [];
+  List<WnHModel> weightList = [];
+  List<WnHModel> heightList = [];
+  List<bool> healthValue = [];
+  List<String> currentHealth = [];
+  bool loading = false;
   List<bool> value1 = [
     false,
     false,
@@ -65,19 +73,106 @@ class _HealthConditionState extends State<HealthCondition> {
   ];
   abc() {}
 
-  void getHealth() async {
+  @override
+  void initState() {
+    super.initState();
+    Constants.getProfile();
+    getHealth();
+  }
+
+  Future getWeightNHeight() async {
+    var response = await http.get(Uri.parse(
+        "https://adventuresclub.net/adventureClub/api/v1/get_heights_weights"));
+    if (response.statusCode == 200) {
+      mapCountry = json.decode(response.body);
+      dynamic result = mapCountry['data'];
+      List<dynamic> height = result['heights'];
+      height.forEach((h) {
+        int id = int.tryParse(h['Id'].toString()) ?? 0;
+        WnHModel heightModel = WnHModel(
+          id,
+          h['heightName'].toString() ?? "",
+          h['image'].toString() ?? "",
+          h['deleted_at'].toString() ?? "",
+          h['created_at'].toString() ?? "",
+          h['updated_at'].toString() ?? "",
+        );
+        heightList.add(heightModel);
+      });
+      List<dynamic> weight = result['weights'];
+      weight.forEach((w) {
+        int id = int.tryParse(w['Id'].toString()) ?? 0;
+        WnHModel weightModel = WnHModel(
+          id,
+          w['weightName'].toString() ?? "",
+          w['image'].toString() ?? "",
+          w['deleted_at'].toString() ?? "",
+          w['created_at'].toString() ?? "",
+          w['updated_at'].toString() ?? "",
+        );
+        weightList.add(weightModel);
+      });
+    }
+  }
+
+  Future getHealth() async {
+    getWeightNHeight();
+    setState(() {
+      loading = true;
+    });
+    var response = await http.get(Uri.parse(
+        "https://adventuresclub.net/adventureClub/api/v1/get_healths"));
+    if (response.statusCode == 200) {
+      mapCountry = json.decode(response.body);
+      List<dynamic> result = mapCountry['data'];
+      result.forEach((element) {
+        HealthConditionModel hc =
+            HealthConditionModel(element['id'], element['name']);
+        healthList.add(hc);
+      });
+    }
+    getHealthValues();
+  }
+
+  void getHealthValues() {
+    healthList.forEach((element) {
+      //for (int i = 0; i <)
+      healthValue.add(false);
+    });
+    setState(() {
+      loading = false;
+    });
+    getCurrentHealth();
+  }
+
+  void getCurrentHealth() {
+    Constants.profile.healthConditionsId;
+    currentHealth = Constants.profile.healthCondtions.split(",");
+    print(currentHealth);
+  }
+
+  // void updateH(List<String> h) {
+  //   h.forEach((element) {
+  //     for (int i = 0; i < healthList.length; )
+  //   })
+  // }
+
+  void editHealth() async {
     try {
       var response = await http.post(
           Uri.parse(
               "https://adventuresclub.net/adventureClub/api/v1/update_health_conditions"),
           body: {
             'user_id': Constants.userId.toString(), //ccCode.toString(),
-            "health_conditions": "",
-            "forgot_password": "0",
-            "height": "",
-            "weight": ""
+            "health_conditions": "6,7,4",
+            "height": "50CM (19.7Inch)",
+            "weight": "10KG (22Pounds)"
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      if (response.statusCode == 200) {
+        cancel();
+        message("Health Condition Amended");
+      }
       // setState(() {
       //   userID = decodedResponse['data']['user_id'];
       // });
@@ -85,6 +180,18 @@ class _HealthConditionState extends State<HealthCondition> {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  void cancel() {
+    Navigator.of(context).pop();
+  }
+
+  void message(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
   }
 
   @override
@@ -111,81 +218,100 @@ class _HealthConditionState extends State<HealthCondition> {
             ),
           ),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(children: [
-                Wrap(
-                  children: List.generate(9, (index) {
-                    return Column(
-                      children: [
-                        CheckboxListTile(
-                          contentPadding: EdgeInsets.symmetric(horizontal: 5),
-                          side: const BorderSide(color: bluishColor),
-                          checkboxShape: const RoundedRectangleBorder(
-                            side: BorderSide(color: bluishColor),
-                          ),
-                          visualDensity:
-                              const VisualDensity(horizontal: -2, vertical: -4),
-                          activeColor: bluishColor,
-                          checkColor: whiteColor,
-                          value: value1[index],
-                          onChanged: ((bool? value2) {
-                            setState(() {
-                              value1[index] = value2!;
-                            });
-                          }),
-                          title: MyText(
-                            text: text[index],
-                            color: greyColor,
-                            fontFamily: 'Raleway',
-                            size: 16,
-                          ),
-                        ),
-                        if (text[index] != "Weight & Height")
-                          const Divider(
-                            endIndent: 6,
-                            indent: 6,
-                            color: blackTypeColor3,
-                          ),
-                      ],
-                    );
-                  }),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(
-                        width: MediaQuery.of(context).size.width / 2.2,
-                        child: pickingWeight(context, '10KG (22Pounds)', true)),
-                    //TFWithSuffixText('60', kGcontroller,'KG'),
+        body: loading
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const CircularProgressIndicator(),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  MyText(
+                    text: "Loading",
+                    size: 14,
+                    weight: FontWeight.bold,
+                  )
+                ],
+              )
+            : SingleChildScrollView(
+                child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(children: [
+                      Wrap(
+                        children: List.generate(healthList.length, (index) {
+                          return Column(
+                            children: [
+                              CheckboxListTile(
+                                contentPadding:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                side: const BorderSide(color: bluishColor),
+                                checkboxShape: const RoundedRectangleBorder(
+                                  side: BorderSide(color: bluishColor),
+                                ),
+                                visualDensity: const VisualDensity(
+                                    horizontal: -2, vertical: -4),
+                                activeColor: bluishColor,
+                                checkColor: whiteColor,
+                                value: value1[index],
+                                onChanged: ((bool? value2) {
+                                  setState(() {
+                                    value1[index] = value2!;
+                                  });
+                                }),
+                                title: MyText(
+                                  text: healthList[index].healthCondition,
+                                  color: greyColor,
+                                  fontFamily: 'Raleway',
+                                  size: 16,
+                                ),
+                              ),
+                              if (text[index] != "Weight & Height")
+                                const Divider(
+                                  endIndent: 6,
+                                  indent: 6,
+                                  color: blackTypeColor3,
+                                ),
+                            ],
+                          );
+                        }),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width / 2.2,
+                              child: pickingWeight(
+                                  context, '10KG (22Pounds)', true)),
+                          //TFWithSuffixText('60', kGcontroller,'KG'),
 
-                    SizedBox(
-                        width: MediaQuery.of(context).size.width / 2.2,
-                        child: pickingWeight(context, '50CM(19.7Inch)', false))
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Button(
-                    'Update',
-                    bluishColor,
-                    bluishColor,
-                    whiteColor,
-                    18,
-                    abc,
-                    Icons.add,
-                    whiteColor,
-                    false,
-                    1.6,
-                    'Roboto',
-                    FontWeight.w400,
-                    16),
-                const SizedBox(height: 20),
-              ])),
-        ));
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width / 2.2,
+                              child: pickingWeight(
+                                  context, '50CM(19.7Inch)', false))
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Button(
+                          'Update',
+                          bluishColor,
+                          bluishColor,
+                          whiteColor,
+                          18,
+                          editHealth,
+                          Icons.add,
+                          whiteColor,
+                          false,
+                          1.6,
+                          'Roboto',
+                          FontWeight.w400,
+                          16),
+                      const SizedBox(height: 20),
+                    ])),
+              ));
   }
 
   Widget pickingWeight(context, String genderName, bool showWidget) {

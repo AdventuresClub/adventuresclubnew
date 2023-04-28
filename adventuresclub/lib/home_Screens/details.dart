@@ -7,6 +7,7 @@ import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
 import 'package:adventuresclub/widgets/tabs/details_tabs/details_tabs.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../models/home_services/services_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -88,6 +89,9 @@ class _DetailsState extends State<Details> {
   }
 
   void addFav() async {
+    setState(() {
+      favourite = true;
+    });
     try {
       var response = await http.post(
           Uri.parse(
@@ -99,11 +103,7 @@ class _DetailsState extends State<Details> {
       if (response.statusCode == 200) {
         cancel();
         message("Adventure has been added to your favourites");
-        setState(() {
-          favourite = true;
-        });
       }
-
       print(response.statusCode);
       print(response.body);
       print(response.headers);
@@ -122,6 +122,16 @@ class _DetailsState extends State<Details> {
         content: Text(message),
       ),
     );
+  }
+
+  void launchURL() async {
+    const url = 'https://adventuresclub.net/';
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -188,21 +198,34 @@ class _DetailsState extends State<Details> {
                         right: 70,
                         child: GestureDetector(
                           onTap: addFav,
-                          child: const Image(
-                            image: ExactAssetImage(
-                              'images/heart.png',
-                            ),
-                            height: 30,
-                          ),
+                          child: favourite
+                              ? const Icon(
+                                  Icons.favorite,
+                                  size: 35,
+                                  color: redColor,
+                                )
+                              : const Icon(
+                                  Icons.favorite_border,
+                                  size: 35,
+                                ),
+                          // child: const Image(
+                          //   image: ExactAssetImage(
+                          //     'images/heart.png',
+                          //   ),
+                          //   height: 30,
+                          // ),
                         )),
-                    const Positioned(
+                    Positioned(
                       bottom: -10,
                       right: 30,
-                      child: Image(
-                        image: ExactAssetImage(
-                          'images/forward.png',
+                      child: GestureDetector(
+                        onTap: launchURL,
+                        child: const Image(
+                          image: ExactAssetImage(
+                            'images/forward.png',
+                          ),
+                          height: 34,
                         ),
-                        height: 34,
                       ),
                     )
                   ],

@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/home_Screens/accounts/my_adventures.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
@@ -147,6 +146,17 @@ class _ClientRequestListState extends State<ClientRequestList> {
     );
   }
 
+  String calculateAge(String d) {
+    DateTime birthdate = DateTime.parse(d);
+    final now = DateTime.now();
+    var age = now.year - birthdate.year;
+    if (now.month < birthdate.month ||
+        (now.month == birthdate.month && now.day < birthdate.day)) {
+      age--;
+    }
+    return '$age years old';
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -267,7 +277,7 @@ class _ClientRequestListState extends State<ClientRequestList> {
                                   height: 1.6,
                                 ),
                                 MyText(
-                                  text: widget.rm[index].dob,
+                                  text: calculateAge(widget.rm[index].dob),
                                   color: greyColor,
                                   weight: FontWeight.w400,
                                   size: 12,

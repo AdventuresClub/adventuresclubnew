@@ -297,11 +297,11 @@ class _AccountState extends State<Account> {
     }
   }
 
-  void goToProfile(bool expired) {
+  void goToProfile(bool expired, String role) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return Profile(expired);
+          return Profile(expired, role);
         },
       ),
     );
@@ -407,10 +407,6 @@ class _AccountState extends State<Account> {
     );
   }
 
-  void showExpiry() {
-    ex();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -427,8 +423,183 @@ class _AccountState extends State<Account> {
                     const SizedBox(
                       height: 10,
                     ),
+                    if (Constants.profile.userRole == "3")
+                      Column(
+                        children: [
+                          Container(
+                            color: transparentColor,
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                loading
+                                    ? const Text("Loading")
+                                    : Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          MyText(
+                                            text: Constants.profile
+                                                .name, //'Kenneth Gutierrez',
+                                            color: blackColor,
+                                            weight: FontWeight.bold,
+                                            size: 22,
+                                            fontFamily: "Raleway",
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (_) {
+                                                return const BecomePartnerNew();
+                                              }));
+                                            },
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                MyText(
+                                                  text: 'Become A partner',
+                                                  size: 16,
+                                                  //fontFamily: 'Raleway',
+                                                  weight: FontWeight.w600,
+                                                  color:
+                                                      greyColor.withOpacity(1),
+                                                ),
+                                                const Icon(
+                                                  Icons.arrow_forward_ios,
+                                                  color: bluishColor,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                profileUrl != null
+                                    ? GestureDetector(
+                                        onTap: () => goToProfile(
+                                            expired, Constants.userRole),
+                                        child: const CircleAvatar(
+                                          radius: 38,
+                                          backgroundImage: ExactAssetImage(
+                                              'images/avatar2.png'),
+                                        ),
+                                      )
+                                    : GestureDetector(
+                                        onTap: () => goToProfile(
+                                            expired, Constants.userRole),
+                                        child: CircleAvatar(
+                                          radius: 38,
+                                          backgroundImage:
+                                              NetworkImage(profileUrl),
+                                        ),
+                                      ),
+                              ],
+                            ),
+                          ),
+                          // const SizedBox(
+                          //   height: 10,
+                          // ),
+                          Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Card(
+                              elevation: 1,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    for (int i = 0; i < 3; i++)
+                                      Column(
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              if (userText[i] == 'Favorite') {
+                                                Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                    builder: (_) {
+                                                      return const Favorite();
+                                                    },
+                                                  ),
+                                                );
+                                              }
+                                              if (userText[i] ==
+                                                  'Notification') {
+                                                Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                    builder: (_) {
+                                                      return const Notifications();
+                                                    },
+                                                  ),
+                                                );
+                                              }
+                                              if (userText[i] == 'My Points') {
+                                                Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                    builder: (_) {
+                                                      return const MyPoints();
+                                                    },
+                                                  ),
+                                                );
+                                              }
+                                            },
+                                            child: Stack(
+                                              clipBehavior: Clip.none,
+                                              children: [
+                                                Image(
+                                                  image: ExactAssetImage(
+                                                      images[i]),
+                                                  height: 30,
+                                                  width: 30,
+                                                ),
+                                                Constants.totalNotication > 0 &&
+                                                        text[i] ==
+                                                            'Notifications'
+                                                    ? Positioned(
+                                                        bottom: -5,
+                                                        right: -12,
+                                                        child: CircleAvatar(
+                                                          radius: 10,
+                                                          backgroundColor:
+                                                              redColor,
+                                                          child: MyText(
+                                                            text: Constants
+                                                                .resultService
+                                                                .toString(), //'12',
+                                                            color: whiteColor,
+                                                            weight:
+                                                                FontWeight.bold,
+                                                            size: 9,
+                                                          ),
+                                                        ),
+                                                      )
+                                                    : const SizedBox()
+                                              ],
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          MyText(
+                                            text: userText[i],
+                                            color: greyColor.withOpacity(1),
+                                            weight: FontWeight.bold,
+                                          )
+                                        ],
+                                      )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     if (Constants.profile.bp.packagesId == 0 &&
-                        Constants.profile.bp.isApproved == "0")
+                        Constants.profile.bp.isApproved == "0" &&
+                        Constants.profile.userRole == "2")
                       GestureDetector(
                         //  onTap: getProfile,
                         child: Container(
@@ -451,40 +622,38 @@ class _AccountState extends State<Account> {
                                           size: 22,
                                           fontFamily: "Raleway",
                                         ),
-                                        if (Constants.profile.bp.packagesId ==
-                                            0)
-                                          GestureDetector(
-                                            onTap: requestSent,
-                                            // () {
-                                            //   Navigator.of(context)
-                                            //       .push(MaterialPageRoute(builder: (_) {
-                                            //     return const BecomePartnerNew();
-                                            //   }));
-                                            // },
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                MyText(
-                                                  text: 'Become A partner',
-                                                  size: 18,
-                                                  //fontFamily: 'Raleway',
-                                                  weight: FontWeight.w600,
-                                                  color:
-                                                      greyColor.withOpacity(1),
-                                                ),
-                                                const Icon(
-                                                  Icons.arrow_forward_ios,
-                                                  color: bluishColor,
-                                                )
-                                              ],
-                                            ),
+                                        GestureDetector(
+                                          onTap: requestSent,
+                                          // () {
+                                          //   Navigator.of(context)
+                                          //       .push(MaterialPageRoute(builder: (_) {
+                                          //     return const BecomePartnerNew();
+                                          //   }));
+                                          // },
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              MyText(
+                                                text: 'Become A partner',
+                                                size: 18,
+                                                //fontFamily: 'Raleway',
+                                                weight: FontWeight.w600,
+                                                color: greyColor.withOpacity(1),
+                                              ),
+                                              const Icon(
+                                                Icons.arrow_forward_ios,
+                                                color: bluishColor,
+                                              )
+                                            ],
                                           ),
+                                        ),
                                       ],
                                     ),
                               profileUrl != null
                                   ? GestureDetector(
-                                      onTap: () => goToProfile(expired),
+                                      onTap: () => goToProfile(
+                                          expired, Constants.userRole),
                                       child: const CircleAvatar(
                                         radius: 38,
                                         backgroundImage: ExactAssetImage(
@@ -492,7 +661,8 @@ class _AccountState extends State<Account> {
                                       ),
                                     )
                                   : GestureDetector(
-                                      onTap: () => goToProfile(expired),
+                                      onTap: () => goToProfile(
+                                          expired, Constants.userRole),
                                       child: CircleAvatar(
                                         radius: 38,
                                         backgroundImage:
@@ -504,11 +674,14 @@ class _AccountState extends State<Account> {
                         ),
                       ),
                     if (Constants.profile.bp.packagesId > 0 &&
-                        Constants.profile.bp.isApproved == "1"
+                        Constants.profile.bp.isApproved == "1" &&
+                        Constants.profile.userRole == "2"
                     // &&
                     // expired == false
                     )
-                      if (expired && Constants.profile.bp.isApproved == "1")
+                      if (expired &&
+                          Constants.profile.bp.isApproved == "1" &&
+                          Constants.profile.userRole == "2")
                         Column(
                           children: [
                             GestureDetector(
@@ -577,7 +750,8 @@ class _AccountState extends State<Account> {
                                           ),
                                     profileUrl != null
                                         ? GestureDetector(
-                                            onTap: () => goToProfile(expired),
+                                            onTap: () => goToProfile(
+                                                expired, Constants.userRole),
                                             child: const CircleAvatar(
                                               radius: 35,
                                               backgroundImage: ExactAssetImage(
@@ -585,7 +759,8 @@ class _AccountState extends State<Account> {
                                             ),
                                           )
                                         : GestureDetector(
-                                            onTap: () => goToProfile(expired),
+                                            onTap: () => goToProfile(
+                                                expired, Constants.userRole),
                                             child: CircleAvatar(
                                               radius: 35,
                                               backgroundImage:
@@ -633,14 +808,13 @@ class _AccountState extends State<Account> {
                                                 }
                                                 if (text[i] ==
                                                     'Client Requests') {
-                                                  showExpiry();
-                                                  // Navigator.of(context).push(
-                                                  //   MaterialPageRoute(
-                                                  //     builder: (_) {
-                                                  //       return const ClientsRequests();
-                                                  //     },
-                                                  //   ),
-                                                  // );
+                                                  Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                      builder: (_) {
+                                                        return const ClientsRequests();
+                                                      },
+                                                    ),
+                                                  );
                                                 }
                                               },
                                               child: Stack(
@@ -717,7 +891,8 @@ class _AccountState extends State<Account> {
                           ],
                         ),
                     if (expired == false &&
-                        Constants.profile.bp.isApproved == "1")
+                        Constants.profile.bp.isApproved == "1" &&
+                        Constants.profile.userRole == "2")
                       Column(
                         children: [
                           GestureDetector(
@@ -784,7 +959,8 @@ class _AccountState extends State<Account> {
                                         ),
                                   profileUrl != null
                                       ? GestureDetector(
-                                          onTap: () => goToProfile(expired),
+                                          onTap: () => goToProfile(
+                                              expired, Constants.userRole),
                                           child: const CircleAvatar(
                                             radius: 35,
                                             backgroundImage: ExactAssetImage(
@@ -792,7 +968,8 @@ class _AccountState extends State<Account> {
                                           ),
                                         )
                                       : GestureDetector(
-                                          onTap: () => goToProfile(expired),
+                                          onTap: () => goToProfile(
+                                              expired, Constants.userRole),
                                           child: CircleAvatar(
                                             radius: 35,
                                             backgroundImage:
@@ -803,7 +980,8 @@ class _AccountState extends State<Account> {
                               ),
                             ),
                           ),
-                          if (Constants.profile.bp.packagesId == 1)
+                          if (Constants.profile.bp.packagesId == 1 &&
+                              Constants.profile.userRole == "2")
                             Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: Card(
@@ -976,7 +1154,8 @@ class _AccountState extends State<Account> {
                                     ),
                               profileUrl != null
                                   ? GestureDetector(
-                                      onTap: () => goToProfile(expired),
+                                      onTap: () => goToProfile(
+                                          expired, Constants.userRole),
                                       child: const CircleAvatar(
                                         radius: 38,
                                         backgroundImage: ExactAssetImage(
@@ -984,7 +1163,8 @@ class _AccountState extends State<Account> {
                                       ),
                                     )
                                   : GestureDetector(
-                                      onTap: () => goToProfile(expired),
+                                      onTap: () => goToProfile(
+                                          expired, Constants.userRole),
                                       child: CircleAvatar(
                                         radius: 38,
                                         backgroundImage:
@@ -992,97 +1172,6 @@ class _AccountState extends State<Account> {
                                       ),
                                     ),
                             ],
-                          ),
-                        ),
-                      ),
-                    if (Constants.userRole == "3")
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Card(
-                          elevation: 1,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                for (int i = 0; i < 3; i++)
-                                  Column(
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          if (userText[i] == 'Favorite') {
-                                            Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                builder: (_) {
-                                                  return const Favorite();
-                                                },
-                                              ),
-                                            );
-                                          }
-                                          if (userText[i] == 'Notification') {
-                                            Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                builder: (_) {
-                                                  return const Notifications();
-                                                },
-                                              ),
-                                            );
-                                          }
-                                          // if (userText[i] == 'Client Requests') {
-                                          //   Navigator.of(context).push(
-                                          //     MaterialPageRoute(
-                                          //       builder: (_) {
-                                          //         return const ClientsRequests();
-                                          //       },
-                                          //     ),
-                                          //   );
-                                          // }
-                                        },
-                                        child: Stack(
-                                          clipBehavior: Clip.none,
-                                          children: [
-                                            Image(
-                                              image: ExactAssetImage(images[i]),
-                                              height: 30,
-                                              width: 30,
-                                            ),
-                                            Constants.totalNotication > 0 &&
-                                                    userText[i] ==
-                                                        'Notification'
-                                                ? Positioned(
-                                                    bottom: -5,
-                                                    right: -12,
-                                                    child: CircleAvatar(
-                                                      radius: 10,
-                                                      backgroundColor: redColor,
-                                                      child: MyText(
-                                                        text: Constants
-                                                            .totalNotication
-                                                            .toString(), //'12',
-                                                        color: whiteColor,
-                                                        weight: FontWeight.bold,
-                                                        size: 9,
-                                                      ),
-                                                    ),
-                                                  )
-                                                : const SizedBox()
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 5,
-                                      ),
-                                      MyText(
-                                        text: userText[i],
-                                        color: greyColor.withOpacity(1),
-                                        weight: FontWeight.bold,
-                                      )
-                                    ],
-                                  )
-                              ],
-                            ),
                           ),
                         ),
                       ),

@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
   final bool? expired;
-  const Profile(this.expired, {super.key});
+  final String? role;
+  const Profile(this.expired, this.role, {super.key});
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -129,7 +130,7 @@ class _ProfileState extends State<Profile> {
                     ))
               ],
             ),
-            const Expanded(child: ProfileTab()),
+            Expanded(child: ProfileTab(widget.role)),
           ],
         ),
 
