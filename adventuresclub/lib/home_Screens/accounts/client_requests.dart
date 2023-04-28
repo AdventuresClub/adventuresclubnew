@@ -132,8 +132,8 @@ class _ClientsRequestsState extends State<ClientsRequests> {
           Uri.parse(
               "https://adventuresclub.net/adventureClub/api/v1/get_client_requests"),
           body: {
-            'partner_id': "3", //Constants.userId, //"3",
-            'country_id': "1", //Constants.countryId //"1",
+            'partner_id': Constants.userId.toString(), //"3",
+            'country_id': Constants.countryId.toString(), //"1",
             // 'mobile_code': ccCode,
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;

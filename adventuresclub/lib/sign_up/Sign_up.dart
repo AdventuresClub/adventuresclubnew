@@ -80,6 +80,7 @@ class _SignUpState extends State<SignUp> {
   List<HealthConditionModel> healthList = [];
   String flag = "";
   String userRole = "";
+  List<GetCountryModel> filteredServices = [];
 
   @override
   void initState() {
@@ -160,7 +161,22 @@ class _SignUpState extends State<SignUp> {
         );
         countriesList1.add(gc);
       });
+      setState(() {
+        filteredServices = countriesList1;
+      });
     }
+  }
+
+  void searchServices(String x, BuildContext context) {
+    if (x.isNotEmpty) {
+      filteredServices = countriesList1
+          .where((element) => element.country.toLowerCase().contains(x))
+          .toList();
+      //log(filteredServices.length.toString());
+    } else {
+      filteredServices = countriesList1;
+    }
+    setState(() {});
   }
 
   Future getWeightNHeight() async {
@@ -1125,96 +1141,114 @@ class _SignUpState extends State<SignUp> {
         onTap: () => showModalBottomSheet(
             context: context,
             builder: (context) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(children: const [
-                      Text(
-                        "Select Your Country",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            fontFamily: 'Raleway-Black'),
-                      )
-                    ]),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: blackColor.withOpacity(0.5),
+              return StatefulBuilder(builder: (context, setState) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(children: const [
+                        Text(
+                          "Select Your Country",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              fontFamily: 'Raleway-Black'),
+                        )
+                      ]),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: blackColor.withOpacity(0.5),
+                          ),
+                        ),
+                        child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 0.0),
+                            child: TextField(
+                              onChanged: (value) {
+                                if (value.isNotEmpty) {
+                                  filteredServices = countriesList1
+                                      .where((element) => element.country
+                                          .toLowerCase()
+                                          .contains(value))
+                                      .toList();
+                                  //log(filteredServices.length.toString());
+                                } else {
+                                  filteredServices = countriesList1;
+                                }
+                                setState(() {});
+                              },
+                              controller: searchController,
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 8),
+                                hintText: 'Country',
+                                filled: true,
+                                fillColor: lightGreyColor,
+                                suffixIcon: GestureDetector(
+                                  //onTap: openMap,
+                                  child: const Icon(Icons.search),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10.0)),
+                                  borderSide: BorderSide(
+                                      color: greyColor.withOpacity(0.2)),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10.0)),
+                                  borderSide: BorderSide(
+                                      color: greyColor.withOpacity(0.2)),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10.0)),
+                                  borderSide: BorderSide(
+                                      color: greyColor.withOpacity(0.2)),
+                                ),
+                              ),
+                            )),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: filteredServices.length,
+                          itemBuilder: ((context, index) {
+                            return ListTile(
+                              leading: searchController.text.isEmpty
+                                  ? Image.network(
+                                      "${"https://adventuresclub.net/adventureClub/public/"}${filteredServices[index].flag}",
+                                      height: 25,
+                                      width: 40,
+                                    )
+                                  : null,
+                              title: Text(filteredServices[index].country),
+                              onTap: () {
+                                addCountry(
+                                  filteredServices[index].country,
+                                  show,
+                                  filteredServices[index].id,
+                                );
+                              },
+                            );
+                          }),
                         ),
                       ),
-                      child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                          child: TextField(
-                            controller: searchController,
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 8),
-                              hintText: 'Country',
-                              filled: true,
-                              fillColor: lightGreyColor,
-                              suffixIcon: GestureDetector(
-                                //onTap: openMap,
-                                child: const Icon(Icons.search),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(10.0)),
-                                borderSide: BorderSide(
-                                    color: greyColor.withOpacity(0.2)),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(10.0)),
-                                borderSide: BorderSide(
-                                    color: greyColor.withOpacity(0.2)),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(10.0)),
-                                borderSide: BorderSide(
-                                    color: greyColor.withOpacity(0.2)),
-                              ),
-                            ),
-                          )),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: countriesList1.length,
-                        itemBuilder: ((context, index) {
-                          return ListTile(
-                            leading: Image.network(
-                              "${"https://adventuresclub.net/adventureClub/public/"}${countriesList1[index].flag}",
-                              height: 25,
-                              width: 40,
-                            ),
-                            title: Text(countriesList1[index].country),
-                            onTap: () {
-                              addCountry(
-                                countriesList1[index].country,
-                                show,
-                                countriesList1[index].id,
-                              );
-                            },
-                          );
-                        }),
-                      ),
-                    ),
-                  ],
-                ),
-              );
+                    ],
+                  ),
+                );
+              });
             }),
         tileColor: whiteColor,
         selectedTileColor: whiteColor,

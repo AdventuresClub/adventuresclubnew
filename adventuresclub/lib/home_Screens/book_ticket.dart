@@ -11,7 +11,8 @@ import 'package:http/http.dart' as http;
 
 class BookTicket extends StatefulWidget {
   final ServicesModel gm;
-  const BookTicket(this.gm, {super.key});
+  final bool? show;
+  const BookTicket(this.gm, {this.show = false, super.key});
 
   @override
   State<BookTicket> createState() => _BookTicketState();
@@ -34,6 +35,7 @@ class _BookTicketState extends State<BookTicket> {
   String selectedGender = "";
   int index = 0;
   String userId = "";
+  var endDate;
   List text = [
     'Per Person',
     'Total Person    x1',
@@ -81,8 +83,12 @@ class _BookTicketState extends State<BookTicket> {
     if (pickedDate != null && pickedDate != currentDate) {
       setState(() {
         var date = DateTime.parse(pickedDate.toString());
-        formattedDate = "${date.day}-${date.month}-${date.year}";
+        String m = date.month < 10 ? "0${date.month}" : "${date.month}";
+        String d = date.day < 10 ? "0${date.day}" : "${date.day}";
+        formattedDate = "${date.year}-$m-$d";
+        //formattedDate = "${date.year}-${date.month}-${date.day}";
         currentDate = pickedDate!;
+        print(formattedDate);
       });
     }
   }
@@ -145,7 +151,23 @@ class _BookTicketState extends State<BookTicket> {
     );
   }
 
-  void bookAdventure() async {
+  void test() {
+    print(endDate);
+  }
+
+  void book() {
+    if (widget.gm.sPlan == 2) {
+      bookAdventure(formattedDate);
+    } else {
+      bookAdventure(endDate);
+    }
+  }
+
+  void bookAdventure(var date) async {
+    // var date = DateTime.parse(widget.gm.startDate.toString());
+    // String m = date.month < 10 ? "0${date.month}" : "${date.month}";
+    // String d = date.day < 10 ? "0${date.day}" : "${date.day}";
+    // endDate = "${date.year}-$m-$d";
     try {
       var response = await http.post(
           Uri.parse(
@@ -157,7 +179,7 @@ class _BookTicketState extends State<BookTicket> {
             "kids": _n.toString(), //"1", //,
             "message": messageController.text,
             "points": "0", //pointsController.text,
-            "booking_date": widget.gm.startDate
+            "booking_date": date
                 .toString(), //"2021-07-15", //widget.gm.bookingData[0].createdAt,
             "coupon_applied": "0",
             "provider_id": widget.gm.providerId
@@ -167,12 +189,23 @@ class _BookTicketState extends State<BookTicket> {
             "discount_amount": "0",
             "final_amount": totalCost.toString(),
           });
-      goToHome();
+      if (response.statusCode == 200) {
+        message("Booking sent successfully");
+        goToHome();
+      }
       print(response.statusCode);
       print(response.body);
     } catch (e) {
       print(e);
     }
+  }
+
+  void message(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
   }
 
   void goToHome() {
@@ -187,440 +220,497 @@ class _BookTicketState extends State<BookTicket> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: MyText(
-          text: 'Book Ticket',
-          color: greenishColor,
-          weight: FontWeight.bold,
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: MyText(
+            text: 'Book Ticket',
+            color: greenishColor,
+            weight: FontWeight.bold,
+          ),
+          centerTitle: true,
+          iconTheme: const IconThemeData(color: greenishColor),
+          backgroundColor: whiteColor,
         ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: greenishColor),
-        backgroundColor: whiteColor,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Card(
-                  elevation: 3,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12.0, vertical: 20),
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Align(
-                            alignment: Alignment.centerLeft,
-                            child: MyText(
-                              text: 'Booking For',
-                              weight: FontWeight.bold,
-                              color: blackTypeColor4,
-                              size: 22,
-                            )),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        //adult
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            MyText(
-                              text: 'Adult',
-                              color: blackColor,
-                            ),
-                            Container(
-                              height: 28,
-                              padding: const EdgeInsets.all(0),
-                              color: greyColorShade400,
-                              child: Center(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                      onTap: minusAdult,
-                                      child: Container(
-                                          width: 27,
-                                          height: 27,
-                                          decoration: BoxDecoration(
-                                              color: whiteColor,
-                                              border: Border.all(
-                                                  color: greyColorShade400)),
-                                          padding: const EdgeInsets.all(6),
-                                          child: const Image(
-                                            image: ExactAssetImage(
-                                                'images/feather-minus.png'),
-                                          )),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8.0),
-                                      child: Text('$_m',
-                                          style:
-                                              const TextStyle(fontSize: 16.0)),
-                                    ),
-                                    GestureDetector(
-                                      onTap: addAdult,
-                                      child: Container(
-                                          width: 27,
-                                          height: 27,
-                                          decoration: BoxDecoration(
-                                              color: whiteColor,
-                                              border: Border.all(
-                                                  color: greyColorShade400)),
-                                          child: const Icon(Icons.add,
-                                              color: bluishColor)),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            MyText(
-                              text: 'Child:',
-                              color: blackColor,
-                            ),
-                            Container(
-                              height: 28,
-                              padding: const EdgeInsets.all(0),
-                              color: greyColorShade400,
-                              child: Center(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    GestureDetector(
-                                      onTap: minus,
-                                      child: Container(
-                                          width: 27,
-                                          height: 27,
-                                          decoration: BoxDecoration(
-                                              color: whiteColor,
-                                              border: Border.all(
-                                                  color: greyColorShade400)),
-                                          padding: const EdgeInsets.all(6),
-                                          child: const Image(
-                                              image: ExactAssetImage(
-                                                  'images/feather-minus.png'))),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8.0),
-                                      child: Text('$_n',
-                                          style:
-                                              const TextStyle(fontSize: 16.0)),
-                                    ),
-                                    GestureDetector(
-                                      onTap: add,
-                                      child: Container(
-                                          width: 27,
-                                          height: 27,
-                                          decoration: BoxDecoration(
-                                              color: whiteColor,
-                                              border: Border.all(
-                                                  color: greyColorShade400)),
-                                          child: const Icon(
-                                            Icons.add,
-                                            color: bluishColor,
-                                          )),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        TextField(
-                          controller: messageController,
-                          maxLines: 5,
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 15, horizontal: 15),
-                            hintText: 'Type Message here... ',
-                            hintStyle: const TextStyle(
-                                color: blackColor,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                                fontFamily: 'Raleway'),
-                            hintMaxLines: 1,
-                            isDense: true,
-                            filled: true,
-                            fillColor: whiteColor,
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(
-                                  color: blackColor.withOpacity(0.2)),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(
-                                  color: blackColor.withOpacity(0.2)),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(10)),
-                                borderSide: BorderSide(
-                                    color: blackColor.withOpacity(0.2))),
-                          ),
-                        )
-                      ],
-                    ),
-                  )),
-              // used earned points
-              Card(
-                child: Column(
-                  children: [
-                    CheckboxListTile(
-                        value: value,
-                        title: MyText(
-                            text: 'Use earned Points',
-                            weight: FontWeight.w500,
-                            color: blackTypeColor1,
-                            fontFamily: 'Roboto'),
-                        onChanged: (bool? value1) {
-                          setState(() {
-                            value = value1!;
-                          });
-                        }),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 12.0, right: 12, bottom: 12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Card(
+                    elevation: 3,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 20),
+                      child: Column(
                         children: [
-                          RichText(
-                            text: const TextSpan(
-                              text: 'Available Points',
-                              style: TextStyle(
-                                  color: blueTextColor,
-                                  fontSize: 10,
-                                  fontFamily: 'Roboto'),
-                              children: <TextSpan>[
-                                TextSpan(
-                                    text: ' 500',
-                                    style: TextStyle(
-                                        fontSize: 24,
-                                        color: blueTextColor,
-                                        fontFamily: 'Roboto')),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          if (widget.show!)
+                            Column(
+                              children: [
+                                Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: MyText(
+                                      text: 'Start Date',
+                                      weight: FontWeight.bold,
+                                      color: blackTypeColor4,
+                                      size: 22,
+                                    )),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    MyText(
+                                      text: 'Select Desired Date',
+                                      weight: FontWeight.w600,
+                                      color: greyTextColor,
+                                      size: 16,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () => _selectDate(context),
+                                      child: const Icon(
+                                        Icons.calendar_month_sharp,
+                                        color: greyColor,
+                                        size: 30,
+                                      ),
+                                    )
+                                  ],
+                                )
                               ],
                             ),
+                          const SizedBox(
+                            height: 20,
                           ),
+                          widget.show!
+                              ? Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: MyText(
+                                    text: 'Planning For',
+                                    weight: FontWeight.bold,
+                                    color: blackTypeColor4,
+                                    size: 22,
+                                  ))
+                              : Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: MyText(
+                                    text: 'Booking For',
+                                    weight: FontWeight.bold,
+                                    color: blackTypeColor4,
+                                    size: 22,
+                                  )),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          //adult
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               MyText(
-                                  text: 'Opt to use',
-                                  color: blueTextColor,
-                                  size: 10,
-                                  fontFamily: 'Roboto'),
+                                text: 'Adult',
+                                color: blackColor,
+                              ),
+                              Container(
+                                height: 28,
+                                padding: const EdgeInsets.all(0),
+                                color: greyColorShade400,
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      GestureDetector(
+                                        onTap: minusAdult,
+                                        child: Container(
+                                            width: 27,
+                                            height: 27,
+                                            decoration: BoxDecoration(
+                                                color: whiteColor,
+                                                border: Border.all(
+                                                    color: greyColorShade400)),
+                                            padding: const EdgeInsets.all(6),
+                                            child: const Image(
+                                              image: ExactAssetImage(
+                                                  'images/feather-minus.png'),
+                                            )),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8.0),
+                                        child: Text('$_m',
+                                            style: const TextStyle(
+                                                fontSize: 16.0)),
+                                      ),
+                                      GestureDetector(
+                                        onTap: addAdult,
+                                        child: Container(
+                                            width: 27,
+                                            height: 27,
+                                            decoration: BoxDecoration(
+                                                color: whiteColor,
+                                                border: Border.all(
+                                                    color: greyColorShade400)),
+                                            child: const Icon(Icons.add,
+                                                color: bluishColor)),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              MyText(
+                                text: 'Child:',
+                                color: blackColor,
+                              ),
+                              Container(
+                                height: 28,
+                                padding: const EdgeInsets.all(0),
+                                color: greyColorShade400,
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      GestureDetector(
+                                        onTap: minus,
+                                        child: Container(
+                                            width: 27,
+                                            height: 27,
+                                            decoration: BoxDecoration(
+                                                color: whiteColor,
+                                                border: Border.all(
+                                                    color: greyColorShade400)),
+                                            padding: const EdgeInsets.all(6),
+                                            child: const Image(
+                                                image: ExactAssetImage(
+                                                    'images/feather-minus.png'))),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8.0),
+                                        child: Text('$_n',
+                                            style: const TextStyle(
+                                                fontSize: 16.0)),
+                                      ),
+                                      GestureDetector(
+                                        onTap: add,
+                                        child: Container(
+                                            width: 27,
+                                            height: 27,
+                                            decoration: BoxDecoration(
+                                                color: whiteColor,
+                                                border: Border.all(
+                                                    color: greyColorShade400)),
+                                            child: const Icon(
+                                              Icons.add,
+                                              color: bluishColor,
+                                            )),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width / 5,
-                            height: MediaQuery.of(context).size.width / 10,
-                            child: TextField(
-                              controller: pointsController,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(fontSize: 16),
-                              decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 10),
-                                  isDense: true,
-                                  filled: true,
-                                  fillColor: whiteColor,
-                                  border: OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10.0)),
-                                    borderSide: BorderSide(
-                                        color: blackColor.withOpacity(0.2)),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10.0)),
-                                    borderSide: BorderSide(
-                                        color: blackColor.withOpacity(0.2)),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(10)),
-                                      borderSide: BorderSide(
-                                          color: blackColor.withOpacity(0.2)))),
+                          const SizedBox(height: 20),
+                          TextField(
+                            controller: messageController,
+                            maxLines: 5,
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 15, horizontal: 15),
+                              hintText: 'Type Message here... ',
+                              hintStyle: const TextStyle(
+                                  color: blackColor,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14,
+                                  fontFamily: 'Raleway'),
+                              hintMaxLines: 1,
+                              isDense: true,
+                              filled: true,
+                              fillColor: whiteColor,
+                              border: OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10.0)),
+                                borderSide: BorderSide(
+                                    color: blackColor.withOpacity(0.2)),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10.0)),
+                                borderSide: BorderSide(
+                                    color: blackColor.withOpacity(0.2)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
+                                  borderSide: BorderSide(
+                                      color: blackColor.withOpacity(0.2))),
                             ),
                           )
                         ],
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              // apply promo code
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
+                    )),
+                // used earned points
+                Card(
                   child: Column(
                     children: [
-                      Align(
-                          alignment: Alignment.centerLeft,
-                          child: MyText(
-                              text: 'Apply Promo Code',
-                              weight: FontWeight.bold,
-                              color: blackTypeColor4,
-                              size: 22,
-                              fontFamily: 'Roboto')),
-                      TextField(
-                        decoration: InputDecoration(
-                            suffixStyle: const TextStyle(
-                                color: bluishColor, fontFamily: 'Roboto'),
-                            suffixText: 'Apply',
-                            border: UnderlineInputBorder(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(
-                                  color: blackColor.withOpacity(0.2)),
+                      CheckboxListTile(
+                          value: value,
+                          title: MyText(
+                              text: 'Use earned Points',
+                              weight: FontWeight.w500,
+                              color: blackTypeColor1,
+                              fontFamily: 'Roboto'),
+                          onChanged: (bool? value1) {
+                            setState(() {
+                              value = value1!;
+                            });
+                          }),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 12.0, right: 12, bottom: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            RichText(
+                              text: const TextSpan(
+                                text: 'Available Points',
+                                style: TextStyle(
+                                    color: blueTextColor,
+                                    fontSize: 10,
+                                    fontFamily: 'Roboto'),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: ' 500',
+                                      style: TextStyle(
+                                          fontSize: 24,
+                                          color: blueTextColor,
+                                          fontFamily: 'Roboto')),
+                                ],
+                              ),
                             ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10.0)),
-                              borderSide: BorderSide(
-                                  color: blackColor.withOpacity(0.2)),
+                            Row(
+                              children: [
+                                MyText(
+                                    text: 'Opt to use',
+                                    color: blueTextColor,
+                                    size: 10,
+                                    fontFamily: 'Roboto'),
+                              ],
                             ),
-                            focusedBorder: UnderlineInputBorder(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(10)),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width / 5,
+                              height: MediaQuery.of(context).size.width / 10,
+                              child: TextField(
+                                controller: pointsController,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(fontSize: 16),
+                                decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 10),
+                                    isDense: true,
+                                    filled: true,
+                                    fillColor: whiteColor,
+                                    border: OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                      borderSide: BorderSide(
+                                          color: blackColor.withOpacity(0.2)),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                      borderSide: BorderSide(
+                                          color: blackColor.withOpacity(0.2)),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10)),
+                                        borderSide: BorderSide(
+                                            color:
+                                                blackColor.withOpacity(0.2)))),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // apply promo code
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Column(
+                      children: [
+                        Align(
+                            alignment: Alignment.centerLeft,
+                            child: MyText(
+                                text: 'Apply Promo Code',
+                                weight: FontWeight.bold,
+                                color: blackTypeColor4,
+                                size: 22,
+                                fontFamily: 'Roboto')),
+                        TextField(
+                          decoration: InputDecoration(
+                              suffixStyle: const TextStyle(
+                                  color: bluishColor, fontFamily: 'Roboto'),
+                              suffixText: 'Apply',
+                              border: UnderlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10.0)),
                                 borderSide: BorderSide(
-                                    color: blackColor.withOpacity(0.2)))),
-                      ),
-                    ],
+                                    color: blackColor.withOpacity(0.2)),
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10.0)),
+                                borderSide: BorderSide(
+                                    color: blackColor.withOpacity(0.2)),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
+                                  borderSide: BorderSide(
+                                      color: blackColor.withOpacity(0.2)))),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
-                elevation: 7,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 15.0, vertical: 15),
-                  child: Column(
-                    children: [
-                      // Wrap(
-                      //   children: List.generate(
-                      //     text.length,
-                      //     (index) {
-                      //       return
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          MyText(
-                              text: "Per Person",
-                              color: blackTypeColor3,
-                              weight: FontWeight.w500,
-                              fontFamily: 'Roboto'),
-                          MyText(
-                              // text: widget.gm.costInc,
-                              text: widget.gm.costInc,
-                              color: greyColor,
-                              weight: FontWeight.bold,
-                              fontFamily: 'Roboto'),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 2,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          MyText(
-                              text:
-                                  "${'Total Person'} ${"  "} ${"x"} $totalPerson",
-                              color: blackTypeColor3,
-                              weight: FontWeight.w500,
-                              fontFamily: 'Roboto'),
-                          MyText(
-                              // text: widget.gm.costInc,
-                              text: totalCost.toStringAsFixed(2),
-                              color: greyColor,
-                              weight: FontWeight.bold,
-                              fontFamily: 'Roboto'),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 2,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          MyText(
-                              text: 'Promo Code',
-                              color: blackTypeColor3,
-                              weight: FontWeight.w500,
-                              fontFamily: 'Roboto'),
-                          MyText(
-                              // text: widget.gm.costInc,
-                              text: widget.gm.costInc,
-                              color: greyColor,
-                              weight: FontWeight.bold,
-                              fontFamily: 'Roboto'),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 2,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          MyText(
-                              text: 'Points',
-                              color: blackTypeColor3,
-                              weight: FontWeight.w500,
-                              fontFamily: 'Roboto'),
-                          MyText(
-                              // text: widget.gm.costInc,
-                              text: "",
-                              color: greyColor,
-                              weight: FontWeight.bold,
-                              fontFamily: 'Roboto'),
-                        ],
-                      ),
-                      //     },
-                      //   ),
-                      // ),
-                      const SizedBox(height: 5),
-                      const Divider(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          MyText(
-                              text: 'Total Amount',
-                              color: blackTypeColor3,
-                              weight: FontWeight.w500,
-                              height: 1.5,
-                              fontFamily: 'Roboto'),
-                          MyText(
-                              text: "$totalCost ${" ر.ع"}", //'ر.ع 19,350',
-                              color: bluishColor,
-                              weight: FontWeight.bold,
-                              size: 16,
-                              height: 1.5,
-                              fontFamily: 'Roboto'),
-                        ],
-                      ),
-                    ],
+                Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  elevation: 7,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15.0, vertical: 15),
+                    child: Column(
+                      children: [
+                        // Wrap(
+                        //   children: List.generate(
+                        //     text.length,
+                        //     (index) {
+                        //       return
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            MyText(
+                                text: "Per Person",
+                                color: blackTypeColor3,
+                                weight: FontWeight.w500,
+                                fontFamily: 'Roboto'),
+                            MyText(
+                                // text: widget.gm.costInc,
+                                text: widget.gm.costInc,
+                                color: greyColor,
+                                weight: FontWeight.bold,
+                                fontFamily: 'Roboto'),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 2,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            MyText(
+                                text:
+                                    "${'Total Person'} ${"  "} ${"x"} $totalPerson",
+                                color: blackTypeColor3,
+                                weight: FontWeight.w500,
+                                fontFamily: 'Roboto'),
+                            MyText(
+                                // text: widget.gm.costInc,
+                                text: totalCost.toStringAsFixed(2),
+                                color: greyColor,
+                                weight: FontWeight.bold,
+                                fontFamily: 'Roboto'),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 2,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            MyText(
+                                text: 'Promo Code',
+                                color: blackTypeColor3,
+                                weight: FontWeight.w500,
+                                fontFamily: 'Roboto'),
+                            MyText(
+                                // text: widget.gm.costInc,
+                                text: widget.gm.costInc,
+                                color: greyColor,
+                                weight: FontWeight.bold,
+                                fontFamily: 'Roboto'),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 2,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            MyText(
+                                text: 'Points',
+                                color: blackTypeColor3,
+                                weight: FontWeight.w500,
+                                fontFamily: 'Roboto'),
+                            MyText(
+                                // text: widget.gm.costInc,
+                                text: "",
+                                color: greyColor,
+                                weight: FontWeight.bold,
+                                fontFamily: 'Roboto'),
+                          ],
+                        ),
+                        //     },
+                        //   ),
+                        // ),
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            MyText(
+                                text: 'Total Amount',
+                                color: blackTypeColor3,
+                                weight: FontWeight.w500,
+                                height: 1.5,
+                                fontFamily: 'Roboto'),
+                            MyText(
+                                text: "$totalCost ${" ر.ع"}", //'ر.ع 19,350',
+                                color: bluishColor,
+                                weight: FontWeight.bold,
+                                size: 16,
+                                height: 1.5,
+                                fontFamily: 'Roboto'),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              ButtonIconLess('Book Now', bluishColor, whiteColor, 1.7, 17, 18,
-                  bookAdventure),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
+                const SizedBox(
+                  height: 20,
+                ),
+                ButtonIconLess(
+                    'Book Now', bluishColor, whiteColor, 1.7, 17, 18, book),
+                const SizedBox(
+                  height: 20,
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -139,8 +139,8 @@ class _TopListState extends State<TopList> {
                     GestureDetector(
                       onTap: () => categoryType(pCM[index].category),
                       child: CircleAvatar(
-                          backgroundColor: transparentColor,
-                          radius: 23,
+                          backgroundColor: whiteColor,
+                          radius: 28,
                           child: pCM[index].category == "Category"
                               ? GestureDetector(
                                   //  onTap: () => goToAdCategory(pCM),

@@ -74,6 +74,19 @@ class _DetailsState extends State<Details> {
     );
   }
 
+  void plan() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return BookTicket(
+            widget.gm!,
+            show: true,
+          );
+        },
+      ),
+    );
+  }
+
   void addFav() async {
     try {
       var response = await http.post(
@@ -244,23 +257,26 @@ class _DetailsState extends State<Details> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ButtonIconLess('PLAN FOR FUTURE', whiteColor, greenishColor,
-                      2.5, 17, 12, goToPlan),
+                      2.5, 17, 12, plan),
                   ButtonIconLess('BOOK NOW', greenishColor, whiteColor, 2.5, 17,
                       12, goToBookTicket),
                 ],
               )
-            : Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(26),
-                  color: bluishColor,
-                ),
-                height: 50,
-                width: MediaQuery.of(context).size.width,
-                child: Center(
-                  child: MyText(
-                    text: "Plan For Future",
-                    size: 16,
-                    weight: FontWeight.w600,
+            : GestureDetector(
+                onTap: plan,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(26),
+                    color: bluishColor,
+                  ),
+                  height: 50,
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                    child: MyText(
+                      text: "Plan For Future",
+                      size: 16,
+                      weight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),

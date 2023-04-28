@@ -274,13 +274,9 @@ class _MyServicesState extends State<MyServices> {
         } else {
           dynamic pga = element['availability'];
           if (pga != null) {
-            List<dynamic> available = element['availability'];
-            available.forEach((a) {
-              AvailabilityModel am = AvailabilityModel(
-                  a['start_date'].toString() ?? "",
-                  a['end_date'].toString() ?? "");
-              gAccomodoationAvaiModel.add(am);
-            });
+            AvailabilityModel am = AvailabilityModel(
+                pga['start_date'].toString() ?? "",
+                pga['end_date'].toString() ?? "");
           }
         }
         dynamic nullbp = element['become_partner'];
@@ -493,7 +489,7 @@ class _MyServicesState extends State<MyServices> {
             )
           ],
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(58.0),
+            preferredSize: const Size.fromHeight(65.0),
             child: Theme(
               data: Theme.of(context).copyWith(accentColor: Colors.white),
               child:
@@ -502,16 +498,75 @@ class _MyServicesState extends State<MyServices> {
                   //   child: SearchContainer('Search by provider name', 1.1, 9,
                   //       'images/path.png', true, false, 'oman', 14),
                   // ),
-                  TextField(
-                onChanged: (value) {
-                  searchServices(value);
-                },
-                textAlign: TextAlign.center,
-                controller: searchController,
-                decoration: const InputDecoration(
-                    hintText: 'Enter 4 Digit Code',
-                    hintStyle: TextStyle(color: blackTypeColor4)),
+                  Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
+                child: Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    color: whiteColor,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: blackColor.withOpacity(0.5),
+                    ),
+                  ),
+                  child: TextField(
+                    onChanged: (value) {
+                      searchServices(value);
+                    },
+                    controller: searchController,
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(
+                        Icons.search,
+                        color: bluishColor,
+                      ),
+                      // label: Icon(
+                      //   Icons.search,
+                      // ),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 8),
+                      hintText: 'Search by Adventure Name',
+                      filled: true,
+                      fillColor: whiteColor,
+                      suffixIcon: GestureDetector(
+                        //onTap: openMap,
+                        child: const Icon(
+                          Icons.filter_alt,
+                          color: bluishColor,
+                        ),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10.0)),
+                        borderSide:
+                            BorderSide(color: greyColor.withOpacity(0.2)),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10.0)),
+                        borderSide:
+                            BorderSide(color: greyColor.withOpacity(0.2)),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10.0)),
+                        borderSide:
+                            BorderSide(color: greyColor.withOpacity(0.2)),
+                      ),
+                    ),
+                  ),
+                ),
               ),
+              //     TextField(
+              //   onChanged: (value) {
+              //     searchServices(value);
+              //   },
+              //   textAlign: TextAlign.center,
+              //   controller: searchController,
+              //   decoration: const InputDecoration(
+              //       hintText: 'Search By Adventure',
+              //       hintStyle: TextStyle(color: blackTypeColor4)),
+              // ),
             ),
           ),
         ),

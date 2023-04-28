@@ -12,6 +12,7 @@ import 'package:adventuresclub/widgets/Lists/home_lists/top_list.dart';
 import 'package:adventuresclub/widgets/home_widgets/stack_home.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -110,7 +111,7 @@ class _HomeState extends State<Home> {
                   height: 35,
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 15,
                 ),
                 const SizedBox(
                   height: 125,

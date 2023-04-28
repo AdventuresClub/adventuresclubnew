@@ -507,20 +507,20 @@ class _RequestsListState extends State<RequestsList> {
                             children: [
                               if (uRequestList[index].status == "0")
                                 MyText(
-                                  text: "Requested", //'Confirmed',
-                                  color: redColor,
+                                  text: "Paid", //'Confirmed',
+                                  color: blueButtonColor,
                                   weight: FontWeight.bold,
                                 ),
                               if (uRequestList[index].status == "1")
                                 MyText(
                                   text: "Accepted", //'Confirmed',
-                                  color: greenColor1,
+                                  color: blueButtonColor,
                                   weight: FontWeight.bold,
                                 ),
                               if (uRequestList[index].status == "2")
                                 MyText(
-                                  text: "Paid", //'Confirmed',
-                                  color: greenColor1,
+                                  text: "Requested", //'Confirmed',
+                                  color: redColor,
                                   weight: FontWeight.bold,
                                 ),
                               if (uRequestList[index].status == "3")
@@ -556,15 +556,15 @@ class _RequestsListState extends State<RequestsList> {
                               const SizedBox(
                                 width: 5,
                               ),
-                              GestureDetector(
-                                onTap: () => showConfirmation(
-                                    uRequestList[index].serviceId.toString()),
-                                child: const Icon(
-                                  Icons.delete_forever_outlined,
-                                  color: redColor,
-                                  size: 20,
-                                ),
-                              )
+                              // GestureDetector(
+                              //   onTap: () => showConfirmation(
+                              //       uRequestList[index].serviceId.toString()),
+                              //   child: const Icon(
+                              //     Icons.delete_forever_outlined,
+                              //     color: redColor,
+                              //     size: 20,
+                              //   ),
+                              // )
                             ],
                           )
                         ],

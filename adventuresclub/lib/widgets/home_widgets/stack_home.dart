@@ -775,7 +775,7 @@ class _StackHomeState extends State<StackHome> {
       clipBehavior: Clip.none,
       children: [
         Container(
-          height: MediaQuery.of(context).size.height / 8,
+          height: MediaQuery.of(context).size.height / 4,
           width: MediaQuery.of(context).size.height / 1.4,
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -809,77 +809,77 @@ class _StackHomeState extends State<StackHome> {
               const SizedBox(
                 width: 8,
               ),
-              Container(
-                padding:
-                    const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 4),
-                width: MediaQuery.of(context).size.width / 1.4,
-                height: MediaQuery.of(context).size.height / 16,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                      color: blackColor.withOpacity(0.4), width: 1.7),
-                  color: whiteColor,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        const Icon(
-                          Icons.search,
-                          color: greyColor,
-                          size: 30,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width / 2.8,
-                          child: TextField(
-                            onChanged: (value) {
-                              searchAdventure(value);
-                            },
-                            controller: searchController,
-                            decoration: const InputDecoration(
-                                hintText: "Search Adventure",
-                                border: InputBorder.none,
-                                hintStyle: TextStyle(fontSize: 16)),
-                          ),
-                        ),
-                        // Text(
-                        //   widget.hinttext,
-                        //   style: TextStyle(
-                        //       color: searchTextColor.withOpacity(0.8),
-                        //       fontSize: widget.fontSize),
-                        // ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          Constants.country,
-                          style: TextStyle(
-                            color: searchTextColor.withOpacity(0.8),
-                            fontSize: 12,
-                          ),
-                        ),
-                        Image.network(
-                          "${"https://adventuresclub.net/adventureClub/public/"}${Constants.countryFlag}",
-                          height: 15,
-                          width: 15,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              // SearchContainer('Search adventure name', 1.4, 8, searchController,
-              //     'images/maskGroup51.png', true, true, Constants.country, 12),
+              // Container(
+              //   padding:
+              //       const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 4),
+              //   width: MediaQuery.of(context).size.width / 1.4,
+              //   height: 50,
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(12),
+              //     border: Border.all(
+              //         color: blackColor.withOpacity(0.4), width: 1.7),
+              //     color: whiteColor,
+              //   ),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Row(
+              //         crossAxisAlignment: CrossAxisAlignment.center,
+              //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //         children: [
+              //           const Icon(
+              //             Icons.search,
+              //             color: greyColor,
+              //             size: 30,
+              //           ),
+              //           const SizedBox(
+              //             width: 10,
+              //           ),
+              //           SizedBox(
+              //             width: MediaQuery.of(context).size.width / 2.8,
+              //             child: TextField(
+              //               onChanged: (value) {
+              //                 searchAdventure(value);
+              //               },
+              //               controller: searchController,
+              //               decoration: const InputDecoration(
+              //                   hintText: "Search Adventure",
+              //                   border: InputBorder.none,
+              //                   hintStyle: TextStyle(fontSize: 16)),
+              //             ),
+              //           ),
+              //           // Text(
+              //           //   widget.hinttext,
+              //           //   style: TextStyle(
+              //           //       color: searchTextColor.withOpacity(0.8),
+              //           //       fontSize: widget.fontSize),
+              //           // ),
+              //         ],
+              //       ),
+              //       Row(
+              //         children: [
+              //           Text(
+              //             Constants.country,
+              //             style: TextStyle(
+              //               color: searchTextColor.withOpacity(0.8),
+              //               fontSize: 12,
+              //             ),
+              //           ),
+              //           Image.network(
+              //             "${"https://adventuresclub.net/adventureClub/public/"}${Constants.countryFlag}",
+              //             height: 15,
+              //             width: 15,
+              //           ),
+              //           const SizedBox(
+              //             width: 5,
+              //           )
+              //         ],
+              //       )
+              //     ],
+              //   ),
+              // ),
+              SearchContainer('Search adventure name', 1.4, 8, searchController,
+                  'images/maskGroup51.png', true, true, Constants.country, 12),
               const SizedBox(
                 width: 8,
               ),

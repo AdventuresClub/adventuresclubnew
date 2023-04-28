@@ -46,7 +46,7 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Expanded(
-              flex: 7,
+              flex: 8,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: List.generate(
