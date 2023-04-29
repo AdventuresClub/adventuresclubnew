@@ -278,8 +278,8 @@ class _HealthConditionState extends State<HealthCondition> {
                           return Column(
                             children: [
                               CheckboxListTile(
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 5),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 5, vertical: 6),
                                 side: const BorderSide(color: bluishColor),
                                 checkboxShape: const RoundedRectangleBorder(
                                   side: BorderSide(color: bluishColor),
@@ -302,18 +302,23 @@ class _HealthConditionState extends State<HealthCondition> {
                                   size: 16,
                                 ),
                               ),
-                              if (text[index] != "Weight & Height")
-                                const Divider(
-                                  endIndent: 6,
-                                  indent: 6,
-                                  color: blackTypeColor3,
-                                ),
+                              // if (text[index] != "Weight & Height")
+                              //   const Divider(
+                              //     endIndent: 6,
+                              //     indent: 6,
+                              //     color: blackTypeColor3,
+                              //   ),
                             ],
                           );
                         }),
                       ),
                       const SizedBox(
                         height: 20,
+                      ),
+                      const Divider(
+                        endIndent: 6,
+                        indent: 6,
+                        color: blackTypeColor3,
                       ),
                       Align(
                         alignment: Alignment.centerLeft,

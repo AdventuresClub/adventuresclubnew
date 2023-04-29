@@ -290,12 +290,12 @@ class _ParticipantsListState extends State<ParticipantsList> {
                           //   width: 20,
                           // ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 140.0),
+                            padding: const EdgeInsets.only(left: 180.0),
                             child: Row(
                               children: [
                                 if (widget.gm[index].status == "0")
                                   MyText(
-                                    text: "Requested", //'Confirmed',
+                                    text: "Paid", //'Confirmed',
                                     color: redColor,
                                     weight: FontWeight.bold,
                                   ),
@@ -307,7 +307,7 @@ class _ParticipantsListState extends State<ParticipantsList> {
                                   ),
                                 if (widget.gm[index].status == "2")
                                   MyText(
-                                    text: "Paid", //'Confirmed',
+                                    text: "Requested", //'Confirmed',
                                     color: greenColor1,
                                     weight: FontWeight.bold,
                                   ),

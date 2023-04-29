@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 import 'package:adventuresclub/become_a_partner/become_partner.dart';
-import 'package:adventuresclub/complete_profile/complete_profile.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/about_us.dart';
 import 'package:adventuresclub/home_Screens/accounts/client_requests.dart';
@@ -479,10 +478,10 @@ class _AccountState extends State<Account> {
                                     ? GestureDetector(
                                         onTap: () => goToProfile(
                                             expired, Constants.userRole),
-                                        child: const CircleAvatar(
+                                        child: CircleAvatar(
                                           radius: 38,
-                                          backgroundImage: ExactAssetImage(
-                                              'images/avatar2.png'),
+                                          backgroundImage: NetworkImage(
+                                              "${'https://adventuresclub.net/adventureClub/public/'}${Constants.profile.profileImage}"),
                                         ),
                                       )
                                     : GestureDetector(
@@ -654,10 +653,10 @@ class _AccountState extends State<Account> {
                                   ? GestureDetector(
                                       onTap: () => goToProfile(
                                           expired, Constants.userRole),
-                                      child: const CircleAvatar(
+                                      child: CircleAvatar(
                                         radius: 38,
-                                        backgroundImage: ExactAssetImage(
-                                            'images/avatar2.png'),
+                                        backgroundImage: NetworkImage(
+                                            "${'https://adventuresclub.net/adventureClub/public/'}${Constants.profile.profileImage}"),
                                       ),
                                     )
                                   : GestureDetector(
@@ -752,10 +751,10 @@ class _AccountState extends State<Account> {
                                         ? GestureDetector(
                                             onTap: () => goToProfile(
                                                 expired, Constants.userRole),
-                                            child: const CircleAvatar(
+                                            child: CircleAvatar(
                                               radius: 35,
-                                              backgroundImage: ExactAssetImage(
-                                                  'images/avatar2.png'),
+                                              backgroundImage: NetworkImage(
+                                                  "${'https://adventuresclub.net/adventureClub/public/'}${Constants.profile.profileImage}"),
                                             ),
                                           )
                                         : GestureDetector(
@@ -961,10 +960,10 @@ class _AccountState extends State<Account> {
                                       ? GestureDetector(
                                           onTap: () => goToProfile(
                                               expired, Constants.userRole),
-                                          child: const CircleAvatar(
+                                          child: CircleAvatar(
                                             radius: 35,
-                                            backgroundImage: ExactAssetImage(
-                                                'images/avatar2.png'),
+                                            backgroundImage: NetworkImage(
+                                                "${'https://adventuresclub.net/adventureClub/public/'}${Constants.profile.profileImage}"),
                                           ),
                                         )
                                       : GestureDetector(

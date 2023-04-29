@@ -19,6 +19,8 @@ class ServicesCard extends StatefulWidget {
 
 class _ServicesCardState extends State<ServicesCard> {
   List<String> adventuresPlan = [""];
+  List<String> availabilityPlanText = [""];
+  String availability = "";
   String aPlan = "";
   double convert(String rating) {
     double result = double.parse(rating);
@@ -41,6 +43,9 @@ class _ServicesCardState extends State<ServicesCard> {
   void initState() {
     super.initState();
     getSteps();
+    if (widget.gm.sPlan == 1) {
+      getAvailability();
+    }
   }
 
   void getSteps() {
@@ -53,6 +58,14 @@ class _ServicesCardState extends State<ServicesCard> {
       }
     });
     //aPlan = adventuresPlan.join(" ");
+  }
+
+  void getAvailability() {
+    int i = 0;
+    widget.gm.availabilityPlan.forEach((element) {
+      availabilityPlanText.add(element.day);
+      availability = availabilityPlanText.join("| ");
+    });
   }
 
   @override
@@ -115,6 +128,7 @@ class _ServicesCardState extends State<ServicesCard> {
                       // crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
+                          flex: 8,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -123,7 +137,7 @@ class _ServicesCardState extends State<ServicesCard> {
                                 text: widget.gm.adventureName,
                                 maxLines: 1,
                                 color: blackColor,
-                                size: 14,
+                                size: 12,
                                 weight: FontWeight.bold,
                                 fontFamily: 'Roboto',
                                 height: 1.3,
@@ -146,7 +160,7 @@ class _ServicesCardState extends State<ServicesCard> {
                                     maxLines: 1,
                                     color: blackColor,
                                     size: 11,
-                                    weight: FontWeight.bold,
+                                    weight: FontWeight.w500,
                                     fontFamily: 'Roboto',
                                     height: 1.3,
                                   ),
@@ -170,7 +184,7 @@ class _ServicesCardState extends State<ServicesCard> {
                                       //text: "testing",
                                       text: "Pending Approval",
                                       //text: 'Advanced',
-                                      weight: FontWeight.w700,
+                                      weight: FontWeight.w500,
                                       color: redColor,
                                       size: 11,
                                       height: 1.3,
@@ -202,6 +216,16 @@ class _ServicesCardState extends State<ServicesCard> {
                             ],
                           ),
                         ),
+                        Expanded(
+                            flex: 4,
+                            child: Column(
+                              children: [
+                                MyText(
+                                    text: availability,
+                                    color: blackColor,
+                                    size: 11)
+                              ],
+                            ))
                         // const SizedBox(height: 5),
                         // Column(
                         //   crossAxisAlignment: CrossAxisAlignment.end,
@@ -299,19 +323,6 @@ class _ServicesCardState extends State<ServicesCard> {
           )
         : Column(
             children: [
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              //   child: Align(
-              //     alignment: Alignment.centerLeft,
-              //     child: MyText(
-              //       text: widget.gm.serviceCategory, //'Recommended Activity',
-              //       weight: FontWeight.bold,
-              //       color: greyColor,
-              //       size: 16,
-              //       fontFamily: "Roboto",
-              //     ),
-              //   ),
-              // ),
               Card(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8)),

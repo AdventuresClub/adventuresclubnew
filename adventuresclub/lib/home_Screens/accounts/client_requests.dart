@@ -278,9 +278,7 @@ class _ClientsRequestsState extends State<ClientsRequests> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [ClientRequestList(gRM)],
-        ),
+        child: ClientRequestList(gRM),
       ),
     );
   }

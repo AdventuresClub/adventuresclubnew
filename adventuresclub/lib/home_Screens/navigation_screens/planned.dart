@@ -417,7 +417,6 @@ class _PlannedState extends State<Planned> {
         }
       }
     });
-
     return filterList;
   }
 
@@ -454,8 +453,6 @@ class _PlannedState extends State<Planned> {
                   // Call `setState()` when updating the selected day
                   setState(() {
                     _selectedDay = selectedDay;
-                    selectedDay = selDate;
-                    _focusedDay = selDate;
                     focusedDay = _focusedDay;
                     day = DateFormat('EEEE').format(_selectedDay);
                     print(day);

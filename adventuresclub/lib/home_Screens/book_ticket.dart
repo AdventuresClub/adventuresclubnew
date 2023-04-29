@@ -156,9 +156,13 @@ class _BookTicketState extends State<BookTicket> {
   }
 
   void book() {
-    if (widget.gm.sPlan == 2) {
+    if (widget.show!) {
       bookAdventure(formattedDate);
     } else {
+      var date = DateTime.parse(widget.gm.startDate.toString());
+      String m = date.month < 10 ? "0${date.month}" : "${date.month}";
+      String d = date.day < 10 ? "0${date.day}" : "${date.day}";
+      endDate = "${date.year}-$m-$d";
       bookAdventure(endDate);
     }
   }

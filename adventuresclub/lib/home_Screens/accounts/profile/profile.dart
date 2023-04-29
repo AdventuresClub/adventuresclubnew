@@ -120,12 +120,13 @@ class _ProfileState extends State<Profile> {
             ),
             Stack(
               clipBehavior: Clip.none,
-              children: const [
+              children: [
                 CircleAvatar(
                   radius: 50,
-                  backgroundImage: ExactAssetImage('images/avatar2.png'),
+                  backgroundImage: NetworkImage(
+                      "${'https://adventuresclub.net/adventureClub/public/'}${Constants.profile.profileImage}"),
                 ),
-                Positioned(
+                const Positioned(
                     bottom: -10,
                     right: -10,
                     child: CircleAvatar(

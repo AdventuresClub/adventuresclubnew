@@ -2,13 +2,10 @@
 
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -45,8 +42,8 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
   @override
   void initState() {
     // setState(() {
-    ln = double.tryParse(widget.lat) ?? 0;
-    lt = double.tryParse(widget.lng) ?? 0;
+    lt = double.tryParse(widget.lat) ?? 0;
+    ln = double.tryParse(widget.lng) ?? 0;
 
     super.initState();
     setMarker();

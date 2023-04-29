@@ -274,9 +274,13 @@ class _MyServicesState extends State<MyServices> {
         } else {
           dynamic pga = element['availability'];
           if (pga != null) {
-            AvailabilityModel am = AvailabilityModel(
-                pga['start_date'].toString() ?? "",
-                pga['end_date'].toString() ?? "");
+            List<dynamic> available = element['availability'];
+            available.forEach((a) {
+              AvailabilityModel am = AvailabilityModel(
+                  a['start_date'].toString() ?? "",
+                  a['end_date'].toString() ?? "");
+              gAccomodoationAvaiModel.add(am);
+            });
           }
         }
         dynamic nullbp = element['become_partner'];
@@ -492,13 +496,7 @@ class _MyServicesState extends State<MyServices> {
             preferredSize: const Size.fromHeight(65.0),
             child: Theme(
               data: Theme.of(context).copyWith(accentColor: Colors.white),
-              child:
-                  //  Padding(
-                  //   padding: EdgeInsets.only(bottom: 20.0, top: 5),
-                  //   child: SearchContainer('Search by provider name', 1.1, 9,
-                  //       'images/path.png', true, false, 'oman', 14),
-                  // ),
-                  Padding(
+              child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
                 child: Container(
@@ -557,16 +555,6 @@ class _MyServicesState extends State<MyServices> {
                   ),
                 ),
               ),
-              //     TextField(
-              //   onChanged: (value) {
-              //     searchServices(value);
-              //   },
-              //   textAlign: TextAlign.center,
-              //   controller: searchController,
-              //   decoration: const InputDecoration(
-              //       hintText: 'Search By Adventure',
-              //       hintStyle: TextStyle(color: blackTypeColor4)),
-              // ),
             ),
           ),
         ),
@@ -575,10 +563,6 @@ class _MyServicesState extends State<MyServices> {
             color: greyShadeColor.withOpacity(0.1),
             child: Column(
               children: [
-                // Text("test")
-                // MyServicesGrid(
-                //   filteredServices,
-                // ),
                 Padding(
                   padding: const EdgeInsets.only(
                       top: 12.0, bottom: 12, left: 5, right: 5),
