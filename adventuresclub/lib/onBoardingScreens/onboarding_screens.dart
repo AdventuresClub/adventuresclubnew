@@ -158,7 +158,7 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
           image: DecorationImage(
               colorFilter: ColorFilter.mode(
                   blackColor.withOpacity(0.4), BlendMode.darken),
-              image: const ExactAssetImage('images/pexels-photo.png'),
+              image: const ExactAssetImage('images/picture1.png'),
               fit: BoxFit.cover),
         ),
         child: Padding(
