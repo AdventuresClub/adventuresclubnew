@@ -17,7 +17,7 @@ class DescriptionActivitiesWidget extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           // mainAxisAlignment: MainAxisAlignment.start,
-          // crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Align(
               alignment: Alignment.centerLeft,
@@ -28,9 +28,39 @@ class DescriptionActivitiesWidget extends StatelessWidget {
                 fontFamily: 'Roboto',
               ),
             ),
+            const SizedBox(height: 10),
+            Wrap(
+              children: [
+                for (int i = 0; i < activities.length; i++)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.network(
+                          "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${activities[i].image}",
+                          height: 18,
+                          width: 18,
+                        ),
+                        const SizedBox(width: 5),
+                        MyText(
+                          text: activities[i].activity,
+                          color: greyTextColor,
+                          weight: FontWeight.w500,
+                          fontFamily: 'Roboto',
+                          size: 12,
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+            /*
             GridView.count(
-              physics: const ScrollPhysics(),
+//                primary: false,
+//                physics: const ScrollPhysics(),
               shrinkWrap: true,
+              addAutomaticKeepAlives: true,
               mainAxisSpacing: 0,
               childAspectRatio: 4,
               crossAxisSpacing: 4,
@@ -61,7 +91,8 @@ class DescriptionActivitiesWidget extends StatelessWidget {
                   ),
                 );
               }),
-            )
+            ),
+            */
           ],
         ),
       ),
