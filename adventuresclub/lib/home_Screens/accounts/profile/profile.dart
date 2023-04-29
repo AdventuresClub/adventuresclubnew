@@ -103,6 +103,15 @@ class _ProfileState extends State<Profile> {
             color: bluishColor,
             weight: FontWeight.bold,
           ),
+          actions: [
+            Icon(
+              Icons.lock,
+              color: greyColor.withOpacity(0.5),
+            ),
+            const SizedBox(
+              width: 10,
+            )
+          ],
         ),
         body: Column(
           children: [

@@ -15,6 +15,9 @@ class DescriptionDependency extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
+          // mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Align(
               alignment: Alignment.centerLeft,
@@ -27,31 +30,24 @@ class DescriptionDependency extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 5),
-            Wrap(
-              children: List.generate(dm.length,
-                  //widget.gm.dependencies.length,
-
-                  (index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4.0),
+            Wrap(children: [
+              for (int i = 0; i < dm.length; i++)
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 4.0, horizontal: 6),
                   child: Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      if (dm[index].name.isEmpty)
-                        const Icon(
-                          Icons.power_input,
-                          size: 20,
-                        ),
-                      if (dm[index].name.isNotEmpty)
-                        Image.network(
-                          "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${dm[index].name}",
-                          height: 18,
-                          width: 18,
-                        ),
+                      Image.network(
+                        "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${dm[i].name}",
+                        height: 18,
+                        width: 18,
+                      ),
                       const SizedBox(
                         width: 5,
                       ),
                       MyText(
-                        text: dm[index].dName,
+                        text: dm[i].dName,
                         //text: aimedFor[index],
                         color: greyColor2,
                         weight: FontWeight.w500,
@@ -60,9 +56,8 @@ class DescriptionDependency extends StatelessWidget {
                       ),
                     ],
                   ),
-                );
-              }),
-            )
+                ),
+            ]),
           ],
         ),
       ),

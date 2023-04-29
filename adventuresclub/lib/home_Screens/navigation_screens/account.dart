@@ -1101,80 +1101,80 @@ class _AccountState extends State<Account> {
                             ),
                         ],
                       ),
-                    if (Constants.profile.bp.packagesId == 0 &&
-                        Constants.profile.bp.isApproved == "")
-                      GestureDetector(
-                        // onTap: getProfile,
-                        child: Container(
-                          color: transparentColor,
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              loading
-                                  ? const Text("Loading")
-                                  : Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        MyText(
-                                          text: Constants.profile
-                                              .name, //'Kenneth Gutierrez',
-                                          color: blackColor,
-                                          weight: FontWeight.bold,
-                                          size: 22,
-                                          fontFamily: "Raleway",
-                                        ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(builder: (_) {
-                                              return const BecomePartnerNew();
-                                            }));
-                                          },
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              MyText(
-                                                text: 'Become A partner',
-                                                size: 16,
-                                                //fontFamily: 'Raleway',
-                                                weight: FontWeight.w600,
-                                                color: greyColor.withOpacity(1),
-                                              ),
-                                              const Icon(
-                                                Icons.arrow_forward_ios,
-                                                color: bluishColor,
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                              profileUrl != null
-                                  ? GestureDetector(
-                                      onTap: () => goToProfile(
-                                          expired, Constants.userRole),
-                                      child: const CircleAvatar(
-                                        radius: 38,
-                                        backgroundImage: ExactAssetImage(
-                                            'images/avatar2.png'),
-                                      ),
-                                    )
-                                  : GestureDetector(
-                                      onTap: () => goToProfile(
-                                          expired, Constants.userRole),
-                                      child: CircleAvatar(
-                                        radius: 38,
-                                        backgroundImage:
-                                            NetworkImage(profileUrl),
-                                      ),
-                                    ),
-                            ],
-                          ),
-                        ),
-                      ),
+                    // if (Constants.profile.bp.packagesId == 0 &&
+                    //     Constants.profile.bp.isApproved == "")
+                    //   GestureDetector(
+                    //     // onTap: getProfile,
+                    //     child: Container(
+                    //       color: transparentColor,
+                    //       padding: const EdgeInsets.symmetric(horizontal: 15),
+                    //       child: Row(
+                    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //         children: [
+                    //           loading
+                    //               ? const Text("Loading")
+                    //               : Column(
+                    //                   crossAxisAlignment:
+                    //                       CrossAxisAlignment.start,
+                    //                   children: [
+                    //                     MyText(
+                    //                       text: Constants.profile
+                    //                           .name, //'Kenneth Gutierrez',
+                    //                       color: blackColor,
+                    //                       weight: FontWeight.bold,
+                    //                       size: 22,
+                    //                       fontFamily: "Raleway",
+                    //                     ),
+                    //                     GestureDetector(
+                    //                       onTap: () {
+                    //                         Navigator.of(context).push(
+                    //                             MaterialPageRoute(builder: (_) {
+                    //                           return const BecomePartnerNew();
+                    //                         }));
+                    //                       },
+                    //                       child: Row(
+                    //                         mainAxisAlignment:
+                    //                             MainAxisAlignment.start,
+                    //                         children: [
+                    //                           MyText(
+                    //                             text: 'Become A partner',
+                    //                             size: 16,
+                    //                             //fontFamily: 'Raleway',
+                    //                             weight: FontWeight.w600,
+                    //                             color: greyColor.withOpacity(1),
+                    //                           ),
+                    //                           const Icon(
+                    //                             Icons.arrow_forward_ios,
+                    //                             color: bluishColor,
+                    //                           )
+                    //                         ],
+                    //                       ),
+                    //                     ),
+                    //                   ],
+                    //                 ),
+                    //           profileUrl != null
+                    //               ? GestureDetector(
+                    //                   onTap: () => goToProfile(
+                    //                       expired, Constants.userRole),
+                    //                   child: const CircleAvatar(
+                    //                     radius: 38,
+                    //                     backgroundImage: ExactAssetImage(
+                    //                         'images/avatar2.png'),
+                    //                   ),
+                    //                 )
+                    //               : GestureDetector(
+                    //                   onTap: () => goToProfile(
+                    //                       expired, Constants.userRole),
+                    //                   child: CircleAvatar(
+                    //                     radius: 38,
+                    //                     backgroundImage:
+                    //                         NetworkImage(profileUrl),
+                    //                   ),
+                    //                 ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
                   ],
                 ),
                 if (Constants.userRole == "2")
@@ -1359,7 +1359,7 @@ class _AccountState extends State<Account> {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (_) {
-                                    return const CompleteProfile();
+                                    return const InviteFriends();
                                   },
                                 ),
                               );

@@ -1,10 +1,27 @@
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class InviteFriends extends StatelessWidget {
+class InviteFriends extends StatefulWidget {
   const InviteFriends({super.key});
 
+  @override
+  State<InviteFriends> createState() => _InviteFriendsState();
+}
+
+void launchURL() async {
+  const url = 'https://adventuresclub.net/';
+  final uri = Uri.parse(url);
+  if (await canLaunchUrl(uri)) {
+    await launchUrl(uri);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
+
+class _InviteFriendsState extends State<InviteFriends> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,31 +52,30 @@ class InviteFriends extends StatelessWidget {
               Container(
                 height: 150,
                 width: MediaQuery.of(context).size.width,
-                // decoration: BoxDecoration(
-                //   borderRadius: BorderRadius.circular(20),
-                //   image: const DecorationImage(
-                //       image: ExactAssetImage('images/my_points.png'),
-                //       fit: BoxFit.cover),
-                // ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      MyText(
-                        text: "Update in Progress",
-                        size: 18,
-                        weight: FontWeight.bold,
-                        color: blackColor,
-                      )
-                      // MyText(text: 'Total Points',color: blackTypeColor1,size: 20,),
-                      // const SizedBox(height: 15,),
-                      // MyText(text: '300',color: blackTypeColor1,size: 40,),
-                    ],
-                  ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  image: const DecorationImage(
+                      image: ExactAssetImage('images/pngtree.png'),
+                      fit: BoxFit.cover),
                 ),
               ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Button(
+                  "Invite",
+                  bluishColor,
+                  bluishColor,
+                  whiteColor,
+                  16,
+                  launchURL,
+                  Icons.deblur,
+                  bluishColor,
+                  false,
+                  3,
+                  "Roboto",
+                  FontWeight.w500,
+                  14),
               const SizedBox(
                 height: 50,
               ),

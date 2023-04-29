@@ -17,42 +17,48 @@ class DescriptionAimedFor extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
+          // mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Align(
                 alignment: Alignment.centerLeft,
                 child: MyText(
                   text: 'Aimed For',
                   color: greyColor.withOpacity(0.6),
-                  weight: FontWeight.w500,
+                  weight: FontWeight.bold,
                   fontFamily: 'Roboto',
                 )),
             const SizedBox(height: 5),
             Wrap(
-              children: List.generate(am.length, (index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4.0),
-                  child: Row(
-                    children: [
-                      Image.network(
-                        "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${am[index].image}",
-                        height: 18,
-                        width: 18,
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      MyText(
-                        text: am[index].aimedName,
-                        //text: aimedFor[index],
-                        color: greyColor2,
-                        weight: FontWeight.w500,
-                        fontFamily: 'Roboto',
-                        size: 12,
-                      ),
-                    ],
+              children: [
+                for (int i = 0; i < am.length; i++)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 4.0, horizontal: 6),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.network(
+                          "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${am[i].image}",
+                          height: 18,
+                          width: 18,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        MyText(
+                          text: am[i].aimedName,
+                          //text: aimedFor[index],
+                          color: greyColor2,
+                          weight: FontWeight.w500,
+                          fontFamily: 'Roboto',
+                          size: 12,
+                        ),
+                      ],
+                    ),
                   ),
-                );
-              }),
+              ],
             ),
           ],
         ),

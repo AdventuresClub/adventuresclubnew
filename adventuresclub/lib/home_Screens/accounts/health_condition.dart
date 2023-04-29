@@ -27,7 +27,11 @@ class _HealthConditionState extends State<HealthCondition> {
   List<WnHModel> heightList = [];
   List<bool> healthValue = [];
   List<String> currentHealth = [];
+  List<HealthConditionModel> selectedHealth = [];
   bool loading = false;
+  String selectedHealthId = "";
+  var getWeight = 'Weight';
+  var getheight = 'Height';
   List<bool> value1 = [
     false,
     false,
@@ -147,29 +151,60 @@ class _HealthConditionState extends State<HealthCondition> {
 
   void getCurrentHealth() {
     Constants.profile.healthConditionsId;
+    getWeight = Constants.profile.weight;
+    getheight = Constants.profile.height;
     currentHealth = Constants.profile.healthCondtions.split(",");
+    for (int i = 0; i < healthList.length; i++) {
+      for (int y = 0; y < currentHealth.length; y++) {
+        if (healthList[i].healthCondition == currentHealth[y]) {
+          healthValue[i] = true;
+          break;
+        }
+      }
+    }
+    setState(() {});
     print(currentHealth);
   }
 
-  // void updateH(List<String> h) {
-  //   h.forEach((element) {
-  //     for (int i = 0; i < healthList.length; )
-  //   })
-  // }
+  void health() {
+    List<HealthConditionModel> f = [];
+    for (int i = 0; i < healthValue.length; i++) {
+      if (healthValue[i]) {
+        f.add(healthList[i]);
+      }
+    }
+    healthParse(f);
+  }
+
+  void healthParse(List<HealthConditionModel> am) async {
+    List<String> a = [];
+    List<int> id = [];
+    am.forEach((element) {
+      a.add(element.healthCondition);
+      id.add(element.id);
+    });
+    // String resultString = id.join(",");
+    setState(() {
+      selectedHealthId = id.join(",");
+    });
+    print(selectedHealthId);
+  }
 
   void editHealth() async {
+    health();
     try {
       var response = await http.post(
           Uri.parse(
               "https://adventuresclub.net/adventureClub/api/v1/update_health_conditions"),
           body: {
             'user_id': Constants.userId.toString(), //ccCode.toString(),
-            "health_conditions": "6,7,4",
-            "height": "50CM (19.7Inch)",
-            "weight": "10KG (22Pounds)"
+            "health_conditions": selectedHealthId,
+            "height": getheight.toString(),
+            "weight": getWeight.toString(),
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       if (response.statusCode == 200) {
+        Constants.getProfile();
         cancel();
         message("Health Condition Amended");
       }
@@ -253,11 +288,12 @@ class _HealthConditionState extends State<HealthCondition> {
                                     horizontal: -2, vertical: -4),
                                 activeColor: bluishColor,
                                 checkColor: whiteColor,
-                                value: value1[index],
+                                value: healthValue[index],
                                 onChanged: ((bool? value2) {
                                   setState(() {
-                                    value1[index] = value2!;
+                                    healthValue[index] = value2!;
                                   });
+                                  //  health();
                                 }),
                                 title: MyText(
                                   text: healthList[index].healthCondition,
@@ -279,19 +315,30 @@ class _HealthConditionState extends State<HealthCondition> {
                       const SizedBox(
                         height: 20,
                       ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: MyText(
+                          text: "Weight & Height",
+                          weight: FontWeight.w500,
+                          color: blackColor.withOpacity(0.5),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           SizedBox(
                               width: MediaQuery.of(context).size.width / 2.2,
                               child: pickingWeight(
-                                  context, '10KG (22Pounds)', true)),
+                                  context, getWeight, true, weightList)),
                           //TFWithSuffixText('60', kGcontroller,'KG'),
 
                           SizedBox(
                               width: MediaQuery.of(context).size.width / 2.2,
                               child: pickingWeight(
-                                  context, '50CM(19.7Inch)', false))
+                                  context, getheight, false, heightList))
                         ],
                       ),
                       const SizedBox(height: 20),
@@ -314,7 +361,8 @@ class _HealthConditionState extends State<HealthCondition> {
               ));
   }
 
-  Widget pickingWeight(context, String genderName, bool showWidget) {
+  Widget pickingWeight(
+      context, String genderName, bool showWidget, List<WnHModel> itemList) {
     return Card(
       elevation: 1,
       color: whiteColor,
@@ -363,34 +411,30 @@ class _HealthConditionState extends State<HealthCondition> {
                                           backgroundColor: whiteColor,
                                           onSelectedItemChanged: (int index) {
                                             print(index + 1);
-                                            setState(() {
-                                              ft = (index + 1);
-                                              heightController.text =
-                                                  "$ft' $inches\"";
-                                            });
+                                            showWidget
+                                                ? setState(() {
+                                                    getWeight = itemList[index]
+                                                        .heightName;
+                                                  })
+                                                : setState(() {
+                                                    getheight = itemList[index]
+                                                        .heightName;
+                                                  });
                                           },
                                           selectionOverlay:
                                               const CupertinoPickerDefaultSelectionOverlay(
                                             background: transparentColor,
                                           ),
-                                          children: showWidget == true
-                                              ? List.generate(3, (index) {
-                                                  return Center(
-                                                    child: MyText(
-                                                        text: pickWeight[index],
-                                                        size: 14,
-                                                        color: blackTypeColor4),
-                                                  );
-                                                })
-                                              : List.generate(pickHeight.length,
-                                                  (index) {
-                                                  return Center(
-                                                    child: MyText(
-                                                        text: pickHeight[index],
-                                                        size: 14,
-                                                        color: blackTypeColor4),
-                                                  );
-                                                })),
+                                          children: List.generate(
+                                              itemList.length, (index) {
+                                            return Center(
+                                              child: MyText(
+                                                  text: itemList[index]
+                                                      .heightName,
+                                                  size: 14,
+                                                  color: blackTypeColor4),
+                                            );
+                                          })),
                                     ),
                                     Positioned(
                                       top: 70,
@@ -423,13 +467,13 @@ class _HealthConditionState extends State<HealthCondition> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               TextButton(
-                                  onPressed: () {},
+                                  onPressed: () => Navigator.of(context).pop(),
                                   child: MyText(
                                     text: 'Cancel',
                                     color: bluishColor,
                                   )),
                               TextButton(
-                                  onPressed: () {},
+                                  onPressed: () => Navigator.of(context).pop(),
                                   child: MyText(
                                     text: 'Ok',
                                     color: bluishColor,
