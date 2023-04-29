@@ -833,19 +833,19 @@ class Constants {
   }
 
   static String convertDaysNumToString(int i) {
-    if (i == 1) {
+    if (i == 7) {
       return "Sunday";
-    } else if (i == 2) {
+    } else if (i == 1) {
       return "Monday";
-    } else if (i == 3) {
+    } else if (i == 2) {
       return "Tuesday";
-    } else if (i == 4) {
+    } else if (i == 3) {
       return "Wednesday";
-    } else if (i == 5) {
+    } else if (i == 4) {
       return "Thursday";
-    } else if (i == 6) {
+    } else if (i == 5) {
       return "Friday";
-    } else if (i == 7) {
+    } else if (i == 6) {
       return "Saturday";
     }
     return "";
