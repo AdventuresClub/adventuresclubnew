@@ -100,7 +100,7 @@ class ServicesProvider with ChangeNotifier {
   Future getServicesList() async {
     filteredServices.clear();
     allServices.clear();
-    //gAllServices.clear();
+    gAllServices.clear();
     //getServicesListy1();
     var response = await http.post(
         Uri.parse(
