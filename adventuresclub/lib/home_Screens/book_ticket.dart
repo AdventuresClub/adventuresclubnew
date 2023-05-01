@@ -168,40 +168,43 @@ class _BookTicketState extends State<BookTicket> {
   }
 
   void bookAdventure(var date) async {
+    if (totalPerson > 0) {
+      try {
+        var response = await http.post(
+            Uri.parse(
+                "https://adventuresclub.net/adventureClub/api/v1/book_service"),
+            body: {
+              "service_id": widget.gm.id.toString(),
+              "user_id": Constants.userId.toString(),
+              "adult": _m.toString(), //"2",
+              "kids": _n.toString(), //"1", //,
+              "message": messageController.text,
+              "points": "0", //pointsController.text,
+              "booking_date": date
+                  .toString(), //"2021-07-15", //widget.gm.bookingData[0].createdAt,
+              "coupon_applied": "0",
+              "provider_id": widget.gm.providerId
+                  .toString(), //widget.gm.providerId.toString(),
+              "amount": totalCost.toString(),
+              "promo_code": "", //"PER2Y2Etr",
+              "discount_amount": "0",
+              "final_amount": totalCost.toString(),
+            });
+        if (response.statusCode == 200) {
+          message("Booking sent successfully");
+          goToHome();
+        }
+        print(response.statusCode);
+        print(response.body);
+      } catch (e) {
+        print(e);
+      }
+    }
+    message("Persons cannot be empty");
     // var date = DateTime.parse(widget.gm.startDate.toString());
     // String m = date.month < 10 ? "0${date.month}" : "${date.month}";
     // String d = date.day < 10 ? "0${date.day}" : "${date.day}";
     // endDate = "${date.year}-$m-$d";
-    try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/book_service"),
-          body: {
-            "service_id": widget.gm.id.toString(),
-            "user_id": Constants.userId.toString(),
-            "adult": _m.toString(), //"2",
-            "kids": _n.toString(), //"1", //,
-            "message": messageController.text,
-            "points": "0", //pointsController.text,
-            "booking_date": date
-                .toString(), //"2021-07-15", //widget.gm.bookingData[0].createdAt,
-            "coupon_applied": "0",
-            "provider_id": widget.gm.providerId
-                .toString(), //widget.gm.providerId.toString(),
-            "amount": totalCost.toString(),
-            "promo_code": "", //"PER2Y2Etr",
-            "discount_amount": "0",
-            "final_amount": totalCost.toString(),
-          });
-      if (response.statusCode == 200) {
-        message("Booking sent successfully");
-        goToHome();
-      }
-      print(response.statusCode);
-      print(response.body);
-    } catch (e) {
-      print(e);
-    }
   }
 
   void message(String message) {
