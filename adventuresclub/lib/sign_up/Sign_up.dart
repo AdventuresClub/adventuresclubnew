@@ -16,6 +16,7 @@ import 'package:adventuresclub/widgets/text_fields/tf_with_suffix_icon.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -76,7 +77,7 @@ class _SignUpState extends State<SignUp> {
   List<GetCountryModel> countriesList1 = [];
   Map mapCountry = {};
   Map userRegistration = {};
-  List<String> healthC = [];
+  String healthC = "";
   List<HealthConditionModel> healthList = [];
   String flag = "";
   String userRole = "";
@@ -107,19 +108,21 @@ class _SignUpState extends State<SignUp> {
 
   List genderText = ['Male', 'Female', 'Other'];
 
-  DateTime currentDate = DateTime.now();
   Future<void> _selectDate(BuildContext context) async {
+    DateTime currentDate = DateTime.now();
+    final DateTime tenYearsAgo =
+        currentDate.subtract(const Duration(days: 365 * 10));
     pickedDate = await showDatePicker(
         context: context,
-        initialDate: currentDate,
+        initialDate: tenYearsAgo,
         firstDate: DateTime(DateTime.now().day - 1),
-        lastDate: DateTime(2050));
+        lastDate: tenYearsAgo);
     if (pickedDate != null && pickedDate != currentDate) {
       setState(() {
         var date = DateTime.parse(pickedDate.toString());
         String m = date.month < 10 ? "0${date.month}" : "${date.month}";
         String d = date.day < 10 ? "0${date.day}" : "${date.day}";
-        formattedDate = "${date.year}-${m}-${d}";
+        formattedDate = "${date.year}-$m-$d";
         currentDate = pickedDate!;
       });
     }
@@ -155,6 +158,7 @@ class _SignUpState extends State<SignUp> {
       result.forEach((element) {
         GetCountryModel gc = GetCountryModel(
           element['country'],
+          element['short_name'],
           element['flag'],
           element['code'],
           element['id'],
@@ -234,6 +238,28 @@ class _SignUpState extends State<SignUp> {
     healthList.forEach((element) {
       healthValue.add(false);
     });
+  }
+
+  void dependency() {
+    List<HealthConditionModel> f = [];
+    for (int i = 0; i < healthValue.length; i++) {
+      if (healthValue[i]) {
+        f.add(healthList[i]);
+      }
+    }
+    dependencyParse(f);
+  }
+
+  void dependencyParse(List<HealthConditionModel> am) async {
+    List<int> a = [];
+    am.forEach((element) {
+      a.add(element.id);
+    });
+    // String resultString = id.join(",");
+    setState(() {
+      healthC = a.join(",");
+    });
+    print(healthC);
   }
 
   void getOtp() async {
@@ -394,8 +420,8 @@ class _SignUpState extends State<SignUp> {
                                   "mobile": numController
                                       .text, //"3344374923", //"3214181273",
                                   // numController.text,
-                                  "health_conditions":
-                                      "8,2,6", //healthC.toString(),
+                                  "health_conditions": healthC,
+                                  //"8,2,6", //healthC.toString(),
                                   "height": getheight,
                                   "weight": getWeight,
                                   "mobile_code": ccCode.toString(),
@@ -405,7 +431,8 @@ class _SignUpState extends State<SignUp> {
                                   "country_id":
                                       currentLocationId.toString(), //"2",
                                   "device_id": "1",
-                                  "nationality_id": countryId.toString() //"5",
+                                  "nationality_id": countryId.toString(),
+                                  "gender": genderText, //"5",
                                 });
                             // print(response.statusCode);
                             if (response.statusCode == 200) {
@@ -430,7 +457,8 @@ class _SignUpState extends State<SignUp> {
                                   numController.text);
                               goToHome();
                             } else {
-                              message(response.body.toString());
+                              dynamic body = jsonDecode(response.body);
+                              message(body['message'].toString());
                             }
                           } else {
                             message("Please Select Height & Weight");
@@ -577,7 +605,8 @@ class _SignUpState extends State<SignUp> {
                     image: const ExactAssetImage('images/registrationpic.png'),
                     fit: BoxFit.cover)),
             child: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20),
               child: Column(
                 children: [
                   const SizedBox(height: 20),
@@ -611,9 +640,10 @@ class _SignUpState extends State<SignUp> {
                   TFWithSiffixIcon(
                       'Password', Icons.visibility_off, passController, true),
                   const SizedBox(height: 20),
-                  pickCountry(context, selectedCountry, true),
+                  pickCountry(context, selectedCountry, true, false),
                   const SizedBox(height: 20),
-                  pickCountry(context, currentLocation, false),
+                  // now i am in
+                  pickCountry(context, currentLocation, false, true),
                   const SizedBox(
                     height: 20,
                   ),
@@ -710,12 +740,15 @@ class _SignUpState extends State<SignUp> {
                                     const SizedBox(
                                       width: 10,
                                     ),
-                                    MyText(
-                                        text: healthList[index].healthCondition,
-                                        color: blackColor.withOpacity(0.6),
-                                        weight: FontWeight.w700,
-                                        size: 13,
-                                        fontFamily: 'Raleway'),
+                                    Expanded(
+                                      child: MyText(
+                                          text:
+                                              healthList[index].healthCondition,
+                                          color: blackColor.withOpacity(0.6),
+                                          weight: FontWeight.w700,
+                                          size: 13,
+                                          fontFamily: 'Raleway'),
+                                    ),
                                   ],
                                 );
                               },
@@ -751,71 +784,81 @@ class _SignUpState extends State<SignUp> {
                               termsValue = value!;
                             });
                           })),
-                      Row(
-                        children: [
-                          MyText(
-                            text: 'I have read ',
-                            size: 12,
-                          ),
-                          GestureDetector(
-                            onTap: terms,
-                            child: MyText(
-                              text: 'Terms & Conditions',
-                              size: 14,
-                            ),
-                          ),
-                          MyText(
-                            text: ' & ',
-                            size: 12,
-                          ),
-                          GestureDetector(
-                            onTap: goToPrivacy,
-                            child: MyText(
-                              text: ' Privacy policy',
-                              size: 14,
-                            ),
-                          ),
-                        ],
-                      )
-                      // Text.rich(
-                      //   TextSpan(
-                      //     children: [
-                      //       const TextSpan(
-                      //           text: 'I have read ',
-                      //           style: TextStyle(
-                      //               fontSize: 12,
-                      //               color: greyColor3,
-                      //               fontFamily: 'Raleway')),
-                      //       TextSpan(
-                      //         onEnter: (event) => terms,
+                      // Row(
+                      //   children: [
+                      //     MyText(
+                      //       text: 'I have read ',
+                      //       size: 12,
+                      //     ),
+                      //     GestureDetector(
+                      //       onTap: terms,
+                      //       child: MyText(
                       //         text: 'Terms & Conditions',
-                      //         style: const TextStyle(
-                      //             fontSize: 12,
-                      //             decoration: TextDecoration.underline,
-                      //             fontWeight: FontWeight.w500,
-                      //             color: greyColor3,
-                      //             fontFamily: 'Raleway'),
+                      //         size: 14,
                       //       ),
-                      //       const TextSpan(
-                      //         text: ' & ',
-                      //         style: TextStyle(
-                      //             fontSize: 12,
-                      //             fontWeight: FontWeight.w500,
-                      //             color: greyColor3,
-                      //             fontFamily: 'Raleway'),
+                      //     ),
+                      //     MyText(
+                      //       text: ' & ',
+                      //       size: 14,
+                      //     ),
+                      //     GestureDetector(
+                      //       onTap: goToPrivacy,
+                      //       child: MyText(
+                      //         text: ' Privacy policy',
+                      //         size: 14,
                       //       ),
-                      //       const TextSpan(
-                      //         text: 'Privacy policy',
-                      //         style: TextStyle(
-                      //             fontSize: 12,
-                      //             decoration: TextDecoration.underline,
-                      //             fontWeight: FontWeight.w500,
-                      //             color: greyColor3,
-                      //             fontFamily: 'Raleway'),
-                      //       ),
-                      //     ],
-                      //   ),
+                      //     ),
+                      //   ],
                       // ),
+                      Expanded(
+                        child: Text.rich(
+                          TextSpan(
+                            children: [
+                              const TextSpan(
+                                  text: 'I have read ',
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: whiteColor,
+                                      fontFamily: 'Raleway')),
+                              TextSpan(
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    terms();
+                                  },
+                                text: 'Terms & Conditions',
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.w500,
+                                    color: whiteColor,
+                                    fontFamily: 'Raleway'),
+                              ),
+                              const TextSpan(
+                                text: ' & ',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    color: whiteColor,
+                                    fontFamily: 'Raleway'),
+                              ),
+                              TextSpan(
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    goToPrivacy();
+                                  },
+                                // onEnter: (event) => goToPrivacy,
+                                text: 'Privacy policy',
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.w500,
+                                    color: whiteColor,
+                                    fontFamily: 'Raleway'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -891,116 +934,132 @@ class _SignUpState extends State<SignUp> {
                       showModalBottomSheet(
                         context: context,
                         builder: (context) {
-                          return Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Column(
-                              children: [
-                                Row(children: const [
-                                  Text(
-                                    "Select Your Country",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                        fontFamily: 'Raleway-Black'),
-                                  )
-                                ]),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                Container(
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(
-                                      color: blackColor.withOpacity(0.5),
+                          return StatefulBuilder(builder: (context, setState) {
+                            return Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Column(
+                                children: [
+                                  Row(children: const [
+                                    Text(
+                                      "Select your active phone country code",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
+                                          fontFamily: 'Raleway-Black'),
+                                    )
+                                  ]),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  Container(
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                        color: blackColor.withOpacity(0.5),
+                                      ),
+                                    ),
+                                    child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 0.0),
+                                        child: TextField(
+                                          onChanged: (value) {
+                                            if (value.isNotEmpty) {
+                                              filteredServices = countriesList1
+                                                  .where((element) => element
+                                                      .shortName
+                                                      .toLowerCase()
+                                                      .contains(value))
+                                                  .toList();
+                                              //log(filteredServices.length.toString());
+                                            } else {
+                                              filteredServices = countriesList1;
+                                            }
+                                            setState(() {});
+                                          },
+                                          controller: searchController,
+                                          decoration: InputDecoration(
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                    vertical: 8, horizontal: 8),
+                                            hintText: 'Country',
+                                            filled: true,
+                                            fillColor: lightGreyColor,
+                                            suffixIcon: GestureDetector(
+                                              //onTap: openMap,
+                                              child: const Icon(Icons.search),
+                                            ),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(10.0)),
+                                              borderSide: BorderSide(
+                                                  color: greyColor
+                                                      .withOpacity(0.2)),
+                                            ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(10.0)),
+                                              borderSide: BorderSide(
+                                                  color: greyColor
+                                                      .withOpacity(0.2)),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(10.0)),
+                                              borderSide: BorderSide(
+                                                  color: greyColor
+                                                      .withOpacity(0.2)),
+                                            ),
+                                          ),
+                                        )),
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  Expanded(
+                                    child: ListView.builder(
+                                      itemCount: filteredServices.length,
+                                      itemBuilder: ((context, index) {
+                                        return ListTile(
+                                          leading: searchController.text.isEmpty
+                                              ? Image.network(
+                                                  "${"https://adventuresclub.net/adventureClub/public/"}${countriesList1[index].flag}",
+                                                  height: 25,
+                                                  width: 40,
+                                                )
+                                              : null,
+                                          title: Text(
+                                            filteredServices[index].shortName,
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                color: blackColor,
+                                                fontFamily: 'Raleway'),
+                                          ),
+                                          trailing: Text(
+                                            filteredServices[index].code,
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                color: blackColor,
+                                                fontFamily: 'Raleway'),
+                                          ),
+                                          onTap: () {
+                                            getC(
+                                                filteredServices[index].country,
+                                                filteredServices[index].code,
+                                                filteredServices[index].id,
+                                                filteredServices[index].flag);
+                                          },
+                                        );
+                                      }),
                                     ),
                                   ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16.0),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "'Country',",
-                                          style: TextStyle(
-                                            color: blackColor.withOpacity(0.6),
-                                          ),
-                                        ),
-                                        Text(
-                                          "'Code' ",
-                                          style: TextStyle(
-                                            color: blackColor.withOpacity(0.6),
-                                          ),
-                                        ),
-                                        Text(
-                                          " or ",
-                                          style: TextStyle(
-                                            color: blackColor.withOpacity(0.6),
-                                          ),
-                                        ),
-                                        Text(
-                                          " 'Dial Code'",
-                                          style: TextStyle(
-                                            color: blackColor.withOpacity(0.6),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 100,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.search,
-                                              color:
-                                                  blackColor.withOpacity(0.5),
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                Expanded(
-                                  child: ListView.builder(
-                                    itemCount: countriesList1.length,
-                                    itemBuilder: ((context, index) {
-                                      return ListTile(
-                                        leading: Image.network(
-                                          "${"https://adventuresclub.net/adventureClub/public/"}${countriesList1[index].flag}",
-                                          height: 25,
-                                          width: 40,
-                                        ),
-                                        title: Text(
-                                          countriesList1[index].country,
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              color: blackColor,
-                                              fontFamily: 'Raleway'),
-                                        ),
-                                        trailing: Text(
-                                          countriesList1[index].code,
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              color: blackColor,
-                                              fontFamily: 'Raleway'),
-                                        ),
-                                        onTap: () {
-                                          getC(
-                                              countriesList1[index].country,
-                                              countriesList1[index].code,
-                                              countriesList1[index].id,
-                                              countriesList1[index].flag);
-                                        },
-                                      );
-                                    }),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
+                                ],
+                              ),
+                            );
+                          });
                         },
                       );
                     },
@@ -1132,7 +1191,7 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Widget pickCountry(context, String countryName, bool show) {
+  Widget pickCountry(context, String countryName, bool show, bool nowIn) {
     return Container(
       padding: const EdgeInsets.all(0),
       decoration: BoxDecoration(
@@ -1149,15 +1208,25 @@ class _SignUpState extends State<SignUp> {
                       const SizedBox(
                         height: 15,
                       ),
-                      Row(children: const [
-                        Text(
-                          "Select Your Country",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              fontFamily: 'Raleway-Black'),
-                        )
-                      ]),
+                      nowIn
+                          ? Row(children: const [
+                              Text(
+                                "Select the country you are now in",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    fontFamily: 'Raleway-Black'),
+                              )
+                            ])
+                          : Row(children: const [
+                              Text(
+                                "Select Your Nationality",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    fontFamily: 'Raleway-Black'),
+                              )
+                            ]),
                       const SizedBox(
                         height: 15,
                       ),
@@ -1172,51 +1241,100 @@ class _SignUpState extends State<SignUp> {
                         child: Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 0.0),
-                            child: TextField(
-                              onChanged: (value) {
-                                if (value.isNotEmpty) {
-                                  filteredServices = countriesList1
-                                      .where((element) => element.country
-                                          .toLowerCase()
-                                          .contains(value))
-                                      .toList();
-                                  //log(filteredServices.length.toString());
-                                } else {
-                                  filteredServices = countriesList1;
-                                }
-                                setState(() {});
-                              },
-                              controller: searchController,
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 8, horizontal: 8),
-                                hintText: 'Country',
-                                filled: true,
-                                fillColor: lightGreyColor,
-                                suffixIcon: GestureDetector(
-                                  //onTap: openMap,
-                                  child: const Icon(Icons.search),
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(10.0)),
-                                  borderSide: BorderSide(
-                                      color: greyColor.withOpacity(0.2)),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(10.0)),
-                                  borderSide: BorderSide(
-                                      color: greyColor.withOpacity(0.2)),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(10.0)),
-                                  borderSide: BorderSide(
-                                      color: greyColor.withOpacity(0.2)),
-                                ),
-                              ),
-                            )),
+                            child: nowIn
+                                ? TextField(
+                                    onChanged: (value) {
+                                      if (value.isNotEmpty) {
+                                        filteredServices = countriesList1
+                                            .where((element) => element.country
+                                                .toLowerCase()
+                                                .contains(value))
+                                            .toList();
+                                        //log(filteredServices.length.toString());
+                                      } else {
+                                        filteredServices = countriesList1;
+                                      }
+                                      setState(() {});
+                                    },
+                                    controller: searchController,
+                                    decoration: InputDecoration(
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              vertical: 8, horizontal: 8),
+                                      hintText: 'Country',
+                                      filled: true,
+                                      fillColor: lightGreyColor,
+                                      suffixIcon: GestureDetector(
+                                        //onTap: openMap,
+                                        child: const Icon(Icons.search),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        borderSide: BorderSide(
+                                            color: greyColor.withOpacity(0.2)),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        borderSide: BorderSide(
+                                            color: greyColor.withOpacity(0.2)),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        borderSide: BorderSide(
+                                            color: greyColor.withOpacity(0.2)),
+                                      ),
+                                    ),
+                                  )
+                                : TextField(
+                                    onChanged: (value) {
+                                      if (value.isNotEmpty) {
+                                        filteredServices = countriesList1
+                                            .where((element) => element
+                                                .shortName
+                                                .toLowerCase()
+                                                .contains(value))
+                                            .toList();
+                                        //log(filteredServices.length.toString());
+                                      } else {
+                                        filteredServices = countriesList1;
+                                      }
+                                      setState(() {});
+                                    },
+                                    controller: searchController,
+                                    decoration: InputDecoration(
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              vertical: 8, horizontal: 8),
+                                      hintText: 'Country',
+                                      filled: true,
+                                      fillColor: lightGreyColor,
+                                      suffixIcon: GestureDetector(
+                                        //onTap: openMap,
+                                        child: const Icon(Icons.search),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        borderSide: BorderSide(
+                                            color: greyColor.withOpacity(0.2)),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        borderSide: BorderSide(
+                                            color: greyColor.withOpacity(0.2)),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        borderSide: BorderSide(
+                                            color: greyColor.withOpacity(0.2)),
+                                      ),
+                                    ),
+                                  )),
                       ),
                       const SizedBox(
                         height: 15,
@@ -1233,7 +1351,9 @@ class _SignUpState extends State<SignUp> {
                                       width: 40,
                                     )
                                   : null,
-                              title: Text(filteredServices[index].country),
+                              title: nowIn
+                                  ? Text(filteredServices[index].country)
+                                  : Text(filteredServices[index].shortName),
                               onTap: () {
                                 addCountry(
                                   filteredServices[index].country,
@@ -1434,13 +1554,13 @@ class _SignUpState extends State<SignUp> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               TextButton(
-                                  onPressed: () {},
+                                  onPressed: () => Navigator.of(context).pop(),
                                   child: MyText(
                                     text: 'Cancel',
                                     color: bluishColor,
                                   )),
                               TextButton(
-                                  onPressed: () {},
+                                  onPressed: () => Navigator.of(context).pop(),
                                   child: MyText(
                                     text: 'Ok',
                                     color: bluishColor,

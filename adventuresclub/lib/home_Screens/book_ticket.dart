@@ -22,7 +22,7 @@ class _BookTicketState extends State<BookTicket> {
   TextEditingController messageController = TextEditingController();
   TextEditingController pointsController = TextEditingController();
   int _n = 0;
-  int _m = 0;
+  int _m = 1;
   int totalPerson = 0;
   double totalCost = 0;
   String costInc = "";
@@ -54,7 +54,8 @@ class _BookTicketState extends State<BookTicket> {
   @override
   void initState() {
     super.initState();
-    formattedDate = 'Birthday';
+    formattedDate = 'Desired Date';
+    addPerson();
     setState(() {
       text2.insert(0, widget.gm.costInc);
 
@@ -199,8 +200,10 @@ class _BookTicketState extends State<BookTicket> {
       } catch (e) {
         print(e);
       }
+    } else {
+      message("Persons cannot be empty");
     }
-    message("Persons cannot be empty");
+
     // var date = DateTime.parse(widget.gm.startDate.toString());
     // String m = date.month < 10 ? "0${date.month}" : "${date.month}";
     // String d = date.day < 10 ? "0${date.day}" : "${date.day}";
@@ -251,7 +254,7 @@ class _BookTicketState extends State<BookTicket> {
             child: Column(
               children: [
                 Card(
-                    elevation: 3,
+                    elevation: 4,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12.0, vertical: 20),
@@ -264,13 +267,14 @@ class _BookTicketState extends State<BookTicket> {
                             Column(
                               children: [
                                 Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: MyText(
-                                      text: 'Start Date',
-                                      weight: FontWeight.bold,
-                                      color: blackTypeColor4,
-                                      size: 22,
-                                    )),
+                                  alignment: Alignment.centerLeft,
+                                  child: MyText(
+                                    text: 'Start Date',
+                                    weight: FontWeight.bold,
+                                    color: blackTypeColor4,
+                                    size: 22,
+                                  ),
+                                ),
                                 const SizedBox(
                                   height: 10,
                                 ),
@@ -293,7 +297,17 @@ class _BookTicketState extends State<BookTicket> {
                                       ),
                                     )
                                   ],
-                                )
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: MyText(
+                                      text: formattedDate,
+                                      color: blackColor,
+                                      weight: FontWeight.w500,
+                                    )),
                               ],
                             ),
                           const SizedBox(
@@ -433,13 +447,13 @@ class _BookTicketState extends State<BookTicket> {
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 15, horizontal: 15),
-                              hintText: 'Type Message here... ',
+                              hintText:
+                                  'Type Message here... Name, Ages or Health Conditions',
                               hintStyle: const TextStyle(
-                                  color: blackColor,
                                   fontWeight: FontWeight.w400,
                                   fontSize: 14,
                                   fontFamily: 'Raleway'),
-                              hintMaxLines: 1,
+                              hintMaxLines: 3,
                               isDense: true,
                               filled: true,
                               fillColor: whiteColor,
@@ -467,13 +481,15 @@ class _BookTicketState extends State<BookTicket> {
                     )),
                 // used earned points
                 Card(
+                  elevation: 4,
                   child: Column(
                     children: [
                       CheckboxListTile(
                           value: value,
                           title: MyText(
                               text: 'Use earned Points',
-                              weight: FontWeight.w500,
+                              weight: FontWeight.bold,
+                              size: 18,
                               color: blackTypeColor1,
                               fontFamily: 'Roboto'),
                           onChanged: (bool? value1) {
@@ -482,8 +498,7 @@ class _BookTicketState extends State<BookTicket> {
                             });
                           }),
                       Padding(
-                        padding: const EdgeInsets.only(
-                            left: 12.0, right: 12, bottom: 12),
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -492,11 +507,11 @@ class _BookTicketState extends State<BookTicket> {
                                 text: 'Available Points',
                                 style: TextStyle(
                                     color: blueTextColor,
-                                    fontSize: 10,
-                                    fontFamily: 'Roboto'),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold),
                                 children: <TextSpan>[
                                   TextSpan(
-                                      text: ' 500',
+                                      text: ' 0',
                                       style: TextStyle(
                                           fontSize: 24,
                                           color: blueTextColor,
@@ -504,23 +519,31 @@ class _BookTicketState extends State<BookTicket> {
                                 ],
                               ),
                             ),
+                            const SizedBox(
+                              width: 50,
+                            ),
                             Row(
                               children: [
                                 MyText(
-                                    text: 'Opt to use',
-                                    color: blueTextColor,
-                                    size: 10,
-                                    fontFamily: 'Roboto'),
+                                  text: 'Opt to use',
+                                  color: blueTextColor,
+                                  size: 12,
+                                  weight: FontWeight.bold,
+                                ),
                               ],
                             ),
                             SizedBox(
-                              width: MediaQuery.of(context).size.width / 5,
-                              height: MediaQuery.of(context).size.width / 10,
+                              width: 35,
+                              height: 60,
                               child: TextField(
                                 controller: pointsController,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(fontSize: 16),
                                 decoration: InputDecoration(
+                                    hintText: "Promo Code",
+                                    hintStyle:
+                                        const TextStyle(color: blackColor),
+                                    suffixText: "Apply",
                                     contentPadding: const EdgeInsets.symmetric(
                                         horizontal: 10, vertical: 10),
                                     isDense: true,
@@ -613,7 +636,7 @@ class _BookTicketState extends State<BookTicket> {
                             MyText(
                                 text: "Per Person",
                                 color: blackTypeColor3,
-                                weight: FontWeight.w500,
+                                weight: FontWeight.bold,
                                 fontFamily: 'Roboto'),
                             MyText(
                                 // text: widget.gm.costInc,
@@ -633,7 +656,7 @@ class _BookTicketState extends State<BookTicket> {
                                 text:
                                     "${'Total Person'} ${"  "} ${"x"} $totalPerson",
                                 color: blackTypeColor3,
-                                weight: FontWeight.w500,
+                                weight: FontWeight.bold,
                                 fontFamily: 'Roboto'),
                             MyText(
                                 // text: widget.gm.costInc,
@@ -651,12 +674,12 @@ class _BookTicketState extends State<BookTicket> {
                           children: [
                             MyText(
                                 text: 'Promo Code',
-                                color: blackTypeColor3,
-                                weight: FontWeight.w500,
+                                color: blueTextColor,
+                                weight: FontWeight.bold,
                                 fontFamily: 'Roboto'),
                             MyText(
                                 // text: widget.gm.costInc,
-                                text: widget.gm.costInc,
+                                text: "0",
                                 color: greyColor,
                                 weight: FontWeight.bold,
                                 fontFamily: 'Roboto'),
@@ -670,8 +693,8 @@ class _BookTicketState extends State<BookTicket> {
                           children: [
                             MyText(
                                 text: 'Points',
-                                color: blackTypeColor3,
-                                weight: FontWeight.w500,
+                                color: blueTextColor,
+                                weight: FontWeight.bold,
                                 fontFamily: 'Roboto'),
                             MyText(
                                 // text: widget.gm.costInc,
@@ -692,11 +715,13 @@ class _BookTicketState extends State<BookTicket> {
                             MyText(
                                 text: 'Total Amount',
                                 color: blackTypeColor3,
-                                weight: FontWeight.w500,
-                                height: 1.5,
+                                weight: FontWeight.bold,
+                                size: 18,
+                                height: 2,
                                 fontFamily: 'Roboto'),
                             MyText(
-                                text: "$totalCost ${" ر.ع"}", //'ر.ع 19,350',
+                                text:
+                                    "$totalCost ${widget.gm.currency}", //'ر.ع 19,350',
                                 color: bluishColor,
                                 weight: FontWeight.bold,
                                 size: 16,
@@ -712,7 +737,7 @@ class _BookTicketState extends State<BookTicket> {
                   height: 20,
                 ),
                 ButtonIconLess(
-                    'Book Now', bluishColor, whiteColor, 1.7, 17, 18, book),
+                    'Send Request', bluishColor, whiteColor, 1.7, 17, 18, book),
                 const SizedBox(
                   height: 20,
                 ),

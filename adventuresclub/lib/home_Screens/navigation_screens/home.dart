@@ -6,13 +6,11 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/banners/banners_model.dart';
 import 'package:adventuresclub/models/home_services/home_services_model.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
-import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/Lists/home_lists/service_List.dart';
 import 'package:adventuresclub/widgets/Lists/home_lists/top_list.dart';
 import 'package:adventuresclub/widgets/home_widgets/stack_home.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -99,231 +97,236 @@ class _HomeState extends State<Home> {
           currentFocus.unfocus();
         }
       },
-      child: Scaffold(
-        backgroundColor: greyProfileColor,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4.0),
-            child: Column(
-              children: [
-                StackHome(banners),
-                const SizedBox(
-                  height: 35,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                const SizedBox(
-                  height: 125,
-                  child: TopList(),
-                ),
-                const ServiceList()
-                // for (int y = 0; y < allServices.length; y++)
-                // (ServiceList(allServices[index]))
-                // Expanded(
-                //   child: ListView.builder(
-                //       itemCount: gAllServices.length,
-                //       itemBuilder: (context, index) {
-                //         return ServiceList(gAllServices);
-                //       }),
-                // )
-                // List.generate(gAllServices.length, (index) {
-                //   return Container();
-                //   //ServiceList(gAllServices)
-                // });
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                //   child: Align(
-                //     alignment: Alignment.centerLeft,
-                //     child: MyText(
-                //       text: 'Recommended Activity',
-                //       weight: FontWeight.bold,
-                //       color: greyColor,
-                //       size: 16,
-                //       fontFamily: "Roboto",
-                //     ),
-                //   ),
-                // ),
-                // const SizedBox(
-                //   height: 10,
-                // ),
-                // Container(
-                //   alignment: Alignment.centerLeft,
-                //   height: 210,
-                //   child: const RecommendedActivity(),
-                // ),
-                // const SizedBox(height: 10),
-                // all
-                //     ? Column(
-                //         children: [
-                //           accomodation
-                //               ? Column(
-                //                   children: [
-                //                     Padding(
-                //                       padding: const EdgeInsets.symmetric(
-                //                           horizontal: 8.0),
-                //                       child: Align(
-                //                         alignment: Alignment.centerLeft,
-                //                         child: MyText(
-                //                           text: 'Accomodation',
-                //                           weight: FontWeight.bold,
-                //                           color: greyColor,
-                //                           size: 18,
-                //                           fontFamily: "Roboto",
-                //                         ),
-                //                       ),
-                //                     ),
-                //                     const SizedBox(
-                //                       height: 10,
-                //                     ),
-                //                     Container(
-                //                       alignment: Alignment.centerLeft,
-                //                       height: 220,
-                //                       child: const ServiceList('Accomodation'),
-                //                     ),
-                //                   ],
-                //                 )
-                //               : Container(),
-                //           const SizedBox(
-                //             height: 10,
-                //           ),
-                //           transport
-                //               ? Column(
-                //                   children: [
-                //                     Padding(
-                //                       padding: const EdgeInsets.symmetric(
-                //                           horizontal: 16.0),
-                //                       child: Align(
-                //                         alignment: Alignment.centerLeft,
-                //                         child: MyText(
-                //                           text: 'Transport',
-                //                           weight: FontWeight.bold,
-                //                           color: greyColor,
-                //                           size: 16,
-                //                           fontFamily: "Roboto",
-                //                         ),
-                //                       ),
-                //                     ),
-                //                     const SizedBox(
-                //                       height: 10,
-                //                     ),
-                //                     Container(
-                //                       alignment: Alignment.centerLeft,
-                //                       height: 220,
-                //                       child: const ServiceList('Transport'),
-                //                     ),
-                //                   ],
-                //                 )
-                //               : Container(),
-                //           const SizedBox(
-                //             height: 10,
-                //           ),
-                //           sky
-                //               ? Column(
-                //                   children: [
-                //                     Padding(
-                //                       padding: const EdgeInsets.symmetric(
-                //                           horizontal: 16.0),
-                //                       child: Align(
-                //                         alignment: Alignment.centerLeft,
-                //                         child: MyText(
-                //                           text: 'Sky',
-                //                           weight: FontWeight.bold,
-                //                           color: greyColor,
-                //                           size: 16,
-                //                           fontFamily: "Roboto",
-                //                         ),
-                //                       ),
-                //                     ),
-                //                     const SizedBox(
-                //                       height: 10,
-                //                     ),
-                //                     Container(
-                //                       alignment: Alignment.centerLeft,
-                //                       height: 220,
-                //                       child: const ServiceList('Sky'),
-                //                     ),
-                //                   ],
-                //                 )
-                //               : Container(),
-                //           const SizedBox(
-                //             height: 10,
-                //           ),
-                //           water
-                //               ? Column(
-                //                   children: [
-                //                     Padding(
-                //                       padding: const EdgeInsets.symmetric(
-                //                           horizontal: 16.0),
-                //                       child: Align(
-                //                         alignment: Alignment.centerLeft,
-                //                         child: MyText(
-                //                           text: 'Water',
-                //                           weight: FontWeight.bold,
-                //                           color: greyColor,
-                //                           size: 16,
-                //                           fontFamily: "Roboto",
-                //                         ),
-                //                       ),
-                //                     ),
-                //                     const SizedBox(
-                //                       height: 10,
-                //                     ),
-                //                     Container(
-                //                       alignment: Alignment.centerLeft,
-                //                       height: 220,
-                //                       child: const ServiceList('Water'),
-                //                     ),
-                //                   ],
-                //                 )
-                //               : Container(),
-                //           land
-                //               ? Column(
-                //                   children: [
-                //                     Padding(
-                //                       padding: const EdgeInsets.symmetric(
-                //                           horizontal: 16.0),
-                //                       child: Align(
-                //                         alignment: Alignment.centerLeft,
-                //                         child: MyText(
-                //                           text: 'Land',
-                //                           weight: FontWeight.bold,
-                //                           color: greyColor,
-                //                           size: 16,
-                //                           fontFamily: "Roboto",
-                //                         ),
-                //                       ),
-                //                     ),
-                //                     const SizedBox(
-                //                       height: 10,
-                //                     ),
-                //                     Container(
-                //                       alignment: Alignment.centerLeft,
-                //                       height: 220,
-                //                       child: const ServiceList('Land'),
-                //                     ),
-                //                   ],
-                //                 )
-                //               : Container(),
-                //         ],
-                //       )
-                //     : Container(),
-                // for (int y = 0; y < allServices.length; y++)
-                // Padding(
-                //     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                //     child: Align(
-                //       alignment: Alignment.centerLeft,
-                //       child: MyText(
-                //         text: 'Recommended Activity',
-                //         weight: FontWeight.bold,
-                //         color: greyColor,
-                //         size: 16,
-                //         fontFamily: "Roboto",
-                //       ),
-                //     ),
-                //   ),
-                // const ServiceList("type")
-              ],
+      child: WillPopScope(
+        onWillPop: () async {
+          return false;
+        },
+        child: Scaffold(
+          backgroundColor: greyProfileColor,
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+              child: Column(
+                children: [
+                  StackHome(banners),
+                  const SizedBox(
+                    height: 35,
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  const SizedBox(
+                    height: 125,
+                    child: TopList(),
+                  ),
+                  const ServiceList()
+                  // for (int y = 0; y < allServices.length; y++)
+                  // (ServiceList(allServices[index]))
+                  // Expanded(
+                  //   child: ListView.builder(
+                  //       itemCount: gAllServices.length,
+                  //       itemBuilder: (context, index) {
+                  //         return ServiceList(gAllServices);
+                  //       }),
+                  // )
+                  // List.generate(gAllServices.length, (index) {
+                  //   return Container();
+                  //   //ServiceList(gAllServices)
+                  // });
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  //   child: Align(
+                  //     alignment: Alignment.centerLeft,
+                  //     child: MyText(
+                  //       text: 'Recommended Activity',
+                  //       weight: FontWeight.bold,
+                  //       color: greyColor,
+                  //       size: 16,
+                  //       fontFamily: "Roboto",
+                  //     ),
+                  //   ),
+                  // ),
+                  // const SizedBox(
+                  //   height: 10,
+                  // ),
+                  // Container(
+                  //   alignment: Alignment.centerLeft,
+                  //   height: 210,
+                  //   child: const RecommendedActivity(),
+                  // ),
+                  // const SizedBox(height: 10),
+                  // all
+                  //     ? Column(
+                  //         children: [
+                  //           accomodation
+                  //               ? Column(
+                  //                   children: [
+                  //                     Padding(
+                  //                       padding: const EdgeInsets.symmetric(
+                  //                           horizontal: 8.0),
+                  //                       child: Align(
+                  //                         alignment: Alignment.centerLeft,
+                  //                         child: MyText(
+                  //                           text: 'Accomodation',
+                  //                           weight: FontWeight.bold,
+                  //                           color: greyColor,
+                  //                           size: 18,
+                  //                           fontFamily: "Roboto",
+                  //                         ),
+                  //                       ),
+                  //                     ),
+                  //                     const SizedBox(
+                  //                       height: 10,
+                  //                     ),
+                  //                     Container(
+                  //                       alignment: Alignment.centerLeft,
+                  //                       height: 220,
+                  //                       child: const ServiceList('Accomodation'),
+                  //                     ),
+                  //                   ],
+                  //                 )
+                  //               : Container(),
+                  //           const SizedBox(
+                  //             height: 10,
+                  //           ),
+                  //           transport
+                  //               ? Column(
+                  //                   children: [
+                  //                     Padding(
+                  //                       padding: const EdgeInsets.symmetric(
+                  //                           horizontal: 16.0),
+                  //                       child: Align(
+                  //                         alignment: Alignment.centerLeft,
+                  //                         child: MyText(
+                  //                           text: 'Transport',
+                  //                           weight: FontWeight.bold,
+                  //                           color: greyColor,
+                  //                           size: 16,
+                  //                           fontFamily: "Roboto",
+                  //                         ),
+                  //                       ),
+                  //                     ),
+                  //                     const SizedBox(
+                  //                       height: 10,
+                  //                     ),
+                  //                     Container(
+                  //                       alignment: Alignment.centerLeft,
+                  //                       height: 220,
+                  //                       child: const ServiceList('Transport'),
+                  //                     ),
+                  //                   ],
+                  //                 )
+                  //               : Container(),
+                  //           const SizedBox(
+                  //             height: 10,
+                  //           ),
+                  //           sky
+                  //               ? Column(
+                  //                   children: [
+                  //                     Padding(
+                  //                       padding: const EdgeInsets.symmetric(
+                  //                           horizontal: 16.0),
+                  //                       child: Align(
+                  //                         alignment: Alignment.centerLeft,
+                  //                         child: MyText(
+                  //                           text: 'Sky',
+                  //                           weight: FontWeight.bold,
+                  //                           color: greyColor,
+                  //                           size: 16,
+                  //                           fontFamily: "Roboto",
+                  //                         ),
+                  //                       ),
+                  //                     ),
+                  //                     const SizedBox(
+                  //                       height: 10,
+                  //                     ),
+                  //                     Container(
+                  //                       alignment: Alignment.centerLeft,
+                  //                       height: 220,
+                  //                       child: const ServiceList('Sky'),
+                  //                     ),
+                  //                   ],
+                  //                 )
+                  //               : Container(),
+                  //           const SizedBox(
+                  //             height: 10,
+                  //           ),
+                  //           water
+                  //               ? Column(
+                  //                   children: [
+                  //                     Padding(
+                  //                       padding: const EdgeInsets.symmetric(
+                  //                           horizontal: 16.0),
+                  //                       child: Align(
+                  //                         alignment: Alignment.centerLeft,
+                  //                         child: MyText(
+                  //                           text: 'Water',
+                  //                           weight: FontWeight.bold,
+                  //                           color: greyColor,
+                  //                           size: 16,
+                  //                           fontFamily: "Roboto",
+                  //                         ),
+                  //                       ),
+                  //                     ),
+                  //                     const SizedBox(
+                  //                       height: 10,
+                  //                     ),
+                  //                     Container(
+                  //                       alignment: Alignment.centerLeft,
+                  //                       height: 220,
+                  //                       child: const ServiceList('Water'),
+                  //                     ),
+                  //                   ],
+                  //                 )
+                  //               : Container(),
+                  //           land
+                  //               ? Column(
+                  //                   children: [
+                  //                     Padding(
+                  //                       padding: const EdgeInsets.symmetric(
+                  //                           horizontal: 16.0),
+                  //                       child: Align(
+                  //                         alignment: Alignment.centerLeft,
+                  //                         child: MyText(
+                  //                           text: 'Land',
+                  //                           weight: FontWeight.bold,
+                  //                           color: greyColor,
+                  //                           size: 16,
+                  //                           fontFamily: "Roboto",
+                  //                         ),
+                  //                       ),
+                  //                     ),
+                  //                     const SizedBox(
+                  //                       height: 10,
+                  //                     ),
+                  //                     Container(
+                  //                       alignment: Alignment.centerLeft,
+                  //                       height: 220,
+                  //                       child: const ServiceList('Land'),
+                  //                     ),
+                  //                   ],
+                  //                 )
+                  //               : Container(),
+                  //         ],
+                  //       )
+                  //     : Container(),
+                  // for (int y = 0; y < allServices.length; y++)
+                  // Padding(
+                  //     padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  //     child: Align(
+                  //       alignment: Alignment.centerLeft,
+                  //       child: MyText(
+                  //         text: 'Recommended Activity',
+                  //         weight: FontWeight.bold,
+                  //         color: greyColor,
+                  //         size: 16,
+                  //         fontFamily: "Roboto",
+                  //       ),
+                  //     ),
+                  //   ),
+                  // const ServiceList("type")
+                ],
+              ),
             ),
           ),
         ),

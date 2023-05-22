@@ -86,79 +86,66 @@ class _MyAdventuresState extends State<MyAdventures> {
             ),
           ),
           title: MyText(
-            text: 'My Adventures',
+            text: 'Review Adventures',
             color: bluishColor,
             weight: FontWeight.bold,
           ),
         ),
-        body: SingleChildScrollView(
-          child: Column(
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 12),
+          child: ListView(
             children: [
+              ListTile(
+                leading: CircleAvatar(
+                  radius: 36,
+                  backgroundImage:
+                      //  ExactAssetImage('images/airrides.png'),
+                      NetworkImage(
+                          "${'https://adventuresclub.net/adventureClub/public/uploads/'}${widget.gm.sImage[0].thumbnail}"),
+                ),
+                title: Row(
+                  children: [
+                    Expanded(
+                      flex: 4,
+                      child: MyText(
+                        text: widget.gm.adventureName,
+                        weight: FontWeight.w700,
+                        color: blackColor,
+                        size: 14,
+                      ),
+                    ),
+                    Expanded(
+                      flex: 4,
+                      child: MyText(
+                        text: "${widget.gm.aDate} " " ${widget.gm.bDate}",
+                        weight: FontWeight.w500,
+                        color: blackColor,
+                        size: 12,
+                      ),
+                    ),
+                  ],
+                ),
+                subtitle: MyText(
+                  text: widget.gm.des,
+                  //'Lorem ipsum dolor sit amet,\nconsetetur sadipscing elitr,\nsed diam nonumy eirmod',
+                  weight: FontWeight.w400,
+                  color: greyColor,
+                  size: 14,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: Column(
                   children: [
-                    Container(
-                        padding: const EdgeInsets.only(bottom: 15),
-                        child: Row(
-                          children: [
-                            const CircleAvatar(
-                              radius: 40,
-                              child: Image(
-                                image: ExactAssetImage('images/Ellipse.png'),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    MyText(
-                                      text: widget.gm.adventureName,
-                                      weight: FontWeight.w700,
-                                      color: blackColor,
-                                      size: 18,
-                                    ),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                    // MyText(
-                                    //   text: '20 May - 25 May',
-                                    //   weight: FontWeight.w400,
-                                    //   color: greyColor,
-                                    //   size: 12,
-                                    // ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                MyText(
-                                  text: widget.gm.des,
-                                  //'Lorem ipsum dolor sit amet,\nconsetetur sadipscing elitr,\nsed diam nonumy eirmod',
-                                  weight: FontWeight.w400,
-                                  color: greyColor,
-                                  size: 14,
-                                ),
-                              ],
-                            ),
-                          ],
-                        )),
-                    const SizedBox(
-                      height: 20,
-                    ),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: MyText(
                         text: 'How was your experience there',
                         color: blackColor,
-                        size: 18,
+                        size: 16,
                         weight: FontWeight.bold,
                       ),
                     ),
@@ -166,7 +153,7 @@ class _MyAdventuresState extends State<MyAdventures> {
                       height: 20,
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width / 1.1,
+                      //width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                           color: whiteColor,
                           borderRadius: BorderRadius.circular(12),
@@ -175,6 +162,8 @@ class _MyAdventuresState extends State<MyAdventures> {
                       padding: const EdgeInsets.symmetric(vertical: 22),
                       child: Center(
                         child: RatingBar.builder(
+                          glowColor: Colors.amber,
+                          glowRadius: 4,
                           unratedColor: greyColor1,
                           initialRating: 0,
                           itemSize: 32,
@@ -203,14 +192,14 @@ class _MyAdventuresState extends State<MyAdventures> {
                     ),
                     MultiLineField(
                         'Description', 5, whiteColor, commentController),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    ButtonIconLess('Submit', bluishColor, whiteColor, 1.8, 16,
+                        18, addReview),
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 50,
-              ),
-              ButtonIconLess(
-                  'Submit', bluishColor, whiteColor, 1.8, 16, 18, addReview),
             ],
           ),
         ),

@@ -26,7 +26,7 @@ class _AdventureChatDetailsState extends State<AdventureChatDetails> {
       MaterialPageRoute(
         builder: (_) {
           return ShowChat(
-              "https://adventuresclub.net/adventureClub/receiverlist/27/'${widget.serviceId}'");
+              "https://adventuresclub.net/adventureClub/receiverlist/${Constants.userId}/${widget.serviceId}");
         },
       ),
     );

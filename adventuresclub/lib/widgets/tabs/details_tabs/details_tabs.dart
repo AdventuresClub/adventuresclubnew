@@ -15,6 +15,7 @@ import 'package:adventuresclub/widgets/tabs/participants.dart';
 import 'package:another_stepper/another_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class DetailsTab extends StatefulWidget {
   final ServicesModel gm;
@@ -34,6 +35,10 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
   bool loading = false;
   List<ServiceImageModel> gSim = [];
   List<GetParticipantsModel> gGM = [];
+  DateTime startDate = DateTime.now();
+  DateTime endDate = DateTime.now();
+  String st = "";
+  String ed = "";
 
   @override
   void initState() {
@@ -43,6 +48,17 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
     if (widget.show!) {
       getParticipants();
     }
+    if (widget.gm.sPlan == 2) {
+      startDate =
+          DateTime.tryParse(widget.gm.availability[0].st) ?? DateTime.now();
+      String sMonth = DateFormat('MMMM').format(startDate);
+      st = "${startDate.day}-$sMonth-${startDate.year}";
+      endDate =
+          DateTime.tryParse(widget.gm.availability[0].ed) ?? DateTime.now();
+      String eMonth = DateFormat('MMMM').format(startDate);
+      ed = "${endDate.day}-$eMonth-${endDate.year}";
+    }
+    //widget.gm.availability[0].st.substring(0, 10)
     if (widget.gm.sPlan == 2) {
       setState(() {
         text1.insert(5, "Start Date");
@@ -55,14 +71,14 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
         text4.insert(4, widget.gm.duration);
         widget.gm.availability.isEmpty
             ? text4.insert(5, "2023-10-24")
-            : text4.insert(5, widget.gm.availability[0].st.substring(0, 10));
+            : text4.insert(5, st);
         text6.insert(0, widget.gm.reviewdBy);
         text6.insert(1, widget.gm.serviceSector);
         text6.insert(2, widget.gm.serviceType);
         text6.insert(3, widget.gm.serviceLevel);
         widget.gm.availability.isEmpty
             ? text6.insert(4, "End Date")
-            : text6.insert(4, widget.gm.availability[0].ed.substring(0, 10));
+            : text6.insert(4, ed);
       });
     }
     if (widget.gm.sPlan == 1) {
@@ -73,7 +89,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
         text4.insert(1, widget.gm.region);
         text4.insert(2, widget.gm.serviceCategory);
         text4.insert(
-            3, "${widget.gm.aSeats} , ${widget.gm.remainingSeats} seat left");
+            3, "${widget.gm.aSeats} ,${widget.gm.remainingSeats} seat left");
         text4.insert(4, widget.gm.duration);
         text4.insert(5, aPlan);
         text6.insert(0, widget.gm.reviewdBy);
@@ -388,18 +404,20 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                   //color: greyTextColor,
                   child: const TabBar(
                     padding: EdgeInsets.all(0),
-                    labelPadding: EdgeInsets.symmetric(horizontal: 4),
+                    labelPadding:
+                        EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                     labelColor: blackColor,
                     labelStyle: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
+                      fontFamily: 'Raleway',
                     ),
                     indicatorColor: greenishColor,
                     isScrollable: true,
                     unselectedLabelStyle: TextStyle(
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        fontFamily: "Roboto"),
+                        fontFamily: "Raleway"),
                     indicatorSize: TabBarIndicatorSize.label,
                     unselectedLabelColor: greyColor,
                     tabs: [
@@ -450,8 +468,20 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                           widget.gm.lat,
                           widget.gm.lng),
                       // 4th Tab /////////
+                      // https://adventuresclub.net/adventureClub/newchat/18/126/20
+                      // 18: user_id of provider
+                      // 126: Service_id
+                      // 20: user_id of the client
+                      // if (widget.gm.providerId.toString() ==
+                      //     Constants.userId.toString())
                       ShowChat(
-                          "https://adventuresclub.net/adventureClub/receiverlist/${widget.gm.providerId}${widget.gm.id}"),
+                        "https://adventuresclub.net/adventureClub/receiverlist/20/126",
+                        appbar: false,
+                      ),
+                      // ShowChat(
+                      //   "https://adventuresclub.net/adventureClub/receiverlist/${widget.gm.providerId}${widget.gm.serviceId}",
+                      //   appbar: false,
+                      // ),
                       //AdventureChatDetails(widget.gm.serviceId.toString())
                       // "https://adventuresclub.net/adventureClub/receiverlist/27/'${widget.serviceId}'"
                     ],

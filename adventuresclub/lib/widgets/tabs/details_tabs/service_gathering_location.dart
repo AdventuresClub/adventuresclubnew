@@ -35,8 +35,8 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
   Completer<GoogleMapController> controller = Completer();
   List<Marker> markers = [];
   static final CameraPosition kGooglePlex = CameraPosition(
-    target: LatLng(ln, lt),
-    zoom: 14.4746,
+    target: LatLng(lt, ln),
+    zoom: 16.4746,
   );
   //AIzaSyCtHdBmvvsOP97AxCzsu1fu8lNb1Dcq9M4
   @override
@@ -54,7 +54,7 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
   void setMarker() {
     setState(() {
       markers.add(
-          Marker(markerId: const MarkerId("14"), position: LatLng(ln, lt)));
+          Marker(markerId: const MarkerId("14"), position: LatLng(lt, ln)));
     });
   }
 
@@ -133,6 +133,9 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
   }
 
   void selected(BuildContext context) async {
+    setState(() {
+      loading = true;
+    });
     try {
       String locationData = await Constants.getLocation();
       List<String> location = locationData.split(':');
@@ -141,8 +144,14 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
       final url =
           'https://www.google.com/maps/dir/?api=1&origin=$myLat,$myLng&destination=$lt,$ln';
       await launchUrl(Uri.parse(url));
+      setState(() {
+        loading = false;
+      });
     } catch (e) {
       log(e.toString());
+      setState(() {
+        loading = false;
+      });
     }
 /*
     String mapOptions = [
@@ -199,44 +208,53 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
               thickness: 1,
               color: blackColor.withOpacity(0.3),
             ),
-            GestureDetector(
-              onTap: () => selected(context),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: MyText(
-                        text: 'Full Address',
-                        color: blackColor,
-                        weight: FontWeight.w700,
-                        size: 16,
-                      )),
-                  Row(
-                    children: [
-                      MyText(
-                        text: 'Get Direction',
-                        color: greyColor,
-                        weight: FontWeight.w700,
-                      ),
-                      Card(
-                        elevation: 1,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(64)),
-                        child: const CircleAvatar(
-                          radius: 14,
-                          backgroundColor: whiteColor,
-                          child: Image(
-                            image: ExactAssetImage('images/location-arrow.png'),
-                            height: 15,
-                          ),
-                        ),
-                      )
-                    ],
+            loading
+                ? Center(
+                    child: MyText(
+                      text: "Loading Location...",
+                      color: blackColor,
+                      weight: FontWeight.bold,
+                    ),
                   )
-                ],
-              ),
-            ),
+                : GestureDetector(
+                    onTap: () => selected(context),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Align(
+                            alignment: Alignment.centerLeft,
+                            child: MyText(
+                              text: 'Full Address',
+                              color: blackColor,
+                              weight: FontWeight.w700,
+                              size: 16,
+                            )),
+                        Row(
+                          children: [
+                            MyText(
+                              text: 'Get Direction',
+                              color: greyColor,
+                              weight: FontWeight.w700,
+                            ),
+                            Card(
+                              elevation: 1,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(64)),
+                              child: const CircleAvatar(
+                                radius: 14,
+                                backgroundColor: whiteColor,
+                                child: Image(
+                                  image: ExactAssetImage(
+                                      'images/location-arrow.png'),
+                                  height: 15,
+                                ),
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
             const SizedBox(
               height: 5,
             ),
@@ -337,7 +355,7 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
                 onMapCreated: (GoogleMapController gController) {
                   controller.complete(gController);
                   gController.animateCamera(CameraUpdate.newCameraPosition(
-                      CameraPosition(target: LatLng(ln, lt), zoom: 14)));
+                      CameraPosition(target: LatLng(lt, ln), zoom: 14)));
                   gController.showMarkerInfoWindow(markers[0].markerId);
                 },
               ),

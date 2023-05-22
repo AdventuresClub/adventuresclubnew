@@ -1,5 +1,6 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/filter_data_model/programs_model.dart';
+import 'package:adventuresclub/widgets/info_tile.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 
@@ -104,40 +105,49 @@ class _ServicesPlansState extends State<ServicesPlans> {
                     padding: const EdgeInsets.symmetric(vertical: 2),
                     child: Column(
                       children: [
-                        ListTile(
-                          minVerticalPadding: 10,
-                          contentPadding: const EdgeInsets.all(6),
-                          leading: SizedBox(
-                            height: 50,
-                            child: Column(
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: greenishColor,
-                                  radius: 25,
-                                  child: MyText(
-                                    text: widget.programmes.length,
-                                    weight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          title: MyText(
-                            text: "${widget.programmes[index].title} "
-                                " ${widget.programmes[index].sD.substring(10, 16)} ${" - "} ${widget.programmes[index].eD.substring(10, 16)} ${" - "} ${widget.programmes[index].sD.substring(0, 10)} ${"-"} ",
-                            color: blackColor,
-                            weight: FontWeight.bold,
-                            fontFamily: 'Raleway',
-                            size: 16,
-                          ),
-                          subtitle: MyText(
-                            text: widget.programmes[index].des, //text[index],
-                            color: greyTextColor,
-                            weight: FontWeight.w500,
-                            fontFamily: 'Raleway',
-                            size: 14,
-                          ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 4.0, horizontal: 6),
+                          child: InfoTile(
+                              widget.programmes[index].title,
+                              widget.programmes[index].sD,
+                              widget.programmes[index].eD,
+                              widget.programmes[index].des),
                         ),
+                        // ListTile(
+                        //   minVerticalPadding: 10,
+                        //   contentPadding: const EdgeInsets.all(6),
+                        //   leading: SizedBox(
+                        //     height: 50,
+                        //     child: Column(
+                        //       children: [
+                        //         CircleAvatar(
+                        //           backgroundColor: greenishColor,
+                        //           radius: 25,
+                        //           child: MyText(
+                        //             text: widget.programmes.length,
+                        //             weight: FontWeight.bold,
+                        //           ),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        //   title: MyText(
+                        //     text: "${widget.programmes[index].title} "
+                        //         " ${widget.programmes[index].sD.substring(10, 16)} ${" - "} ${widget.programmes[index].eD.substring(10, 16)} ${" - "} ${widget.programmes[index].sD.substring(0, 10)} ${"-"} ",
+                        //     color: blackColor,
+                        //     weight: FontWeight.bold,
+                        //     fontFamily: 'Raleway',
+                        //     size: 16,
+                        //   ),
+                        //   subtitle: MyText(
+                        //     text: widget.programmes[index].des, //text[index],
+                        //     color: greyTextColor,
+                        //     weight: FontWeight.w500,
+                        //     fontFamily: 'Raleway',
+                        //     size: 14,
+                        //   ),
+                        // ),
                         const Divider(
                           endIndent: 30,
                           indent: 30,

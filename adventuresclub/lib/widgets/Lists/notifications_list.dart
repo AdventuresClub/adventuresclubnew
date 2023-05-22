@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:core';
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/home_Screens/accounts/notifications.dart';
 import 'package:adventuresclub/home_Screens/become_partner/become_partner_packages.dart';
 import 'package:adventuresclub/models/packages_become_partner/packages_become_partner_model.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
@@ -20,14 +21,14 @@ class NotificationsList extends StatefulWidget {
 
 class _NotificationsListState extends State<NotificationsList> {
   List images = [
-    'images/notificationpic.png',
-    'images/notificationpic.png',
-    'images/notificationpic.png',
-    'images/notificationpic.png',
-    'images/notificationpic.png',
-    'images/notificationpic.png',
-    'images/notificationpic.png',
-    'images/notificationpic.png',
+    'images/logo.png',
+    // 'images/notificationpic.png',
+    // 'images/notificationpic.png',
+    // 'images/notificationpic.png',
+    // 'images/notificationpic.png',
+    // 'images/notificationpic.png',
+    // 'images/notificationpic.png',
+    // 'images/notificationpic.png',
   ];
   List text = [
     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy',
@@ -60,7 +61,7 @@ class _NotificationsListState extends State<NotificationsList> {
     getNotifications();
   }
 
-  void getNotifications() async {
+  Future<void> getNotifications() async {
     setState(() {
       loading = true;
     });
@@ -104,7 +105,11 @@ class _NotificationsListState extends State<NotificationsList> {
     }
   }
 
-  void deleteNotification(String id) async {
+  void deleteNotification(String id, int index) async {
+    NotificationsListModel nm = pNm.elementAt(index);
+    setState(() {
+      pNm.removeAt(index);
+    });
     try {
       var response = await http.post(
           Uri.parse(
@@ -112,9 +117,14 @@ class _NotificationsListState extends State<NotificationsList> {
           body: {
             "notification_id": id, //ccCode.toString(),
           });
-      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-      if (response.statusCode == 200) {
-        cancel();
+      // var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      if (response.statusCode != 200) {
+        setState(() {
+          pNm.insert(index, nm);
+        });
+        message("Error");
+      } else {
+        message("Notification has been deleted successfully");
       }
       print(response.statusCode);
     } catch (e) {
@@ -122,10 +132,17 @@ class _NotificationsListState extends State<NotificationsList> {
     }
   }
 
-  void cancel() {
-    message("Notification has been deleted successfully");
-    Navigator.of(context).pop();
-  }
+  // void cancel() {
+  //   message("Notification has been deleted successfully");
+  //   Navigator.of(context).pushReplacement(
+  //     MaterialPageRoute(
+  //       builder: (_) {
+  //         return const Notifications();
+  //       },
+  //     ),
+  //     //(route) => false,
+  //   );
+  // }
 
   void message(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -137,9 +154,6 @@ class _NotificationsListState extends State<NotificationsList> {
 
   void getList() async {
     await Constants.getPackagesApi();
-    setState(() {
-      packageList = Constants.gBp;
-    });
     packagesList(Constants.gBp);
   }
 
@@ -147,7 +161,9 @@ class _NotificationsListState extends State<NotificationsList> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return const BecomePartnerPackages();
+          return const BecomePartnerPackages(
+            show: true,
+          );
         },
       ),
     );
@@ -161,25 +177,25 @@ class _NotificationsListState extends State<NotificationsList> {
               children: const [Text("Loading..")],
             ),
           )
-        : ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-            shrinkWrap: true,
-            physics: const ClampingScrollPhysics(),
-            itemCount: pNm.length,
-            scrollDirection: Axis.vertical,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                //onTap: getPackagesApi,
-                child: Slidable(
+        : RefreshIndicator(
+            onRefresh: getNotifications,
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+              shrinkWrap: true,
+              physics: const ClampingScrollPhysics(),
+              itemCount: pNm.length,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) {
+                return Slidable(
                   key: const ValueKey(0),
                   endActionPane: ActionPane(
                     motion: const ScrollMotion(),
                     children: [
                       SlidableAction(
                         onPressed: (context) =>
-                            deleteNotification(pNm[index].id.toString()),
+                            deleteNotification(pNm[index].id.toString(), index),
                         backgroundColor: Colors.transparent,
-                        foregroundColor: Colors.red,
+                        foregroundColor: Colors.black,
                         icon: Icons.delete,
                         label: '',
                       ),
@@ -187,87 +203,88 @@ class _NotificationsListState extends State<NotificationsList> {
                   ),
                   child: Column(
                     children: [
-                      if (pNm[index].title == "Your request has been approved")
-                        GestureDetector(
-                          onTap: getList, //() => packagesList(gBp),
-                          child: ListTile(
-                            leading: ClipRRect(
-                              borderRadius: BorderRadius.circular(32),
-                              child: CircleAvatar(
+                      pNm[index].title == "Your request has be approved"
+                          ? GestureDetector(
+                              onTap: getList, //() => packagesList(gBp),
+                              child: ListTile(
+                                leading: ClipRRect(
+                                  borderRadius: BorderRadius.circular(32),
+                                  child: CircleAvatar(
+                                    backgroundImage: ExactAssetImage(
+                                      'images/logo.png',
+                                    ),
+                                    //NetworkImage(pNm[index].senderImage),
+                                  ),
+                                ),
+                                title: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8.0),
+                                  child: MyText(
+                                    text: pNm[index].title, //text[index],
+                                    color: blackColor,
+                                    weight: FontWeight.w700,
+                                    size: 14,
+                                  ),
+                                ),
+                                subtitle: MyText(
+                                  text: pNm[index].message, //subText[index],
+                                  color: blackColor.withOpacity(0.6),
+                                  weight: FontWeight.w500,
+                                  size: 13,
+                                ),
+                                // trailing: Column(
+                                //   children: [
+                                //     CircleAvatar(
+                                //       radius: 12,
+                                //       backgroundColor: bluishColor,
+                                //       child: MyText(
+                                //         text: '2',
+                                //         color: whiteColor,
+                                //         size: 10,
+                                //         weight: FontWeight.w500,
+                                //       ),
+                                //     )
+                                //   ],
+                                // ),
+                              ),
+                            )
+                          :
+                          //   if (pNm[index].title != "Your request has been approved")
+                          ListTile(
+                              leading: ClipRRect(
+                                borderRadius: BorderRadius.circular(32),
+                                child: CircleAvatar(
                                   backgroundImage:
-                                      //ExactAssetImage(images[index]),
-                                      NetworkImage(pNm[index].senderImage)),
-                            ),
-                            title: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: MyText(
-                                text: pNm[index].title, //text[index],
-                                color: blackColor,
-                                weight: FontWeight.w700,
-                                size: 14,
+                                      ExactAssetImage('images/logo.png'),
+                                  //NetworkImage(pNm[index].senderImage),
+                                ),
+                              ),
+                              title: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
+                                child: MyText(
+                                  text: pNm[index].title, //text[index],
+                                  color: blackColor,
+                                  weight: FontWeight.w700,
+                                  size: 14,
+                                ),
+                              ),
+                              subtitle: MyText(
+                                text: pNm[index].message, //subText[index],
+                                color: blackColor.withOpacity(0.6),
+                                weight: FontWeight.w500,
+                                size: 13,
                               ),
                             ),
-                            subtitle: MyText(
-                              text: pNm[index].message, //subText[index],
-                              color: blackColor.withOpacity(0.6),
-                              weight: FontWeight.w500,
-                              size: 13,
-                            ),
-                            // trailing: Column(
-                            //   children: [
-                            //     CircleAvatar(
-                            //       radius: 12,
-                            //       backgroundColor: bluishColor,
-                            //       child: MyText(
-                            //         text: '2',
-                            //         color: whiteColor,
-                            //         size: 10,
-                            //         weight: FontWeight.w500,
-                            //       ),
-                            //     )
-                            //   ],
-                            // ),
-                          ),
-                        ),
-                      if (pNm[index].title != "Your request has been approved")
-                        GestureDetector(
-                          onTap: () {},
-                          child: ListTile(
-                            leading: ClipRRect(
-                              borderRadius: BorderRadius.circular(32),
-                              child: CircleAvatar(
-                                  backgroundImage:
-                                      //ExactAssetImage(images[index]),
-                                      NetworkImage(pNm[index].senderImage)),
-                            ),
-                            title: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: MyText(
-                                text: pNm[index].title, //text[index],
-                                color: blackColor,
-                                weight: FontWeight.w700,
-                                size: 14,
-                              ),
-                            ),
-                            subtitle: MyText(
-                              text: pNm[index].message, //subText[index],
-                              color: blackColor.withOpacity(0.6),
-                              weight: FontWeight.w500,
-                              size: 13,
-                            ),
-                          ),
-                        ),
                       const Divider(
                         thickness: 2,
                         indent: 22,
                       )
                     ],
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           );
   }
 }

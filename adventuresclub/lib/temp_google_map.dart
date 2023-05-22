@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:developer';
-
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/buttons/my_button.dart';
 import 'package:flutter/material.dart';
@@ -88,6 +85,42 @@ class _TempGoogleMapState extends State<TempGoogleMap> {
 
   void mapTapped(LatLng argument) async {
     markers.clear();
+    lat = argument.latitude;
+    lng = argument.longitude;
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+      lat,
+      lng,
+    );
+    if (placemarks.isNotEmpty) {
+      bool found = false;
+      for (Placemark placeMark in placemarks) {
+        if (!found && placeMark.locality != '' && placeMark.country != '') {
+          var myLoc = "${placeMark.locality!}, ${placeMark.country!}";
+          List<Marker> tempMarkers = [];
+          tempMarkers.add(
+            Marker(
+              markerId: const MarkerId("myLoc"),
+              position: LatLng(lat, lng),
+              infoWindow: InfoWindow(
+                snippet: myLoc,
+                title: myLoc,
+              ),
+            ),
+          );
+          setState(() {
+            myLocation = myLoc;
+            markers = tempMarkers;
+            loading = false;
+          });
+          found = true;
+        }
+      }
+    } else {
+      setState(() {
+        myLocation = "Can't find your location";
+        loading = false;
+      });
+    }
     setState(() {
       markers.add(
         Marker(
@@ -108,7 +141,7 @@ class _TempGoogleMapState extends State<TempGoogleMap> {
   }
 
   void save() {
-    widget.setLoc(myLocation, lat, lng, location);
+    widget.setLoc(myLocation, lat, lng);
   }
 
   @override

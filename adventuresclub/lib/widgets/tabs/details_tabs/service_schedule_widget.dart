@@ -1,5 +1,6 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/filter_data_model/programs_model.dart';
+import 'package:adventuresclub/widgets/info_tile.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 
@@ -85,27 +86,12 @@ class ServiceScheduleWidget extends StatelessWidget {
 
                         (index) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4.0),
-                        child: ListTile(
-                          contentPadding: const EdgeInsets.all(4),
-                          title: MyText(
-                            text: "${programmes[index].title} "
-                                "${"-"}"
-                                " ${programmes[index].sD.substring(10, 16)} ${" - "} ${programmes[index].eD.substring(10, 16)} ${" - "} ${programmes[index].sD.substring(0, 10)} ",
-                            color: blackColor,
-                            weight: FontWeight.bold,
-                            fontFamily: 'Raleway',
-                            size: 16,
-                          ),
-                          subtitle: MyText(
-                            text: programmes[index].des, //text[index],
-                            color: greyTextColor,
-                            weight: FontWeight.w500,
-                            fontFamily: 'Raleway',
-                            size: 14,
-                          ),
-                        ),
-                      );
+                          padding: const EdgeInsets.symmetric(vertical: 4.0),
+                          child: InfoTile(
+                              programmes[index].title,
+                              programmes[index].sD,
+                              programmes[index].eD,
+                              programmes[index].des));
 
                       // Padding(
                       //   padding: const EdgeInsets.symmetric(vertical: 4.0),

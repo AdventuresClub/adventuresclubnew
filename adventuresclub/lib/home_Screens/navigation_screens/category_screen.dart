@@ -13,11 +13,9 @@ import 'package:adventuresclub/models/services/availability_model.dart';
 import 'package:adventuresclub/models/services/dependencies_model.dart';
 import 'package:adventuresclub/models/services/included_activities_model.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
-import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/services_card.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
 import '../../models/services/create_services/availability_plan_model.dart';
@@ -229,9 +227,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
             );
             allServices.add(nSm);
             all_Services.add(nSm);
+            HomeServicesModel adv = HomeServicesModel(acc, all_Services);
+            gAllServices.add(adv);
           });
-          HomeServicesModel adv = HomeServicesModel(acc, all_Services);
-          gAllServices.add(adv);
         }
         setState(() {
           loading = false;

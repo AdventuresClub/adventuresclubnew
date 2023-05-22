@@ -168,6 +168,7 @@ class _SignInState extends State<SignIn> {
       result.forEach((element) {
         GetCountryModel gc = GetCountryModel(
           element['country'],
+          element['short_name'],
           element['flag'],
           element['code'],
           element['id'],
@@ -308,12 +309,13 @@ class _SignInState extends State<SignIn> {
   }
 
   void goToNavigation() {
-    Navigator.of(context).push(
+    Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (_) {
           return const BottomNavigation();
         },
       ),
+      (route) => false,
     );
   }
 

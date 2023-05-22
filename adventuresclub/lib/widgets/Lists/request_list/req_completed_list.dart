@@ -176,9 +176,8 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
       }
       setState(() {
         loading = false;
-        uRequestList.reversed;
+        uRequestList = uRequestList.reversed.toList();
       });
-
       print(uRequestList);
       print(response.statusCode);
       print(response.body);
@@ -444,7 +443,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
     );
   }
 
-  void showConfirmation(String id) async {
+  void showConfirmation(String id, int index) async {
     showDialog(
         context: context,
         builder: (ctx) => SimpleDialog(
@@ -487,7 +486,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () => delete(id),
+                      onPressed: () => delete(id, index),
                       child: MyText(
                         text: "Yes",
                       ),
@@ -499,8 +498,12 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
             ));
   }
 
-  void delete(String id) async {
+  void delete(String id, int index) async {
     Navigator.of(context).pop();
+    UpcomingRequestsModel uR = uRequestList.elementAt(index);
+    setState(() {
+      uRequestList.removeAt(index);
+    });
     try {
       var response = await http.post(
           Uri.parse(
@@ -510,10 +513,12 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
             'status': "5",
             'user_id': Constants.userId.toString(),
           });
-      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-      if (response.statusCode == 200) {
+      if (response.statusCode != 200) {
+        setState(() {
+          uRequestList.insert(index, uR);
+        });
+      } else {
         message("Deleted Successfully");
-        homePage();
       }
       print(response.statusCode);
     } catch (e) {
@@ -552,132 +557,142 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
               const CircularProgressIndicator(),
             ],
           )
-        : ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 00),
-            shrinkWrap: true,
-            physics: const ClampingScrollPhysics(),
-            itemCount: uRequestList.length,
-            scrollDirection: Axis.vertical,
-            itemBuilder: (context, index) {
-              return loading
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        MyText(
-                          text: "Loading Information...",
-                          color: blackColor,
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        const CircularProgressIndicator(),
-                      ],
-                    )
-                  : Card(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 20.0, horizontal: 10),
-                        child: Column(
+        : uRequestList.isEmpty
+            ? Center(
+                child: Column(
+                children: [
+                  MyText(
+                    text: "No Data Found",
+                    color: blackColor,
+                    size: 16,
+                  ),
+                ],
+              ))
+            : ListView.builder(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 00),
+                shrinkWrap: true,
+                physics: const ClampingScrollPhysics(),
+                itemCount: uRequestList.length,
+                scrollDirection: Axis.vertical,
+                itemBuilder: (context, index) {
+                  return loading
+                      ? Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            MyText(
+                              text: "Loading Information...",
+                              color: blackColor,
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            const CircularProgressIndicator(),
+                          ],
+                        )
+                      : Card(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 20.0, horizontal: 4),
+                            child: Column(
                               children: [
-                                MyText(
-                                  text: uRequestList[index]
-                                      .region, //'Location Name',
-                                  color: blackColor,
-                                ),
                                 Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    if (uRequestList[index].status == "0")
-                                      MyText(
-                                        text: "Requested", //'Confirmed',
-                                        color: redColor,
-                                        weight: FontWeight.bold,
-                                      ),
-                                    if (uRequestList[index].status == "1")
-                                      MyText(
-                                        text: "Accepted", //'Confirmed',
-                                        color: greenColor1,
-                                        weight: FontWeight.bold,
-                                      ),
-                                    if (uRequestList[index].status == "2")
-                                      MyText(
-                                        text: "Paid", //'Confirmed',
-                                        color: greenColor1,
-                                        weight: FontWeight.bold,
-                                      ),
-                                    if (uRequestList[index].status == "3")
-                                      MyText(
-                                        text: "Declined", //'Confirmed',
-                                        color: redColor,
-                                        weight: FontWeight.bold,
-                                      ),
-                                    if (uRequestList[index].status == "4")
-                                      MyText(
-                                        text: "Completed", //'Confirmed',
-                                        color: greenColor1,
-                                        weight: FontWeight.bold,
-                                      ),
-                                    if (uRequestList[index].status == "5")
-                                      MyText(
-                                        text: "Dropped", //'Confirmed',
-                                        color: redColor,
-                                        weight: FontWeight.bold,
-                                      ),
-                                    if (uRequestList[index].status == "6")
-                                      MyText(
-                                        text: "Confirm", //'Confirmed',
-                                        color: greenColor1,
-                                        weight: FontWeight.bold,
-                                      ),
-                                    if (uRequestList[index].status == "7")
-                                      MyText(
-                                        text: "UnPaid", //'Confirmed',
-                                        color: greenColor1,
-                                        weight: FontWeight.bold,
-                                      ),
-                                    const SizedBox(
-                                      width: 5,
+                                    MyText(
+                                      text: uRequestList[index]
+                                          .region, //'Location Name',
+                                      color: blackColor,
                                     ),
-                                    GestureDetector(
-                                      onTap: () => showConfirmation(
-                                          uRequestList[index]
-                                              .serviceId
-                                              .toString()),
-                                      child: const Icon(
-                                        Icons.delete_forever_outlined,
-                                        color: redColor,
-                                        size: 20,
-                                      ),
+                                    Row(
+                                      children: [
+                                        if (uRequestList[index].status == "0")
+                                          MyText(
+                                            text: "Requested", //'Confirmed',
+                                            color: blueColor1,
+                                            weight: FontWeight.bold,
+                                          ),
+                                        if (uRequestList[index].status == "1")
+                                          MyText(
+                                            text: "Accepted", //'Confirmed',
+                                            color: orangeColor,
+                                            weight: FontWeight.bold,
+                                          ),
+                                        if (uRequestList[index].status == "2")
+                                          MyText(
+                                            text: "Paid", //'Confirmed',
+                                            color: greenColor1,
+                                            weight: FontWeight.bold,
+                                          ),
+                                        if (uRequestList[index].status == "3")
+                                          MyText(
+                                            text: "Declined", //'Confirmed',
+                                            color: redColor,
+                                            weight: FontWeight.bold,
+                                          ),
+                                        if (uRequestList[index].status == "4")
+                                          MyText(
+                                            text: "Completed", //'Confirmed',
+                                            color: greenColor1,
+                                            weight: FontWeight.bold,
+                                          ),
+                                        if (uRequestList[index].status == "5")
+                                          MyText(
+                                            text: "Dropped", //'Confirmed',
+                                            color: redColor,
+                                            weight: FontWeight.bold,
+                                          ),
+                                        if (uRequestList[index].status == "6")
+                                          MyText(
+                                            text: "Confirm", //'Confirmed',
+                                            color: greenColor1,
+                                            weight: FontWeight.bold,
+                                          ),
+                                        if (uRequestList[index].status == "7")
+                                          MyText(
+                                            text: "UnPaid", //'Confirmed',
+                                            color: greenColor1,
+                                            weight: FontWeight.bold,
+                                          ),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () => showConfirmation(
+                                              uRequestList[index]
+                                                  .BookingId
+                                                  .toString(),
+                                              index),
+                                          child: const Icon(
+                                            Icons.delete_forever_outlined,
+                                            color: redColor,
+                                            size: 20,
+                                          ),
+                                        )
+                                      ],
                                     )
                                   ],
-                                )
-                              ],
-                            ),
-                            Divider(
-                              color: blackColor.withOpacity(0.3),
-                              thickness: 2,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const CircleAvatar(
-                                  radius: 26,
-                                  backgroundImage:
-                                      ExactAssetImage('images/airrides.png'),
-                                  // NetworkImage(
-                                  //     "${"https://adventuresclub.net/adventureClub/public/uploads/"}${uRequestList[index].sImage[0].imageUrl}}"),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 12.0, vertical: 3),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Wrap(direction: Axis.vertical, children: [
+                                Divider(
+                                  color: blackColor.withOpacity(0.3),
+                                  thickness: 2,
+                                ),
+                                ListTile(
+                                  leading: CircleAvatar(
+                                    radius: 26,
+                                    backgroundImage:
+                                        //  ExactAssetImage('images/airrides.png'),
+                                        NetworkImage(
+                                            "${'https://adventuresclub.net/adventureClub/public/uploads/'}${uRequestList[index].sImage[index].thumbnail}"),
+                                  ),
+                                  title: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      //direction: Axis.vertical,
+                                      children: [
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
@@ -699,26 +714,31 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                             ),
                                           ],
                                         ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            MyText(
-                                              text: "Activity Name: ",
-                                              color: blackColor,
-                                              weight: FontWeight.w700,
-                                              size: 13,
-                                              height: 1.8,
-                                            ),
-                                            MyText(
-                                              text: uRequestList[index]
-                                                  .adventureName,
-                                              color: greyColor,
-                                              weight: FontWeight.w400,
-                                              size: 13,
-                                              height: 1.8,
-                                            ),
-                                          ],
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        RichText(
+                                          text: TextSpan(
+                                            text: "Activity Name: ",
+                                            style: const TextStyle(
+                                                color: blackColor,
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.bold),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: uRequestList[index]
+                                                      .adventureName,
+                                                  style: const TextStyle(
+                                                      fontSize: 13,
+                                                      color: blackColor,
+                                                      fontWeight:
+                                                          FontWeight.w300,
+                                                      fontFamily: 'Roboto')),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 2,
                                         ),
                                         Row(
                                           mainAxisAlignment:
@@ -888,142 +908,127 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                           ],
                                         ),
                                       ]),
-                                      const SizedBox(height: 10),
-                                    ],
-                                  ),
                                 ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                GestureDetector(
-                                  onTap: () => getDetails(
-                                      uRequestList[index].serviceId.toString(),
-                                      uRequestList[index]
-                                          .providerId
-                                          .toString()),
-                                  child: Container(
-                                    height:
-                                        MediaQuery.of(context).size.height / 21,
-                                    width:
-                                        MediaQuery.of(context).size.width / 3.8,
-                                    decoration: const BoxDecoration(
-                                      color: bluishColor,
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: const [
-                                            Text(
+//                                 Row(
+//                                   mainAxisAlignment: MainAxisAlignment.start,
+//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                   children: [
+
+//                                     Padding(
+//                                       padding: const EdgeInsets.symmetric(
+//                                           horizontal: 2.0, vertical: 5),
+//                                       child:
+// //const SizedBox(height: 10),
+//                                     ),
+//                                   ],
+//                                 ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      height: 45,
+                                      width: MediaQuery.of(context).size.width /
+                                          3.6,
+                                      decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12)),
+                                          color: bluishColor),
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        child: InkWell(
+                                          onTap: () => getDetails(
+                                              uRequestList[index]
+                                                  .serviceId
+                                                  .toString(),
+                                              uRequestList[index]
+                                                  .providerId
+                                                  .toString()),
+                                          child: const Center(
+                                            child: Text(
                                               'View Details',
                                               style: TextStyle(
                                                   color: whiteColor,
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w700),
                                             ),
-                                          ],
+                                          ),
                                         ),
                                       ),
+                                      // color: bluishColor,
                                     ),
-                                  ),
-                                ),
-                                // SquareButton('View Details', bluishColor, whiteColor,
-                                //     3.7, 21, 12, abc),
-                                // SquareButton('Rate Now', yellowcolor,
-                                //     whiteColor, 3.7, 21, 12, goToMyAd),
-                                GestureDetector(
-                                  onTap: () => goToMyAd(uRequestList[index]),
-                                  child: Container(
-                                    height:
-                                        MediaQuery.of(context).size.height / 21,
-                                    width:
-                                        MediaQuery.of(context).size.width / 3.8,
-                                    decoration: const BoxDecoration(
-                                      color: yellowcolor,
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: const [
-                                            Text(
+                                    Container(
+                                      height: 45,
+                                      width: MediaQuery.of(context).size.width /
+                                          3.6,
+                                      decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12)),
+                                        color: Color.fromARGB(255, 255, 166, 0),
+                                      ),
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        child: InkWell(
+                                          onTap: () =>
+                                              goToMyAd(uRequestList[index]),
+                                          child: const Center(
+                                            child: Text(
                                               'Rate Now',
                                               style: TextStyle(
                                                   color: whiteColor,
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w700),
                                             ),
-                                          ],
+                                          ),
                                         ),
                                       ),
+                                      // color: bluishColor,
                                     ),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () => selected(
-                                      context,
-                                      uRequestList[index].serviceId,
-                                      uRequestList[index].providerId),
-                                  child: Container(
-                                    height:
-                                        MediaQuery.of(context).size.height / 21,
-                                    width:
-                                        MediaQuery.of(context).size.width / 3.8,
-                                    decoration: const BoxDecoration(
-                                      color: blueColor1,
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(8)),
-                                    ),
-                                    child: Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: const [
-                                            Text(
+                                    Container(
+                                      height: 45,
+                                      width: MediaQuery.of(context).size.width /
+                                          3.6,
+                                      decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12)),
+                                          color: blueColor1),
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        child: InkWell(
+                                          onTap: () => selected(
+                                              context,
+                                              uRequestList[index].serviceId,
+                                              uRequestList[index].providerId),
+                                          child: const Center(
+                                            child: Text(
                                               'Chat Provider',
                                               style: TextStyle(
                                                   color: whiteColor,
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w700),
                                             ),
-                                          ],
+                                          ),
                                         ),
                                       ),
+                                      // color: bluishColor,
                                     ),
-                                  ),
+                                    // SquareButton(
+                                    //     'Chat Provider',
+                                    //     blueColor1,
+                                    //     whiteColor,
+                                    //     3.7,
+                                    //     21,
+                                    //     12,
+                                    //     () => selected(
+                                    //         context,
+                                    //         uRequestList[index].serviceId.toString(),
+                                    //         uRequestList[index].providerId.toString())),
+                                  ],
                                 ),
-                                // SquareButton(
-                                //     'Chat Provider',
-                                //     blueColor1,
-                                //     whiteColor,
-                                //     3.7,
-                                //     21,
-                                //     12,
-                                //     () => selected(
-                                //         context,
-                                //         uRequestList[index].serviceId.toString(),
-                                //         uRequestList[index].providerId.toString())),
                               ],
                             ),
-                          ],
-                        ),
-                      ),
-                    );
-            });
+                          ),
+                        );
+                });
   }
 }

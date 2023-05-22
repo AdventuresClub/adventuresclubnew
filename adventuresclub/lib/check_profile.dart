@@ -67,22 +67,24 @@ class CheckProfileState extends State<CheckProfile> {
   }
 
   void goToNavigation() {
-    Navigator.of(context).push(
+    Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (_) {
           return const BottomNavigation();
         },
       ),
+      (route) => false,
     );
   }
 
   void home() {
-    Navigator.of(context).push(
+    Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (_) {
           return const SignIn();
         },
       ),
+      (route) => false,
     );
   }
 
@@ -106,6 +108,20 @@ class CheckProfileState extends State<CheckProfile> {
       Constants.password = pass;
       Constants.userRole = userRole;
     });
+  }
+
+  void cId(int id) async {
+    SharedPreferences prefs = await Constants.getPrefs();
+    countriesList1.forEach((element) {
+      if (id == element.id) {
+        setState(() {
+          Constants.countryFlag = element.flag;
+          Constants.country = element.country;
+        });
+      }
+    });
+    prefs.setString("country", Constants.country);
+    prefs.setString("countryFlag", Constants.countryFlag);
   }
 
   void checkProfile() async {
@@ -245,23 +261,6 @@ class CheckProfileState extends State<CheckProfile> {
     print(response.headers);
   }
 
-  void cId(int id) async {
-    SharedPreferences prefs = await Constants.getPrefs();
-    countriesList1.forEach((element) {
-      if (id == element.id) {
-        setState(() {
-          Constants.countryFlag = element.flag;
-          Constants.country = element.country;
-        });
-      }
-    });
-    prefs.setString(
-      "countryFlag",
-      Constants.countryFlag,
-    );
-    prefs.setString(("country"), Constants.country);
-  }
-
   Future getCountries() async {
     var response = await http.get(Uri.parse(
         "https://adventuresclub.net/adventureClub/api/v1/get_countries"));
@@ -271,6 +270,7 @@ class CheckProfileState extends State<CheckProfile> {
       result.forEach((element) {
         GetCountryModel gc = GetCountryModel(
           element['country'],
+          element['short_name'],
           element['flag'],
           element['code'],
           element['id'],

@@ -52,6 +52,7 @@ const greenColor1 = Color(0xFF07A24B);
 const greycolor4 = Color(0xFFBCBCBC);
 const yellowcolor = Color(0xFFFFB04E);
 const blueColor1 = Color(0xFF1D7FFF);
+const orangeColor = Colors.orange;
 const greyColor2 = Color(0xFF737D6D);
 const greyTextColor = Color(0xFF565656);
 const greyishColor = Color(0xFF333631);
@@ -193,7 +194,6 @@ class Constants {
     durationFilter.clear();
     regionFilter.clear();
     levelFilter.clear();
-    activitiesFilter.clear();
     activitiesFilter.clear();
   }
 
@@ -460,7 +460,14 @@ class Constants {
   }
 
   static Future<void> getFilter() async {
-    clearServicesList();
+    regionFilter.clear();
+    categoryFilter.clear();
+    filterSectors.clear();
+    serviceFilter.clear();
+    durationFilter.clear();
+    regionFilter.clear();
+    levelFilter.clear();
+    activitiesFilter.clear();
     getRegions();
     getProfile();
     var response = await http.get(Uri.parse(
@@ -579,13 +586,14 @@ class Constants {
   }
 
   static void getRegions() async {
+    regionList.clear();
     aimedFor();
     try {
       var response = await http.post(
           Uri.parse(
               "https://adventuresclub.net/adventureClub/api/v1/get_regions"),
           body: {
-            'country_id': "1",
+            'country_id': Constants.countryId.toString(),
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       List<dynamic> rm = decodedResponse['data'];

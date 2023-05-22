@@ -34,7 +34,6 @@ class RequestsList extends StatefulWidget {
 
 class _RequestsListState extends State<RequestsList> {
   Map Ulist = {};
-  String userID = "27";
   List<ServiceImageModel> gSim = [];
   List<UpcomingRequestsModel> uRequestList = [];
   bool loading = false;
@@ -119,7 +118,6 @@ class _RequestsListState extends State<RequestsList> {
       if (response.statusCode == 200) {
         Ulist = json.decode(response.body);
         List<dynamic> result = Ulist['data'];
-
         result.forEach((element) {
           List<dynamic> image = element['images'];
           image.forEach((i) {
@@ -164,7 +162,9 @@ class _RequestsListState extends State<RequestsList> {
           uRequestList.add(up);
         });
       }
-      setState(() {});
+      setState(() {
+        uRequestList = uRequestList.reversed.toList();
+      });
       print(response.statusCode);
       print(response.body);
     } catch (e) {
@@ -483,16 +483,17 @@ class _RequestsListState extends State<RequestsList> {
             ),
           )
         : ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 00),
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 00),
             shrinkWrap: true,
             physics: const ClampingScrollPhysics(),
             itemCount: uRequestList.length,
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
               return Card(
+                elevation: 4,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 20.0, horizontal: 10),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20.0, horizontal: 5),
                   child: Column(
                     children: [
                       Row(
@@ -507,20 +508,20 @@ class _RequestsListState extends State<RequestsList> {
                             children: [
                               if (uRequestList[index].status == "0")
                                 MyText(
-                                  text: "Paid", //'Confirmed',
-                                  color: blueButtonColor,
+                                  text: "Requested", //'Confirmed',
+                                  color: blueColor1,
                                   weight: FontWeight.bold,
                                 ),
                               if (uRequestList[index].status == "1")
                                 MyText(
                                   text: "Accepted", //'Confirmed',
-                                  color: blueButtonColor,
+                                  color: orangeColor,
                                   weight: FontWeight.bold,
                                 ),
                               if (uRequestList[index].status == "2")
                                 MyText(
-                                  text: "Requested", //'Confirmed',
-                                  color: redColor,
+                                  text: "Paid", //'Confirmed',
+                                  color: greenColor1,
                                   weight: FontWeight.bold,
                                 ),
                               if (uRequestList[index].status == "3")
@@ -577,14 +578,16 @@ class _RequestsListState extends State<RequestsList> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const CircleAvatar(
+                          CircleAvatar(
                             radius: 26,
                             backgroundImage:
-                                ExactAssetImage('images/airrides.png'),
+                                //ExactAssetImage('images/airrides.png'),
+                                NetworkImage(
+                                    "${'https://adventuresclub.net/adventureClub/public/uploads/'}${uRequestList[index].sImage[index].thumbnail}"),
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 12.0, vertical: 3),
+                                horizontal: 12.0, vertical: 5),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -596,7 +599,7 @@ class _RequestsListState extends State<RequestsList> {
                                           MainAxisAlignment.start,
                                       children: [
                                         MyText(
-                                          text: "Booking Number",
+                                          text: "Booking Number : ",
                                           color: blackColor,
                                           weight: FontWeight.w500,
                                           size: 13,
@@ -616,7 +619,7 @@ class _RequestsListState extends State<RequestsList> {
                                           MainAxisAlignment.start,
                                       children: [
                                         MyText(
-                                          text: "Activity Name",
+                                          text: "Activity Name : ",
                                           color: blackColor,
                                           weight: FontWeight.w500,
                                           size: 13,
@@ -637,7 +640,7 @@ class _RequestsListState extends State<RequestsList> {
                                           MainAxisAlignment.start,
                                       children: [
                                         MyText(
-                                          text: "Provider Name",
+                                          text: "Provider Name : ",
                                           color: blackColor,
                                           weight: FontWeight.w500,
                                           size: 13,
@@ -657,7 +660,7 @@ class _RequestsListState extends State<RequestsList> {
                                           MainAxisAlignment.start,
                                       children: [
                                         MyText(
-                                          text: "Booking Date",
+                                          text: "Booking Date : ",
                                           color: blackColor,
                                           weight: FontWeight.w500,
                                           size: 13,
@@ -677,7 +680,7 @@ class _RequestsListState extends State<RequestsList> {
                                           MainAxisAlignment.start,
                                       children: [
                                         MyText(
-                                          text: "Activity Date",
+                                          text: "Activity Date : ",
                                           color: blackColor,
                                           weight: FontWeight.w500,
                                           size: 13,
@@ -707,10 +710,7 @@ class _RequestsListState extends State<RequestsList> {
                                           MyText(
                                             text:
                                                 "${uRequestList[index].adult} "
-                                                " ${"Adult"}"
-                                                ",  "
-                                                "${uRequestList[index].kids} "
-                                                " ${"Youngsters"}",
+                                                " ${"Adult, "}",
                                             color: greyTextColor,
                                             weight: FontWeight.w400,
                                             size: 12,
@@ -732,7 +732,7 @@ class _RequestsListState extends State<RequestsList> {
                                           MainAxisAlignment.start,
                                       children: [
                                         MyText(
-                                          text: "Unit Cost",
+                                          text: "Unit Cost : ",
                                           color: blackColor,
                                           weight: FontWeight.w500,
                                           size: 13,
@@ -752,7 +752,7 @@ class _RequestsListState extends State<RequestsList> {
                                           MainAxisAlignment.start,
                                       children: [
                                         MyText(
-                                          text: "Total Cost",
+                                          text: "Total Cost : ",
                                           color: blackColor,
                                           weight: FontWeight.w500,
                                           size: 13,
@@ -772,7 +772,7 @@ class _RequestsListState extends State<RequestsList> {
                                           MainAxisAlignment.start,
                                       children: [
                                         MyText(
-                                          text: "Payable Cost",
+                                          text: "Payable Cost : ",
                                           color: blackColor,
                                           weight: FontWeight.w500,
                                           size: 13,
@@ -792,7 +792,7 @@ class _RequestsListState extends State<RequestsList> {
                                           MainAxisAlignment.start,
                                       children: [
                                         MyText(
-                                          text: "Payment Channel",
+                                          text: "Payment Channel : ",
                                           color: blackColor,
                                           weight: FontWeight.w500,
                                           size: 13,
@@ -822,109 +822,95 @@ class _RequestsListState extends State<RequestsList> {
                           ),
                         ],
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () => getDetails(
-                                uRequestList[index].serviceId.toString(),
-                                uRequestList[index].providerId.toString()),
-                            child: Container(
-                              height: MediaQuery.of(context).size.height / 21,
-                              width: MediaQuery.of(context).size.width / 3.8,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              height: 45,
+                              width: MediaQuery.of(context).size.width / 3.6,
                               decoration: const BoxDecoration(
-                                color: bluishColor,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8)),
-                              ),
-                              child: Center(
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
-                                      Text(
-                                        'View Details',
-                                        style: TextStyle(
-                                            color: whiteColor,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)),
+                                  color: bluishColor),
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () => getDetails(
+                                      uRequestList[index].serviceId.toString(),
+                                      uRequestList[index]
+                                          .providerId
+                                          .toString()),
+                                  child: const Center(
+                                    child: Text(
+                                      'View Details',
+                                      style: TextStyle(
+                                          color: whiteColor,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700),
+                                    ),
                                   ),
                                 ),
                               ),
+                              // color: bluishColor,
                             ),
-                          ),
-                          // SquareButton('View Details', bluishColor, whiteColor,
-                          //     3.7, 21, 12, abc),
-                          // SquareButton('Rate Now', yellowcolor,
-                          //     whiteColor, 3.7, 21, 12, goToMyAd),
-                          GestureDetector(
-                            //onTap: () => goToMyAd(uRequestList[index]),
-                            child: Container(
-                              height: MediaQuery.of(context).size.height / 21,
-                              width: MediaQuery.of(context).size.width / 3.8,
+                            Container(
+                              height: 45,
+                              width: MediaQuery.of(context).size.width / 3.6,
                               decoration: const BoxDecoration(
-                                color: redColor,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8)),
-                              ),
-                              child: Center(
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
-                                      Text(
-                                        'Cancel Request',
-                                        style: TextStyle(
-                                            color: whiteColor,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)),
+                                  color: redColor),
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () => selected(
+                                      context,
+                                      uRequestList[index].serviceId,
+                                      uRequestList[index].providerId),
+                                  child: const Center(
+                                    child: Text(
+                                      'Cancel Request',
+                                      style: TextStyle(
+                                          color: whiteColor,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700),
+                                    ),
                                   ),
                                 ),
                               ),
+                              // color: bluishColor,
                             ),
-                          ),
-                          GestureDetector(
-                            onTap: () => selected(
-                                context,
-                                uRequestList[index].serviceId,
-                                uRequestList[index].providerId),
-                            child: Container(
-                              height: MediaQuery.of(context).size.height / 21,
-                              width: MediaQuery.of(context).size.width / 3.8,
+                            Container(
+                              height: 45,
+                              width: MediaQuery.of(context).size.width / 3.6,
                               decoration: const BoxDecoration(
-                                color: greenColor1,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8)),
-                              ),
-                              child: Center(
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
-                                      Text(
-                                        'Make Payment',
-                                        style: TextStyle(
-                                            color: whiteColor,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ],
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)),
+                                  color: greenColor1),
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () => selected(
+                                      context,
+                                      uRequestList[index].serviceId,
+                                      uRequestList[index].providerId),
+                                  child: const Center(
+                                    child: Text(
+                                      'Make Payment',
+                                      style: TextStyle(
+                                          color: whiteColor,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700),
+                                    ),
                                   ),
                                 ),
                               ),
+                              // color: bluishColor,
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),

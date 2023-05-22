@@ -19,8 +19,8 @@ class ProfileBecomePartner {
   String isOnline;
   String isApproved;
   int packagesId;
-  dynamic startDate;
-  dynamic endDate;
+  String startDate;
+  String endDate;
   String isWiretransfer;
   String isFreeUsed;
   String ca;

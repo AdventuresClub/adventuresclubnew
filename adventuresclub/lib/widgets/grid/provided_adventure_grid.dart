@@ -1,11 +1,7 @@
-import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/about.dart';
 import 'package:adventuresclub/home_Screens/details.dart';
-import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/services_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-
 import '../../models/home_services/services_model.dart';
 
 class ProvidedAdventureGrid extends StatefulWidget {

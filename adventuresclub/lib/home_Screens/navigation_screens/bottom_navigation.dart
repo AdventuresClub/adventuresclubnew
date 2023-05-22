@@ -56,6 +56,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
   void initState() {
     super.initState();
     getServicesList();
+    // Constants.getRegions();
+    // Constants.getProfile();
     getNotificationBadge();
     Constants.getFilter();
     // if (Constants.partnerRequest) {

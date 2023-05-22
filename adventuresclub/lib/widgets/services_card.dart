@@ -5,6 +5,7 @@ import 'package:adventuresclub/home_Screens/accounts/about.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:intl/intl.dart';
 
 import '../models/home_services/services_model.dart';
 
@@ -22,6 +23,8 @@ class _ServicesCardState extends State<ServicesCard> {
   List<String> availabilityPlanText = [""];
   String availability = "";
   String aPlan = "";
+  DateTime startDate = DateTime.now();
+  String st = "";
   double convert(String rating) {
     double result = double.parse(rating);
     return result;
@@ -46,6 +49,12 @@ class _ServicesCardState extends State<ServicesCard> {
     if (widget.gm.sPlan == 1) {
       getAvailability();
     }
+    if (widget.gm.sPlan == 2) {
+      startDate =
+          DateTime.tryParse(widget.gm.availability[0].st) ?? DateTime.now();
+      String sMonth = DateFormat('MMMM').format(startDate);
+      st = "${startDate.day}-$sMonth-${startDate.year}";
+    }
   }
 
   void getSteps() {
@@ -64,7 +73,11 @@ class _ServicesCardState extends State<ServicesCard> {
     int i = 0;
     widget.gm.availabilityPlan.forEach((element) {
       availabilityPlanText.add(element.day);
-      availability = availabilityPlanText.join("| ");
+      if (i < 3) {
+        //availability += availabilityPlanText.join("| ");
+        availability += "${element.day} ";
+        i++;
+      }
     });
   }
 
@@ -125,7 +138,7 @@ class _ServicesCardState extends State<ServicesCard> {
                     width: MediaQuery.of(context).size.width / 2.3,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      // crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
                           flex: 8,
@@ -149,17 +162,17 @@ class _ServicesCardState extends State<ServicesCard> {
                                 children: [
                                   Icon(
                                     Icons.pin_drop_sharp,
-                                    size: 16,
+                                    size: 14,
                                     color: greyBackgroundColor.withOpacity(0.6),
                                   ),
-                                  const SizedBox(
-                                    width: 2,
-                                  ),
+                                  // const SizedBox(
+                                  //   width: 2,
+                                  // ),
                                   MyText(
                                     text: widget.gm.region,
                                     maxLines: 1,
                                     color: blackColor,
-                                    size: 11,
+                                    size: 10,
                                     weight: FontWeight.w500,
                                     fontFamily: 'Roboto',
                                     height: 1.3,
@@ -175,10 +188,7 @@ class _ServicesCardState extends State<ServicesCard> {
                                     const Icon(
                                       Icons.person_add,
                                       color: redColor,
-                                      size: 16,
-                                    ),
-                                    const SizedBox(
-                                      width: 2,
+                                      size: 12,
                                     ),
                                     MyText(
                                       //text: "testing",
@@ -186,7 +196,7 @@ class _ServicesCardState extends State<ServicesCard> {
                                       //text: 'Advanced',
                                       weight: FontWeight.w500,
                                       color: redColor,
-                                      size: 11,
+                                      size: 10,
                                       height: 1.3,
                                     ),
                                   ],
@@ -197,18 +207,18 @@ class _ServicesCardState extends State<ServicesCard> {
                                     const Icon(
                                       Icons.person_add,
                                       color: greenColor1,
-                                      size: 16,
+                                      size: 12,
                                     ),
-                                    const SizedBox(
-                                      width: 2,
-                                    ),
+                                    // const SizedBox(
+                                    //   width: 2,
+                                    // ),
                                     MyText(
                                       //text: "testing",
                                       text: "Accepted",
                                       //text: 'Advanced',
-                                      weight: FontWeight.w700,
+                                      weight: FontWeight.w500,
                                       color: greenColor1,
-                                      size: 12,
+                                      size: 10,
                                       height: 1.3,
                                     ),
                                   ],
@@ -216,16 +226,27 @@ class _ServicesCardState extends State<ServicesCard> {
                             ],
                           ),
                         ),
-                        Expanded(
-                            flex: 4,
-                            child: Column(
-                              children: [
-                                MyText(
-                                    text: availability,
-                                    color: blackColor,
-                                    size: 11)
-                              ],
-                            ))
+                        widget.gm.sPlan == 1
+                            ? Expanded(
+                                flex: 4,
+                                child: Column(
+                                  children: [
+                                    MyText(
+                                        text: availability,
+                                        color: blackColor,
+                                        size: 10)
+                                  ],
+                                ),
+                              )
+                            : Expanded(
+                                flex: 5,
+                                child: Column(
+                                  children: [
+                                    MyText(
+                                        text: st, color: blackColor, size: 10)
+                                  ],
+                                ),
+                              ),
                         // const SizedBox(height: 5),
                         // Column(
                         //   crossAxisAlignment: CrossAxisAlignment.end,
@@ -396,6 +417,7 @@ class _ServicesCardState extends State<ServicesCard> {
                                   child: Align(
                                     alignment: Alignment.centerRight,
                                     child: RatingBar.builder(
+                                      ignoreGestures: true,
                                       initialRating: convert(widget.gm.stars),
                                       itemSize: 10,
                                       minRating: convert(widget.gm.stars),

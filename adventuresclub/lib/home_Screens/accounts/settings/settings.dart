@@ -71,6 +71,7 @@ class _SettingsState extends State<Settings> {
       result.forEach((element) {
         GetCountryModel gc = GetCountryModel(
           element['country'],
+          element['short_name'],
           element['flag'],
           element['code'],
           element['id'],
@@ -94,6 +95,7 @@ class _SettingsState extends State<Settings> {
   void addCountry(String country, int id, String flag) async {
     clearAll();
     Navigator.of(context).pop();
+    updateCountryId(id);
     SharedPreferences prefs = await Constants.getPrefs();
     prefs.setInt("countryId", id);
     prefs.setString("country", country);
@@ -106,6 +108,27 @@ class _SettingsState extends State<Settings> {
     // getServicesList();
     homePage();
   }
+
+  void updateCountryId(int id) async {
+    try {
+      var response = await http.post(
+          Uri.parse(
+              "https://adventuresclub.net/adventureClub/api/v1/updateCountry"),
+          body: {
+            'user_id': Constants.userId.toString(), //ccCode.toString(),
+            'country_id': id.toString(),
+          });
+      print(response.statusCode);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+//   https://adventuresclub.net/adventureClub/api/v1/update_profile
+// user_id:2
+// name:fgfd
+// mobile_code:+91
+// email:mmm@yopmail.com
 
   void homePage() {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {

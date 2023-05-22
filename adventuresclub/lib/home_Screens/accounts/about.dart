@@ -338,7 +338,7 @@ class _AboutState extends State<About> {
           element['delete_at'].toString() ?? "",
           int.tryParse(element['provider_id'].toString()) ?? 0,
           int.tryParse(element['service_id'].toString()) ?? 0,
-          element['provided_name'].toString() ?? "",
+          element['name'].toString() ?? "",
           element['provider_profile'].toString() ?? "",
           element['including_gerea_and_other_taxes'].toString() ?? "",
           element['excluding_gerea_and_other_taxes'].toString() ?? "",
@@ -399,89 +399,62 @@ class _AboutState extends State<About> {
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
-                        Container(
-                            padding: const EdgeInsets.only(bottom: 15),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    CircleAvatar(
-                                      radius: 40,
-                                      backgroundImage: NetworkImage(
-                                        "${'https://adventuresclub.net/adventureClub/public/'}${profile.profileImage}",
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 15,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        MyText(
-                                          text: profile.name, //'Alexander',
-                                          weight: FontWeight.w600,
-                                          color: blackColor,
-                                          size: 18,
-                                        ),
-                                        const SizedBox(
-                                          height: 2,
-                                        ),
-                                        MyText(
-                                          text: profile.bp
-                                              .companyName, //'Travel Instructor',
-                                          weight: FontWeight.w500,
-                                          color: greyTextColor,
-                                          size: 14,
-                                        ),
-                                        const SizedBox(
-                                          height: 2,
-                                        ),
-                                        MyText(
-                                          overFlow: TextOverflow.fade,
-                                          text: "${profile.bp.location}"
-                                              "${","}"
-                                              "${profile.bp.address}", //'County, City',
-                                          weight: FontWeight.w500,
-                                          color: greyTextColor,
-                                          size: 12,
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Button(
-                                            'Chat',
-                                            const Color.fromARGB(
-                                                255, 15, 71, 116),
-                                            const Color.fromARGB(
-                                                255, 15, 71, 116),
-                                            whiteColor,
-                                            14,
-                                            abc,
-                                            Icons.add,
-                                            whiteColor,
-                                            false,
-                                            4,
-                                            'Roboto',
-                                            FontWeight.w400,
-                                            26)
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                const Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Image(
-                                    image:
-                                        ExactAssetImage('images/forward.png'),
-                                  ),
-                                )
-                              ],
-                            )),
-                        const SizedBox(
-                          height: 5,
+                        ListTile(
+                          leading: CircleAvatar(
+                            radius: 40,
+                            backgroundImage: NetworkImage(
+                              "${'https://adventuresclub.net/adventureClub/public/'}${profile.profileImage}",
+                            ),
+                          ),
+                          title: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              MyText(
+                                text: profile.name, //'Alexander',
+                                weight: FontWeight.w600,
+                                color: blackColor,
+                                size: 18,
+                              ),
+                              MyText(
+                                text: profile
+                                    .bp.companyName, //'Travel Instructor',
+                                weight: FontWeight.w500,
+                                color: greyTextColor,
+                                size: 14,
+                              ),
+                              MyText(
+                                overFlow: TextOverflow.fade,
+                                text: "${profile.bp.location}"
+                                    "${","}"
+                                    "${profile.bp.address}", //'County, City',
+                                weight: FontWeight.w500,
+                                color: greyTextColor,
+                                size: 12,
+                              ),
+                            ],
+                          ),
+                          trailing: const Image(
+                            image: ExactAssetImage('images/forward.png'),
+                          ),
                         ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Button(
+                            'Chat',
+                            const Color.fromARGB(255, 15, 71, 116),
+                            const Color.fromARGB(255, 15, 71, 116),
+                            whiteColor,
+                            14,
+                            abc,
+                            Icons.add,
+                            whiteColor,
+                            false,
+                            4,
+                            'Roboto',
+                            FontWeight.w400,
+                            26),
                         Align(
                           alignment: Alignment.centerLeft,
                           child: MyText(
@@ -504,6 +477,25 @@ class _AboutState extends State<About> {
                             weight: FontWeight.w500,
                           ),
                         ),
+                        // Container(
+                        //     padding: const EdgeInsets.only(bottom: 15),
+                        //     child: Row(
+                        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //       children: [
+                        //         Row(
+                        //           children: [
+                        //             Column(
+                        //               crossAxisAlignment:
+                        //                   CrossAxisAlignment.start,
+                        //               children: [],
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ],
+                        //     )),
+                        // const SizedBox(
+                        //   height: 5,
+                        // ),
                       ],
                     ),
                   ),
@@ -520,6 +512,7 @@ class _AboutState extends State<About> {
                       child: MyText(
                         text: 'Provided Adventures',
                         color: greyColor,
+                        weight: FontWeight.w600,
                         size: 16,
                       ),
                     ),

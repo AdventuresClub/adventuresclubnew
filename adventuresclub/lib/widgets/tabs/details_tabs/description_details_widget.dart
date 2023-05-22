@@ -42,11 +42,11 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 16),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          // mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Expanded(
-              flex: 8,
+              flex: 6,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: List.generate(
@@ -78,11 +78,11 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
             Expanded(
               flex: 5,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Wrap(
-                    alignment: WrapAlignment.start,
-                    crossAxisAlignment: WrapCrossAlignment.start,
+                    alignment: WrapAlignment.end,
+                    crossAxisAlignment: WrapCrossAlignment.end,
                     direction: Axis.vertical,
                     children: List.generate(widget.text5.length, (index) {
                       return widget.text1[index] == 'Country  :'

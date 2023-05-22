@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 class CreateProgram extends StatefulWidget {
   final Function parseData;
   final int index;
-  const CreateProgram(this.parseData, this.index, {super.key});
+  final CreateServicesProgramModel pm;
+  const CreateProgram(this.parseData, this.index, this.pm, {super.key});
 
   @override
   State<CreateProgram> createState() => _CreateProgramState();
@@ -21,15 +22,24 @@ class _CreateProgramState extends State<CreateProgram> {
   TimeOfDay time = TimeOfDay.now();
   DateTime pickedDate = DateTime.now();
   DateTime currentDate = DateTime.now();
+  DateTime eDate = DateTime.now();
   Duration timeSt = const Duration();
   Duration endSt = const Duration();
-
+  bool isTimeAfter = false;
   var formattedDate;
+  bool loading = false;
 
   @override
   void initState() {
     super.initState();
-    formattedDate = 'Start Date';
+    //formattedDate = widget.pm.startDate;
+    //eDate = widget.pm.endDate;
+  }
+
+  void changeStatus() {
+    setState(() {
+      // loading = true;
+    });
   }
 
   void sendData() {
@@ -56,19 +66,20 @@ class _CreateProgramState extends State<CreateProgram> {
     CreateServicesProgramModel pm = CreateServicesProgramModel(
       title,
       sTime,
+      eTime,
       durationSt,
       durationEt,
       description,
     );
-    widget.parseData(pm, widget.index);
+    widget.parseData(pm, widget.index, isTimeAfter);
   }
 
   Future<void> _selectDate(BuildContext context) async {
     DateTime? tDate = (await showDatePicker(
         context: context,
-        initialDate: currentDate,
-        firstDate: DateTime.now(),
-        lastDate: DateTime(2050)));
+        initialDate: widget.pm.startDate,
+        firstDate: widget.pm.startDate,
+        lastDate: widget.pm.endDate));
     if (tDate != null) {
       pickedDate = tDate;
       setState(() {
@@ -80,19 +91,37 @@ class _CreateProgramState extends State<CreateProgram> {
     sendData();
   }
 
-  Future pickTime(BuildContext context, TimeOfDay t) async {
+  Future pickTime(BuildContext context) async {
     final newTime = await showTimePicker(context: context, initialTime: time);
     if (newTime == null) return;
-    if (t == startTime) {
-      setState(() {
-        startTime = newTime;
-        timeSt = Duration(hours: newTime.hour, minutes: newTime.minute);
-      });
-      print(startTime);
+    setState(() {
+      startTime = newTime;
+      timeSt = Duration(hours: newTime.hour, minutes: newTime.minute);
+    });
+    print(startTime);
+    sendData();
+  }
+
+  Future pickEndTime(BuildContext context) async {
+    final newEndTime = await showTimePicker(
+      context: context, initialTime: time,
+      //  sele
+    );
+    if (newEndTime == null) return;
+    if (newEndTime.hour < startTime.hour) {
+      message("End Time Cannot be before Start Time");
+      isTimeAfter = true;
+      return;
+    } else if (newEndTime.hour == startTime.hour &&
+        newEndTime.minute < startTime.minute) {
+      message("End Time Cannot be before Start Time");
+      isTimeAfter = true;
+      return;
     } else {
       setState(() {
-        endTime = newTime;
-        endSt = Duration(hours: newTime.hour, minutes: newTime.minute);
+        endTime = newEndTime;
+        isTimeAfter = false;
+        endSt = Duration(hours: newEndTime.hour, minutes: newEndTime.minute);
       });
       print(endTime);
     }
@@ -101,6 +130,16 @@ class _CreateProgramState extends State<CreateProgram> {
 
   void editComplete() {
     sendData();
+  }
+
+  void pStartTime(BuildContext context) {}
+
+  void message(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
   }
 
   @override
@@ -171,7 +210,7 @@ class _CreateProgramState extends State<CreateProgram> {
             children: [
               Expanded(
                 child: GestureDetector(
-                  onTap: () => pickTime(context, startTime),
+                  onTap: () => pickTime(context),
                   child: Container(
                     height: 50,
                     padding: const EdgeInsets.symmetric(vertical: 0),
@@ -205,7 +244,7 @@ class _CreateProgramState extends State<CreateProgram> {
               ),
               Expanded(
                 child: GestureDetector(
-                  onTap: () => pickTime(context, endTime),
+                  onTap: () => pickEndTime(context),
                   child: Container(
                     height: 50,
                     padding: const EdgeInsets.symmetric(vertical: 0),

@@ -93,7 +93,7 @@ class _BecomePartnerPackagesState extends State<BecomePartnerPackages> {
             element['deleted_at'].toString() ?? "",
             gIList,
             gEList);
-        if (element['cost'] == "0.00" && widget.show == false) {
+        if (widget.show!) {
           freegBp.add(pBp);
           pbp = freegBp;
         } else if (element['cost'] != "0.00") {
@@ -352,27 +352,26 @@ class _BecomePartnerPackagesState extends State<BecomePartnerPackages> {
           : ListView.builder(
               itemCount: pbp.length,
               itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () => selected(
-                      context,
-                      "38.56",
-                      // orderId,
-                      // transactionId,
-                      Constants.name,
-                      myLocation,
-                      myLocation,
-                      lat.toString(),
-                      myLocation,
-                      "41561651",
-                      Constants.emailId,
-                      pbp[index].id.toString()),
-                  //update(pbp[index].id.toString(), pbp[index].cost),
-                  child: PackageList(
-                      imageOneList[index],
-                      secondImageList[index],
-                      pbp[index].cost,
-                      pbp[index].duration),
-                );
+                return
+                    // GestureDetector(
+                    //   onTap: () => selected(
+                    //       context,
+                    //       "38.56",
+                    //       // orderId,
+                    //       // transactionId,
+                    //       Constants.name,
+                    //       myLocation,
+                    //       myLocation,
+                    //       lat.toString(),
+                    //       myLocation,
+                    //       "41561651",
+                    //       Constants.emailId,
+                    //       pbp[index].id.toString()),
+                    //   //update(pbp[index].id.toString(), pbp[index].cost),
+                    //   child:
+                    PackageList(imageOneList[index], secondImageList[index],
+                        pbp[index]);
+                //   );
               },
             ),
       // const SizedBox(
