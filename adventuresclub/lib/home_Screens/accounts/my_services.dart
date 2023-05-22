@@ -492,7 +492,7 @@ class _MyServicesState extends State<MyServices> {
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(65.0),
           child: Theme(
-            data: Theme.of(context).copyWith(accentColor: Colors.white),
+            data: Theme.of(context).copyWith(primaryColor: Colors.white),
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
