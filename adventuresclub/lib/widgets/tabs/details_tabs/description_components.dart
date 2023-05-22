@@ -31,10 +31,10 @@ class DescriptionComponents extends StatelessWidget {
                   // text:
                   //     'The highest peak in Al-Hajar mountain range and in all of Oman,Jebel Shams(Mountain of the sun) towers above the northern town in Al-Hamra. Rising to about 10,000 feet(3,000 meters).',
                   color: greyColor2,
-                  weight: FontWeight.w400,
+                  weight: FontWeight.w500,
                   fontFamily: 'Roboto',
                   height: 1.5,
-                  size: 12,
+                  size: 14,
                 ),
               ),
             ],

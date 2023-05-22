@@ -10,6 +10,7 @@ import 'package:adventuresclub/widgets/tabs/details_tabs/service_description.dar
 import 'package:adventuresclub/widgets/tabs/participants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class MyServicesTab extends StatefulWidget {
   final ServicesModel sm;
@@ -25,10 +26,25 @@ class _MyServicesTabState extends State<MyServicesTab> {
   List<GetParticipantsModel> gGM = [];
   List<ServiceImageModel> gSim = [];
   List<String> adventuresPlan = [""];
+  DateTime startDate = DateTime.now();
+  DateTime endDate = DateTime.now();
+  String st = "";
+  String ed = "";
+  // "${widget.sm.availability[0].st.substring(8, 10)}-${widget.sm.availability[0].st.substring(5, 8)}${widget.sm.availability[0].st.substring(0, 4)}"
   @override
   void initState() {
     super.initState();
     getParticipants();
+    if (widget.sm.sPlan == 2) {
+      startDate =
+          DateTime.tryParse(widget.sm.availability[0].st) ?? DateTime.now();
+      String sMonth = DateFormat('MMMM').format(startDate);
+      st = "${startDate.day}-$sMonth-${startDate.year}";
+      endDate =
+          DateTime.tryParse(widget.sm.availability[0].ed) ?? DateTime.now();
+      String eMonth = DateFormat('MMMM').format(startDate);
+      ed = "${endDate.day}-$eMonth-${endDate.year}";
+    }
     if (widget.sm.sPlan == 2) {
       setState(() {
         text1.insert(5, "Start Date");
@@ -40,14 +56,14 @@ class _MyServicesTabState extends State<MyServicesTab> {
         text4.insert(4, widget.sm.duration);
         widget.sm.availability.isEmpty
             ? text4.insert(5, "Start Date")
-            : text4.insert(5, widget.sm.availability[0].st.substring(0, 10));
+            : text4.insert(5, st);
         text6.insert(0, widget.sm.reviewdBy);
         text6.insert(1, widget.sm.serviceSector);
         text6.insert(2, widget.sm.serviceType);
         text6.insert(3, widget.sm.serviceLevel);
         widget.sm.availability.isEmpty
             ? text6.insert(4, "End Date")
-            : text6.insert(4, widget.sm.availability[0].ed.substring(0, 10));
+            : text6.insert(4, ed);
       });
     }
     if (widget.sm.sPlan == 1) {
@@ -235,8 +251,6 @@ class _MyServicesTabState extends State<MyServicesTab> {
                     const TabBarTheme(labelColor: Colors.black), //<-- SEE HERE
               ),
               child: TabBar(
-                padding: const EdgeInsets.all(0),
-                labelPadding: const EdgeInsets.all(0),
                 labelColor: blackColor,
                 labelStyle: const TextStyle(
                     fontSize: 14,
@@ -262,7 +276,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
             child: TabBarView(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.all(12.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
                   child: ServiceDescription(
                     widget.sm,
                     text1,

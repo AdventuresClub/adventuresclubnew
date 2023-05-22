@@ -40,8 +40,6 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   TextEditingController minimumRequirement = TextEditingController();
   TextEditingController terms = TextEditingController();
   TextEditingController daysExpiry = TextEditingController();
-  String selectedRegion = "";
-  int selectedSectorId = 0;
   List text = ['Banner', 'Description', 'Program', 'Cost/GeoLoc'];
   List text1 = ['1', '2', '3', '4'];
   int count = 0;
@@ -64,6 +62,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   DateTime? pickedDate;
   var formattedDate;
   var endDate;
+  DateTime startDate = DateTime.now();
+  DateTime eDate = DateTime.now();
   // var startTime;
   // var endTime;
   DateTime currentDate = DateTime.now();
@@ -90,8 +90,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   TimeOfDay time = TimeOfDay.now();
   bool planChecked = false;
   List<CreateServicesProgramModel> pm = [
-    CreateServicesProgramModel(
-        "", DateTime.now(), const Duration(), const Duration(), "")
+    CreateServicesProgramModel("", DateTime.now(), DateTime.now(),
+        const Duration(), const Duration(), "")
   ];
   List<CreateServicesPlanOneModel> onePlan = [
     CreateServicesPlanOneModel("", "")
@@ -112,6 +112,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   List<String> d = [];
   List<String> programOnetitleList = [];
   List<String> programOnedescriptionList = [];
+  bool isTimeAfter = false;
 
   @override
   void initState() {
@@ -124,8 +125,9 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     // addProgramData();
   }
 
-  void getProgramData(CreateServicesProgramModel data, int index) {
+  void getProgramData(CreateServicesProgramModel data, int index, bool time) {
     pm[index] = data;
+    isTimeAfter = time;
     //  pm.add(data);
   }
 
@@ -143,7 +145,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   void addProgramData() {
     setState(() {
       pm.add(CreateServicesProgramModel(
-          "", DateTime.now(), const Duration(), const Duration(), ""));
+          "", startDate, currentDate, const Duration(), const Duration(), ""));
     });
   }
 
@@ -384,7 +386,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     if (count == 0 && imageList.isNotEmpty) {
       //  createService();
       setState(() {
-        count++;
+        count = 1;
       });
     } else if (imageList.isEmpty) {
       message("Images cannot be empty");
@@ -401,11 +403,13 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         selectedActivitesId.isNotEmpty &&
         selectedDependencyId.isNotEmpty &&
         planChecked) {
+      pm[0].startDate = startDate;
+      pm[0].endDate = currentDate;
       // await convertProgramData();
       // aimed();
       //dependency();
       setState(() {
-        count++;
+        count = 2;
       });
     } else if (adventureName.text.isEmpty) {
       message("Please enter the adventure name");
@@ -429,12 +433,14 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       message("Please select from aimed for");
     } else if (selectedDependencyId.isEmpty) {
       message("Please select Dependency");
-    } else if (count == 2 && pm.isNotEmpty) {
+    } else if (count == 2 && pm.isNotEmpty && isTimeAfter == false) {
       setState(() {
-        count++;
+        count = 3;
       });
     } else if (pm.isEmpty) {
       message("Please enter program");
+    } else if (isTimeAfter) {
+      message("End Time Cannot be before Start Time");
     } else if (count == 3 &&
         // ConstantsCreateNewServices.lat > 0 &&
         // ConstantsCreateNewServices.lng >  &&
@@ -463,10 +469,11 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   void previous() {
     if (count == 0) {
       Navigator.of(context).pop();
+    } else {
+      setState(() {
+        count--;
+      });
     }
-    setState(() {
-      count--;
-    });
   }
 
   void getImages(List<File> imgList) {
@@ -678,29 +685,44 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   }
 
   Future<void> _selectDate(BuildContext context, var givenDate) async {
-    pickedDate = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime.now(),
-        lastDate: DateTime(2050));
+    if (givenDate == formattedDate) {
+      pickedDate = await showDatePicker(
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime.now(),
+          lastDate: DateTime(2050));
+    } else if (givenDate == endDate) {
+      pickedDate = await showDatePicker(
+          context: context,
+          initialDate: startDate,
+          firstDate: startDate,
+          lastDate: DateTime(2050));
+    }
     if (pickedDate != null && pickedDate != currentDate) {
       if (givenDate == formattedDate) {
+        var date = DateTime.parse(pickedDate.toString());
+        String m = date.month < 10 ? "0${date.month}" : "${date.month}";
+        String d = date.day < 10 ? "0${date.day}" : "${date.day}";
         setState(() {
-          var date = DateTime.parse(pickedDate.toString());
-          String m = date.month < 10 ? "0${date.month}" : "${date.month}";
-          String d = date.day < 10 ? "0${date.day}" : "${date.day}";
           formattedDate = "${date.year}-$m-$d";
+          startDate = pickedDate!;
+          pm[0].startDate = startDate;
         });
       } else if (givenDate == endDate) {
+        DateTime eDate = DateTime(
+            pickedDate!.year, pickedDate!.month, pickedDate!.day, 23, 59, 59);
+        print(eDate);
+        var date = DateTime.parse(eDate.toString());
+        String m = date.month < 10 ? "0${date.month}" : "${date.month}";
+        String d = date.day < 10 ? "0${date.day}" : "${date.day}";
         setState(() {
-          var date = DateTime.parse(pickedDate.toString());
-          String m = date.month < 10 ? "0${date.month}" : "${date.month}";
-          String d = date.day < 10 ? "0${date.day}" : "${date.day}";
           endDate = "${date.year}-$m-$d";
-          currentDate = pickedDate!;
+          pm[0].endDate = eDate;
+          currentDate = eDate;
         });
       }
     }
+    print(currentDate);
     getDates(formattedDate, endDate);
   }
 
@@ -1253,7 +1275,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                         : ListView(
                             children: [
                               for (int z = 0; z < pm.length; z++)
-                                CreateProgram(getProgramData, z),
+                                CreateProgram(getProgramData, z, pm[z]),
                               const SizedBox(
                                 height: 10,
                               ),
@@ -1420,7 +1442,6 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                     //     //   );
                     //   }),
                     // ),
-
                     Cost(
                       iLiveInController,
                       specificAddressController,

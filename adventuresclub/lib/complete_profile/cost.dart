@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_print, prefer_interpolation_to_compose_strings, avoid_function_literals_in_foreach_calls
 
-import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/constants_create_new_services.dart';
 import 'package:adventuresclub/google_page.dart';
@@ -12,7 +11,6 @@ import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
 import 'package:adventuresclub/widgets/text_fields/multiline_field.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:http/http.dart' as http;
 
 class Cost extends StatefulWidget {
   final TextEditingController iliveController;
@@ -121,29 +119,6 @@ class _CostState extends State<Cost> {
     );
   }
 
-  void createService() async {
-    try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/create_service"),
-          body: {
-            'customer_id': "3",
-            'adventure_name': "",
-            "country_id": Constants.countryId,
-            'region': "",
-
-            // 'mobile_code': ccCode,
-          });
-      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-      print(response.statusCode);
-      print(response.body);
-      print(response.headers);
-      print(decodedResponse['data']['user_id']);
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
   void getMyLocation() async {
     if (!loading) {
       setState(() {
@@ -210,12 +185,12 @@ class _CostState extends State<Cost> {
     );
   }
 
-  void setLocation(String loc, double lt, double lg, String location) {
+  void setLocation(String loc, double lt, double lg) {
     Navigator.of(context).pop();
     widget.iliveController.text = loc;
     lat = lt;
     lng = lg;
-    glocation = location;
+    //  glocation = location;
     setState(
       () {
         userlocation = loc;

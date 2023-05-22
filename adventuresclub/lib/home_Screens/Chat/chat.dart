@@ -10,11 +10,21 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatState extends State<Chat> {
+  String userId = "";
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      userId = Constants.userId.toString();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: greyProfileColor,
-      body: ShowChat('https://adventuresclub.net/adventureClub/grouplist/27'),
+      body: ShowChat(
+          'https://adventuresclub.net/adventureClub/grouplist/$userId'),
     );
   }
 }

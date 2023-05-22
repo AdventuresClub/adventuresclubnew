@@ -23,53 +23,43 @@ class _RequestsState extends State<Requests> {
         backgroundColor: whiteColor,
         elevation: 1.5,
         centerTitle: true,
-        // leading: IconButton(
-        //   onPressed: () => Navigator.pop(context),
-        //   icon: Image.asset(
-        //     'images/backArrow.png',
-        //     height: 20,
-        //   ),
-        // ),
         title: MyText(
           text: 'Requests ',
           color: bluishColor,
           weight: FontWeight.bold,
         ),
       ),
-      //  AppBar(
-      //   backgroundColor: whiteColor,
-      //   centerTitle: true,
-      //   title: MyText(text: 'Requests',color: greenishColor,),),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 15),
+                  const EdgeInsets.symmetric(horizontal: 2.0, vertical: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          value = !value;
-                          value1 = !value1;
-                        });
-                      },
-                      child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal:
-                                  MediaQuery.of(context).size.width / 8.9,
-                              vertical: 10),
-                          decoration: BoxDecoration(
-                            color: value == true ? bluishColor : greyShadeColor,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: MyText(
-                            text: 'Upcoming',
-                            color: whiteColor,
-                            size: 16,
-                          ))),
+                    onTap: () {
+                      setState(() {
+                        value = !value;
+                        value1 = !value1;
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width / 8.9,
+                          vertical: 10),
+                      decoration: BoxDecoration(
+                        color: value == true ? bluishColor : greyShadeColor,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: MyText(
+                        text: 'Upcoming',
+                        color: whiteColor,
+                        size: 16,
+                      ),
+                    ),
+                  ),
                   GestureDetector(
                     onTap: () {
                       setState(() {

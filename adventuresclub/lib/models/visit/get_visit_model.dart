@@ -35,3 +35,12 @@ class GetVisitModel {
       this.da,
       this.rS);
 }
+
+class GetVisitedTitleModel {
+  String title;
+  String image;
+  GetVisitedTitleModel(
+    this.title,
+    this.image,
+  );
+}

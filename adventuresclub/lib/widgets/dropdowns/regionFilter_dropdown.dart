@@ -1,13 +1,14 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/constants_create_new_services.dart';
+import 'package:adventuresclub/models/create_adventure/regions_model.dart';
 import 'package:adventuresclub/models/filter_data_model/region_model.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RegionFilterDropDown extends StatefulWidget {
-  final List<RegionFilterModel> rFilter;
+  final List<RegionsModel> rFilter;
   final bool show;
   const RegionFilterDropDown(this.rFilter, {this.show = false, super.key});
 
@@ -28,7 +29,7 @@ class RegionFilterDropDownState extends State<RegionFilterDropDown> {
   void initState() {
     super.initState();
     // parseRegions(widget.rFilter);
-    selectedRegion = widget.rFilter[0].regions;
+    selectedRegion = widget.rFilter[0].region;
   }
 
   void parseRegions(List<RegionFilterModel> rm) {
@@ -52,10 +53,10 @@ class RegionFilterDropDownState extends State<RegionFilterDropDown> {
     });
   }
 
-  void sId(RegionFilterModel rFilter) {
+  void sId(RegionsModel rFilter) {
     setState(() {
-      ConstantsCreateNewServices.selectedRegion = rFilter.regions;
-      ConstantsCreateNewServices.selectedRegionId = rFilter.id;
+      ConstantsCreateNewServices.selectedRegion = rFilter.region;
+      ConstantsCreateNewServices.selectedRegionId = rFilter.countryId;
     });
   }
 
@@ -65,6 +66,16 @@ class RegionFilterDropDownState extends State<RegionFilterDropDown> {
       ConstantsCreateNewServices.selectedRegionId = sRegionId;
     });
     //  ConstantsCreateNewServices.selectedRegionId = selectedRegionId;
+  }
+
+  void selected() {
+    if (getRegion.isEmpty) {
+      getRegion = widget.rFilter[0].region;
+      Navigator.of(context).pop();
+    } else {
+      Navigator.of(context).pop();
+    }
+    print(getRegion);
   }
 
   @override
@@ -122,8 +133,9 @@ class RegionFilterDropDownState extends State<RegionFilterDropDown> {
                                           backgroundColor: whiteColor,
                                           onSelectedItemChanged: (int index) {
                                             sendRegion(
-                                                widget.rFilter[index].regions,
-                                                widget.rFilter[index].id);
+                                                widget.rFilter[index].region,
+                                                widget
+                                                    .rFilter[index].countryId);
                                             //print(index + 1);
                                           },
                                           selectionOverlay:
@@ -135,7 +147,7 @@ class RegionFilterDropDownState extends State<RegionFilterDropDown> {
                                             return Center(
                                               child: MyText(
                                                   text: widget
-                                                      .rFilter[index].regions,
+                                                      .rFilter[index].region,
                                                   size: 14,
                                                   color: blackTypeColor4),
                                             );
@@ -180,14 +192,16 @@ class RegionFilterDropDownState extends State<RegionFilterDropDown> {
                                         color: bluishColor,
                                       )),
                                   TextButton(
-                                      onPressed: () =>
-                                          Navigator.of(context).pop(),
+                                      onPressed: selected,
+                                      // sendRegion(widget.rFilter[index].region,
+                                      //       widget
+                                      //           .rFilter[index].countryId),
                                       child: MyText(
                                         text: 'Ok',
                                         color: bluishColor,
                                       )),
                                 ],
-                              )
+                              ),
                             ],
                           ),
                         ));
@@ -280,13 +294,13 @@ class RegionFilterDropDownState extends State<RegionFilterDropDown> {
                   });
                 },
                 items: widget.rFilter
-                    .map<DropdownMenuItem<String>>((RegionFilterModel rFilter) {
+                    .map<DropdownMenuItem<String>>((RegionsModel rFilter) {
                   return DropdownMenuItem<String>(
                     onTap: () => sId(
                       rFilter,
                     ),
-                    value: rFilter.regions,
-                    child: Text(rFilter.regions),
+                    value: rFilter.region,
+                    child: Text(rFilter.region),
                   );
                 }).toList(),
               ),

@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, avoid_print, unused_local_variable
 
 import 'dart:convert';
+import 'dart:math';
 
+import 'package:adventuresclub/become_a_partner/welcome_partner.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/payment_methods/one_pay_method.dart';
 import 'package:adventuresclub/models/currency_model.dart';
-import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
+import 'package:adventuresclub/models/packages_become_partner/packages_become_partner_model.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -13,18 +15,18 @@ import 'package:http/http.dart' as http;
 class PackageList extends StatefulWidget {
   final image1;
   final image2;
-  final cost;
-  final time;
-  const PackageList(this.image1, this.image2, this.cost, this.time,
-      {super.key});
+  final PackagesBecomePartnerModel bp;
+  const PackageList(this.image1, this.image2, this.bp, {super.key});
 
   @override
   State<PackageList> createState() => _PackageListState();
 }
 
 class _PackageListState extends State<PackageList> {
+  int count = 8;
   DateTime t = DateTime.now();
   String key = "5d7d771c49-103d05e0d0-riwfxc";
+  String transactionId = "";
 
   List text = [
     'This is first includes',
@@ -54,15 +56,24 @@ class _PackageListState extends State<PackageList> {
     );
   }
 
-  void update() async {
+  void update(int id) async {
+    generateRandomString(8);
     try {
       var response = await http.post(
           Uri.parse(
               "https://adventuresclub.net/adventureClub/api/v1/update_subscription"),
-          body: {'user_id': Constants.userId.toString, 'packages_id ': "0"});
-      // setState(() {
-      //   //userID = response.body.
-      // });
+          body: {
+            'user_id': Constants.userId.toString(),
+            "packages_id": id.toString(),
+            "order_id": transactionId,
+            // if payment type is bank muscat then pass 1 else 0
+            "payment_type": "0",
+            "payment_status": "Free",
+            "payment_amount": "0",
+          });
+      if (response.statusCode == 200) {
+        packagesList();
+      }
       print(response.statusCode);
       print(response.body);
       print(response.headers);
@@ -71,23 +82,53 @@ class _PackageListState extends State<PackageList> {
     }
   }
 
-  void transactionApi(String price) async {
+  // form.Add(new StringContent(Settings.UserId), "user_id");
+  //                   form.Add(new StringContent(paymentRequestModel.PackagesIdORBookingId), "packages_id");
+  //                   form.Add(new StringContent(paymentRequestModel.TransactionId), "order_id");
+  //                   form.Add(new StringContent(paymentStatus), "payment_type");
+  //                   form.Add(new StringContent(paymentRequestModel.Method), "payment_status");
+  //                   form.Add(new StringContent(paymentRequestModel.Price), "payment_amount");
+
+  String generateRandomString(int lengthOfString) {
+    final random = Random();
+    const allChars =
+        'AaBbCcDdlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1EeFfGgHhIiJjKkL84165135161';
+    // below statement will generate a random string of length using the characters
+    // and length provided to it
+    final randomString = List.generate(
+        count, (index) => allChars[random.nextInt(allChars.length)]).join();
+    setState(() {
+      transactionId = randomString;
+      //transactionId = "${randomString}${randomString}";
+    });
+    return randomString; // return the generated string
+  }
+
+  void transactionApi(String price, int id) async {
+    generateRandomString(8);
     try {
       var response = await http.post(
           Uri.parse(
               "https://adventuresclub.net/adventureClub/api/v1/transaction"),
           body: {
             'user_id': Constants.userId.toString(), //"27",
-            'packages_id ': "0",
-            'transaction_id': t.toString(),
-            "type": "booking",
-            "transaction_type": "booking",
-            "method": "card",
-            "status": "",
-            "price": price, //"0",
-            "order_type": "",
+            // 'packages_id': "1",
+            'transaction_id': transactionId,
+            //Booking OR Subsreption
+            "type": "subscription",
+            //Booking OR Subsreption
+            "transaction_type": "subscription",
+            // in case of paid
+            //WireTransfer
+            "method": "WireTransfer",
+            "status": "success",
+            "price": "0", //price, //"0",
+            // 1 in case of subscription && 0 in case of booking
+            "order_type": "1",
           });
-      update();
+      if (response.statusCode == 200) {
+        update(id);
+      }
       // setState(() {
       //   //userID = response.body.
       // });
@@ -98,11 +139,29 @@ class _PackageListState extends State<PackageList> {
       print(e.toString());
     }
   }
+  // form.Add(new StringContent(Settings.UserId), "user_id");
+  // 				form.Add(new StringContent(paymentRequestModel.TransactionId), "transaction_id");
+  // 				form.Add(new StringContent(paymentRequestModel.Type), "type");
+  // 				form.Add(new StringContent(paymentRequestModel.Transaction_type), "transaction_type");
+  // 				form.Add(new StringContent(paymentRequestModel.Method), "method");
+  // 				form.Add(new StringContent(paymentRequestModel.Status), "status");
+  // 				form.Add(new StringContent(paymentRequestModel.Price), "price");
+  // 				form.Add(new StringContent(paymentRequestModel.Order_type), "order_type");
 
   Map mapCountry = {};
   double amount = 0;
 
   List<CurrencyModel> scurrencies = [];
+
+  void packagesList() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return const WelcomePartner();
+        },
+      ),
+    );
+  }
 
   Future<List<CurrencyModel>> fetchCurrency(String? value) async {
     final response = await http.get(Uri.parse(
@@ -175,7 +234,7 @@ class _PackageListState extends State<PackageList> {
             bottom: 20,
             right: 30,
             child: GestureDetector(
-              onTap: () => fetchCurrency("100"),
+              onTap: () => transactionApi(widget.bp.cost, widget.bp.id),
               child: Container(
                 height: MediaQuery.of(context).size.height / 16,
                 width: MediaQuery.of(context).size.width / 4,
@@ -205,7 +264,7 @@ class _PackageListState extends State<PackageList> {
               ),
             ),
           ),
-          if (widget.cost == "0.00")
+          if (widget.bp.cost == "0.00")
             Positioned(
               bottom: 70,
               right: 65,
@@ -215,12 +274,12 @@ class _PackageListState extends State<PackageList> {
                 weight: FontWeight.w900,
               ),
             ),
-          if (widget.cost != "0.00")
+          if (widget.bp.cost != "0.00")
             Positioned(
               bottom: 70,
               right: 50,
               child: MyText(
-                text: widget.cost,
+                text: widget.bp.cost,
                 size: 24,
                 weight: FontWeight.w900,
               ),
@@ -236,7 +295,7 @@ class _PackageListState extends State<PackageList> {
                     color: whiteColor,
                   ),
                   MyText(
-                    text: (widget.time),
+                    text: (widget.bp.duration),
                     size: 18,
                   ),
                 ],

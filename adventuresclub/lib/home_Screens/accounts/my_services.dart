@@ -1,8 +1,6 @@
 // ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls, deprecated_member_use
 
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:adventuresclub/become_a_partner/create_services/create_new_services.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/myservices_ad_details.dart';
@@ -258,6 +256,7 @@ class _MyServicesState extends State<MyServices> {
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       List<dynamic> result = decodedResponse['data'];
+      filteredServices.clear();
       result.forEach(((element) {
         List<AvailabilityPlanModel> gAccomodationPlanModel = [];
         List<AvailabilityModel> gAccomodoationAvaiModel = [];
@@ -459,98 +458,92 @@ class _MyServicesState extends State<MyServices> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: myServicesApi,
-      child: Scaffold(
-        //backgroundColor: greyBackgroundColor.withOpacity(0.9),
-        appBar: AppBar(
-          backgroundColor: whiteColor,
-          elevation: 1.5,
-          centerTitle: true,
-          leading: IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: Image.asset(
-              'images/backArrow.png',
-              height: 20,
-            ),
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 237, 232, 232),
+      appBar: AppBar(
+        backgroundColor: whiteColor,
+        elevation: 1.5,
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Image.asset(
+            'images/backArrow.png',
+            height: 20,
           ),
-          title: MyText(
-            text: 'My services',
-            color: bluishColor,
-            weight: FontWeight.w700,
-            fontFamily: "Roboto",
-          ),
-          actions: [
-            GestureDetector(
-                onTap: goTo,
-                child: const Image(
-                  image: ExactAssetImage('images/add-circle.png'),
-                  width: 25,
-                  height: 25,
-                )),
-            const SizedBox(
-              width: 15,
-            )
-          ],
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(65.0),
-            child: Theme(
-              data: Theme.of(context).copyWith(accentColor: Colors.white),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
-                child: Container(
-                  height: 45,
-                  decoration: BoxDecoration(
-                    color: whiteColor,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: blackColor.withOpacity(0.5),
-                    ),
+        ),
+        title: MyText(
+          text: 'My services',
+          color: bluishColor,
+          weight: FontWeight.w700,
+          fontFamily: "Roboto",
+        ),
+        actions: [
+          GestureDetector(
+              onTap: goTo,
+              child: const Image(
+                image: ExactAssetImage('images/add-circle.png'),
+                width: 25,
+                height: 25,
+              )),
+          const SizedBox(
+            width: 15,
+          )
+        ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(65.0),
+          child: Theme(
+            data: Theme.of(context).copyWith(accentColor: Colors.white),
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
+              child: Container(
+                height: 45,
+                decoration: BoxDecoration(
+                  color: whiteColor,
+                  borderRadius: BorderRadius.circular(4),
+                  border: Border.all(
+                    color: blackColor.withOpacity(0.5),
                   ),
-                  child: TextField(
-                    onChanged: (value) {
-                      searchServices(value);
-                    },
-                    controller: searchController,
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(
-                        Icons.search,
+                ),
+                child: TextField(
+                  onChanged: (value) {
+                    searchServices(value);
+                  },
+                  controller: searchController,
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(
+                      Icons.search,
+                      color: bluishColor,
+                    ),
+                    // label: Icon(
+                    //   Icons.search,
+                    // ),
+                    contentPadding:
+                        const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+                    hintText: 'Search by Adventure Name',
+                    filled: true,
+                    fillColor: whiteColor,
+                    suffixIcon: GestureDetector(
+                      //onTap: openMap,
+                      child: const Icon(
+                        Icons.filter_alt,
                         color: bluishColor,
                       ),
-                      // label: Icon(
-                      //   Icons.search,
-                      // ),
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 8),
-                      hintText: 'Search by Adventure Name',
-                      filled: true,
-                      fillColor: whiteColor,
-                      suffixIcon: GestureDetector(
-                        //onTap: openMap,
-                        child: const Icon(
-                          Icons.filter_alt,
-                          color: bluishColor,
-                        ),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10.0)),
-                        borderSide:
-                            BorderSide(color: greyColor.withOpacity(0.2)),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10.0)),
-                        borderSide:
-                            BorderSide(color: greyColor.withOpacity(0.2)),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10.0)),
-                        borderSide:
-                            BorderSide(color: greyColor.withOpacity(0.2)),
-                      ),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(6.0)),
+                      borderSide: BorderSide(color: greyColor.withOpacity(0.5)),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(6.0)),
+                      borderSide: BorderSide(color: greyColor.withOpacity(0.5)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(6.0)),
+                      borderSide: BorderSide(color: greyColor.withOpacity(0.5)),
                     ),
                   ),
                 ),
@@ -558,36 +551,30 @@ class _MyServicesState extends State<MyServices> {
             ),
           ),
         ),
-        body: SingleChildScrollView(
-          child: Container(
-            color: greyShadeColor.withOpacity(0.1),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 12.0, bottom: 12, left: 5, right: 5),
-                  child: GridView.count(
-                    physics: const ScrollPhysics(),
-                    shrinkWrap: true,
-                    mainAxisSpacing: 2,
-                    childAspectRatio: 1.05,
-                    crossAxisSpacing: 2,
-                    crossAxisCount: 2,
-                    children: List.generate(
-                      filteredServices.length, // widget.profileURL.length,
-                      (index) {
-                        return GestureDetector(
-                          onTap: () => goToDetails(filteredServices[index]),
-                          child: ServicesCard(
-                            filteredServices[index],
-                            show: true,
-                          ),
-                        );
-                      },
-                    ),
+      ),
+      body: RefreshIndicator(
+        onRefresh: myServicesApi,
+        child: Padding(
+          padding:
+              const EdgeInsets.only(top: 12.0, bottom: 12, left: 5, right: 5),
+          child: GridView.count(
+            physics: const AlwaysScrollableScrollPhysics(),
+            shrinkWrap: true,
+            mainAxisSpacing: 2,
+            childAspectRatio: 1,
+            crossAxisSpacing: 2,
+            crossAxisCount: 2,
+            children: List.generate(
+              filteredServices.length, // widget.profileURL.length,
+              (index) {
+                return GestureDetector(
+                  onTap: () => goToDetails(filteredServices[index]),
+                  child: ServicesCard(
+                    filteredServices[index],
+                    show: true,
                   ),
-                ),
-              ],
+                );
+              },
             ),
           ),
         ),

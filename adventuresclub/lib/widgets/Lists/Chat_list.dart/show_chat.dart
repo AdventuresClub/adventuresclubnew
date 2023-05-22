@@ -9,7 +9,8 @@ import '../../my_text.dart';
 class ShowChat extends StatefulWidget {
   final String url;
   final bool? show;
-  const ShowChat(this.url, {this.show = false, super.key});
+  final bool? appbar;
+  const ShowChat(this.url, {this.show = false, this.appbar = true, super.key});
 
   @override
   State<ShowChat> createState() => _ShowChatState();
@@ -45,22 +46,24 @@ class _ShowChatState extends State<ShowChat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: whiteColor,
-        iconTheme: const IconThemeData(color: blackColor),
-        title: widget.show!
-            ? MyText(
-                text: 'Bank Infomation',
-                color: blackColor,
-                weight: FontWeight.bold,
-              )
-            : MyText(
-                text: 'Chat',
-                color: blackColor,
-                weight: FontWeight.bold,
-              ),
-        centerTitle: true,
-      ),
+      appBar: widget.appbar == true
+          ? AppBar(
+              backgroundColor: whiteColor,
+              iconTheme: const IconThemeData(color: blackColor),
+              title: widget.show!
+                  ? MyText(
+                      text: 'Bank Infomation',
+                      color: blackColor,
+                      weight: FontWeight.bold,
+                    )
+                  : MyText(
+                      text: 'Chat',
+                      color: blackColor,
+                      weight: FontWeight.bold,
+                    ),
+              centerTitle: true,
+            )
+          : null,
       body: WebViewWidget(controller: controller),
     );
   }

@@ -124,18 +124,6 @@ class _TopListState extends State<TopList> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // if (pCM[index].category == "Category")
-                    //   GestureDetector(
-                    //
-                    //     child: const CircleAvatar(
-                    //       backgroundColor: transparentColor,
-                    //       radius: 23,
-                    //       child: Image(
-                    //         image: ExactAssetImage('images/maskGroup44.png'),
-                    //         fit: BoxFit.cover,
-                    //       ),
-                    //     ),
-                    //   ),
                     GestureDetector(
                       onTap: () => categoryType(pCM[index].category),
                       child: CircleAvatar(

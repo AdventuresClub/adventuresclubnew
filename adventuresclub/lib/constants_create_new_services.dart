@@ -15,6 +15,8 @@ class ConstantsCreateNewServices {
   static String startDate = "";
   static String endDate = "";
   static int number = 0;
+  static String country = "";
+  static int countryId = 0;
   static List<String> selectedActivites = [];
   static List<int> selectedActivitesId = [];
   static String gatheringDate = "";

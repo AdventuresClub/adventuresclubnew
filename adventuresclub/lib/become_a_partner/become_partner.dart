@@ -1,11 +1,12 @@
 // ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls, prefer_interpolation_to_compose_strings
 
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
-
+import 'dart:typed_data';
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/google_page.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
+import 'package:adventuresclub/temp_google_map.dart';
 import 'package:adventuresclub/widgets/buttons/bottom_button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
@@ -25,6 +26,7 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
   TextEditingController nameController = TextEditingController();
   TextEditingController addController = TextEditingController();
   TextEditingController geoController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
   TextEditingController crName = TextEditingController();
   TextEditingController crNumber = TextEditingController();
   TextEditingController payPalId = TextEditingController();
@@ -184,24 +186,6 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
   // -2 i will store this file name path into bytes array
   // multipartformdata
 
-  void nextStep() {
-    if (count == 0) {
-      setState(() {
-        count = 1;
-      });
-      // setState(() {
-      //   count == 1;
-      // });
-    } else if (count == 1) {
-      becomeProvider();
-      // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      //   return const BottomNavigation();
-      // }));
-    } else {
-      count--;
-    }
-  }
-
   void lastStep() {
     if (count == 0) {
       Navigator.of(context).pop();
@@ -272,69 +256,102 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
     }
   }
 
-  void openMap() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (_) {
-          return GoogleMapPage(setLocation);
-        },
-      ),
-    );
-  }
-
-  void setLocation(String loc, double lt, double lg) {
-    Navigator.of(context).pop();
-    iLiveInController.text = loc;
-    lat = lt;
-    lng = lg;
-    setState(
-      () {
-        userlocation = loc;
-      },
-    );
-    // addLocation(iLiveInController, lat, lng);
+  void nextStep() {
+    if (count == 0 &&
+        nameController.text.isNotEmpty &&
+        addController.text.isNotEmpty &&
+        iLiveInController.text.isNotEmpty) {
+      setState(() {
+        count += 1;
+      });
+      // setState(() {
+      //   count == 1;
+      // });
+    } else if (nameController.text.isEmpty) {
+      message("Please Enter Company Name");
+    } else if (addController.text.isEmpty) {
+      message("Please Enter Official Address");
+    } else if (iLiveInController.text.isEmpty) {
+      message("GeoLocation Cannot be Empty");
+    } else if (count == 1 &&
+        bankName.text.isNotEmpty &&
+        accountName.text.isNotEmpty &&
+        accountNum.text.isNotEmpty) {
+      // setState(() {
+      //   count += 1;
+      // });
+      becomeProvider();
+      // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      //   return const BottomNavigation();
+      // }));
+    } else if (bankName.text.isEmpty) {
+      message("BankName Cannot be Empty");
+    } else if (accountName.text.isEmpty) {
+      message("Account Name Cannot be Empty");
+    } else if (accountNum.text.isEmpty) {
+      message("Account Number Cannot be Empty");
+    } else {
+      count--;
+    }
   }
 
   void becomeProvider() async {
+    setState(() {
+      loading = true;
+    });
     crNum = int.tryParse(crNumber.text) ?? 0;
     accNum = int.tryParse(accountNum.text) ?? 0;
+    Uint8List crcopyList = crCopy.readAsBytesSync();
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/become_partner"),
-          body: {
-            'user_id': Constants.userId.toString(), //"27", //27, //"27",
-            'company_name': nameController.text, //deles
-            'address': addController.text, //pakistan
-            'location': iLiveInController.text, //lahore
-            'description': "hello world",
-            "license": license, //"Yes", //license, //"Yes", //license,
-            "cr_name": crName.text,
-            "cr_number": crNumber.text, //crNum, //crNumber.text,
-            "cr_copy":
-                uniqueId, //crCopy.toString(), //"/C:/Users/Manish-Pc/Desktop/Images/1.jpg",
-            "debit_card": "1", //"0", //debit_card, //"897654",
-            //"visa_card": null, //"456132",
-            "payon_arrival": payArrivalClicked
-                .toString(), //"1", //payArrivalClicked, //"1", //payArrivalClicked.toString(),
-            //"paypal": "", //payPalId.text,
-            "bankname": "null", //nameController.text,
-            "account_holdername": "null", //accountName.text,
-            "account_number":
-                "null", //accountNum.text, //accNum, //5645656454, //accountNum.text,
-            "is_online": "1", // hardcoded
-            "packages_id": "0", // hardcoded
-            "is_wiretransfer": "0", //isWireTrasfer //"1", //isWireTrasfer,
-          });
+      var request = http.MultipartRequest(
+        "POST",
+        Uri.parse(
+            "https://adventuresclub.net/adventureClub/api/v1/become_partner"),
+      );
+      String fileName =
+          "${DateTime.now().millisecondsSinceEpoch.toString()}.png";
+      request.files.add(http.MultipartFile.fromBytes("cr_copy", crcopyList,
+          filename: fileName));
+      dynamic programData = {
+        'user_id': Constants.userId.toString(), //"27", //27, //"27",
+        'company_name': nameController.text, //deles
+        'address': addController.text, //pakistan
+        'location': iLiveInController.text, //lahore
+        'description': descriptionController.text,
+        "license": license, //"Yes", //license, //"Yes", //license,
+        "cr_name": crName.text,
+        "cr_number": crNumber.text, //crNum, //crNumber.text,
+        //"cr_copy": crCopy,
+        //uniqueId, //crCopy.toString(), //"/C:/Users/Manish-Pc/Desktop/Images/1.jpg",
+        "debit_card": "1", //"0", //debit_card, //"897654",
+        //"visa_card": null, //"456132",
+        "payon_arrival": payArrivalClicked
+            .toString(), //"1", //payArrivalClicked, //"1", //payArrivalClicked.toString(),
+        //"paypal": "", //payPalId.text,
+        "bankname": bankName.text, //"null", //nameController.text,
+        "account_holdername": accountName.text, //"null", //accountName.text,
+        "account_number": accountNum.text,
+        //"null", //accountNum.text, //accNum, //5645656454, //accountNum.text,
+        "is_online": "1", // hardcoded
+        "packages_id": "0", // hardcoded
+        "is_wiretransfer": "0", //isWireTrasfer //"1", //isWireTrasfer,
+      };
+      request.fields.addAll(programData);
+      log(request.fields.toString());
+      final response = await request.send();
       if (response.statusCode == 200) {
         showConfirmation();
+        setState(() {
+          loading = false;
+        });
       } else {
-        dynamic body = jsonDecode(response.body);
+        dynamic body = jsonDecode(response.toString());
         message(body['message'].toString());
+        setState(() {
+          loading = false;
+        });
       }
       print(response.statusCode);
-      print(response.body);
       print(response.headers);
     } catch (e) {
       print(e.toString());
@@ -362,426 +379,471 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
     print(payArrivalClicked);
   }
 
+  void openMap() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (_) {
+          return TempGoogleMap(setLocation);
+        },
+      ),
+    );
+  }
+
+  void setLocation(String loc, double lt, double lg) {
+    Navigator.of(context).pop();
+    iLiveInController.text = loc;
+    lat = lt;
+    lng = lg;
+    setState(
+      () {
+        userlocation = loc;
+      },
+    );
+    // addLocation(iLiveInController, lat, lng);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: whiteColor,
-      appBar: AppBar(
-        backgroundColor: whiteColor,
-        elevation: 1.5,
-        centerTitle: true,
-        leading: IconButton(
-          onPressed: lastStep,
-          //() => completePartnerProvider.previousStep(context),
-          icon: Image.asset(
-            'images/backArrow.png',
-            height: 20,
-          ),
-        ),
-        title: MyText(
-          text: 'Become A Partner',
-          color: bluishColor,
-          weight: FontWeight.bold,
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: IndexedStack(
-          index: count,
-          children: [
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: 20),
-                  TFWithSize('Enter Comany Name', nameController, 12,
-                      lightGreyColor, 1),
-                  const SizedBox(height: 20),
-                  TFWithSize('Enter Official Address', addController, 12,
-                      lightGreyColor, 1),
-                  const SizedBox(height: 20),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width / 1,
-                    child: TextField(
-                      controller: iLiveInController,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 8),
-                        hintText: 'Enter: Geolocation',
-                        filled: true,
-                        fillColor: lightGreyColor,
-                        suffixIcon: GestureDetector(
-                          onTap: openMap,
-                          child: const Image(
-                            image: ExactAssetImage('images/map-symbol.png'),
-                            height: 15,
-                            width: 20,
-                          ),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10.0)),
-                          borderSide:
-                              BorderSide(color: greyColor.withOpacity(0.2)),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10.0)),
-                          borderSide:
-                              BorderSide(color: greyColor.withOpacity(0.2)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10.0)),
-                          borderSide:
-                              BorderSide(color: greyColor.withOpacity(0.2)),
-                        ),
-                      ),
-                    ),
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: loading
+          ? Center(
+              child: MyText(
+              text: "Sending Request",
+              weight: FontWeight.bold,
+              size: 16,
+              color: blackColor,
+            ))
+          : Scaffold(
+              backgroundColor: whiteColor,
+              appBar: AppBar(
+                backgroundColor: whiteColor,
+                elevation: 1.5,
+                centerTitle: true,
+                leading: IconButton(
+                  onPressed: lastStep,
+                  //() => completePartnerProvider.previousStep(context),
+                  icon: Image.asset(
+                    'images/backArrow.png',
+                    height: 20,
                   ),
-                  const SizedBox(height: 20),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: MyText(
-                      text: 'Are you having License?',
-                      color: blackTypeColor1,
-                      align: TextAlign.center,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Checkbox(
-                          value: value,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(24)),
-                          onChanged: (bool? valuee1) {
-                            setState(() {
-                              value = valuee1!;
-                              value1 = false;
-                              license = "No";
-                            });
-                            print(license);
-                          }),
-                      MyText(
-                        text: 'I’m not licensed yet, will sooner get license',
-                        color: blackTypeColor,
-                        align: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Checkbox(
-                          value: value1,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(24)),
-                          onChanged: (bool? value2) {
-                            setState(() {
-                              value1 = value2!;
-                              value = false;
-                              license = "Yes";
-                            });
-                            print(license);
-                          }),
-                      MyText(
-                        text: 'Yes! I am lincensed',
-                        color: blackTypeColor,
-                        align: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                  if (value1 == true)
-                    Column(
-                      children: [
-                        const SizedBox(height: 20),
-                        TFWithSize(
-                            'Enter CR name', crName, 12, lightGreyColor, 1),
-                        const SizedBox(height: 20),
-                        TFWithSize(
-                            'Enter CR number', crNumber, 12, lightGreyColor, 1),
-                        const SizedBox(height: 20),
-                        GestureDetector(
-                          onTap: addMedia,
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Container(
-                              padding: const EdgeInsets.all(20),
-                              decoration: BoxDecoration(
-                                  color: lightGreyColor,
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
-                                      color: greyColor.withOpacity(0.4))),
-                              child: Column(children: [
-                                crCopy.path.isEmpty
-                                    ? const Image(
-                                        image: ExactAssetImage(
-                                            'images/upload.png'),
-                                        height: 50,
-                                      )
-                                    : Image.file(
-                                        crCopy,
-                                        height: 50,
-                                        width: 50,
-                                      ),
-                                const SizedBox(
-                                  height: 10,
+                ),
+                title: MyText(
+                  text: 'Become A Partner',
+                  color: bluishColor,
+                  weight: FontWeight.bold,
+                ),
+              ),
+              body: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: IndexedStack(
+                  index: count,
+                  children: [
+                    SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 20),
+                          TFWithSize('Enter Comany Name', nameController, 12,
+                              lightGreyColor, 1),
+                          const SizedBox(height: 20),
+                          TFWithSize('Enter Official Address', addController,
+                              12, lightGreyColor, 1),
+                          const SizedBox(height: 20),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width / 1,
+                            child: TextField(
+                              controller: iLiveInController,
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 8),
+                                hintText: 'Enter: Geolocation',
+                                filled: true,
+                                fillColor: lightGreyColor,
+                                suffixIcon: GestureDetector(
+                                  onTap: openMap,
+                                  child: const Image(
+                                    image: ExactAssetImage(
+                                        'images/map-symbol.png'),
+                                    height: 15,
+                                    width: 20,
+                                  ),
                                 ),
-                                MyText(
-                                  text: 'Attach CR copy',
-                                  color: blackTypeColor1,
-                                  align: TextAlign.center,
+                                border: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10.0)),
+                                  borderSide: BorderSide(
+                                      color: greyColor.withOpacity(0.2)),
                                 ),
-                              ]),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10.0)),
+                                  borderSide: BorderSide(
+                                      color: greyColor.withOpacity(0.2)),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10.0)),
+                                  borderSide: BorderSide(
+                                      color: greyColor.withOpacity(0.2)),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 20),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: MyText(
+                              text: 'Are you having License?',
+                              color: blackTypeColor1,
+                              align: TextAlign.center,
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Checkbox(
+                                  value: value,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(24)),
+                                  onChanged: (bool? valuee1) {
+                                    setState(() {
+                                      value = valuee1!;
+                                      value1 = false;
+                                      license = "No";
+                                    });
+                                    print(license);
+                                  }),
+                              MyText(
+                                text:
+                                    'I’m not licensed yet, will sooner get license',
+                                color: blackTypeColor,
+                                align: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Checkbox(
+                                  value: value1,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(24)),
+                                  onChanged: (bool? value2) {
+                                    setState(() {
+                                      value1 = value2!;
+                                      value = false;
+                                      license = "Yes";
+                                    });
+                                    print(license);
+                                  }),
+                              MyText(
+                                text: 'Yes! I am lincensed',
+                                color: blackTypeColor,
+                                align: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                          if (value1 == true)
+                            Column(
+                              children: [
+                                const SizedBox(height: 20),
+                                TFWithSize('Enter CR name', crName, 12,
+                                    lightGreyColor, 1),
+                                const SizedBox(height: 20),
+                                TFWithSize('Enter CR number', crNumber, 12,
+                                    lightGreyColor, 1),
+                                const SizedBox(height: 20),
+                                GestureDetector(
+                                  onTap: addMedia,
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Container(
+                                      padding: const EdgeInsets.all(20),
+                                      decoration: BoxDecoration(
+                                          color: lightGreyColor,
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          border: Border.all(
+                                              color:
+                                                  greyColor.withOpacity(0.4))),
+                                      child: Column(children: [
+                                        crCopy.path.isEmpty
+                                            ? const Image(
+                                                image: ExactAssetImage(
+                                                    'images/upload.png'),
+                                                height: 50,
+                                              )
+                                            : Image.file(
+                                                crCopy,
+                                                height: 50,
+                                                width: 50,
+                                              ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        MyText(
+                                          text: 'Attach CR copy',
+                                          color: blackTypeColor1,
+                                          align: TextAlign.center,
+                                        ),
+                                      ]),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                        ],
+                      ),
                     ),
-                ],
+                    SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 20),
+                          MyText(
+                            text: "Payment methods from ",
+                            align: TextAlign.left,
+                            color: blackColor,
+                            size: 18,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          CheckboxListTile(
+                            contentPadding: const EdgeInsets.only(
+                                left: 0, top: 0, bottom: 0, right: 0),
+                            side: const BorderSide(color: bluishColor),
+                            checkboxShape: const RoundedRectangleBorder(
+                              side: BorderSide(color: bluishColor),
+                            ),
+                            visualDensity: const VisualDensity(
+                                horizontal: 0, vertical: -4),
+                            activeColor: greyProfileColor,
+                            checkColor: bluishColor,
+                            value: bankCard,
+                            onChanged: ((bool? value2) {
+                              setState(() {
+                                //bankCard = bankCard;
+                              });
+                              //updateStatus(bankCard, debit_card);
+                              //print(debit_card);
+                            }),
+                            title: MyText(
+                              text: "Bank Card", //text[index],
+                              color: blackTypeColor,
+                              fontFamily: 'Raleway',
+                              weight: FontWeight.bold,
+                              size: 14,
+                            ),
+                          ),
+                          // const SizedBox(
+                          //   height: 2,
+                          // ),
+                          MyText(
+                            text:
+                                "10% charges will be detected from your transactions",
+                            align: TextAlign.left,
+                            color: redColor,
+                            size: 14,
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          CheckboxListTile(
+                            contentPadding: const EdgeInsets.only(
+                                left: 0, top: 0, bottom: 0, right: 0),
+                            side: const BorderSide(color: bluishColor),
+                            checkboxShape: const RoundedRectangleBorder(
+                              side: BorderSide(color: bluishColor),
+                            ),
+                            visualDensity: const VisualDensity(
+                                horizontal: 0, vertical: -4),
+                            activeColor: greyProfileColor,
+                            checkColor: bluishColor,
+                            value: payArrival,
+                            onChanged: ((bool? value2) {
+                              setState(() {
+                                payArrival = !payArrival;
+                              });
+                              updateStatus(payArrival, payArrivalClicked);
+                              print(payArrivalClicked);
+                            }),
+                            title: MyText(
+                              text: "Pay on Arrival", //text[index],
+                              color: blackTypeColor,
+                              fontFamily: 'Raleway',
+                              weight: FontWeight.bold,
+                              size: 14,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Divider(
+                            thickness: 1,
+                            color: blackColor.withOpacity(0.6),
+                          ),
+                          // CheckboxListTile(
+                          //   contentPadding: const EdgeInsets.only(
+                          //       left: 0, top: 0, bottom: 0, right: 0),
+                          //   side: const BorderSide(color: bluishColor),
+                          //   checkboxShape: const RoundedRectangleBorder(
+                          //     side: BorderSide(color: bluishColor),
+                          //   ),
+                          //   visualDensity:
+                          //       const VisualDensity(horizontal: 0, vertical: -4),
+                          //   activeColor: greyProfileColor,
+                          //   checkColor: bluishColor,
+                          //   value: payPal,
+                          //   onChanged: ((bool? value2) {
+                          //     setState(() {
+                          //       payPal = !payPal;
+                          //     });
+                          //     updateStatus(payPal, payPalArrived);
+                          //     print(payPalArrived);
+                          //   }),
+                          //   title: MyText(
+                          //     text: "Pay Pal", //text[index],
+                          //     color: blackTypeColor,
+                          //     fontFamily: 'Raleway',
+                          //     size: 14,
+                          //   ),
+                          // ),
+                          // List.generate(text.length, (index) {
+                          //   return SizedBox(
+                          //     width: MediaQuery.of(context).size.width,
+                          //     child: CheckboxListTile(
+                          //       contentPadding: const EdgeInsets.only(
+                          //           left: 0, top: 5, bottom: 5, right: 25),
+                          //       side: const BorderSide(color: bluishColor),
+                          //       checkboxShape: const RoundedRectangleBorder(
+                          //         side: BorderSide(color: bluishColor),
+                          //       ),
+                          //       visualDensity:
+                          //           const VisualDensity(horizontal: 0, vertical: -4),
+                          //       activeColor: greyProfileColor,
+                          //       checkColor: bluishColor,
+                          //       value: value3[index],
+                          //       onChanged: ((bool? value2) {
+                          //         setState(() {
+                          //           value3[index] = value2!;
+                          //         });
+                          //       }),
+                          //       title: MyText(
+                          //         text: text[index],
+                          //         color: blackTypeColor,
+                          //         fontFamily: 'Raleway',
+                          //         size: 14,
+                          //       ),
+                          //     ),
+                          //   );
+                          // }),
+
+                          //  Align(alignment: Alignment.centerLeft,
+                          //     child:  CheckboxListTile(
+                          //       value: payPalvalue,
+                          //       leading: MyText(text: 'Pay Pal',color: blackTypeColor1,align: TextAlign.center,)),
+
+                          //     ),
+                          // CheckboxListTile(
+                          //   contentPadding: const EdgeInsets.only(
+                          //     bottom: 0,
+                          //   ),
+                          //   side: const BorderSide(color: bluishColor),
+                          //   checkboxShape: const RoundedRectangleBorder(
+                          //     side: BorderSide(color: bluishColor),
+                          //   ),
+                          //   visualDensity:
+                          //       const VisualDensity(horizontal: 0, vertical: -4),
+                          //   activeColor: greyProfileColor,
+                          //   checkColor: bluishColor,
+                          //   value: paypalValue,
+                          //   onChanged: ((bool? value2) {
+                          //     setState(() {
+                          //       paypalValue = value2!;
+                          //     });
+                          //   }),
+                          //   title: MyText(
+                          //     text: 'Pay Pal',
+                          //     color: blackTypeColor,
+                          //     fontFamily: 'Raleway',
+                          //     size: 14,
+                          //   ),
+                          // ),
+                          // const SizedBox(height: 10),
+                          //BottomButton(bgColor: whiteColor, onTap: showConfirmation)
+
+                          // TFWithSize(
+                          //     'Enter Paypal id here', payPalId, 12, lightGreyColor, 1),
+                          const SizedBox(height: 10),
+                          // MyText(
+                          //   text: "Payment method from Adventorous Club",
+                          //   align: TextAlign.left,
+                          //   //weight: FontWeight.w700,
+                          //   color: blackColor,
+                          //   size: 18,
+                          // ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          CheckboxListTile(
+                            contentPadding: const EdgeInsets.only(
+                              bottom: 0,
+                            ),
+                            side: const BorderSide(color: bluishColor),
+                            checkboxShape: const RoundedRectangleBorder(
+                              side: BorderSide(color: bluishColor),
+                            ),
+                            visualDensity:
+                                const VisualDensity(horizontal: 0, vertical: 4),
+                            activeColor: greyProfileColor,
+                            checkColor: bluishColor,
+                            value: wireTransferValue,
+                            onChanged: ((bool? value2) {
+                              setState(() {
+                                wireTransferValue = wireTransferValue;
+                                // updateStatus(wireTransferValue, isWireTrasfer);
+                                // print(isWireTrasfer);
+                              });
+                            }),
+                            title: MyText(
+                              text: 'Wire Transfer',
+                              color: blackTypeColor,
+                              fontFamily: 'Raleway',
+                              size: 14,
+                              weight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          TFWithSize('Enter bank name here', bankName, 12,
+                              lightGreyColor, 1),
+                          const SizedBox(height: 20),
+                          TFWithSize('Enter account holder name here',
+                              accountName, 12, lightGreyColor, 1),
+                          const SizedBox(height: 20),
+                          TFWithSize('Enter account number', accountNum, 12,
+                              lightGreyColor, 1),
+                          const SizedBox(height: 20),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              bottomNavigationBar:
+                  // ElevatedButton(
+                  //     onPressed: showConfirmation,
+                  //     child: MyText(
+                  //       text: "Continue",
+                  //     ))
+                  BottomButton(
+                bgColor: whiteColor,
+                onTap: nextStep, //nextStep //showConfirmation, //nextStep
               ),
             ),
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: 20),
-                  MyText(
-                    text: "Payment methods from ",
-                    align: TextAlign.left,
-                    color: blackColor,
-                    size: 18,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  CheckboxListTile(
-                    contentPadding: const EdgeInsets.only(
-                        left: 0, top: 0, bottom: 0, right: 0),
-                    side: const BorderSide(color: bluishColor),
-                    checkboxShape: const RoundedRectangleBorder(
-                      side: BorderSide(color: bluishColor),
-                    ),
-                    visualDensity:
-                        const VisualDensity(horizontal: 0, vertical: -4),
-                    activeColor: greyProfileColor,
-                    checkColor: bluishColor,
-                    value: bankCard,
-                    onChanged: ((bool? value2) {
-                      setState(() {
-                        //bankCard = bankCard;
-                      });
-                      //updateStatus(bankCard, debit_card);
-                      //print(debit_card);
-                    }),
-                    title: MyText(
-                      text: "Bank Card", //text[index],
-                      color: blackTypeColor,
-                      fontFamily: 'Raleway',
-                      weight: FontWeight.bold,
-                      size: 14,
-                    ),
-                  ),
-                  // const SizedBox(
-                  //   height: 2,
-                  // ),
-                  MyText(
-                    text: "10% charges will be detected from your transactions",
-                    align: TextAlign.left,
-                    color: redColor,
-                    size: 14,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  CheckboxListTile(
-                    contentPadding: const EdgeInsets.only(
-                        left: 0, top: 0, bottom: 0, right: 0),
-                    side: const BorderSide(color: bluishColor),
-                    checkboxShape: const RoundedRectangleBorder(
-                      side: BorderSide(color: bluishColor),
-                    ),
-                    visualDensity:
-                        const VisualDensity(horizontal: 0, vertical: -4),
-                    activeColor: greyProfileColor,
-                    checkColor: bluishColor,
-                    value: payArrival,
-                    onChanged: ((bool? value2) {
-                      setState(() {
-                        payArrival = !payArrival;
-                      });
-                      updateStatus(payArrival, payArrivalClicked);
-                      print(payArrivalClicked);
-                    }),
-                    title: MyText(
-                      text: "Pay on Arrival", //text[index],
-                      color: blackTypeColor,
-                      fontFamily: 'Raleway',
-                      weight: FontWeight.bold,
-                      size: 14,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Divider(
-                    thickness: 1,
-                    color: blackColor.withOpacity(0.6),
-                  ),
-                  // CheckboxListTile(
-                  //   contentPadding: const EdgeInsets.only(
-                  //       left: 0, top: 0, bottom: 0, right: 0),
-                  //   side: const BorderSide(color: bluishColor),
-                  //   checkboxShape: const RoundedRectangleBorder(
-                  //     side: BorderSide(color: bluishColor),
-                  //   ),
-                  //   visualDensity:
-                  //       const VisualDensity(horizontal: 0, vertical: -4),
-                  //   activeColor: greyProfileColor,
-                  //   checkColor: bluishColor,
-                  //   value: payPal,
-                  //   onChanged: ((bool? value2) {
-                  //     setState(() {
-                  //       payPal = !payPal;
-                  //     });
-                  //     updateStatus(payPal, payPalArrived);
-                  //     print(payPalArrived);
-                  //   }),
-                  //   title: MyText(
-                  //     text: "Pay Pal", //text[index],
-                  //     color: blackTypeColor,
-                  //     fontFamily: 'Raleway',
-                  //     size: 14,
-                  //   ),
-                  // ),
-                  // List.generate(text.length, (index) {
-                  //   return SizedBox(
-                  //     width: MediaQuery.of(context).size.width,
-                  //     child: CheckboxListTile(
-                  //       contentPadding: const EdgeInsets.only(
-                  //           left: 0, top: 5, bottom: 5, right: 25),
-                  //       side: const BorderSide(color: bluishColor),
-                  //       checkboxShape: const RoundedRectangleBorder(
-                  //         side: BorderSide(color: bluishColor),
-                  //       ),
-                  //       visualDensity:
-                  //           const VisualDensity(horizontal: 0, vertical: -4),
-                  //       activeColor: greyProfileColor,
-                  //       checkColor: bluishColor,
-                  //       value: value3[index],
-                  //       onChanged: ((bool? value2) {
-                  //         setState(() {
-                  //           value3[index] = value2!;
-                  //         });
-                  //       }),
-                  //       title: MyText(
-                  //         text: text[index],
-                  //         color: blackTypeColor,
-                  //         fontFamily: 'Raleway',
-                  //         size: 14,
-                  //       ),
-                  //     ),
-                  //   );
-                  // }),
-
-                  //  Align(alignment: Alignment.centerLeft,
-                  //     child:  CheckboxListTile(
-                  //       value: payPalvalue,
-                  //       leading: MyText(text: 'Pay Pal',color: blackTypeColor1,align: TextAlign.center,)),
-
-                  //     ),
-                  // CheckboxListTile(
-                  //   contentPadding: const EdgeInsets.only(
-                  //     bottom: 0,
-                  //   ),
-                  //   side: const BorderSide(color: bluishColor),
-                  //   checkboxShape: const RoundedRectangleBorder(
-                  //     side: BorderSide(color: bluishColor),
-                  //   ),
-                  //   visualDensity:
-                  //       const VisualDensity(horizontal: 0, vertical: -4),
-                  //   activeColor: greyProfileColor,
-                  //   checkColor: bluishColor,
-                  //   value: paypalValue,
-                  //   onChanged: ((bool? value2) {
-                  //     setState(() {
-                  //       paypalValue = value2!;
-                  //     });
-                  //   }),
-                  //   title: MyText(
-                  //     text: 'Pay Pal',
-                  //     color: blackTypeColor,
-                  //     fontFamily: 'Raleway',
-                  //     size: 14,
-                  //   ),
-                  // ),
-                  // const SizedBox(height: 10),
-                  //BottomButton(bgColor: whiteColor, onTap: showConfirmation)
-
-                  // TFWithSize(
-                  //     'Enter Paypal id here', payPalId, 12, lightGreyColor, 1),
-                  const SizedBox(height: 10),
-                  MyText(
-                    text: "Payment method from Adventorous Club",
-                    align: TextAlign.left,
-                    //weight: FontWeight.w700,
-                    color: blackColor,
-                    size: 18,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  CheckboxListTile(
-                    contentPadding: const EdgeInsets.only(
-                      bottom: 0,
-                    ),
-                    side: const BorderSide(color: bluishColor),
-                    checkboxShape: const RoundedRectangleBorder(
-                      side: BorderSide(color: bluishColor),
-                    ),
-                    visualDensity:
-                        const VisualDensity(horizontal: 0, vertical: 4),
-                    activeColor: greyProfileColor,
-                    checkColor: bluishColor,
-                    value: wireTransferValue,
-                    onChanged: ((bool? value2) {
-                      setState(() {
-                        wireTransferValue = wireTransferValue;
-                        // updateStatus(wireTransferValue, isWireTrasfer);
-                        // print(isWireTrasfer);
-                      });
-                    }),
-                    title: MyText(
-                      text: 'Wire Transfer',
-                      color: blackTypeColor,
-                      fontFamily: 'Raleway',
-                      size: 14,
-                      weight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  TFWithSize(
-                      'Enter bank name here', bankName, 12, lightGreyColor, 1),
-                  const SizedBox(height: 20),
-                  TFWithSize('Enter account holder name here', accountName, 12,
-                      lightGreyColor, 1),
-                  const SizedBox(height: 20),
-                  TFWithSize('Enter account number', accountNum, 12,
-                      lightGreyColor, 1),
-                  const SizedBox(height: 20),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar:
-          // ElevatedButton(
-          //     onPressed: showConfirmation,
-          //     child: MyText(
-          //       text: "Continue",
-          //     ))
-          BottomButton(
-        bgColor: whiteColor,
-        onTap: nextStep, //nextStep //showConfirmation, //nextStep
-      ),
     );
   }
 }

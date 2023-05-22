@@ -3,6 +3,7 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/constants_create_new_services.dart';
 import 'package:adventuresclub/models/category/category_model.dart';
+import 'package:adventuresclub/models/create_adventure/regions_model.dart';
 import 'package:adventuresclub/models/filter_data_model/activities_inc_model.dart';
 import 'package:adventuresclub/models/filter_data_model/category_filter_model.dart';
 import 'package:adventuresclub/models/filter_data_model/countries_filter.dart';
@@ -75,7 +76,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
     "Oman",
   ];
   List<CategoryModel> categoryList = [];
-  List<RegionFilterModel> regionList = [];
+  List<RegionsModel> regionList = [];
   List aimedText = [];
   List dependencyText = [
     'Licensed',
@@ -98,7 +99,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
   }
 
   void getData() {
-    regionList = Constants.regionFilter;
+    regionList = Constants.regionList;
     categoryFilter = Constants.categoryFilter;
     filterSectors = Constants.filterSectors;
     serviceFilter = Constants.serviceFilter;

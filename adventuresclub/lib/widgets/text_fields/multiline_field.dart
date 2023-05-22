@@ -18,6 +18,7 @@ class _MultiLineFieldState extends State<MultiLineField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      autofocus: false,
       controller: widget.controller,
       maxLines: widget.lines,
       decoration: InputDecoration(

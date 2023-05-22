@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls
 
 import 'dart:convert';
 
@@ -8,63 +8,16 @@ import 'package:adventuresclub/models/visit/get_visit_model.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:http/http.dart' as http;
 
 class VisitList extends StatefulWidget {
-  const VisitList({super.key});
+  final List<GetVisitModel> gGv;
+  const VisitList(this.gGv, {super.key});
 
   @override
   State<VisitList> createState() => _VisitListState();
 }
 
 class _VisitListState extends State<VisitList> {
-  Map mapVisit = {};
-  List<GetVisitModel> gGv = [];
-  bool loading = false;
-
-  @override
-  void initState() {
-    super.initState();
-    getVisit();
-  }
-
-  Future getVisit() async {
-    setState(() {
-      loading = true;
-    });
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_visited_location"));
-    if (response.statusCode == 200) {
-      mapVisit = json.decode(response.body);
-      List<dynamic> result = mapVisit['data'];
-      result.forEach((element) {
-        GetVisitModel gv = GetVisitModel(
-          int.tryParse(element['id'].toString()) ?? 0,
-          int.tryParse(element['user_id'].toString()) ?? 0,
-          element['destination_image'].toString() ?? "",
-          element['destination_name'].toString() ?? "",
-          element['destination_type'].toString() ?? "",
-          element['geo_location'].toString() ?? "",
-          element['destination_address'].toString() ?? "",
-          element['dest_mobile'].toString() ?? "",
-          element['dest_website'].toString() ?? "",
-          element['dest_description'].toString() ?? "",
-          element['is_approved'].toString() ?? "",
-          element['latitude'].toString() ?? "",
-          element['longitude'].toString() ?? "",
-          element['created_at'].toString() ?? "",
-          element['updated_at'].toString() ?? "",
-          element['deleted_at'].toString() ?? "",
-          element['rating_start'].toString() ?? "",
-        );
-        gGv.add(gv);
-      });
-    }
-    setState(() {
-      loading = false;
-    });
-  }
-
   void goToDetails(GetVisitModel vm) {
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -96,11 +49,11 @@ class _VisitListState extends State<VisitList> {
         padding: const EdgeInsets.only(left: 5, top: 10, bottom: 10),
         shrinkWrap: true,
         physics: const ClampingScrollPhysics(),
-        itemCount: gGv.length,
+        itemCount: widget.gGv.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: () => goToDetails(gGv[index]),
+            onTap: () => goToDetails(widget.gGv[index]),
             child: Padding(
               padding: const EdgeInsets.only(left: 3.0),
               child: Card(
@@ -117,7 +70,7 @@ class _VisitListState extends State<VisitList> {
                                     Colors.black.withOpacity(0.2),
                                     BlendMode.darken),
                                 image: NetworkImage(
-                                  "${"https://adventuresclub.net/adventureClub/public/uploads/"}${gGv[index].destinationImage}",
+                                  "${"https://adventuresclub.net/adventureClub/public/uploads/"}${widget.gGv[index].destinationImage}",
                                 ),
                                 // const ExactAssetImage(
                                 //   'images/image13.png',
@@ -145,14 +98,15 @@ class _VisitListState extends State<VisitList> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           MyText(
-                            text: gGv[index].destinationName, //text[index],
+                            text: widget
+                                .gGv[index].destinationName, //text[index],
                             color: blackColor,
                             size: 14,
                             weight: FontWeight.w700,
                           ),
                           const SizedBox(width: 20),
                           RatingBar.builder(
-                            initialRating: convert(gGv[index].rS), //3,
+                            initialRating: convert(widget.gGv[index].rS), //3,
                             itemSize: 12,
                             minRating: 1,
                             direction: Axis.horizontal,

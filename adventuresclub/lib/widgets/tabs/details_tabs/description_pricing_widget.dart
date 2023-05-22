@@ -25,20 +25,25 @@ class DescriptionPricingWidget extends StatelessWidget {
         child: Column(
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                MyText(
-                  text: adventureName,
-                  //'River Rafting',
-                  weight: FontWeight.bold,
-                  color: blackColor,
-                  size: 16,
+                Expanded(
+                  flex: 2,
+                  child: MyText(
+                    text: adventureName,
+                    //'River Rafting',
+                    weight: FontWeight.bold,
+                    color: blackColor,
+                    size: 16,
+                  ),
                 ),
-                MyText(
-                  text: 'Earn 180 Points',
-                  weight: FontWeight.bold,
-                  color: blueTextColor,
-                  size: 16,
+                Expanded(
+                  child: MyText(
+                    text: 'Earn 180 Points',
+                    weight: FontWeight.bold,
+                    color: blueTextColor,
+                    size: 16,
+                  ),
                 ),
               ],
             ),

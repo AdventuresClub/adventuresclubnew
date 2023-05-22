@@ -71,9 +71,7 @@ class _StackHomeState extends State<StackHome> {
   @override
   void initState() {
     super.initState();
-    if (filterSectors.isEmpty) {
-      getFilters();
-    }
+    getData();
     aimedFor();
     _timer = Timer.periodic(
       const Duration(seconds: 5),
@@ -90,6 +88,16 @@ class _StackHomeState extends State<StackHome> {
         );
       },
     );
+  }
+
+  void getData() {
+    categoryFilter = Constants.categoryFilter;
+    filterSectors = Constants.filterSectors;
+    serviceFilter = Constants.serviceFilter;
+    durationFilter = Constants.durationFilter;
+    regionFilter = Constants.regionFilter;
+    levelFilter = Constants.levelFilter;
+    activitiesFilter = Constants.activitiesFilter;
   }
 
   @override
@@ -668,24 +676,24 @@ class _StackHomeState extends State<StackHome> {
                       const SizedBox(
                         height: 15,
                       ),
-                      MyText(
-                        text: 'Provider Name',
-                        color: blackTypeColor3,
-                        weight: FontWeight.bold,
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      SearchContainer(
-                          'Search by provider name',
-                          1.2,
-                          8,
-                          searchController,
-                          'images/bin.png',
-                          false,
-                          false,
-                          'abc',
-                          14),
+                      // MyText(
+                      //   text: 'Provider Name',
+                      //   color: blackTypeColor3,
+                      //   weight: FontWeight.bold,
+                      // ),
+                      // const SizedBox(
+                      //   height: 15,
+                      // ),
+                      // SearchContainer(
+                      //     'Search by provider name',
+                      //     1.2,
+                      //     8,
+                      //     searchController,
+                      //     'images/bin.png',
+                      //     false,
+                      //     false,
+                      //     'abc',
+                      //     14),
                       const SizedBox(
                         height: 3,
                       ),
