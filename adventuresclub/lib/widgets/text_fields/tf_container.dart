@@ -35,7 +35,6 @@ class TFContainerState extends State<TFContainer> {
       child: TextField(
         readOnly: true,
         onEditingComplete: () => widget.onEdit,
-        autofocus: true,
         keyboardType: widget.show,
         controller: widget.controller,
         decoration: InputDecoration(

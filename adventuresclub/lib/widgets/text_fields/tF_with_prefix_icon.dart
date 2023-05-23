@@ -6,7 +6,7 @@ class TFWithPrefixIcon extends StatefulWidget {
   final String hintText;
   final Image? icn;
   final TextEditingController? controller;
-  final bool? show; 
+  final bool? show;
   const TFWithPrefixIcon(
     this.hintText,
     this.controller, {
@@ -25,11 +25,10 @@ class _TFWithPrefixIconState extends State<TFWithPrefixIcon> {
     return TextField(
       readOnly: widget.show!,
       style: TextStyle(
-          color: blackColor.withOpacity(0.4),
-          fontWeight: FontWeight.w400,
-          fontSize: 14,
-        ),
-      autofocus: true,
+        color: blackColor.withOpacity(0.4),
+        fontWeight: FontWeight.w400,
+        fontSize: 14,
+      ),
       keyboardType: TextInputType.text,
       controller: widget.controller,
       decoration: InputDecoration(

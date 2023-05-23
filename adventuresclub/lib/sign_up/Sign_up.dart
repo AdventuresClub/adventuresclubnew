@@ -240,17 +240,17 @@ class _SignUpState extends State<SignUp> {
     });
   }
 
-  void dependency() {
+  void health() {
     List<HealthConditionModel> f = [];
     for (int i = 0; i < healthValue.length; i++) {
       if (healthValue[i]) {
         f.add(healthList[i]);
       }
     }
-    dependencyParse(f);
+    healthParse(f);
   }
 
-  void dependencyParse(List<HealthConditionModel> am) async {
+  void healthParse(List<HealthConditionModel> am) async {
     List<int> a = [];
     am.forEach((element) {
       a.add(element.id);
@@ -391,6 +391,7 @@ class _SignUpState extends State<SignUp> {
   void showMessage(String message) {}
 
   void register() async {
+    health();
     SharedPreferences prefs = await Constants.getPrefs();
     try {
       if (termsValue) {
@@ -432,7 +433,7 @@ class _SignUpState extends State<SignUp> {
                                       currentLocationId.toString(), //"2",
                                   "device_id": "1",
                                   "nationality_id": countryId.toString(),
-                                  "gender": genderText, //"5",
+                                  //"gender": genderText, //"5",
                                 });
                             // print(response.statusCode);
                             if (response.statusCode == 200) {

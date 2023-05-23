@@ -7,9 +7,15 @@ class TFWithSuffixText extends StatefulWidget {
   final bool? edit;
 
   final TextInputType? show;
-   final String text;
-  const TFWithSuffixText(this.hintText, this.controller,this.text, {Key? key, this.edit = true, this.show = TextInputType.text,})
-      : super(key: key);
+  final String text;
+  const TFWithSuffixText(
+    this.hintText,
+    this.controller,
+    this.text, {
+    Key? key,
+    this.edit = true,
+    this.show = TextInputType.text,
+  }) : super(key: key);
 
   @override
   State<TFWithSuffixText> createState() => _TFWithSuffixTextState();
@@ -19,22 +25,17 @@ class _TFWithSuffixTextState extends State<TFWithSuffixText> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      autofocus: true,
-      keyboardType: 
-      widget.show ,
-
+      keyboardType: widget.show,
       controller: widget.controller,
-      
       decoration: InputDecoration(
           contentPadding:
               const EdgeInsets.symmetric(vertical: 17, horizontal: 15),
           hintText: widget.hintText,
           hintStyle: const TextStyle(
-            color: blackColor,
-            fontWeight: FontWeight.w400,
-            fontSize: 14,
-             fontFamily: 'Raleway'
-          ),
+              color: blackColor,
+              fontWeight: FontWeight.w400,
+              fontSize: 14,
+              fontFamily: 'Raleway'),
           hintMaxLines: 1,
           suffixText: widget.text,
           isDense: true,
@@ -49,9 +50,8 @@ class _TFWithSuffixTextState extends State<TFWithSuffixText> {
             borderSide: BorderSide(color: blackColor.withOpacity(0.1)),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(color: blackColor.withOpacity(0.1))
-          )),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              borderSide: BorderSide(color: blackColor.withOpacity(0.1)))),
     );
   }
 }

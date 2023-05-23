@@ -29,7 +29,6 @@ class _TFWithPrefixSuffixIconState extends State<TFWithPrefixSuffixIcon> {
         color: blackColor.withOpacity(0.5),
       ),
       obscureText: widget.show!,
-      autofocus: true,
       keyboardType: TextInputType.text,
       controller: widget.controller,
       decoration: InputDecoration(

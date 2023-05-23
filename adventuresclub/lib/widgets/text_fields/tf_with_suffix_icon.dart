@@ -2,13 +2,14 @@
 
 import 'package:adventuresclub/constants.dart';
 import 'package:flutter/material.dart';
+
 class TFWithSiffixIcon extends StatefulWidget {
   final String hintText;
 
   final suffixIcon;
   final TextEditingController controller;
 
-   final bool? showPassword;
+  final bool? showPassword;
   const TFWithSiffixIcon(
       this.hintText, this.suffixIcon, this.controller, this.showPassword,
       {Key? key})
@@ -20,20 +21,21 @@ class TFWithSiffixIcon extends StatefulWidget {
 
 class _TFWithSiffixIconState extends State<TFWithSiffixIcon> {
   bool passwordVisible = false;
-@override
+  @override
   void initState() {
     passwordVisible = widget.showPassword!;
   }
+
   @override
   Widget build(BuildContext context) {
     return TextField(
-      autofocus: true,
       keyboardType: TextInputType.text,
       controller: widget.controller,
-      obscureText:!passwordVisible, //This will obscure text dynamically
-        style: TextStyle(decoration:TextDecoration.none,),
+      obscureText: !passwordVisible, //This will obscure text dynamically
+      style: const TextStyle(
+        decoration: TextDecoration.none,
+      ),
       decoration: InputDecoration(
-    
           contentPadding:
               const EdgeInsets.symmetric(vertical: 17, horizontal: 15),
           hintText: widget.hintText,
@@ -46,7 +48,7 @@ class _TFWithSiffixIconState extends State<TFWithSiffixIcon> {
               ? IconButton(
                   icon: Icon(
                     // Based on passwordVisible state choose the icon
-                     passwordVisible ? Icons.visibility : Icons.visibility_off,
+                    passwordVisible ? Icons.visibility : Icons.visibility_off,
                     color: bluishColor,
                   ),
                   onPressed: () {

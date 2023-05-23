@@ -33,7 +33,6 @@ class _SpaceTextFieldsState extends State<SpaceTextFields> {
       width: MediaQuery.of(context).size.width,
       child: TextField(
         inputFormatters: [NoSpaceFormatter()],
-        autofocus: true,
         keyboardType: widget.show,
         controller: widget.controller,
         style: const TextStyle(
