@@ -327,9 +327,9 @@ class _AccountState extends State<Account> {
       Constants.userRole = up.userRole;
       prefs.setString("userRole", up.userRole);
       convert();
-      // setState(() {
-      //   loading = false;
-      // });
+      setState(() {
+        loading = false;
+      });
     } catch (e) {
       print(e.toString());
     }
@@ -1050,11 +1050,11 @@ class _AccountState extends State<Account> {
                         ],
                       ),
                     if (profile.bp.packagesId > 0 &&
-                        profile.bp.isApproved == "1" &&
-                        profile.userRole == "2"
-                    // &&
-                    // expired == false
-                    )
+                            profile.bp.isApproved == "1" &&
+                            profile.userRole == "2"
+                        // &&
+                        // expired == false
+                        )
                       if (expired &&
                           profile.bp.isApproved == "1" &&
                           profile.userRole == "2" &&

@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/text_fields/no_space.dart';
 import 'package:adventuresclub/widgets/text_fields/text_fields.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class PersonalDetails extends StatefulWidget {
   const PersonalDetails({super.key});
@@ -25,11 +28,52 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   }
 
   void getData() {
+    nameController.text = Constants.profile.name;
+    phoneController.text = Constants.phone;
+    emailController.text = Constants.emailId;
     setState(() {
       name = Constants.profile.name;
       phone = Constants.profile.mobile;
       email = Constants.profile.email;
     });
+  }
+
+  //   https://adventuresclub.net/adventureClub/api/v1/update_profile
+// user_id:2
+// name:fgfd
+// mobile_code:+91
+// email:mmm@yopmail.com
+
+  void editProfile() async {
+    try {
+      var response = await http.post(
+          Uri.parse(
+              "https://adventuresclub.net/adventureClub/api/v1/update_profile"),
+          body: {
+            'user_id': Constants.userId.toString(), //ccCode.toString(),
+            'name': nameController.text.trim(),
+            'mobile_code': Constants.profile.mobileCode,
+            'email': emailController.text.trim(),
+          });
+      if (response.statusCode == 200) {
+        message("Information Updated");
+      } else {
+        dynamic body = jsonDecode(response.body);
+        // error = decodedError['data']['name'];
+        message(body['message'].toString());
+      }
+      print(response.statusCode);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  void message(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
   }
 
   @override
@@ -123,7 +167,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                     greenishColor,
                     whiteColor,
                     18,
-                    () {},
+                    editProfile,
                     Icons.add,
                     whiteColor,
                     false,

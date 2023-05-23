@@ -29,7 +29,7 @@ class RegionFilterDropDownState extends State<RegionFilterDropDown> {
   void initState() {
     super.initState();
     // parseRegions(widget.rFilter);
-    selectedRegion = widget.rFilter[0].region;
+    // selectedRegion = widget.rFilter[0].region;
   }
 
   void parseRegions(List<RegionFilterModel> rm) {
