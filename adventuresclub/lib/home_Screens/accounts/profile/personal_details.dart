@@ -6,6 +6,7 @@ import 'package:adventuresclub/widgets/text_fields/no_space.dart';
 import 'package:adventuresclub/widgets/text_fields/text_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PersonalDetails extends StatefulWidget {
   const PersonalDetails({super.key});
@@ -28,9 +29,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   }
 
   void getData() {
-    nameController.text = Constants.profile.name;
+    nameController.text = Constants.name;
     phoneController.text = Constants.phone;
-    emailController.text = Constants.emailId;
+    emailController.text = Constants.profile.email;
     setState(() {
       name = Constants.profile.name;
       phone = Constants.profile.mobile;
@@ -56,6 +57,11 @@ class _PersonalDetailsState extends State<PersonalDetails> {
             'email': emailController.text.trim(),
           });
       if (response.statusCode == 200) {
+        SharedPreferences prefs = await Constants.getPrefs();
+        prefs.setString("name", nameController.text.trim());
+        prefs.setString("email", emailController.text);
+        Constants.emailId = nameController.text.trim();
+        Constants.name = nameController.text.trim();
         message("Information Updated");
       } else {
         dynamic body = jsonDecode(response.body);
