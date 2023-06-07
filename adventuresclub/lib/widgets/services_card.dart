@@ -32,11 +32,12 @@ class _ServicesCardState extends State<ServicesCard> {
 
   void goToProvider(
     String id,
+    int serviceId,
   ) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return About(id: id);
+          return About(id: id, sId: serviceId);
         },
       ),
     );
@@ -646,8 +647,9 @@ class _ServicesCardState extends State<ServicesCard> {
                         child: Padding(
                           padding: const EdgeInsets.all(2.0),
                           child: GestureDetector(
-                            onTap: () =>
-                                goToProvider(widget.gm.providerId.toString()),
+                            onTap: () => goToProvider(
+                                widget.gm.providerId.toString(),
+                                widget.gm.serviceId),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,

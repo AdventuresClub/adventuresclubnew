@@ -21,10 +21,12 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../models/services/create_services/availability_plan_model.dart';
+import '../../widgets/Lists/Chat_list.dart/show_chat.dart';
 
 class About extends StatefulWidget {
   final String? id;
-  const About({this.id, super.key});
+  final int? sId;
+  const About({this.id, this.sId, super.key});
 
   @override
   State<About> createState() => _AboutState();
@@ -369,6 +371,20 @@ class _AboutState extends State<About> {
     }
   }
 
+  void selected(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return ShowChat(
+              "https://adventuresclub.net/adventureClub/newreceiverchat/${Constants.userId}/${widget.sId}/${profile.id}");
+        },
+      ),
+    );
+  }
+
+  // Chat Provider : https://adventuresclub.net/adventureClub/newreceiverchat/3/34/24
+  // string ChatUrl = $"{CommonConstantUrl.ChatUrl}newreceiverchat/{Settings.UserId}/{completedDataModel.service_id}/{completedDataModel.provider_id}";
+
   abc() {}
   @override
   Widget build(BuildContext context) {
@@ -441,20 +457,58 @@ class _AboutState extends State<About> {
                         const SizedBox(
                           height: 10,
                         ),
-                        Button(
-                            'Chat',
-                            const Color.fromARGB(255, 15, 71, 116),
-                            const Color.fromARGB(255, 15, 71, 116),
-                            whiteColor,
-                            14,
-                            abc,
-                            Icons.add,
-                            whiteColor,
-                            false,
-                            4,
-                            'Roboto',
-                            FontWeight.w400,
-                            26),
+                        // Button(
+                        //     'Chat',
+                        //     const Color.fromARGB(255, 15, 71, 116),
+                        //     const Color.fromARGB(255, 15, 71, 116),
+                        //     whiteColor,
+                        //     14,
+                        //     selected(),
+                        //     Icons.add,
+                        //     whiteColor,
+                        //     false,
+                        //     4,
+                        //     'Roboto',
+                        //     FontWeight.w400,
+                        //     26),
+                        Container(
+                          height: MediaQuery.of(context).size.height / 20,
+                          width: MediaQuery.of(context).size.width / 4,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 15, 71, 116),
+                              width: 2.0,
+                            ),
+                            color: const Color.fromARGB(255, 15, 71, 116),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(28)),
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () => selected(context),
+                              child: const Center(
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Chat',
+                                        style: TextStyle(
+                                            color: whiteColor,
+                                            fontWeight: FontWeight.w400,
+                                            letterSpacing: 0.8,
+                                            fontFamily: "Roboto",
+                                            fontSize: 14),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                         Align(
                           alignment: Alignment.centerLeft,
                           child: MyText(

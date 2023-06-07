@@ -723,20 +723,23 @@ class _StackHomeState extends State<StackHome> {
                             const SizedBox(
                               width: 10,
                             ),
-                            Container(
-                              width: 110,
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 15, horizontal: 18),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(color: bluishColor),
-                                  color: bluishColor),
-                              child: Center(
-                                child: MyText(
-                                  text: 'Search',
-                                  color: whiteColor,
-                                  weight: FontWeight.bold,
-                                  size: 14,
+                            InkWell(
+                              onTap: searchFilter,
+                              child: Container(
+                                width: 110,
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 15, horizontal: 18),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(color: bluishColor),
+                                    color: bluishColor),
+                                child: Center(
+                                  child: MyText(
+                                    text: 'Search',
+                                    color: whiteColor,
+                                    weight: FontWeight.bold,
+                                    size: 14,
+                                  ),
                                 ),
                               ),
                             ),
@@ -750,6 +753,10 @@ class _StackHomeState extends State<StackHome> {
         );
       },
     );
+  }
+
+  void searchFilter() {
+    Provider.of<ServicesProvider>(context, listen: false).getFilteredList();
   }
 
   // void searchServices(String x) {

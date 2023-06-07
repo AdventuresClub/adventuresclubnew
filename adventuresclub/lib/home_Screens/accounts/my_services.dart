@@ -65,15 +65,16 @@ class _MyServicesState extends State<MyServices> {
     setState(() {});
   }
 
-  void goTo() {
+  void goTo() async {
     if (Constants.expired == false) {
-      Navigator.of(context).push(
+      await Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) {
             return const CreateNewServices(); //CompleteProfile();
           },
         ),
       );
+      myServicesApi();
     } else if (Constants.expired == true) {
       requestSent();
     }
@@ -458,92 +459,100 @@ class _MyServicesState extends State<MyServices> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 237, 232, 232),
-      appBar: AppBar(
-        backgroundColor: whiteColor,
-        elevation: 1.5,
-        centerTitle: true,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: Image.asset(
-            'images/backArrow.png',
-            height: 20,
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 237, 232, 232),
+        appBar: AppBar(
+          backgroundColor: whiteColor,
+          elevation: 1.5,
+          centerTitle: true,
+          leading: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: Image.asset(
+              'images/backArrow.png',
+              height: 20,
+            ),
           ),
-        ),
-        title: MyText(
-          text: 'My services',
-          color: bluishColor,
-          weight: FontWeight.w700,
-          fontFamily: "Roboto",
-        ),
-        actions: [
-          GestureDetector(
-              onTap: goTo,
-              child: const Image(
-                image: ExactAssetImage('images/add-circle.png'),
-                width: 25,
-                height: 25,
-              )),
-          const SizedBox(
-            width: 15,
-          )
-        ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(65.0),
-          child: Theme(
-            data: Theme.of(context).copyWith(hintColor: Colors.white),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
-              child: Container(
-                height: 45,
-                decoration: BoxDecoration(
-                  color: whiteColor,
-                  borderRadius: BorderRadius.circular(4),
-                  border: Border.all(
-                    color: blackColor.withOpacity(0.5),
-                  ),
-                ),
-                child: TextField(
-                  onChanged: (value) {
-                    searchServices(value);
-                  },
-                  controller: searchController,
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(
-                      Icons.search,
-                      color: bluishColor,
+          title: MyText(
+            text: 'My services',
+            color: bluishColor,
+            weight: FontWeight.w700,
+            fontFamily: "Roboto",
+          ),
+          actions: [
+            GestureDetector(
+                onTap: goTo,
+                child: const Image(
+                  image: ExactAssetImage('images/add-circle.png'),
+                  width: 25,
+                  height: 25,
+                )),
+            const SizedBox(
+              width: 15,
+            )
+          ],
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(65.0),
+            child: Theme(
+              data: Theme.of(context).copyWith(hintColor: Colors.white),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
+                child: Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    color: whiteColor,
+                    borderRadius: BorderRadius.circular(4),
+                    border: Border.all(
+                      color: blackColor.withOpacity(0.5),
                     ),
-                    // label: Icon(
-                    //   Icons.search,
-                    // ),
-                    contentPadding:
-                        const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-                    hintText: 'Search by Adventure Name',
-                    filled: true,
-                    fillColor: whiteColor,
-                    suffixIcon: GestureDetector(
-                      //onTap: openMap,
-                      child: const Icon(
-                        Icons.filter_alt,
+                  ),
+                  child: TextField(
+                    onChanged: (value) {
+                      searchServices(value);
+                    },
+                    controller: searchController,
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(
+                        Icons.search,
                         color: bluishColor,
                       ),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(6.0)),
-                      borderSide: BorderSide(color: greyColor.withOpacity(0.5)),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(6.0)),
-                      borderSide: BorderSide(color: greyColor.withOpacity(0.5)),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(6.0)),
-                      borderSide: BorderSide(color: greyColor.withOpacity(0.5)),
+                      // label: Icon(
+                      //   Icons.search,
+                      // ),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 4),
+                      hintText: 'Search by Adventure Name',
+                      filled: true,
+                      fillColor: whiteColor,
+                      suffixIcon: GestureDetector(
+                        //onTap: openMap,
+                        child: const Icon(
+                          Icons.filter_alt,
+                          color: bluishColor,
+                        ),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(6.0)),
+                        borderSide:
+                            BorderSide(color: greyColor.withOpacity(0.5)),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(6.0)),
+                        borderSide:
+                            BorderSide(color: greyColor.withOpacity(0.5)),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(6.0)),
+                        borderSide:
+                            BorderSide(color: greyColor.withOpacity(0.5)),
+                      ),
                     ),
                   ),
                 ),
@@ -551,30 +560,30 @@ class _MyServicesState extends State<MyServices> {
             ),
           ),
         ),
-      ),
-      body: RefreshIndicator(
-        onRefresh: myServicesApi,
-        child: Padding(
-          padding:
-              const EdgeInsets.only(top: 12.0, bottom: 12, left: 5, right: 5),
-          child: GridView.count(
-            physics: const AlwaysScrollableScrollPhysics(),
-            shrinkWrap: true,
-            mainAxisSpacing: 2,
-            childAspectRatio: 1,
-            crossAxisSpacing: 2,
-            crossAxisCount: 2,
-            children: List.generate(
-              filteredServices.length, // widget.profileURL.length,
-              (index) {
-                return GestureDetector(
-                  onTap: () => goToDetails(filteredServices[index]),
-                  child: ServicesCard(
-                    filteredServices[index],
-                    show: true,
-                  ),
-                );
-              },
+        body: RefreshIndicator(
+          onRefresh: myServicesApi,
+          child: Padding(
+            padding:
+                const EdgeInsets.only(top: 12.0, bottom: 12, left: 5, right: 5),
+            child: GridView.count(
+              physics: const AlwaysScrollableScrollPhysics(),
+              shrinkWrap: true,
+              mainAxisSpacing: 2,
+              childAspectRatio: 1,
+              crossAxisSpacing: 2,
+              crossAxisCount: 2,
+              children: List.generate(
+                filteredServices.length, // widget.profileURL.length,
+                (index) {
+                  return GestureDetector(
+                    onTap: () => goToDetails(filteredServices[index]),
+                    child: ServicesCard(
+                      filteredServices[index],
+                      show: true,
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         ),

@@ -432,12 +432,23 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
     'Debit/Credit Card'
   ];
 
-  void selected(BuildContext context, int serviceId, int providerId) {
+  // void selected(BuildContext context) {
+  //   Navigator.of(context).push(
+  //     MaterialPageRoute(
+  //       builder: (_) {
+  //         return ShowChat(
+  //             "https://adventuresclub.net/adventureClub/newreceiverchat/${Constants.userId}/${widget.sId}/${profile.id}");
+  //       },
+  //     ),
+  //   );
+  // }
+
+  void selected(BuildContext context, int serviceId, int providerUserId) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
           return ShowChat(
-              "https://adventuresclub.net/adventureClub/newreceiverchat/${Constants.userId}/$serviceId/$providerId");
+              "https://adventuresclub.net/adventureClub/newreceiverchat/${Constants.userId}/$serviceId/$providerUserId");
         },
       ),
     );

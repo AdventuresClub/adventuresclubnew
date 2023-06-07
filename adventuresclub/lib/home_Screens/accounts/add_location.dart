@@ -1,14 +1,19 @@
 // ignore_for_file: avoid_print
 
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/submitting_info.dart';
+import 'package:adventuresclub/models/filter_data_model/service_types_filter.dart';
+import 'package:adventuresclub/temp_google_map.dart';
 import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
 import 'package:adventuresclub/widgets/text_fields/multiline_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
@@ -21,17 +26,23 @@ class AddLocation extends StatefulWidget {
 
 class _AddLocationState extends State<AddLocation> {
   TextEditingController nameController = TextEditingController();
-  TextEditingController destinationController = TextEditingController();
   TextEditingController geoController = TextEditingController();
   TextEditingController addController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
   TextEditingController webController = TextEditingController();
   TextEditingController desController = TextEditingController();
-
+  TextEditingController iLiveInController = TextEditingController();
+  double lat = 0;
+  double lng = 0;
   String dropdownValue1 = 'Select type of destination';
   File? pickedMedia;
+  String destinationType = "";
   List<String> mediaFiles = [];
   final picker = ImagePicker();
+  bool loading = false;
+  File crCopy = File("");
+  Uint8List crcopyList = Uint8List(0);
+  File visitImage = File("");
   List<String> list1 = <String>[
     'Select type of destination',
     'Two',
@@ -52,10 +63,10 @@ class _AddLocationState extends State<AddLocation> {
         children: [
           GestureDetector(
             onTap: () => pickMedia("Camera"),
-            child: ListTile(
+            child: const ListTile(
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Text("CAMERA",
                       style: TextStyle(
                           color: blackColor, fontWeight: FontWeight.bold)),
@@ -69,10 +80,10 @@ class _AddLocationState extends State<AddLocation> {
           ),
           GestureDetector(
             onTap: () => pickMedia("Gallery"),
-            child: ListTile(
+            child: const ListTile(
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Text("GALLERY",
                       style: TextStyle(
                           color: blackColor, fontWeight: FontWeight.bold)),
@@ -87,40 +98,19 @@ class _AddLocationState extends State<AddLocation> {
 
   void pickMedia(String from) async {
     Navigator.of(context).pop();
+    setState(() {
+      loading = true;
+    });
     final XFile? photo = await picker.pickImage(
         source: from == "Camera" ? ImageSource.camera : ImageSource.gallery,
-        maxWidth: 300,
-        maxHeight: 30);
+        maxWidth: 450,
+        maxHeight: 450);
     if (photo != null) {
-      pickedMedia = File(photo.path);
-      uploadMedia(pickedMedia!);
+      setState(() {
+        visitImage = File(photo.path);
+        loading = false;
+      });
     }
-  }
-
-  void uploadMedia(File file) async {
-    // User? user = FirebaseAuth.instance.currentUser;
-    // if (user != null) {
-    //   setState(() {
-    //     loading = true;
-    //   });
-    //   String id = FirebaseFirestore.instance.collection('UserMediaFiles').doc().id;
-    //   final ref = FirebaseStorage.instance.ref().child('mediaFiles').child(id);
-    //   UploadTask uploadTask = ref.putFile(file);
-    //   String url = await (await uploadTask).ref.getDownloadURL();
-    //   saveImageLink(url, id);
-  }
-
-  void saveImageLink(String url, String id) async {
-    //       {'profileURL': url}, SetOptions(merge: true));
-    //  // updateProfile(url);
-    //   await batch.commit().then((value) {
-
-    //   }).catchError(
-    //     (onError) {
-    //       print(onError.toString());
-    //     },
-    //   );
-    // }
   }
 
   void goToSubInfo() {
@@ -133,45 +123,128 @@ class _AddLocationState extends State<AddLocation> {
     );
   }
 
-  void goToAddLocation() {
+  void openMap() {
     Navigator.of(context).push(
       MaterialPageRoute(
+        fullscreenDialog: true,
         builder: (_) {
-          return const AddLocation();
+          return TempGoogleMap(setLocation);
         },
       ),
     );
   }
 
+  void setLocation(String loc, double lt, double lg) {
+    Navigator.of(context).pop();
+    iLiveInController.text = loc;
+    lat = lt;
+    lng = lg;
+  }
+
   void addLocation() async {
-    //otpController.clear();
+    setState(() {
+      loading = true;
+    });
+    if (visitImage.path.isNotEmpty) {
+      crcopyList = visitImage.readAsBytesSync();
+    }
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/visited_location"),
-          body: {
-            'user_id': "27",
-            'destination_image': "/C:/Users/Manish-Pc/Desktop/Images/2.jpg",
-            'destination_name': nameController.text,
-            "destination_type": "Travel",
-            "get_location": geoController.text, //"",
-            "destination_address": desController.text, //"",
-            "dest_mobile": mobileController.text, //"",
-            "dest_website": webController.text, //"",
-            "dest_description": desController.text, //"",
-            "latitude": "455.221", //"",
-            "longitude": "983.15", //"",
-          });
-      // setState(() {
-      //   //userID = response.body.
-      // });
+      var request = http.MultipartRequest(
+        "POST",
+        Uri.parse(
+            "https://adventuresclub.net/adventureClub/api/v1/visited_location"),
+      );
+      String fileName =
+          "${DateTime.now().millisecondsSinceEpoch.toString()}.png";
+      request.files.add(http.MultipartFile.fromBytes(
+          "destination_image", crcopyList,
+          filename: fileName));
+      dynamic programData = {
+        'user_id': Constants.userId.toString(),
+        'destination_name': nameController.text,
+        "destination_type": destinationType, //"Travel",
+        "geo_location": iLiveInController.text, //"",
+        "destination_address": desController.text, //"",
+        "dest_mobile": mobileController.text, //"",
+        "dest_website": webController.text, //"",
+        "dest_description": desController.text, //"",
+        "latitude": lat.toString(), //"455.221", //"",
+        "longitude": lng
+            .toString(), //"983.15", //"", //isWireTrasfer //"1", //isWireTrasfer,
+      };
+      request.fields.addAll(programData);
+      log(request.fields.toString());
+      final response = await request.send();
+      if (response.statusCode == 200) {
+        message("Location added successfully");
+        goToSubInfo();
+      } else {
+        dynamic body = jsonDecode(response.toString());
+        message(body['message'].toString());
+        setState(() {
+          loading = false;
+        });
+      }
       print(response.statusCode);
-      print(response.body);
       print(response.headers);
     } catch (e) {
       print(e.toString());
     }
-    goToSubInfo();
+  }
+
+  void message(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
+  }
+
+  void editMedia() async {
+    showDialog(
+      context: context,
+      builder: (ctx) => SimpleDialog(
+        title: const Text("From ?"),
+        children: [
+          GestureDetector(
+            onTap: () => editPickMedia("Camera"),
+            child: const ListTile(
+              title: Text("Camera"),
+            ),
+          ),
+          GestureDetector(
+            onTap: () => editPickMedia("Gallery"),
+            child: const ListTile(
+              title: Text("Gallery"),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void editPickMedia(String from) async {
+    Navigator.of(context).pop();
+    setState(() {
+      loading = true;
+    });
+    final XFile? photo = await picker.pickImage(
+        source: from == "Camera" ? ImageSource.camera : ImageSource.gallery,
+        maxWidth: 300,
+        maxHeight: 300);
+    if (photo != null) {
+      pickedMedia = File(photo.path);
+      // imageList.add(pickedMedia);
+      setState(() {
+        visitImage = pickedMedia!;
+        loading = false;
+      });
+    }
+  }
+
+  void deleteImage() {
+    visitImage.deleteSync();
+    setState(() {});
   }
 
   @override
@@ -198,44 +271,88 @@ class _AddLocationState extends State<AddLocation> {
             padding: const EdgeInsets.all(12.0),
             child: Column(
               children: [
-                GestureDetector(
-                  onTap: addMedia,
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                        border:
-                            Border.all(color: blackTypeColor.withOpacity(0.2)),
-                        borderRadius: BorderRadius.circular(12),
-                        color: lightGreyColor),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const SizedBox(height: 20),
-                        const Center(
-                          child: Image(
-                            image: ExactAssetImage('images/upload.png'),
-                            height: 45,
+                visitImage.path.isEmpty
+                    ? GestureDetector(
+                        onTap: addMedia,
+                        child: Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: blackTypeColor.withOpacity(0.2)),
+                              borderRadius: BorderRadius.circular(12),
+                              color: lightGreyColor),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(height: 20),
+                              const Center(
+                                child: Image(
+                                  image: ExactAssetImage('images/upload.png'),
+                                  height: 45,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              MyText(
+                                text: 'Tap to browse',
+                                color: greyColor,
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              MyText(
+                                text:
+                                    'Add banner(image) to effectively adventure',
+                                color: greyColor,
+                                align: TextAlign.center,
+                              ),
+                            ],
                           ),
                         ),
-                        const SizedBox(
-                          height: 20,
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Stack(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: blackTypeColor.withOpacity(0.2)),
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: lightGreyColor),
+                              child: Center(
+                                child: Image.file(
+                                  visitImage,
+                                  fit: BoxFit.fill,
+                                  height: 150,
+                                  width: 300,
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              right: 5,
+                              top: 10,
+                              child: GestureDetector(
+                                onTap: editMedia,
+                                child: Container(
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    color: blackColor,
+                                    borderRadius: BorderRadius.circular(32),
+                                  ),
+                                  child: const Icon(
+                                    Icons.edit,
+                                    color: whiteColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        MyText(
-                          text: 'Tap to browse',
-                          color: greyColor,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        MyText(
-                          text: 'Add banner(image) to effectively adventure',
-                          color: greyColor,
-                          align: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                      ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -254,7 +371,7 @@ class _AddLocationState extends State<AddLocation> {
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
                       isExpanded: true,
-                      value: dropdownValue1,
+                      value: Constants.serviceFilter[0].type,
                       icon: const Image(
                         image: ExactAssetImage('images/drop_down.png'),
                         height: 12,
@@ -267,14 +384,15 @@ class _AddLocationState extends State<AddLocation> {
                       onChanged: (String? value) {
                         // This is called when the user selects an item.
                         setState(() {
-                          value = value!;
+                          destinationType = value!;
                         });
                       },
-                      items:
-                          list1.map<DropdownMenuItem<String>>((String value) {
+                      items: Constants.serviceFilter
+                          .map<DropdownMenuItem<String>>(
+                              (ServiceTypeFilterModel value) {
                         return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
+                          value: value.type,
+                          child: Text(value.type),
                         );
                       }).toList(),
                     ),
@@ -286,17 +404,20 @@ class _AddLocationState extends State<AddLocation> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 1,
                   child: TextField(
-                    controller: geoController,
+                    controller: iLiveInController,
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 8, horizontal: 8),
                       hintText: 'Enter: Geolocation',
                       filled: true,
                       fillColor: lightGreyColor,
-                      suffixIcon: const Image(
-                        image: ExactAssetImage('images/map-symbol.png'),
-                        height: 10,
-                        width: 10,
+                      suffixIcon: InkWell(
+                        onTap: openMap,
+                        child: const Image(
+                          image: ExactAssetImage('images/map-symbol.png'),
+                          height: 10,
+                          width: 10,
+                        ),
                       ),
                       border: OutlineInputBorder(
                         borderRadius:

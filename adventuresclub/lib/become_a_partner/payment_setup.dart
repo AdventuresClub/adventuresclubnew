@@ -20,6 +20,8 @@ class _PaymentSetupState extends State<PaymentSetup> {
   ];
   bool paypalValue = false;
   bool wireTransferValue = false;
+
+  @override
   @override
   Widget build(BuildContext context) {
     return Column(

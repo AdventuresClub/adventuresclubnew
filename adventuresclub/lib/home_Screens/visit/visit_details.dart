@@ -1,12 +1,10 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls, avoid_print
 
 import 'dart:convert';
-
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/visit/review_ad.dart';
 import 'package:adventuresclub/models/getReviews/location_review_model.dart';
 import 'package:adventuresclub/models/getReviews/review_user_data_model.dart';
-import 'package:adventuresclub/models/getReviews/user_data_model.dart';
 import 'package:adventuresclub/models/reviews/location_reviews_model.dart';
 import 'package:adventuresclub/models/visit/get_visit_model.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
@@ -14,8 +12,6 @@ import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
-
-import '../../models/getReviews/review_model.dart';
 
 class VisitDetails extends StatefulWidget {
   final GetVisitModel? vm;
@@ -54,12 +50,13 @@ class _VisitDetailsState extends State<VisitDetails> {
     });
     List<LocationReviewModel> reviewModelList = [];
     ReviewUserDataModel reviewUserModelList = ReviewUserDataModel("", "", "");
+    String id = widget.vm!.id.toString();
     try {
       var response = await http.post(
           Uri.parse(
               "https://adventuresclub.net/adventureClub/api/v1/get_location_reviews"),
           body: {
-            'location_id': widget.vm!.id.toString(),
+            'location_id': id,
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       dynamic reviewsList = decodedResponse['data'];
@@ -91,15 +88,15 @@ class _VisitDetailsState extends State<VisitDetails> {
             LocationReviewsModel(avgReviews, reviewModelList);
         reviewList.add(lm);
       });
-      setState(() {
-        loading = false;
-      });
       print(response.statusCode);
       print(response.body);
       print(response.headers);
     } catch (e) {
       print(e.toString());
     }
+    setState(() {
+      loading = false;
+    });
   }
 
   @override

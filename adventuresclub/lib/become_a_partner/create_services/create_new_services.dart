@@ -91,7 +91,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   bool planChecked = false;
   List<CreateServicesProgramModel> pm = [
     CreateServicesProgramModel("", DateTime.now(), DateTime.now(),
-        const Duration(), const Duration(), "")
+        const Duration(), const Duration(), "", DateTime.now(), DateTime.now())
   ];
   List<CreateServicesPlanOneModel> onePlan = [
     CreateServicesPlanOneModel("", "")
@@ -126,8 +126,17 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   }
 
   void getProgramData(CreateServicesProgramModel data, int index, bool time) {
-    pm[index] = data;
+    pm[index] = CreateServicesProgramModel(
+        data.title,
+        data.startDate,
+        data.endDate,
+        data.startTime,
+        data.endTime,
+        data.description,
+        data.adventureStartDate,
+        data.adventureEndDate);
     isTimeAfter = time;
+    setState(() {});
     //  pm.add(data);
   }
 
@@ -144,8 +153,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
 
   void addProgramData() {
     setState(() {
-      pm.add(CreateServicesProgramModel(
-          "", startDate, currentDate, const Duration(), const Duration(), ""));
+      pm.add(CreateServicesProgramModel("", startDate, currentDate,
+          const Duration(), const Duration(), "", startDate, currentDate));
     });
   }
 
@@ -405,6 +414,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         planChecked) {
       pm[0].startDate = startDate;
       pm[0].endDate = currentDate;
+      pm[0].adventureStartDate = startDate;
+      pm[0].adventureEndDate = currentDate;
       // await convertProgramData();
       // aimed();
       //dependency();
@@ -464,6 +475,10 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     } else if (terms.text.isEmpty) {
       message("Please Type Terms");
     }
+  }
+
+  void clearAll() async {
+    ConstantsCreateNewServices.clearAll();
   }
 
   void previous() {
@@ -655,6 +670,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       print(response.statusCode);
       // print(response.body);
       print(response.headers);
+      clearAll();
       showConfirmation();
       //close();
       // } else {
@@ -1275,7 +1291,11 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                         : ListView(
                             children: [
                               for (int z = 0; z < pm.length; z++)
-                                CreateProgram(getProgramData, z, pm[z]),
+                                CreateProgram(
+                                    key: ValueKey(z.toString()),
+                                    getProgramData,
+                                    z,
+                                    pm[z]),
                               const SizedBox(
                                 height: 10,
                               ),

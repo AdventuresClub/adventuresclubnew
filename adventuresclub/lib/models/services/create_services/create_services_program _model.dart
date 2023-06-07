@@ -5,6 +5,15 @@ class CreateServicesProgramModel {
   Duration startTime;
   Duration endTime;
   String description;
-  CreateServicesProgramModel(this.title, this.startDate, this.endDate,
-      this.startTime, this.endTime, this.description);
+  DateTime adventureStartDate;
+  DateTime adventureEndDate;
+  CreateServicesProgramModel(
+      this.title,
+      this.startDate,
+      this.endDate,
+      this.startTime,
+      this.endTime,
+      this.description,
+      this.adventureStartDate,
+      this.adventureEndDate);
 }

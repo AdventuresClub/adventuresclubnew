@@ -96,6 +96,11 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
   void initState() {
     super.initState();
     getData();
+    //   getRegionId();
+  }
+
+  void getRegionId() {
+    print(ConstantsCreateNewServices.selectedRegionId);
   }
 
   void getData() {

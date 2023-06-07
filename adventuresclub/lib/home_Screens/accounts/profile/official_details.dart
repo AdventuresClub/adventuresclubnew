@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 
+import 'dart:convert';
 import 'dart:io';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/google_page.dart';
@@ -8,6 +9,7 @@ import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:http/http.dart' as http;
 
 class OfficialDetails extends StatefulWidget {
   const OfficialDetails({super.key});
@@ -27,6 +29,7 @@ class _OfficialDetailsState extends State<OfficialDetails> {
   TextEditingController accountName = TextEditingController();
   TextEditingController accountNum = TextEditingController();
   TextEditingController iLiveInController = TextEditingController();
+
   String locationMessage = "Getting location ...";
   String userlocation = "";
   bool loading = false;
@@ -147,6 +150,67 @@ class _OfficialDetailsState extends State<OfficialDetails> {
       },
     );
     // addLocation(iLiveInController, lat, lng);
+  }
+
+  // void editProfile() async {
+  //   if (bankNameController.text.isNotEmpty) {
+  //     if (accountNameController.text.isNotEmpty) {
+  //       if (accountNumberController.text.isNotEmpty) {
+  //         try {
+  //           var response = await http.post(
+  //               Uri.parse(
+  //                   "https://adventuresclub.net/adventureClub/api/v1/edit_partner_official_details"),
+  //               body: {
+  //       'user_id': Constants.userId.toString(), //"27", //27, //"27",
+  //       'company_name': nameController.text, //deles
+  //       'address': addController.text, //pakistan
+  //       'location': iLiveInController.text, //lahore
+  //       'description': descriptionController.text,
+  //       "license": license, //"Yes", //license, //"Yes", //license,
+  //       "cr_name": crName.text,
+  //       "cr_number": crNumber.text, //crNum, //crNumber.text,
+  //       //"cr_copy": crCopy,
+  //       //uniqueId, //crCopy.toString(), //"/C:/Users/Manish-Pc/Desktop/Images/1.jpg",
+  //       "debit_card": "1", //"0", //debit_card, //"897654",
+  //       //"visa_card": null, //"456132",
+  //       "payon_arrival": payArrivalClicked
+  //           .toString(), //"1", //payArrivalClicked, //"1", //payArrivalClicked.toString(),
+  //       //"paypal": "", //payPalId.text,
+  //       "bankname": bankName.text, //"null", //nameController.text,
+  //       "account_holdername": accountName.text, //"null", //accountName.text,
+  //       "account_number": accountNum.text,
+  //       //"null", //accountNum.text, //accNum, //5645656454, //accountNum.text,
+  //       "is_online": "1", // hardcoded
+  //       "packages_id": "0", // hardcoded
+  //       "is_wiretransfer": "0", //isWireTrasfer //"1", //isWireTrasfer,
+  //               });
+  //           if (response.statusCode == 200) {
+  //             message("Information Updated");
+  //           } else {
+  //             dynamic body = jsonDecode(response.body);
+  //             // error = decodedError['data']['name'];
+  //             message(body['message'].toString());
+  //           }
+  //         } catch (e) {
+  //           print(e.toString());
+  //         }
+  //       } else {
+  //         message("Please Enter Your Bank Name");
+  //       }
+  //     } else {
+  //       message("Please Enter AccountHolder Name");
+  //     }
+  //   } else {
+  //     message("Please Enter Account Number");
+  //   }
+  // }
+
+  void message(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
   }
 
   @override

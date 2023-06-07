@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 import 'package:adventuresclub/constants.dart';
@@ -29,9 +31,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   }
 
   void getData() {
-    nameController.text = Constants.name;
-    phoneController.text = Constants.phone;
-    emailController.text = Constants.profile.email;
+    // nameController.text = Constants.name;
+    // phoneController.text = Constants.phone;
+    // emailController.text = Constants.profile.email;
     setState(() {
       name = Constants.profile.name;
       phone = Constants.profile.mobile;
@@ -46,31 +48,42 @@ class _PersonalDetailsState extends State<PersonalDetails> {
 // email:mmm@yopmail.com
 
   void editProfile() async {
-    try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/update_profile"),
-          body: {
-            'user_id': Constants.userId.toString(), //ccCode.toString(),
-            'name': nameController.text.trim(),
-            'mobile_code': Constants.profile.mobileCode,
-            'email': emailController.text.trim(),
-          });
-      if (response.statusCode == 200) {
-        SharedPreferences prefs = await Constants.getPrefs();
-        prefs.setString("name", nameController.text.trim());
-        prefs.setString("email", emailController.text);
-        Constants.emailId = nameController.text.trim();
-        Constants.name = nameController.text.trim();
-        message("Information Updated");
+    if (nameController.text.isNotEmpty) {
+      if (phoneController.text.isNotEmpty) {
+        if (emailController.text.isNotEmpty) {
+          try {
+            var response = await http.post(
+                Uri.parse(
+                    "https://adventuresclub.net/adventureClub/api/v1/update_profile"),
+                body: {
+                  'user_id': Constants.userId.toString(), //ccCode.toString(),
+                  'name': nameController.text.trim(),
+                  'mobile_code': Constants.profile.mobileCode,
+                  'email': emailController.text.trim(),
+                });
+            if (response.statusCode == 200) {
+              SharedPreferences prefs = await Constants.getPrefs();
+              prefs.setString("name", nameController.text.trim());
+              prefs.setString("email", emailController.text);
+              Constants.emailId = nameController.text.trim();
+              Constants.name = nameController.text.trim();
+              message("Information Updated");
+            } else {
+              dynamic body = jsonDecode(response.body);
+              // error = decodedError['data']['name'];
+              message(body['message'].toString());
+            }
+          } catch (e) {
+            print(e.toString());
+          }
+        } else {
+          message("Please Enter Your Email Address");
+        }
       } else {
-        dynamic body = jsonDecode(response.body);
-        // error = decodedError['data']['name'];
-        message(body['message'].toString());
+        message("Please Enter Your Phone");
       }
-      print(response.statusCode);
-    } catch (e) {
-      print(e.toString());
+    } else {
+      message("Please Enter Name");
     }
   }
 
@@ -99,7 +112,6 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                 ),
                 TextField(
                   inputFormatters: [NoSpaceFormatter()],
-                  autofocus: true,
                   keyboardType: TextInputType.name,
                   controller: phoneController,
                   style: const TextStyle(
@@ -116,42 +128,44 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                     }
                   },
                   decoration: InputDecoration(
-                      suffixText: "Send OTP",
-                      suffixStyle: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: blackColor),
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 15, horizontal: 15),
-                      hintText: phone,
-                      hintStyle: TextStyle(
-                          color: blackColor.withOpacity(
-                            0.6,
-                          ),
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                          fontFamily: 'Raleway'),
-                      hintMaxLines: 1,
-                      isDense: true,
-                      filled: true,
-                      fillColor: greyProfileColor,
-                      border: OutlineInputBorder(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10.0)),
-                        borderSide:
-                            BorderSide(color: blackColor.withOpacity(0.0)),
+                    //  suffixText: "Send OTP",
+                    suffixStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: blackColor),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 15),
+                    hintText: phone,
+                    hintStyle: TextStyle(
+                        color: blackColor.withOpacity(
+                          0.6,
+                        ),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                        fontFamily: 'Raleway'),
+                    hintMaxLines: 1,
+                    isDense: true,
+                    filled: true,
+                    fillColor: greyProfileColor,
+                    border: OutlineInputBorder(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10.0)),
+                      borderSide:
+                          BorderSide(color: blackColor.withOpacity(0.0)),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10.0)),
+                      borderSide:
+                          BorderSide(color: blackColor.withOpacity(0.0)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      borderSide: BorderSide(
+                        color: blackColor.withOpacity(0.0),
                       ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10.0)),
-                        borderSide:
-                            BorderSide(color: blackColor.withOpacity(0.0)),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10)),
-                          borderSide:
-                              BorderSide(color: blackColor.withOpacity(0.0)))),
+                    ),
+                  ),
                 ),
                 Divider(
                   indent: 4,

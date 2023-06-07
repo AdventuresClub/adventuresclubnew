@@ -67,12 +67,13 @@ class _ClientRequestListState extends State<ClientRequestList> {
     'printing & typesetting industry.'
   ];
 
-  void selected(BuildContext context, int serviceId, String providerId) {
+  void selected(BuildContext context, int serviceId, int bookingUser) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
           return ShowChat(
-              "https://adventuresclub.net/adventureClub/newreceiverchat/${Constants.userId}/${serviceId}/${Constants.profile.bp.id.toString()}");
+              "https://adventuresclub.net/adventureClub/newchat/${Constants.userId}/$serviceId/$bookingUser");
+          // "https://adventuresclub.net/adventureClub/newreceiverchat/${providerId}/${serviceId}/${Constants.userId}");
         },
       ),
     );
@@ -204,8 +205,8 @@ class _ClientRequestListState extends State<ClientRequestList> {
                           size: 12,
                         ),
                         MyText(
-                          text: gRM[index].bookedOn.substring(
-                              0, 10), //'Booked on : 25 Sep, 2020 | 10:30',
+                          text: gRM[index]
+                              .bookedOn, //'Booked on : 25 Sep, 2020 | 10:30',
                           color: bluishColor,
                           weight: FontWeight.w500,
                           fontFamily: 'Roboto',
@@ -565,7 +566,7 @@ class _ClientRequestListState extends State<ClientRequestList> {
                         color: Colors.transparent,
                         child: InkWell(
                           onTap: () => selected(context, gRM[index].serviceId,
-                              gRM[index].ownerId.toString()),
+                              gRM[index].bookingUser),
                           child: const Center(
                             child: Text(
                               'Chat Client',

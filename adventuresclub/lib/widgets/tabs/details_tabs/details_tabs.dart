@@ -474,14 +474,14 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                       // 20: user_id of the client
                       // if (widget.gm.providerId.toString() ==
                       //     Constants.userId.toString())
-                      ShowChat(
-                        "https://adventuresclub.net/adventureClub/receiverlist/20/126",
-                        appbar: false,
-                      ),
                       // ShowChat(
-                      //   "https://adventuresclub.net/adventureClub/receiverlist/${widget.gm.providerId}${widget.gm.serviceId}",
+                      //   "https://adventuresclub.net/adventureClub/receiverlist/20/126",
                       //   appbar: false,
                       // ),
+                      ShowChat(
+                        "https://adventuresclub.net/adventureClub/receiverlist/${Constants.userId}/${widget.gm.serviceId}",
+                        appbar: false,
+                      ),
                       //AdventureChatDetails(widget.gm.serviceId.toString())
                       // "https://adventuresclub.net/adventureClub/receiverlist/27/'${widget.serviceId}'"
                     ],

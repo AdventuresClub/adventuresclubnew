@@ -26,14 +26,13 @@ class _CreateProgramState extends State<CreateProgram> {
   Duration timeSt = const Duration();
   Duration endSt = const Duration();
   bool isTimeAfter = false;
-  var formattedDate;
+  String formattedDate = "";
   bool loading = false;
 
   @override
   void initState() {
+    //pickedDate = widget.pm.startDate;
     super.initState();
-    //formattedDate = widget.pm.startDate;
-    //eDate = widget.pm.endDate;
   }
 
   void changeStatus() {
@@ -70,6 +69,8 @@ class _CreateProgramState extends State<CreateProgram> {
       durationSt,
       durationEt,
       description,
+      widget.pm.adventureStartDate,
+      widget.pm.adventureEndDate,
     );
     widget.parseData(pm, widget.index, isTimeAfter);
   }
@@ -77,9 +78,9 @@ class _CreateProgramState extends State<CreateProgram> {
   Future<void> _selectDate(BuildContext context) async {
     DateTime? tDate = (await showDatePicker(
         context: context,
-        initialDate: widget.pm.startDate,
-        firstDate: widget.pm.startDate,
-        lastDate: widget.pm.endDate));
+        initialDate: widget.pm.adventureStartDate,
+        firstDate: widget.pm.adventureStartDate,
+        lastDate: widget.pm.adventureEndDate));
     if (tDate != null) {
       pickedDate = tDate;
       setState(() {
@@ -87,8 +88,8 @@ class _CreateProgramState extends State<CreateProgram> {
         formattedDate =
             "${pickedDate.day}-${pickedDate.month}-${pickedDate.year}";
       });
+      sendData();
     }
-    sendData();
   }
 
   Future pickTime(BuildContext context) async {
@@ -188,10 +189,11 @@ class _CreateProgramState extends State<CreateProgram> {
                 ),
               ),
               child: ListTile(
+                key: ValueKey("${widget.index}num"),
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                leading: Text(
-                  formattedDate.toString(),
+                title: Text(
+                  formattedDate,
                   style: TextStyle(color: blackColor.withOpacity(0.6)),
                 ),
                 trailing: Icon(

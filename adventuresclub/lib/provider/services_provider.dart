@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_function_literals_in_foreach_calls, unused_local_variable
+// ignore_for_file: avoid_function_literals_in_foreach_calls, unused_local_variable, avoid_print
 
 import 'dart:convert';
 import 'dart:developer';
@@ -39,6 +39,7 @@ class ServicesProvider with ChangeNotifier {
   // List<HomeServicesModel> land = [];
   // List<HomeServicesModel> gm = [];
   List<ServicesModel> allServices = [];
+  List<ServicesModel> filterServices = [];
   List<ServicesModel> allAccomodation = [];
   List<ServicesModel> allTransport = [];
   List<ServicesModel> allSky = [];
@@ -49,6 +50,7 @@ class ServicesProvider with ChangeNotifier {
   String search = "";
   List<HomeServicesModel> filteredServices = [];
   List<SearchModel> searchedList = [];
+  List<HomeServicesModel> searchfilterServices = [];
 
   void setSearch(String x) {
     filteredServices.clear();
@@ -286,6 +288,206 @@ class ServicesProvider with ChangeNotifier {
       // allServices.forEach((element) {
       //     gAllServices.add(element.serviceCategory, element);
       //   });
+    }
+  }
+
+  void getFilteredList() async {
+    try {
+      var response = await http.post(
+          Uri.parse(
+              "https://adventuresclub.net/adventureClub/api/v1/services_filter"),
+          body: {
+            "category": "",
+            "country": Constants.countryId.toString(),
+            "provider_name": "",
+            "region": "",
+            "service_type": "",
+            "level": "",
+            "duration": "",
+            "activity_id": "",
+            "aimed": "",
+          });
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      List<dynamic> rm = decodedResponse['data'];
+      if (response.statusCode == 200) {
+        var getServicesMap = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+        List<dynamic> result = getServicesMap['data'];
+        String acc = "";
+        result.forEach((element) {
+          List<AvailabilityPlanModel> gAccomodationPlanModel = [];
+          List<AvailabilityModel> gAccomodoationAvaiModel = [];
+          List<ServicesModel> filter_Services = [];
+          acc = element['category'].toString() ?? "";
+          categories.add(acc);
+          if (element['service_plan'] == 1) {
+            List<dynamic> availablePlan = element['availability'];
+            availablePlan.forEach((ap) {
+              AvailabilityPlanModel amPlan = AvailabilityPlanModel(
+                  ap['id'].toString() ?? "", ap['day'].toString() ?? "");
+              gAccomodationPlanModel.add(amPlan);
+            });
+          } else {
+            List<dynamic> available = element['availability'];
+            available.forEach((a) {
+              AvailabilityModel am = AvailabilityModel(
+                  a['start_date'].toString() ?? "",
+                  a['end_date'].toString() ?? "");
+              gAccomodoationAvaiModel.add(am);
+            });
+          }
+          List<dynamic> becomePartner = element['become_partner'];
+          becomePartner.forEach((b) {
+            BecomePartner bp = BecomePartner(
+                b['cr_name'].toString() ?? "",
+                b['cr_number'].toString() ?? "",
+                b['description'].toString() ?? "");
+          });
+          List<IncludedActivitiesModel> gIAm = [];
+          if (element['included_activities'] != null) {
+            List<dynamic> iActivities = element['included_activities'];
+            iActivities.forEach((iA) {
+              IncludedActivitiesModel iAm = IncludedActivitiesModel(
+                int.tryParse(iA['id'].toString()) ?? 0,
+                int.tryParse(iA['service_id'].toString()) ?? 0,
+                iA['activity_id'].toString() ?? "",
+                iA['activity'].toString() ?? "",
+                iA['image'].toString() ?? "",
+              );
+              gIAm.add(iAm);
+            });
+          }
+          List<DependenciesModel> gdM = [];
+          // List<dynamic> dependency = element['dependencies'];
+          // dependency.forEach((d) {
+          //   DependenciesModel dm = DependenciesModel(
+          //     int.tryParse(d['id'].toString()) ?? 0,
+          //     d['dependency_name'].toString() ?? "",
+          //     d['image'].toString() ?? "",
+          //     d['updated_at'].toString() ?? "",
+          //     d['created_at'].toString() ?? "",
+          //     d['deleted_at'].toString() ?? "",
+          //   );
+          //   gdM.add(dm);
+          // });
+          List<AimedForModel> gAccomodationAimedfm = [];
+          List<dynamic> aF = element['aimed_for'];
+          aF.forEach((a) {
+            AimedForModel afm = AimedForModel(
+              int.tryParse(a['id'].toString()) ?? 0,
+              a['AimedName'].toString() ?? "",
+              a['image'].toString() ?? "",
+              a['created_at'].toString() ?? "",
+              a['updated_at'].toString() ?? "",
+              a['deleted_at'].toString() ?? "",
+              int.tryParse(a['service_id'].toString()) ?? 0,
+            );
+            gAccomodationAimedfm.add(afm);
+          });
+          List<ServiceImageModel> gAccomodationServImgModel = [];
+          List<dynamic> image = element['images'];
+          image.forEach((i) {
+            ServiceImageModel sm = ServiceImageModel(
+              int.tryParse(i['id'].toString()) ?? 0,
+              int.tryParse(i['service_id'].toString()) ?? 0,
+              int.tryParse(i['is_default'].toString()) ?? 0,
+              i['image_url'].toString() ?? "",
+              i['thumbnail'].toString() ?? "",
+            );
+            gAccomodationServImgModel.add(sm);
+          });
+          List<ProgrammesModel> gPm = [];
+          List<dynamic> programs = element['programs'];
+          programs.forEach((p) {
+            ProgrammesModel pm = ProgrammesModel(
+              int.tryParse(p['id'].toString()) ?? 0,
+              int.tryParse(p['service_id'].toString()) ?? 0,
+              p['title'].toString() ?? "",
+              p['start_datetime'].toString() ?? "",
+              p['end_datetime'].toString() ?? "",
+              p['description'].toString() ?? "",
+            );
+            gPm.add(pm);
+          });
+          DateTime sDate =
+              DateTime.tryParse(element['start_date'].toString()) ??
+                  DateTime.now();
+          DateTime eDate = DateTime.tryParse(element['end_date'].toString()) ??
+              DateTime.now();
+          List<ServicesModel> aS = [];
+          ServicesModel nSm = ServicesModel(
+            int.tryParse(element['id'].toString()) ?? 0,
+            int.tryParse(element['owner'].toString()) ?? 0,
+            element['adventure_name'].toString() ?? "",
+            element['country'].toString() ?? "",
+            element['region'].toString() ?? "",
+            element['city_id'].toString() ?? "",
+            element['service_sector'].toString() ?? "",
+            element['service_category'].toString() ?? "",
+            element['service_type'].toString() ?? "",
+            element['service_level'].toString() ?? "",
+            element['duration'].toString() ?? "",
+            int.tryParse(element['available_seats'].toString()) ?? 0,
+            sDate,
+            eDate,
+            element['latitude'].toString() ?? "",
+            element['longitude'].toString() ?? "",
+            element['write_information'].toString() ?? "",
+            int.tryParse(element['service_plan'].toString()) ?? 0,
+            int.tryParse(element['sfor_id'].toString()) ?? 0,
+            gAccomodoationAvaiModel,
+            gAccomodationPlanModel,
+            element['geo_location'].toString() ?? "",
+            element['specific_address'].toString() ?? "",
+            element['cost_inc'].toString() ?? "",
+            element['cost_exc'].toString() ?? "",
+            element['currency'].toString() ?? "",
+            int.tryParse(element['points'].toString()) ?? 0,
+            element['pre_requisites'].toString() ?? "",
+            element['minimum_requirements'].toString() ?? "",
+            element['terms_conditions'].toString() ?? "",
+            int.tryParse(element['recommended'].toString()) ?? 0,
+            element['status'].toString() ?? "",
+            element['image'].toString() ?? "",
+            element['descreption]'].toString() ?? "",
+            element['favourite_image'].toString() ?? "",
+            element['created_at'].toString() ?? "",
+            element['updated_at'].toString() ?? "",
+            element['delete_at'].toString() ?? "",
+            int.tryParse(element['provider_id'].toString()) ?? 0,
+            int.tryParse(element['service_id'].toString()) ?? 0,
+            element['provided_name'].toString() ?? "",
+            element['provider_profile'].toString() ?? "",
+            element['including_gerea_and_other_taxes'].toString() ?? "",
+            element['excluding_gerea_and_other_taxes'].toString() ?? "",
+            gIAm,
+            gdM,
+            nBp,
+            gAccomodationAimedfm,
+            gPm,
+            element['stars'].toString() ?? "",
+            int.tryParse(element['is_liked'].toString()) ?? 0,
+            element['baseurl'].toString() ?? "",
+            gAccomodationServImgModel,
+            element['rating'].toString() ?? "",
+            element['reviewd_by'].toString() ?? "",
+            int.tryParse(element['remaining_seats'].toString()) ?? 0,
+          );
+          filterServices.add(nSm);
+          filter_Services.add(nSm);
+
+          HomeServicesModel adv = HomeServicesModel(acc, filter_Services);
+          searchfilterServices.add(adv);
+        });
+        notifyListeners();
+        // allServices.forEach((element) {
+        //     gAllServices.add(element.serviceCategory, element);
+        //   });
+      }
+      print(response.statusCode);
+      print(response.body);
+      print(response.headers);
+    } catch (e) {
+      print(e.toString());
     }
   }
 

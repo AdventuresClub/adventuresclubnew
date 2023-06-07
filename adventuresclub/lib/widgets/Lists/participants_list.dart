@@ -56,12 +56,13 @@ class _ParticipantsListState extends State<ParticipantsList> {
     // ''
   ];
 
-  void selected(BuildContext context, int serviceId, int providerId) {
+  void selected(BuildContext context, int serviceId, int bookingUser) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
           return ShowChat(
-              "https://adventuresclub.net/adventureClub/newreceiverchat/${Constants.userId}/$serviceId/$providerId");
+              "https://adventuresclub.net/adventureClub/newchat/${Constants.userId}/$serviceId/$bookingUser");
+          // "https://adventuresclub.net/adventureClub/newreceiverchat/${providerId}/${serviceId}/${Constants.userId}");
         },
       ),
     );
@@ -408,6 +409,25 @@ class _ParticipantsListState extends State<ParticipantsList> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 MyText(
+                                  text: 'UserName : ',
+                                  color: blackColor,
+                                  weight: FontWeight.w700,
+                                  size: 14,
+                                  height: 1.8,
+                                ),
+                                MyText(
+                                  text: widget.gm[index].customer,
+                                  color: greyTextColor,
+                                  weight: FontWeight.w400,
+                                  size: 12,
+                                  height: 1.8,
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                MyText(
                                   text: 'How Old : ',
                                   color: blackColor,
                                   weight: FontWeight.w700,
@@ -728,7 +748,7 @@ class _ParticipantsListState extends State<ParticipantsList> {
                                 onTap: () => selected(
                                     context,
                                     widget.gm[index].serviceId,
-                                    widget.gm[index].providerId),
+                                    widget.gm[index].bookingUser),
                                 child: const Center(
                                   child: Text(
                                     'Chat Client',

@@ -61,6 +61,7 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
   String crCopyString = "";
   DateTime? today = DateTime.now();
   String uniqueId = "";
+  Uint8List crcopyList = Uint8List(0);
 
   List<bool> value3 = [
     false,
@@ -123,11 +124,11 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
     setState(() {
       Constants.partnerRequest = true;
     });
-    Navigator.of(context).pop();
     cancel();
   }
 
   void cancel() {
+    Navigator.of(context).pop();
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       return const BottomNavigation();
     }));
@@ -295,13 +296,21 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
     }
   }
 
+  void imageConversion() {
+    if (crCopy.path.isNotEmpty) {
+      crcopyList = crCopy.readAsBytesSync();
+    }
+  }
+
   void becomeProvider() async {
     setState(() {
       loading = true;
     });
     crNum = int.tryParse(crNumber.text) ?? 0;
     accNum = int.tryParse(accountNum.text) ?? 0;
-    Uint8List crcopyList = crCopy.readAsBytesSync();
+    if (crCopy.path.isNotEmpty) {
+      crcopyList = crCopy.readAsBytesSync();
+    }
     try {
       var request = http.MultipartRequest(
         "POST",
@@ -341,9 +350,6 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
       final response = await request.send();
       if (response.statusCode == 200) {
         showConfirmation();
-        setState(() {
-          loading = false;
-        });
       } else {
         dynamic body = jsonDecode(response.toString());
         message(body['message'].toString());
@@ -604,7 +610,7 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                         children: [
                           const SizedBox(height: 20),
                           MyText(
-                            text: "Payment methods from ",
+                            text: "Payment methods from client",
                             align: TextAlign.left,
                             color: blackColor,
                             size: 18,
@@ -786,6 +792,12 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                           //   color: blackColor,
                           //   size: 18,
                           // ),
+                          MyText(
+                            text: "Payment methods from Adventures Club",
+                            align: TextAlign.left,
+                            color: blackColor,
+                            size: 18,
+                          ),
                           const SizedBox(
                             height: 10,
                           ),

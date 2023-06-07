@@ -134,8 +134,7 @@ class RegionFilterDropDownState extends State<RegionFilterDropDown> {
                                           onSelectedItemChanged: (int index) {
                                             sendRegion(
                                                 widget.rFilter[index].region,
-                                                widget
-                                                    .rFilter[index].countryId);
+                                                widget.rFilter[index].regionId);
                                             //print(index + 1);
                                           },
                                           selectionOverlay:

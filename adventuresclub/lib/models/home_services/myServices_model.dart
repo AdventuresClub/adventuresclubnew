@@ -1,6 +1,5 @@
 import 'package:adventuresclub/models/filter_data_model/programs_model.dart';
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
-import 'package:adventuresclub/models/services/availability_model.dart';
 import 'package:adventuresclub/models/services/dependencies_model.dart';
 import 'package:adventuresclub/models/services/included_activities_model.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
