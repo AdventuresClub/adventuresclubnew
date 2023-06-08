@@ -51,6 +51,9 @@ class _UpcomingRequestInformationState
   static List<ServiceImageModel> images = [];
   String transactionId = "";
   int count = 8;
+  double selectedcountryPrice = 0;
+  double priceInOmr = 0;
+  double totalPriceOmr = 0;
   static ServicesModel service = ServicesModel(
       0,
       0,
@@ -288,25 +291,41 @@ class _UpcomingRequestInformationState
     }
   }
 
+  void convertCurrency(double p, double omrPrice, double tc) {
+    selectedcountryPrice = p;
+    double omrInverse = 1 / omrPrice;
+    double product = selectedcountryPrice * omrInverse;
+    double omrConverted = 1 / product;
+    setState(() {
+      packagePrice = omrConverted * tc;
+    });
+    print(packagePrice);
+  }
+
   Future<List<CurrencyModel>> fetchCurrency(
-      String value, String bookingId) async {
+      String value, String bookingId, String currency, String totalCost) async {
     double valueDouble = double.tryParse(value) ?? 0;
     final response = await http.get(Uri.parse(
         'https://api.fastforex.io/fetch-all?api_key=5d7d771c49-103d05e0d0-riwfxc'));
     mapCountry = jsonDecode(response.body);
     if (response.statusCode == 200) {
       dynamic result = mapCountry['results'];
-      if (result['OMR'] != null) {
+      if (result['OMR'] != currency) {
+        double tcDouble = double.tryParse(totalCost) ?? 0;
+        CurrencyModel cm = CurrencyModel(result[currency]);
+        CurrencyModel omrPrice = CurrencyModel(result['OMR']);
+        convertCurrency(cm.currency, omrPrice.currency, tcDouble);
+        selected(context, bookingId);
+        print(selectedcountryPrice);
+      } else {
         CurrencyModel cm = CurrencyModel(result['OMR']);
         packagePrice = valueDouble * cm.currency;
-        // setState(() {
-        //   amount = result.
-        // });
+        selected(context, bookingId);
         print(packagePrice);
         print(cm.currency);
       }
       //  transactionApi(packagePrice.toString(), id);
-      selected(context, bookingId);
+
       List<CurrencyModel> currencies = [];
       return currencies;
     } else {
@@ -752,9 +771,10 @@ class _UpcomingRequestInformationState
                       child: InkWell(
                         onTap: //() {},
                             () => fetchCurrency(
-                          widget.uRequestList.tCost,
-                          widget.uRequestList.BookingId.toString(),
-                        ),
+                                widget.uRequestList.tCost,
+                                widget.uRequestList.BookingId.toString(),
+                                widget.uRequestList.currency,
+                                widget.uRequestList.tCost),
                         child: const Center(
                           child: Text(
                             'Make Payment',
