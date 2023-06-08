@@ -27,6 +27,7 @@ import 'package:adventuresclub/widgets/search_container.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import '../../home_Screens/navigation_screens/bottom_navigation.dart';
 import '../../models/filter_data_model/durations_model.dart';
 import '../../models/filter_data_model/level_filter_mode.dart';
 
@@ -703,7 +704,7 @@ class _StackHomeState extends State<StackHome> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             GestureDetector(
-                              //    onTap: goTo,
+                              onTap: changeStatus,
                               child: Container(
                                   width: 130,
                                   padding: const EdgeInsets.symmetric(
@@ -756,7 +757,17 @@ class _StackHomeState extends State<StackHome> {
   }
 
   void searchFilter() {
+    Navigator.of(context).pop();
     Provider.of<ServicesProvider>(context, listen: false).getFilteredList();
+    Provider.of<ServicesProvider>(context, listen: false).searchFilter;
+  }
+
+  void changeStatus() {
+    Navigator.of(context).pop();
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return const BottomNavigation();
+    }));
+    Provider.of<ServicesProvider>(context, listen: false).getServicesList;
   }
 
   // void searchServices(String x) {

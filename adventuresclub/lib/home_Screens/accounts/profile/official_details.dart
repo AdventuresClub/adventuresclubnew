@@ -1,15 +1,18 @@
-// ignore_for_file: avoid_function_literals_in_foreach_calls
+// ignore_for_file: avoid_function_literals_in_foreach_calls, avoid_print
 
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/google_page.dart';
+import 'package:adventuresclub/temp_google_map.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
 class OfficialDetails extends StatefulWidget {
   const OfficialDetails({super.key});
@@ -35,8 +38,8 @@ class _OfficialDetailsState extends State<OfficialDetails> {
   bool loading = false;
   double lat = 0;
   double lng = 0;
-  bool value = true;
-  bool value1 = false;
+  bool isLicensed = false;
+  bool haveLicense = false;
   String license = "No";
   File crCopy = File("");
   String name = "";
@@ -44,6 +47,12 @@ class _OfficialDetailsState extends State<OfficialDetails> {
   String address = "";
   String crNameText = "";
   String crNumberText = "";
+  final picker = ImagePicker();
+  String uniqueId = "";
+  DateTime? today = DateTime.now();
+  int crNum = 0;
+  int accNum = 0;
+  Uint8List crcopyList = Uint8List(0);
 
   @override
   void initState() {
@@ -53,6 +62,7 @@ class _OfficialDetailsState extends State<OfficialDetails> {
 
   void getData() {
     changeValue();
+    iLiveInController.text == Constants.profile.bp.location;
     setState(() {
       name = Constants.profile.bp.companyName;
       address = Constants.profile.bp.address;
@@ -65,11 +75,15 @@ class _OfficialDetailsState extends State<OfficialDetails> {
   void changeValue() {
     if (Constants.profile.bp.license == "No") {
       setState(() {
-        value = true;
+        isLicensed == false;
+        haveLicense == false;
+        license = "No";
       });
     } else {
       setState(() {
-        value = false;
+        isLicensed = false;
+        haveLicense = true;
+        license = "Yes";
       });
     }
   }
@@ -133,7 +147,7 @@ class _OfficialDetailsState extends State<OfficialDetails> {
       MaterialPageRoute(
         fullscreenDialog: true,
         builder: (_) {
-          return GoogleMapPage(setLocation);
+          return TempGoogleMap(setLocation);
         },
       ),
     );
@@ -152,37 +166,109 @@ class _OfficialDetailsState extends State<OfficialDetails> {
     // addLocation(iLiveInController, lat, lng);
   }
 
+  void licenseStatus() {
+    if (haveLicense) {
+      setState(() {
+        license = "Yes";
+        isLicensed = false;
+      });
+    } else {
+      setState(() {
+        license = "No";
+        isLicensed = true;
+      });
+    }
+  }
+
+  void addMedia() async {
+    showDialog(
+      context: context,
+      builder: (ctx) => SimpleDialog(
+        title: const Text("From ?"),
+        children: [
+          GestureDetector(
+            onTap: () => pickMedia(
+              "Camera",
+            ),
+            child: const ListTile(
+              title: Text("Camera"),
+            ),
+          ),
+          GestureDetector(
+            onTap: () => pickMedia(
+              "Gallery",
+            ),
+            child: const ListTile(
+              title: Text("Gallery"),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void pickMedia(String from) async {
+    Navigator.of(context).pop();
+    setState(() {
+      loading = true;
+    });
+    final XFile? photo = await picker.pickImage(
+        source: from == "Camera" ? ImageSource.camera : ImageSource.gallery,
+        maxWidth: 300,
+        maxHeight: 300);
+    if (photo != null && crCopy.path.isEmpty) {
+      crCopy = File(photo.path);
+      //imageList[0] = crCopy;
+      // addImage();
+      //imagesList.add(pickedMedia);
+    } else {}
+    setState(() {
+      loading = false;
+      uniqueId = "${Constants.userId}${today.toString()}.png";
+      //  crCopyString = "${}"
+    });
+  }
+
   // void editProfile() async {
-  //   if (bankNameController.text.isNotEmpty) {
-  //     if (accountNameController.text.isNotEmpty) {
-  //       if (accountNumberController.text.isNotEmpty) {
+  //   if (haveLicense) {
+  //     setState(() {
+  //       license = "Yes";
+  //     });
+  //   } else {
+  //     setState(() {
+  //       license = "No";
+  //     });
+  //   }
+  //   if (nameController.text.isNotEmpty) {
+  //     if (addController.text.isNotEmpty) {
+  //       if (iLiveInController.text.isNotEmpty) {
   //         try {
   //           var response = await http.post(
   //               Uri.parse(
   //                   "https://adventuresclub.net/adventureClub/api/v1/edit_partner_official_details"),
   //               body: {
-  //       'user_id': Constants.userId.toString(), //"27", //27, //"27",
-  //       'company_name': nameController.text, //deles
-  //       'address': addController.text, //pakistan
-  //       'location': iLiveInController.text, //lahore
-  //       'description': descriptionController.text,
-  //       "license": license, //"Yes", //license, //"Yes", //license,
-  //       "cr_name": crName.text,
-  //       "cr_number": crNumber.text, //crNum, //crNumber.text,
-  //       //"cr_copy": crCopy,
-  //       //uniqueId, //crCopy.toString(), //"/C:/Users/Manish-Pc/Desktop/Images/1.jpg",
-  //       "debit_card": "1", //"0", //debit_card, //"897654",
-  //       //"visa_card": null, //"456132",
-  //       "payon_arrival": payArrivalClicked
-  //           .toString(), //"1", //payArrivalClicked, //"1", //payArrivalClicked.toString(),
-  //       //"paypal": "", //payPalId.text,
-  //       "bankname": bankName.text, //"null", //nameController.text,
-  //       "account_holdername": accountName.text, //"null", //accountName.text,
-  //       "account_number": accountNum.text,
-  //       //"null", //accountNum.text, //accNum, //5645656454, //accountNum.text,
-  //       "is_online": "1", // hardcoded
-  //       "packages_id": "0", // hardcoded
-  //       "is_wiretransfer": "0", //isWireTrasfer //"1", //isWireTrasfer,
+  //                 'user_id': Constants.userId.toString(), //"27", //27, //"27",
+  //                 'company_name': nameController.text, //deles
+  //                 'address': addController.text, //pakistan
+  //                 'location': iLiveInController.text, //lahore
+  //                 // 'description': descriptionController.text,
+  //                 "license": license, //"Yes", //license, //"Yes", //license,
+  //                 "cr_name": crName.text,
+  //                 "cr_number": crNumber.text, //crNum, //crNumber.text,
+  //                 "cr_copy": crCopy,
+  //                 // //uniqueId, //crCopy.toString(), //"/C:/Users/Manish-Pc/Desktop/Images/1.jpg",
+  //                 // "debit_card": "1", //"0", //debit_card, //"897654",
+  //                 // //"visa_card": null, //"456132",
+  //                 // "payon_arrival": payArrivalClicked
+  //                 //     .toString(), //"1", //payArrivalClicked, //"1", //payArrivalClicked.toString(),
+  //                 // //"paypal": "", //payPalId.text,
+  //                 // "bankname": bankName.text, //"null", //nameController.text,
+  //                 // "account_holdername": accountName.text, //"null", //accountName.text,
+  //                 // "account_number": accountNum.text,
+  //                 // //"null", //accountNum.text, //accNum, //5645656454, //accountNum.text,
+  //                 // "is_online": "1", // hardcoded
+  //                 // "packages_id": "0", // hardcoded
+  //                 // "is_wiretransfer": "0", //isWireTrasfer //"1", //isWireTrasfer,
   //               });
   //           if (response.statusCode == 200) {
   //             message("Information Updated");
@@ -195,15 +281,83 @@ class _OfficialDetailsState extends State<OfficialDetails> {
   //           print(e.toString());
   //         }
   //       } else {
-  //         message("Please Enter Your Bank Name");
+  //         message("Please Enter Your Company Name");
   //       }
   //     } else {
-  //       message("Please Enter AccountHolder Name");
+  //       message("Please Enter Address");
   //     }
   //   } else {
-  //     message("Please Enter Account Number");
+  //     message("Please Enter Location");
   //   }
   // }
+
+  void editProfile() async {
+    if (haveLicense) {
+      setState(() {
+        license = "Yes";
+        loading = true;
+      });
+    } else {
+      setState(() {
+        license = "No";
+        loading = true;
+      });
+    }
+    if (nameController.text.isNotEmpty) {
+      if (addController.text.isNotEmpty) {
+        if (iLiveInController.text.isNotEmpty) {
+          crNum = int.tryParse(crNumber.text) ?? 0;
+          accNum = int.tryParse(accountNum.text) ?? 0;
+          if (crCopy.path.isNotEmpty) {
+            crcopyList = crCopy.readAsBytesSync();
+          }
+          try {
+            var request = http.MultipartRequest(
+              "POST",
+              Uri.parse(
+                  "https://adventuresclub.net/adventureClub/api/v1/edit_partner_official_details"),
+            );
+            String fileName =
+                "${DateTime.now().millisecondsSinceEpoch.toString()}.png";
+            request.files.add(http.MultipartFile.fromBytes(
+                "cr_copy", crcopyList,
+                filename: fileName));
+            dynamic programData = {
+              'user_id': Constants.userId.toString(), //"27", //27, //"27",
+              'company_name': nameController.text, //deles
+              'address': addController.text, //pakistan
+              'location': iLiveInController.text, //lahore
+              "license": license, //"Yes", //license, //"Yes", //license,
+              "cr_name": crName.text,
+              "cr_number": crNumber.text, //crNum, //crNumber.text,
+            };
+            request.fields.addAll(programData);
+            log(request.fields.toString());
+            final response = await request.send();
+            if (response.statusCode == 200) {
+              message("Information Updated Successfully");
+            } else {
+              dynamic body = jsonDecode(response.toString());
+              message(body['message'].toString());
+              setState(() {
+                loading = false;
+              });
+            }
+            print(response.statusCode);
+            print(response.headers);
+          } catch (e) {
+            print(e.toString());
+          }
+        } else {
+          message("Please Enter Your Location");
+        }
+      } else {
+        message("Please Enter Company Address");
+      }
+    } else {
+      message("Please Enter Company Name");
+    }
+  }
 
   void message(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -270,15 +424,17 @@ class _OfficialDetailsState extends State<OfficialDetails> {
             Row(
               children: [
                 Checkbox(
-                    value: value,
+                    value: isLicensed,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(24)),
-                    onChanged: (bool? valuee1) {
+                    onChanged: (bool? noLicense) {
                       setState(() {
-                        value = valuee1!;
-                        value1 = false;
-                        license = "No";
+                        isLicensed = noLicense!;
+                        haveLicense = !haveLicense;
+                        // value1 = false;
+                        //  license = "No";
                       });
+                      // licenseStatus();
                       print(license);
                     }),
                 MyText(
@@ -291,14 +447,16 @@ class _OfficialDetailsState extends State<OfficialDetails> {
             Row(
               children: [
                 Checkbox(
-                    value: value1,
+                    value: haveLicense,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(24)),
-                    onChanged: (bool? value2) {
+                    onChanged: (bool? hlicense) {
+                      // licenseStatus();
                       setState(() {
-                        value1 = value2!;
-                        value = false;
-                        license = "Yes";
+                        haveLicense = hlicense!;
+                        isLicensed = !isLicensed;
+                        //value = false;
+                        //license = "Yes";
                       });
                       print(license);
                     }),
@@ -310,49 +468,50 @@ class _OfficialDetailsState extends State<OfficialDetails> {
               ],
             ),
             //if (value1 == true)
-            Column(
-              children: [
-                const SizedBox(height: 20),
-                TFWithSize(crNameText, crName, 12, lightGreyColor, 1),
-                const SizedBox(height: 20),
-                TFWithSize(crNumberText, crNumber, 12, lightGreyColor, 1),
-                const SizedBox(height: 20),
-                GestureDetector(
-                  //onTap: addMedia,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                          color: lightGreyColor,
-                          borderRadius: BorderRadius.circular(12),
-                          border:
-                              Border.all(color: greyColor.withOpacity(0.4))),
-                      child: Column(children: [
-                        crCopy.path.isEmpty
-                            ? const Image(
-                                image: ExactAssetImage('images/upload.png'),
-                                height: 50,
-                              )
-                            : Image.file(
-                                crCopy,
-                                height: 50,
-                                width: 50,
-                              ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        MyText(
-                          text: 'Attach CR copy',
-                          color: blackTypeColor1,
-                          align: TextAlign.center,
-                        ),
-                      ]),
+            if (haveLicense)
+              Column(
+                children: [
+                  const SizedBox(height: 20),
+                  TFWithSize(crNameText, crName, 12, lightGreyColor, 1),
+                  const SizedBox(height: 20),
+                  TFWithSize(crNumberText, crNumber, 12, lightGreyColor, 1),
+                  const SizedBox(height: 20),
+                  GestureDetector(
+                    //onTap: addMedia,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                            color: lightGreyColor,
+                            borderRadius: BorderRadius.circular(12),
+                            border:
+                                Border.all(color: greyColor.withOpacity(0.4))),
+                        child: Column(children: [
+                          crCopy.path.isEmpty
+                              ? const Image(
+                                  image: ExactAssetImage('images/upload.png'),
+                                  height: 50,
+                                )
+                              : Image.file(
+                                  crCopy,
+                                  height: 50,
+                                  width: 50,
+                                ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          MyText(
+                            text: 'Attach CR copy',
+                            color: blackTypeColor1,
+                            align: TextAlign.center,
+                          ),
+                        ]),
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
             const SizedBox(
               height: 20,
             ),
@@ -362,7 +521,7 @@ class _OfficialDetailsState extends State<OfficialDetails> {
                 greenishColor,
                 whiteColor,
                 18,
-                () {},
+                editProfile,
                 Icons.add,
                 whiteColor,
                 false,

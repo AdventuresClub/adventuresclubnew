@@ -51,6 +51,8 @@ class ServicesProvider with ChangeNotifier {
   List<HomeServicesModel> filteredServices = [];
   List<SearchModel> searchedList = [];
   List<HomeServicesModel> searchfilterServices = [];
+  List<DependenciesModel> gdM = [];
+  bool searchFilter = false;
 
   void setSearch(String x) {
     filteredServices.clear();
@@ -97,6 +99,10 @@ class ServicesProvider with ChangeNotifier {
     gLandServicesModel.clear();
     allServices.clear();
     gAllServices.clear();
+  }
+
+  void changeState() {
+    searchFilter = true;
   }
 
   Future getServicesList() async {
@@ -292,6 +298,7 @@ class ServicesProvider with ChangeNotifier {
   }
 
   void getFilteredList() async {
+    filteredServices.clear();
     try {
       var response = await http.post(
           Uri.parse(
@@ -356,7 +363,7 @@ class ServicesProvider with ChangeNotifier {
               gIAm.add(iAm);
             });
           }
-          List<DependenciesModel> gdM = [];
+          //List<DependenciesModel> gdM = [];
           // List<dynamic> dependency = element['dependencies'];
           // dependency.forEach((d) {
           //   DependenciesModel dm = DependenciesModel(
@@ -474,10 +481,10 @@ class ServicesProvider with ChangeNotifier {
           );
           filterServices.add(nSm);
           filter_Services.add(nSm);
-
           HomeServicesModel adv = HomeServicesModel(acc, filter_Services);
           searchfilterServices.add(adv);
         });
+        filteredServices = [...searchfilterServices];
         notifyListeners();
         // allServices.forEach((element) {
         //     gAllServices.add(element.serviceCategory, element);

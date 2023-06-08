@@ -8,6 +8,7 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/payment_methods/one_pay_method.dart';
 import 'package:adventuresclub/models/currency_model.dart';
 import 'package:adventuresclub/models/packages_become_partner/packages_become_partner_model.dart';
+import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -27,6 +28,8 @@ class _PackageListState extends State<PackageList> {
   DateTime t = DateTime.now();
   String key = "5d7d771c49-103d05e0d0-riwfxc";
   String transactionId = "";
+  double packagePrice = 0;
+  String orderId = "";
 
   List text = [
     'This is first includes',
@@ -56,7 +59,7 @@ class _PackageListState extends State<PackageList> {
     );
   }
 
-  void update(int id) async {
+  void update(String id, String price) async {
     generateRandomString(8);
     try {
       var response = await http.post(
@@ -64,8 +67,8 @@ class _PackageListState extends State<PackageList> {
               "https://adventuresclub.net/adventureClub/api/v1/update_subscription"),
           body: {
             'user_id': Constants.userId.toString(),
-            "packages_id": id.toString(),
-            "order_id": transactionId,
+            "packages_id": id,
+            "order_id": orderId,
             // if payment type is bank muscat then pass 1 else 0
             "payment_type": "0",
             "payment_status": "Free",
@@ -90,21 +93,35 @@ class _PackageListState extends State<PackageList> {
   //                   form.Add(new StringContent(paymentRequestModel.Price), "payment_amount");
 
   String generateRandomString(int lengthOfString) {
+    generateRandomId(10);
     final random = Random();
-    const allChars =
-        'AaBbCcDdlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1EeFfGgHhIiJjKkL84165135161';
+    const allChars = 'AaBbCcDdlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1EeFfGgHhIiJjKkL';
+    // below statement will generate a random string of length using the characters
+    // and length provided to it
+    final randomString = List.generate(
+        count, (index) => allChars[random.nextInt(allChars.length)]).join();
+    setState(() {
+      orderId = randomString;
+      //transactionId = "${randomString}${randomString}";
+    });
+    return randomString; // return the generated string
+  }
+
+  String generateRandomId(int lengthOfString) {
+    final random = Random();
+    const allChars = "18744651324650"; //'RrSsTtUuVvWwXxYyZz1EeFfGgHhIiJjKkL';
     // below statement will generate a random string of length using the characters
     // and length provided to it
     final randomString = List.generate(
         count, (index) => allChars[random.nextInt(allChars.length)]).join();
     setState(() {
       transactionId = randomString;
-      //transactionId = "${randomString}${randomString}";
+      // transactionId = "${randomString}${randomString}";
     });
     return randomString; // return the generated string
   }
 
-  void transactionApi(String price, int id) async {
+  void transactionApi(String price, String id) async {
     generateRandomString(8);
     try {
       var response = await http.post(
@@ -122,12 +139,12 @@ class _PackageListState extends State<PackageList> {
             //WireTransfer
             "method": "WireTransfer",
             "status": "success",
-            "price": "0", //price, //"0",
+            "price": price, //price, //"0",
             // 1 in case of subscription && 0 in case of booking
             "order_type": "1",
           });
       if (response.statusCode == 200) {
-        update(id);
+        update(id, price);
       }
       // setState(() {
       //   //userID = response.body.
@@ -163,33 +180,47 @@ class _PackageListState extends State<PackageList> {
     );
   }
 
-  Future<List<CurrencyModel>> fetchCurrency(String? value) async {
+  Future<List<CurrencyModel>> fetchCurrency(String value, String id) async {
+    double valueDouble = double.tryParse(value) ?? 0;
     final response = await http.get(Uri.parse(
         'https://api.fastforex.io/fetch-all?api_key=5d7d771c49-103d05e0d0-riwfxc'));
     mapCountry = jsonDecode(response.body);
     if (response.statusCode == 200) {
       dynamic result = mapCountry['results'];
       if (result['OMR'] != null) {
+        CurrencyModel cm = CurrencyModel(result['OMR']);
+        packagePrice = valueDouble * cm.currency;
         // setState(() {
         //   amount = result.
         // });
-        print(result);
+        print(packagePrice);
+        print(cm.currency);
       }
-      // result.forEach((element) {
-      //   if (element == "OMR") {
-      //     print(element);
-      //   }
-      // });
+      //  transactionApi(packagePrice.toString(), id);
+      selected(context, id);
       List<CurrencyModel> currencies = [];
-      // for (var code in data["data"].keys) {
-      //   CurrencyModel currency = CurrencyModel(
-      //       data["data"][code]["code"], data["data"][code]["value"].toDouble());
-      //   currencies.add(currency);
-      // }
       return currencies;
     } else {
       throw Exception('Failed');
     }
+  }
+
+  void selected(BuildContext context, String packageId) {
+    generateRandomString(count);
+    // transaction id is random uniuq generated number
+    // currency has to be omr
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return ShowChat(
+            "${'https://adventuresclub.net/admin1/dataFrom.htm?amount=$packagePrice&merchant_id=${67}&order_id=$orderId&tid=$transactionId&billing_name=${Constants.profile.name}&billing_address=${Constants.profile.bp.address}&billing_city=${Constants.profile.bp.address}&billing_zip=${Constants.profile.bp.address}&billing_country=${Constants.profile.bp.address}&billing_tel=${Constants.profile.bp.address}&billing_email=${Constants.profile.email}'}${'&merchant_param1=$packageId&merchant_param2={_paymentAndSubscreptionRequestModel.ActivityName}&merchant_param3=${Constants.userId}&merchant_param4={_paymentAndSubscreptionRequestModel.ActivityName}&merchant_param5={_paymentAndSubscreptionRequestModel.NoOfPerson'}",
+            show: true,
+          );
+        },
+      ),
+    );
+    print(
+        "${'https://adventuresclub.net/admin1/dataFrom.htm?amount=$packagePrice&merchant_id=${67}&order_id=$orderId&tid=$transactionId&billing_name=${Constants.profile.name}&billing_address=${Constants.profile.bp.address}&billing_city=${Constants.profile.bp.address}&billing_zip=${Constants.profile.bp.address}&billing_country=${Constants.profile.bp.address}&billing_tel=${Constants.profile.bp.address}&billing_email=${Constants.profile.email}'}${'&merchant_param1=${"subscription"}&merchant_param2=$packageId&merchant_param3=${Constants.userId}&merchant_param4={_paymentAndSubscreptionRequestModel.ActivityName}&merchant_param5={_paymentAndSubscreptionRequestModel.NoOfPerson'}");
   }
 
   @override
@@ -234,7 +265,9 @@ class _PackageListState extends State<PackageList> {
             bottom: 20,
             right: 30,
             child: GestureDetector(
-              onTap: () => transactionApi(widget.bp.cost, widget.bp.id),
+              onTap: () =>
+                  fetchCurrency(widget.bp.cost, widget.bp.id.toString()),
+              // onTap: () => transactionApi(widget.bp.cost, widget.bp.id),
               child: Container(
                 height: MediaQuery.of(context).size.height / 16,
                 width: MediaQuery.of(context).size.width / 4,
@@ -243,12 +276,12 @@ class _PackageListState extends State<PackageList> {
                   border: Border.all(color: greenishColor),
                   borderRadius: const BorderRadius.all(Radius.circular(40)),
                 ),
-                child: Center(
+                child: const Center(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 0),
+                    padding: EdgeInsets.only(left: 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text(
                           "Proceed",
                           style: TextStyle(

@@ -1,5 +1,6 @@
 class CurrencyModel {
-  dynamic currency;
-  double amount;
-  CurrencyModel(this.currency, this.amount);
+  double currency;
+  CurrencyModel(
+    this.currency,
+  );
 }

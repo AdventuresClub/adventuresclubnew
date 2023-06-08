@@ -81,21 +81,10 @@ class ServiceListState extends State<ServiceList> {
   Widget build(BuildContext context) {
     List<HomeServicesModel> gAllServices =
         Provider.of<ServicesProvider>(context).filteredServices;
-    // if (widget.type == "Accomodation") {
-    //   gm = Provider.of<ServicesProvider>(context).allAccomodation;
-    // } else if (widget.type == "Transport") {
-    //   gm = Provider.of<ServicesProvider>(context).allTransport;
-    // } else if (widget.type == "Sky") {
-    //   gm = Provider.of<ServicesProvider>(context).allSky;
-    // } else if (widget.type == "Water") {
-    //   gm = Provider.of<ServicesProvider>(context).allWater;
-    // } else if (widget.type == "Land") {
-    //   gm = Provider.of<ServicesProvider>(context).allLand;
-    // }
     return loading
-        ? Center(
+        ? const Center(
             child: Column(
-              children: const [
+              children: [
                 Text("Loading ....."),
                 SizedBox(
                   height: 10,
