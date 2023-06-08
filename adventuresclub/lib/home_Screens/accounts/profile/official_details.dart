@@ -75,8 +75,8 @@ class _OfficialDetailsState extends State<OfficialDetails> {
   void changeValue() {
     if (Constants.profile.bp.license == "No") {
       setState(() {
-        isLicensed == false;
-        haveLicense == false;
+        isLicensed = true;
+        haveLicense = false;
         license = "No";
       });
     } else {
@@ -336,6 +336,7 @@ class _OfficialDetailsState extends State<OfficialDetails> {
             final response = await request.send();
             if (response.statusCode == 200) {
               message("Information Updated Successfully");
+              Constants.getProfile();
             } else {
               dynamic body = jsonDecode(response.toString());
               message(body['message'].toString());
@@ -477,7 +478,7 @@ class _OfficialDetailsState extends State<OfficialDetails> {
                   TFWithSize(crNumberText, crNumber, 12, lightGreyColor, 1),
                   const SizedBox(height: 20),
                   GestureDetector(
-                    //onTap: addMedia,
+                    onTap: addMedia,
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
