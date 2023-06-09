@@ -909,13 +909,37 @@ class _StackHomeState extends State<StackHome> {
               const SizedBox(
                 width: 8,
               ),
-              GestureDetector(
-                onTap: goToMessages,
-                child: const Icon(
-                  Icons.message,
-                  color: whiteColor,
-                  size: 30,
-                ),
+              Stack(
+                children: [
+                  GestureDetector(
+                    onTap: goToMessages,
+                    child: const Icon(
+                      Icons.message,
+                      color: whiteColor,
+                      size: 30,
+                    ),
+                  ),
+                  if (Constants.chatCount != "0")
+                    Positioned(
+                      right: 4,
+                      bottom: -1,
+                      child: Container(
+                        height: 18,
+                        width: 15,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 187, 39, 28),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Center(
+                          child: MyText(
+                            text: Constants.chatCount,
+                            color: whiteColor,
+                            weight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ],
           ),

@@ -81,6 +81,7 @@ class Constants {
   static String country = "";
   static String countryFlag = "";
   static String phone = "";
+  static String chatCount = "";
   static int resultService = 0;
   static int resultRequest = 0;
   static int resultAccount = 0;

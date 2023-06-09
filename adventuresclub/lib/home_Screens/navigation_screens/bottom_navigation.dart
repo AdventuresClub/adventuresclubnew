@@ -28,6 +28,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   String resultAccount = "";
   String resultService = "";
   String resultRequest = "";
+  Map mapChatNotification = {};
 
   Widget getBody() {
     if (index == 0) {
@@ -60,6 +61,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     // Constants.getProfile();
     getNotificationBadge();
     Constants.getFilter();
+    getChatNotification();
     // if (Constants.partnerRequest) {
     //   setState(() {
     //     Constants.partnerRequest == false;
@@ -98,6 +100,19 @@ class _BottomNavigationState extends State<BottomNavigation> {
       print(response.headers);
     } catch (e) {
       print(e.toString());
+    }
+  }
+
+  Future getChatNotification() async {
+    var response = await http.get(Uri.parse(
+        "https://adventuresclub.net/adventureClub/unreadchatcount/'${Constants.userId}"));
+    if (response.statusCode == 200) {
+      mapChatNotification = json.decode(response.body);
+      dynamic result = mapChatNotification['unread'];
+      setState(() {
+        Constants.chatCount = result.toString();
+      });
+      print(result);
     }
   }
 

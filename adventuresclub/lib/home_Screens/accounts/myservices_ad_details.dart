@@ -21,6 +21,8 @@ class MyServicesAdDetails extends StatefulWidget {
 }
 
 class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
+  Map mapChatNotification = {};
+  String groupChatCount = "";
   List text = [
     'Hill Climbing',
     'Muscat, Oman',
@@ -31,6 +33,13 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
     '\$ 80.20',
     'Excluding gears and other taxes',
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    getChatNotification();
+  }
+
   void goToReviews(String id) {
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -68,6 +77,19 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
     }
   }
 
+  Future getChatNotification() async {
+    var response = await http.get(Uri.parse(
+        "https://adventuresclub.net/adventureClub/unreadchatcount/'${Constants.userId}/${widget.sm.serviceId}"));
+    if (response.statusCode == 200) {
+      mapChatNotification = json.decode(response.body);
+      dynamic result = mapChatNotification['unread'];
+      setState(() {
+        Constants.chatCount = result.toString();
+      });
+      print(result);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,13 +110,38 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
           weight: FontWeight.w800,
         ),
         actions: [
-          GestureDetector(
-            onTap: () =>
-                selected(context, widget.sm.serviceId, widget.sm.providerId),
-            child: const Icon(
-              Icons.message,
-              color: bluishColor,
-            ),
+          Stack(
+            alignment: AlignmentDirectional.center,
+            children: [
+              GestureDetector(
+                onTap: () => selected(
+                    context, widget.sm.serviceId, widget.sm.providerId),
+                child: const Icon(
+                  Icons.message,
+                  color: bluishColor,
+                  size: 30,
+                ),
+              ),
+              Positioned(
+                right: 4,
+                bottom: 8,
+                child: Container(
+                  height: 18,
+                  width: 15,
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 187, 39, 28),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Center(
+                    child: MyText(
+                      text: groupChatCount,
+                      color: whiteColor,
+                      weight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
           const SizedBox(width: 10)
         ],
