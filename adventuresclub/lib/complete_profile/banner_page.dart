@@ -24,38 +24,36 @@ class _BannerPageState extends State<BannerPage> {
   List<File> imageList = [];
   List<File> imageBanners = [File(""), File("")];
 
-  void addMedia(int i) async {
-    showDialog(
-      context: context,
-      builder: (ctx) => SimpleDialog(
-        title: const Text("From ?"),
-        children: [
-          GestureDetector(
-            onTap: () => pickMedia("Camera", i),
-            child: const ListTile(
-              title: Text("Camera"),
-            ),
-          ),
-          GestureDetector(
-            onTap: () => pickMedia("Gallery", i),
-            child: const ListTile(
-              title: Text("Gallery"),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // void addMedia(int i) async {
+  //   showDialog(
+  //     context: context,
+  //     builder: (ctx) => SimpleDialog(
+  //       title: const Text("From ?"),
+  //       children: [
+  //         GestureDetector(
+  //           onTap: () => pickMedia("Camera", i),
+  //           child: const ListTile(
+  //             title: Text("Camera"),
+  //           ),
+  //         ),
+  //         GestureDetector(
+  //           onTap: () => pickMedia("Gallery", i),
+  //           child: const ListTile(
+  //             title: Text("Gallery"),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  void pickMedia(String from, int i) async {
+  void pickMedia(int i) async {
     Navigator.of(context).pop();
     setState(() {
       loading = true;
     });
     final XFile? photo = await picker.pickImage(
-        source: from == "Camera" ? ImageSource.camera : ImageSource.gallery,
-        maxWidth: 300,
-        maxHeight: 300);
+        source: ImageSource.gallery, maxWidth: 300, maxHeight: 300);
     if (photo != null) {
       pickedMedia = File(photo.path);
       imageList.add(pickedMedia);
@@ -68,38 +66,36 @@ class _BannerPageState extends State<BannerPage> {
     }
   }
 
-  void editMedia(int i) async {
-    showDialog(
-      context: context,
-      builder: (ctx) => SimpleDialog(
-        title: const Text("From ?"),
-        children: [
-          GestureDetector(
-            onTap: () => editPickMedia("Camera", i),
-            child: const ListTile(
-              title: Text("Camera"),
-            ),
-          ),
-          GestureDetector(
-            onTap: () => editPickMedia("Gallery", i),
-            child: const ListTile(
-              title: Text("Gallery"),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // void editMedia(int i) async {
+  //   showDialog(
+  //     context: context,
+  //     builder: (ctx) => SimpleDialog(
+  //       title: const Text("From ?"),
+  //       children: [
+  //         GestureDetector(
+  //           onTap: () => editPickMedia("Camera", i),
+  //           child: const ListTile(
+  //             title: Text("Camera"),
+  //           ),
+  //         ),
+  //         GestureDetector(
+  //           onTap: () => editPickMedia("Gallery", i),
+  //           child: const ListTile(
+  //             title: Text("Gallery"),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  void editPickMedia(String from, int i) async {
+  void editPickMedia(int i) async {
     Navigator.of(context).pop();
     setState(() {
       loading = true;
     });
     final XFile? photo = await picker.pickImage(
-        source: from == "Camera" ? ImageSource.camera : ImageSource.gallery,
-        maxWidth: 300,
-        maxHeight: 300);
+        source: ImageSource.gallery, maxWidth: 300, maxHeight: 300);
     if (photo != null) {
       pickedMedia = File(photo.path);
 
@@ -210,7 +206,7 @@ class _BannerPageState extends State<BannerPage> {
                                       children: [
                                         const SizedBox(height: 20),
                                         GestureDetector(
-                                          onTap: () => addMedia(y),
+                                          onTap: () => pickMedia(y),
                                           child: const Center(
                                             child: Image(
                                               image: ExactAssetImage(
@@ -265,7 +261,7 @@ class _BannerPageState extends State<BannerPage> {
                                         right: 5,
                                         top: 10,
                                         child: GestureDetector(
-                                          onTap: () => editMedia(y),
+                                          onTap: () => editPickMedia(y),
                                           child: Container(
                                             height: 40,
                                             width: 40,

@@ -440,6 +440,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       message("Please add availaible seats");
     } else if (sPlan == 0) {
       message("Please select from the service plan");
+    } else if (ConstantsCreateNewServices.selectedActivitesId.isEmpty) {
+      message("Please select from the activities");
     } else if (selectedActivitesId.isEmpty) {
       message("Please select from aimed for");
     } else if (selectedDependencyId.isEmpty) {

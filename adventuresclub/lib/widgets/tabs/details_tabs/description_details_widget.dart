@@ -46,7 +46,7 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
           // mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Expanded(
-              flex: 6,
+              flex: 7,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: List.generate(
@@ -75,78 +75,81 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
                 ),
               ),
             ),
-            Expanded(
-              flex: 5,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Wrap(
-                    alignment: WrapAlignment.end,
-                    crossAxisAlignment: WrapCrossAlignment.end,
-                    direction: Axis.vertical,
-                    children: List.generate(widget.text5.length, (index) {
-                      return widget.text1[index] == 'Country  :'
-                          ? GestureDetector(
-                              onTap: () => goToReviews(widget.id),
-                              child: Column(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.bottomLeft,
-                                    child: RatingBar.builder(
-                                      initialRating: widget.stars,
-                                      ignoreGestures: true,
-                                      itemSize: 15,
-                                      minRating: 0,
-                                      direction: Axis.horizontal,
-                                      allowHalfRating: true,
-                                      itemCount: 5,
-                                      itemPadding: const EdgeInsets.symmetric(
-                                          horizontal: 1.0),
-                                      itemBuilder: (context, _) => const Icon(
-                                        Icons.star,
-                                        color: Colors.amber,
-                                        size: 14,
+            Padding(
+              padding: const EdgeInsets.only(right: 0.0),
+              child: Expanded(
+                flex: 5,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Wrap(
+                      alignment: WrapAlignment.end,
+                      crossAxisAlignment: WrapCrossAlignment.end,
+                      direction: Axis.vertical,
+                      children: List.generate(widget.text5.length, (index) {
+                        return widget.text1[index] == 'Country  :'
+                            ? GestureDetector(
+                                onTap: () => goToReviews(widget.id),
+                                child: Column(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.bottomLeft,
+                                      child: RatingBar.builder(
+                                        initialRating: widget.stars,
+                                        ignoreGestures: true,
+                                        itemSize: 15,
+                                        minRating: 0,
+                                        direction: Axis.horizontal,
+                                        allowHalfRating: true,
+                                        itemCount: 5,
+                                        itemPadding: const EdgeInsets.symmetric(
+                                            horizontal: 1.0),
+                                        itemBuilder: (context, _) => const Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
+                                          size: 14,
+                                        ),
+                                        onRatingUpdate: (rating) {
+                                          print(rating);
+                                        },
                                       ),
-                                      onRatingUpdate: (rating) {
-                                        print(rating);
-                                      },
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Align(
-                                    child: MyText(
-                                      text:
-                                          "${widget.stars} ${" "} (${widget.reviewedBy} ${"Reviews)"} ",
-                                      color: yellowcolor,
-                                      weight: FontWeight.bold,
+                                    const SizedBox(
+                                      height: 5,
                                     ),
-                                  )
-                                ],
-                              ),
-                            )
-                          : RichText(
-                              text: TextSpan(
-                                text: widget.text5[index],
-                                style: const TextStyle(
-                                  color: greyColor2,
-                                  fontSize: 14,
-                                  height: 1.5,
+                                    Align(
+                                      child: MyText(
+                                        text:
+                                            "${widget.stars} ${" "} (${widget.reviewedBy} ${"Reviews)"} ",
+                                        color: yellowcolor,
+                                        weight: FontWeight.bold,
+                                      ),
+                                    )
+                                  ],
                                 ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text: widget.text6[index],
-                                      style: const TextStyle(
-                                          fontSize: 14,
-                                          color: blackColor,
-                                          height: 1.5)),
-                                ],
-                              ),
-                            );
-                    }),
-                  ),
-                ],
+                              )
+                            : RichText(
+                                text: TextSpan(
+                                  text: widget.text5[index],
+                                  style: const TextStyle(
+                                    color: greyColor2,
+                                    fontSize: 14,
+                                    height: 1.5,
+                                  ),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: widget.text6[index],
+                                        style: const TextStyle(
+                                            fontSize: 14,
+                                            color: blackColor,
+                                            height: 1.5)),
+                                  ],
+                                ),
+                              );
+                      }),
+                    ),
+                  ],
+                ),
               ),
             )
           ],

@@ -1130,7 +1130,7 @@ class _AccountState extends State<Account> {
                                                 MyText(
                                                   text:
                                                       "${"Your Plan expired on "}${profile.bp.endDate}",
-                                                  //"${"Renew before "}${profile.bp.endDate}", //'Kenneth Gutierrez',
+                                                  //"${" before "}${profile.bp.endDate}", //'Kenneth Gutierrez',
                                                   color: redColor,
                                                   weight: FontWeight.bold,
                                                   size: 14,

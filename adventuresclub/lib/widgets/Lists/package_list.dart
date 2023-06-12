@@ -223,6 +223,14 @@ class _PackageListState extends State<PackageList> {
         "${'https://adventuresclub.net/admin1/dataFrom.htm?amount=$packagePrice&merchant_id=${67}&order_id=$orderId&tid=$transactionId&billing_name=${Constants.profile.name}&billing_address=${Constants.profile.bp.address}&billing_city=${Constants.profile.bp.address}&billing_zip=${Constants.profile.bp.address}&billing_country=${Constants.profile.bp.address}&billing_tel=${Constants.profile.bp.address}&billing_email=${Constants.profile.email}'}${'&merchant_param1=${"subscription"}&merchant_param2=$packageId&merchant_param3=${Constants.userId}&merchant_param4={_paymentAndSubscreptionRequestModel.ActivityName}&merchant_param5={_paymentAndSubscreptionRequestModel.NoOfPerson'}");
   }
 
+  void checkPayment(String cost, String packageId) {
+    if (packageId == "1") {
+      transactionApi(cost, packageId);
+    } else {
+      fetchCurrency(cost, packageId);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -266,7 +274,7 @@ class _PackageListState extends State<PackageList> {
             right: 30,
             child: GestureDetector(
               onTap: () =>
-                  fetchCurrency(widget.bp.cost, widget.bp.id.toString()),
+                  checkPayment(widget.bp.cost, widget.bp.id.toString()),
               // onTap: () => transactionApi(widget.bp.cost, widget.bp.id),
               child: Container(
                 height: MediaQuery.of(context).size.height / 16,
@@ -300,7 +308,7 @@ class _PackageListState extends State<PackageList> {
           if (widget.bp.cost == "0.00")
             Positioned(
               bottom: 70,
-              right: 65,
+              right: 60,
               child: MyText(
                 text: "Free",
                 size: 24,
@@ -328,8 +336,9 @@ class _PackageListState extends State<PackageList> {
                     color: whiteColor,
                   ),
                   MyText(
-                    text: (widget.bp.duration),
+                    text: ("${widget.bp.title} (${(widget.bp.duration)})"),
                     size: 18,
+                    weight: FontWeight.bold,
                   ),
                 ],
               )),
