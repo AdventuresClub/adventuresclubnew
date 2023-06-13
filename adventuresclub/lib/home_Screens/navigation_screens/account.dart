@@ -170,47 +170,6 @@ class _AccountState extends State<Account> {
     // convert();
   }
 
-  void convert() {
-    if (profile.userRole == "2" && profile.bp.endDate != "null") {
-      setState(() {
-        loading = true;
-      });
-      DateTime dt = DateTime.parse(profile.bp.endDate);
-      if (today.year > dt.year) {
-        setState(() {
-          loading = false;
-          expired = true;
-        });
-      } else if (today.year == dt.year && today.month > dt.month) {
-        setState(() {
-          loading = false;
-          expired = true;
-        });
-      } else if (today.year == dt.year &&
-          today.month == dt.month &&
-          today.day > dt.day) {
-        setState(() {
-          loading = false;
-          expired = true;
-        });
-      }
-      // else if (today.year > dt.year &&
-      //     today.month > dt.month &&
-      //     today.day > dt.day) {
-      //   setState(() {
-      //     loading = false;
-      //     expired = true;
-      //     Constants.expired = false;
-      //   });
-      // }
-      else {
-        loading = false;
-        expired = false;
-      }
-    }
-    print(expired);
-  }
-
   void requestSent() async {
     //if (widget.gm.sPlan == 1 && text1[index] == "Availability")
     showDialog(
@@ -323,16 +282,53 @@ class _AccountState extends State<Account> {
           userData['deleted_at'].toString() ?? "",
           userData['device_id'].toString() ?? "",
           pbp);
+
       profile = up;
       Constants.userRole = up.userRole;
       prefs.setString("userRole", up.userRole);
-      convert();
       setState(() {
         loading = false;
       });
+      convert();
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  void convert() {
+    if (profile.userRole == "2" && profile.bp.endDate != "null") {
+      setState(() {
+        loading = true;
+      });
+      if (profile.bp.endDate.isNotEmpty) {
+        DateTime dt = DateTime.parse(profile.bp.endDate);
+        if (today.year > dt.year) {
+          setState(() {
+            loading = false;
+            expired = true;
+          });
+        } else if (today.year == dt.year && today.month > dt.month) {
+          setState(() {
+            loading = false;
+            expired = true;
+          });
+        } else if (today.year == dt.year &&
+            today.month == dt.month &&
+            today.day > dt.day) {
+          setState(() {
+            loading = false;
+            expired = true;
+          });
+        } else {
+          loading = false;
+          expired = false;
+        }
+      }
+      setState(() {
+        loading = false;
+      });
+    }
+    print(expired);
   }
 
   void goToProfile(bool expired, String role) {

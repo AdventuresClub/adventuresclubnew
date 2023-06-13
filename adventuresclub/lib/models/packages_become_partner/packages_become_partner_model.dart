@@ -13,7 +13,7 @@ class PackagesBecomePartnerModel {
   String ua;
   String da;
   List<BpIncludesModel> im;
-  List<BpExcludesModel> em;
+  List<BpIncludesModel> em;
   PackagesBecomePartnerModel(
       this.id,
       this.title,

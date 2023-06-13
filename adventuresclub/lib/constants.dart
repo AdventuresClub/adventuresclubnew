@@ -107,7 +107,7 @@ class Constants {
   static List<PackagesBecomePartnerModel> gBp = [];
   static Map getPackages = {};
   static List<BpIncludesModel> gIList = [];
-  static List<BpExcludesModel> gEList = [];
+  static List<BpIncludesModel> gEList = [];
   static ProfileBecomePartner pbp = ProfileBecomePartner(
       0,
       0,
@@ -433,11 +433,11 @@ class Constants {
         });
         List<dynamic> excluded = element['Exclude'];
         excluded.forEach((e) {
-          BpExcludesModel eList = BpExcludesModel(
+          BpIncludesModel eList = BpIncludesModel(
             int.tryParse(e['id'].toString()) ?? 0,
             int.tryParse(e['package_id'].toString()) ?? 0,
             e['title'].toString() ?? "",
-            e['detail_type'].toString() ?? "",
+            int.tryParse(e['detail_type'].toString()) ?? 0,
           );
           gEList.add(eList);
         });

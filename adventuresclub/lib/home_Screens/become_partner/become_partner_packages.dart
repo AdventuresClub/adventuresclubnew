@@ -32,8 +32,6 @@ class _BecomePartnerPackagesState extends State<BecomePartnerPackages> {
   String userRole = "";
   bool loading = false;
   Map getPackages = {};
-  List<BpIncludesModel> gIList = [];
-  List<BpExcludesModel> gEList = [];
   List<PackagesBecomePartnerModel> freegBp = [];
   List<PackagesBecomePartnerModel> pbp = [];
   List<PackagesBecomePartnerModel> packages = [];
@@ -60,6 +58,8 @@ class _BecomePartnerPackagesState extends State<BecomePartnerPackages> {
       getPackages = json.decode(response.body);
       List<dynamic> result = getPackages['data'];
       result.forEach((element) {
+        List<BpIncludesModel> gIList = [];
+        List<BpIncludesModel> gEList = [];
         List<dynamic> included = element['includes'];
         included.forEach((i) {
           BpIncludesModel iList = BpIncludesModel(
@@ -72,11 +72,11 @@ class _BecomePartnerPackagesState extends State<BecomePartnerPackages> {
         });
         List<dynamic> excluded = element['Exclude'];
         excluded.forEach((e) {
-          BpExcludesModel eList = BpExcludesModel(
+          BpIncludesModel eList = BpIncludesModel(
             int.tryParse(e['id'].toString()) ?? 0,
             int.tryParse(e['package_id'].toString()) ?? 0,
             e['title'].toString() ?? "",
-            e['detail_type'].toString() ?? "",
+            int.tryParse(e['detail_type'].toString()) ?? 0,
           );
           gEList.add(eList);
         });

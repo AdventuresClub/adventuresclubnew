@@ -10,6 +10,7 @@ import 'package:adventuresclub/models/currency_model.dart';
 import 'package:adventuresclub/models/packages_become_partner/packages_become_partner_model.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:adventuresclub/widgets/package_include_details.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -317,68 +318,78 @@ class _PackageListState extends State<PackageList> {
             ),
           if (widget.bp.cost != "0.00")
             Positioned(
-              bottom: 70,
-              right: 50,
+              bottom: 75,
+              right: 35,
               child: MyText(
-                text: widget.bp.cost,
+                text: "${widget.bp.symbol} ${widget.bp.cost}",
                 size: 24,
                 weight: FontWeight.w900,
               ),
             ),
           Positioned(
-              left: 15,
-              top: 15,
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.calendar_month,
-                    size: 25,
-                    color: whiteColor,
-                  ),
-                  MyText(
-                    text: ("${widget.bp.title} (${(widget.bp.duration)})"),
-                    size: 18,
-                    weight: FontWeight.bold,
-                  ),
-                ],
-              )),
+            left: 15,
+            top: 15,
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.calendar_month,
+                  size: 25,
+                  color: whiteColor,
+                ),
+                MyText(
+                  text: ("${widget.bp.title} (${(widget.bp.duration)})"),
+                  size: 18,
+                  weight: FontWeight.bold,
+                ),
+              ],
+            ),
+          ),
           const Positioned(
-              top: 40,
-              left: 10,
-              child: Image(
-                image: ExactAssetImage('images/line.png'),
-                color: whiteColor,
-              )),
+            top: 40,
+            left: 10,
+            child: Image(
+              image: ExactAssetImage('images/line.png'),
+              color: whiteColor,
+            ),
+          ),
           Positioned(
-              left: 15,
-              top: 40,
-              child: Column(
-                children: [
-                  Wrap(
-                    direction: Axis.vertical,
-                    children: List.generate(2, (index) {
-                      return Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                              radius: 8,
-                              backgroundColor: whiteColor,
-                              child: Image(
-                                  image: ExactAssetImage(iconImages[index]))),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          MyText(
-                            text: text[index],
-                            size: 12,
-                            height: 2.2,
-                          ),
-                        ],
-                      );
-                    }),
-                  )
-                ],
-              ))
+            left: 15,
+            top: 40,
+            child: Column(
+              children: [
+                //     Wrap(
+                //       direction: Axis.vertical,
+                //       children: List.generate(widget.bp.im.length, (index) {
+                //         return
+                PackageIncludeDetails(widget.bp.im),
+                PackageIncludeDetails(widget.bp.em)
+                // Row(
+                //   crossAxisAlignment: CrossAxisAlignment.center,
+                //   children: [
+                //     const CircleAvatar(
+                //       radius: 8,
+                //       backgroundColor: whiteColor,
+                //       child: Image(
+                //         image: ExactAssetImage(
+                //           'images/ic_green_check.png',
+                //         ),
+                //       ),
+                //     ),
+                //     const SizedBox(
+                //       width: 10,
+                //     ),
+                //     MyText(
+                //       text: widget.bp.im[index].title,
+                //       size: 12,
+                //       height: 2.2,
+                //     ),
+                //   ],
+                // );
+                //       }),
+                //     )
+              ],
+            ),
+          ),
         ],
       ),
     );
