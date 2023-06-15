@@ -46,7 +46,7 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
           // mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Expanded(
-              flex: 7,
+              flex: 6,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: List.generate(
@@ -75,10 +75,10 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(right: 0.0),
-              child: Expanded(
-                flex: 5,
+            Expanded(
+              flex: 5,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -151,7 +151,7 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
