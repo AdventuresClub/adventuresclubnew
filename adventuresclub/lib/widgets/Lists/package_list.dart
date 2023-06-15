@@ -225,7 +225,7 @@ class _PackageListState extends State<PackageList> {
   }
 
   void checkPayment(String cost, String packageId) {
-    if (packageId == "1") {
+    if (cost == "0.00") {
       transactionApi(cost, packageId);
     } else {
       fetchCurrency(cost, packageId);
