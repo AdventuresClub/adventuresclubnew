@@ -1375,132 +1375,123 @@ class _AccountState extends State<Account> {
                                 ),
                               ),
                             ),
-                            if (profile.bp.packagesId == 1 &&
-                                profile.userRole == "2")
-                              Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Card(
-                                  elevation: 1,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        for (int i = 0; i < 3; i++)
-                                          Column(
-                                            children: [
-                                              GestureDetector(
-                                                onTap: () {
-                                                  if (text[i] == 'Favorite') {
-                                                    Navigator.of(context).push(
-                                                      MaterialPageRoute(
-                                                        builder: (_) {
-                                                          return const Favorite();
-                                                        },
-                                                      ),
-                                                    );
-                                                  }
-                                                  if (text[i] ==
-                                                      'My Services') {
-                                                    Navigator.of(context).push(
-                                                      MaterialPageRoute(
-                                                        builder: (_) {
-                                                          return const MyServices();
-                                                        },
-                                                      ),
-                                                    );
-                                                  }
-                                                  if (text[i] ==
-                                                      'Client Requests') {
-                                                    Navigator.of(context).push(
-                                                      MaterialPageRoute(
-                                                        builder: (_) {
-                                                          return const ClientsRequests();
-                                                        },
-                                                      ),
-                                                    );
-                                                  }
-                                                },
-                                                child: Stack(
-                                                  clipBehavior: Clip.none,
-                                                  children: [
-                                                    Image(
-                                                      image: ExactAssetImage(
-                                                          partnerImages[i]),
-                                                      height: 30,
-                                                      width: 30,
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Card(
+                                elevation: 1,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      for (int i = 0; i < 3; i++)
+                                        Column(
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                if (text[i] == 'Favorite') {
+                                                  Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                      builder: (_) {
+                                                        return const Favorite();
+                                                      },
                                                     ),
-                                                    Constants.resultService >
-                                                                0 &&
-                                                            text[i] ==
-                                                                'Client Requests'
-                                                        ? Positioned(
-                                                            bottom: -5,
-                                                            right: -12,
-                                                            child: CircleAvatar(
-                                                              radius: 10,
-                                                              backgroundColor:
-                                                                  redColor,
-                                                              child: MyText(
-                                                                text: Constants
-                                                                    .resultRequest
-                                                                    .toString(), //'12',
-                                                                color:
-                                                                    whiteColor,
-                                                                weight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                size: 9,
-                                                              ),
+                                                  );
+                                                }
+                                                if (text[i] == 'My Services') {
+                                                  Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                      builder: (_) {
+                                                        return const MyServices();
+                                                      },
+                                                    ),
+                                                  );
+                                                }
+                                                if (text[i] ==
+                                                    'Client Requests') {
+                                                  Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                      builder: (_) {
+                                                        return const ClientsRequests();
+                                                      },
+                                                    ),
+                                                  );
+                                                }
+                                              },
+                                              child: Stack(
+                                                clipBehavior: Clip.none,
+                                                children: [
+                                                  Image(
+                                                    image: ExactAssetImage(
+                                                        partnerImages[i]),
+                                                    height: 30,
+                                                    width: 30,
+                                                  ),
+                                                  Constants.resultService > 0 &&
+                                                          text[i] ==
+                                                              'Client Requests'
+                                                      ? Positioned(
+                                                          bottom: -5,
+                                                          right: -12,
+                                                          child: CircleAvatar(
+                                                            radius: 10,
+                                                            backgroundColor:
+                                                                redColor,
+                                                            child: MyText(
+                                                              text: Constants
+                                                                  .resultRequest
+                                                                  .toString(), //'12',
+                                                              color: whiteColor,
+                                                              weight: FontWeight
+                                                                  .bold,
+                                                              size: 9,
                                                             ),
-                                                          )
-                                                        : const SizedBox(),
-                                                    Constants.resultService >
-                                                                0 &&
-                                                            text[i] ==
-                                                                'My Services'
-                                                        ? Positioned(
-                                                            bottom: -5,
-                                                            right: -12,
-                                                            child: CircleAvatar(
-                                                              radius: 10,
-                                                              backgroundColor:
-                                                                  redColor,
-                                                              child: MyText(
-                                                                text: Constants
-                                                                    .resultService
-                                                                    .toString(), //'12',
-                                                                color:
-                                                                    whiteColor,
-                                                                weight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                size: 9,
-                                                              ),
+                                                          ),
+                                                        )
+                                                      : const SizedBox(),
+                                                  Constants.resultService > 0 &&
+                                                          text[i] ==
+                                                              'My Services'
+                                                      ? Positioned(
+                                                          bottom: -5,
+                                                          right: -12,
+                                                          child: CircleAvatar(
+                                                            radius: 10,
+                                                            backgroundColor:
+                                                                redColor,
+                                                            child: MyText(
+                                                              text: Constants
+                                                                  .resultService
+                                                                  .toString(), //'12',
+                                                              color: whiteColor,
+                                                              weight: FontWeight
+                                                                  .bold,
+                                                              size: 9,
                                                             ),
-                                                          )
-                                                        : const SizedBox()
-                                                  ],
-                                                ),
+                                                          ),
+                                                        )
+                                                      : const SizedBox()
+                                                ],
                                               ),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              MyText(
-                                                text: text[i],
-                                                color: greyColor.withOpacity(1),
-                                                weight: FontWeight.bold,
-                                              )
-                                            ],
-                                          )
-                                      ],
-                                    ),
+                                            ),
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            MyText(
+                                              text: text[i],
+                                              color: greyColor.withOpacity(1),
+                                              weight: FontWeight.bold,
+                                            )
+                                          ],
+                                        )
+                                    ],
                                   ),
                                 ),
                               ),
+                            ),
                           ],
                         ),
                       // if (Constants.profile.bp.packagesId == 0 &&
