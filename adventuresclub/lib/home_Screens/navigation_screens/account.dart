@@ -1095,7 +1095,7 @@ class _AccountState extends State<Account> {
                                                   fontFamily: "Raleway",
                                                 ),
                                                 GestureDetector(
-                                                  onTap: packagesList,
+                                                  onTap: ex,
                                                   // () {
                                                   //   Navigator.of(context)
                                                   //       .push(MaterialPageRoute(builder: (_) {
