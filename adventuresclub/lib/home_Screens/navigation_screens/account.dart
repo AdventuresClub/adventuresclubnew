@@ -1213,7 +1213,7 @@ class _AccountState extends State<Account> {
                                                       height: 30,
                                                       width: 30,
                                                     ),
-                                                    Constants.resultService >
+                                                    Constants.resultRequest >
                                                                 0 &&
                                                             text[i] ==
                                                                 'Client Requests'
@@ -1430,7 +1430,7 @@ class _AccountState extends State<Account> {
                                                     height: 30,
                                                     width: 30,
                                                   ),
-                                                  Constants.resultService > 0 &&
+                                                  Constants.resultRequest > 0 &&
                                                           text[i] ==
                                                               'Client Requests'
                                                       ? Positioned(
