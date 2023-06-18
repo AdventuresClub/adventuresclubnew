@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OfficialDetails extends StatefulWidget {
   const OfficialDetails({super.key});
@@ -324,19 +325,28 @@ class _OfficialDetailsState extends State<OfficialDetails> {
                 filename: fileName));
             dynamic programData = {
               'user_id': Constants.userId.toString(), //"27", //27, //"27",
-              'company_name': nameController.text, //deles
-              'address': addController.text, //pakistan
-              'location': iLiveInController.text, //lahore
+              'company_name': nameController.text.trim(), //deles
+              'address': addController.text.trim(), //pakistan
+              'location': iLiveInController.text.trim(), //lahore
               "license": license, //"Yes", //license, //"Yes", //license,
-              "cr_name": crName.text,
-              "cr_number": crNumber.text, //crNum, //crNumber.text,
+              "cr_name": crName.text.trim(),
+              "cr_number": crNumber.text.trim(), //crNum, //crNumber.text,
             };
             request.fields.addAll(programData);
             log(request.fields.toString());
             final response = await request.send();
             if (response.statusCode == 200) {
-              message("Information Updated Successfully");
+              // SharedPreferences prefs = await Constants.getPrefs();
+              // prefs.setString("company_Name", nameController.text.trim());
+              // prefs.setString("address", addController.text);
+              // prefs.setString("location", iLiveInController.text.trim());
+              // prefs.setString("license", license);
+              // prefs.setString("cr_name", crName.text.trim());
+              // prefs.setString("cr_number", crNumber.text.trim());
+              Constants.emailId = nameController.text.trim();
+              Constants.name = nameController.text.trim();
               Constants.getProfile();
+              message("Information Updated Successfully");
             } else {
               dynamic body = jsonDecode(response.toString());
               message(body['message'].toString());

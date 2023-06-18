@@ -62,6 +62,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                   'email': emailController.text.trim(),
                 });
             if (response.statusCode == 200) {
+              Constants.getProfile();
               SharedPreferences prefs = await Constants.getPrefs();
               prefs.setString("name", nameController.text.trim());
               prefs.setString("email", emailController.text);

@@ -39,6 +39,9 @@ class _PaymentDetailsState extends State<PaymentDetails> {
     } else {
       payonArrival = "1";
     }
+    bankNameController.text = Constants.profile.bp.bankName;
+    accountNameController.text = Constants.profile.bp.accountHoldername;
+    accountNumberController.text = Constants.profile.bp.accountNumber;
     bankName = Constants.profile.bp.bankName;
     bankAccountName = Constants.profile.bp.accountHoldername;
     bankAccountNumber = Constants.profile.bp.accountNumber;
@@ -55,7 +58,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                 body: {
                   'user_id': Constants.userId.toString(), //ccCode.toString(),
                   "debit_card": "1",
-                  "payon_arrival": payonArrival,
+                  "payon_arrival": payArrivalClicked.toString(),
                   "bankname": bankNameController.text.trim(),
                   "account_holdername": accountNameController.text.trim(),
                   "account_number": accountNumberController.text,
@@ -66,6 +69,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                       "0", //isWireTrasfer //"1", //isWireTrasfer,
                 });
             if (response.statusCode == 200) {
+              Constants.getProfile();
               message("Information Updated");
             } else {
               dynamic body = jsonDecode(response.body);
@@ -99,10 +103,11 @@ class _PaymentDetailsState extends State<PaymentDetails> {
       setState(() {
         payArrival = true;
       });
+    } else {
+      setState(() {
+        payArrival = false;
+      });
     }
-    setState(() {
-      payArrival = false;
-    });
   }
 
   void updateStatus(bool status, int update) {
