@@ -18,7 +18,6 @@ import 'package:adventuresclub/models/services/included_activities_model.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
 import 'package:adventuresclub/widgets/circle_image_avatar.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
-import 'package:adventuresclub/widgets/upcoming_request_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -377,6 +376,35 @@ class _UpcomingRequestInformationState
       // transactionId = "${randomString}${randomString}";
     });
     return randomString; // return the generated string
+  }
+
+  void dropped(String bookingId) async {
+    try {
+      var response = await http.post(
+          Uri.parse(
+              "https://adventuresclub.net/adventureClub/api/v1/booking_accept"),
+          body: {
+            'booking_id': bookingId,
+            'user_id': Constants.userId.toString(),
+            'status': "5",
+          });
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      if (response.statusCode == 200) {
+        message("Dropped Successfully");
+        // homePage();
+      }
+      print(response.statusCode);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  void message(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
   }
 
   @override
@@ -742,11 +770,10 @@ class _UpcomingRequestInformationState
                     child: Material(
                       color: Colors.transparent,
                       child: InkWell(
-                        onTap: () {},
-                        // () => selected(
-                        //     context,
-                        //     widget.uRequestList.serviceId,
-                        //     widget.uRequestList.providerId),
+                        onTap: // () {},
+                            () => dropped(
+                          widget.uRequestList.BookingId.toString(),
+                        ),
                         child: const Center(
                           child: Text(
                             'Cancel Request',

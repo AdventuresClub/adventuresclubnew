@@ -6,11 +6,13 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/banners/banners_model.dart';
 import 'package:adventuresclub/models/home_services/home_services_model.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
+import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/Lists/home_lists/service_List.dart';
 import 'package:adventuresclub/widgets/Lists/home_lists/top_list.dart';
 import 'package:adventuresclub/widgets/home_widgets/stack_home.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -37,6 +39,7 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     getBanners();
+    getServicesList();
   }
 
   void getBanners() async {
@@ -85,6 +88,10 @@ class _HomeState extends State<Home> {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  void getServicesList() {
+    Provider.of<ServicesProvider>(context, listen: false).getServicesList();
   }
 
   @override

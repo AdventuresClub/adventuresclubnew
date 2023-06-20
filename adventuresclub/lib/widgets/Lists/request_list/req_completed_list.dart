@@ -551,6 +551,28 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
     }));
   }
 
+  void dropped(String bookingId) async {
+    Navigator.of(context).pop();
+    try {
+      var response = await http.post(
+          Uri.parse(
+              "https://adventuresclub.net/adventureClub/api/v1/booking_accept"),
+          body: {
+            'booking_id': bookingId,
+            'user_id': Constants.userId.toString(),
+            'status': "5",
+          });
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      if (response.statusCode == 200) {
+        message("Deleted Successfully");
+        // homePage();
+      }
+      print(response.statusCode);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return loading

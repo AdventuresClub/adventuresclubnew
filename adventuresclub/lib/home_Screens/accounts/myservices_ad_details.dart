@@ -77,6 +77,87 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
     }
   }
 
+  void deleteService(String id) async {
+    try {
+      var response = await http.post(
+          Uri.parse(
+              "https://adventuresclub.net/adventureClub/api/v1/services_delete"),
+          body: {
+            'services_id': id,
+          });
+      // var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      if (response.statusCode == 200) {
+        dynamic body = jsonDecode(response.body);
+        // error = decodedError['data']['name'];
+        // Constants.showMessage(context, body['message'].toString());
+        showConfirmation(body['message'].toString());
+      } else {
+        dynamic body = jsonDecode(response.body);
+        showConfirmation(body['message'].toString());
+      }
+      print(response.statusCode);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  void showConfirmation(String title) async {
+    showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+              contentPadding: const EdgeInsets.all(12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              title: const Text(
+                "Are you sure you want to delete this",
+                textAlign: TextAlign.center,
+              ),
+              actions: [
+                MaterialButton(
+                  onPressed: cancel,
+                  child: const Text("No"),
+                ),
+                MaterialButton(
+                  onPressed: () => showdelete(title),
+                  child: const Text("Yes"),
+                )
+              ],
+            ));
+  }
+
+  void showdelete(String title) {
+    Navigator.of(context).pop();
+    deleteConfirmation(title);
+  }
+
+  void deleteConfirmation(String title) async {
+    showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+              contentPadding: const EdgeInsets.all(12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              title: Text(
+                title,
+                textAlign: TextAlign.center,
+              ),
+              actions: [
+                MaterialButton(
+                  onPressed: cancel,
+                  child: const Text("No"),
+                ),
+                MaterialButton(
+                  onPressed: cancel,
+                  child: const Text("Yes"),
+                )
+              ],
+            ));
+  }
+
+  void cancel() {
+    Navigator.of(context).pop();
+  }
+
   Future getChatNotification() async {
     var response = await http.get(Uri.parse(
         "https://adventuresclub.net/adventureClub/unreadchatcount/'${Constants.userId}/${widget.sm.serviceId}"));
@@ -178,22 +259,27 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            GestureDetector(
-                              onTap: () => editService(widget.sm.id.toString(),
-                                  widget.sm.providerId.toString()),
-                              child: const Image(
-                                image: ExactAssetImage('images/edit.png'),
-                                height: 20,
-                                width: 20,
-                              ),
-                            ),
+                            // GestureDetector(
+                            //   onTap: () {},
+                            //   //=> editService(widget.sm.id.toString(),
+                            //   //  widget.sm.providerId.toString()),
+                            //   child: const Image(
+                            //     image: ExactAssetImage('images/edit.png'),
+                            //     height: 20,
+                            //     width: 20,
+                            //   ),
+                            // ),
                             const SizedBox(
                               width: 20,
                             ),
-                            const Image(
-                              image: ExactAssetImage('images/bin.png'),
-                              height: 20,
-                              width: 20,
+                            GestureDetector(
+                              onTap: () =>
+                                  deleteService(widget.sm.serviceId.toString()),
+                              child: const Image(
+                                image: ExactAssetImage('images/bin.png'),
+                                height: 20,
+                                width: 20,
+                              ),
                             ),
                           ],
                         ),

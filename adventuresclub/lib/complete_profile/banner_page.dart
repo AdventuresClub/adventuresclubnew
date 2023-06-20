@@ -48,7 +48,7 @@ class _BannerPageState extends State<BannerPage> {
   // }
 
   void pickMedia(int i) async {
-    Navigator.of(context).pop();
+    // Navigator.of(context).pop();
     setState(() {
       loading = true;
     });

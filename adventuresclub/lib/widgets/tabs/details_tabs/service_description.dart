@@ -34,14 +34,7 @@ class ServiceDescription extends StatelessWidget {
               : Container(),
           // location etc
           DescriptionDetailsWidget(
-            text1,
-            text4,
-            text5,
-            text6,
-            stars,
-            reviewedBy,
-            id,
-          ),
+              text1, text4, text5, text6, stars, reviewedBy, id, gm),
           show! ? ServiceScheduleWidget(gm.sPlan, gm.programmes) : Container(),
           // information widget
           DescriptionInformationWidget(gm.writeInformation),

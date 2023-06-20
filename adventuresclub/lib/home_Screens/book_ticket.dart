@@ -36,6 +36,7 @@ class _BookTicketState extends State<BookTicket> {
   int index = 0;
   String userId = "";
   var endDate;
+  double pPerson = 0;
   List text = [
     'Per Person',
     'Total Person    x1',
@@ -51,14 +52,22 @@ class _BookTicketState extends State<BookTicket> {
     'ر.ع 19,350'
   ];
 
+  void convert(String d) {
+    double i = double.tryParse(d) ?? 0;
+    setState(() {
+      pPerson = i;
+    });
+    print(pPerson);
+  }
+
   @override
   void initState() {
     super.initState();
     formattedDate = 'Desired Date';
     addPerson();
+    convert(widget.gm.costInc);
     setState(() {
       text2.insert(0, widget.gm.costInc);
-
       //text2.insert(0, tPerson());
 
       //  userId = Constants.userID;
@@ -78,8 +87,8 @@ class _BookTicketState extends State<BookTicket> {
   Future<void> _selectDate(BuildContext context) async {
     pickedDate = await showDatePicker(
         context: context,
-        initialDate: currentDate,
-        firstDate: DateTime(DateTime.now().day - 1),
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
         lastDate: DateTime(2050));
     if (pickedDate != null && pickedDate != currentDate) {
       setState(() {
@@ -498,7 +507,8 @@ class _BookTicketState extends State<BookTicket> {
                             });
                           }),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 12),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -520,9 +530,10 @@ class _BookTicketState extends State<BookTicket> {
                               ),
                             ),
                             const SizedBox(
-                              width: 50,
+                              width: 70,
                             ),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 MyText(
                                   text: 'Opt to use',
@@ -534,18 +545,19 @@ class _BookTicketState extends State<BookTicket> {
                             ),
                             SizedBox(
                               width: 35,
-                              height: 60,
+                              height: 35,
                               child: TextField(
                                 controller: pointsController,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(fontSize: 16),
                                 decoration: InputDecoration(
-                                    hintText: "Promo Code",
-                                    hintStyle:
-                                        const TextStyle(color: blackColor),
+                                    hintText: "0",
+                                    hintStyle: const TextStyle(
+                                        color: blackColor, fontSize: 16),
                                     suffixText: "Apply",
                                     contentPadding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 10),
+                                      horizontal: 12,
+                                    ),
                                     isDense: true,
                                     filled: true,
                                     fillColor: whiteColor,
@@ -568,7 +580,7 @@ class _BookTicketState extends State<BookTicket> {
                                             color:
                                                 blackColor.withOpacity(0.2)))),
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -640,7 +652,7 @@ class _BookTicketState extends State<BookTicket> {
                                 fontFamily: 'Roboto'),
                             MyText(
                                 // text: widget.gm.costInc,
-                                text: widget.gm.costInc,
+                                text: "${pPerson.toStringAsFixed(0)}${" OMR"}",
                                 color: greyColor,
                                 weight: FontWeight.bold,
                                 fontFamily: 'Roboto'),
@@ -660,7 +672,8 @@ class _BookTicketState extends State<BookTicket> {
                                 fontFamily: 'Roboto'),
                             MyText(
                                 // text: widget.gm.costInc,
-                                text: totalCost.toStringAsFixed(2),
+                                text:
+                                    "${totalCost.toStringAsFixed(0)}${" OMR"}",
                                 color: greyColor,
                                 weight: FontWeight.bold,
                                 fontFamily: 'Roboto'),
@@ -679,8 +692,8 @@ class _BookTicketState extends State<BookTicket> {
                                 fontFamily: 'Roboto'),
                             MyText(
                                 // text: widget.gm.costInc,
-                                text: "0",
-                                color: greyColor,
+                                text: "-0 OMR",
+                                color: blueTextColor,
                                 weight: FontWeight.bold,
                                 fontFamily: 'Roboto'),
                           ],
@@ -698,8 +711,8 @@ class _BookTicketState extends State<BookTicket> {
                                 fontFamily: 'Roboto'),
                             MyText(
                                 // text: widget.gm.costInc,
-                                text: "",
-                                color: greyColor,
+                                text: "-0 OMR",
+                                color: blueTextColor,
                                 weight: FontWeight.bold,
                                 fontFamily: 'Roboto'),
                           ],
@@ -708,7 +721,7 @@ class _BookTicketState extends State<BookTicket> {
                         //   ),
                         // ),
                         const SizedBox(height: 5),
-                        const Divider(),
+                        const Divider(thickness: 3),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

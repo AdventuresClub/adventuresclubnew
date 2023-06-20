@@ -86,7 +86,7 @@ class _ParticipantsListState extends State<ParticipantsList> {
 
   //// https://adventuresclub.net/adventureClub/newchat/3/2/6 //provider = 3 , service = 2 , member/userId = 6
 
-  void showConfirmation(String id) async {
+  void showConfirmation(String bookingId, String bookingUser) async {
     showDialog(
         context: context,
         builder: (ctx) => SimpleDialog(
@@ -129,7 +129,7 @@ class _ParticipantsListState extends State<ParticipantsList> {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () => delete(id),
+                      onPressed: () => delete(bookingId, bookingUser),
                       child: MyText(
                         text: "Yes",
                       ),
@@ -191,16 +191,16 @@ class _ParticipantsListState extends State<ParticipantsList> {
 
   //https://adventuresclub.net/adventureClub/api/v1/booking_accept
 
-  void delete(String id) async {
+  void delete(String bookingId, String bookingUser) async {
     Navigator.of(context).pop();
     try {
       var response = await http.post(
           Uri.parse(
               "https://adventuresclub.net/adventureClub/api/v1/booking_accept"),
           body: {
-            'booking_id': id,
-            'status': "5",
-            'user_id': Constants.userId.toString(),
+            'booking_id': bookingId,
+            'user_id': bookingUser,
+            'status': "3",
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       if (response.statusCode == 200) {
@@ -289,49 +289,49 @@ class _ParticipantsListState extends State<ParticipantsList> {
                             children: [
                               if (widget.gm[index].status == "0")
                                 MyText(
-                                  text: "Paid", //'Confirmed',
-                                  color: redColor,
+                                  text: "REQUESTED", //'Confirmed',
+                                  color: blueColor1,
                                   weight: FontWeight.bold,
                                 ),
                               if (widget.gm[index].status == "1")
                                 MyText(
-                                  text: "Accepted", //'Confirmed',
-                                  color: greenColor1,
+                                  text: "ACCEPTED", //'Confirmed',
+                                  color: orangeColor,
                                   weight: FontWeight.bold,
                                 ),
                               if (widget.gm[index].status == "2")
                                 MyText(
-                                  text: "Requested", //'Confirmed',
+                                  text: "PAID", //'Confirmed',
                                   color: greenColor1,
                                   weight: FontWeight.bold,
                                 ),
                               if (widget.gm[index].status == "3")
                                 MyText(
-                                  text: "Declined", //'Confirmed',
+                                  text: "DECLINED", //'Confirmed',
                                   color: redColor,
                                   weight: FontWeight.bold,
                                 ),
                               if (widget.gm[index].status == "4")
                                 MyText(
-                                  text: "Completed", //'Confirmed',
+                                  text: "COMPLETED", //'Confirmed',
                                   color: greenColor1,
                                   weight: FontWeight.bold,
                                 ),
                               if (widget.gm[index].status == "5")
                                 MyText(
-                                  text: "Dropped", //'Confirmed',
+                                  text: "DROPPED", //'Confirmed',
                                   color: redColor,
                                   weight: FontWeight.bold,
                                 ),
                               if (widget.gm[index].status == "6")
                                 MyText(
-                                  text: "Confirm", //'Confirmed',
+                                  text: "CONFIRM", //'Confirmed',
                                   color: greenColor1,
                                   weight: FontWeight.bold,
                                 ),
                               if (widget.gm[index].status == "7")
                                 MyText(
-                                  text: "UnPaid", //'Confirmed',
+                                  text: "UNPAID", //'Confirmed',
                                   color: greenColor1,
                                   weight: FontWeight.bold,
                                 ),
@@ -340,7 +340,8 @@ class _ParticipantsListState extends State<ParticipantsList> {
                               ),
                               GestureDetector(
                                 onTap: () => showConfirmation(
-                                    widget.gm[index].bookingId.toString()),
+                                    widget.gm[index].bookingId.toString(),
+                                    widget.gm[index].bookingUser.toString()),
                                 child: const Icon(
                                   Icons.delete_forever_outlined,
                                   color: redColor,
@@ -516,22 +517,22 @@ class _ParticipantsListState extends State<ParticipantsList> {
                                         " ${"Adult"}"
                                         ",  "
                                         "${widget.gm[index].kids} "
-                                        " ${" Youngsters "}",
+                                        " ${"Youngsters "}",
                                     style: const TextStyle(
                                       fontSize: 12,
                                       color: greyTextColor,
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
-                                  TextSpan(
-                                    text: "${widget.gm[index].kids} "
-                                        " ${"Kids"}",
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      color: greyTextColor,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
+                                  // TextSpan(
+                                  //   text: "${widget.gm[index].kids} "
+                                  //       " ${"Kids"}",
+                                  //   style: const TextStyle(
+                                  //     fontSize: 12,
+                                  //     color: greyTextColor,
+                                  //     fontWeight: FontWeight.w400,
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),
@@ -656,14 +657,17 @@ class _ParticipantsListState extends State<ParticipantsList> {
                                 text: 'Health : ',
                                 style: const TextStyle(
                                     color: blackColor,
-                                    fontSize: 14,
+                                    fontSize: 15,
+                                    fontFamily: 'Raleway',
                                     fontWeight: FontWeight.bold),
                                 children: <TextSpan>[
                                   TextSpan(
                                     text:
                                         "${widget.gm[index].healthConditions} ",
                                     style: const TextStyle(
-                                      fontSize: 12,
+                                      fontSize: 13,
+                                      wordSpacing: 1,
+                                      fontFamily: 'Raleway',
                                       color: greyTextColor,
                                       fontWeight: FontWeight.w400,
                                     ),
@@ -671,9 +675,9 @@ class _ParticipantsListState extends State<ParticipantsList> {
                                 ],
                               ),
                             ),
-                            const SizedBox(
-                              height: 5,
-                            ),
+                            // const SizedBox(
+                            //   height: 5,
+                            // ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [

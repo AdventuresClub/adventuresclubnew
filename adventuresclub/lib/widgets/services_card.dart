@@ -74,7 +74,7 @@ class _ServicesCardState extends State<ServicesCard> {
     int i = 0;
     widget.gm.availabilityPlan.forEach((element) {
       availabilityPlanText.add(element.day);
-      if (i < 3) {
+      if (i < 4) {
         //availability += availabilityPlanText.join("| ");
         availability += "${element.day} ";
         i++;
@@ -170,7 +170,7 @@ class _ServicesCardState extends State<ServicesCard> {
                                   //   width: 2,
                                   // ),
                                   MyText(
-                                    text: widget.gm.region,
+                                    text: widget.gm.sAddress,
                                     maxLines: 1,
                                     color: blackColor,
                                     size: 10,

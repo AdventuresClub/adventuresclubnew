@@ -105,6 +105,8 @@ class _RequestInformationState extends State<RequestInformation> {
                 //           "${'https://adventuresclub.net/adventureClub/public/uploads/'}${gRM[0].sm.imageUrl}"),
                 // ),
                 title: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
@@ -328,9 +330,10 @@ class _RequestInformationState extends State<RequestInformation> {
                       text: TextSpan(
                         text: 'Health Condition: ',
                         style: const TextStyle(
-                          color: blackColor,
-                          fontSize: 13,
-                        ),
+                            color: blackColor,
+                            fontSize: 13,
+                            fontFamily: "Raleway",
+                            fontWeight: FontWeight.w500),
                         children: <TextSpan>[
                           TextSpan(
                               text: widget.gRM.healthCondition,
@@ -338,6 +341,7 @@ class _RequestInformationState extends State<RequestInformation> {
                                 fontSize: 13,
                                 color: blackColor,
                                 fontWeight: FontWeight.w300,
+                                fontFamily: "Raleway",
                               )),
                         ],
                       ),
@@ -382,24 +386,44 @@ class _RequestInformationState extends State<RequestInformation> {
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        MyText(
-                          text: 'Client Message: ',
-                          color: blackColor,
-                          weight: FontWeight.w500,
-                          size: 12,
-                          height: 1.6,
-                        ),
-                        MyText(
-                          text: widget.gRM.message,
-                          color: greyColor,
-                          weight: FontWeight.w400,
-                          size: 12,
-                        ),
-                      ],
+                    RichText(
+                      text: TextSpan(
+                        text: 'Client Message: ',
+                        style: const TextStyle(
+                            color: blackColor,
+                            fontSize: 13,
+                            fontFamily: "Raleway",
+                            fontWeight: FontWeight.w500),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: widget.gRM.message,
+                              style: const TextStyle(
+                                fontSize: 13,
+                                color: blackColor,
+                                fontWeight: FontWeight.w300,
+                                fontFamily: "Raleway",
+                              )),
+                        ],
+                      ),
                     ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.start,
+                    //   children: [
+                    //     MyText(
+                    //       text: 'Client Message: ',
+                    //       color: blackColor,
+                    //       weight: FontWeight.w500,
+                    //       size: 12,
+                    //       height: 1.6,
+                    //     ),
+                    //     MyText(
+                    //       text: widget.gRM.message,
+                    //       color: greyColor,
+                    //       weight: FontWeight.w400,
+                    //       size: 12,
+                    //     ),
+                    //   ],
+                    // ),
                   ],
                 )),
 
