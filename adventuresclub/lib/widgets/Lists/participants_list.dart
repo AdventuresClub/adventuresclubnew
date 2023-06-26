@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:adventuresclub/widgets/participants_container.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
@@ -11,8 +12,8 @@ import '../../models/getParticipants/get_participants_model.dart';
 import 'Chat_list.dart/show_chat.dart';
 
 class ParticipantsList extends StatefulWidget {
-  final List<GetParticipantsModel> gm;
-  const ParticipantsList(this.gm, {super.key});
+  final List<GetParticipantsModel> participantsList;
+  const ParticipantsList(this.participantsList, {super.key});
 
   @override
   State<ParticipantsList> createState() => _ParticipantsListState();
@@ -22,11 +23,13 @@ class _ParticipantsListState extends State<ParticipantsList> {
   bool value = false;
   List<String> customers = [];
   List<String> nationality = [];
+  List<GetParticipantsModel> gm = [];
   //DateTime now = DateTime.now();
 
   @override
   void initState() {
     super.initState();
+    gm = widget.participantsList;
     //final age = now.year - birthdate.year;
   }
 
@@ -86,7 +89,7 @@ class _ParticipantsListState extends State<ParticipantsList> {
 
   //// https://adventuresclub.net/adventureClub/newchat/3/2/6 //provider = 3 , service = 2 , member/userId = 6
 
-  void showConfirmation(String bookingId, String bookingUser) async {
+  void showConfirmation(String bookingId, String bookingUser, int index) async {
     showDialog(
         context: context,
         builder: (ctx) => SimpleDialog(
@@ -129,7 +132,7 @@ class _ParticipantsListState extends State<ParticipantsList> {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () => delete(bookingId, bookingUser),
+                      onPressed: () => delete(bookingId, bookingUser, index),
                       child: MyText(
                         text: "Yes",
                       ),
@@ -191,21 +194,28 @@ class _ParticipantsListState extends State<ParticipantsList> {
 
   //https://adventuresclub.net/adventureClub/api/v1/booking_accept
 
-  void delete(String bookingId, String bookingUser) async {
+  void delete(String bookingId, String bookingUser, int index) async {
     Navigator.of(context).pop();
     try {
+      GetParticipantsModel pm = gm.elementAt(index);
+      setState(() {
+        gm.removeAt(index);
+      });
       var response = await http.post(
           Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/booking_accept"),
+              "https://adventuresclub.net/adventureClub/api/v1/booking_delete"),
           body: {
             'booking_id': bookingId,
-            'user_id': bookingUser,
-            'status': "3",
+            // 'user_id': bookingUser,
+            // 'status': "3",
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-      if (response.statusCode == 200) {
+      if (response.statusCode != 200) {
+        setState(() {
+          gm.insert(index, pm);
+        });
+      } else {
         message("Deleted Successfully");
-        homePage();
       }
       print(response.statusCode);
     } catch (e) {
@@ -252,7 +262,7 @@ class _ParticipantsListState extends State<ParticipantsList> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.gm.isEmpty
+    return gm.isEmpty
         ? Center(
             child: MyText(
               text: "No Participants Yet",
@@ -264,574 +274,580 @@ class _ParticipantsListState extends State<ParticipantsList> {
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 00),
             shrinkWrap: true,
             physics: const ClampingScrollPhysics(),
-            itemCount: widget.gm.length,
+            itemCount: gm.length,
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
-              return Card(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 15.0, left: 10, right: 10, bottom: 15),
-                  child: Column(
-                    // direction: Axis.vertical,
-                    // alignment: WrapAlignment.spaceBetween,
-                    //crossAxisAlignment: WrapCrossAlignment.,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          MyText(
-                            text: widget.gm[index].region, //'Location Name',
-                            color: blackColor,
-                            weight: FontWeight.bold,
-                          ),
-                          Row(
-                            children: [
-                              if (widget.gm[index].status == "0")
-                                MyText(
-                                  text: "REQUESTED", //'Confirmed',
-                                  color: blueColor1,
-                                  weight: FontWeight.bold,
-                                ),
-                              if (widget.gm[index].status == "1")
-                                MyText(
-                                  text: "ACCEPTED", //'Confirmed',
-                                  color: orangeColor,
-                                  weight: FontWeight.bold,
-                                ),
-                              if (widget.gm[index].status == "2")
-                                MyText(
-                                  text: "PAID", //'Confirmed',
-                                  color: greenColor1,
-                                  weight: FontWeight.bold,
-                                ),
-                              if (widget.gm[index].status == "3")
-                                MyText(
-                                  text: "DECLINED", //'Confirmed',
-                                  color: redColor,
-                                  weight: FontWeight.bold,
-                                ),
-                              if (widget.gm[index].status == "4")
-                                MyText(
-                                  text: "COMPLETED", //'Confirmed',
-                                  color: greenColor1,
-                                  weight: FontWeight.bold,
-                                ),
-                              if (widget.gm[index].status == "5")
-                                MyText(
-                                  text: "DROPPED", //'Confirmed',
-                                  color: redColor,
-                                  weight: FontWeight.bold,
-                                ),
-                              if (widget.gm[index].status == "6")
-                                MyText(
-                                  text: "CONFIRM", //'Confirmed',
-                                  color: greenColor1,
-                                  weight: FontWeight.bold,
-                                ),
-                              if (widget.gm[index].status == "7")
-                                MyText(
-                                  text: "UNPAID", //'Confirmed',
-                                  color: greenColor1,
-                                  weight: FontWeight.bold,
-                                ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              GestureDetector(
-                                onTap: () => showConfirmation(
-                                    widget.gm[index].bookingId.toString(),
-                                    widget.gm[index].bookingUser.toString()),
-                                child: const Icon(
-                                  Icons.delete_forever_outlined,
-                                  color: redColor,
-                                  size: 20,
-                                ),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        thickness: 2,
-                        color: blackColor.withOpacity(0.4),
-                      ),
-                      ListTile(
-                        leading: CircleAvatar(
-                          radius: 26,
-                          backgroundImage:
-                              //ExactAssetImage('images/airrides.png'),
-                              NetworkImage(
-                                  "${'https://adventuresclub.net/adventureClub/public/'}${widget.gm[index].providerProfile}"),
-                        ),
-                        //     const CircleAvatar(
-                        //   radius: 28,
-                        //   backgroundImage:
-                        //       ExactAssetImage('images/airrides.png'),
-                        // ),
-                        // NetworkImage(
-                        //     "${'https://adventuresclub.net/adventureClub/public/uploads/'}${widget.gm[index].sm[index].imageUrl}")),,
-                        title: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                MyText(
-                                  text: widget.gm[index].adventureName,
-                                  color: blackColor,
-                                  weight: FontWeight.w700,
-                                  size: 14,
-                                  height: 1.8,
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                MyText(
-                                  text: 'Booking Id : ',
-                                  color: blackColor,
-                                  weight: FontWeight.w700,
-                                  size: 14,
-                                  height: 1.8,
-                                ),
-                                MyText(
-                                  text: widget.gm[index].bookingId,
-                                  color: greyTextColor,
-                                  weight: FontWeight.w400,
-                                  size: 12,
-                                  height: 1.8,
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                MyText(
-                                  text: 'UserName : ',
-                                  color: blackColor,
-                                  weight: FontWeight.w700,
-                                  size: 14,
-                                  height: 1.8,
-                                ),
-                                MyText(
-                                  text: widget.gm[index].customer,
-                                  color: greyTextColor,
-                                  weight: FontWeight.w400,
-                                  size: 12,
-                                  height: 1.8,
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                MyText(
-                                  text: 'How Old : ',
-                                  color: blackColor,
-                                  weight: FontWeight.w700,
-                                  size: 14,
-                                  height: 1.8,
-                                ),
-                                MyText(
-                                  text: calculateAge(widget.gm[index].dob),
-                                  color: greyTextColor,
-                                  weight: FontWeight.w400,
-                                  size: 12,
-                                  height: 1.8,
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                MyText(
-                                  text: 'Nationality : ',
-                                  color: blackColor,
-                                  weight: FontWeight.w700,
-                                  size: 14,
-                                  height: 1.8,
-                                ),
-                                MyText(
-                                  text: widget.gm[index].nationality,
-                                  color: greyTextColor,
-                                  weight: FontWeight.w400,
-                                  size: 12,
-                                  height: 1.8,
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                MyText(
-                                  text: 'Booked On : ',
-                                  color: blackColor,
-                                  weight: FontWeight.w700,
-                                  size: 14,
-                                  height: 1.8,
-                                ),
-                                MyText(
-                                  text: widget.gm[index].bookedOn,
-                                  color: greyTextColor,
-                                  weight: FontWeight.w400,
-                                  size: 12,
-                                  height: 1.8,
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                MyText(
-                                  text: 'Service Date : ',
-                                  color: blackColor,
-                                  weight: FontWeight.w700,
-                                  size: 14,
-                                  height: 1.8,
-                                ),
-                                MyText(
-                                  text: widget.gm[index].serviceDate,
-                                  color: greyTextColor,
-                                  weight: FontWeight.w400,
-                                  size: 12,
-                                  height: 1.8,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                text: 'Registrations : ',
-                                style: const TextStyle(
-                                    color: blackColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: "${widget.gm[index].adult} "
-                                        " ${"Adult"}"
-                                        ",  "
-                                        "${widget.gm[index].kids} "
-                                        " ${"Youngsters "}",
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      color: greyTextColor,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                  // TextSpan(
-                                  //   text: "${widget.gm[index].kids} "
-                                  //       " ${"Kids"}",
-                                  //   style: const TextStyle(
-                                  //     fontSize: 12,
-                                  //     color: greyTextColor,
-                                  //     fontWeight: FontWeight.w400,
-                                  //   ),
-                                  // ),
-                                ],
-                              ),
-                            ),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.start,
-                            //   children: [
-                            //     MyText(
-                            //       text: 'Registrations : ',
-                            //       color: blackColor,
-                            //       weight: FontWeight.w700,
-                            //       size: 14,
-                            //       height: 1.8,
-                            //     ),
-                            //     if (widget.gm[index].adult != 0)
-                            //       MyText(
-                            //         text: "${widget.gm[index].adult} "
-                            //             " ${"Adult"}"
-                            //             ",  "
-                            //             "${widget.gm[index].kids} "
-                            //             " ${"Youngsters"}",
-                            //         color: greyTextColor,
-                            //         weight: FontWeight.w400,
-                            //         size: 12,
-                            //         height: 1.8,
-                            //       ),
-                            //     if (widget.gm[index].kids != 0)
-                            //       MyText(
-                            //         text: "${widget.gm[index].kids} "
-                            //             " ${"Kids"}",
-                            //         color: greyTextColor,
-                            //         weight: FontWeight.w400,
-                            //         size: 12,
-                            //         height: 1.8,
-                            //       ),
-                            //   ],
-                            // ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                MyText(
-                                  text: 'Unit Cost : ',
-                                  color: blackColor,
-                                  weight: FontWeight.w700,
-                                  size: 14,
-                                  height: 1.8,
-                                ),
-                                MyText(
-                                  overFlow: TextOverflow.ellipsis,
-                                  text: "${widget.gm[index].unitCost} "
-                                      "  ${widget.gm[index].currency}",
-                                  color: greyTextColor,
-                                  weight: FontWeight.w400,
-                                  size: 12,
-                                  height: 1.8,
-                                ),
-                              ],
-                            ),
-                            Row(
-                              // mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                MyText(
-                                  text: 'Total Cost : ',
-                                  color: blackColor,
-                                  weight: FontWeight.w700,
-                                  size: 14,
-                                  height: 1.8,
-                                ),
-                                MyText(
-                                  text: "${widget.gm[index].totalCost} "
-                                      "  ${widget.gm[index].currency}",
-                                  color: greyTextColor,
-                                  weight: FontWeight.w400,
-                                  size: 12,
-                                  height: 1.8,
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                MyText(
-                                  text: 'Payable Cost : ',
-                                  color: blackColor,
-                                  weight: FontWeight.w700,
-                                  size: 14,
-                                  height: 1.8,
-                                ),
-                                MyText(
-                                  text: "${widget.gm[index].totalCost} "
-                                      "  ${widget.gm[index].currency}",
-                                  color: greyTextColor,
-                                  weight: FontWeight.w400,
-                                  size: 12,
-                                  height: 1.8,
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                MyText(
-                                  text: 'Weight : ',
-                                  color: blackColor,
-                                  weight: FontWeight.w700,
-                                  size: 14,
-                                  height: 1.8,
-                                ),
-                                MyText(
-                                  text: "${widget.gm[index].weight} ",
-                                  color: greyTextColor,
-                                  weight: FontWeight.w400,
-                                  size: 12,
-                                  height: 1.8,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                text: 'Health : ',
-                                style: const TextStyle(
-                                    color: blackColor,
-                                    fontSize: 15,
-                                    fontFamily: 'Raleway',
-                                    fontWeight: FontWeight.bold),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text:
-                                        "${widget.gm[index].healthConditions} ",
-                                    style: const TextStyle(
-                                      fontSize: 13,
-                                      wordSpacing: 1,
-                                      fontFamily: 'Raleway',
-                                      color: greyTextColor,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            // const SizedBox(
-                            //   height: 5,
-                            // ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                MyText(
-                                  text: 'Height : ',
-                                  color: blackColor,
-                                  weight: FontWeight.w700,
-                                  size: 14,
-                                  height: 1.8,
-                                ),
-                                MyText(
-                                  overFlow: TextOverflow.clip,
-                                  text: "${widget.gm[index].height} ",
-                                  color: greyTextColor,
-                                  weight: FontWeight.w400,
-                                  size: 12,
-                                  height: 1.5,
-                                ),
-                              ],
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                text: 'Client Message : ',
-                                style: const TextStyle(
-                                    color: blackColor,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: "${widget.gm[index].message} ",
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      color: greyTextColor,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            //   ],
-                            // ),
-                          ],
-                        ),
-                      ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.start,
-                      //   crossAxisAlignment: CrossAxisAlignment.start,
-                      //   children: [
-
-                      //     const SizedBox(
-                      //       width: 10,
-                      //     ),
-
-                      //   ],
-                      // ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            height: MediaQuery.of(context).size.height / 21,
-                            width: MediaQuery.of(context).size.width / 3.8,
-                            decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(12)),
-                                color: blueColor1),
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: () => selected(
-                                    context,
-                                    widget.gm[index].serviceId,
-                                    widget.gm[index].bookingUser),
-                                child: const Center(
-                                  child: Text(
-                                    'Chat Client',
-                                    style: TextStyle(
-                                        color: whiteColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            // color: bluishColor,
-                          ),
-                          Container(
-                            height: MediaQuery.of(context).size.height / 21,
-                            width: MediaQuery.of(context).size.width / 3.8,
-                            decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12)),
-                              color: Color.fromARGB(255, 92, 11, 106),
-                            ),
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: rateUser,
-                                child: const Center(
-                                  child: Text(
-                                    'Rate User',
-                                    style: TextStyle(
-                                        color: whiteColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            // color: bluishColor,
-                          ),
-
-                          // GestureDetector(
-                          //   onTap: rateUser,
-                          //   child: Container(
-                          //     height: MediaQuery.of(context).size.height / 21,
-                          //     width: MediaQuery.of(context).size.width / 3.8,
-                          //     decoration: const BoxDecoration(
-                          //       color: Color.fromARGB(255, 92, 11, 106),
-                          //       borderRadius:
-                          //           BorderRadius.all(Radius.circular(8)),
-                          //     ),
-                          //     child: Center(
-                          //       child: Padding(
-                          //         padding: const EdgeInsets.symmetric(
-                          //             horizontal: 0),
-                          //         child: Row(
-                          //           mainAxisAlignment:
-                          //               MainAxisAlignment.center,
-                          //           children: const [
-                          //             Text(
-                          //               'Rate User',
-                          //               style: TextStyle(
-                          //                   color: whiteColor,
-                          //                   fontSize: 12,
-                          //                   fontWeight: FontWeight.w700),
-                          //             ),
-                          //           ],
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-
-                          // SquareButton('Chat Client', blueButtonColor, whiteColor,
-                          //     3.1, 21, 13, abc),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              );
+              return //Container();
+                  ParticipantsContainer(
+                      gm[index], selected, delete, rateUser, index);
             });
+    // Card(
+    //   child: Padding(
+    //     padding: const EdgeInsets.only(
+    //         top: 15.0, left: 10, right: 10, bottom: 15),
+    //     child: Column(
+    //       // direction: Axis.vertical,
+    //       // alignment: WrapAlignment.spaceBetween,
+    //       //crossAxisAlignment: WrapCrossAlignment.,
+    //       children: [
+    //         // Row(
+    //         //   crossAxisAlignment: CrossAxisAlignment.end,
+    //         //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //         //   children: [
+    //         //     MyText(
+    //         //       text: gm[index].region, //'Location Name',
+    //         //       color: blackColor,
+    //         //       weight: FontWeight.bold,
+    //         //     ),
+    //         //     Row(
+    //         //       children: [
+    //         //         if (gm[index].status == "0")
+    //         //           MyText(
+    //         //             text: "REQUESTED", //'Confirmed',
+    //         //             color: blueColor1,
+    //         //             weight: FontWeight.bold,
+    //         //           ),
+    //         //         if (gm[index].status == "1")
+    //         //           MyText(
+    //         //             text: "ACCEPTED", //'Confirmed',
+    //         //             color: orangeColor,
+    //         //             weight: FontWeight.bold,
+    //         //           ),
+    //         //         if (gm[index].status == "2")
+    //         //           MyText(
+    //         //             text: "PAID", //'Confirmed',
+    //         //             color: greenColor1,
+    //         //             weight: FontWeight.bold,
+    //         //           ),
+    //         //         if (gm[index].status == "3")
+    //         //           MyText(
+    //         //             text: "DECLINED", //'Confirmed',
+    //         //             color: redColor,
+    //         //             weight: FontWeight.bold,
+    //         //           ),
+    //         //         if (gm[index].status == "4")
+    //         //           MyText(
+    //         //             text: "COMPLETED", //'Confirmed',
+    //         //             color: greenColor1,
+    //         //             weight: FontWeight.bold,
+    //         //           ),
+    //         //         if (gm[index].status == "5")
+    //         //           MyText(
+    //         //             text: "DROPPED", //'Confirmed',
+    //         //             color: redColor,
+    //         //             weight: FontWeight.bold,
+    //         //           ),
+    //         //         if (gm[index].status == "6")
+    //         //           MyText(
+    //         //             text: "CONFIRM", //'Confirmed',
+    //         //             color: greenColor1,
+    //         //             weight: FontWeight.bold,
+    //         //           ),
+    //         //         if (gm[index].status == "7")
+    //         //           MyText(
+    //         //             text: "UNPAID", //'Confirmed',
+    //         //             color: greenColor1,
+    //         //             weight: FontWeight.bold,
+    //         //           ),
+    //         //         const SizedBox(
+    //         //           width: 5,
+    //         //         ),
+    //         //         GestureDetector(
+    //         //           onTap: () => showConfirmation(
+    //         //               gm[index].bookingId.toString(),
+    //         //               gm[index].bookingUser.toString(),
+    //         //               index),
+    //         //           child: const Icon(
+    //         //             Icons.delete_forever_outlined,
+    //         //             color: redColor,
+    //         //             size: 20,
+    //         //           ),
+    //         //         )
+    //         //       ],
+    //         //     ),
+    //         //   ],
+    //         // ),
+    //         Divider(
+    //           thickness: 2,
+    //           color: blackColor.withOpacity(0.4),
+    //         ),
+    //         ListTile(
+    //           // leading: SizedBox(
+    //           //   width: 60,
+    //           //   child: CircleAvatar(
+    //           //     radius: 26,
+    //           //     backgroundImage:
+    //           //         //ExactAssetImage('images/airrides.png'),
+    //           //         NetworkImage(
+    //           //       "${'https://adventuresclub.net/adventureClub/public/'}${gm[index].providerProfile},",
+    //           //     ),
+    //           //   ),
+    //           // ),
+    //           //     const CircleAvatar(
+    //           //   radius: 28,
+    //           //   backgroundImage:
+    //           //       ExactAssetImage('images/airrides.png'),
+    //           // ),
+    //           // NetworkImage(
+    //           //     "${'https://adventuresclub.net/adventureClub/public/uploads/'}${gm[index].sm[index].imageUrl}")),,
+    //           title: Column(
+    //             crossAxisAlignment: CrossAxisAlignment.start,
+    //             mainAxisAlignment: MainAxisAlignment.start,
+    //             children: [
+    //               Row(
+    //                 mainAxisAlignment: MainAxisAlignment.start,
+    //                 children: [
+    //                   MyText(
+    //                     text: gm[index].adventureName,
+    //                     color: blackColor,
+    //                     weight: FontWeight.w700,
+    //                     size: 14,
+    //                     height: 1.8,
+    //                   ),
+    //                 ],
+    //               ),
+    //               Row(
+    //                 mainAxisAlignment: MainAxisAlignment.start,
+    //                 children: [
+    //                   MyText(
+    //                     text: 'Booking Id : ',
+    //                     color: blackColor,
+    //                     weight: FontWeight.w700,
+    //                     size: 14,
+    //                     height: 1.8,
+    //                   ),
+    //                   MyText(
+    //                     text: gm[index].bookingId,
+    //                     color: greyTextColor,
+    //                     weight: FontWeight.w400,
+    //                     size: 12,
+    //                     height: 1.8,
+    //                   ),
+    //                 ],
+    //               ),
+    //               Row(
+    //                 mainAxisAlignment: MainAxisAlignment.start,
+    //                 children: [
+    //                   MyText(
+    //                     text: 'UserName : ',
+    //                     color: blackColor,
+    //                     weight: FontWeight.w700,
+    //                     size: 14,
+    //                     height: 1.8,
+    //                   ),
+    //                   MyText(
+    //                     text: gm[index].customer,
+    //                     color: greyTextColor,
+    //                     weight: FontWeight.w400,
+    //                     size: 12,
+    //                     height: 1.8,
+    //                   ),
+    //                 ],
+    //               ),
+    //               Row(
+    //                 mainAxisAlignment: MainAxisAlignment.start,
+    //                 children: [
+    //                   MyText(
+    //                     text: 'How Old : ',
+    //                     color: blackColor,
+    //                     weight: FontWeight.w700,
+    //                     size: 14,
+    //                     height: 1.8,
+    //                   ),
+    //                   MyText(
+    //                     text: calculateAge(gm[index].dob),
+    //                     color: greyTextColor,
+    //                     weight: FontWeight.w400,
+    //                     size: 12,
+    //                     height: 1.8,
+    //                   ),
+    //                 ],
+    //               ),
+    //               Row(
+    //                 mainAxisAlignment: MainAxisAlignment.start,
+    //                 children: [
+    //                   MyText(
+    //                     text: 'Nationality : ',
+    //                     color: blackColor,
+    //                     weight: FontWeight.w700,
+    //                     size: 14,
+    //                     height: 1.8,
+    //                   ),
+    //                   MyText(
+    //                     text: gm[index].nationality,
+    //                     color: greyTextColor,
+    //                     weight: FontWeight.w400,
+    //                     size: 12,
+    //                     height: 1.8,
+    //                   ),
+    //                 ],
+    //               ),
+    //               Row(
+    //                 mainAxisAlignment: MainAxisAlignment.start,
+    //                 children: [
+    //                   MyText(
+    //                     text: 'Booked On : ',
+    //                     color: blackColor,
+    //                     weight: FontWeight.w700,
+    //                     size: 14,
+    //                     height: 1.8,
+    //                   ),
+    //                   MyText(
+    //                     text: gm[index].bookedOn,
+    //                     color: greyTextColor,
+    //                     weight: FontWeight.w400,
+    //                     size: 12,
+    //                     height: 1.8,
+    //                   ),
+    //                 ],
+    //               ),
+    //               Row(
+    //                 mainAxisAlignment: MainAxisAlignment.start,
+    //                 children: [
+    //                   MyText(
+    //                     text: 'Service Date : ',
+    //                     color: blackColor,
+    //                     weight: FontWeight.w700,
+    //                     size: 14,
+    //                     height: 1.8,
+    //                   ),
+    //                   MyText(
+    //                     text: gm[index].serviceDate,
+    //                     color: greyTextColor,
+    //                     weight: FontWeight.w400,
+    //                     size: 12,
+    //                     height: 1.8,
+    //                   ),
+    //                 ],
+    //               ),
+    //               const SizedBox(
+    //                 height: 4,
+    //               ),
+    //               RichText(
+    //                 text: TextSpan(
+    //                   text: 'Registrations : ',
+    //                   style: const TextStyle(
+    //                       color: blackColor,
+    //                       fontSize: 14,
+    //                       fontWeight: FontWeight.bold),
+    //                   children: <TextSpan>[
+    //                     TextSpan(
+    //                       text: "${gm[index].adult} "
+    //                           " ${"Adult"}"
+    //                           ",  "
+    //                           "${gm[index].kids} "
+    //                           " ${"Youngsters "}",
+    //                       style: const TextStyle(
+    //                         fontSize: 12,
+    //                         color: greyTextColor,
+    //                         fontWeight: FontWeight.w400,
+    //                       ),
+    //                     ),
+    //                     // TextSpan(
+    //                     //   text: "${gm[index].kids} "
+    //                     //       " ${"Kids"}",
+    //                     //   style: const TextStyle(
+    //                     //     fontSize: 12,
+    //                     //     color: greyTextColor,
+    //                     //     fontWeight: FontWeight.w400,
+    //                     //   ),
+    //                     // ),
+    //                   ],
+    //                 ),
+    //               ),
+    //               // Row(
+    //               //   mainAxisAlignment: MainAxisAlignment.start,
+    //               //   children: [
+    //               //     MyText(
+    //               //       text: 'Registrations : ',
+    //               //       color: blackColor,
+    //               //       weight: FontWeight.w700,
+    //               //       size: 14,
+    //               //       height: 1.8,
+    //               //     ),
+    //               //     if (gm[index].adult != 0)
+    //               //       MyText(
+    //               //         text: "${gm[index].adult} "
+    //               //             " ${"Adult"}"
+    //               //             ",  "
+    //               //             "${gm[index].kids} "
+    //               //             " ${"Youngsters"}",
+    //               //         color: greyTextColor,
+    //               //         weight: FontWeight.w400,
+    //               //         size: 12,
+    //               //         height: 1.8,
+    //               //       ),
+    //               //     if (gm[index].kids != 0)
+    //               //       MyText(
+    //               //         text: "${gm[index].kids} "
+    //               //             " ${"Kids"}",
+    //               //         color: greyTextColor,
+    //               //         weight: FontWeight.w400,
+    //               //         size: 12,
+    //               //         height: 1.8,
+    //               //       ),
+    //               //   ],
+    //               // ),
+    //               Row(
+    //                 mainAxisAlignment: MainAxisAlignment.start,
+    //                 children: [
+    //                   MyText(
+    //                     text: 'Unit Cost : ',
+    //                     color: blackColor,
+    //                     weight: FontWeight.w700,
+    //                     size: 14,
+    //                     height: 1.8,
+    //                   ),
+    //                   MyText(
+    //                     overFlow: TextOverflow.ellipsis,
+    //                     text: "${gm[index].unitCost} "
+    //                         "  ${gm[index].currency}",
+    //                     color: greyTextColor,
+    //                     weight: FontWeight.w400,
+    //                     size: 12,
+    //                     height: 1.8,
+    //                   ),
+    //                 ],
+    //               ),
+    //               Row(
+    //                 // mainAxisAlignment: MainAxisAlignment.start,
+    //                 children: [
+    //                   MyText(
+    //                     text: 'Total Cost : ',
+    //                     color: blackColor,
+    //                     weight: FontWeight.w700,
+    //                     size: 14,
+    //                     height: 1.8,
+    //                   ),
+    //                   MyText(
+    //                     text: "${gm[index].totalCost} "
+    //                         "  ${gm[index].currency}",
+    //                     color: greyTextColor,
+    //                     weight: FontWeight.w400,
+    //                     size: 12,
+    //                     height: 1.8,
+    //                   ),
+    //                 ],
+    //               ),
+    //               Row(
+    //                 mainAxisAlignment: MainAxisAlignment.start,
+    //                 children: [
+    //                   MyText(
+    //                     text: 'Payable Cost : ',
+    //                     color: blackColor,
+    //                     weight: FontWeight.w700,
+    //                     size: 14,
+    //                     height: 1.8,
+    //                   ),
+    //                   MyText(
+    //                     text: "${gm[index].totalCost} "
+    //                         "  ${gm[index].currency}",
+    //                     color: greyTextColor,
+    //                     weight: FontWeight.w400,
+    //                     size: 12,
+    //                     height: 1.8,
+    //                   ),
+    //                 ],
+    //               ),
+    //               Row(
+    //                 mainAxisAlignment: MainAxisAlignment.start,
+    //                 children: [
+    //                   MyText(
+    //                     text: 'Weight : ',
+    //                     color: blackColor,
+    //                     weight: FontWeight.w700,
+    //                     size: 14,
+    //                     height: 1.8,
+    //                   ),
+    //                   MyText(
+    //                     text: "${gm[index].weight} ",
+    //                     color: greyTextColor,
+    //                     weight: FontWeight.w400,
+    //                     size: 12,
+    //                     height: 1.8,
+    //                   ),
+    //                 ],
+    //               ),
+    //               const SizedBox(
+    //                 height: 5,
+    //               ),
+    //               RichText(
+    //                 text: TextSpan(
+    //                   text: 'Health : ',
+    //                   style: const TextStyle(
+    //                       color: blackColor,
+    //                       fontSize: 15,
+    //                       fontFamily: 'Raleway',
+    //                       fontWeight: FontWeight.bold),
+    //                   children: <TextSpan>[
+    //                     TextSpan(
+    //                       text: "${gm[index].healthConditions} ",
+    //                       style: const TextStyle(
+    //                         fontSize: 13,
+    //                         wordSpacing: 1,
+    //                         fontFamily: 'Raleway',
+    //                         color: greyTextColor,
+    //                         fontWeight: FontWeight.w400,
+    //                       ),
+    //                     ),
+    //                   ],
+    //                 ),
+    //               ),
+    //               // const SizedBox(
+    //               //   height: 5,
+    //               // ),
+    //               Row(
+    //                 mainAxisAlignment: MainAxisAlignment.start,
+    //                 children: [
+    //                   MyText(
+    //                     text: 'Height : ',
+    //                     color: blackColor,
+    //                     weight: FontWeight.w700,
+    //                     size: 14,
+    //                     height: 1.8,
+    //                   ),
+    //                   MyText(
+    //                     overFlow: TextOverflow.clip,
+    //                     text: "${gm[index].height} ",
+    //                     color: greyTextColor,
+    //                     weight: FontWeight.w400,
+    //                     size: 12,
+    //                     height: 1.5,
+    //                   ),
+    //                 ],
+    //               ),
+    //               RichText(
+    //                 text: TextSpan(
+    //                   text: 'Client Message : ',
+    //                   style: const TextStyle(
+    //                       color: blackColor,
+    //                       fontSize: 14,
+    //                       fontWeight: FontWeight.bold),
+    //                   children: <TextSpan>[
+    //                     TextSpan(
+    //                       text: "${gm[index].message} ",
+    //                       style: const TextStyle(
+    //                         fontSize: 12,
+    //                         color: greyTextColor,
+    //                         fontWeight: FontWeight.w400,
+    //                       ),
+    //                     ),
+    //                   ],
+    //                 ),
+    //               ),
+    //               //   ],
+    //               // ),
+    //             ],
+    //           ),
+    //         ),
+    //         // Row(
+    //         //   mainAxisAlignment: MainAxisAlignment.start,
+    //         //   crossAxisAlignment: CrossAxisAlignment.start,
+    //         //   children: [
+
+    //         //     const SizedBox(
+    //         //       width: 10,
+    //         //     ),
+
+    //         //   ],
+    //         // ),
+    //         const SizedBox(
+    //           height: 10,
+    //         ),
+    //         Row(
+    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //           children: [
+    //             Container(
+    //               height: MediaQuery.of(context).size.height / 21,
+    //               width: MediaQuery.of(context).size.width / 3.8,
+    //               decoration: const BoxDecoration(
+    //                   borderRadius:
+    //                       BorderRadius.all(Radius.circular(12)),
+    //                   color: blueColor1),
+    //               child: Material(
+    //                 color: Colors.transparent,
+    //                 child: InkWell(
+    //                   onTap: () => selected(context,
+    //                       gm[index].serviceId, gm[index].bookingUser),
+    //                   child: const Center(
+    //                     child: Text(
+    //                       'Chat Client',
+    //                       style: TextStyle(
+    //                           color: whiteColor,
+    //                           fontSize: 12,
+    //                           fontWeight: FontWeight.w700),
+    //                     ),
+    //                   ),
+    //                 ),
+    //               ),
+    //               // color: bluishColor,
+    //             ),
+    //             Container(
+    //               height: MediaQuery.of(context).size.height / 21,
+    //               width: MediaQuery.of(context).size.width / 3.8,
+    //               decoration: const BoxDecoration(
+    //                 borderRadius:
+    //                     BorderRadius.all(Radius.circular(12)),
+    //                 color: Color.fromARGB(255, 92, 11, 106),
+    //               ),
+    //               child: Material(
+    //                 color: Colors.transparent,
+    //                 child: InkWell(
+    //                   onTap: rateUser,
+    //                   child: const Center(
+    //                     child: Text(
+    //                       'Rate User',
+    //                       style: TextStyle(
+    //                           color: whiteColor,
+    //                           fontSize: 12,
+    //                           fontWeight: FontWeight.w700),
+    //                     ),
+    //                   ),
+    //                 ),
+    //               ),
+    //               // color: bluishColor,
+    //             ),
+
+    //             // GestureDetector(
+    //             //   onTap: rateUser,
+    //             //   child: Container(
+    //             //     height: MediaQuery.of(context).size.height / 21,
+    //             //     width: MediaQuery.of(context).size.width / 3.8,
+    //             //     decoration: const BoxDecoration(
+    //             //       color: Color.fromARGB(255, 92, 11, 106),
+    //             //       borderRadius:
+    //             //           BorderRadius.all(Radius.circular(8)),
+    //             //     ),
+    //             //     child: Center(
+    //             //       child: Padding(
+    //             //         padding: const EdgeInsets.symmetric(
+    //             //             horizontal: 0),
+    //             //         child: Row(
+    //             //           mainAxisAlignment:
+    //             //               MainAxisAlignment.center,
+    //             //           children: const [
+    //             //             Text(
+    //             //               'Rate User',
+    //             //               style: TextStyle(
+    //             //                   color: whiteColor,
+    //             //                   fontSize: 12,
+    //             //                   fontWeight: FontWeight.w700),
+    //             //             ),
+    //             //           ],
+    //             //         ),
+    //             //       ),
+    //             //     ),
+    //             //   ),
+    //             // ),
+
+    //             // SquareButton('Chat Client', blueButtonColor, whiteColor,
+    //             //     3.1, 21, 13, abc),
+    //           ],
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
+    // });
   }
 }

@@ -35,8 +35,10 @@ class ServiceDescription extends StatelessWidget {
           // location etc
           DescriptionDetailsWidget(
               text1, text4, text5, text6, stars, reviewedBy, id, gm),
-          show! ? ServiceScheduleWidget(gm.sPlan, gm.programmes) : Container(),
-          // information widget
+          show!
+              ? ServiceScheduleWidget(gm.sPlan, gm.programmes)
+              : const SizedBox(),
+          // // information widget
           DescriptionInformationWidget(gm.writeInformation),
           DescriptionActivitiesWidget(gm.activityIncludes),
           DescriptionAimedFor(gm.am),

@@ -61,13 +61,12 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
     //widget.gm.availability[0].st.substring(0, 10)
     if (widget.gm.sPlan == 2) {
       setState(() {
-        text1.insert(5, "Start Date");
+        text1.insert(5, "Start Date : ");
         text5.insert(4, "End Date");
         text4.insert(0, widget.gm.country);
         text4.insert(1, widget.gm.region);
         text4.insert(2, widget.gm.serviceCategory);
-        text4.insert(
-            3, "${widget.gm.aSeats} , ${widget.gm.remainingSeats} seat left");
+        text4.insert(3, "${widget.gm.aSeats}");
         text4.insert(4, widget.gm.duration);
         widget.gm.availability.isEmpty
             ? text4.insert(5, "2023-10-24")
@@ -89,7 +88,9 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
         text4.insert(1, widget.gm.region);
         text4.insert(2, widget.gm.serviceCategory);
         text4.insert(
-            3, "${widget.gm.aSeats} ,${widget.gm.remainingSeats} seat left");
+          3,
+          "${widget.gm.aSeats}",
+        );
         text4.insert(4, widget.gm.duration);
         text4.insert(5, aPlan);
         text6.insert(0, widget.gm.reviewdBy);

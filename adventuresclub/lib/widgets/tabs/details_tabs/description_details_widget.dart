@@ -195,12 +195,21 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
                         color: greyColor2, fontSize: 13, height: 1.5),
                     children: [
                       TextSpan(
-                          text: widget.text4[3],
-                          style: const TextStyle(
-                              fontSize: 13,
-                              // fontWeight: FontWeight.w300,
-                              color: blackColor,
-                              height: 1.5)),
+                        text: widget.text4[3],
+                        style: const TextStyle(
+                            fontSize: 13,
+                            // fontWeight: FontWeight.w300,
+                            color: blackColor,
+                            height: 1.5),
+                      ),
+                      TextSpan(
+                        text: ", ${widget.gm.remainingSeats} seat left",
+                        style: const TextStyle(
+                            fontSize: 13,
+                            // fontWeight: FontWeight.w300,
+                            color: redColor,
+                            height: 1.5),
+                      ),
                     ],
                   ),
                 ),
@@ -283,7 +292,7 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
                 if (widget.gm.sPlan == 2)
                   RichText(
                     text: TextSpan(
-                      text: "End Date",
+                      text: "End Date : ",
                       style: const TextStyle(
                         color: greyColor2,
                         fontSize: 14,

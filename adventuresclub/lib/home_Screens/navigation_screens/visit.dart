@@ -369,7 +369,7 @@ class _VisitState extends State<Visit> {
       context, int index, double width, String image, String title) {
     return SizedBox(
       height: 50,
-      width: title.length * 15,
+      //width: title.length * 18,
       child: Card(
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),

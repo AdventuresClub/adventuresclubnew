@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls, avoid_print
 
 import 'dart:convert';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:adventuresclub/models/filter_data_model/activities_inc_model.dart';
@@ -172,6 +173,18 @@ class Constants {
   static getPrefs() async {
     prefs ??= await SharedPreferences.getInstance();
     return prefs;
+  }
+
+  static double getDistance(
+      double lat1, double lng1, double lat2, double lng2) {
+    double result = 0;
+    double r = 6371;
+    double p = 0.017453292519943295;
+    double a = 0.5 -
+        cos((lat2 - lat1) * p) / 2 +
+        cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lng2 - lng1) * p)) / 2;
+    result = 2 * r * asin(sqrt(a));
+    return result;
   }
 
   static void clear() {
@@ -407,6 +420,7 @@ class Constants {
             pbp);
         profile = up;
         Constants.userRole = up.userRole;
+        Constants.phone = up.mobile;
         prefs.setString("userRole", up.userRole);
       }
     } catch (e) {

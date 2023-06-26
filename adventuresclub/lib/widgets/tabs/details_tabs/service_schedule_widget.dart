@@ -85,13 +85,11 @@ class ServiceScheduleWidget extends StatelessWidget {
                         //widget.gm.dependencies.length,
 
                         (index) {
-                      return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4.0),
-                          child: InfoTile(
-                              programmes[index].title,
-                              programmes[index].sD,
-                              programmes[index].eD,
-                              programmes[index].des));
+                      return InfoTile(
+                          programmes[index].title,
+                          programmes[index].sD,
+                          programmes[index].eD,
+                          programmes[index].des);
 
                       // Padding(
                       //   padding: const EdgeInsets.symmetric(vertical: 4.0),

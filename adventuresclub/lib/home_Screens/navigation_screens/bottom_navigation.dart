@@ -22,15 +22,23 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
-  int index = 0;
+  //int index = 0;
   String userId = "";
   String totalNotication = "";
   String resultAccount = "";
   String resultService = "";
   String resultRequest = "";
-  Map mapChatNotification = {};
 
-  Widget getBody() {
+  @override
+  void initState() {
+    super.initState();
+    // index = context.read<ServicesProvider>().homeIndex;
+    getNotificationBadge();
+    Constants.getFilter();
+  }
+
+  Widget getBody(int index) {
+    // int providerIndex = context.read<ServicesProvider>().homeIndex;
     if (index == 0) {
       return const Home();
     } else if (index == 1) {
@@ -51,23 +59,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   void getServicesList() {
     Provider.of<ServicesProvider>(context, listen: false).getServicesList();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    // getServicesList();
-    // Constants.getRegions();
-    // Constants.getProfile();
-    getNotificationBadge();
-    Constants.getFilter();
-    getChatNotification();
-    // if (Constants.partnerRequest) {
-    //   setState(() {
-    //     Constants.partnerRequest == false;
-    //   });
-    //   Constants.getProfile();
-    // }
   }
 
   void getNotificationBadge() async {
@@ -103,19 +94,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
     }
   }
 
-  Future getChatNotification() async {
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/unreadchatcount/'${Constants.userId}"));
-    if (response.statusCode == 200) {
-      mapChatNotification = json.decode(response.body);
-      dynamic result = mapChatNotification['unread'];
-      setState(() {
-        Constants.chatCount = result.toString();
-      });
-      print(result);
-    }
-  }
-
   int convertToInt(String s) {
     int t = int.tryParse(s) ?? 0;
     return t;
@@ -140,15 +118,18 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
+    int index = Provider.of<ServicesProvider>(context).homeIndex;
     return Scaffold(
-      body: getBody(),
+      body: getBody(index),
       bottomNavigationBar: BottomNavigationBar(
         elevation: 0,
         currentIndex: index,
         onTap: (i) {
-          setState(() {
-            index = i;
-          });
+          print(i);
+          Provider.of<ServicesProvider>(context, listen: false).setHomeIndex(i);
+          // setState(() {
+          //   index = i;
+          // });
         },
         type: BottomNavigationBarType.fixed,
         items: [
@@ -238,7 +219,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
               height: 25,
               width: 25,
             ),
-            label: 'Visit',
+            label: 'Attractions',
             //  ),
             activeIcon: Image.asset(
               'images/worldwide.png',

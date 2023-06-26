@@ -13,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class OfficialDetails extends StatefulWidget {
   const OfficialDetails({super.key});
@@ -54,6 +53,7 @@ class _OfficialDetailsState extends State<OfficialDetails> {
   int crNum = 0;
   int accNum = 0;
   Uint8List crcopyList = Uint8List(0);
+  String licenseImage = "";
 
   @override
   void initState() {
@@ -63,13 +63,16 @@ class _OfficialDetailsState extends State<OfficialDetails> {
 
   void getData() {
     changeValue();
-    iLiveInController.text == Constants.profile.bp.location;
+    iLiveInController.text = Constants.profile.bp.location;
+    nameController.text = Constants.profile.bp.companyName;
+    addController.text = Constants.profile.bp.address;
     setState(() {
       name = Constants.profile.bp.companyName;
       address = Constants.profile.bp.address;
       location = Constants.profile.bp.location;
       crNameText = Constants.profile.bp.crName;
       crNumberText = Constants.profile.bp.crNumber;
+      licenseImage = Constants.profile.bp.crCopy;
     });
   }
 
@@ -343,7 +346,7 @@ class _OfficialDetailsState extends State<OfficialDetails> {
               // prefs.setString("license", license);
               // prefs.setString("cr_name", crName.text.trim());
               // prefs.setString("cr_number", crNumber.text.trim());
-              Constants.emailId = nameController.text.trim();
+              //   Constants.emailId = nameController.text.trim();
               Constants.name = nameController.text.trim();
               Constants.getProfile();
               message("Information Updated Successfully");
@@ -499,6 +502,13 @@ class _OfficialDetailsState extends State<OfficialDetails> {
                             border:
                                 Border.all(color: greyColor.withOpacity(0.4))),
                         child: Column(children: [
+                          // licenseImage.isNotEmpty
+                          //     ? Image.network(
+                          //         "${"https://adventuresclub.net/adventureClub/public/uploads/"}$licenseImage",
+                          //         height: 50,
+                          //         width: 50,
+                          //       )
+                          //     :
                           crCopy.path.isEmpty
                               ? const Image(
                                   image: ExactAssetImage('images/upload.png'),

@@ -144,11 +144,7 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
               actions: [
                 MaterialButton(
                   onPressed: cancel,
-                  child: const Text("No"),
-                ),
-                MaterialButton(
-                  onPressed: cancel,
-                  child: const Text("Yes"),
+                  child: const Text("OK"),
                 )
               ],
             ));
@@ -165,7 +161,7 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
       mapChatNotification = json.decode(response.body);
       dynamic result = mapChatNotification['unread'];
       setState(() {
-        Constants.chatCount = result.toString();
+        groupChatCount = result.toString();
       });
       print(result);
     }

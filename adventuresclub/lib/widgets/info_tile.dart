@@ -8,7 +8,10 @@ class InfoTile extends StatefulWidget {
   final String sd;
   final String ed;
   final String des;
-  const InfoTile(this.title, this.sd, this.ed, this.des, {super.key});
+  final bool? show;
+  final int? count;
+  const InfoTile(this.title, this.sd, this.ed, this.des,
+      {this.show = false, this.count = 0, super.key});
 
   @override
   State<InfoTile> createState() => _InfoTileState();
@@ -21,6 +24,7 @@ class _InfoTileState extends State<InfoTile> {
   String sTime = "";
   String eTime = "";
   String sd = "";
+  String number = "";
 
   @override
   void initState() {
@@ -32,6 +36,7 @@ class _InfoTileState extends State<InfoTile> {
     startTime = DateTime.tryParse(widget.ed) ?? DateTime.now();
     String sMonth = DateFormat('MMMM').format(startDate);
     sd = "${startDate.day}-$sMonth-${startDate.year}";
+    number = widget.count.toString();
   }
 
   void convertTime(DateTime t) {
@@ -51,7 +56,21 @@ class _InfoTileState extends State<InfoTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: const EdgeInsets.all(4),
+      contentPadding: const EdgeInsets.all(0),
+      leading: widget.show!
+          ? CircleAvatar(
+              backgroundColor: blueColor,
+              radius: 28,
+              child: CircleAvatar(
+                backgroundColor: greenishColor,
+                radius: 25,
+                child: MyText(
+                  text: number,
+                  weight: FontWeight.bold,
+                ),
+              ),
+            )
+          : null,
       title: MyText(
         text: "${widget.title} "
             "${" "}"
@@ -73,23 +92,3 @@ class _InfoTileState extends State<InfoTile> {
     );
   }
 }
-
-// ListTile(
-//                           contentPadding: const EdgeInsets.all(4),
-//                           title: MyText(
-//                             text: "${programmes[index].title} "
-//                                 "${"-"}"
-//                                 " ${programmes[index].sD.substring(10, 16)} ${" - "} ${programmes[index].eD.substring(10, 16)} ${" - "} ${programmes[index].sD.substring(0, 10)} ",
-//                             color: blackColor,
-//                             weight: FontWeight.bold,
-//                             fontFamily: 'Raleway',
-//                             size: 16,
-//                           ),
-//                           subtitle: MyText(
-//                             text: programmes[index].des, //text[index],
-//                             color: greyTextColor,
-//                             weight: FontWeight.w500,
-//                             fontFamily: 'Raleway',
-//                             size: 14,
-//                           ),
-//                         ),

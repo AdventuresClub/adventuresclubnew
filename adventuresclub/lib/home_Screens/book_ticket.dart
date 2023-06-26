@@ -4,10 +4,12 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/requests.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
+import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class BookTicket extends StatefulWidget {
   final ServicesModel gm;
@@ -228,13 +230,8 @@ class _BookTicketState extends State<BookTicket> {
   }
 
   void goToHome() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return const BottomNavigation();
-        },
-      ),
-    );
+    Provider.of<ServicesProvider>(context, listen: false).setHomeIndex(2);
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
   @override
@@ -338,7 +335,8 @@ class _BookTicketState extends State<BookTicket> {
                                     weight: FontWeight.bold,
                                     color: blackTypeColor4,
                                     size: 22,
-                                  )),
+                                  ),
+                                ),
                           const SizedBox(
                             height: 20,
                           ),
@@ -468,21 +466,27 @@ class _BookTicketState extends State<BookTicket> {
                               fillColor: whiteColor,
                               border: OutlineInputBorder(
                                 borderRadius: const BorderRadius.all(
-                                    Radius.circular(10.0)),
+                                  Radius.circular(10.0),
+                                ),
                                 borderSide: BorderSide(
-                                    color: blackColor.withOpacity(0.2)),
+                                  color: blackColor.withOpacity(0.2),
+                                ),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: const BorderRadius.all(
-                                    Radius.circular(10.0)),
+                                  Radius.circular(10.0),
+                                ),
                                 borderSide: BorderSide(
-                                    color: blackColor.withOpacity(0.2)),
+                                  color: blackColor.withOpacity(0.2),
+                                ),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(10)),
-                                  borderSide: BorderSide(
-                                      color: blackColor.withOpacity(0.2))),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(10)),
+                                borderSide: BorderSide(
+                                  color: blackColor.withOpacity(0.2),
+                                ),
+                              ),
                             ),
                           )
                         ],
@@ -551,34 +555,40 @@ class _BookTicketState extends State<BookTicket> {
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(fontSize: 16),
                                 decoration: InputDecoration(
-                                    hintText: "0",
-                                    hintStyle: const TextStyle(
-                                        color: blackColor, fontSize: 16),
-                                    suffixText: "Apply",
-                                    contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
+                                  hintText: "0",
+                                  hintStyle: const TextStyle(
+                                      color: blackColor, fontSize: 16),
+                                  suffixText: "Apply",
+                                  contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 2,
+                                  ),
+                                  isDense: true,
+                                  filled: true,
+                                  fillColor: whiteColor,
+                                  border: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(10.0),
                                     ),
-                                    isDense: true,
-                                    filled: true,
-                                    fillColor: whiteColor,
-                                    border: OutlineInputBorder(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(10.0)),
-                                      borderSide: BorderSide(
-                                          color: blackColor.withOpacity(0.2)),
+                                    borderSide: BorderSide(
+                                      color: blackColor.withOpacity(0.4),
                                     ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(10.0)),
-                                      borderSide: BorderSide(
-                                          color: blackColor.withOpacity(0.2)),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(10.0),
                                     ),
-                                    focusedBorder: OutlineInputBorder(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(10)),
-                                        borderSide: BorderSide(
-                                            color:
-                                                blackColor.withOpacity(0.2)))),
+                                    borderSide: BorderSide(
+                                      color: blackColor.withOpacity(0.2),
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(10)),
+                                    borderSide: BorderSide(
+                                      color: blackColor.withOpacity(0.4),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ],
@@ -590,7 +600,8 @@ class _BookTicketState extends State<BookTicket> {
                 // apply promo code
                 Card(
                   child: Padding(
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.only(
+                        right: 12.0, left: 12, top: 12, bottom: 8),
                     child: Column(
                       children: [
                         Align(
@@ -601,28 +612,43 @@ class _BookTicketState extends State<BookTicket> {
                                 color: blackTypeColor4,
                                 size: 22,
                                 fontFamily: 'Roboto')),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         TextField(
                           decoration: InputDecoration(
-                              suffixStyle: const TextStyle(
-                                  color: bluishColor, fontFamily: 'Roboto'),
-                              suffixText: 'Apply',
-                              border: UnderlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(10.0)),
-                                borderSide: BorderSide(
-                                    color: blackColor.withOpacity(0.2)),
+                            hintText: "Apply",
+                            hintStyle: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                                fontFamily: 'Raleway'),
+                            suffixStyle: const TextStyle(
+                                color: bluishColor, fontFamily: 'Roboto'),
+                            suffixText: 'Apply',
+                            border: OutlineInputBorder(
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(10.0),
                               ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(10.0)),
-                                borderSide: BorderSide(
-                                    color: blackColor.withOpacity(0.2)),
+                              borderSide: BorderSide(
+                                color: blackColor.withOpacity(0.2),
                               ),
-                              focusedBorder: UnderlineInputBorder(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(10)),
-                                  borderSide: BorderSide(
-                                      color: blackColor.withOpacity(0.2)))),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(10.0),
+                              ),
+                              borderSide: BorderSide(
+                                color: blackColor.withOpacity(0.2),
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide(
+                                color: blackColor.withOpacity(0.2),
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),

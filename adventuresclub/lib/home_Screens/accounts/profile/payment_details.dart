@@ -108,6 +108,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
         payArrival = false;
       });
     }
+    print(payArrival);
   }
 
   void updateStatus(bool status, int update) {
@@ -140,6 +141,18 @@ class _PaymentDetailsState extends State<PaymentDetails> {
             // const SizedBox(
             //   height: 10,
             // ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: MyText(
+                text: "Payment methods from client",
+                align: TextAlign.left,
+                color: blackColor,
+                size: 16,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             CheckboxListTile(
               contentPadding:
                   const EdgeInsets.only(left: 0, top: 0, bottom: 0, right: 0),
@@ -202,6 +215,18 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                 fontFamily: 'Raleway',
                 weight: FontWeight.bold,
                 size: 14,
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: MyText(
+                text: "Payment methods from Adventures Club",
+                align: TextAlign.center,
+                color: blackColor,
+                size: 16,
               ),
             ),
             CheckboxListTile(

@@ -34,12 +34,28 @@ class _HomeState extends State<Home> {
   bool training = true;
   List<ServicesModel> allServices = [];
   List<HomeServicesModel> gAllServices = [];
+  Map mapChatNotification = {};
 
   @override
   void initState() {
     super.initState();
     getBanners();
     getServicesList();
+    getChatNotification();
+  }
+
+  Future getChatNotification() async {
+    var response = await http.get(Uri.parse(
+        "https://adventuresclub.net/adventureClub/unreadchatcount/${Constants.userId}"));
+    if (response.statusCode == 200) {
+      mapChatNotification = json.decode(response.body);
+      dynamic result = mapChatNotification['unread'];
+      setState(() {
+        Constants.chatCount = result.toString();
+      });
+      print(result);
+      print(Constants.chatCount);
+    }
   }
 
   void getBanners() async {

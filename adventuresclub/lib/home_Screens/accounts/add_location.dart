@@ -164,9 +164,9 @@ class _AddLocationState extends State<AddLocation> {
         'destination_name': nameController.text,
         "destination_type": destinationType, //"Travel",
         "geo_location": iLiveInController.text, //"",
-        "destination_address": desController.text, //"",
-        "dest_mobile": mobileController.text, //"",
-        "dest_website": webController.text, //"",
+        "destination_address": "dsf", //desController.text, //"",
+        "dest_mobile": "650", //mobileController.text, //"",
+        "dest_website": "ww", //webController.text, //"",
         "dest_description": desController.text, //"",
         "latitude": lat.toString(), //"455.221", //"",
         "longitude": lng
@@ -440,21 +440,21 @@ class _AddLocationState extends State<AddLocation> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TFWithSize(
-                    'Enter Address', addController, 14, lightGreyColor, 1),
-                const SizedBox(
-                  height: 20,
-                ),
-                TFWithSize('Enter Mobile Number', mobileController, 14,
-                    lightGreyColor, 1),
-                const SizedBox(
-                  height: 20,
-                ),
-                TFWithSize(
-                    'Enter Website Link', webController, 14, lightGreyColor, 1),
+                // const SizedBox(
+                //   height: 20,
+                // ),
+                // TFWithSize(
+                //     'Enter Address', addController, 14, lightGreyColor, 1),
+                // const SizedBox(
+                //   height: 20,
+                // ),
+                // TFWithSize('Enter Mobile Number', mobileController, 14,
+                //     lightGreyColor, 1),
+                // const SizedBox(
+                //   height: 20,
+                // ),
+                // TFWithSize(
+                //     'Enter Website Link', webController, 14, lightGreyColor, 1),
                 const SizedBox(
                   height: 20,
                 ),

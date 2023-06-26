@@ -1,20 +1,73 @@
+// ignore_for_file: avoid_print
+
+import 'dart:convert';
+
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/multiline_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:http/http.dart' as http;
 
 class ReviewAd extends StatefulWidget {
-  const ReviewAd({super.key});
+  final String id;
+  const ReviewAd(this.id, {super.key});
 
   @override
   State<ReviewAd> createState() => _ReviewAdState();
 }
 
 class _ReviewAdState extends State<ReviewAd> {
-  TextEditingController controller = TextEditingController();
-  abc() {}
+  TextEditingController descriptionController = TextEditingController();
+  double visitRating = 0;
+
+  void review() async {
+    if (visitRating > 0) {
+      if (descriptionController.text.length >= 10) {
+        try {
+          var response = await http.post(
+              Uri.parse(
+                  "https://adventuresclub.net/adventureClub/api/v1/add_review_location"),
+              body: {
+                'user_id': Constants.userId.toString(),
+                'location_id': widget.id,
+                'rating': visitRating.toString(),
+                'rating_description': descriptionController.text.trim(),
+              });
+          if (response.statusCode == 200) {
+            message("Review Added Successfully");
+            home();
+          }
+          print(response.statusCode);
+          print(response.body);
+          print(response.headers);
+        } catch (e) {
+          print(e.toString());
+        }
+      } else {
+        message("Description must be atleast 10 Characters");
+      }
+    } else {
+      message("Ratings cannot be zero");
+    }
+  }
+
+  void message(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
+  }
+
+  void home() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return const BottomNavigation();
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +119,7 @@ class _ReviewAdState extends State<ReviewAd> {
                     child: Center(
                       child: RatingBar.builder(
                         unratedColor: greyColor1,
-                        initialRating: 3,
+                        initialRating: 0,
                         itemSize: 32,
                         minRating: 1,
                         direction: Axis.horizontal,
@@ -80,7 +133,10 @@ class _ReviewAdState extends State<ReviewAd> {
                           size: 12,
                         ),
                         onRatingUpdate: (rating) {
-                          print(rating);
+                          setState(() {
+                            visitRating = rating;
+                          });
+                          print(visitRating);
                         },
                       ),
                     ),
@@ -88,14 +144,16 @@ class _ReviewAdState extends State<ReviewAd> {
                   const SizedBox(
                     height: 20,
                   ),
-                  MultiLineField('Description', 5, whiteColor, controller),
+                  MultiLineField(
+                      'Description', 5, whiteColor, descriptionController),
                 ],
               ),
             ),
             const SizedBox(
               height: 50,
             ),
-            ButtonIconLess('Submit', bluishColor, whiteColor, 1.8, 16, 18, abc),
+            ButtonIconLess(
+                'Submit', bluishColor, whiteColor, 1.8, 16, 18, review),
           ],
         ),
       ),

@@ -31,6 +31,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
   String st = "";
   String ed = "";
   // "${widget.sm.availability[0].st.substring(8, 10)}-${widget.sm.availability[0].st.substring(5, 8)}${widget.sm.availability[0].st.substring(0, 4)}"
+
   @override
   void initState() {
     super.initState();
@@ -94,6 +95,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
     'Duration :',
     //'Start Date :'
   ];
+
   List text11 = [
     'Country  :',
     'Region  :',
@@ -290,8 +292,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
                   ),
                 ),
                 loading ? Container() : Participants(gGM)
-                // SquareButton('Upcoming', bluishColor, whiteColor, 2.4, 16, 16, abc),
-                //         SquareButton('Completed', greyColor, whiteColor, 2.4, 16, 16, abc), ///////
+                // Container(),
               ],
             ),
           ),

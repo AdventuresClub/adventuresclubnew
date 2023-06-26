@@ -940,7 +940,7 @@ class _SignUpState extends State<SignUp> {
                               padding: const EdgeInsets.all(12.0),
                               child: Column(
                                 children: [
-                                  Row(children: const [
+                                  const Row(children: [
                                     Text(
                                       "Select your active phone country code",
                                       style: TextStyle(

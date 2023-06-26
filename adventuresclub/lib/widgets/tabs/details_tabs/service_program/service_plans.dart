@@ -109,10 +109,13 @@ class _ServicesPlansState extends State<ServicesPlans> {
                           padding: const EdgeInsets.symmetric(
                               vertical: 4.0, horizontal: 6),
                           child: InfoTile(
-                              widget.programmes[index].title,
-                              widget.programmes[index].sD,
-                              widget.programmes[index].eD,
-                              widget.programmes[index].des),
+                            widget.programmes[index].title,
+                            widget.programmes[index].sD,
+                            widget.programmes[index].eD,
+                            widget.programmes[index].des,
+                            show: true,
+                            count: l[index],
+                          ),
                         ),
                         // ListTile(
                         //   minVerticalPadding: 10,

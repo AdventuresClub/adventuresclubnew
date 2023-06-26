@@ -704,7 +704,7 @@ class _AccountState extends State<Account> {
                         Column(
                           children: [
                             GestureDetector(
-                              //  onTap: getProfile,
+                              // onTap: getProfile,
                               child: Container(
                                 color: transparentColor,
                                 padding:
