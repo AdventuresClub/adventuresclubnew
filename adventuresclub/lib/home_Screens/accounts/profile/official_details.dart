@@ -486,9 +486,23 @@ class _OfficialDetailsState extends State<OfficialDetails> {
               Column(
                 children: [
                   const SizedBox(height: 20),
-                  TFWithSize(crNameText, crName, 12, lightGreyColor, 1),
+                  TFWithSize(
+                    crNameText,
+                    crName,
+                    12,
+                    lightGreyColor,
+                    1,
+                    label: "License Name",
+                  ),
                   const SizedBox(height: 20),
-                  TFWithSize(crNumberText, crNumber, 12, lightGreyColor, 1),
+                  TFWithSize(
+                    crNumberText,
+                    crNumber,
+                    12,
+                    lightGreyColor,
+                    1,
+                    label: "License Number",
+                  ),
                   const SizedBox(height: 20),
                   GestureDetector(
                     onTap: addMedia,

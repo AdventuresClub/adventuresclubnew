@@ -238,7 +238,7 @@ class _BecomePartnerPackagesState extends State<BecomePartnerPackages> {
       MaterialPageRoute(
         builder: (_) {
           return ShowChat(
-            "${'https://adventuresclub.net/admin1/dataFrom.htm?amount=$amount&merchant_id=${67}&order_id=$orderId&tid=$transactionId&billing_name=$accountUserName&billing_address=$providerAddress&billing_city=$providerCity&billing_zip=$zipCode&billing_country=$billingCountry&billing_tel=$telePhone&billing_email=$email'}${'&merchant_param1=$subscriptionId&merchant_param2={_paymentAndSubscreptionRequestModel.ActivityName}&merchant_param3={_paymentAndSubscreptionRequestModel.BookingDate}&merchant_param4={_paymentAndSubscreptionRequestModel.ActivityName}&merchant_param5={_paymentAndSubscreptionRequestModel.NoOfPerson'}",
+            "${'https://adventuresclub.net/admin1/dataFrom.htm?amount=$amount&merchant_id=${67}&order_id=$orderId&tid=$transactionId&billing_name=$accountUserName&billing_address=$providerAddress&billing_city=$providerCity&billing_zip=$zipCode&billing_country=$billingCountry&billing_tel=$telePhone&billing_email=$email'}${'&merchant_param1=${'Subscription'}&merchant_param2=$subscriptionId&merchant_param3={_paymentAndSubscreptionRequestModel.BookingDate}&merchant_param4={_paymentAndSubscreptionRequestModel.ActivityName}&merchant_param5={_paymentAndSubscreptionRequestModel.NoOfPerson'}",
             show: true,
           );
         },

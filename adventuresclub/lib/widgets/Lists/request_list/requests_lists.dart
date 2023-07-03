@@ -96,11 +96,11 @@ class _RequestsListState extends State<RequestsList> {
     }
   }
 
-  void goToMakePayments() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return const PaymentMethods();
-    }));
-  }
+  // void goToMakePayments() {
+  //   Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+  //     return const PaymentMethods();
+  //   }));
+  // }
 
   void goTo() {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {

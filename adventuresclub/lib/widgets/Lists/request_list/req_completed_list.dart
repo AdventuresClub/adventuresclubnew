@@ -994,16 +994,31 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                       height: 45,
                                       width: MediaQuery.of(context).size.width /
                                           3.6,
-                                      decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(12)),
-                                        color: Color.fromARGB(255, 255, 166, 0),
-                                      ),
+                                      decoration: uRequestList[index].status ==
+                                                  "2" ||
+                                              uRequestList[index].status == "4"
+                                          ? const BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(12)),
+                                              color: Color.fromARGB(
+                                                  255, 255, 166, 0),
+                                            )
+                                          : const BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(12)),
+                                              color: Color.fromARGB(
+                                                  255, 189, 145, 65),
+                                            ),
                                       child: Material(
                                         color: Colors.transparent,
                                         child: InkWell(
-                                          onTap: () =>
-                                              goToMyAd(uRequestList[index]),
+                                          onTap: uRequestList[index].status ==
+                                                      "2" ||
+                                                  uRequestList[index].status ==
+                                                      "4"
+                                              ? () =>
+                                                  goToMyAd(uRequestList[index])
+                                              : () {},
                                           child: const Center(
                                             child: Text(
                                               'Rate Now',
@@ -1017,6 +1032,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                       ),
                                       // color: bluishColor,
                                     ),
+
                                     Container(
                                       height: 45,
                                       width: MediaQuery.of(context).size.width /

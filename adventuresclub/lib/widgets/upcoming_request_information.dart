@@ -3,12 +3,15 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:adventuresclub/become_a_partner/payment_setup.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/details.dart';
+import 'package:adventuresclub/home_Screens/payment_methods/payment_methods.dart';
 import 'package:adventuresclub/models/currency_model.dart';
 import 'package:adventuresclub/models/filter_data_model/programs_model.dart';
 import 'package:adventuresclub/models/home_services/become_partner.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
+import 'package:adventuresclub/models/profile_models/profile_become_partner.dart';
 import 'package:adventuresclub/models/requests/upcoming_Requests_Model.dart';
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
 import 'package:adventuresclub/models/services/availability_model.dart';
@@ -16,11 +19,13 @@ import 'package:adventuresclub/models/services/create_services/availability_plan
 import 'package:adventuresclub/models/services/dependencies_model.dart';
 import 'package:adventuresclub/models/services/included_activities_model.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
+import 'package:adventuresclub/models/user_profile_model.dart';
 import 'package:adventuresclub/widgets/circle_image_avatar.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../home_Screens/payment_methods/one_pay_method.dart';
 import 'Lists/Chat_list.dart/show_chat.dart';
 
 class UpcomingRequestInformation extends StatefulWidget {
@@ -40,6 +45,7 @@ class _UpcomingRequestInformationState
   double packagePrice = 0;
   List<BecomePartner> nBp = [];
   String orderId = "";
+  String payOnArrival = "";
   static List<AvailabilityModel> ab = [];
   static List<AvailabilityPlanModel> ap = [];
   static List<IncludedActivitiesModel> ia = [];
@@ -53,6 +59,8 @@ class _UpcomingRequestInformationState
   double selectedcountryPrice = 0;
   double priceInOmr = 0;
   double totalPriceOmr = 0;
+  ProfileBecomePartner pbp = ProfileBecomePartner(0, 0, "", "", "", "", "", "",
+      "", "", 0, 0, "", "", "", "", "", "", "", 0, "", "", "", "", "", "");
   static ServicesModel service = ServicesModel(
       0,
       0,
@@ -119,6 +127,107 @@ class _UpcomingRequestInformationState
         },
       ),
     );
+  }
+
+  void getProfile(String providerId, String amount, String bId, String cur,
+      String tCost) async {
+    setState(() {
+      loading = true;
+    });
+    try {
+      var response = await http.post(
+          Uri.parse(
+              "https://adventuresclub.net/adventureClub/api/v1/get_profile"),
+          body: {
+            'user_id': providerId, //"hamza@gmail.com",
+          });
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      dynamic userData = decodedResponse['data'];
+      int userLoginId = int.tryParse(userData['id'].toString()) ?? 0;
+      int countryId = int.tryParse(userData['country_id'].toString()) ?? 0;
+      int languageId = int.tryParse(userData['language_id'].toString()) ?? 0;
+      int currencyId = int.tryParse(userData['currency_id'].toString()) ?? 0;
+      int addedFrom = int.tryParse(userData['added_from'].toString()) ?? 0;
+      dynamic partnerInfo = decodedResponse['data']["become_partner"];
+      if (partnerInfo != null) {
+        int id = int.tryParse(partnerInfo['id'].toString()) ?? 0;
+        int userId = int.tryParse(partnerInfo['user_id'].toString()) ?? 0;
+        int debitCard = int.tryParse(partnerInfo['debit_card'].toString()) ?? 0;
+        int visaCard = int.tryParse(partnerInfo['visa_card'].toString()) ?? 0;
+        int packagesId =
+            int.tryParse(partnerInfo['packages_id'].toString()) ?? 0;
+        ProfileBecomePartner bp = ProfileBecomePartner(
+          id,
+          userId,
+          partnerInfo['company_name'].toString() ?? "",
+          partnerInfo['address'].toString() ?? "",
+          partnerInfo['location'].toString() ?? "",
+          partnerInfo['description'].toString() ?? "",
+          partnerInfo['license'].toString() ?? "",
+          partnerInfo['cr_name'].toString() ?? "",
+          partnerInfo['cr_number'].toString() ?? "",
+          partnerInfo['cr_copy'].toString() ?? "",
+          debitCard,
+          visaCard,
+          partnerInfo['payon_arrival'].toString() ?? "",
+          partnerInfo['paypal'].toString() ?? "",
+          partnerInfo['bankname'].toString() ?? "",
+          partnerInfo['account_holdername'].toString() ?? "",
+          partnerInfo['account_number'].toString() ?? "",
+          partnerInfo['is_online'].toString() ?? "",
+          partnerInfo['is_approved'].toString() ?? "",
+          packagesId,
+          partnerInfo['start_date'].toString() ?? "",
+          partnerInfo['end_date'].toString() ?? "",
+          partnerInfo['is_wiretransfer'].toString() ?? "",
+          partnerInfo['is_free_used'].toString() ?? "",
+          partnerInfo['created_at'].toString() ?? "",
+          partnerInfo['updated_at'].toString() ?? "",
+        );
+        pbp = bp;
+      }
+      UserProfileModel up = UserProfileModel(
+          userLoginId,
+          userData['users_role'].toString() ?? "",
+          userData['profile_image'].toString() ?? "",
+          userData['name'].toString() ?? "",
+          userData['height'].toString() ?? "",
+          userData['weight'].toString() ?? "",
+          userData['email'].toString() ?? "",
+          countryId,
+          userData['region_id'].toString() ?? "",
+          userData['city_id'].toString() ?? "",
+          userData['now_in'].toString() ?? "",
+          userData['mobile'].toString() ?? "",
+          userData['mobile_verified_at'].toString() ?? "",
+          userData['dob'].toString() ?? "",
+          userData['gender'].toString() ?? "",
+          languageId,
+          userData['nationality_id'].toString() ?? "",
+          currencyId,
+          userData['app_notification'].toString() ?? "",
+          userData['points'].toString() ?? "",
+          userData['health_conditions'].toString() ?? "",
+          userData['health_conditions_id'].toString() ?? "",
+          userData['email_verified_at'].toString() ?? "",
+          userData['mobile_code'].toString() ?? "",
+          userData['status'].toString() ?? "",
+          addedFrom,
+          userData['created_at'].toString() ?? "",
+          userData['updated_at'].toString() ?? "",
+          userData['deleted_at'].toString() ?? "",
+          userData['device_id'].toString() ?? "",
+          pbp);
+      setState(() {
+        payOnArrival = up.bp.payOnArrival;
+        loading = false;
+      });
+      getPaymentMode(payOnArrival, amount, bId, cur, tCost);
+      // Constants.userRole = up.userRole;
+      // prefs.setString("userRole", up.userRole);
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   Future getDetails(String serviceId, String userId) async {
@@ -301,6 +410,17 @@ class _UpcomingRequestInformationState
     print(packagePrice);
   }
 
+  void getPaymentMode(
+      String pay, String amount, String bId, String cur, String tCost) async {
+    if (pay == "1") {
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+        return PaymentMethods(widget.uRequestList, amount, bId, cur, tCost);
+      }));
+    } else {
+      fetchCurrency(amount, bId, cur, tCost);
+    }
+  }
+
   Future<List<CurrencyModel>> fetchCurrency(
       String value, String bookingId, String currency, String totalCost) async {
     double valueDouble = double.tryParse(value) ?? 0;
@@ -388,10 +508,8 @@ class _UpcomingRequestInformationState
             'user_id': Constants.userId.toString(),
             'status': "5",
           });
-      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       if (response.statusCode == 200) {
         message("Dropped Successfully");
-        // homePage();
       }
       print(response.statusCode);
     } catch (e) {
@@ -790,18 +908,24 @@ class _UpcomingRequestInformationState
                   Container(
                     height: 45,
                     width: MediaQuery.of(context).size.width / 3.6,
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
-                        color: greenColor1),
+                    decoration: widget.uRequestList.status == "1"
+                        ? const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(12)),
+                            color: greenColor1)
+                        : const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(12)),
+                            color: Color.fromARGB(255, 137, 176, 92)),
                     child: Material(
                       color: Colors.transparent,
                       child: InkWell(
-                        onTap: //() {},
-                            () => fetchCurrency(
+                        onTap: widget.uRequestList.status == "1"
+                            ? () => getProfile(
+                                widget.uRequestList.providerId.toString(),
                                 widget.uRequestList.tCost,
                                 widget.uRequestList.BookingId.toString(),
                                 widget.uRequestList.currency,
-                                widget.uRequestList.tCost),
+                                widget.uRequestList.tCost)
+                            : () {},
                         child: const Center(
                           child: Text(
                             'Make Payment',

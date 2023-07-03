@@ -278,7 +278,13 @@ class _PersonalDetailsState extends State<PersonalDetails> {
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 15),
             child: Column(
               children: [
-                TextFields(name, nameController, 15, greyProfileColor, true),
+                TextFields(
+                  name,
+                  nameController,
+                  15,
+                  greyProfileColor,
+                  true,
+                ),
                 Divider(
                   indent: 4,
                   endIndent: 4,

@@ -13,6 +13,7 @@ class TFWithSize extends StatefulWidget {
   final double width;
   final int? hintLines;
   final bool? type;
+  final String? label;
   const TFWithSize(this.hintText, this.controller, this.verticalPadding,
       this.fillColor, this.width,
       {Key? key,
@@ -21,7 +22,8 @@ class TFWithSize extends StatefulWidget {
       this.function,
       this.onEdit,
       this.hintLines = 2,
-      this.type = false})
+      this.type = false,
+      this.label})
       : super(key: key);
 
   @override
@@ -39,6 +41,12 @@ class _TFWithSizeState extends State<TFWithSize> {
         keyboardType: widget.show,
         controller: widget.controller,
         decoration: InputDecoration(
+          labelText: widget.label,
+          labelStyle: TextStyle(
+              color: blackColor.withOpacity(0.5),
+              fontWeight: FontWeight.w500,
+              fontSize: 15,
+              fontFamily: 'Raleway'),
           // contentPadding: EdgeInsets.symmetric(
           //     vertical: widget.verticalPadding, horizontal: 18),
           hintText: widget.hintText,
