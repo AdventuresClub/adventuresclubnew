@@ -19,7 +19,7 @@ class TopList extends StatefulWidget {
 }
 
 class _TopListState extends State<TopList> {
-  Map Mapcategory = {};
+  Map mapCategory = {};
   List<CategoryModel> pCM = [];
   CategoryModel category = CategoryModel(0, "Category", "images/logo.png", 0);
   List<CategoryFilterModel> categoryFilter = [];
@@ -74,9 +74,9 @@ class _TopListState extends State<TopList> {
     var response = await http.get(Uri.parse(
         "https://adventuresclub.net/adventureClub/api/v1/categories"));
     if (response.statusCode == 200) {
-      Mapcategory = json.decode(response.body);
+      mapCategory = json.decode(response.body);
       categoryFilter.forEach((i) {});
-      List<dynamic> result = Mapcategory['data'];
+      List<dynamic> result = mapCategory['data'];
       result.forEach((element) {
         CategoryModel cm = CategoryModel(
           int.tryParse(element['id'].toString()) ?? 0,
@@ -107,9 +107,9 @@ class _TopListState extends State<TopList> {
   Widget build(BuildContext context) {
     // final ffpCM = Provider.of<CompleteProfileProvider>(context, listen: false)
     return loading
-        ? Center(
+        ? const Center(
             child: Column(
-              children: const [Text("Loading....")],
+              children: [Text("Loading....")],
             ),
           )
         : ListView.builder(

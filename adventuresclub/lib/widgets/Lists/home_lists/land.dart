@@ -14,7 +14,6 @@ import 'package:adventuresclub/models/services/included_activities_model.dart';
 import 'package:adventuresclub/models/services/manish_model.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
-import 'package:adventuresclub/widgets/services_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
@@ -112,9 +111,9 @@ class LandState extends State<Land> {
   Widget build(BuildContext context) {
     gm = Provider.of<ServicesProvider>(context).allLand;
     return loading
-        ? Center(
+        ? const Center(
             child: Column(
-              children: const [
+              children: [
                 Text("Loading ....."),
                 SizedBox(
                   height: 10,

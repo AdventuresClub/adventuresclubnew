@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
-import 'dart:math';
 import 'package:adventuresclub/become_a_partner/become_partner.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/about_us.dart';
@@ -21,9 +20,10 @@ import 'package:adventuresclub/sign_up/sign_in.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../models/packages_become_partner/packages_become_partner_model.dart';
+import '../../provider/services_provider.dart';
 import '../become_partner/become_partner_packages.dart';
 
 class Account extends StatefulWidget {
@@ -396,8 +396,13 @@ class _AccountState extends State<Account> {
             ));
   }
 
+  void changeIndex() {
+    Provider.of<ServicesProvider>(context, listen: false).homeIndex = 0;
+  }
+
   void logout() {
     Constants.clear();
+    changeIndex();
     print(Constants.userId);
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
@@ -471,7 +476,6 @@ class _AccountState extends State<Account> {
             ],
           ),
         ),
-        children: [],
       ),
     );
   }

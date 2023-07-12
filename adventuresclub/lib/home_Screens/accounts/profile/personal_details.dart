@@ -1,13 +1,10 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls
 
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/get_country.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
-import 'package:adventuresclub/widgets/text_fields/no_space.dart';
 import 'package:adventuresclub/widgets/text_fields/text_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -139,7 +136,6 @@ class _PersonalDetailsState extends State<PersonalDetails> {
             'mobile': phoneController.text,
             'forgot_password': "0",
           });
-      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       // setState(() {
       //   userID = decodedResponse['data']['user_id'];
       // });

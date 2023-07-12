@@ -2,8 +2,6 @@
 
 import 'dart:convert';
 import 'dart:math';
-
-import 'package:adventuresclub/become_a_partner/payment_setup.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/details.dart';
 import 'package:adventuresclub/home_Screens/payment_methods/payment_methods.dart';
@@ -24,8 +22,6 @@ import 'package:adventuresclub/widgets/circle_image_avatar.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-import '../home_Screens/payment_methods/one_pay_method.dart';
 import 'Lists/Chat_list.dart/show_chat.dart';
 
 class UpcomingRequestInformation extends StatefulWidget {
@@ -159,64 +155,64 @@ class _UpcomingRequestInformationState
         ProfileBecomePartner bp = ProfileBecomePartner(
           id,
           userId,
-          partnerInfo['company_name'].toString() ?? "",
-          partnerInfo['address'].toString() ?? "",
-          partnerInfo['location'].toString() ?? "",
-          partnerInfo['description'].toString() ?? "",
-          partnerInfo['license'].toString() ?? "",
-          partnerInfo['cr_name'].toString() ?? "",
-          partnerInfo['cr_number'].toString() ?? "",
-          partnerInfo['cr_copy'].toString() ?? "",
+          partnerInfo['company_name'].toString(),
+          partnerInfo['address'].toString(),
+          partnerInfo['location'].toString(),
+          partnerInfo['description'].toString(),
+          partnerInfo['license'].toString(),
+          partnerInfo['cr_name'].toString(),
+          partnerInfo['cr_number'].toString(),
+          partnerInfo['cr_copy'].toString(),
           debitCard,
           visaCard,
-          partnerInfo['payon_arrival'].toString() ?? "",
-          partnerInfo['paypal'].toString() ?? "",
-          partnerInfo['bankname'].toString() ?? "",
-          partnerInfo['account_holdername'].toString() ?? "",
-          partnerInfo['account_number'].toString() ?? "",
-          partnerInfo['is_online'].toString() ?? "",
-          partnerInfo['is_approved'].toString() ?? "",
+          partnerInfo['payon_arrival'].toString(),
+          partnerInfo['paypal'].toString(),
+          partnerInfo['bankname'].toString(),
+          partnerInfo['account_holdername'].toString(),
+          partnerInfo['account_number'].toString(),
+          partnerInfo['is_online'].toString(),
+          partnerInfo['is_approved'].toString(),
           packagesId,
-          partnerInfo['start_date'].toString() ?? "",
-          partnerInfo['end_date'].toString() ?? "",
-          partnerInfo['is_wiretransfer'].toString() ?? "",
-          partnerInfo['is_free_used'].toString() ?? "",
-          partnerInfo['created_at'].toString() ?? "",
-          partnerInfo['updated_at'].toString() ?? "",
+          partnerInfo['start_date'].toString(),
+          partnerInfo['end_date'].toString(),
+          partnerInfo['is_wiretransfer'].toString(),
+          partnerInfo['is_free_used'].toString(),
+          partnerInfo['created_at'].toString(),
+          partnerInfo['updated_at'].toString(),
         );
         pbp = bp;
       }
       UserProfileModel up = UserProfileModel(
           userLoginId,
-          userData['users_role'].toString() ?? "",
-          userData['profile_image'].toString() ?? "",
-          userData['name'].toString() ?? "",
-          userData['height'].toString() ?? "",
-          userData['weight'].toString() ?? "",
-          userData['email'].toString() ?? "",
+          userData['users_role'].toString(),
+          userData['profile_image'].toString(),
+          userData['name'].toString(),
+          userData['height'].toString(),
+          userData['weight'].toString(),
+          userData['email'].toString(),
           countryId,
-          userData['region_id'].toString() ?? "",
-          userData['city_id'].toString() ?? "",
-          userData['now_in'].toString() ?? "",
-          userData['mobile'].toString() ?? "",
-          userData['mobile_verified_at'].toString() ?? "",
-          userData['dob'].toString() ?? "",
-          userData['gender'].toString() ?? "",
+          userData['region_id'].toString(),
+          userData['city_id'].toString(),
+          userData['now_in'].toString(),
+          userData['mobile'].toString(),
+          userData['mobile_verified_at'].toString(),
+          userData['dob'].toString(),
+          userData['gender'].toString(),
           languageId,
-          userData['nationality_id'].toString() ?? "",
+          userData['nationality_id'].toString(),
           currencyId,
-          userData['app_notification'].toString() ?? "",
-          userData['points'].toString() ?? "",
-          userData['health_conditions'].toString() ?? "",
-          userData['health_conditions_id'].toString() ?? "",
-          userData['email_verified_at'].toString() ?? "",
-          userData['mobile_code'].toString() ?? "",
-          userData['status'].toString() ?? "",
+          userData['app_notification'].toString(),
+          userData['points'].toString(),
+          userData['health_conditions'].toString(),
+          userData['health_conditions_id'].toString(),
+          userData['email_verified_at'].toString(),
+          userData['mobile_code'].toString(),
+          userData['status'].toString(),
           addedFrom,
-          userData['created_at'].toString() ?? "",
-          userData['updated_at'].toString() ?? "",
-          userData['deleted_at'].toString() ?? "",
-          userData['device_id'].toString() ?? "",
+          userData['created_at'].toString(),
+          userData['updated_at'].toString(),
+          userData['deleted_at'].toString(),
+          userData['device_id'].toString(),
           pbp);
       setState(() {
         payOnArrival = up.bp.payOnArrival;
@@ -242,8 +238,8 @@ class _UpcomingRequestInformationState
       List<AvailabilityPlanModel> gAccomodationPlanModel = [];
       List<dynamic> availablePlan = result['availability'];
       availablePlan.forEach((ap) {
-        AvailabilityPlanModel amPlan = AvailabilityPlanModel(
-            ap['id'].toString() ?? "", ap['day'].toString() ?? "");
+        AvailabilityPlanModel amPlan =
+            AvailabilityPlanModel(ap['id'].toString(), ap['day'].toString());
         gAccomodationPlanModel.add(amPlan);
       });
       List<AvailabilityModel> gAccomodoationAvaiModel = [];

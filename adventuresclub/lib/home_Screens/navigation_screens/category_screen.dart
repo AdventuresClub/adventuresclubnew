@@ -69,7 +69,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       String acc = "";
       result.forEach((element) {
         if (element['category'] == type) {
-          List<ServicesModel> all_Services = [];
+          List<ServicesModel> allServices = [];
           acc = element['category'].toString() ?? "";
           List<dynamic> s = element['services'];
           allServices.clear();
@@ -226,8 +226,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
               int.tryParse(services['remaining_seats'].toString()) ?? 0,
             );
             allServices.add(nSm);
-            all_Services.add(nSm);
-            HomeServicesModel adv = HomeServicesModel(acc, all_Services);
+            allServices.add(nSm);
+            HomeServicesModel adv = HomeServicesModel(acc, allServices);
             gAllServices.add(adv);
           });
         }
@@ -253,12 +253,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
         ),
       ),
       body: loading
-          ? Center(
+          ? const Center(
               child: Column(
-                children: const [
-                  CircularProgressIndicator(),
-                  Text("Loading...")
-                ],
+                children: [CircularProgressIndicator(), Text("Loading...")],
               ),
             )
           : SingleChildScrollView(

@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_print
-
 import 'dart:convert';
 
 import 'package:adventuresclub/constants.dart';
@@ -12,9 +11,8 @@ import '../widgets/text_fields/space_text_field.dart';
 import '../widgets/text_fields/tf_with_suffix_icon.dart';
 
 class RecoveryPassword extends StatefulWidget {
-  final String userid;
   final String otpId;
-  const RecoveryPassword(this.userid, this.otpId, {super.key});
+  const RecoveryPassword(this.otpId, {super.key});
 
   @override
   State<RecoveryPassword> createState() => _RecoveryPasswordState();
@@ -55,19 +53,30 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
           Uri.parse(
               "https://adventuresclub.net/adventureClubDev/api/v1/create_forgot_password"),
           body: {
-            'user_id': widget.userid, //"",
-            'password_confirmation': "",
+            'user_id': Constants.userId.toString(), //"",
+            'password': passController.text.trim(),
+            'password_confirmation': confirmPassController.text.trim(),
             'otp_id': widget.otpId, //"0",
           });
-      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       if (response.statusCode == 200) {
         requestSent();
         goToSignIn();
+      } else {
+        dynamic body = jsonDecode(response.body);
+        message(body['message'].toString());
       }
       print(response.statusCode);
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  void message(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
   }
 
   @override

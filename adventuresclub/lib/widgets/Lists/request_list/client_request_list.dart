@@ -1,13 +1,9 @@
 // ignore_for_file: avoid_print
 
-import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
-import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/request_information.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../../models/getClientRequest/get_client_request_model.dart';
-import '../../circle_image_avatar.dart';
 
 class ClientRequestList extends StatefulWidget {
   final List<GetClientRequestModel> rm;

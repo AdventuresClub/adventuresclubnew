@@ -44,9 +44,6 @@ class _ProvidedAdventureGridState extends State<ProvidedAdventureGrid> {
 
   @override
   Widget build(BuildContext context) {
-    final double itemHeight =
-        (MediaQuery.of(context).size.height - kToolbarHeight - 24) / 8.75;
-    final double itemWidth = MediaQuery.of(context).size.width / 4.5;
     return GridView.count(
       physics: const ScrollPhysics(),
       shrinkWrap: true,

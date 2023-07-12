@@ -546,6 +546,5 @@ class _RequestInformationState extends State<RequestInformation> {
         ),
       ),
     );
-    ;
   }
 }

@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable, prefer_interpolation_to_compose_strings, use_build_context_synchronously
+// ignore_for_file: must_be_immutable, prefer_interpolation_to_compose_strings, use_build_context_synchronously, no_leading_underscores_for_local_identifiers
 
 import 'dart:async';
 import 'dart:developer';
@@ -67,13 +67,13 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
       List<String> location = locationData.split(':');
       myLat = double.tryParse(location[0]) ?? 0;
       myLng = double.tryParse(location[1]) ?? 0;
-      final CameraPosition _myPosition = CameraPosition(
+      final CameraPosition myPosition = CameraPosition(
         target: LatLng(myLat, myLng),
         zoom: 19.151926040649414,
       );
       final GoogleMapController _controller = await controller.future;
       _controller.animateCamera(
-        CameraUpdate.newCameraPosition(_myPosition),
+        CameraUpdate.newCameraPosition(myPosition),
       );
       List<Placemark> placemarks = await placemarkFromCoordinates(
         myLat,

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/filter_data_model/programs_model.dart';
 import 'package:adventuresclub/widgets/info_tile.dart';

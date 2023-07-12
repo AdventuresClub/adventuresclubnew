@@ -16,7 +16,7 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
   final PageController _pageViewController = PageController(initialPage: 0);
   int _activePage = 0;
   int index = 0;
-  int _currentPage = 0;
+  int currentPage = 0;
   late Timer _timer;
 
   @override
@@ -65,11 +65,11 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
             image: const ExactAssetImage('images/climb.png'),
             fit: BoxFit.cover),
       ),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 40.0),
+      child: const Padding(
+        padding: EdgeInsets.only(top: 40.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
+          children: [
             Text(
               'Adventures Club',
               style: TextStyle(
@@ -105,12 +105,12 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
             image: const ExactAssetImage('images/freerider.png'),
             fit: BoxFit.cover),
       ),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 40.0),
+      child: const Padding(
+        padding: EdgeInsets.only(top: 40.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
+            Text(
               'Adventures Club',
               style: TextStyle(
                   fontSize: 20,
@@ -118,12 +118,11 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                   fontFamily: 'Raleway',
                   fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 35.0, vertical: 20),
+              padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 20),
               child: Column(
-                children: const [
+                children: [
                   Text(
                     'Life is ...',
                     textAlign: TextAlign.center,
@@ -147,7 +146,7 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                 ],
               ),
             ),
-            const SizedBox(height: 2)
+            SizedBox(height: 2)
           ],
         ),
       ),
@@ -161,23 +160,22 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
               image: const ExactAssetImage('images/picture1.png'),
               fit: BoxFit.cover),
         ),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 40.0),
+        child: const Padding(
+          padding: EdgeInsets.only(top: 40.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Adventures Club',
+              Text('Adventures Club',
                   style: TextStyle(
                       fontSize: 20,
                       color: Colors.white,
                       fontFamily: 'Raleway',
                       fontWeight: FontWeight.bold)),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 35.0, vertical: 20),
+                padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 20),
                 child: Column(
-                  children: const [
+                  children: [
                     Text('Lets get back',
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -197,7 +195,7 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                   ],
                 ),
               ),
-              const SizedBox(height: 2)
+              SizedBox(height: 2)
             ],
           ),
         )),
@@ -208,23 +206,22 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                   blackColor.withOpacity(0.4), BlendMode.darken),
               image: const ExactAssetImage('images/man.png'),
               fit: BoxFit.cover)),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 40.0),
+      child: const Padding(
+        padding: EdgeInsets.only(top: 40.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text('Adventures Club',
+            Text('Adventures Club',
                 style: TextStyle(
                     fontSize: 20,
                     color: Colors.white,
                     fontFamily: 'Raleway',
                     fontWeight: FontWeight.bold)),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 35.0, vertical: 20),
+              padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 20),
               child: Column(
-                children: const [
+                children: [
                   Text('Spending time',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -246,7 +243,7 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                 ],
               ),
             ),
-            const SizedBox(height: 2)
+            SizedBox(height: 2)
           ],
         ),
       ),
@@ -259,23 +256,22 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                   blackColor.withOpacity(0.4), BlendMode.darken),
               image: const ExactAssetImage('images/swimming.png'),
               fit: BoxFit.cover)),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 40.0),
+      child: const Padding(
+        padding: EdgeInsets.only(top: 40.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text('Adventures Club',
+            Text('Adventures Club',
                 style: TextStyle(
                     fontSize: 20,
                     color: Colors.white,
                     fontFamily: 'Raleway',
                     fontWeight: FontWeight.bold)),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 35.0, vertical: 20),
+              padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 20),
               child: Column(
-                children: const [
+                children: [
                   Text('Create real human',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -297,7 +293,7 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                 ],
               ),
             ),
-            const SizedBox(height: 2)
+            SizedBox(height: 2)
           ],
         ),
       ),

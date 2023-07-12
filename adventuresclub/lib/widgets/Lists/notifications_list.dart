@@ -3,7 +3,6 @@
 import 'dart:convert';
 import 'dart:core';
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/home_Screens/accounts/notifications.dart';
 import 'package:adventuresclub/home_Screens/become_partner/become_partner_packages.dart';
 import 'package:adventuresclub/models/packages_become_partner/packages_become_partner_model.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
@@ -172,9 +171,9 @@ class _NotificationsListState extends State<NotificationsList> {
   @override
   Widget build(BuildContext context) {
     return loading
-        ? Center(
+        ? const Center(
             child: Column(
-              children: const [Text("Loading..")],
+              children: [Text("Loading..")],
             ),
           )
         : RefreshIndicator(
@@ -209,7 +208,7 @@ class _NotificationsListState extends State<NotificationsList> {
                               child: ListTile(
                                 leading: ClipRRect(
                                   borderRadius: BorderRadius.circular(32),
-                                  child: CircleAvatar(
+                                  child: const CircleAvatar(
                                     backgroundImage: ExactAssetImage(
                                       'images/logo.png',
                                     ),
@@ -253,7 +252,7 @@ class _NotificationsListState extends State<NotificationsList> {
                           ListTile(
                               leading: ClipRRect(
                                 borderRadius: BorderRadius.circular(32),
-                                child: CircleAvatar(
+                                child: const CircleAvatar(
                                   backgroundImage:
                                       ExactAssetImage('images/logo.png'),
                                   //NetworkImage(pNm[index].senderImage),

@@ -1,7 +1,5 @@
 // ignore_for_file: avoid_print
 
-import 'dart:math';
-
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/about.dart';
 import 'package:adventuresclub/home_Screens/details.dart';
@@ -239,10 +237,10 @@ class _PlannedGridState extends State<PlannedGrid> {
                           padding: const EdgeInsets.all(2.0),
                           child: GestureDetector(
                             onTap: goToProvider,
-                            child: Row(
+                            child: const Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
+                              children: [
                                 CircleAvatar(
                                     radius: 10,
                                     backgroundColor: transparentColor,

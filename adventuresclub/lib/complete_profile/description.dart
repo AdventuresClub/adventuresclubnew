@@ -586,8 +586,8 @@ class _DescriptionState extends State<Description> {
   @override
   Widget build(BuildContext context) {
     return loading
-        ? Column(
-            children: const [CircularProgressIndicator(), Text("Loading...")],
+        ? const Column(
+            children: [CircularProgressIndicator(), Text("Loading...")],
           )
         : Consumer<CompleteProfileProvider>(
             builder: (context, provider, child) {

@@ -82,11 +82,11 @@ class _ForgotPassState extends State<ForgotPass> {
     );
   }
 
-  void forgetPage(String userid, String otpId) {
+  void forgetPage(String id) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return RecoveryPassword(userid, otpId);
+          return RecoveryPassword(id);
         },
       ),
     );
@@ -99,12 +99,12 @@ class _ForgotPassState extends State<ForgotPass> {
           Uri.parse(
               "https://adventuresclub.net/adventureClub/api/v1/verify_otp"),
           body: {
-            'user_id': userID.toString(),
-            'otp': otpController.text,
+            'user_id': Constants.userId.toString(),
+            'otp': otpController.text.trim,
             'forgot_password': "0"
           });
       if (response.statusCode == 200) {
-        forgetPage(userID.toString(), otpController.text);
+        forgetPage(otpController.text.trim());
         message("OTP Verfied");
       } else {
         dynamic body = jsonDecode(response.body);
@@ -337,7 +337,7 @@ class _ForgotPassState extends State<ForgotPass> {
                             padding: const EdgeInsets.all(12.0),
                             child: Column(
                               children: [
-                                Row(children: const [
+                                const Row(children: [
                                   Text(
                                     "Select Your Country",
                                     style: TextStyle(

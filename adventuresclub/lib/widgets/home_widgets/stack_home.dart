@@ -48,7 +48,7 @@ class _StackHomeState extends State<StackHome> {
 
   int _activePage = 0;
   int index = 0;
-  int _currentPage = 0;
+  int currentPage = 0;
   late Timer _timer;
   bool value = false;
   Map mapFilter = {};

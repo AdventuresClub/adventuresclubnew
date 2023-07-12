@@ -12,7 +12,6 @@ import 'package:adventuresclub/models/filter_data_model/filter_data_model.dart';
 import 'package:adventuresclub/models/filter_data_model/level_filter_mode.dart';
 import 'package:adventuresclub/models/filter_data_model/sector_filter_model.dart';
 import 'package:adventuresclub/models/filter_data_model/service_types_filter.dart';
-import 'package:adventuresclub/models/packages_become_partner/bp_excluded_model.dart';
 import 'package:adventuresclub/models/packages_become_partner/bp_includes_model.dart';
 import 'package:adventuresclub/models/profile_models/profile_become_partner.dart';
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
@@ -24,7 +23,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-
 import 'models/create_adventure/regions_model.dart';
 import 'models/filter_data_model/region_model.dart';
 import 'models/packages_become_partner/packages_become_partner_model.dart';

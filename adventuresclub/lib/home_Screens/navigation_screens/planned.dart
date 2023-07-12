@@ -502,7 +502,7 @@ class _PlannedState extends State<Planned> {
                       );
                     }
                   },
-                  selectedBuilder: (context, _datetime, focusedDay) {
+                  selectedBuilder: (context, datetime, focusedDay) {
                     return Container(
                       decoration: BoxDecoration(
                           color: bluishColor,
@@ -510,7 +510,7 @@ class _PlannedState extends State<Planned> {
                       margin: const EdgeInsets.all(10.0),
                       child: Center(
                         child: Text(
-                          _datetime.day.toString(),
+                          datetime.day.toString(),
                           style: const TextStyle(color: Colors.white),
                         ),
                       ),
@@ -535,12 +535,9 @@ class _PlannedState extends State<Planned> {
             ),
           ),
           loading
-              ? Center(
+              ? const Center(
                   child: Column(
-                    children: const [
-                      CircularProgressIndicator(),
-                      Text("Loading...")
-                    ],
+                    children: [CircularProgressIndicator(), Text("Loading...")],
                   ),
                 )
               : Align(

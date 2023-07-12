@@ -70,7 +70,6 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
             'service_id': id,
             'customer_id': providerId, //ccCode.toString(),
           });
-      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       print(response.statusCode);
     } catch (e) {
       print(e.toString());

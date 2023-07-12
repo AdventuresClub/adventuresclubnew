@@ -144,7 +144,7 @@ class HomeCalendarPageState extends State<HomeCalendarPage> {
                   //      // ): Container();
                   //     },
 
-                  selectedBuilder: (context, _datetime, focusedDay) {
+                  selectedBuilder: (context, datetime, focusedDay) {
                     return Container(
                       decoration: BoxDecoration(
                           color: bluishColor,
@@ -152,7 +152,7 @@ class HomeCalendarPageState extends State<HomeCalendarPage> {
                       margin: const EdgeInsets.all(10.0),
                       child: Center(
                         child: Text(
-                          _datetime.day.toString(),
+                          datetime.day.toString(),
                           style: const TextStyle(color: Colors.white),
                         ),
                       ),

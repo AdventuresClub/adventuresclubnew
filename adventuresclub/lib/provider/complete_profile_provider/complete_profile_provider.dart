@@ -1,8 +1,5 @@
 // ignore_for_file: avoid_print
 import 'dart:io';
-import 'package:adventuresclub/complete_profile/description.dart';
-import 'package:adventuresclub/complete_profile/cost.dart';
-import 'package:adventuresclub/complete_profile/program.dart';
 import 'package:adventuresclub/models/category/category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -31,7 +28,6 @@ class CompleteProfileProvider with ChangeNotifier {
   TextEditingController tncController = TextEditingController();
   TextEditingController adventureNameController = TextEditingController();
   TextEditingController daysBeforeActController = TextEditingController();
-
   TextEditingController nameController = TextEditingController();
   TextEditingController dobController = TextEditingController();
   TextEditingController workPlaceController = TextEditingController();

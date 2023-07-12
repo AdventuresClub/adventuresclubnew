@@ -80,7 +80,7 @@ class _FavListState extends State<FavList> {
       MaterialPageRoute(
         builder: (_) {
           return ShowChat(
-              "https://adventuresclub.net/adventureClub/newreceiverchat/${Constants.userId}/${serviceId}/${providerId}");
+              "https://adventuresclub.net/adventureClub/newreceiverchat/${Constants.userId}/$serviceId/$providerId");
         },
       ),
     );

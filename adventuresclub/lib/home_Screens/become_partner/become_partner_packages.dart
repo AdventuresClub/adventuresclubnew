@@ -5,7 +5,6 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
-import 'package:adventuresclub/models/packages_become_partner/bp_excluded_model.dart';
 import 'package:adventuresclub/models/packages_become_partner/bp_includes_model.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/Lists/package_list.dart';
@@ -238,7 +237,7 @@ class _BecomePartnerPackagesState extends State<BecomePartnerPackages> {
       MaterialPageRoute(
         builder: (_) {
           return ShowChat(
-            "${'https://adventuresclub.net/admin1/dataFrom.htm?amount=$amount&merchant_id=${67}&order_id=$orderId&tid=$transactionId&billing_name=$accountUserName&billing_address=$providerAddress&billing_city=$providerCity&billing_zip=$zipCode&billing_country=$billingCountry&billing_tel=$telePhone&billing_email=$email'}${'&merchant_param1=${'Subscription'}&merchant_param2=$subscriptionId&merchant_param3={_paymentAndSubscreptionRequestModel.BookingDate}&merchant_param4={_paymentAndSubscreptionRequestModel.ActivityName}&merchant_param5={_paymentAndSubscreptionRequestModel.NoOfPerson'}",
+            "${'https://adventuresclub.net/admin1/dataFrom.htm?amount=$amount&merchant_id=${67}&order_id=$orderId&tid=$transactionId&billing_name=$accountUserName&billing_address=$providerAddress&billing_city=$providerCity&billing_zip=$zipCode&billing_country=$billingCountry&billing_tel=$telePhone&billing_email=$email'}${'&merchant_param1=${'Subscription'}&merchant_param2=$subscriptionId&merchant_param3=${Constants.userId}&merchant_param4={_paymentAndSubscreptionRequestModel.ActivityName}&merchant_param5={_paymentAndSubscreptionRequestModel.NoOfPerson'}",
             show: true,
           );
         },

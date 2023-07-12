@@ -25,65 +25,65 @@ class _InviteFriendsState extends State<InviteFriends> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: whiteColor,
-          elevation: 1.5,
-          centerTitle: true,
-          leading: IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: Image.asset(
-              'images/backArrow.png',
-              height: 20,
-            ),
-          ),
-          title: MyText(
-            text: 'Invite Friends',
-            color: bluishColor,
-            weight: FontWeight.bold,
+      appBar: AppBar(
+        backgroundColor: whiteColor,
+        elevation: 1.5,
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Image.asset(
+            'images/backArrow.png',
+            height: 20,
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 10,
+        title: MyText(
+          text: 'Invite Friends',
+          color: bluishColor,
+          weight: FontWeight.bold,
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              height: 150,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                image: const DecorationImage(
+                    image: ExactAssetImage('images/pngtree.png'),
+                    fit: BoxFit.cover),
               ),
-              Container(
-                height: 150,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  image: const DecorationImage(
-                      image: ExactAssetImage('images/pngtree.png'),
-                      fit: BoxFit.cover),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Button(
-                  "Invite",
-                  bluishColor,
-                  bluishColor,
-                  whiteColor,
-                  16,
-                  launchURL,
-                  Icons.deblur,
-                  bluishColor,
-                  false,
-                  3,
-                  "Roboto",
-                  FontWeight.w500,
-                  14),
-              const SizedBox(
-                height: 50,
-              ),
-              // ButtonIconLess(
-              //     'Earn More', bluishColor, whiteColor, 1.8, 16, 16, abc),
-            ],
-          ),
-        ));
-    ;
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Button(
+                "Invite",
+                bluishColor,
+                bluishColor,
+                whiteColor,
+                16,
+                launchURL,
+                Icons.deblur,
+                bluishColor,
+                false,
+                3,
+                "Roboto",
+                FontWeight.w500,
+                14),
+            const SizedBox(
+              height: 50,
+            ),
+            // ButtonIconLess(
+            //     'Earn More', bluishColor, whiteColor, 1.8, 16, 16, abc),
+          ],
+        ),
+      ),
+    );
   }
 }

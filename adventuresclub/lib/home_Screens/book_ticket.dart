@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/requests.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/provider/services_provider.dart';

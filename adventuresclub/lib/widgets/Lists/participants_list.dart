@@ -1,13 +1,11 @@
 // ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls
 
-import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/participants_container.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-
 import '../../models/getParticipants/get_participants_model.dart';
 import 'Chat_list.dart/show_chat.dart';
 
@@ -209,7 +207,6 @@ class _ParticipantsListState extends State<ParticipantsList> {
             // 'user_id': bookingUser,
             // 'status': "3",
           });
-      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       if (response.statusCode != 200) {
         setState(() {
           gm.insert(index, pm);

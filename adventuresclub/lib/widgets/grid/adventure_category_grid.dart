@@ -48,9 +48,6 @@ class _AdventureCategoryGridState extends State<AdventureCategoryGrid> {
   ];
   @override
   Widget build(BuildContext context) {
-    final double itemHeight =
-        (MediaQuery.of(context).size.height - kToolbarHeight - 24) / 9.75;
-    final double itemWidth = MediaQuery.of(context).size.width / 4.5;
     return Padding(
       padding: const EdgeInsets.all(8),
       child: GridView.count(

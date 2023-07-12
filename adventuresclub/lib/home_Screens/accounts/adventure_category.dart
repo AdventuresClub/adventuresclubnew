@@ -21,7 +21,7 @@ class _AdventureCategoryState extends State<AdventureCategory> {
   static List<CategoryFilterModel> categoryFilter = [];
   List<CategoryModel> categories = [];
   bool loading = false;
-  Map Mapcategory = {};
+  Map mapCategory = {};
   List<CategoryModel> pCM = [];
 
   @override
@@ -70,9 +70,9 @@ class _AdventureCategoryState extends State<AdventureCategory> {
     var response = await http.get(Uri.parse(
         "https://adventuresclub.net/adventureClub/api/v1/categories"));
     if (response.statusCode == 200) {
-      Mapcategory = json.decode(response.body);
+      mapCategory = json.decode(response.body);
       categoryFilter.forEach((i) {});
-      List<dynamic> result = Mapcategory['data'];
+      List<dynamic> result = mapCategory['data'];
       result.forEach((element) {
         CategoryModel cm = CategoryModel(
           int.tryParse(element['id'].toString()) ?? 0,

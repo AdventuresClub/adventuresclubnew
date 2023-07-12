@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/widgets/app_bar.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/tabs/profile_tabs.dart';

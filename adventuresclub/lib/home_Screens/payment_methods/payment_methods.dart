@@ -1,9 +1,8 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'dart:math';
-
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/home_Screens/accounts/details_card.dart';
-import 'package:adventuresclub/home_Screens/accounts/international_visa_card_details.dart';
 import 'package:adventuresclub/models/currency_model.dart';
 import 'package:adventuresclub/models/requests/upcoming_Requests_Model.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';

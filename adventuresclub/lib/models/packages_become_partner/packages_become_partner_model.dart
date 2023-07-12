@@ -1,4 +1,3 @@
-import 'package:adventuresclub/models/packages_become_partner/bp_excluded_model.dart';
 import 'package:adventuresclub/models/packages_become_partner/bp_includes_model.dart';
 
 class PackagesBecomePartnerModel {

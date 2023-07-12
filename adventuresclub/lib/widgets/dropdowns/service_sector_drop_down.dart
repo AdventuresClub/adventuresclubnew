@@ -317,6 +317,5 @@ class ServiceSectorDropDownState extends State<ServiceSectorDropDown> {
               ),
             ),
           );
-    ;
   }
 }

@@ -23,7 +23,7 @@ class RequestsList extends StatefulWidget {
 }
 
 class _RequestsListState extends State<RequestsList> {
-  Map Ulist = {};
+  Map uList = {};
   List<ServiceImageModel> gSim = [];
   List<UpcomingRequestsModel> uRequestList = [];
   List<UpcomingRequestsModel> uRequestListInv = [];
@@ -40,8 +40,8 @@ class _RequestsListState extends State<RequestsList> {
         "https://adventuresclub.net/adventureClub/api/v1/get_requests?user_id=${Constants.userId}&type=0"));
     try {
       if (response.statusCode == 200) {
-        Ulist = json.decode(response.body);
-        List<dynamic> result = Ulist['data'];
+        uList = json.decode(response.body);
+        List<dynamic> result = uList['data'];
         result.forEach((element) {
           List<dynamic> image = element['images'];
           image.forEach((i) {

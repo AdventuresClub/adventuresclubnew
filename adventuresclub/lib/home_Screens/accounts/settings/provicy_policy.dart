@@ -15,7 +15,7 @@ class PrivacyPolicy extends StatefulWidget {
 }
 
 class _PrivacyPolicyState extends State<PrivacyPolicy> {
-  Map MapFilter = {};
+  Map mapFilter = {};
   List<TermsConditionModel> privacyList = [];
   bool loading = false;
 
@@ -32,8 +32,8 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
     var response = await http.get(Uri.parse(
         "https://adventuresclub.net/adventureClub/api/v1/privacy-policy"));
     if (response.statusCode == 200) {
-      MapFilter = json.decode(response.body);
-      List<dynamic> result = MapFilter['data'];
+      mapFilter = json.decode(response.body);
+      List<dynamic> result = mapFilter['data'];
       result.forEach((element) {
         int id = int.tryParse(element['id'].toString()) ?? 0;
         TermsConditionModel tc = TermsConditionModel(
