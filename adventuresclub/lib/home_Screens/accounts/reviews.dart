@@ -210,7 +210,7 @@ class _ReviewsState extends State<Reviews> {
                                   )
                                 : MyText(
                                     text:
-                                        "${(reviewList[index].um[index].name)} ${'|'} ${(reviewList[index].um[index].userName)}", //"ReviJohn Doe | California | 9days ago",
+                                        "${(reviewList[index].um[index].name)} ${'|'} ${(reviewList[index].um[index].userName)} ${'|'} ${(reviewList[index].ca)} ", //"ReviJohn Doe | California | 9days ago",
                                     color: blackTypeColor4,
                                     weight: FontWeight.w600,
                                   ),

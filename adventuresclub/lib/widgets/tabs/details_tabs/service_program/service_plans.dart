@@ -59,16 +59,16 @@ class _ServicesPlansState extends State<ServicesPlans> {
                             padding: const EdgeInsets.only(top: 18.0),
                             child: Row(
                               children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      color: bluishColor,
-                                      borderRadius: BorderRadius.circular(16)),
-                                  width: 10,
-                                  height: 10,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
+                                // Container(
+                                //   decoration: BoxDecoration(
+                                //       color: bluishColor,
+                                //       borderRadius: BorderRadius.circular(16)),
+                                //   width: 10,
+                                //   height: 10,
+                                // ),
+                                // const SizedBox(
+                                //   width: 5,
+                                // ),
                                 MyText(
                                   text: widget.programmes[index].title,
                                   color: blackColor,

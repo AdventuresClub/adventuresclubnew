@@ -79,11 +79,7 @@ class _ClientRequestListState extends State<ClientRequestList> {
             "booking_id": bookingId,
             'user_id': userId, //"3", //Constants.userId, //"27",
             'status': "3",
-            // 'id': "2",
           });
-      // setState(() {
-      //   favourite = true;
-      // });
       if (response.statusCode != 200) {
         setState(() {
           gRM.insert(index, gR);

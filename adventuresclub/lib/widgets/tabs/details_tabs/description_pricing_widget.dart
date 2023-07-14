@@ -37,14 +37,14 @@ class DescriptionPricingWidget extends StatelessWidget {
                     size: 16,
                   ),
                 ),
-                Expanded(
-                  child: MyText(
-                    text: 'Earn 180 Points',
-                    weight: FontWeight.bold,
-                    color: blueTextColor,
-                    size: 16,
-                  ),
-                ),
+                // Expanded(
+                //   child: MyText(
+                //     text: 'Earn 180 Points',
+                //     weight: FontWeight.bold,
+                //     color: blueTextColor,
+                //     size: 16,
+                //   ),
+                // ),
               ],
             ),
             const SizedBox(height: 10),

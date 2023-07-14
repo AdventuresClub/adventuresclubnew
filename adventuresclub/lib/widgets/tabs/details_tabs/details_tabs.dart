@@ -480,7 +480,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                       //   appbar: false,
                       // ),
                       ShowChat(
-                        "https://adventuresclub.net/adventureClub/receiverlist/${Constants.userId}/${widget.gm.serviceId}",
+                        "https://adventuresclub.net/adventureClub/receiverlist/${Constants.userId}/${widget.gm.id}",
                         appbar: false,
                       ),
                       //AdventureChatDetails(widget.gm.serviceId.toString())

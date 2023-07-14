@@ -56,7 +56,10 @@ class _ProvidedAdventureGridState extends State<ProvidedAdventureGrid> {
         (index) {
           return GestureDetector(
               onTap: () => goToDetails(widget.allSer[index]),
-              child: ServicesCard(widget.allSer[index]));
+              child: ServicesCard(
+                widget.allSer[index],
+                providerShow: false,
+              ));
           //     return GestureDetector(
           // //  onTap: goToDetails,
           //   child: Padding(

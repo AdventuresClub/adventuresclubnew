@@ -26,7 +26,9 @@ import 'Lists/Chat_list.dart/show_chat.dart';
 
 class UpcomingRequestInformation extends StatefulWidget {
   final UpcomingRequestsModel uRequestList;
-  const UpcomingRequestInformation(this.uRequestList, {super.key});
+  final Function decline;
+  const UpcomingRequestInformation(this.uRequestList, this.decline,
+      {super.key});
 
   @override
   State<UpcomingRequestInformation> createState() =>
@@ -494,25 +496,6 @@ class _UpcomingRequestInformationState
     return randomString; // return the generated string
   }
 
-  void dropped(String bookingId) async {
-    try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/booking_accept"),
-          body: {
-            'booking_id': bookingId,
-            'user_id': Constants.userId.toString(),
-            'status': "5",
-          });
-      if (response.statusCode == 200) {
-        message("Dropped Successfully");
-      }
-      print(response.statusCode);
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
   void message(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -885,9 +868,10 @@ class _UpcomingRequestInformationState
                       color: Colors.transparent,
                       child: InkWell(
                         onTap: // () {},
-                            () => dropped(
-                          widget.uRequestList.BookingId.toString(),
-                        ),
+                            widget.decline(widget.uRequestList.BookingId
+                                .toString()), //     () => showConfirmation(
+                        //   widget.uRequestList.BookingId.toString(),
+                        // ),
                         child: const Center(
                           child: Text(
                             'Cancel Request',
@@ -942,6 +926,5 @@ class _UpcomingRequestInformationState
         ),
       ),
     );
-    ;
   }
 }

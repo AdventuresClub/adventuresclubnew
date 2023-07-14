@@ -12,7 +12,9 @@ import '../models/home_services/services_model.dart';
 class ServicesCard extends StatefulWidget {
   final ServicesModel gm;
   final bool show;
-  const ServicesCard(this.gm, {this.show = false, super.key});
+  final bool? providerShow;
+  const ServicesCard(this.gm,
+      {this.show = false, this.providerShow = true, super.key});
 
   @override
   State<ServicesCard> createState() => _ServicesCardState();
@@ -34,13 +36,15 @@ class _ServicesCardState extends State<ServicesCard> {
     String id,
     int serviceId,
   ) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return About(id: id, sId: serviceId);
-        },
-      ),
-    );
+    if (widget.providerShow!) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) {
+            return About(id: id, sId: serviceId);
+          },
+        ),
+      );
+    } else {}
   }
 
   @override
