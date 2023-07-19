@@ -305,9 +305,9 @@ class _FilterPageState extends State<FilterPage> {
                             Center(
                               child: MyText(
                                   text: 'Filter',
-                                  weight: FontWeight.bold,
-                                  color: blackColor,
-                                  size: 20,
+                                  weight: FontWeight.w800,
+                                  color: blackColor.withOpacity(0.7),
+                                  size: 16,
                                   fontFamily: 'Raleway'),
                             ),
                             const SizedBox(width: 40),
