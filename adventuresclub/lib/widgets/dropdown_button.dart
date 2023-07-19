@@ -21,23 +21,12 @@ class _DdButtonState extends State<DdButton> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       width: MediaQuery.of(context).size.width / widget.width,
-      decoration: BoxDecoration(
-          color: lightGreyColor,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: greyColor.withOpacity(0.2),
-          )),
+     
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           isExpanded: true,
           value: widget.dropDown,
-          icon: const Image(
-            image: ExactAssetImage(
-              'images/drop_down.png',
-            ),
-            height: 14,
-            width: 16,
-          ),
+          icon: const Icon(Icons.keyboard_arrow_down),
           elevation: 12,
           style: const TextStyle(color: blackTypeColor),
           onChanged: (String? value) {
@@ -50,7 +39,10 @@ class _DdButtonState extends State<DdButton> {
               .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text(value),
+              child: Text(value,style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 12
+              ),),
             );
           }).toList(),
         ),

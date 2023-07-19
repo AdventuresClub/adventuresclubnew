@@ -9,6 +9,7 @@ import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/Lists/home_lists/service_List.dart';
 import 'package:adventuresclub/widgets/Lists/home_lists/top_list.dart';
+import 'package:adventuresclub/widgets/home_widgets/filter.dart';
 import 'package:adventuresclub/widgets/home_widgets/stack_home.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -131,7 +132,7 @@ class _HomeState extends State<Home> {
               padding: const EdgeInsets.symmetric(horizontal: 4.0),
               child: Column(
                 children: [
-                  StackHome(banners),
+                  FilterPage(banners),
                   const SizedBox(
                     height: 35,
                   ),
