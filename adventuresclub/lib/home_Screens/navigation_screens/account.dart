@@ -167,7 +167,7 @@ class _AccountState extends State<Account> {
     super.initState();
     getProfile();
     //Constants.getProfile();
-    // convert();
+    convert();
   }
 
   void requestSent() async {
@@ -306,11 +306,13 @@ class _AccountState extends State<Account> {
           setState(() {
             loading = false;
             expired = true;
+            Constants.expired = true;
           });
         } else if (today.year == dt.year && today.month > dt.month) {
           setState(() {
             loading = false;
             expired = true;
+            Constants.expired = true;
           });
         } else if (today.year == dt.year &&
             today.month == dt.month &&
@@ -318,10 +320,12 @@ class _AccountState extends State<Account> {
           setState(() {
             loading = false;
             expired = true;
+            Constants.expired = true;
           });
         } else {
           loading = false;
           expired = false;
+          Constants.expired = false;
         }
       }
       setState(() {
@@ -329,6 +333,7 @@ class _AccountState extends State<Account> {
       });
     }
     print(expired);
+    print(Constants.expired);
   }
 
   void goToProfile(bool expired, String role) {
@@ -456,7 +461,7 @@ class _AccountState extends State<Account> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   MaterialButton(
-                    onPressed: packagesList1,
+                    onPressed: () => packagesList1(false),
                     child: MyText(
                       text: "Yes",
                       weight: FontWeight.bold,
@@ -484,14 +489,14 @@ class _AccountState extends State<Account> {
     Navigator.of(context).pop();
   }
 
-  void packagesList1() {
+  void packagesList1(bool s) {
     cancel();
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return const BecomePartnerPackages(
-            //bp,
-            show: true,
+          return BecomePartnerPackages(
+            // bp,
+            show: s,
           );
         },
       ),
@@ -707,80 +712,77 @@ class _AccountState extends State<Account> {
                           profile.userRole == "2")
                         Column(
                           children: [
-                            GestureDetector(
-                              // onTap: getProfile,
-                              child: Container(
-                                color: transparentColor,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 15),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    loading
-                                        ? const Text("Loading")
-                                        : Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              MyText(
-                                                text: profile
-                                                    .name, //'Kenneth Gutierrez',
-                                                color: blackColor,
-                                                weight: FontWeight.bold,
-                                                size: 22,
-                                                fontFamily: "Raleway",
-                                              ),
-                                              GestureDetector(
-                                                onTap: requestSent,
-                                                // () {
-                                                //   Navigator.of(context)
-                                                //       .push(MaterialPageRoute(builder: (_) {
-                                                //     return const BecomePartnerNew();
-                                                //   }));
-                                                // },
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    MyText(
-                                                      text: 'Become A partner',
-                                                      size: 18,
-                                                      //fontFamily: 'Raleway',
-                                                      weight: FontWeight.w600,
-                                                      color: greyColor
-                                                          .withOpacity(1),
-                                                    ),
-                                                    const Icon(
-                                                      Icons.arrow_forward_ios,
-                                                      color: bluishColor,
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                    profileUrl != null
-                                        ? GestureDetector(
-                                            onTap: () => goToProfile(
-                                                expired, profile.userRole),
-                                            child: CircleAvatar(
-                                              radius: 38,
-                                              backgroundImage: NetworkImage(
-                                                  "${'https://adventuresclub.net/adventureClub/public/'}${profile.profileImage}"),
+                            Container(
+                              color: transparentColor,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  loading
+                                      ? const Text("Loading")
+                                      : Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            MyText(
+                                              text: profile
+                                                  .name, //'Kenneth Gutierrez',
+                                              color: blackColor,
+                                              weight: FontWeight.bold,
+                                              size: 22,
+                                              fontFamily: "Raleway",
                                             ),
-                                          )
-                                        : GestureDetector(
-                                            onTap: () => goToProfile(
-                                                expired, profile.userRole),
-                                            child: CircleAvatar(
-                                              radius: 38,
-                                              backgroundImage:
-                                                  NetworkImage(profileUrl),
+                                            GestureDetector(
+                                              onTap: requestSent,
+                                              // () {
+                                              //   Navigator.of(context)
+                                              //       .push(MaterialPageRoute(builder: (_) {
+                                              //     return const BecomePartnerNew();
+                                              //   }));
+                                              // },
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  MyText(
+                                                    text: 'Become A partner',
+                                                    size: 18,
+                                                    //fontFamily: 'Raleway',
+                                                    weight: FontWeight.w600,
+                                                    color: greyColor
+                                                        .withOpacity(1),
+                                                  ),
+                                                  const Icon(
+                                                    Icons.arrow_forward_ios,
+                                                    color: bluishColor,
+                                                  )
+                                                ],
+                                              ),
                                             ),
+                                          ],
+                                        ),
+                                  profileUrl != null
+                                      ? GestureDetector(
+                                          onTap: () => goToProfile(
+                                              expired, profile.userRole),
+                                          child: CircleAvatar(
+                                            radius: 38,
+                                            backgroundImage: NetworkImage(
+                                                "${'https://adventuresclub.net/adventureClub/public/'}${profile.profileImage}"),
                                           ),
-                                  ],
-                                ),
+                                        )
+                                      : GestureDetector(
+                                          onTap: () => goToProfile(
+                                              expired, profile.userRole),
+                                          child: CircleAvatar(
+                                            radius: 38,
+                                            backgroundImage:
+                                                NetworkImage(profileUrl),
+                                          ),
+                                        ),
+                                ],
                               ),
                             ),
                             Padding(
@@ -912,7 +914,8 @@ class _AccountState extends State<Account> {
                                                 fontFamily: "Raleway",
                                               ),
                                               GestureDetector(
-                                                onTap: requestSent,
+                                                onTap: () => packagesList1(
+                                                    true), //requestSent,
                                                 // () {
                                                 //   Navigator.of(context)
                                                 //       .push(MaterialPageRoute(builder: (_) {
@@ -940,7 +943,7 @@ class _AccountState extends State<Account> {
                                               ),
                                             ],
                                           ),
-                                    profileUrl != null
+                                    profileUrl.isEmpty
                                         ? GestureDetector(
                                             onTap: () => goToProfile(
                                                 expired, profile.userRole),

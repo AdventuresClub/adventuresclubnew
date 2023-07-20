@@ -337,7 +337,8 @@ class _PackageListState extends State<PackageList> {
                   color: whiteColor,
                 ),
                 MyText(
-                  text: ("${widget.bp.title} (${(widget.bp.duration)})"),
+                  text:
+                      ("${widget.bp.title} (${(widget.bp.duration)} ${("Days")})"),
                   size: 18,
                   weight: FontWeight.bold,
                 ),

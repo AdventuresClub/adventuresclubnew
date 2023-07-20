@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:map_launcher/map_launcher.dart' as ml;
+import 'package:map_launcher/src/models.dart' as mt;
 
 class VisitDetails extends StatefulWidget {
   final GetVisitModel? vm;
@@ -72,6 +74,29 @@ class _VisitDetailsState extends State<VisitDetails> {
     myLng = double.tryParse(location[1]) ?? 0;
   }
 
+  // void selected(BuildContext context) async {
+  //   setState(() {
+  //     loading = true;
+  //   });
+  //   try {
+  //     String locationData = await Constants.getLocation();
+  //     List<String> location = locationData.split(':');
+  //     myLat = double.tryParse(location[0]) ?? 0;
+  //     myLng = double.tryParse(location[1]) ?? 0;
+  //     final url =
+  //         'https://www.google.com/maps/dir/?api=1&origin=$myLat,$myLng&destination=$lt,$ln';
+  //     await launchUrl(Uri.parse(url));
+  //     setState(() {
+  //       loading = false;
+  //     });
+  //   } catch (e) {
+  //     log(e.toString());
+  //     setState(() {
+  //       loading = false;
+  //     });
+  //   }
+  // }
+
   void selected(BuildContext context) async {
     setState(() {
       loading = true;
@@ -81,9 +106,25 @@ class _VisitDetailsState extends State<VisitDetails> {
       List<String> location = locationData.split(':');
       myLat = double.tryParse(location[0]) ?? 0;
       myLng = double.tryParse(location[1]) ?? 0;
+/*
       final url =
-          'https://www.google.com/maps/dir/?api=1&origin=$myLat,$myLng&destination=$lt,$ln';
-      await launchUrl(Uri.parse(url));
+          "https://www.google.com/maps/dir/?api=1&origin=$myLat,$myLng&destination=$lt,$ln&key=${Constants.googleMapsApi}";
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await launchUrl(Uri.parse(url));
+      } else {
+        throw 'Could not launch $url';
+      }
+      */
+      if (await ml.MapLauncher.isMapAvailable(mt.MapType.google) == true) {
+        await ml.MapLauncher.showDirections(
+          mapType: mt.MapType.google,
+          destination: ml.Coords(lt, ln),
+          origin: ml.Coords(myLat, myLng),
+          extraParams: {
+            "key": Constants.googleMapsApi,
+          },
+        );
+      }
       setState(() {
         loading = false;
       });

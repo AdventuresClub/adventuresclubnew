@@ -19,6 +19,7 @@ import '../models/services/create_services/availability_plan_model.dart';
 
 class ServicesProvider with ChangeNotifier {
   ServicesProvider({Key? key});
+  bool loadingServices = false;
   int homeIndex = 0;
   List<String> categories = [];
   List<BecomePartner> nBp = [];
@@ -96,7 +97,7 @@ class ServicesProvider with ChangeNotifier {
     gWaterServicesModel.clear();
     gLandServicesModel.clear();
     allServices.clear();
-    gAllServices.clear();
+    print(filterServices);
   }
 
   void changeState() {
@@ -104,10 +105,10 @@ class ServicesProvider with ChangeNotifier {
   }
 
   Future getServicesList() async {
+    //if ()
     filteredServices.clear();
     allServices.clear();
     gAllServices.clear();
-    //getServicesListy1();
     var response = await http.post(
         Uri.parse(
             "https://adventuresclub.net/adventureClub/api/v1/get_allservices"),

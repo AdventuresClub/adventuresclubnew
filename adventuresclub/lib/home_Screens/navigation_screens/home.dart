@@ -10,8 +10,8 @@ import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/Lists/home_lists/service_List.dart';
 import 'package:adventuresclub/widgets/Lists/home_lists/top_list.dart';
 import 'package:adventuresclub/widgets/home_widgets/filter.dart';
-import 'package:adventuresclub/widgets/home_widgets/stack_home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
@@ -40,9 +40,14 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    getBanners();
-    getServicesList();
-    getChatNotification();
+    if (SchedulerBinding.instance.schedulerPhase ==
+        SchedulerPhase.persistentCallbacks) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        getBanners();
+        getServicesList();
+        getChatNotification();
+      });
+    }
   }
 
   Future getChatNotification() async {

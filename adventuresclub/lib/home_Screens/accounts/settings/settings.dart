@@ -84,10 +84,6 @@ class _SettingsState extends State<Settings> {
     }
   }
 
-  void getServicesList() {
-    Provider.of<ServicesProvider>(context, listen: false).getServicesList();
-  }
-
   void clearAll() {
     Provider.of<ServicesProvider>(context, listen: false).clearAll();
   }
@@ -105,7 +101,6 @@ class _SettingsState extends State<Settings> {
       Constants.country = country;
       Constants.countryFlag = flag;
     });
-    // getServicesList();
     homePage();
   }
 
@@ -130,7 +125,12 @@ class _SettingsState extends State<Settings> {
 // mobile_code:+91
 // email:mmm@yopmail.com
 
+  void changeIndex() {
+    Provider.of<ServicesProvider>(context, listen: false).homeIndex = 0;
+  }
+
   void homePage() {
+    changeIndex();
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       return const BottomNavigation();
     }));

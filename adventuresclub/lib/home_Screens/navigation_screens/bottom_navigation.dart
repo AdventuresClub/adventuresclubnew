@@ -57,10 +57,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
     }
   }
 
-  void getServicesList() {
-    Provider.of<ServicesProvider>(context, listen: false).getServicesList();
-  }
-
   void getNotificationBadge() async {
     try {
       var response = await http.post(

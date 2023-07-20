@@ -66,31 +66,33 @@ class _TopListState extends State<TopList> {
   }
 
   Future getCategory() async {
-    getFilters();
-    // pCM.clear();
-    setState(() {
-      loading = false;
-    });
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/categories"));
-    if (response.statusCode == 200) {
-      mapCategory = json.decode(response.body);
-      categoryFilter.forEach((i) {});
-      List<dynamic> result = mapCategory['data'];
-      result.forEach((element) {
-        CategoryModel cm = CategoryModel(
-          int.tryParse(element['id'].toString()) ?? 0,
-          element['category'].toString() ?? "",
-          element['image'].toString() ?? "",
-          int.tryParse(element['status'].toString()) ?? 0,
-        );
-        pCM.add(cm);
-        //listAdd(pCM);
+    if (mounted) {
+      getFilters();
+      // pCM.clear();
+      setState(() {
+        loading = false;
+      });
+      var response = await http.get(Uri.parse(
+          "https://adventuresclub.net/adventureClub/api/v1/categories"));
+      if (response.statusCode == 200) {
+        mapCategory = json.decode(response.body);
+        categoryFilter.forEach((i) {});
+        List<dynamic> result = mapCategory['data'];
+        result.forEach((element) {
+          CategoryModel cm = CategoryModel(
+            int.tryParse(element['id'].toString()) ?? 0,
+            element['category'].toString() ?? "",
+            element['image'].toString() ?? "",
+            int.tryParse(element['status'].toString()) ?? 0,
+          );
+          pCM.add(cm);
+          //listAdd(pCM);
+        });
+      }
+      setState(() {
+        loading = false;
       });
     }
-    setState(() {
-      loading = false;
-    });
   }
 
   void categoryType(String type) {
