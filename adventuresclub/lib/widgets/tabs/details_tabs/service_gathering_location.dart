@@ -7,7 +7,9 @@ import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:map_launcher/map_launcher.dart' as ml;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:map_launcher/src/models.dart' as mt;
 
 class ServiceGatheringLocation extends StatefulWidget {
   final String writeInformation;
@@ -141,13 +143,25 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
       List<String> location = locationData.split(':');
       myLat = double.tryParse(location[0]) ?? 0;
       myLng = double.tryParse(location[1]) ?? 0;
- 
-      final url = "https://www.google.com/maps/dir/?api=1&origin=$myLat,$myLng&destination=$lt,$ln&key=${Constants.googleMapsApi}";
- /*
+/*
       final url =
-          'https://www.google.com/maps/dir/?api=${Constants.googleMapsApi}&origin=$myLat,$myLng&destination=$lt,$ln';
-          */
-      await launchUrl(Uri.parse(url));
+          "https://www.google.com/maps/dir/?api=1&origin=$myLat,$myLng&destination=$lt,$ln&key=${Constants.googleMapsApi}";
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await launchUrl(Uri.parse(url));
+      } else {
+        throw 'Could not launch $url';
+      }
+      */
+      if (await ml.MapLauncher.isMapAvailable(mt.MapType.google) == true) {
+        await ml.MapLauncher.showDirections(
+          mapType: mt.MapType.google,
+          destination: ml.Coords(lt, ln),
+          origin: ml.Coords(myLat, myLng),
+          extraParams: {
+            "key": Constants.googleMapsApi,
+          },
+        );
+      }
       setState(() {
         loading = false;
       });
