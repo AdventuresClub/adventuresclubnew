@@ -225,44 +225,50 @@ class _AboutState extends State<About> {
           });
         }
         List<IncludedActivitiesModel> gIAm = [];
-        List<dynamic> iActivities = element['included_activities'];
-        iActivities.forEach((iA) {
-          IncludedActivitiesModel iAm = IncludedActivitiesModel(
-            int.tryParse(iA['id'].toString()) ?? 0,
-            int.tryParse(iA['service_id'].toString()) ?? 0,
-            iA['activity_id'].toString() ?? "",
-            iA['activity'].toString() ?? "",
-            iA['image'].toString() ?? "",
-          );
-          gIAm.add(iAm);
-        });
+        if (element['included_activities'] != null) {
+          List<dynamic> iActivities = element['included_activities'];
+          iActivities.forEach((iA) {
+            IncludedActivitiesModel iAm = IncludedActivitiesModel(
+              int.tryParse(iA['id'].toString()) ?? 0,
+              int.tryParse(iA['service_id'].toString()) ?? 0,
+              iA['activity_id'].toString() ?? "",
+              iA['activity'].toString() ?? "",
+              iA['image'].toString() ?? "",
+            );
+            gIAm.add(iAm);
+          });
+        }
         List<DependenciesModel> gdM = [];
-        List<dynamic> dependency = element['dependencies'];
-        dependency.forEach((d) {
-          DependenciesModel dm = DependenciesModel(
-            int.tryParse(d['id'].toString()) ?? 0,
-            d['dependency_name'].toString() ?? "",
-            d['image'].toString() ?? "",
-            d['updated_at'].toString() ?? "",
-            d['created_at'].toString() ?? "",
-            d['deleted_at'].toString() ?? "",
-          );
-          gdM.add(dm);
-        });
+        if (element['dependencies'] != null) {
+          List<dynamic> dependency = element['dependencies'];
+          dependency.forEach((d) {
+            DependenciesModel dm = DependenciesModel(
+              int.tryParse(d['id'].toString()) ?? 0,
+              d['dependency_name'].toString() ?? "",
+              d['image'].toString() ?? "",
+              d['updated_at'].toString() ?? "",
+              d['created_at'].toString() ?? "",
+              d['deleted_at'].toString() ?? "",
+            );
+            gdM.add(dm);
+          });
+        }
         List<AimedForModel> gAccomodationAimedfm = [];
-        List<dynamic> aF = element['aimed_for'];
-        aF.forEach((a) {
-          AimedForModel afm = AimedForModel(
-            int.tryParse(a['id'].toString()) ?? 0,
-            a['AimedName'].toString() ?? "",
-            a['image'].toString() ?? "",
-            a['created_at'].toString() ?? "",
-            a['updated_at'].toString() ?? "",
-            a['deleted_at'].toString() ?? "",
-            int.tryParse(a['service_id'].toString()) ?? 0,
-          );
-          gAccomodationAimedfm.add(afm);
-        });
+        if (element['aimed_for'] != null) {
+          List<dynamic> aF = element['aimed_for'];
+          aF.forEach((a) {
+            AimedForModel afm = AimedForModel(
+              int.tryParse(a['id'].toString()) ?? 0,
+              a['AimedName'].toString() ?? "",
+              a['image'].toString() ?? "",
+              a['created_at'].toString() ?? "",
+              a['updated_at'].toString() ?? "",
+              a['deleted_at'].toString() ?? "",
+              int.tryParse(a['service_id'].toString()) ?? 0,
+            );
+            gAccomodationAimedfm.add(afm);
+          });
+        }
         List<ServiceImageModel> gAccomodationServImgModel = [];
         if (element['images'] != null) {
           List<dynamic> image = element['images'];
@@ -278,18 +284,20 @@ class _AboutState extends State<About> {
           });
         }
         List<ProgrammesModel> gPm = [];
-        List<dynamic> programs = element['programs'];
-        programs.forEach((p) {
-          ProgrammesModel pm = ProgrammesModel(
-            int.tryParse(p['id'].toString()) ?? 0,
-            int.tryParse(p['service_id'].toString()) ?? 0,
-            p['title'].toString() ?? "",
-            p['start_datetime'].toString() ?? "",
-            p['end_datetime'].toString() ?? "",
-            p['description'].toString() ?? "",
-          );
-          gPm.add(pm);
-        });
+        if (element['images'] != null) {
+          List<dynamic> programs = element['programs'];
+          programs.forEach((p) {
+            ProgrammesModel pm = ProgrammesModel(
+              int.tryParse(p['id'].toString()) ?? 0,
+              int.tryParse(p['service_id'].toString()) ?? 0,
+              p['title'].toString() ?? "",
+              p['start_datetime'].toString() ?? "",
+              p['end_datetime'].toString() ?? "",
+              p['description'].toString() ?? "",
+            );
+            gPm.add(pm);
+          });
+        }
         DateTime sDate = DateTime.tryParse(element['start_date'].toString()) ??
             DateTime.now();
         DateTime eDate =

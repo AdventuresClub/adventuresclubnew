@@ -107,6 +107,7 @@ class Constants {
   static Map getPackages = {};
   static List<BpIncludesModel> gIList = [];
   static List<BpIncludesModel> gEList = [];
+  static const String googleMapsApi = "AIzaSyCtHdBmvvsOP97AxCzsu1fu8lNb1Dcq9M4";
   static ProfileBecomePartner pbp = ProfileBecomePartner(
       0,
       0,

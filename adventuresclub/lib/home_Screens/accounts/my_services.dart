@@ -146,100 +146,6 @@ class _MyServicesState extends State<MyServices> {
     Navigator.of(context).pop();
   }
 
-// 0:
-// "id" -> 44
-// 1:
-// "owner" -> 27
-// 2:
-// "adventure_name" -> "hamza adventure name"
-// 3:
-// "country" -> "INDIA"
-// 4:
-// "region" -> "Al sharqiyah South"
-// 5:
-// "city_id" -> null
-// 6:
-// "service_sector" -> "Tour"
-// 7:
-// "service_category" -> "Accomodation"
-// 8:
-// "service_type" -> "Bike riding"
-// 9:
-// "service_level" -> "Master"
-// 10:
-// "duration" -> "38 Min"
-// 11:
-// "available_seats" -> 90
-// 12:
-// "start_date" -> "0000-00-00 00:00:00"
-
-// "end_date" -> "0000-00-00 00:00:00"
-// 14:
-// "latitude" -> "37.4219983"
-// 15:
-// "longitude" -> "-122.084"
-// 16:
-// "write_information" -> "hamza information"
-// 17:
-// "service_plan" -> null
-// 18:
-// "sfor_id" -> null
-// 19:
-// "availability" -> List (0 items)
-// 20:
-// "geo_location" -> null
-// 21:
-// "specific_address" -> null
-// 22:
-// "cost_inc" -> "100.00"
-// 23:
-// "cost_exc" -> "50.00"
-// 24:
-// "currency" -> "INR"
-// 25:
-// "points" -> 0
-// 26:
-// "pre_requisites" -> "be careful"
-// "minimum_requirements" -> "take care"
-// 28:
-// "terms_conditions" -> "be kind"
-// 29:
-// "recommended" -> 1
-// 30:
-// "status" -> "0"
-// 31:
-// "image" -> ""
-// 32:
-// "descreption" -> "hamza information"
-// 33:
-// "favourite_image" -> ""
-// 34:
-// "created_at" -> "2023-03-02 16:52:50"
-// 35:
-// "updated_at" -> "2023-03-02 16:52:50"
-// 36:
-// "deleted_at" -> null
-// 37:
-// "service_id" -> 44
-// 38:
-// "provider_id" -> 27
-// 39:
-// "provided_name" -> "talha"
-// 40:
-// "provider_profile" -> "https://adventuresclub.net/adventureClub/public/profile_image/no-image.png"
-// 41:
-// "including_gerea_and_other_taxes" -> "100.00"
-// 42:
-// "excluding_gerea_and_other_taxes" -> "50.00"
-// 43:
-// "image_url" -> List (0 items)
-// 44:
-// "aimed_for" -> List (1 item)
-// 45:
-// "cost_incclude" -> "100.00"
-// 46:
-// "cost_exclude" -> "50.00"
-
   Future<void> myServicesApi() async {
     setState(() {
       loading = true;
@@ -251,9 +157,6 @@ class _MyServicesState extends State<MyServices> {
           body: {
             'owner': Constants.userId.toString(), //"3",
             'country_id': Constants.countryId.toString(),
-            //.toString(),
-            //"2", //Constants.countryId.toString(), //"2",
-            //'forgot_password': "0"
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       List<dynamic> result = decodedResponse['data'];

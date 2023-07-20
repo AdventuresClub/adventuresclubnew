@@ -142,7 +142,7 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
       myLat = double.tryParse(location[0]) ?? 0;
       myLng = double.tryParse(location[1]) ?? 0;
       final url =
-          'https://www.google.com/maps/dir/?api=1&origin=$myLat,$myLng&destination=$lt,$ln';
+          'https://www.google.com/maps/dir/?api=${Constants.googleMapsApi}&origin=$myLat,$myLng&destination=$lt,$ln';
       await launchUrl(Uri.parse(url));
       setState(() {
         loading = false;
