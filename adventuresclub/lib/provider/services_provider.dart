@@ -48,6 +48,8 @@ class ServicesProvider with ChangeNotifier {
   List<DependenciesModel> gdM = [];
   bool searchFilter = false;
 
+  bool loading = false;
+
   void setHomeIndex(int i) {
     homeIndex = i;
     notifyListeners();
@@ -106,6 +108,10 @@ class ServicesProvider with ChangeNotifier {
 
   Future getServicesList() async {
     //if ()
+    if (loading) {
+      return;
+    }
+    loading = true;
     filteredServices.clear();
     allServices.clear();
     gAllServices.clear();
@@ -294,6 +300,7 @@ class ServicesProvider with ChangeNotifier {
       //     gAllServices.add(element.serviceCategory, element);
       //   });
     }
+    loading = false;
   }
 
   void getFilteredList() async {
