@@ -758,7 +758,8 @@ class _StackHomeState extends State<StackHome> {
 
   void searchFilter() {
     Navigator.of(context).pop();
-    Provider.of<ServicesProvider>(context, listen: false).getFilteredList();
+    Provider.of<ServicesProvider>(context, listen: false).getFilterList();
+    // Provider.of<ServicesProvider>(context, listen: false).getFilteredList();
     Provider.of<ServicesProvider>(context, listen: false).searchFilter;
   }
 

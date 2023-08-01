@@ -82,7 +82,8 @@ class _ProfileState extends State<Profile> {
           return Dialog(
             backgroundColor: Colors.transparent,
             child: SizedBox(
-              height: MediaQuery.of(context).size.height / 2.3,
+              height: 400,
+              //height: MediaQuery.of(context).size.height / 2.3,
               child: Card(
                 elevation: 5,
                 shape: RoundedRectangleBorder(

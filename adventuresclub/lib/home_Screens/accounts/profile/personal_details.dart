@@ -126,7 +126,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
     otpController.clear();
   }
 
-  void getOtp() async {
+  void confirmOtp() async {
     enterOTP();
     try {
       var response = await http.post(
@@ -141,6 +141,49 @@ class _PersonalDetailsState extends State<PersonalDetails> {
       // });
       // print(response.statusCode);
       // print(userID);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  // void getOtp() async {
+  //   int phone = int.parse(phoneController.text);
+  //   enterOTP();
+  //   var request = http.MultipartRequest(
+  //       'POST',
+  //       Uri.parse(
+  //           "https://adventuresclub.net/adventureClubDev/api/v1/update/number"));
+  //   request.fields.addAll({
+  //     'user_id': Constants.userId,
+  //     'mobile_code': ccCode.toString(),
+  //     'mobile': phone,
+  //   });
+  //   http.StreamedResponse response = await request.send();
+  //   if (response.statusCode == 200) {
+  //     print(await response.stream.bytesToString());
+  //   } else {
+  //     print(response.reasonPhrase);
+  //   }
+  // }
+
+  void getOtp() async {
+    int phone = int.parse(phoneController.text);
+    print(phone);
+    print(ccCode.toString());
+    print(Constants.userId);
+    enterOTP();
+    try {
+      var response = await http.post(
+          Uri.parse(
+              "https://adventuresclub.net/adventureClubDev/api/v1/update/number"),
+          body: {
+            "user_id": Constants.userId,
+            'mobile_code': ccCode.toString(),
+            'mobile': phone,
+          });
+      if (response.statusCode == 200) {
+        message("Number Updated Successfully");
+      }
     } catch (e) {
       print(e.toString());
     }

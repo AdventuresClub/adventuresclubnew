@@ -181,7 +181,8 @@ class _PackageListState extends State<PackageList> {
     );
   }
 
-  Future<List<CurrencyModel>> fetchCurrency(String value, String id) async {
+  Future<List<CurrencyModel>> fetchCurrency(
+      String value, String id, String duration) async {
     double valueDouble = double.tryParse(value) ?? 0;
     final response = await http.get(Uri.parse(
         'https://api.fastforex.io/fetch-all?api_key=5d7d771c49-103d05e0d0-riwfxc'));
@@ -198,7 +199,7 @@ class _PackageListState extends State<PackageList> {
         print(cm.currency);
       }
       //  transactionApi(packagePrice.toString(), id);
-      selected(context, id);
+      selected(context, id, duration);
       List<CurrencyModel> currencies = [];
       return currencies;
     } else {
@@ -206,7 +207,7 @@ class _PackageListState extends State<PackageList> {
     }
   }
 
-  void selected(BuildContext context, String packageId) {
+  void selected(BuildContext context, String packageId, String duration) {
     generateRandomString(count);
     // transaction id is random uniuq generated number
     // currency has to be omr
@@ -214,7 +215,7 @@ class _PackageListState extends State<PackageList> {
       MaterialPageRoute(
         builder: (_) {
           return ShowChat(
-            "${'https://adventuresclub.net/admin1/dataFrom.htm?amount=$packagePrice&merchant_id=${67}&order_id=$orderId&tid=$transactionId&billing_name=${Constants.profile.name}&billing_address=${Constants.profile.bp.address}&billing_city=${Constants.profile.bp.address}&billing_zip=${Constants.profile.bp.address}&billing_country=${Constants.profile.bp.address}&billing_tel=${Constants.profile.bp.address}&billing_email=${Constants.profile.email}'}${'&merchant_param1=${'subscription'}&merchant_param2=$packageId&merchant_param3=${Constants.userId}&merchant_param4={_paymentAndSubscreptionRequestModel.ActivityName}&merchant_param5={_paymentAndSubscreptionRequestModel.NoOfPerson'}",
+            "${'https://adventuresclub.net/admin1/dataFrom.htm?amount=$packagePrice&merchant_id=${67}&order_id=$orderId&tid=$transactionId&billing_name=${Constants.profile.name}&billing_address=${Constants.profile.bp.address}&billing_city=${Constants.profile.bp.address}&billing_zip=${Constants.profile.bp.address}&billing_country=${Constants.profile.bp.address}&billing_tel=${Constants.profile.bp.address}&billing_email=${Constants.profile.email}'}${'&merchant_param1=${'subscription'}&merchant_param2=$packageId&merchant_param3=${Constants.userId}&merchant_param4=$duration&merchant_param5={_paymentAndSubscreptionRequestModel.NoOfPerson'}",
             show: true,
           );
         },
@@ -224,11 +225,11 @@ class _PackageListState extends State<PackageList> {
         "${'https://adventuresclub.net/admin1/dataFrom.htm?amount=$packagePrice&merchant_id=${67}&order_id=$orderId&tid=$transactionId&billing_name=${Constants.profile.name}&billing_address=${Constants.profile.bp.address}&billing_city=${Constants.profile.bp.address}&billing_zip=${Constants.profile.bp.address}&billing_country=${Constants.profile.bp.address}&billing_tel=${Constants.profile.bp.address}&billing_email=${Constants.profile.email}'}${'&merchant_param1=${"subscription"}&merchant_param2=$packageId&merchant_param3=${Constants.userId}&merchant_param4={_paymentAndSubscreptionRequestModel.ActivityName}&merchant_param5={_paymentAndSubscreptionRequestModel.NoOfPerson'}");
   }
 
-  void checkPayment(String cost, String packageId) {
+  void checkPayment(String cost, String packageId, String duration) {
     if (cost == "0.00") {
       transactionApi(cost, packageId);
     } else {
-      fetchCurrency(cost, packageId);
+      fetchCurrency(cost, packageId, duration);
     }
   }
 
@@ -274,8 +275,8 @@ class _PackageListState extends State<PackageList> {
             bottom: 20,
             right: 30,
             child: GestureDetector(
-              onTap: () =>
-                  checkPayment(widget.bp.cost, widget.bp.id.toString()),
+              onTap: () => checkPayment(
+                  widget.bp.cost, widget.bp.id.toString(), widget.bp.duration),
               // onTap: () => transactionApi(widget.bp.cost, widget.bp.id),
               child: Container(
                 height: MediaQuery.of(context).size.height / 16,

@@ -66,6 +66,8 @@ class _OfficialDetailsState extends State<OfficialDetails> {
     iLiveInController.text = Constants.profile.bp.location;
     nameController.text = Constants.profile.bp.companyName;
     addController.text = Constants.profile.bp.address;
+    crName.text = Constants.profile.bp.crName;
+    crNumber.text = Constants.profile.bp.crNumber;
     setState(() {
       name = Constants.profile.bp.companyName;
       address = Constants.profile.bp.address;
@@ -523,16 +525,22 @@ class _OfficialDetailsState extends State<OfficialDetails> {
                           //         width: 50,
                           //       )
                           //     :
-                          crCopy.path.isEmpty
+                          licenseImage.isEmpty
                               ? const Image(
                                   image: ExactAssetImage('images/upload.png'),
                                   height: 50,
                                 )
-                              : Image.file(
-                                  crCopy,
-                                  height: 50,
-                                  width: 50,
-                                ),
+                              : crCopy.path.isEmpty
+                                  ? Image.file(
+                                      crCopy,
+                                      height: 50,
+                                      width: 50,
+                                    )
+                                  : Image.network(
+                                      licenseImage,
+                                      height: 50,
+                                      width: 50,
+                                    ),
                           const SizedBox(
                             height: 10,
                           ),

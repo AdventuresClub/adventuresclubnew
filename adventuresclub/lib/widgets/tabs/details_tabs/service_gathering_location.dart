@@ -333,7 +333,8 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
                     color: greyishColor.withOpacity(0.7), fontSize: 14),
                 children: <TextSpan>[
                   TextSpan(
-                      text: widget.geoLocation, //widget.lat.substring(0, 7),
+                      text:
+                          "${"Lat:"} ${widget.lat.substring(0, 7)} ${","} ${"Lng:"} ${widget.lng.substring(0, 7)}", //widget.geoLocation, //widget.lat.substring(0, 7),
                       //text: ' 60.25455415, 54.2555125',
                       style: const TextStyle(fontSize: 14, color: blackColor)),
                   // const TextSpan(

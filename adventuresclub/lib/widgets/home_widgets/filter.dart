@@ -278,7 +278,8 @@ class _FilterPageState extends State<FilterPage> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(22)),
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0, top: 0, bottom: 0,right: 5),
+                  padding: const EdgeInsets.only(
+                      left: 20.0, top: 0, bottom: 0, right: 5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -314,7 +315,7 @@ class _FilterPageState extends State<FilterPage> {
                           ],
                         ),
                       ),
-                     
+
                       pickCountry(context, 'Country Location'),
                       Divider(
                         indent: 18,
@@ -406,17 +407,15 @@ class _FilterPageState extends State<FilterPage> {
                                           ],
                                         ),
                                       ),
-                                  
                                     ],
                                   ),
                                 ),
-                                
                               ],
                             ),
                           ),
-                              const SizedBox(
-                                  height: 20,
-                                ),
+                          const SizedBox(
+                            height: 20,
+                          ),
                         ],
                       ),
                       Divider(
@@ -605,7 +604,7 @@ class _FilterPageState extends State<FilterPage> {
 
   void searchFilter() {
     Navigator.of(context).pop();
-    Provider.of<ServicesProvider>(context, listen: false).getFilteredList();
+    Provider.of<ServicesProvider>(context, listen: false).getFilterList();
     Provider.of<ServicesProvider>(context, listen: false).searchFilter;
   }
 
