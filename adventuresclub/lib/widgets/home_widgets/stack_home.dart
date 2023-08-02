@@ -725,7 +725,7 @@ class _StackHomeState extends State<StackHome> {
                               width: 10,
                             ),
                             InkWell(
-                              onTap: searchFilter,
+                              // onTap: searchFilter,
                               child: Container(
                                 width: 110,
                                 padding: const EdgeInsets.symmetric(
@@ -756,12 +756,12 @@ class _StackHomeState extends State<StackHome> {
     );
   }
 
-  void searchFilter() {
-    Navigator.of(context).pop();
-    Provider.of<ServicesProvider>(context, listen: false).getFilterList();
-    // Provider.of<ServicesProvider>(context, listen: false).getFilteredList();
-    Provider.of<ServicesProvider>(context, listen: false).searchFilter;
-  }
+  // void searchFilter() {
+  //   Navigator.of(context).pop();
+  //   Provider.of<ServicesProvider>(context, listen: false).getFilterList();
+  //   // Provider.of<ServicesProvider>(context, listen: false).getFilteredList();
+  //   Provider.of<ServicesProvider>(context, listen: false).searchFilter;
+  // }
 
   void changeStatus() {
     Navigator.of(context).pop();

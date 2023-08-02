@@ -111,12 +111,21 @@ class _PersonalDetailsState extends State<PersonalDetails> {
     try {
       var response = await http.post(
           Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/verify_otp"),
+              "https://adventuresclub.net/adventureClub/api/v1/verify/otp"),
           body: {
             'user_id': Constants.userId.toString(),
-            'otp': otpController.text,
-            'forgot_password': "0"
+            'mobile_code': ccCode.toString(),
+            'mobile': phoneController.text.trim(),
+            //"3353414905", //"3214181273", //phoneController.text.trim(),
+            'otp': otpController.text
+                .trim(), //"9567", //otpController.text.trim(),
           });
+      if (response.statusCode == 200) {
+        SharedPreferences prefs = await Constants.getPrefs();
+        prefs.setString("phone", phoneController.text.trim());
+        Constants.phone = phoneController.text.trim();
+        message("Number Verified");
+      }
       print(response.statusCode);
       print(response.body);
       print(response.headers);
@@ -136,11 +145,6 @@ class _PersonalDetailsState extends State<PersonalDetails> {
             'mobile': phoneController.text,
             'forgot_password': "0",
           });
-      // setState(() {
-      //   userID = decodedResponse['data']['user_id'];
-      // });
-      // print(response.statusCode);
-      // print(userID);
     } catch (e) {
       print(e.toString());
     }
@@ -175,11 +179,12 @@ class _PersonalDetailsState extends State<PersonalDetails> {
     try {
       var response = await http.post(
           Uri.parse(
-              "https://adventuresclub.net/adventureClubDev/api/v1/update/number"),
+              "https://adventuresclub.net/adventureClub/api/v1/update/number"),
           body: {
-            "user_id": Constants.userId,
+            'user_id': Constants.userId.toString(),
             'mobile_code': ccCode.toString(),
-            'mobile': phone,
+            'mobile': phoneController.text.trim(),
+            //"3353414905", //"3214181273", //phoneController.text.trim(),
           });
       if (response.statusCode == 200) {
         message("Number Updated Successfully");

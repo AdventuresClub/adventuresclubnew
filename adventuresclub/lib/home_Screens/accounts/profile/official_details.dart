@@ -525,16 +525,17 @@ class _OfficialDetailsState extends State<OfficialDetails> {
                           //         width: 50,
                           //       )
                           //     :
-                          licenseImage.isEmpty
-                              ? const Image(
-                                  image: ExactAssetImage('images/upload.png'),
+                          crCopy.path.isNotEmpty
+                              ? Image.file(
+                                  crCopy,
                                   height: 50,
+                                  width: 50,
                                 )
-                              : crCopy.path.isEmpty
-                                  ? Image.file(
-                                      crCopy,
+                              : licenseImage.isEmpty
+                                  ? const Image(
+                                      image:
+                                          ExactAssetImage('images/upload.png'),
                                       height: 50,
-                                      width: 50,
                                     )
                                   : Image.network(
                                       licenseImage,

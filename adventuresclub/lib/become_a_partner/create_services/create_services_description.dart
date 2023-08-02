@@ -269,8 +269,8 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
   @override
   Widget build(BuildContext context) {
     return loading
-        ? Column(
-            children: const [CircularProgressIndicator(), Text("Loading...")],
+        ? const Column(
+            children: [CircularProgressIndicator(), Text("Loading...")],
           )
         : SingleChildScrollView(
             child: Column(

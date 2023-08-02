@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/constants_filter.dart';
 import 'package:adventuresclub/home_Screens/Chat/chat.dart';
 import 'package:adventuresclub/models/filter_data_model/activities_inc_model.dart';
 import 'package:adventuresclub/models/filter_data_model/category_filter_model.dart';
@@ -14,6 +15,7 @@ import 'package:adventuresclub/models/filter_data_model/sector_filter_model.dart
 import 'package:adventuresclub/models/filter_data_model/service_types_filter.dart';
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
+import 'package:adventuresclub/widgets/activities_filter_list.dart';
 import 'package:adventuresclub/widgets/dropdowns/aimed_for_drop_down.dart';
 import 'package:adventuresclub/widgets/dropdowns/country_drop_down.dart';
 import 'package:adventuresclub/widgets/dropdowns/duration_drop_down.dart';
@@ -54,7 +56,7 @@ class _FilterPageState extends State<FilterPage> {
   late Timer _timer;
   bool value = false;
   Map mapFilter = {};
-
+  dynamic ccCode;
   int _currentSliderValue = 1;
   Map mapAimedFilter = {};
   List<SectorFilterModel> filterSectors = [];
@@ -64,6 +66,7 @@ class _FilterPageState extends State<FilterPage> {
   List<LevelFilterModel> levelFilter = [];
   List<AimedForModel> dummyAm = [];
   List<AimedForModel> am = [];
+  List<String> sectorsList = [];
   String categoryDropDown = 'One';
   List<String> list = <String>['One', 'Two', 'Three', 'Four'];
   String selectedCatergoryFilter = "Training";
@@ -72,15 +75,17 @@ class _FilterPageState extends State<FilterPage> {
   List<ActivitiesIncludeModel> activitiesFilter = [];
   List<RegionFilterModel> regionFilter = [];
   List<FilterDataModel> fDM = [];
-
+  Map mapCountry = {};
   List<GetCountryModel> countriesList1 = [];
   List<GetCountryModel> filteredServices = [];
-  RangeValues values = const RangeValues(5, 100);
+  RangeValues values = const RangeValues(0, 1000);
+  SectorFilterModel sectorList = SectorFilterModel(0, "", "", 0, "", "", "");
   @override
   void initState() {
     super.initState();
     getData();
     aimedFor();
+    ccCode = Constants.countryId.toString();
     _timer = Timer.periodic(
       const Duration(seconds: 5),
       (Timer timer) {
@@ -97,6 +102,12 @@ class _FilterPageState extends State<FilterPage> {
       },
     );
   }
+
+  // void getSector() {
+  //   Constants.filterSectors.forEach((element) {
+  //     sectors
+  //   })
+  // }
 
   void getData() {
     categoryFilter = Constants.categoryFilter;
@@ -261,6 +272,40 @@ class _FilterPageState extends State<FilterPage> {
     }
   }
 
+  Future getCountries() async {
+    var response = await http.get(Uri.parse(
+        "https://adventuresclub.net/adventureClub/api/v1/get_countries"));
+    if (response.statusCode == 200) {
+      mapCountry = json.decode(response.body);
+      List<dynamic> result = mapCountry['data'];
+      result.forEach((element) {
+        GetCountryModel gc = GetCountryModel(
+          element['country'],
+          element['short_name'],
+          element['flag'],
+          element['code'],
+          element['id'],
+        );
+        countriesList1.add(gc);
+      });
+      setState(() {
+        filteredServices = countriesList1;
+      });
+    }
+  }
+
+  void getC(String country, dynamic code, int id, String countryflag) {
+    Navigator.of(context).pop();
+    setState(
+      () {
+        // countryCode = country;
+        ccCode = code;
+        // countryId = id;
+        // flag = countryflag;
+      },
+    );
+  }
+
   void addActivites() {
     showGeneralDialog(
       context: context,
@@ -269,342 +314,420 @@ class _FilterPageState extends State<FilterPage> {
       barrierLabel: MaterialLocalizations.of(context).dialogLabel,
       barrierColor: Colors.black.withOpacity(0.5),
       pageBuilder: (context, _, __) {
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(
-                left: 6.0, right: 6.0, bottom: 20, top: 30),
-            child: Card(
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(22)),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20.0, top: 0, bottom: 0, right: 5),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            GestureDetector(
-                              onTap: Navigator.of(context).pop,
-                              child: const Align(
-                                alignment: Alignment.centerRight,
-                                child: CircleAvatar(
-                                  radius: 14,
-                                  backgroundColor: whiteColor,
-                                  child: Image(
-                                    image: ExactAssetImage(
-                                        'images/cancel-button.png'),
+        return StatefulBuilder(builder: (context, setState) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  left: 6.0, right: 6.0, bottom: 20, top: 30),
+              child: Card(
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(22)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 20.0, top: 0, bottom: 0, right: 5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                onTap: Navigator.of(context).pop,
+                                child: const Align(
+                                  alignment: Alignment.centerRight,
+                                  child: CircleAvatar(
+                                    radius: 14,
+                                    backgroundColor: whiteColor,
+                                    child: Image(
+                                      image: ExactAssetImage(
+                                          'images/cancel-button.png'),
+                                    ),
                                   ),
                                 ),
                               ),
+                              Center(
+                                child: MyText(
+                                    text: 'Filter',
+                                    weight: FontWeight.w800,
+                                    color: blackColor.withOpacity(0.7),
+                                    size: 16,
+                                    fontFamily: 'Raleway'),
+                              ),
+                              const SizedBox(width: 40),
+                            ],
+                          ),
+                        ),
+                        pickCountry(context, 'Country Location'),
+                        Divider(
+                          indent: 18,
+                          endIndent: 18,
+                          color: blackColor.withOpacity(0.3),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              height: 10,
                             ),
-                            Center(
+                            Padding(
+                              padding: const EdgeInsets.only(left: 12.0),
                               child: MyText(
-                                  text: 'Filter',
-                                  weight: FontWeight.w800,
-                                  color: blackColor.withOpacity(0.7),
-                                  size: 16,
-                                  fontFamily: 'Raleway'),
+                                text: "Price Range",
+                                weight: FontWeight.w800,
+                                color: blackColor,
+                                size: 18,
+                              ),
                             ),
-                            const SizedBox(width: 40),
+                            Container(
+                              margin: const EdgeInsets.only(top: 10),
+                              //width: Get.width,
+                              child: Column(
+                                children: [
+                                  RangeSlider(
+                                      activeColor: greyColor,
+                                      inactiveColor: greyColor.withOpacity(0.3),
+                                      min: 0,
+                                      max: 1000,
+                                      values: values,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          values = value;
+                                        });
+                                      }),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 35.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 22, vertical: 5),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              border: Border.all(
+                                                  color: greyColor
+                                                      .withOpacity(0.6))),
+                                          child: Column(
+                                            children: [
+                                              MyText(
+                                                text: 'Minimum',
+                                                color: greyColor,
+                                                size: 12,
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text("\$${values.start.toInt()}"),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 22, vertical: 5),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              border: Border.all(
+                                                  color: greyColor
+                                                      .withOpacity(0.6))),
+                                          child: Column(
+                                            children: [
+                                              MyText(
+                                                text: 'Maximum',
+                                                color: greyColor,
+                                                size: 12,
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                  "\$${values.end.toInt().toString()}"),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
                           ],
                         ),
-                      ),
-
-                      pickCountry(context, 'Country Location'),
-                      Divider(
-                        indent: 18,
-                        endIndent: 18,
-                        color: blackColor.withOpacity(0.3),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            height: 10,
+                        Divider(
+                          indent: 18,
+                          endIndent: 18,
+                          color: blackColor.withOpacity(0.5),
+                        ),
+                        ListTile(
+                          title: MyText(
+                            text: "Sector",
+                            color: blackColor,
+                            weight: FontWeight.bold,
+                            size: 14,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12.0),
-                            child: MyText(
-                              text: "Price Range",
-                              weight: FontWeight.w800,
-                              color: blackColor,
-                              size: 18,
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 10),
-                            //width: Get.width,
-                            child: Column(
+                          trailing: SizedBox(
+                            width: 150,
+                            child: Row(
                               children: [
-                                RangeSlider(
-                                    activeColor: greyColor,
-                                    inactiveColor: blackColor.withOpacity(0.3),
-                                    min: 5,
-                                    max: 100,
-                                    values: values,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        values = value;
-                                      });
-                                    }),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 35.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 22, vertical: 5),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            border: Border.all(
-                                                color: greyColor
-                                                    .withOpacity(0.6))),
-                                        child: Column(
-                                          children: [
-                                            MyText(
-                                              text: 'Minimum',
-                                              color: greyColor,
-                                              size: 12,
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text("\$${values.start.toInt()}"),
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 22, vertical: 5),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            border: Border.all(
-                                                color: greyColor
-                                                    .withOpacity(0.6))),
-                                        child: Column(
-                                          children: [
-                                            MyText(
-                                              text: 'Maximum',
-                                              color: greyColor,
-                                              size: 12,
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                                "\$${values.end.toInt().toString()}"),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                Icon(
+                                  dDIconList[index],
+                                  color: blackColor,
+                                ),
+                                ServiceSectorDropDown(
+                                  filterSectors,
+                                  title: "",
+                                  show: true,
                                 ),
                               ],
                             ),
                           ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        indent: 18,
-                        endIndent: 18,
-                        color: blackColor.withOpacity(0.5),
-                      ),
-                      ListView.builder(
-                          itemCount: dropDownTileTextList.length,
-                          shrinkWrap: true,
-                          physics: const ClampingScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              title: MyText(
-                                text: dropDownTileTextList[index],
-                                color: blackColor,
-                                weight: FontWeight.bold,
-                                size: 14,
-                              ),
-                              trailing: SizedBox(
-                                width: 140,
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      dDIconList[index],
-                                      color: blackColor,
-                                    ),
-                                    DdButton(
-                                      3.8,
-                                      dropDown: 'Oman',
-                                      dropDownList: dropDownList,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          }),
-
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 12.0),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: MyText(
-                              text: 'Acitivities',
-                              weight: FontWeight.w800,
-                              color: blackColor,
-                              size: 18,
-                              fontFamily: 'Raleway'),
                         ),
-                      ),
-
-                      ListView.builder(
-                          itemCount: activitiesList.length,
-                          shrinkWrap: true,
-                          padding: const EdgeInsets.only(top: 10),
-                          physics: const ClampingScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return CheckboxListTile(
-                              secondary: Icon(
-                                iconList[index],
+                        ListTile(
+                          title: MyText(
+                            text: "Category",
+                            color: blackColor,
+                            weight: FontWeight.bold,
+                            size: 14,
+                          ),
+                          trailing: SizedBox(
+                            width: 150,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  dDIconList[index],
+                                  color: blackColor,
+                                ),
+                                ServiceCategoryDropDown(
+                                  categoryFilter,
+                                  show: true,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: MyText(
+                            text: "Type",
+                            color: blackColor,
+                            weight: FontWeight.bold,
+                            size: 14,
+                          ),
+                          trailing: SizedBox(
+                            width: 150,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  dDIconList[index],
+                                  color: blackColor,
+                                ),
+                                ServiceTypeDropDown(
+                                  serviceFilter,
+                                  show: true,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: MyText(
+                            text: "Level",
+                            color: blackColor,
+                            weight: FontWeight.bold,
+                            size: 14,
+                          ),
+                          trailing: SizedBox(
+                            width: 150,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  dDIconList[index],
+                                  color: blackColor,
+                                ),
+                                LevelDropDown(
+                                  levelFilter,
+                                  show: true,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: MyText(
+                            text: "Duration",
+                            color: blackColor,
+                            weight: FontWeight.bold,
+                            size: 14,
+                          ),
+                          trailing: SizedBox(
+                            width: 150,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  dDIconList[index],
+                                  color: blackColor,
+                                ),
+                                DurationDropDown(
+                                  durationFilter,
+                                  show: true,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: MyText(
+                                text: 'Acitivities',
+                                weight: FontWeight.w800,
                                 color: blackColor,
+                                size: 18,
+                                fontFamily: 'Raleway'),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const ActivitiesFilterList(),
+                        // ListView.builder(
+                        //     itemCount: activitiesList.length,
+                        //     shrinkWrap: true,
+                        //     padding: const EdgeInsets.only(top: 10),
+                        //     physics: const ClampingScrollPhysics(),
+                        //     itemBuilder: (context, index) {
+                        //       return CheckboxListTile(
+                        //         secondary: Icon(
+                        //           iconList[index],
+                        //           color: blackColor,
+                        //         ),
+                        //         title: MyText(
+                        //           text: activitiesList[index],
+                        //           color: blackColor.withOpacity(0.6),
+                        //           weight: FontWeight.w700,
+                        //           size: 15,
+                        //         ),
+                        //         value: value,
+                        //         onChanged: ((bool? value) {
+                        //           setState(() {
+                        //             value = value!;
+                        //           });
+                        //         }),
+                        //       );
+                        //     }),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        ListView.builder(
+                            itemCount: aimedText.length,
+                            shrinkWrap: true,
+                            physics: const ClampingScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return CheckboxListTile(
+                                secondary: Icon(
+                                  aimedIconList[index],
+                                  color: blackColor,
+                                ),
+                                title: MyText(
+                                  text: aimedText[index],
+                                  color: blackColor.withOpacity(0.6),
+                                  weight: FontWeight.w700,
+                                  size: 15,
+                                ),
+                                value: value,
+                                onChanged: ((bool? value) {
+                                  setState(() {
+                                    value = value!;
+                                  });
+                                }),
+                              );
+                            }),
+                        const SizedBox(
+                          height: 3,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              GestureDetector(
+                                onTap: changeStatus,
+                                child: Container(
+                                    width: 130,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 15, horizontal: 18),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        border: Border.all(color: redColor),
+                                        color: whiteColor),
+                                    child: Center(
+                                        child: MyText(
+                                      text: 'Clear Filter',
+                                      color: redColor,
+                                      weight: FontWeight.bold,
+                                      size: 14,
+                                    ))),
                               ),
-                              title: MyText(
-                                text: activitiesList[index],
-                                color: blackColor.withOpacity(0.6),
-                                weight: FontWeight.w700,
-                                size: 15,
+                              const SizedBox(
+                                width: 10,
                               ),
-                              value: value,
-                              onChanged: ((bool? value) {
-                                setState(() {
-                                  value = value!;
-                                });
-                              }),
-                            );
-                          }),
-
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      ListView.builder(
-                          itemCount: aimedText.length,
-                          shrinkWrap: true,
-                          physics: const ClampingScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return CheckboxListTile(
-                              secondary: Icon(
-                                aimedIconList[index],
-                                color: blackColor,
-                              ),
-                              title: MyText(
-                                text: aimedText[index],
-                                color: blackColor.withOpacity(0.6),
-                                weight: FontWeight.w700,
-                                size: 15,
-                              ),
-                              value: value,
-                              onChanged: ((bool? value) {
-                                setState(() {
-                                  value = value!;
-                                });
-                              }),
-                            );
-                          }),
-                      // MyText(
-                      //   text: 'Provider Name',
-                      //   color: blackTypeColor3,
-                      //   weight: FontWeight.bold,
-                      // ),
-                      // const SizedBox(
-                      //   height: 15,
-                      // ),
-                      // SearchContainer(
-                      //     'Search by provider name',
-                      //     1.2,
-                      //     8,
-                      //     searchController,
-                      //     'images/bin.png',
-                      //     false,
-                      //     false,
-                      //     'abc',
-                      //     14),
-                      const SizedBox(
-                        height: 3,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            GestureDetector(
-                              onTap: changeStatus,
-                              child: Container(
-                                  width: 130,
+                              InkWell(
+                                onTap: searchFilter,
+                                child: Container(
+                                  width: 110,
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 15, horizontal: 18),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(12),
-                                      border: Border.all(color: redColor),
-                                      color: whiteColor),
+                                      border: Border.all(color: bluishColor),
+                                      color: bluishColor),
                                   child: Center(
-                                      child: MyText(
-                                    text: 'Clear Filter',
-                                    color: redColor,
-                                    weight: FontWeight.bold,
-                                    size: 14,
-                                  ))),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            InkWell(
-                              onTap: searchFilter,
-                              child: Container(
-                                width: 110,
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 15, horizontal: 18),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(color: bluishColor),
-                                    color: bluishColor),
-                                child: Center(
-                                  child: MyText(
-                                    text: 'Search',
-                                    color: whiteColor,
-                                    weight: FontWeight.bold,
-                                    size: 14,
+                                    child: MyText(
+                                      text: 'Search',
+                                      color: whiteColor,
+                                      weight: FontWeight.bold,
+                                      size: 14,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                )),
-          ),
-        );
+                      ],
+                    ),
+                  )),
+            ),
+          );
+        });
       },
     );
   }
 
   void searchFilter() {
     Navigator.of(context).pop();
-    Provider.of<ServicesProvider>(context, listen: false).getFilterList();
+    Provider.of<ServicesProvider>(context, listen: false).getFilterList(
+        ccCode,
+        values.start.toStringAsFixed(0),
+        values.end.toStringAsFixed(0),
+        ConstantsFilter.sectorId,
+        ConstantsFilter.categoryId,
+        ConstantsFilter.typeId,
+        ConstantsFilter.levelId,
+        ConstantsFilter.durationId);
     Provider.of<ServicesProvider>(context, listen: false).searchFilter;
   }
 
@@ -916,6 +1039,7 @@ class _FilterPageState extends State<FilterPage> {
   }
 
   Widget pickCountry(context, String countryName) {
+    getCountries();
     return ListTile(
       onTap: () => showModalBottomSheet(
           context: context,
@@ -1006,13 +1130,13 @@ class _FilterPageState extends State<FilterPage> {
                                   )
                                 : null,
                             title: Text(filteredServices[index].country),
-                            // onTap: () {
-                            //   addCountry(
-                            //     filteredServices[index].country,
-                            //     filteredServices[index].id,
-                            //     filteredServices[index].flag,
-                            //   );
-                            // },
+                            onTap: () {
+                              getC(
+                                  filteredServices[index].country,
+                                  filteredServices[index].code,
+                                  filteredServices[index].id,
+                                  filteredServices[index].flag);
+                            },
                           );
                         }),
                       ),

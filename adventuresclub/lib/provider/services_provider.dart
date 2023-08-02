@@ -303,24 +303,63 @@ class ServicesProvider with ChangeNotifier {
     loading = false;
   }
 
-  void getFilterList() async {
-    var request = http.MultipartRequest(
-        'POST',
+  // void getFilterList(
+  //     String ccode,
+  //     String minPrice,
+  //     String maxPrice,
+  //     String sId,
+  //     String cId,
+  //     String serviceType,
+  //     String serviceLevel,
+  //     String duration) async {
+  //   var request = http.MultipartRequest(
+  //       'POST',
+  //       Uri.parse(
+  //           'https://adventuresclub.net/adventureClubDev/api/v1/filterServices'));
+  //   request.fields.addAll({
+  //     'country_id': ccode, //'14',
+  //     'min_price': minPrice, //'10',
+  //     'max_price': maxPrice, //'100',
+  //     'sector_id': sId, //'1',
+  //     'category_id': cId, //'4',
+  //     'service_type': serviceType, //'1',
+  //     'service_level': serviceLevel, //'1',
+  //     'duration': duration //'1'
+  //   });
+  //   http.StreamedResponse response = await request.send();
+  //   if (response.statusCode == 200) {
+
+  //     print(await response.stream.bytesToString());
+  //   } else {
+  //     print(response.reasonPhrase);
+  //   }
+  // }
+
+  void getFilterList(
+      String ccode,
+      String minPrice,
+      String maxPrice,
+      String sId,
+      String cId,
+      String serviceType,
+      String serviceLevel,
+      String duration) async {
+    var response = await http.post(
         Uri.parse(
-            'https://adventuresclub.net/adventureClubDev/api/v1/filterServices'));
-    request.fields.addAll({
-      'country_id': '14',
-      'min_price': '10',
-      'max_price': '100',
-      'sector_id': '1',
-      'category_id': '4',
-      'service_type': '1',
-      'service_level': '1',
-      'duration': '1'
-    });
-    http.StreamedResponse response = await request.send();
+            'https://adventuresclub.net/adventureClubDev/api/v1/filterServices'),
+        body: {
+          'country_id': ccode, //'14',
+          'min_price': minPrice, //'10',
+          'max_price': maxPrice, //'100',
+          'sector_id': sId, //'1',
+          'category_id': cId, //'4',
+          'service_type': serviceType, //'1',
+          'service_level': serviceLevel, //'1',
+          'duration': duration //'1'
+        });
     if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
+      var getServicesMap = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      List<dynamic> result = getServicesMap['data'];
     } else {
       print(response.reasonPhrase);
     }
