@@ -151,15 +151,15 @@ class _ReviewsState extends State<Reviews> {
                   : Column(
                       children: [
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            MyText(
-                              text: "${'Reviews'} "
-                                  " (${reviewList[index].count})",
-                              color: greyTextColor,
-                              weight: FontWeight.w700,
-                              size: 14,
-                            ),
+                            // MyText(
+                            //   text: "${'Reviews'} "
+                            //       " (${reviewList[index].count})",
+                            //   color: greyTextColor,
+                            //   weight: FontWeight.w700,
+                            //   size: 14,
+                            // ),
                             Row(
                               children: [
                                 MyText(
@@ -210,7 +210,7 @@ class _ReviewsState extends State<Reviews> {
                                   )
                                 : MyText(
                                     text:
-                                        "${(reviewList[index].um[index].name)} ${'|'} ${(reviewList[index].um[index].userName)} ${'|'} ${(reviewList[index].ca)} ", //"ReviJohn Doe | California | 9days ago",
+                                        "${(reviewList[index].um[index].name)} ${'|'} ${(reviewList[index].ca.substring(0, 10))} ", //"ReviJohn Doe | California | 9days ago",
                                     color: blackTypeColor4,
                                     weight: FontWeight.w600,
                                   ),

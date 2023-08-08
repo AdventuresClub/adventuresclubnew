@@ -409,6 +409,7 @@ class _RequestListViewState extends State<RequestListView> {
             // UpcomingRequestInformation(
             //     uRequestListInv[index], showConfirmation);
             Card(
+          key: Key(uRequestListInv[index].BookingId.toString()),
           elevation: 4,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 5),

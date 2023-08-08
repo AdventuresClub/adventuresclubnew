@@ -299,11 +299,12 @@ class _FilterPageState extends State<FilterPage> {
     setState(
       () {
         // countryCode = country;
-        ccCode = code;
+        ccCode = id.toString();
         // countryId = id;
         // flag = countryflag;
       },
     );
+    print(ccCode);
   }
 
   void addActivites() {
@@ -718,7 +719,6 @@ class _FilterPageState extends State<FilterPage> {
   }
 
   void searchFilter() {
-    Navigator.of(context).pop();
     Provider.of<ServicesProvider>(context, listen: false).getFilterList(
         ccCode,
         values.start.toStringAsFixed(0),
@@ -729,6 +729,7 @@ class _FilterPageState extends State<FilterPage> {
         ConstantsFilter.levelId,
         ConstantsFilter.durationId);
     Provider.of<ServicesProvider>(context, listen: false).searchFilter;
+    Navigator.of(context).pop();
   }
 
   void changeStatus() {
@@ -736,7 +737,7 @@ class _FilterPageState extends State<FilterPage> {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       return const BottomNavigation();
     }));
-    Provider.of<ServicesProvider>(context, listen: false).getServicesList;
+    //Provider.of<ServicesProvider>(context, listen: false).getServicesList;
   }
 
   // void searchServices(String x) {

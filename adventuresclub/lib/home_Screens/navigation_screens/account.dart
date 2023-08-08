@@ -41,8 +41,8 @@ class _AccountState extends State<Account> {
   ];
   List partnerImages = [
     'images/heart.png',
-    'images/services.jpeg',
-    'images/request.jpeg'
+    'images/newservice.png',
+    'images/newrequest.png'
   ];
   List text = ['Favorite', 'My Services', 'Client Requests'];
   List userText = ['Favorite', 'Notification', 'My Points'];

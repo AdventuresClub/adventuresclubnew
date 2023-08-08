@@ -460,6 +460,250 @@ class _RequestsListState extends State<RequestsList> {
     }
   }
 
+  void showConfirmation(String bookingId, int index) async {
+    showDialog(
+        context: context,
+        builder: (ctx) => SimpleDialog(
+              contentPadding: const EdgeInsets.all(12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              title: MyText(
+                text: "Alert",
+                size: 18,
+                weight: FontWeight.bold,
+                color: blackColor,
+              ),
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                //Text("data"),
+                const Text(
+                  "Are you sure you want to Delete This?",
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    MaterialButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: MyText(
+                        text: "No",
+                        color: blackColor,
+                        weight: FontWeight.bold,
+                      ),
+                    ),
+                    MaterialButton(
+                      onPressed: () => dropped(bookingId, index),
+                      child: MyText(
+                        text: "Yes",
+                        color: blackColor,
+                        weight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                //BottomButton(bgColor: blueButtonColor, onTap: homePage)
+              ],
+            ));
+  }
+
+  void getProfile(String providerId, String amount, String bId, String cur,
+      String tCost, UpcomingRequestsModel rm) async {
+    setState(() {
+      loading = true;
+    });
+    try {
+      var response = await http.post(
+          Uri.parse(
+              "https://adventuresclub.net/adventureClub/api/v1/get_profile"),
+          body: {
+            'user_id': providerId, //"hamza@gmail.com",
+          });
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      dynamic userData = decodedResponse['data'];
+      int userLoginId = int.tryParse(userData['id'].toString()) ?? 0;
+      int countryId = int.tryParse(userData['country_id'].toString()) ?? 0;
+      int languageId = int.tryParse(userData['language_id'].toString()) ?? 0;
+      int currencyId = int.tryParse(userData['currency_id'].toString()) ?? 0;
+      int addedFrom = int.tryParse(userData['added_from'].toString()) ?? 0;
+      dynamic partnerInfo = decodedResponse['data']["become_partner"];
+      if (partnerInfo != null) {
+        int id = int.tryParse(partnerInfo['id'].toString()) ?? 0;
+        int userId = int.tryParse(partnerInfo['user_id'].toString()) ?? 0;
+        int debitCard = int.tryParse(partnerInfo['debit_card'].toString()) ?? 0;
+        int visaCard = int.tryParse(partnerInfo['visa_card'].toString()) ?? 0;
+        int packagesId =
+            int.tryParse(partnerInfo['packages_id'].toString()) ?? 0;
+        ProfileBecomePartner bp = ProfileBecomePartner(
+          id,
+          userId,
+          partnerInfo['company_name'].toString(),
+          partnerInfo['address'].toString(),
+          partnerInfo['location'].toString(),
+          partnerInfo['description'].toString(),
+          partnerInfo['license'].toString(),
+          partnerInfo['cr_name'].toString(),
+          partnerInfo['cr_number'].toString(),
+          partnerInfo['cr_copy'].toString(),
+          debitCard,
+          visaCard,
+          partnerInfo['payon_arrival'].toString(),
+          partnerInfo['paypal'].toString(),
+          partnerInfo['bankname'].toString(),
+          partnerInfo['account_holdername'].toString(),
+          partnerInfo['account_number'].toString(),
+          partnerInfo['is_online'].toString(),
+          partnerInfo['is_approved'].toString(),
+          packagesId,
+          partnerInfo['start_date'].toString(),
+          partnerInfo['end_date'].toString(),
+          partnerInfo['is_wiretransfer'].toString(),
+          partnerInfo['is_free_used'].toString(),
+          partnerInfo['created_at'].toString(),
+          partnerInfo['updated_at'].toString(),
+        );
+        pbp = bp;
+      }
+      UserProfileModel up = UserProfileModel(
+          userLoginId,
+          userData['users_role'].toString(),
+          userData['profile_image'].toString(),
+          userData['name'].toString(),
+          userData['height'].toString(),
+          userData['weight'].toString(),
+          userData['email'].toString(),
+          countryId,
+          userData['region_id'].toString(),
+          userData['city_id'].toString(),
+          userData['now_in'].toString(),
+          userData['mobile'].toString(),
+          userData['mobile_verified_at'].toString(),
+          userData['dob'].toString(),
+          userData['gender'].toString(),
+          languageId,
+          userData['nationality_id'].toString(),
+          currencyId,
+          userData['app_notification'].toString(),
+          userData['points'].toString(),
+          userData['health_conditions'].toString(),
+          userData['health_conditions_id'].toString(),
+          userData['email_verified_at'].toString(),
+          userData['mobile_code'].toString(),
+          userData['status'].toString(),
+          addedFrom,
+          userData['created_at'].toString(),
+          userData['updated_at'].toString(),
+          userData['deleted_at'].toString(),
+          userData['device_id'].toString(),
+          pbp);
+      setState(() {
+        payOnArrival = up.bp.payOnArrival;
+        loading = false;
+      });
+      getPaymentMode(payOnArrival, amount, bId, cur, tCost, rm);
+      // Constants.userRole = up.userRole;
+      // prefs.setString("userRole", up.userRole);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  void getPaymentMode(String pay, String amount, String bId, String cur,
+      String tCost, UpcomingRequestsModel rm) async {
+    if (pay == "1") {
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+        return PaymentMethods(rm, amount, bId, cur, tCost);
+      }));
+    } else {
+      fetchCurrency(amount, bId, cur, tCost);
+    }
+  }
+
+  Future<List<CurrencyModel>> fetchCurrency(
+      String value, String bookingId, String currency, String totalCost) async {
+    double valueDouble = double.tryParse(value) ?? 0;
+    final response = await http.get(Uri.parse(
+        'https://api.fastforex.io/fetch-all?api_key=5d7d771c49-103d05e0d0-riwfxc'));
+    mapCountry = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      dynamic result = mapCountry['results'];
+      if (result['OMR'] != currency) {
+        double tcDouble = double.tryParse(totalCost) ?? 0;
+        CurrencyModel cm = CurrencyModel(result[currency]);
+        CurrencyModel omrPrice = CurrencyModel(result['OMR']);
+        convertCurrency(cm.currency, omrPrice.currency, tcDouble);
+        selected(context, bookingId);
+        print(selectedcountryPrice);
+      } else {
+        CurrencyModel cm = CurrencyModel(result['OMR']);
+        packagePrice = valueDouble * cm.currency;
+        selected(context, bookingId);
+        print(packagePrice);
+        print(cm.currency);
+      }
+      //  transactionApi(packagePrice.toString(), id);
+
+      List<CurrencyModel> currencies = [];
+      return currencies;
+    } else {
+      throw Exception('Failed');
+    }
+  }
+
+  void selected(BuildContext context, String bookingId) {
+    generateRandomString(10);
+    // transaction id is random uniuq generated number
+    // currency has to be omr
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return ShowChat(
+            "${'https://adventuresclub.net/admin1/dataFrom.htm?amount=$packagePrice&merchant_id=${67}&order_id=$orderId&tid=$transactionId&billing_name=${Constants.profile.name}&billing_address=${Constants.profile.bp.address}&billing_city=${Constants.profile.bp.address}&billing_zip=${Constants.profile.bp.address}&billing_country=${Constants.profile.bp.address}&billing_tel=${"widget.uRequestList.bDate"}&billing_email=${"widget.uRequestList.adventureName"}'}${'&merchant_param1=${'booking'}&merchant_param2=$bookingId&merchant_param3=${Constants.userId}&merchant_param4=${"widget.uRequestList.tCost"}&merchant_param5=${"widget.uRequestList.adult"}'}",
+            show: true,
+          );
+        },
+      ),
+    );
+    // print(object);
+  }
+
+  String generateRandomString(int lengthOfString) {
+    generateRandomId(10);
+    final random = Random();
+    const allChars = 'AaBbCcDdlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1EeFfGgHhIiJjKkL';
+    final randomString = List.generate(
+        count, (index) => allChars[random.nextInt(allChars.length)]).join();
+    setState(() {
+      orderId = randomString;
+    });
+    return randomString; // return the generated string
+  }
+
+  String generateRandomId(int lengthOfString) {
+    final random = Random();
+    const allChars = "18744651324650"; //'RrSsTtUuVvWwXxYyZz1EeFfGgHhIiJjKkL';
+    final randomString = List.generate(
+        count, (index) => allChars[random.nextInt(allChars.length)]).join();
+    setState(() {
+      transactionId = randomString;
+    });
+    return randomString; // return the generated string
+  }
+
+  void convertCurrency(double p, double omrPrice, double tc) {
+    selectedcountryPrice = p;
+    double omrInverse = 1 / omrPrice;
+    double product = selectedcountryPrice * omrInverse;
+    double omrConverted = 1 / product;
+    setState(() {
+      packagePrice = omrConverted * tc;
+    });
+    print(packagePrice);
+  }
+
   @override
   Widget build(BuildContext context) {
     return uRequestListInv.isEmpty
@@ -469,5 +713,470 @@ class _RequestsListState extends State<RequestsList> {
             ),
           )
         : RequestListView(uRequestListInv, getDetails);
+    // ListView.builder(
+    //     padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 00),
+    //     shrinkWrap: true,
+    //     physics: const ClampingScrollPhysics(),
+    //     itemCount: uRequestListInv.length,
+    //     scrollDirection: Axis.vertical,
+    //     itemBuilder: (context, index) {
+    //       return
+    //           // UpcomingRequestInformation(
+    //           //     uRequestListInv[index], showConfirmation);
+    //           Card(
+    //         key: Key(uRequestListInv[index].BookingId.toString()),
+    //         elevation: 4,
+    //         child: Padding(
+    //           padding:
+    //               const EdgeInsets.symmetric(vertical: 20.0, horizontal: 5),
+    //           child: Column(
+    //             children: [
+    //               Row(
+    //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //                 children: [
+    //                   MyText(
+    //                     text: uRequestListInv[index]
+    //                         .region, //'Location Name',
+    //                     color: blackColor,
+    //                     weight: FontWeight.bold,
+    //                   ),
+    //                   Row(
+    //                     children: [
+    //                       if (uRequestListInv[index].status == "0")
+    //                         MyText(
+    //                           text: "REQUESTED", //'Confirmed',
+    //                           color: blueColor1,
+    //                           weight: FontWeight.bold,
+    //                         ),
+    //                       if (uRequestListInv[index].status == "1")
+    //                         MyText(
+    //                           text: "ACCEPTED", //'Confirmed',
+    //                           color: orangeColor,
+    //                           weight: FontWeight.bold,
+    //                         ),
+    //                       if (uRequestListInv[index].status == "2")
+    //                         MyText(
+    //                           text: "PAID", //'Confirmed',
+    //                           color: greenColor1,
+    //                           weight: FontWeight.bold,
+    //                         ),
+    //                       if (uRequestListInv[index].status == "3")
+    //                         MyText(
+    //                           text: "DECLINED", //'Confirmed',
+    //                           color: redColor,
+    //                           weight: FontWeight.bold,
+    //                         ),
+    //                       if (uRequestListInv[index].status == "4")
+    //                         MyText(
+    //                           text: "COMPLETED", //'Confirmed',
+    //                           color: greenColor1,
+    //                           weight: FontWeight.bold,
+    //                         ),
+    //                       if (uRequestListInv[index].status == "5")
+    //                         MyText(
+    //                           text: "DROPPED", //'Confirmed',
+    //                           color: redColor,
+    //                           weight: FontWeight.bold,
+    //                         ),
+    //                       if (uRequestListInv[index].status == "6")
+    //                         MyText(
+    //                           text: "CONFIRM", //'Confirmed',
+    //                           color: greenColor1,
+    //                           weight: FontWeight.bold,
+    //                         ),
+    //                       if (uRequestListInv[index].status == "7")
+    //                         MyText(
+    //                           text: "UNPAID", //'Confirmed',
+    //                           color: greenColor1,
+    //                           weight: FontWeight.bold,
+    //                         ),
+    //                       const SizedBox(
+    //                         width: 5,
+    //                       ),
+    //                       // GestureDetector(
+    //                       //   onTap: () => showConfirmation(
+    //                       //       uRequestListInv[index][index].serviceId.toString()),
+    //                       //   child: const Icon(
+    //                       //     Icons.delete_forever_outlined,
+    //                       //     color: redColor,
+    //                       //     size: 20,
+    //                       //   ),
+    //                       // )
+    //                     ],
+    //                   )
+    //                 ],
+    //               ),
+    //               const Divider(
+    //                 thickness: 1,
+    //                 color: greyColor,
+    //               ),
+    //               Row(
+    //                 mainAxisAlignment: MainAxisAlignment.start,
+    //                 crossAxisAlignment: CrossAxisAlignment.start,
+    //                 children: [
+    //                   //CircleImageAvatar(uRequestList.sImage),
+    //                   //UpcomingRequestImage(rm),
+    //                   CircleAvatar(
+    //                     radius: 26,
+    //                     backgroundImage:
+    //                         //ExactAssetImage('images/airrides.png'),
+    //                         NetworkImage(
+    //                             "${'https://adventuresclub.net/adventureClub/public/uploads/'}${uRequestListInv[index].sImage[index].thumbnail}"),
+    //                   ),
+    //                   Padding(
+    //                     padding: const EdgeInsets.symmetric(
+    //                         horizontal: 12.0, vertical: 5),
+    //                     child: Column(
+    //                       crossAxisAlignment: CrossAxisAlignment.start,
+    //                       children: [
+    //                         Wrap(
+    //                           direction: Axis.vertical,
+    //                           children: [
+    //                             Row(
+    //                               mainAxisAlignment:
+    //                                   MainAxisAlignment.start,
+    //                               children: [
+    //                                 MyText(
+    //                                   text: "Booking Number : ",
+    //                                   color: blackColor,
+    //                                   weight: FontWeight.w500,
+    //                                   size: 13,
+    //                                   height: 1.8,
+    //                                 ),
+    //                                 MyText(
+    //                                   text:
+    //                                       uRequestListInv[index].BookingId,
+    //                                   color: greyColor,
+    //                                   weight: FontWeight.w400,
+    //                                   size: 13,
+    //                                   height: 1.8,
+    //                                 ),
+    //                               ],
+    //                             ),
+    //                             Row(
+    //                               mainAxisAlignment:
+    //                                   MainAxisAlignment.start,
+    //                               children: [
+    //                                 MyText(
+    //                                   text: "Activity Name : ",
+    //                                   color: blackColor,
+    //                                   weight: FontWeight.w500,
+    //                                   size: 13,
+    //                                   height: 1.8,
+    //                                 ),
+    //                                 MyText(
+    //                                   text: uRequestListInv[index]
+    //                                       .adventureName,
+    //                                   color: greyColor,
+    //                                   weight: FontWeight.w400,
+    //                                   size: 13,
+    //                                   height: 1.8,
+    //                                 ),
+    //                               ],
+    //                             ),
+    //                             Row(
+    //                               mainAxisAlignment:
+    //                                   MainAxisAlignment.start,
+    //                               children: [
+    //                                 MyText(
+    //                                   text: "Provider Name : ",
+    //                                   color: blackColor,
+    //                                   weight: FontWeight.w500,
+    //                                   size: 13,
+    //                                   height: 1.8,
+    //                                 ),
+    //                                 MyText(
+    //                                   text: uRequestListInv[index].pName,
+    //                                   color: greyColor,
+    //                                   weight: FontWeight.w400,
+    //                                   size: 13,
+    //                                   height: 1.8,
+    //                                 ),
+    //                               ],
+    //                             ),
+    //                             Row(
+    //                               mainAxisAlignment:
+    //                                   MainAxisAlignment.start,
+    //                               children: [
+    //                                 MyText(
+    //                                   text: "Booking Date : ",
+    //                                   color: blackColor,
+    //                                   weight: FontWeight.w500,
+    //                                   size: 13,
+    //                                   height: 1.8,
+    //                                 ),
+    //                                 MyText(
+    //                                   text: uRequestListInv[index].bDate,
+    //                                   color: greyColor,
+    //                                   weight: FontWeight.w400,
+    //                                   size: 13,
+    //                                   height: 1.8,
+    //                                 ),
+    //                               ],
+    //                             ),
+    //                             Row(
+    //                               mainAxisAlignment:
+    //                                   MainAxisAlignment.start,
+    //                               children: [
+    //                                 MyText(
+    //                                   text: "Activity Date : ",
+    //                                   color: blackColor,
+    //                                   weight: FontWeight.w500,
+    //                                   size: 13,
+    //                                   height: 1.8,
+    //                                 ),
+    //                                 MyText(
+    //                                   text: uRequestListInv[index].aDate,
+    //                                   color: greyColor,
+    //                                   weight: FontWeight.w400,
+    //                                   size: 13,
+    //                                   height: 1.8,
+    //                                 ),
+    //                               ],
+    //                             ),
+    //                             Row(
+    //                               mainAxisAlignment:
+    //                                   MainAxisAlignment.start,
+    //                               children: [
+    //                                 MyText(
+    //                                   text: 'Registrations : ',
+    //                                   color: blackColor,
+    //                                   weight: FontWeight.w400,
+    //                                   size: 13,
+    //                                   height: 1.8,
+    //                                 ),
+    //                                 if (uRequestListInv[index].adult != 0)
+    //                                   MyText(
+    //                                     text:
+    //                                         "${uRequestListInv[index].adult} "
+    //                                         " ${"Adult, "}",
+    //                                     color: greyTextColor,
+    //                                     weight: FontWeight.w400,
+    //                                     size: 12,
+    //                                     height: 1.8,
+    //                                   ),
+    //                                 if (uRequestListInv[index].kids != 0)
+    //                                   MyText(
+    //                                     text:
+    //                                         "${uRequestListInv[index].kids} "
+    //                                         " ${"Kids"}",
+    //                                     color: greyTextColor,
+    //                                     weight: FontWeight.w400,
+    //                                     size: 12,
+    //                                     height: 1.8,
+    //                                   ),
+    //                               ],
+    //                             ),
+    //                             Row(
+    //                               mainAxisAlignment:
+    //                                   MainAxisAlignment.start,
+    //                               children: [
+    //                                 MyText(
+    //                                   text: "Unit Cost : ",
+    //                                   color: blackColor,
+    //                                   weight: FontWeight.w500,
+    //                                   size: 13,
+    //                                   height: 1.8,
+    //                                 ),
+    //                                 MyText(
+    //                                   text: uRequestListInv[index].uCost,
+    //                                   color: greyColor,
+    //                                   weight: FontWeight.w400,
+    //                                   size: 13,
+    //                                   height: 1.8,
+    //                                 ),
+    //                               ],
+    //                             ),
+    //                             Row(
+    //                               mainAxisAlignment:
+    //                                   MainAxisAlignment.start,
+    //                               children: [
+    //                                 MyText(
+    //                                   text: "Total Cost : ",
+    //                                   color: blackColor,
+    //                                   weight: FontWeight.w500,
+    //                                   size: 13,
+    //                                   height: 1.8,
+    //                                 ),
+    //                                 MyText(
+    //                                   text: uRequestListInv[index].tCost,
+    //                                   color: greyColor,
+    //                                   weight: FontWeight.w400,
+    //                                   size: 13,
+    //                                   height: 1.8,
+    //                                 ),
+    //                               ],
+    //                             ),
+    //                             Row(
+    //                               mainAxisAlignment:
+    //                                   MainAxisAlignment.start,
+    //                               children: [
+    //                                 MyText(
+    //                                   text: "Payable Cost : ",
+    //                                   color: blackColor,
+    //                                   weight: FontWeight.w500,
+    //                                   size: 13,
+    //                                   height: 1.8,
+    //                                 ),
+    //                                 MyText(
+    //                                   text: uRequestListInv[index].tCost,
+    //                                   color: greyColor,
+    //                                   weight: FontWeight.w400,
+    //                                   size: 13,
+    //                                   height: 1.8,
+    //                                 ),
+    //                               ],
+    //                             ),
+    //                             Row(
+    //                               mainAxisAlignment:
+    //                                   MainAxisAlignment.start,
+    //                               children: [
+    //                                 MyText(
+    //                                   text: "Payment Channel : ",
+    //                                   color: blackColor,
+    //                                   weight: FontWeight.w500,
+    //                                   size: 13,
+    //                                   height: 1.8,
+    //                                 ),
+    //                                 MyText(
+    //                                   text: uRequestListInv[index].pChanel,
+    //                                   color: greyColor,
+    //                                   weight: FontWeight.w400,
+    //                                   size: 13,
+    //                                   height: 1.8,
+    //                                 ),
+    //                               ],
+    //                             ),
+    //                           ],
+    //                           // List.generate(
+    //                           //   text.length,
+    //                           //   (index) {
+    //                           //     return
+
+    //                           //   },
+    //                           // ),
+    //                         ),
+    //                         const SizedBox(height: 10),
+    //                       ],
+    //                     ),
+    //                   ),
+    //                 ],
+    //               ),
+    //               Padding(
+    //                 padding: const EdgeInsets.symmetric(horizontal: 4),
+    //                 child: Row(
+    //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //                   children: [
+    //                     Container(
+    //                       height: 45,
+    //                       width: MediaQuery.of(context).size.width / 3.6,
+    //                       decoration: const BoxDecoration(
+    //                           borderRadius:
+    //                               BorderRadius.all(Radius.circular(12)),
+    //                           color: bluishColor),
+    //                       child: Material(
+    //                         color: Colors.transparent,
+    //                         child: InkWell(
+    //                           onTap: () => getDetails(
+    //                               uRequestListInv[index]
+    //                                   .serviceId
+    //                                   .toString(),
+    //                               uRequestListInv[index]
+    //                                   .providerId
+    //                                   .toString()),
+    //                           child: const Center(
+    //                             child: Text(
+    //                               'View Details',
+    //                               style: TextStyle(
+    //                                   color: whiteColor,
+    //                                   fontSize: 12,
+    //                                   fontWeight: FontWeight.w700),
+    //                             ),
+    //                           ),
+    //                         ),
+    //                       ),
+    //                       // color: bluishColor,
+    //                     ),
+    //                     Container(
+    //                       height: 45,
+    //                       width: MediaQuery.of(context).size.width / 3.6,
+    //                       decoration: const BoxDecoration(
+    //                           borderRadius:
+    //                               BorderRadius.all(Radius.circular(12)),
+    //                           color: redColor),
+    //                       child: Material(
+    //                         color: Colors.transparent,
+    //                         child: InkWell(
+    //                           onTap: // () {},
+    //                               () => showConfirmation(
+    //                                   uRequestListInv[index]
+    //                                       .BookingId
+    //                                       .toString(),
+    //                                   index), //     () => showConfirmation(
+    //                           //   widget.uRequestListInv[index].BookingId.toString(),
+    //                           // ),
+    //                           child: const Center(
+    //                             child: Text(
+    //                               'Cancel Request',
+    //                               style: TextStyle(
+    //                                   color: whiteColor,
+    //                                   fontSize: 12,
+    //                                   fontWeight: FontWeight.w700),
+    //                             ),
+    //                           ),
+    //                         ),
+    //                       ),
+    //                       // color: bluishColor,
+    //                     ),
+    //                     Container(
+    //                       height: 45,
+    //                       width: MediaQuery.of(context).size.width / 3.6,
+    //                       decoration: uRequestListInv[index].status == "1"
+    //                           ? const BoxDecoration(
+    //                               borderRadius:
+    //                                   BorderRadius.all(Radius.circular(12)),
+    //                               color: greenColor1)
+    //                           : const BoxDecoration(
+    //                               borderRadius:
+    //                                   BorderRadius.all(Radius.circular(12)),
+    //                               color: Color.fromARGB(255, 137, 176, 92)),
+    //                       child: Material(
+    //                         color: Colors.transparent,
+    //                         child: InkWell(
+    //                           onTap: uRequestListInv[index].status == "1"
+    //                               ? () => getProfile(
+    //                                   uRequestListInv[index]
+    //                                       .providerId
+    //                                       .toString(),
+    //                                   uRequestListInv[index].tCost,
+    //                                   uRequestListInv[index]
+    //                                       .BookingId
+    //                                       .toString(),
+    //                                   uRequestListInv[index].currency,
+    //                                   uRequestListInv[index].tCost,
+    //                                   uRequestListInv[index])
+    //                               : () {},
+    //                           child: const Center(
+    //                             child: Text(
+    //                               'Make Payment',
+    //                               style: TextStyle(
+    //                                   color: whiteColor,
+    //                                   fontSize: 12,
+    //                                   fontWeight: FontWeight.w700),
+    //                             ),
+    //                           ),
+    //                         ),
+    //                       ),
+    //                       // color: bluishColor,
+    //                     ),
+    //                   ],
+    //                 ),
+    //               ),
+    //             ],
+    //           ),
+    //         ),
+    //       );
+    //     },
+    //   );
   }
 }
