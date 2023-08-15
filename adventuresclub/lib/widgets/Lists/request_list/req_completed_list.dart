@@ -31,7 +31,6 @@ class ReqCompletedList extends StatefulWidget {
 
 class _ReqCompletedListState extends State<ReqCompletedList> {
   Map Ulist = {};
-  List<ServiceImageModel> gSim = [];
   List<UpcomingRequestsModel> uRequestList = [];
   Map mapChat = {};
   bool loading = false;
@@ -131,6 +130,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
         Ulist = json.decode(response.body);
         List<dynamic> result = Ulist['data'];
         result.forEach((element) {
+          List<ServiceImageModel> gSim = [];
           List<dynamic> image = element['images'];
           image.forEach((i) {
             ServiceImageModel sm = ServiceImageModel(
@@ -717,7 +717,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                     backgroundImage:
                                         //  ExactAssetImage('images/airrides.png'),
                                         NetworkImage(
-                                            "${'https://adventuresclub.net/adventureClub/public/uploads/'}${uRequestList[index].sImage[index].thumbnail}"),
+                                            "${'https://adventuresclub.net/adventureClub/public/uploads/'}${uRequestList[index].sImage[0].thumbnail}"),
                                   ),
                                   title: Column(
                                       crossAxisAlignment:

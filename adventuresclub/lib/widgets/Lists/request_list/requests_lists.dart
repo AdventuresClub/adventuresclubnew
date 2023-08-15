@@ -38,8 +38,6 @@ class RequestsList extends StatefulWidget {
 
 class _RequestsListState extends State<RequestsList> {
   Map uList = {};
-  List<ServiceImageModel> gSim = [];
-  List<UpcomingRequestsModel> uRequestList = [];
   List<UpcomingRequestsModel> uRequestListInv = [];
   List<UpcomingRequestsModel> customList = [];
   bool loading = false;
@@ -140,18 +138,20 @@ class _RequestsListState extends State<RequestsList> {
     var response = await http.get(Uri.parse(
         "https://adventuresclub.net/adventureClub/api/v1/get_requests?user_id=${Constants.userId}&type=0"));
     try {
+      List<UpcomingRequestsModel> uRequestList = [];
       if (response.statusCode == 200) {
         uList = json.decode(response.body);
         List<dynamic> result = uList['data'];
         result.forEach((element) {
+          List<ServiceImageModel> gSim = [];
           List<dynamic> image = element['images'];
           image.forEach((i) {
             ServiceImageModel sm = ServiceImageModel(
               int.tryParse(i['id'].toString()) ?? 0,
               int.tryParse(i['service_id'].toString()) ?? 0,
               int.tryParse(i['is_default'].toString()) ?? 0,
-              i['image_url'].toString() ?? "",
-              i['thumbnail'].toString() ?? "",
+              i['image_url'].toString(),
+              i['thumbnail'].toString(),
             );
             gSim.add(sm);
           });
@@ -189,10 +189,7 @@ class _RequestsListState extends State<RequestsList> {
       }
       setState(() {
         uRequestListInv = uRequestList.reversed.toList();
-        //uRequestListInv = customList;
       });
-      print(response.statusCode);
-      print(response.body);
     } catch (e) {
       print(e);
     }
