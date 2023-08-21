@@ -588,22 +588,22 @@ class _FilterPageState extends State<FilterPage> {
                         const SizedBox(
                           height: 30,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 12.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: MyText(
-                                text: 'Acitivities',
-                                weight: FontWeight.w800,
-                                color: blackColor,
-                                size: 18,
-                                fontFamily: 'Raleway'),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        const ActivitiesFilterList(),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(left: 12.0),
+                        //   child: Align(
+                        //     alignment: Alignment.centerLeft,
+                        //     child: MyText(
+                        //         text: 'Acitivities',
+                        //         weight: FontWeight.w800,
+                        //         color: blackColor,
+                        //         size: 18,
+                        //         fontFamily: 'Raleway'),
+                        //   ),
+                        // ),
+                        // const SizedBox(
+                        //   height: 20,
+                        // ),
+                        // const ActivitiesFilterList(),
                         // ListView.builder(
                         //     itemCount: activitiesList.length,
                         //     shrinkWrap: true,
@@ -629,36 +629,36 @@ class _FilterPageState extends State<FilterPage> {
                         //         }),
                         //       );
                         //     }),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        ListView.builder(
-                            itemCount: aimedText.length,
-                            shrinkWrap: true,
-                            physics: const ClampingScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return CheckboxListTile(
-                                secondary: Icon(
-                                  aimedIconList[index],
-                                  color: blackColor,
-                                ),
-                                title: MyText(
-                                  text: aimedText[index],
-                                  color: blackColor.withOpacity(0.6),
-                                  weight: FontWeight.w700,
-                                  size: 15,
-                                ),
-                                value: value,
-                                onChanged: ((bool? value) {
-                                  setState(() {
-                                    value = value!;
-                                  });
-                                }),
-                              );
-                            }),
-                        const SizedBox(
-                          height: 3,
-                        ),
+                        // const SizedBox(
+                        //   height: 15,
+                        // ),
+                        // ListView.builder(
+                        //     itemCount: aimedText.length,
+                        //     shrinkWrap: true,
+                        //     physics: const ClampingScrollPhysics(),
+                        //     itemBuilder: (context, index) {
+                        //       return CheckboxListTile(
+                        //         secondary: Icon(
+                        //           aimedIconList[index],
+                        //           color: blackColor,
+                        //         ),
+                        //         title: MyText(
+                        //           text: aimedText[index],
+                        //           color: blackColor.withOpacity(0.6),
+                        //           weight: FontWeight.w700,
+                        //           size: 15,
+                        //         ),
+                        //         value: value,
+                        //         onChanged: ((bool? value) {
+                        //           setState(() {
+                        //             value = value!;
+                        //           });
+                        //         }),
+                        //       );
+                        //     }),
+                        // const SizedBox(
+                        //   height: 3,
+                        // ),
                         Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Row(

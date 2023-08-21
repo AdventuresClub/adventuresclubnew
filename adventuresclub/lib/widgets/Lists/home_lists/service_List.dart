@@ -19,7 +19,7 @@ class ServiceList extends StatefulWidget {
 
 class ServiceListState extends State<ServiceList> {
   Map getServicesMap = {};
-  bool loading = false;
+  //bool loading = false;
   String id = "1";
   // List<ServicesModel> gAccomodationSModel = [];
   // List<ServicesModel> gTransportSModel = [];
@@ -81,6 +81,7 @@ class ServiceListState extends State<ServiceList> {
   Widget build(BuildContext context) {
     List<HomeServicesModel> gAllServices =
         Provider.of<ServicesProvider>(context).filteredServices;
+    bool loading = Provider.of<ServicesProvider>(context).loading;
     return loading
         ? const Center(
             child: Column(

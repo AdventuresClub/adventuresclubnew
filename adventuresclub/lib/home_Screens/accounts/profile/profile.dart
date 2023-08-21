@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:adventuresclub/constants.dart';
@@ -9,6 +10,7 @@ import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/text_fields.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
@@ -31,6 +33,15 @@ class _ProfileState extends State<Profile> {
   final picker = ImagePicker();
   List<File> imageList = [];
   List<File> imageBanners = [File(""), File("")];
+  File crCopy = File("");
+  String uniqueId = "";
+  DateTime? today = DateTime.now();
+  Uint8List crcopyList = Uint8List(0);
+  @override
+  void initState() {
+    super.initState();
+    Constants.getProfile();
+  }
 
   void addMedia() async {
     showDialog(
@@ -55,23 +66,24 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  void pickMedia(String type) async {
+  void pickMedia(String from) async {
     Navigator.of(context).pop();
     setState(() {
       loading = true;
     });
     final XFile? photo = await picker.pickImage(
-        source: type == "Camera" ? ImageSource.camera : ImageSource.gallery,
+        source: from == "Camera" ? ImageSource.camera : ImageSource.gallery,
         maxWidth: 300,
         maxHeight: 300);
-    if (photo != null) {
-      setState(() {
-        pickedMedia = File(photo.path);
-        loading = false;
-      });
-      // getAllImages();
-      // widget.sendImages(imageList);
-    }
+    if (photo != null && crCopy.path.isEmpty) {
+      crCopy = File(photo.path);
+    } else {}
+    setState(() {
+      loading = false;
+      uniqueId = "${Constants.userId}${today.toString()}.png";
+      //  crCopyString = "${}"
+    });
+    updateProfilePicture();
   }
 
   abc() {}
@@ -189,6 +201,44 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+  void updateProfilePicture() async {
+    setState(() {
+      loading = true;
+    });
+    if (crCopy.path.isNotEmpty) {
+      crcopyList = crCopy.readAsBytesSync();
+    }
+    try {
+      var request = http.MultipartRequest(
+        "POST",
+        Uri.parse(
+            "https://adventuresclub.net/adventureClub/api/v1/profilePhotoUpdate"),
+      );
+      String fileName =
+          "${DateTime.now().millisecondsSinceEpoch.toString()}.png";
+      request.files.add(http.MultipartFile.fromBytes(
+          "profile_picture", crcopyList,
+          filename: fileName));
+      dynamic programData = {
+        'user_id': Constants.userId.toString(), //"27", //27, //"27",
+      };
+      request.fields.addAll(programData);
+      log(request.fields.toString());
+      final response = await request.send();
+      if (response.statusCode == 200) {
+        message("Display Picture Updated");
+      } else {
+        dynamic body = jsonDecode(response.toString());
+        message(body['message'].toString());
+        setState(() {
+          loading = false;
+        });
+      }
+    } catch (e) {
+      message(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -245,7 +295,7 @@ class _ProfileState extends State<Profile> {
                   //         backgroundImage:
                   //             ExactAssetImage('images/avatar2.png'),
                   //       )
-                  pickedMedia.path.isEmpty
+                  crCopy.path.isEmpty
                       ? CircleAvatar(
                           radius: 60,
                           backgroundImage: NetworkImage(
@@ -258,7 +308,7 @@ class _ProfileState extends State<Profile> {
                           ),
                           child: ClipRRect(
                             child: Image.file(
-                              pickedMedia,
+                              crCopy,
                               height: 100,
                               width: 100,
                               fit: BoxFit.fill,
