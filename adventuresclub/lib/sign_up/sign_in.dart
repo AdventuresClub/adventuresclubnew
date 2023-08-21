@@ -329,11 +329,11 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-  void goToForgotPass() {
+  void goToForgotPass(String t) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return const ForgotPass();
+          return ForgotPass(t);
         },
       ),
     );
@@ -405,7 +405,7 @@ class _SignInState extends State<SignIn> {
                   ),
                   const SizedBox(height: 20),
                   GestureDetector(
-                    onTap: goToForgotPass,
+                    onTap: () => goToForgotPass("username"),
                     child: Align(
                         alignment: Alignment.center,
                         child: MyText(
@@ -417,7 +417,7 @@ class _SignInState extends State<SignIn> {
                   ),
                   const SizedBox(height: 20),
                   GestureDetector(
-                    onTap: goToForgotPass,
+                    onTap: () => goToForgotPass("password"),
                     child: Align(
                         alignment: Alignment.center,
                         child: MyText(

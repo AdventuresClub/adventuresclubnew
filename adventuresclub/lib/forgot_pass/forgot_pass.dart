@@ -12,7 +12,8 @@ import '../models/get_country.dart';
 import '../widgets/buttons/button.dart';
 
 class ForgotPass extends StatefulWidget {
-  const ForgotPass({super.key});
+  final String type;
+  const ForgotPass(this.type, {super.key});
 
   @override
   State<ForgotPass> createState() => _ForgotPassState();
@@ -34,6 +35,8 @@ class _ForgotPassState extends State<ForgotPass> {
   int countryId = 0;
   String flag = "";
   int userID = 0;
+  Map mapFilter = {};
+  String userName = "";
 
   @override
   void initState() {
@@ -82,29 +85,37 @@ class _ForgotPassState extends State<ForgotPass> {
     );
   }
 
-  void forgetPage(String id) {
+  void forgetPage(String id, String userid, String user) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return RecoveryPassword(id);
+          return RecoveryPassword(id, userid, user, widget.type);
         },
       ),
     );
   }
 
   void verifyOtp() async {
+    String otpNumber = otpController.text.trim();
     Navigator.of(context).pop();
     try {
       var response = await http.post(
           Uri.parse(
               "https://adventuresclub.net/adventureClub/api/v1/verify_otp"),
           body: {
-            'user_id': Constants.userId.toString(),
-            'otp': otpController.text.trim,
-            'forgot_password': "0"
+            'user_id': userID.toString(),
+            'otp': otpNumber,
+            'forgot_password': "2",
           });
       if (response.statusCode == 200) {
-        forgetPage(otpController.text.trim());
+        mapFilter = json.decode(response.body);
+        dynamic result = mapFilter['data'];
+        // result.forEach((element) {
+        //   setState(() {
+        userName = result['name'];
+        //   });
+        // });
+        forgetPage(otpController.text.trim(), userID.toString(), userName);
         message("OTP Verfied");
       } else {
         dynamic body = jsonDecode(response.body);
@@ -127,7 +138,7 @@ class _ForgotPassState extends State<ForgotPass> {
           body: {
             'mobile_code': ccCode.toString(), //ccCode.toString(),
             'mobile': numController.text,
-            'forgot_password': "0",
+            'forgot_password': "2",
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       if (response.statusCode == 200) {
@@ -243,69 +254,74 @@ class _ForgotPassState extends State<ForgotPass> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          iconTheme: const IconThemeData(color: kSecondaryColor),
+        ),
         body: Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        children: [
-          const SizedBox(height: 20),
-          Align(
-              alignment: Alignment.centerLeft,
-              child: MyText(
-                text: 'Forgot Password',
-                weight: FontWeight.w600,
-                color: bluishColor,
-                size: 20,
-              )),
-          const SizedBox(
-            height: 30,
-          ),
-          const Image(
-            image: ExactAssetImage('images/logo.png'),
-            height: 150,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Align(
-              alignment: Alignment.centerLeft,
-              child: MyText(
-                text:
-                    "By sending an OTP we'll verify that you are real, so please select an option.",
-                weight: FontWeight.bold,
-                color: greyColor,
-                size: 12,
-              )),
-          const SizedBox(
-            height: 20,
-          ),
-          phoneNumberField(context),
-          const SizedBox(
-            height: 20,
-          ),
-          GestureDetector(
-            onTap: goToSignIn,
-            child: const Align(
-              alignment: Alignment.center,
-              child: Text.rich(
-                TextSpan(
-                  children: [
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: MyText(
+                    text: 'Forgot Password',
+                    weight: FontWeight.w600,
+                    color: bluishColor,
+                    size: 20,
+                  )),
+              const SizedBox(
+                height: 30,
+              ),
+              const Image(
+                image: ExactAssetImage('images/logo.png'),
+                height: 150,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: MyText(
+                    text:
+                        "By sending an OTP we'll verify that you are real, so please select an option.",
+                    weight: FontWeight.bold,
+                    color: greyColor,
+                    size: 12,
+                  )),
+              const SizedBox(
+                height: 20,
+              ),
+              phoneNumberField(context),
+              const SizedBox(
+                height: 20,
+              ),
+              GestureDetector(
+                onTap: goToSignIn,
+                child: const Align(
+                  alignment: Alignment.center,
+                  child: Text.rich(
                     TextSpan(
-                      text: "Got Remember? ",
-                      style: TextStyle(color: greyColor),
+                      children: [
+                        TextSpan(
+                          text: "Got Remember? ",
+                          style: TextStyle(color: greyColor),
+                        ),
+                        TextSpan(
+                          text: 'Sign In',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: bluishColor),
+                        ),
+                      ],
                     ),
-                    TextSpan(
-                      text: 'Sign In',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: bluishColor),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
-    ));
+        ));
   }
 
   Widget phoneNumberField(context) {
