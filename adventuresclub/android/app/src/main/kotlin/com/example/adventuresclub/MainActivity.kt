@@ -1,4 +1,4 @@
-package com.example.adventuresclub
+package com.universalskills.adventuresclub
 
 import io.flutter.embedding.android.FlutterActivity
 
