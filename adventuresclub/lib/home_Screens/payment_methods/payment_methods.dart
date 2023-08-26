@@ -147,6 +147,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
   }
 
   void showConfirmation() async {
+    generateRandomString(count);
     showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -169,7 +170,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
                       child: const Text("No"),
                     ),
                     MaterialButton(
-                      onPressed: cancel,
+                      onPressed: update,
                       child: const Text("Yes"),
                     ),
                   ],
@@ -180,6 +181,44 @@ class _PaymentMethodsState extends State<PaymentMethods> {
 
   void cancel() {
     Navigator.of(context).pop();
+  }
+
+  void update() async {
+    DateTime now = DateTime.now();
+    try {
+      var response = await http.post(
+          Uri.parse(
+              "https://adventuresclub.net/adventureClub/api/v1/update_payments"),
+          body: {
+            "user_id": Constants.userId.toString(),
+            "service_id": widget.uRequestList.serviceId.toString(),
+            "booking_id": widget.uRequestList.BookingId.toString(),
+            "payment_method": "payOnArrival",
+            "amount": widget.value,
+            "transaction_id": transactionId,
+            "transaction_date": now.toString(),
+            "account_name": "payOnArrival",
+            "status": "8",
+            "points": "0"
+          });
+      if (response.statusCode == 200) {
+        message("PayMent Method Updated Successfly");
+        cancel();
+      }
+      print(response.statusCode);
+      print(response.body);
+      print(response.headers);
+    } catch (e) {
+      message(e.toString());
+    }
+  }
+
+  void message(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
   }
 
   @override
