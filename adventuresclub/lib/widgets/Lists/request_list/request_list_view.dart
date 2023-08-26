@@ -222,15 +222,21 @@ class _RequestListViewState extends State<RequestListView> {
       String tCost, UpcomingRequestsModel rm) async {
     if (pay == "1") {
       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return PaymentMethods(rm, amount, bId, cur, tCost);
+        return PaymentMethods(
+          rm,
+          amount,
+          bId,
+          cur,
+          tCost,
+        );
       }));
     } else {
-      fetchCurrency(amount, bId, cur, tCost);
+      fetchCurrency(amount, bId, cur, tCost, rm);
     }
   }
 
-  Future<List<CurrencyModel>> fetchCurrency(
-      String value, String bookingId, String currency, String totalCost) async {
+  Future<List<CurrencyModel>> fetchCurrency(String value, String bookingId,
+      String currency, String totalCost, UpcomingRequestsModel rm) async {
     double valueDouble = double.tryParse(value) ?? 0;
     final response = await http.get(Uri.parse(
         'https://api.fastforex.io/fetch-all?api_key=5d7d771c49-103d05e0d0-riwfxc'));
@@ -242,17 +248,12 @@ class _RequestListViewState extends State<RequestListView> {
         CurrencyModel cm = CurrencyModel(result[currency]);
         CurrencyModel omrPrice = CurrencyModel(result['OMR']);
         convertCurrency(cm.currency, omrPrice.currency, tcDouble);
-        selected(context, bookingId);
-        print(selectedcountryPrice);
+        selected(context, bookingId, rm);
       } else {
         CurrencyModel cm = CurrencyModel(result['OMR']);
         packagePrice = valueDouble * cm.currency;
-        selected(context, bookingId);
-        print(packagePrice);
-        print(cm.currency);
+        selected(context, bookingId, rm);
       }
-      //  transactionApi(packagePrice.toString(), id);
-
       List<CurrencyModel> currencies = [];
       return currencies;
     } else {
@@ -260,8 +261,10 @@ class _RequestListViewState extends State<RequestListView> {
     }
   }
 
-  void selected(BuildContext context, String bookingId) {
+  void selected(
+      BuildContext context, String bookingId, UpcomingRequestsModel rm) {
     generateRandomString(10);
+    String price = packagePrice.toString();
     // transaction id is random uniuq generated number
     // currency has to be omr
     Navigator.of(context).push(
@@ -274,6 +277,7 @@ class _RequestListViewState extends State<RequestListView> {
         },
       ),
     );
+    // update(price, rm);
     // print(object);
   }
 
@@ -308,7 +312,6 @@ class _RequestListViewState extends State<RequestListView> {
     setState(() {
       packagePrice = omrConverted * tc;
     });
-    print(packagePrice);
   }
 
   void showConfirmation(String bookingId, int index) async {
@@ -405,9 +408,6 @@ class _RequestListViewState extends State<RequestListView> {
       itemCount: uRequestListInv.length,
       scrollDirection: Axis.vertical,
       itemBuilder: (context, index) {
-        print(
-            "https://adventuresclub.net/adventureClub/public/uploads/'}${uRequestListInv[index].sImage[0].imageUrl}");
-
         return
             // UpcomingRequestInformation(
             //     uRequestListInv[index], showConfirmation);
