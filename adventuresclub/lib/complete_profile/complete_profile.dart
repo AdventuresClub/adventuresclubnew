@@ -6,7 +6,6 @@ import 'package:adventuresclub/widgets/buttons/bottom_button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 class CompleteProfile extends StatefulWidget {
   const CompleteProfile({Key? key}) : super(key: key);
@@ -82,6 +81,8 @@ class _CompleteProfileState extends State<CompleteProfile> {
                 ),
                 child: Consumer<CompleteProfileProvider>(
                   builder: (context, provider, child) {
+                    return Container();
+                    /*
                     return StepProgressIndicator(
                       padding: 0,
                       totalSteps: provider.steps.length,
@@ -175,6 +176,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
                               ],
                             ),
                     );
+                    */
                   },
                 ),
               ),

@@ -7,12 +7,10 @@ import 'package:adventuresclub/models/getParticipants/get_participants_model.dar
 import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
-import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/tabs/details_tabs/service_description.dart';
 import 'package:adventuresclub/widgets/tabs/details_tabs/service_gathering_location.dart';
 import 'package:adventuresclub/widgets/tabs/details_tabs/service_program/service_plans.dart';
 import 'package:adventuresclub/widgets/tabs/participants.dart';
-import 'package:another_stepper/another_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -134,6 +132,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
     "Climbing efferent levels of curves/rocks with\nthe help of the leads.",
   ];
   String firstValue = "";
+  /*
   List<StepperData> stepperData = [
     StepperData(
         iconWidget: CircleAvatar(
@@ -205,6 +204,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
       ),
     )),
   ];
+  */
   List text1 = [
     'Country  :',
     'Region  :',
