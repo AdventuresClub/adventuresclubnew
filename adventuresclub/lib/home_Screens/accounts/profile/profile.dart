@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:adventuresclub/camera/camera_access.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/profile/profile_tab.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:permission_handler/permission_handler.dart';
 
 class Profile extends StatefulWidget {
   final bool? expired;
@@ -44,26 +46,40 @@ class _ProfileState extends State<Profile> {
   }
 
   void addMedia() async {
-    showDialog(
-      context: context,
-      builder: (ctx) => SimpleDialog(
-        title: const Text("From ?"),
-        children: [
-          GestureDetector(
-            onTap: () => pickMedia("Camera"),
-            child: const ListTile(
-              title: Text("Camera"),
-            ),
+    if (!await checkPermission()) {
+      goToCamera();
+    } else {
+      if (mounted) {
+        showDialog(
+          context: context,
+          builder: (ctx) => SimpleDialog(
+            title: const Text("From ?"),
+            children: [
+              GestureDetector(
+                onTap: () => pickMedia("Camera"),
+                child: const ListTile(
+                  title: Text("Camera"),
+                ),
+              ),
+              GestureDetector(
+                onTap: () => pickMedia("Gallery"),
+                child: const ListTile(
+                  title: Text("Gallery"),
+                ),
+              ),
+            ],
           ),
-          GestureDetector(
-            onTap: () => pickMedia("Gallery"),
-            child: const ListTile(
-              title: Text("Gallery"),
-            ),
-          ),
-        ],
-      ),
-    );
+        );
+      }
+    }
+  }
+
+  Future<bool> checkPermission() async {
+    PermissionStatus status = await Permission.camera.status;
+    if (status.isPermanentlyDenied || status.isDenied) {
+      return false;
+    }
+    return true;
   }
 
   void pickMedia(String from) async {
@@ -237,6 +253,12 @@ class _ProfileState extends State<Profile> {
     } catch (e) {
       message(e.toString());
     }
+  }
+
+  void goToCamera() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return const CameraAccess();
+    }));
   }
 
   @override

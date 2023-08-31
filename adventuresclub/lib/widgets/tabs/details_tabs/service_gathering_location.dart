@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_launcher/map_launcher.dart' as ml;
+import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:map_launcher/src/models.dart' as mt;
 
@@ -43,7 +44,7 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
   //AIzaSyCtHdBmvvsOP97AxCzsu1fu8lNb1Dcq9M4
   @override
   void initState() {
-    // setState(() {
+    getPermissions();
     lt = double.tryParse(widget.lat) ?? 0;
     ln = double.tryParse(widget.lng) ?? 0;
 
@@ -191,6 +192,20 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
     //     },
     //   ),
     */
+  }
+
+  void getPermissions() async {
+    PermissionStatus status = await Permission.location.status;
+    if (!status.isGranted) {
+      PermissionStatus request = await Permission.location.request();
+      if (request.isPermanentlyDenied) {
+        openAppSettings();
+      } else if (request.isDenied) {
+        openAppSettings();
+      }
+    }
+
+    //goBack();
   }
 
   @override

@@ -14,6 +14,7 @@ import 'package:adventuresclub/widgets/tabs/participants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class DetailsTab extends StatefulWidget {
   final ServicesModel gm;
@@ -244,6 +245,14 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
   double convert(String rating) {
     double result = double.parse(rating);
     return result;
+  }
+
+  Future<bool> checkPermission() async {
+    PermissionStatus status = await Permission.location.status;
+    if (status.isPermanentlyDenied || status.isDenied) {
+      return false;
+    }
+    return true;
   }
 
   void getParticipants() async {

@@ -57,6 +57,7 @@ dependencies:
   share_plus: ^7.0.1
   map_launcher: ^2.5.0+1
   flutter_launcher_icons: ^0.13.1
+  permission_handler: ^10.4.3
 
 flutter_icons:
   android: "launcher_icon"
