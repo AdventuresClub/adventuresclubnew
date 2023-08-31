@@ -30,7 +30,11 @@ class _SettingsState extends State<Settings> {
   List<String> list = <String>['Change Language', 'Two', 'Three', 'Four'];
   String dropdownValue1 = 'Country Location';
   List<String> list1 = <String>['Country Location', 'Two', 'Three', 'Four'];
-  List text = ['Privacy', 'Terms and Conditions', 'Contact us'];
+  List text = [
+    'Privacy',
+    'Terms and Conditions',
+    'Contact us',
+  ];
   bool value = false;
   TextEditingController heightController = TextEditingController();
   int ft = 0;

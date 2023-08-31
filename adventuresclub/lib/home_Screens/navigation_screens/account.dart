@@ -56,6 +56,7 @@ class _AccountState extends State<Account> {
     'images/about.png',
     'images/phone.png',
     'images/logout.png',
+    'images/notification.png',
   ];
   List tile1Text = [
     'My Points',
@@ -67,6 +68,7 @@ class _AccountState extends State<Account> {
     'About us',
     'Contact us',
     'Log out',
+    "Delete Account"
   ];
   List userListText = [
     'Health Condition',
@@ -346,7 +348,7 @@ class _AccountState extends State<Account> {
     );
   }
 
-  void showConfirmation() async {
+  void showConfirmation(String title, String message) async {
     showDialog(
         context: context,
         builder: (ctx) => SimpleDialog(
@@ -354,7 +356,7 @@ class _AccountState extends State<Account> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12)),
               title: MyText(
-                text: "Log out",
+                text: title,
                 size: 18,
                 weight: FontWeight.bold,
                 color: blackColor,
@@ -364,8 +366,8 @@ class _AccountState extends State<Account> {
                   height: 10,
                 ),
                 //Text("data"),
-                const Text(
-                  "Are you sure you want to log out?",
+                Text(
+                  message,
                   textAlign: TextAlign.center,
                 ),
                 // text:
@@ -1660,7 +1662,12 @@ class _AccountState extends State<Account> {
                                 );
                               }
                               if (tile1Text[index] == 'Log out') {
-                                showConfirmation();
+                                showConfirmation("Log out",
+                                    "Are you sure you want to log out?");
+                              }
+                              if (tile1Text[index] == "Delete Account") {
+                                showConfirmation("Delete Account",
+                                    "Are you sure you want to Delete your account?");
                               }
                             }),
                             leading: Stack(clipBehavior: Clip.none, children: [
