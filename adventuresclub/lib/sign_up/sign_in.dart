@@ -8,6 +8,7 @@ import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation
 import 'package:adventuresclub/models/get_country.dart';
 import 'package:adventuresclub/models/profile_models/profile_become_partner.dart';
 import 'package:adventuresclub/models/user_profile_model.dart';
+import 'package:adventuresclub/new_signup/new_getotp.dart';
 import 'package:adventuresclub/sign_up/Sign_up.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
@@ -323,7 +324,7 @@ class _SignInState extends State<SignIn> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return const SignUp();
+          return const NewGetOtp(); //SignUp();
         },
       ),
     );

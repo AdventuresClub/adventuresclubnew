@@ -74,7 +74,6 @@ class _SignUpState extends State<SignUp> {
   var getheight = 'Height';
   var getGender = 'Male';
   int userID = 0;
-  List<GetCountryModel> countriesList1 = [];
   Map mapCountry = {};
   Map userRegistration = {};
   String healthC = "";
@@ -82,6 +81,7 @@ class _SignUpState extends State<SignUp> {
   String flag = "";
   String userRole = "";
   List<GetCountryModel> filteredServices = [];
+  List<GetCountryModel> countriesList1 = [];
 
   @override
   void initState() {
@@ -600,11 +600,12 @@ class _SignUpState extends State<SignUp> {
         body: SingleChildScrollView(
           child: Container(
             decoration: BoxDecoration(
-                image: DecorationImage(
-                    colorFilter: ColorFilter.mode(
-                        blackColor.withOpacity(0.6), BlendMode.darken),
-                    image: const ExactAssetImage('images/registrationpic.png'),
-                    fit: BoxFit.cover)),
+              image: DecorationImage(
+                  colorFilter: ColorFilter.mode(
+                      blackColor.withOpacity(0.6), BlendMode.darken),
+                  image: const ExactAssetImage('images/registrationpic.png'),
+                  fit: BoxFit.cover),
+            ),
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20),

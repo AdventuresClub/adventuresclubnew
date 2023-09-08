@@ -359,36 +359,8 @@ class _PackageListState extends State<PackageList> {
             top: 40,
             child: Column(
               children: [
-                //     Wrap(
-                //       direction: Axis.vertical,
-                //       children: List.generate(widget.bp.im.length, (index) {
-                //         return
                 PackageIncludeDetails(widget.bp.im),
                 PackageIncludeDetails(widget.bp.em)
-                // Row(
-                //   crossAxisAlignment: CrossAxisAlignment.center,
-                //   children: [
-                //     const CircleAvatar(
-                //       radius: 8,
-                //       backgroundColor: whiteColor,
-                //       child: Image(
-                //         image: ExactAssetImage(
-                //           'images/ic_green_check.png',
-                //         ),
-                //       ),
-                //     ),
-                //     const SizedBox(
-                //       width: 10,
-                //     ),
-                //     MyText(
-                //       text: widget.bp.im[index].title,
-                //       size: 12,
-                //       height: 2.2,
-                //     ),
-                //   ],
-                // );
-                //       }),
-                //     )
               ],
             ),
           ),
