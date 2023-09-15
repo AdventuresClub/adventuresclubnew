@@ -2,15 +2,15 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/get_country.dart';
-import 'package:adventuresclub/sign_up/Sign_up.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../new_signup/new_register.dart';
 import 'buttons/button.dart';
 import 'my_text.dart';
 
 class PhoneTextField extends StatefulWidget {
-  const PhoneTextField({super.key});
+  final Function parseData;
+  const PhoneTextField(this.parseData, {super.key});
 
   @override
   State<PhoneTextField> createState() => _PhoneTextFieldState();
@@ -197,6 +197,12 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
         flag = countryflag;
       },
     );
+    sendData();
+  }
+
+  void sendData() {
+    widget.parseData(numController.text, ccCode);
+    print(ccCode);
   }
 
   void getOtp() async {
@@ -229,13 +235,13 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
   }
 
   void goRegister() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return NewRegister(
-        mobileNumber: numController.text.trim(),
-        mobileCode: ccCode,
-        userId: userID,
-      );
-    }));
+    // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+    //   return NewRegister(
+    //     mobileNumber: numController.text.trim(),
+    //     mobileCode: ccCode,
+    //     userId: userID,
+    //   );
+    // }));
   }
 
   @override
@@ -453,6 +459,11 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
                     phone.length > 9 ? cont = true : cont = false;
                     phoneNumber = phone;
                   });
+                  sendData();
+                },
+                onEditingComplete: () {
+                  FocusScope.of(context).unfocus();
+                  sendData();
                 },
                 style: const TextStyle(
                   fontSize: 14,
@@ -467,7 +478,7 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
                   ),
                   filled: true,
                   fillColor: whiteColor,
-                  hintText: 'Enter Phone Number',
+                  hintText: "enterPhoneNumber".tr(), //'Enter Phone Number',
                   hintStyle: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
@@ -493,11 +504,11 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
             // ),
           ),
         ),
-        const SizedBox(
-          height: 20,
-        ),
-        Button('Send OTP', greenishColor, greenishColor, whiteColor, 18, getOtp,
-            Icons.add, whiteColor, false, 2, 'Raleway', FontWeight.w600, 16),
+        // const SizedBox(
+        //   height: 20,
+        // ),
+        // Button('Send OTP', greenishColor, greenishColor, whiteColor, 18, getOtp,
+        //     Icons.add, whiteColor, false, 2, 'Raleway', FontWeight.w600, 16),
       ],
     );
   }

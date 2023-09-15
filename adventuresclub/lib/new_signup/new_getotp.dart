@@ -36,7 +36,7 @@ class NewGetOtp extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                const PhoneTextField(),
+                // const PhoneTextField(),
               ],
             ),
           ),

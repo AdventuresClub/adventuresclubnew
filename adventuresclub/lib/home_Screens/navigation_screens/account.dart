@@ -18,6 +18,7 @@ import 'package:adventuresclub/models/profile_models/profile_become_partner.dart
 import 'package:adventuresclub/models/user_profile_model.dart';
 import 'package:adventuresclub/sign_up/sign_in.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -44,8 +45,8 @@ class _AccountState extends State<Account> {
     'images/newservice.png',
     'images/newrequest.png'
   ];
-  List text = ['Favorite', 'My Services', 'Client Requests'];
-  List userText = ['Favorite', 'Notification', 'My Points'];
+  List text = ["favorite".tr(), 'My Services', 'Client Requests'];
+  List userText = ["favorite".tr(), 'Notification', 'My Points'];
   List tile1 = [
     'images/points.png',
     'images/healthCondition.png',
@@ -59,16 +60,16 @@ class _AccountState extends State<Account> {
     'images/notification.png',
   ];
   List tile1Text = [
-    'My Points',
-    'Health Condition',
-    'Notification',
-    'Service & Quality Standards',
-    'Settings',
-    'Invite Friends',
-    'About us',
-    'Contact us',
-    'Log out',
-    "Delete Account"
+    'myPoints'.tr(),
+    "healthCondition".tr(),
+    "notification".tr(),
+    "serviceQuality".tr(),
+    "settings".tr(),
+    "inviteFriends".tr(),
+    "aboutUs".tr(),
+    "contactUs".tr(),
+    "logOut".tr(),
+    "deleteAccount".tr(),
   ];
   List userListText = [
     'Health Condition',
@@ -77,7 +78,8 @@ class _AccountState extends State<Account> {
     'About us',
     'Service & Quality Standards',
     'Contact us',
-    'Log out',
+    "logOut".tr(),
+    //'Log out',
   ];
   List userListIcon = [
     'images/healthCondition.png',
@@ -164,6 +166,7 @@ class _AccountState extends State<Account> {
       "",
       ProfileBecomePartner(0, 0, "", "", "", "", "", "", "", "", 0, 0, "", "",
           "", "", "", "", "", 0, "", "", "", "", "", ""));
+  String selectedLanguage = "";
   @override
   void initState() {
     super.initState();
@@ -505,6 +508,14 @@ class _AccountState extends State<Account> {
     );
   }
 
+  void changeLanguage(String lang) {
+    if (lang == "English") {
+      context.setLocale(const Locale('en', 'US'));
+    } else if (lang == "Arabic") {
+      context.setLocale(const Locale('ar', 'SA'));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -627,7 +638,8 @@ class _AccountState extends State<Account> {
                                           children: [
                                             GestureDetector(
                                               onTap: () {
-                                                if (userText[i] == 'Favorite') {
+                                                if (userText[i] ==
+                                                    "favorite".tr()) {
                                                   Navigator.of(context).push(
                                                     MaterialPageRoute(
                                                       builder: (_) {
@@ -647,7 +659,7 @@ class _AccountState extends State<Account> {
                                                   );
                                                 }
                                                 if (userText[i] ==
-                                                    'My Points') {
+                                                    'myPoints'.tr()) {
                                                   Navigator.of(context).push(
                                                     MaterialPageRoute(
                                                       builder: (_) {
@@ -804,7 +816,8 @@ class _AccountState extends State<Account> {
                                           children: [
                                             GestureDetector(
                                               onTap: () {
-                                                if (userText[i] == 'Favorite') {
+                                                if (userText[i] ==
+                                                    "favorite".tr()) {
                                                   Navigator.of(context).push(
                                                     MaterialPageRoute(
                                                       builder: (_) {
@@ -985,7 +998,8 @@ class _AccountState extends State<Account> {
                                           children: [
                                             GestureDetector(
                                               onTap: () {
-                                                if (userText[i] == 'Favorite') {
+                                                if (userText[i] ==
+                                                    "favorite".tr()) {
                                                   Navigator.of(context).push(
                                                     MaterialPageRoute(
                                                       builder: (_) {
@@ -1183,7 +1197,8 @@ class _AccountState extends State<Account> {
                                             children: [
                                               GestureDetector(
                                                 onTap: () {
-                                                  if (text[i] == 'Favorite') {
+                                                  if (text[i] ==
+                                                      "favorite".tr()) {
                                                     Navigator.of(context).push(
                                                       MaterialPageRoute(
                                                         builder: (_) {
@@ -1401,7 +1416,8 @@ class _AccountState extends State<Account> {
                                           children: [
                                             GestureDetector(
                                               onTap: () {
-                                                if (text[i] == 'Favorite') {
+                                                if (text[i] ==
+                                                    "favorite".tr()) {
                                                   Navigator.of(context).push(
                                                     MaterialPageRoute(
                                                       builder: (_) {
@@ -1793,7 +1809,7 @@ class _AccountState extends State<Account> {
                                   ),
                                 );
                               }
-                              if (userListText[index] == 'Log out') {
+                              if (userListText[index] == "logOut".tr()) {
                                 logout();
                               }
                             }),
@@ -1814,18 +1830,48 @@ class _AccountState extends State<Account> {
                         },
                       ),
                     ),
-                  Center(
-                    child: Container(
-                      height: 40,
-                      width: 140,
-                      decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 20, 69, 22),
-                          borderRadius: BorderRadius.circular(12)),
-                      child: Center(
-                        child: MyText(
-                          text: "App Version : 2.0",
-                          color: whiteColor,
-                          weight: FontWeight.w600,
+                  PopupMenuButton<String>(
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Icon(
+                        Icons.language_rounded,
+                        color: whiteColor,
+                        size: 60,
+                      ),
+                    ),
+                    onSelected: (String item) {
+                      setState(() {
+                        selectedLanguage = item;
+                      });
+                      changeLanguage(item);
+                    },
+                    itemBuilder: (BuildContext context) =>
+                        <PopupMenuEntry<String>>[
+                      const PopupMenuItem<String>(
+                        value: "English",
+                        child: Text('English'),
+                      ),
+                      const PopupMenuItem<String>(
+                        value: "Arabic",
+                        child: Text('Arabic'),
+                      ),
+                    ],
+                  ),
+                  GestureDetector(
+                    onTap: logout,
+                    child: Center(
+                      child: Container(
+                        height: 40,
+                        width: 140,
+                        decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 20, 69, 22),
+                            borderRadius: BorderRadius.circular(12)),
+                        child: Center(
+                          child: MyText(
+                            text: "App Version : 2.0",
+                            color: whiteColor,
+                            weight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),

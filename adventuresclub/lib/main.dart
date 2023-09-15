@@ -1,12 +1,15 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/splashScreen/splash_screen.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   initializeDateFormatting().then(
     (_) => runApp(
       MultiProvider(
@@ -21,7 +24,12 @@ void main() async {
           //   create: (_) => FilterProvider(),
           // ),
         ],
-        child: const MyApp(),
+        child: EasyLocalization(
+          supportedLocales: const [Locale('en', 'US'), Locale('ar', 'SA')],
+          path: 'assets/translations',
+          fallbackLocale: const Locale('en', 'US'),
+          child: const MyApp(),
+        ),
       ),
     ),
   );
@@ -38,6 +46,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        EasyLocalization.of(context)!.delegate,
+      ],
+      supportedLocales: const [Locale('en', 'US'), Locale('ar', 'SA')],
+      locale: context.locale,
       title: 'Adventures Club',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Raleway'),

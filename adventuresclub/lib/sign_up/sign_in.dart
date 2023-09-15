@@ -8,12 +8,12 @@ import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation
 import 'package:adventuresclub/models/get_country.dart';
 import 'package:adventuresclub/models/profile_models/profile_become_partner.dart';
 import 'package:adventuresclub/models/user_profile_model.dart';
-import 'package:adventuresclub/new_signup/new_getotp.dart';
-import 'package:adventuresclub/sign_up/Sign_up.dart';
+import 'package:adventuresclub/new_signup/new_register.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/space_text_field.dart';
 import 'package:adventuresclub/widgets/text_fields/tf_with_suffix_icon.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -42,6 +42,7 @@ class _SignInState extends State<SignIn> {
   List<GetCountryModel> countriesList1 = [];
   ProfileBecomePartner pbp = ProfileBecomePartner(0, 0, "", "", "", "", "", "",
       "", "", 0, 0, "", "", "", "", "", "", "", 0, "", "", "", "", "", "");
+  String selectedLanguage = "";
 
   @override
   void initState() {
@@ -324,7 +325,7 @@ class _SignInState extends State<SignIn> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return const NewGetOtp(); //SignUp();
+          return const NewRegister(); //NewGetOtp(); //SignUp();
         },
       ),
     );
@@ -338,6 +339,14 @@ class _SignInState extends State<SignIn> {
         },
       ),
     );
+  }
+
+  void changeLanguage(String lang) {
+    if (lang == "English") {
+      context.setLocale(const Locale('en', 'US'));
+    } else if (lang == "Arabic") {
+      context.setLocale(const Locale('ar', 'SA'));
+    }
   }
 
   @override
@@ -367,30 +376,62 @@ class _SignInState extends State<SignIn> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const SizedBox(height: 20),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: MyText(
-                        text: 'Sign In',
-                        weight: FontWeight.w600,
-                        color: whiteColor,
-                        size: 24,
-                      )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: MyText(
+                            text: "signIn".tr(), //'Sign In',
+                            weight: FontWeight.w600,
+                            color: whiteColor,
+                            size: 24,
+                          )),
+                      PopupMenuButton<String>(
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Icon(
+                            Icons.language_rounded,
+                            color: whiteColor,
+                            size: 60,
+                          ),
+                        ),
+                        onSelected: (String item) {
+                          setState(() {
+                            selectedLanguage = item;
+                          });
+                          changeLanguage(item);
+                        },
+                        itemBuilder: (BuildContext context) =>
+                            <PopupMenuEntry<String>>[
+                          const PopupMenuItem<String>(
+                            value: "English",
+                            child: Text('English'),
+                          ),
+                          const PopupMenuItem<String>(
+                            value: "Arabic",
+                            child: Text('Arabic'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                   Image.asset(
                     'images/whitelogo.png',
                     height: 120,
                     width: 320,
                   ),
                   const SizedBox(height: 20),
-                  SpaceTextFields('Email or Username', emailController, 17,
+                  SpaceTextFields("emailorUsername".tr(), emailController, 17,
                       whiteColor, true),
                   const SizedBox(height: 20),
-                  TFWithSiffixIcon(
-                      'Password', Icons.visibility_off, passController, true),
+                  TFWithSiffixIcon("password".tr(), Icons.visibility_off,
+                      passController, true),
                   const SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),
                     child: Button(
-                        'Sign In',
+                        "signIn".tr(),
                         greenishColor,
                         greenishColor,
                         whiteColor,
@@ -410,7 +451,7 @@ class _SignInState extends State<SignIn> {
                     child: Align(
                         alignment: Alignment.center,
                         child: MyText(
-                          text: 'Forgot Username?',
+                          text: "forgotUserName?".tr(),
                           weight: FontWeight.w500,
                           color: whiteColor,
                           size: 14,
@@ -422,7 +463,7 @@ class _SignInState extends State<SignIn> {
                     child: Align(
                         alignment: Alignment.center,
                         child: MyText(
-                          text: 'Forgot Password?',
+                          text: "forgotPassword".tr(),
                           weight: FontWeight.w500,
                           color: whiteColor,
                           size: 14,
@@ -459,17 +500,17 @@ class _SignInState extends State<SignIn> {
           height: 40,
           child: GestureDetector(
             onTap: goToSignUp,
-            child: const Align(
+            child: Align(
               alignment: Alignment.center,
               child: Text.rich(
                 TextSpan(
                   children: [
                     TextSpan(
-                        text: "Don't have an account? ",
-                        style: TextStyle(color: whiteColor)),
+                        text: "dontHaveAnAccount?".tr(),
+                        style: const TextStyle(color: whiteColor)),
                     TextSpan(
-                      text: 'Register',
-                      style: TextStyle(
+                      text: "register".tr(),
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold, color: whiteColor),
                     ),
                   ],

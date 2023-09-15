@@ -8,30 +8,31 @@ import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation
 import 'package:adventuresclub/models/get_country.dart';
 import 'package:adventuresclub/sign_up/sign_in.dart';
 import 'package:adventuresclub/sign_up/terms_condition.dart';
-import 'package:adventuresclub/temp_google_map.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/text_fields.dart';
 import 'package:adventuresclub/widgets/text_fields/tf_with_suffix_icon.dart';
-import 'package:fl_country_code_picker/fl_country_code_picker.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
-import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../widgets/phone_text_field.dart';
+
 class NewRegister extends StatefulWidget {
-  final String mobileNumber;
-  final String mobileCode;
-  final int userId;
-  const NewRegister(
-      {super.key,
-      required this.mobileNumber,
-      required this.mobileCode,
-      required this.userId});
+  // final String mobileNumber;
+  // final String mobileCode;
+  // final int userId;
+  const NewRegister({
+    super.key,
+    // required this.mobileNumber,
+    // required this.mobileCode,
+    // required this.userId,
+  });
 
   @override
   State<NewRegister> createState() => _NewRegisterState();
@@ -62,6 +63,9 @@ class _NewRegisterState extends State<NewRegister> {
   Position? _currentPosition;
   Map mapCountry = {};
   List<GetCountryModel> countriesList = [];
+  String mobileNumber = "";
+  String countryCode = "";
+  String selectedLanguage = "";
 
   @override
   void initState() {
@@ -142,43 +146,48 @@ class _NewRegisterState extends State<NewRegister> {
       if (formattedDate != null) {
         var response = await http.post(
             Uri.parse(
-                "https://adventuresclub.net/adventureClub/api/v1/register"),
+                "https://adventuresclub.net/adventureClub/api/v1/register_new"),
             body: {
+              "language_id": "1",
               "name": userNameController.text,
               "email": emailController.text,
-              "nationality": "",
               "password": passController.text,
-              "now_in": currentLocationId.toString(),
-              "mobile": widget.mobileNumber,
-              "health_conditions": "",
-              "height": "",
-              "weight": "",
-              "mobile_code": widget.mobileCode,
-              "user_id": widget.userId.toString(),
-              "dob": formattedDate.toString(),
-              "country_id": countryId.toString(),
-              "device_id": "1",
-              "nationality_id": "",
+              "mobile": mobileNumber, //widget.mobileNumber,
             });
+        var decodedResponse =
+            jsonDecode(utf8.decode(response.bodyBytes)) as Map;
         if (response.statusCode == 200) {
+          setState(() {
+            userID = decodedResponse['data']['id'];
+          });
           prefs.setString("name", userNameController.text);
           prefs.setInt("countryId", countryId);
-          prefs.setInt("userId", widget.userId);
+          prefs.setInt("userId", userID //widget.userId
+              );
           prefs.setString("email", emailController.text.trim());
           prefs.setString("password", passController.text.trim());
-          prefs.setString("country", widget.mobileCode);
+          prefs.setString(
+            "country", countryCode,
+            //widget.mobileCode,
+          );
           prefs.setString("countryFlag", flag);
-          prefs.setString("phoneNumber", widget.mobileNumber);
+          prefs.setString(
+            "phoneNumber", mobileNumber, //widget.mobileNumber,
+          );
           prefs.setString("userRole", "3");
           parseData(
-              userNameController.text,
-              countryId,
-              widget.userId,
-              emailController.text,
-              passController.text,
-              widget.mobileCode,
-              flag,
-              widget.mobileNumber);
+            userNameController.text,
+            countryId,
+            userID,
+            //widget.userId,
+            emailController.text,
+            passController.text,
+            countryCode,
+            //widget.mobileCode,
+            flag,
+            "",
+            //widget.mobileNumber,
+          );
           goToHome();
         } else {
           dynamic body = jsonDecode(response.body);
@@ -344,7 +353,7 @@ class _NewRegisterState extends State<NewRegister> {
             ' ${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
         selectedCountry = place.country!;
       });
-      //  getCountryId(selectedCountry);
+      //getCountryId(selectedCountry);
     }).catchError((e) {
       debugPrint(e);
     });
@@ -421,6 +430,19 @@ class _NewRegisterState extends State<NewRegister> {
     );
   }
 
+  void getData(String phoneNumber, String code) {
+    mobileNumber = phoneNumber;
+    countryCode = code;
+  }
+
+  void changeLanguage(String lang) {
+    if (lang == "English") {
+      context.setLocale(const Locale('en', 'US'));
+    } else if (lang == "Arabic") {
+      context.setLocale(const Locale('ar', 'SA'));
+    }
+  }
+
   abc() {}
   @override
   Widget build(BuildContext context) {
@@ -444,8 +466,8 @@ class _NewRegisterState extends State<NewRegister> {
             child: loading
                 ? const Center(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CircularProgressIndicator(
                           color: whiteColor,
@@ -457,191 +479,206 @@ class _NewRegisterState extends State<NewRegister> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 12.0, vertical: 20),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const SizedBox(height: 20),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: MyText(
-                              text: ' Profile Creation',
-                              weight: FontWeight.w600,
-                              color: whiteColor,
-                              size: 24,
-                              fontFamily: 'Raleway'),
-                        ),
-                        const SizedBox(height: 20),
-                        Image.asset(
-                          'images/whitelogo.png',
-                          height: 140,
-                          width: 320,
-                        ),
-                        const SizedBox(height: 20),
-                        TextFields('Username', userNameController, 17,
-                            whiteColor, true),
-                        const SizedBox(height: 20),
-                        TextFields(
-                            'Email', emailController, 17, whiteColor, true),
-                        const SizedBox(height: 20),
-                        TFWithSiffixIcon('Password', Icons.visibility_off,
-                            passController, true),
-                        const SizedBox(height: 20),
-                        GestureDetector(
-                          onTap: () => _selectDate(context),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 0),
-                            width: MediaQuery.of(context).size.width / 1,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: whiteColor),
-                            child: ListTile(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 0, horizontal: 10),
-                              leading: Text(
-                                formattedDate.toString(),
-                                style: TextStyle(
-                                    color: blackColor.withOpacity(0.6)),
-                              ),
-                              trailing: Icon(
-                                Icons.calendar_today,
-                                color: blackColor.withOpacity(0.6),
-                                size: 20,
-                              ),
-                            ),
-                          ),
-                        ),
-                        // const SizedBox(height: 20),
-                        // GestureDetector(
-                        //   child: Container(
-                        //     padding: const EdgeInsets.symmetric(vertical: 0),
-                        //     width: MediaQuery.of(context).size.width / 1,
-                        //     decoration: BoxDecoration(
-                        //         borderRadius: BorderRadius.circular(10),
-                        //         color: whiteColor),
-                        //     child: ListTile(
-                        //       contentPadding: const EdgeInsets.symmetric(
-                        //           vertical: 0, horizontal: 10),
-                        //       leading: Text(
-                        //         selectedCountry,
-                        //         style: TextStyle(
-                        //             color: blackColor.withOpacity(0.6)),
-                        //       ),
-                        //       trailing: GestureDetector(
-                        //         onTap: _getCurrentPosition,
-                        //         child: Icon(
-                        //           Icons.pin_drop,
-                        //           color: blackColor.withOpacity(0.6),
-                        //           size: 20,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                        Column(
                           children: [
-                            Checkbox(
-                                activeColor: bluishColor,
-                                side: const BorderSide(
-                                    color: greyColor3, width: 2),
-                                value: termsValue,
-                                onChanged: ((bool? value) {
-                                  return setState(() {
-                                    termsValue = value!;
-                                  });
-                                })),
-                            Expanded(
-                              child: Text.rich(
-                                TextSpan(
-                                  children: [
-                                    const TextSpan(
-                                        text: 'I have read ',
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color: whiteColor,
-                                            fontFamily: 'Raleway')),
-                                    TextSpan(
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          terms();
-                                        },
-                                      text: 'Terms & Conditions',
-                                      style: const TextStyle(
-                                          fontSize: 14,
-                                          decoration: TextDecoration.underline,
-                                          fontWeight: FontWeight.w500,
-                                          color: whiteColor,
-                                          fontFamily: 'Raleway'),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: MyText(
+                                  text: 'profileCreation'
+                                      .tr(), //'Profile Creation',
+                                  weight: FontWeight.w600,
+                                  color: whiteColor,
+                                  size: 24,
+                                  fontFamily: 'Raleway'),
+                            ),
+                            const SizedBox(height: 20),
+                            Image.asset(
+                              'images/whitelogo.png',
+                              height: 140,
+                              width: 320,
+                            ),
+                            const SizedBox(height: 20),
+                            TextFields("userName".tr(), userNameController, 17,
+                                whiteColor, true),
+                            const SizedBox(height: 20),
+                            TextFields('email'.tr(), emailController, 17,
+                                whiteColor, true),
+                            const SizedBox(height: 20),
+                            TFWithSiffixIcon('password'.tr(),
+                                Icons.visibility_off, passController, true),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            PhoneTextField(getData),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                // Icon(
+                                //   Icons.translate_sharp,
+                                //   color: whiteColor,
+                                //   size: 64,
+                                // ),
+                                PopupMenuButton<String>(
+                                  child: const Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 8.0),
+                                    child: Icon(
+                                      Icons.language_rounded,
+                                      color: whiteColor,
+                                      size: 60,
                                     ),
-                                    const TextSpan(
-                                      text: ' & ',
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
-                                          color: whiteColor,
-                                          fontFamily: 'Raleway'),
+                                  ),
+                                  onSelected: (String item) {
+                                    setState(() {
+                                      selectedLanguage = item;
+                                    });
+                                    changeLanguage(item);
+                                  },
+                                  itemBuilder: (BuildContext context) =>
+                                      <PopupMenuEntry<String>>[
+                                    const PopupMenuItem<String>(
+                                      value: "English",
+                                      child: Text('English'),
                                     ),
-                                    TextSpan(
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          goToPrivacy();
-                                        },
-                                      // onEnter: (event) => goToPrivacy,
-                                      text: 'Privacy policy',
-                                      style: const TextStyle(
-                                          fontSize: 14,
-                                          decoration: TextDecoration.underline,
-                                          fontWeight: FontWeight.w500,
-                                          color: whiteColor,
-                                          fontFamily: 'Raleway'),
+                                    const PopupMenuItem<String>(
+                                      value: "Arabic",
+                                      child: Text('Arabic'),
                                     ),
                                   ],
                                 ),
-                              ),
+                              ],
+                            ),
+                            // const SizedBox(
+                            //   height: 10,
+                            // ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Checkbox(
+                                    activeColor: bluishColor,
+                                    side: const BorderSide(
+                                        color: greyColor3, width: 2),
+                                    value: termsValue,
+                                    onChanged: ((bool? value) {
+                                      return setState(() {
+                                        termsValue = value!;
+                                      });
+                                    })),
+                                Expanded(
+                                  child: Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        TextSpan(
+                                            text: "iHaveRead"
+                                                .tr(), //'I have read   ',
+                                            style: const TextStyle(
+                                                fontSize: 12,
+                                                color: whiteColor,
+                                                fontFamily: 'Raleway')),
+                                        TextSpan(
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () {
+                                              terms();
+                                            },
+                                          text: "termsAndConditions"
+                                              .tr(), //'Terms & Conditions',
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              fontWeight: FontWeight.w500,
+                                              color: whiteColor,
+                                              fontFamily: 'Raleway'),
+                                        ),
+                                        const TextSpan(
+                                          text: ' & ',
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                              color: whiteColor,
+                                              fontFamily: 'Raleway'),
+                                        ),
+                                        TextSpan(
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () {
+                                              goToPrivacy();
+                                            },
+                                          // onEnter: (event) => goToPrivacy,
+                                          text: "privacyPolicy"
+                                              .tr(), //'Privacy policy',
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              decoration:
+                                                  TextDecoration.underline,
+                                              fontWeight: FontWeight.w500,
+                                              color: whiteColor,
+                                              fontFamily: 'Raleway'),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                        const SizedBox(height: 40),
-                        Button(
-                            'Register',
-                            greenishColor,
-                            greenishColor,
-                            whiteColor,
-                            18,
-                            register,
-                            Icons.add,
-                            whiteColor,
-                            false,
-                            1.3,
-                            'Raleway',
-                            FontWeight.w600,
-                            16),
-                        const SizedBox(height: 20),
-                        GestureDetector(
-                          onTap: goToSignIn,
-                          child: const Align(
-                            alignment: Alignment.center,
-                            child: Text.rich(
-                              TextSpan(
-                                children: [
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Column(
+                          children: [
+                            Button(
+                                "register".tr(),
+                                //'Register',
+                                greenishColor,
+                                greenishColor,
+                                whiteColor,
+                                18,
+                                register,
+                                Icons.add,
+                                whiteColor,
+                                false,
+                                1.3,
+                                'Raleway',
+                                FontWeight.w600,
+                                16),
+                            const SizedBox(height: 10),
+                            GestureDetector(
+                              onTap: goToSignIn,
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text.rich(
                                   TextSpan(
-                                      text: 'Already have an account ?',
-                                      style: TextStyle(
-                                          color: whiteColor,
-                                          fontFamily: 'Raleway')),
-                                  TextSpan(
-                                    text: 'Sign In',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: whiteColor,
-                                        fontFamily: 'Raleway'),
+                                    children: [
+                                      TextSpan(
+                                          text: "alreadyHaveAnAccount ?"
+                                              .tr(), //'Already have an account ?',
+                                          style: const TextStyle(
+                                              color: whiteColor,
+                                              fontFamily: 'Raleway')),
+                                      TextSpan(
+                                        text: "signIn".tr(), //'Sign In',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: whiteColor,
+                                            fontFamily: 'Raleway'),
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
                             ),
-                          ),
-                        ),
+                            const SizedBox(
+                              height: 30,
+                            )
+                          ],
+                        )
                       ],
                     ),
                   ),

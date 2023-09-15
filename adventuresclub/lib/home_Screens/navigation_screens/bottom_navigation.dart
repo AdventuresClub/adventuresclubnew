@@ -10,6 +10,7 @@ import 'package:adventuresclub/home_Screens/navigation_screens/visit.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/requests.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
@@ -135,7 +136,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
               height: 25,
               width: 25,
             ),
-            label: 'Home',
+            label: 'home'.tr(),
             //  ),
             activeIcon: Image.asset(
               'images/home.png',
@@ -151,7 +152,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
               width: 25,
             ),
 
-            label: 'Planned',
+            label: 'planned'.tr(),
             //  ),
             activeIcon: Image.asset(
               'images/calender.png',
@@ -180,7 +181,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                         size: 9,
                       )))
             ]),
-            label: 'Requests',
+            label: 'requests'.tr(),
             //  ),
             activeIcon: Stack(
               clipBehavior: Clip.none,
@@ -215,7 +216,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
               height: 25,
               width: 25,
             ),
-            label: 'Attractions',
+            label: 'attractions'.tr(),
             //  ),
             activeIcon: Image.asset(
               'images/worldwide.png',
@@ -248,7 +249,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                     )
                   : Container(),
             ]),
-            label: 'Account',
+            label: 'account'.tr(),
             //  ),
             activeIcon: Stack(clipBehavior: Clip.none, children: [
               Image.asset(
