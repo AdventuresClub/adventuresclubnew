@@ -7,6 +7,7 @@ import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/services_card.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -102,7 +103,7 @@ class ServiceListState extends State<ServiceList> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: MyText(
-                        text: gAllServices[i].category,
+                        text: gAllServices[i].category.tr(),
                         color: blackColor.withOpacity(0.6),
                         weight: FontWeight.bold,
                         size: 18,

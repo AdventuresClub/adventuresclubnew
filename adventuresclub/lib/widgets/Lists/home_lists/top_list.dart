@@ -6,6 +6,7 @@ import 'package:adventuresclub/home_Screens/accounts/adventure_category.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/category_screen.dart';
 import 'package:adventuresclub/models/filter_data_model/category_filter_model.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../../models/category/category_model.dart';
@@ -146,7 +147,7 @@ class _TopListState extends State<TopList> {
                     ),
                     const SizedBox(height: 10),
                     MyText(
-                      text: pCM[index].category, //text[index],
+                      text: pCM[index].category.tr(), //text[index],
                       color: blackColor,
                       size: 12,
                       weight: FontWeight.w600,

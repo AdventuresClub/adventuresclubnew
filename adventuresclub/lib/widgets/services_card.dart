@@ -3,6 +3,7 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/about.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
@@ -472,7 +473,7 @@ class _ServicesCardState extends State<ServicesCard> {
                             Row(
                               children: [
                                 MyText(
-                                  text: widget.gm.serviceLevel,
+                                  text: widget.gm.serviceLevel.tr(),
                                   //text: 'Advanced',
                                   color: blackTypeColor3,
                                   weight: FontWeight.w500,
@@ -493,7 +494,8 @@ class _ServicesCardState extends State<ServicesCard> {
                               children: [
                                 Expanded(
                                   child: MyText(
-                                    text: aPlan, //widget.gm.am[0].aimedName,
+                                    text:
+                                        aPlan.tr(), //widget.gm.am[0].aimedName,
                                     color: redColor,
                                     weight: FontWeight.w600,
                                     size: 10,
@@ -670,9 +672,9 @@ class _ServicesCardState extends State<ServicesCard> {
                                   child: Text.rich(
                                     TextSpan(
                                       children: [
-                                        const TextSpan(
-                                            text: "Provided By ",
-                                            style: TextStyle(
+                                        TextSpan(
+                                            text: "providedBy".tr(),
+                                            style: const TextStyle(
                                               color: greyColor3,
                                               fontSize: 10,
                                             )),
