@@ -153,38 +153,35 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
             builder: ((context, setState) {
               return Dialog(
                 backgroundColor: Colors.transparent,
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height / 1.8,
-                  // width: MediaQuery.of(context).size.width / 1.2,
-                  child: Card(
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(22)),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 5.0, vertical: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 0),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12.0, vertical: 10),
-                              child: MyText(
-                                  text: 'Activities Included',
-                                  weight: FontWeight.bold,
-                                  color: blackColor,
-                                  size: 16,
-                                  fontFamily: 'Raleway'),
-                            ),
-                            const SizedBox(height: 30),
-                            Wrap(
-                              children: List.generate(
-                                  activitiesFilter
-                                      .length, //activityList.length,
-                                  (index) {
-                                return SizedBox(
+                child: SingleChildScrollView(
+                  child: SizedBox(
+                    //height: MediaQuery.of(context).size.height / 1.5,
+                    // width: MediaQuery.of(context).size.width / 1.2,
+                    child: Card(
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(22)),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              right: 5.0, left: 5, top: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 0),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0, vertical: 10),
+                                child: MyText(
+                                    text: 'Activities Included',
+                                    weight: FontWeight.bold,
+                                    color: blackColor,
+                                    size: 16,
+                                    fontFamily: 'Raleway'),
+                              ),
+                              const SizedBox(height: 20),
+                              for (int i = 0; i < activitiesFilter.length; i++)
+                                SizedBox(
                                   //width: MediaQuery.of(context).size.width / 1,
                                   child: Column(
                                     children: [
@@ -199,12 +196,12 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                                             horizontal: 0, vertical: -4),
                                         activeColor: greyProfileColor,
                                         checkColor: bluishColor,
-                                        selected: activityValue[index],
-                                        value: activityValue[index],
+                                        selected: activityValue[i],
+                                        value: activityValue[i],
                                         onChanged: (value) {
                                           setState(() {
-                                            activityValue[index] =
-                                                !activityValue[index];
+                                            activityValue[i] =
+                                                !activityValue[i];
                                             // activityId
                                             //     .add(activitiesFilter[index].id);
                                             // activity.add(
@@ -212,8 +209,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                                           });
                                         },
                                         title: MyText(
-                                          text:
-                                              activitiesFilter[index].activity,
+                                          text: activitiesFilter[i].activity,
                                           color: greyColor,
                                           fontFamily: 'Raleway',
                                           size: 18,
@@ -222,30 +218,37 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                                       ),
                                     ],
                                   ),
-                                );
-                              }),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 30.0, vertical: 15),
-                              child: Button(
-                                  'Done',
-                                  greenishColor,
-                                  greyColorShade400,
-                                  whiteColor,
-                                  16,
-                                  abc,
-                                  Icons.add,
-                                  whiteColor,
-                                  false,
-                                  1.3,
-                                  'Raleway',
-                                  FontWeight.w600,
-                                  16),
-                            ),
-                          ],
-                        ),
-                      )),
+                                ),
+                              // Wrap(
+                              //   children: List.generate(
+                              //       activitiesFilter
+                              //           .length, //activityList.length,
+                              //       (index) {
+                              //     return ;
+                              //   }),
+                              // ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 30.0, vertical: 15),
+                                child: Button(
+                                    'Done',
+                                    greenishColor,
+                                    greyColorShade400,
+                                    whiteColor,
+                                    16,
+                                    abc,
+                                    Icons.add,
+                                    whiteColor,
+                                    false,
+                                    1.3,
+                                    'Raleway',
+                                    FontWeight.w600,
+                                    16),
+                              ),
+                            ],
+                          ),
+                        )),
+                  ),
                 ),
               );
             }),
