@@ -69,6 +69,7 @@ class _NewRegisterState extends State<NewRegister> {
   String selectedLanguage = "";
   List<GetCountryModel> filteredServices = [];
   List<GetCountryModel> countriesList1 = [];
+  String language = "";
 
   @override
   void initState() {
@@ -443,8 +444,14 @@ class _NewRegisterState extends State<NewRegister> {
   void changeLanguage(String lang) {
     if (lang == "English") {
       context.setLocale(const Locale('en', 'US'));
+      setState(() {
+        language = "english";
+      });
     } else if (lang == "Arabic") {
       context.setLocale(const Locale('ar', 'SA'));
+      setState(() {
+        language = "arabic";
+      });
     }
   }
 
@@ -502,60 +509,100 @@ class _NewRegisterState extends State<NewRegister> {
                                     color: whiteColor,
                                     size: 24,
                                     fontFamily: 'Raleway'),
-                                Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () => changeLanguage("Arabic"),
-                                      child: const Image(
-                                        image: ExactAssetImage(
-                                            'images/ksa_flag.png'),
-                                        height: 60,
-                                        width: 60,
+                                // Row(
+                                //   children: [
+                                //     GestureDetector(
+                                //       onTap: () => changeLanguage("Arabic"),
+                                //       child: const Image(
+                                //         image: ExactAssetImage(
+                                //             'images/ksa_flag.png'),
+                                //         height: 60,
+                                //         width: 60,
+                                //       ),
+                                //     ),
+                                //     const SizedBox(
+                                //       width: 10,
+                                //     ),
+                                //     GestureDetector(
+                                //       onTap: () => changeLanguage("English"),
+                                //       child: const Image(
+                                //         image: ExactAssetImage(
+                                //             'images/great_britain.jpg'),
+                                //         height: 60,
+                                //         width: 60,
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
+
+                                PopupMenuButton<String>(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: language.isEmpty
+                                        ? const Icon(
+                                            Icons.language_rounded,
+                                            color: whiteColor,
+                                            size: 50,
+                                          )
+                                        : language == "english"
+                                            ? const Image(
+                                                image: ExactAssetImage(
+                                                    'images/great_britain.jpg'),
+                                                height: 60,
+                                                width: 40,
+                                              )
+                                            : const Image(
+                                                image: ExactAssetImage(
+                                                    'images/ksa_flag.png'),
+                                                height: 60,
+                                                width: 40,
+                                              ),
+                                  ),
+                                  onSelected: (String item) {
+                                    setState(() {
+                                      selectedLanguage = item;
+                                    });
+                                    changeLanguage(item);
+                                  },
+                                  itemBuilder: (BuildContext context) =>
+                                      <PopupMenuEntry<String>>[
+                                    const PopupMenuItem<String>(
+                                      value: "English",
+                                      child: Row(
+                                        children: [
+                                          Image(
+                                            image: ExactAssetImage(
+                                                'images/great_britain.jpg'),
+                                            height: 40,
+                                            width: 20,
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text('English'),
+                                        ],
                                       ),
                                     ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () => changeLanguage("English"),
-                                      child: const Image(
-                                        image: ExactAssetImage(
-                                            'images/great_britain.jpg'),
-                                        height: 60,
-                                        width: 60,
+                                    const PopupMenuItem<String>(
+                                      value: "Arabic",
+                                      child: Row(
+                                        children: [
+                                          Image(
+                                            image: ExactAssetImage(
+                                                'images/ksa_flag.png'),
+                                            height: 40,
+                                            width: 20,
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text('Arabic'),
+                                        ],
                                       ),
                                     ),
                                   ],
                                 ),
-
-                                // PopupMenuButton<String>(
-                                //   child: const Padding(
-                                //     padding:
-                                //         EdgeInsets.symmetric(horizontal: 8.0),
-                                //     child: Icon(
-                                //       Icons.language_rounded,
-                                //       color: whiteColor,
-                                //       size: 50,
-                                //     ),
-                                //   ),
-                                //   onSelected: (String item) {
-                                //     setState(() {
-                                //       selectedLanguage = item;
-                                //     });
-                                //     changeLanguage(item);
-                                //   },
-                                //   itemBuilder: (BuildContext context) =>
-                                //       <PopupMenuEntry<String>>[
-                                //     const PopupMenuItem<String>(
-                                //       value: "English",
-                                //       child: Text('English'),
-                                //     ),
-                                //     const PopupMenuItem<String>(
-                                //       value: "Arabic",
-                                //       child: Text('Arabic'),
-                                //     ),
-                                //   ],
-                                // ),
                               ],
                             ),
                             const SizedBox(height: 20),
