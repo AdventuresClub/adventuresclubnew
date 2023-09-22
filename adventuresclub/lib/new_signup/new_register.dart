@@ -43,8 +43,9 @@ class _NewRegisterState extends State<NewRegister> {
   TextEditingController passController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
   TextEditingController dobController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
   bool loading = false;
-  String selectedCountry = '';
+  String selectedCountry = 'Now In';
   bool termsValue = false;
   var formattedDate;
   String getCode = '';
@@ -66,11 +67,14 @@ class _NewRegisterState extends State<NewRegister> {
   String mobileNumber = "";
   String countryCode = "";
   String selectedLanguage = "";
+  List<GetCountryModel> filteredServices = [];
+  List<GetCountryModel> countriesList1 = [];
 
   @override
   void initState() {
     super.initState();
-    _getCurrentPosition();
+    getCountries();
+    // _getCurrentPosition();
     formattedDate = 'DOB';
   }
 
@@ -81,6 +85,7 @@ class _NewRegisterState extends State<NewRegister> {
     passController.dispose();
     userNameController.dispose();
     dobController.dispose();
+    searchController.dispose();
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -153,6 +158,7 @@ class _NewRegisterState extends State<NewRegister> {
               "email": emailController.text,
               "password": passController.text,
               "mobile": mobileNumber, //widget.mobileNumber,
+              "now_in": countryId.toString(),
             });
         var decodedResponse =
             jsonDecode(utf8.decode(response.bodyBytes)) as Map;
@@ -351,7 +357,7 @@ class _NewRegisterState extends State<NewRegister> {
       setState(() {
         _currentAddress =
             ' ${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
-        selectedCountry = place.country!;
+        // selectedCountry = place.country!;
       });
       //getCountryId(selectedCountry);
     }).catchError((e) {
@@ -374,11 +380,9 @@ class _NewRegisterState extends State<NewRegister> {
         userCountryId = "14";
       });
     }
-    getCountries(userCountryId);
   }
 
-  Future getCountries(String cId) async {
-    countryId = int.tryParse(cId) ?? 0;
+  Future getCountries() async {
     var response = await http.get(Uri.parse(
         "https://adventuresclub.net/adventureClub/api/v1/get_countries"));
     if (response.statusCode == 200) {
@@ -392,19 +396,20 @@ class _NewRegisterState extends State<NewRegister> {
           element['code'],
           element['id'],
         );
-        countriesList.add(gc);
+        countriesList1.add(gc);
+      });
+      setState(() {
+        filteredServices = countriesList1;
       });
     }
-    countriesList.forEach((element) {
-      if (element.id == countryId) {
-        getC(element.country, element.flag);
-      }
-    });
   }
 
-  void getC(String country, String countryflag) {
+  void getC(String country, int id, String countryflag) {
+    Navigator.of(context).pop();
     setState(
       () {
+        selectedCountry = country;
+        countryId = id;
         flag = countryflag;
       },
     );
@@ -454,8 +459,11 @@ class _NewRegisterState extends State<NewRegister> {
         }
       },
       child: Scaffold(
+        extendBodyBehindAppBar: true,
+        extendBody: true,
         body: SingleChildScrollView(
           child: Container(
+            height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
               image: DecorationImage(
                   colorFilter: ColorFilter.mode(
@@ -484,15 +492,71 @@ class _NewRegisterState extends State<NewRegister> {
                         const SizedBox(height: 20),
                         Column(
                           children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: MyText(
-                                  text: 'profileCreation'
-                                      .tr(), //'Profile Creation',
-                                  weight: FontWeight.w600,
-                                  color: whiteColor,
-                                  size: 24,
-                                  fontFamily: 'Raleway'),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                MyText(
+                                    text: 'profileCreation'
+                                        .tr(), //'Profile Creation',
+                                    weight: FontWeight.w600,
+                                    color: whiteColor,
+                                    size: 24,
+                                    fontFamily: 'Raleway'),
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () => changeLanguage("Arabic"),
+                                      child: const Image(
+                                        image: ExactAssetImage(
+                                            'images/ksa_flag.png'),
+                                        height: 60,
+                                        width: 60,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () => changeLanguage("English"),
+                                      child: const Image(
+                                        image: ExactAssetImage(
+                                            'images/great_britain.jpg'),
+                                        height: 60,
+                                        width: 60,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                                // PopupMenuButton<String>(
+                                //   child: const Padding(
+                                //     padding:
+                                //         EdgeInsets.symmetric(horizontal: 8.0),
+                                //     child: Icon(
+                                //       Icons.language_rounded,
+                                //       color: whiteColor,
+                                //       size: 50,
+                                //     ),
+                                //   ),
+                                //   onSelected: (String item) {
+                                //     setState(() {
+                                //       selectedLanguage = item;
+                                //     });
+                                //     changeLanguage(item);
+                                //   },
+                                //   itemBuilder: (BuildContext context) =>
+                                //       <PopupMenuEntry<String>>[
+                                //     const PopupMenuItem<String>(
+                                //       value: "English",
+                                //       child: Text('English'),
+                                //     ),
+                                //     const PopupMenuItem<String>(
+                                //       value: "Arabic",
+                                //       child: Text('Arabic'),
+                                //     ),
+                                //   ],
+                                // ),
+                              ],
                             ),
                             const SizedBox(height: 20),
                             Image.asset(
@@ -500,63 +564,26 @@ class _NewRegisterState extends State<NewRegister> {
                               height: 140,
                               width: 320,
                             ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 10),
                             TextFields("userName".tr(), userNameController, 17,
                                 whiteColor, true),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 10),
                             TextFields('email'.tr(), emailController, 17,
                                 whiteColor, true),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 10),
                             TFWithSiffixIcon('password'.tr(),
                                 Icons.visibility_off, passController, true),
                             const SizedBox(
-                              height: 20,
+                              height: 10,
                             ),
                             PhoneTextField(getData),
                             const SizedBox(
-                              height: 20,
+                              height: 10,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                // Icon(
-                                //   Icons.translate_sharp,
-                                //   color: whiteColor,
-                                //   size: 64,
-                                // ),
-                                PopupMenuButton<String>(
-                                  child: const Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Icon(
-                                      Icons.language_rounded,
-                                      color: whiteColor,
-                                      size: 60,
-                                    ),
-                                  ),
-                                  onSelected: (String item) {
-                                    setState(() {
-                                      selectedLanguage = item;
-                                    });
-                                    changeLanguage(item);
-                                  },
-                                  itemBuilder: (BuildContext context) =>
-                                      <PopupMenuEntry<String>>[
-                                    const PopupMenuItem<String>(
-                                      value: "English",
-                                      child: Text('English'),
-                                    ),
-                                    const PopupMenuItem<String>(
-                                      value: "Arabic",
-                                      child: Text('Arabic'),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                            pickCountry(context, selectedCountry, true, true),
+                            const SizedBox(
+                              height: 10,
                             ),
-                            // const SizedBox(
-                            //   height: 10,
-                            // ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
@@ -578,7 +605,7 @@ class _NewRegisterState extends State<NewRegister> {
                                             text: "iHaveRead"
                                                 .tr(), //'I have read   ',
                                             style: const TextStyle(
-                                                fontSize: 12,
+                                                fontSize: 14,
                                                 color: whiteColor,
                                                 fontFamily: 'Raleway')),
                                         TextSpan(
@@ -599,7 +626,7 @@ class _NewRegisterState extends State<NewRegister> {
                                         const TextSpan(
                                           text: ' & ',
                                           style: TextStyle(
-                                              fontSize: 12,
+                                              fontSize: 14,
                                               fontWeight: FontWeight.w500,
                                               color: whiteColor,
                                               fontFamily: 'Raleway'),
@@ -683,6 +710,225 @@ class _NewRegisterState extends State<NewRegister> {
                     ),
                   ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget pickCountry(context, String countryName, bool show, bool nowIn) {
+    return Container(
+      padding: const EdgeInsets.all(0),
+      decoration: BoxDecoration(
+          color: whiteColor, borderRadius: BorderRadius.circular(8)),
+      child: ListTile(
+        onTap: () => showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return StatefulBuilder(builder: (context, setState) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      nowIn
+                          ? const Row(children: [
+                              Text(
+                                "Select the country you are now in",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    fontFamily: 'Raleway-Black'),
+                              )
+                            ])
+                          : const Row(children: [
+                              Text(
+                                "Select Your Nationality",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    fontFamily: 'Raleway-Black'),
+                              )
+                            ]),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: blackColor.withOpacity(0.5),
+                          ),
+                        ),
+                        child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 0.0),
+                            child: nowIn
+                                ? TextField(
+                                    onChanged: (value) {
+                                      if (value.isNotEmpty) {
+                                        filteredServices = countriesList1
+                                            .where((element) => element.country
+                                                .toLowerCase()
+                                                .contains(value))
+                                            .toList();
+                                        //log(filteredServices.length.toString());
+                                      } else {
+                                        filteredServices = countriesList1;
+                                      }
+                                      setState(() {});
+                                    },
+                                    controller: searchController,
+                                    decoration: InputDecoration(
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              vertical: 8, horizontal: 8),
+                                      hintText: 'Country',
+                                      filled: true,
+                                      fillColor: lightGreyColor,
+                                      suffixIcon: GestureDetector(
+                                        //onTap: openMap,
+                                        child: const Icon(Icons.search),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        borderSide: BorderSide(
+                                            color: greyColor.withOpacity(0.2)),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        borderSide: BorderSide(
+                                            color: greyColor.withOpacity(0.2)),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        borderSide: BorderSide(
+                                            color: greyColor.withOpacity(0.2)),
+                                      ),
+                                    ),
+                                  )
+                                : TextField(
+                                    onChanged: (value) {
+                                      if (value.isNotEmpty) {
+                                        filteredServices = countriesList1
+                                            .where((element) => element
+                                                .shortName
+                                                .toLowerCase()
+                                                .contains(value))
+                                            .toList();
+                                        //log(filteredServices.length.toString());
+                                      } else {
+                                        filteredServices = countriesList1;
+                                      }
+                                      setState(() {});
+                                    },
+                                    controller: searchController,
+                                    decoration: InputDecoration(
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              vertical: 8, horizontal: 8),
+                                      hintText: 'Country',
+                                      filled: true,
+                                      fillColor: lightGreyColor,
+                                      suffixIcon: GestureDetector(
+                                        //onTap: openMap,
+                                        child: const Icon(Icons.search),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        borderSide: BorderSide(
+                                            color: greyColor.withOpacity(0.2)),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        borderSide: BorderSide(
+                                            color: greyColor.withOpacity(0.2)),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        borderSide: BorderSide(
+                                            color: greyColor.withOpacity(0.2)),
+                                      ),
+                                    ),
+                                  )),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: filteredServices.length,
+                          itemBuilder: ((context, index) {
+                            return ListTile(
+                              leading: searchController.text.isEmpty
+                                  ? Image.network(
+                                      "${"https://adventuresclub.net/adventureClub/public/"}${filteredServices[index].flag}",
+                                      height: 25,
+                                      width: 40,
+                                    )
+                                  : null,
+                              title: nowIn
+                                  ? Text(filteredServices[index].country)
+                                  : Text(filteredServices[index].shortName),
+                              onTap: () {
+                                getC(
+                                    filteredServices[index].country,
+                                    filteredServices[index].id,
+                                    filteredServices[index].flag);
+                                // addCountry(
+                                //   filteredServices[index].country,
+                                //   show,
+                                //   filteredServices[index].id,
+                                // );
+                              },
+                            );
+                          }),
+                        ),
+                      ),
+                      const Text(
+                        "Request to add country from contact us menu after making a registration",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14,
+                            color: redColor,
+                            fontFamily: 'Raleway-Black'),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
+                );
+              });
+            }),
+        tileColor: whiteColor,
+        selectedTileColor: whiteColor,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 15),
+        title: show == true
+            ? MyText(
+                text: selectedCountry,
+                color: blackColor.withOpacity(0.6),
+                size: 14,
+                weight: FontWeight.w500,
+              )
+            : MyText(
+                text: currentLocation,
+                color: blackColor.withOpacity(0.6),
+                size: 14,
+                weight: FontWeight.w500,
+              ),
+        trailing: const Image(
+          image: ExactAssetImage('images/ic_drop_down.png'),
+          height: 16,
+          width: 16,
         ),
       ),
     );

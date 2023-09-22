@@ -91,6 +91,7 @@ class _ContactUsState extends State<ContactUs> {
                       Uri.parse(
                           "https://adventuresclub.net/adventureClub/api/v1/contact_us"),
                       body: {
+                        'user_id': Constants.userId.toString(),
                         'name': nameController.text, //"3",
                         'mobile_code': numController.text,
                         'mobile_number': numController.text, //"",

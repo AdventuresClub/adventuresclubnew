@@ -13,6 +13,8 @@ import 'constants.dart';
 import 'home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:http/http.dart' as http;
 
+import 'new_signup/new_register.dart';
+
 class CheckProfile extends StatefulWidget {
   const CheckProfile({Key? key}) : super(key: key);
 
@@ -81,7 +83,7 @@ class CheckProfileState extends State<CheckProfile> {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (_) {
-          return const SignIn();
+          return const NewRegister();
         },
       ),
       (route) => false,

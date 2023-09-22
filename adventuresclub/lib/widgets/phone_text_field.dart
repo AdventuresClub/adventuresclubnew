@@ -309,7 +309,7 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
                                                       countriesList1
                                                           .where((element) =>
                                                               element
-                                                                  .shortName
+                                                                  .country
                                                                   .toLowerCase()
                                                                   .contains(
                                                                       value))
@@ -384,8 +384,7 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
                                                         )
                                                       : null,
                                               title: Text(
-                                                filteredServices[index]
-                                                    .shortName,
+                                                filteredServices[index].country,
                                                 style: const TextStyle(
                                                     fontWeight: FontWeight.w500,
                                                     color: blackColor,
