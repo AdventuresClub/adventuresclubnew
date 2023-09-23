@@ -60,16 +60,16 @@ class _AccountState extends State<Account> {
     'images/notification.png',
   ];
   List tile1Text = [
-    'myPoints'.tr(),
-    "healthCondition".tr(),
-    "notification".tr(),
-    "serviceQuality".tr(),
-    "settings".tr(),
-    "inviteFriends".tr(),
-    "aboutUs".tr(),
-    "contactUs".tr(),
-    "logOut".tr(),
-    "deleteAccount".tr(),
+    'myPoints',
+    "healthCondition",
+    "notification",
+    "serviceQuality",
+    "settings",
+    "inviteFriends",
+    "aboutUs",
+    "contactUs",
+    "logOut",
+    "deleteAccount",
   ];
   List userListText = [
     'Health Condition',
@@ -1713,7 +1713,7 @@ class _AccountState extends State<Account> {
                                   : const SizedBox()
                             ]),
                             title: MyText(
-                              text: tile1Text[index],
+                              text: tile1Text[index].tr(),
                               color: greyColor.withOpacity(1),
                               size: 15,
                               weight: FontWeight.w700,
@@ -1809,7 +1809,7 @@ class _AccountState extends State<Account> {
                                   ),
                                 );
                               }
-                              if (userListText[index] == "logOut".tr()) {
+                              if (userListText[index] == "logOut") {
                                 logout();
                               }
                             }),
