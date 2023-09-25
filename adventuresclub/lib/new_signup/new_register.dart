@@ -159,7 +159,7 @@ class _NewRegisterState extends State<NewRegister> {
               "email": emailController.text,
               "password": passController.text,
               "mobile": mobileNumber, //widget.mobileNumber,
-              "now_in": countryId.toString(),
+              "country_id": countryId.toString(),
             });
         var decodedResponse =
             jsonDecode(utf8.decode(response.bodyBytes)) as Map;

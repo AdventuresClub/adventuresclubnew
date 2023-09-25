@@ -6,13 +6,11 @@ import 'package:adventuresclub/choose_language.dart';
 import 'package:adventuresclub/models/get_country.dart';
 import 'package:adventuresclub/models/profile_models/profile_become_partner.dart';
 import 'package:adventuresclub/models/user_profile_model.dart';
-import 'package:adventuresclub/sign_up/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'constants.dart';
 import 'home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:http/http.dart' as http;
-
 import 'new_signup/new_register.dart';
 
 class CheckProfile extends StatefulWidget {
