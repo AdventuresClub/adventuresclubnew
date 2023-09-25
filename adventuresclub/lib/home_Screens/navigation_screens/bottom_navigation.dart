@@ -206,7 +206,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
                           ),
                         ),
                       )
-                    : Container(),
+                    : const SizedBox(
+                        width: 0,
+                        height: 0,
+                      ),
               ],
             ),
           ),
@@ -235,7 +238,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
               Constants.resultAccount > 0
                   ? Positioned(
                       top: -5,
-                      right: -12,
+                      right: -6,
                       child: CircleAvatar(
                         radius: 10,
                         backgroundColor: redColor,
@@ -247,7 +250,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
                         ),
                       ),
                     )
-                  : Container(),
+                  : const SizedBox(
+                      width: 0,
+                      height: 0,
+                    ),
             ]),
             label: 'account'.tr(),
             //  ),

@@ -14,7 +14,7 @@ class SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-      const Duration(seconds: 3),
+      const Duration(seconds: 1),
       () {
         Navigator.pushReplacement(
           context,
@@ -35,8 +35,8 @@ class SplashScreenState extends State<SplashScreen> {
             image: DecorationImage(
                 image: ExactAssetImage('images/logo.png'), fit: BoxFit.cover),
           ),
-          width: MediaQuery.of(context).size.width / 1.6,
-          height: MediaQuery.of(context).size.height / 4,
+          width: MediaQuery.of(context).size.width / 1.2,
+          height: MediaQuery.of(context).size.height / 3,
         ),
       ),
     );

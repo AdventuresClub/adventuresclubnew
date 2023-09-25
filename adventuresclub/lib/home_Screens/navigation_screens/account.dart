@@ -45,8 +45,8 @@ class _AccountState extends State<Account> {
     'images/newservice.png',
     'images/newrequest.png'
   ];
-  List text = ["favorite".tr(), 'My Services', 'Client Requests'];
-  List userText = ["favorite".tr(), 'Notification', 'My Points'];
+  List text = ["favorite", 'My Services', 'Client Requests'];
+  List userText = ["favorite", 'Notification', 'My Points'];
   List tile1 = [
     'images/points.png',
     'images/healthCondition.png',
@@ -60,24 +60,24 @@ class _AccountState extends State<Account> {
     'images/notification.png',
   ];
   List tile1Text = [
-    'myPoints',
-    "healthCondition",
-    "notification",
-    "serviceQuality",
-    "settings",
-    "inviteFriends",
-    "aboutUs",
-    "contactUs",
-    "logOut",
-    "deleteAccount",
+    'myPoints'.tr(),
+    "healthCondition".tr(),
+    "notification".tr(),
+    "serviceQuality".tr(),
+    "settings".tr(),
+    "inviteFriends".tr(),
+    "aboutUs".tr(),
+    "contactUs".tr(),
+    "logOut".tr(),
+    "deleteAccount".tr(),
   ];
   List userListText = [
-    'Health Condition',
-    'Settings',
-    'Invite Friends',
-    'About us',
-    'Service & Quality Standards',
-    'Contact us',
+    'healthCondition'.tr(),
+    'settings'.tr(),
+    'inviteFriends'.tr(),
+    'aboutUs'.tr(),
+    'serviceQuality'.tr(),
+    'contactUs'.tr(),
     "logOut".tr(),
     //'Log out',
   ];
@@ -1658,7 +1658,7 @@ class _AccountState extends State<Account> {
                                   ),
                                 );
                               }
-                              if (tile1Text[index] == 'About us') {
+                              if (tile1Text[index] == 'About Us') {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (_) {
@@ -1667,7 +1667,7 @@ class _AccountState extends State<Account> {
                                   ),
                                 );
                               }
-                              if (tile1Text[index] == 'Contact us') {
+                              if (tile1Text[index] == 'Contact Us') {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (_) {
@@ -1677,7 +1677,7 @@ class _AccountState extends State<Account> {
                                   ),
                                 );
                               }
-                              if (tile1Text[index] == 'Log out') {
+                              if (tile1Text[index] == 'Log Out') {
                                 showConfirmation("Log out",
                                     "Are you sure you want to log out?");
                               }
@@ -1713,7 +1713,7 @@ class _AccountState extends State<Account> {
                                   : const SizedBox()
                             ]),
                             title: MyText(
-                              text: tile1Text[index].tr(),
+                              text: tile1Text[index],
                               color: greyColor.withOpacity(1),
                               size: 15,
                               weight: FontWeight.w700,
@@ -1809,7 +1809,7 @@ class _AccountState extends State<Account> {
                                   ),
                                 );
                               }
-                              if (userListText[index] == "logOut") {
+                              if (userListText[index] == "Log Out") {
                                 logout();
                               }
                             }),
@@ -1830,33 +1830,33 @@ class _AccountState extends State<Account> {
                         },
                       ),
                     ),
-                  PopupMenuButton<String>(
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Icon(
-                        Icons.language_rounded,
-                        color: whiteColor,
-                        size: 60,
-                      ),
-                    ),
-                    onSelected: (String item) {
-                      setState(() {
-                        selectedLanguage = item;
-                      });
-                      changeLanguage(item);
-                    },
-                    itemBuilder: (BuildContext context) =>
-                        <PopupMenuEntry<String>>[
-                      const PopupMenuItem<String>(
-                        value: "English",
-                        child: Text('English'),
-                      ),
-                      const PopupMenuItem<String>(
-                        value: "Arabic",
-                        child: Text('Arabic'),
-                      ),
-                    ],
-                  ),
+                  // PopupMenuButton<String>(
+                  //   child: const Padding(
+                  //     padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  //     child: Icon(
+                  //       Icons.language_rounded,
+                  //       color: whiteColor,
+                  //       size: 60,
+                  //     ),
+                  //   ),
+                  //   onSelected: (String item) {
+                  //     setState(() {
+                  //       selectedLanguage = item;
+                  //     });
+                  //     changeLanguage(item);
+                  //   },
+                  //   itemBuilder: (BuildContext context) =>
+                  //       <PopupMenuEntry<String>>[
+                  //     const PopupMenuItem<String>(
+                  //       value: "English",
+                  //       child: Text('English'),
+                  //     ),
+                  //     const PopupMenuItem<String>(
+                  //       value: "Arabic",
+                  //       child: Text('Arabic'),
+                  //     ),
+                  //   ],
+                  // ),
                   GestureDetector(
                     onTap: logout,
                     child: Center(

@@ -1,3 +1,4 @@
+import 'package:adventuresclub/check_profile.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/splashScreen/splash_screen.dart';
@@ -60,7 +61,7 @@ class MyApp extends StatelessWidget {
         future: getApp(),
         builder: (context, asppsnapshot) {
           // return const TempGoogleMap();
-          return const SplashScreen();
+          return const CheckProfile();
         },
       ),
     );

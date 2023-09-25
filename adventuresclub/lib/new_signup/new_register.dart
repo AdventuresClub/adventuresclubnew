@@ -70,12 +70,13 @@ class _NewRegisterState extends State<NewRegister> {
   List<GetCountryModel> filteredServices = [];
   List<GetCountryModel> countriesList1 = [];
   String language = "";
+  String userCountry = "";
 
   @override
   void initState() {
-    super.initState();
     getCountries();
-    // _getCurrentPosition();
+    super.initState();
+    //_getCurrentPosition();
     formattedDate = 'DOB';
   }
 
@@ -195,6 +196,7 @@ class _NewRegisterState extends State<NewRegister> {
             "",
             //widget.mobileNumber,
           );
+          Constants.country = selectedCountry;
           goToHome();
         } else {
           dynamic body = jsonDecode(response.body);
@@ -358,12 +360,31 @@ class _NewRegisterState extends State<NewRegister> {
       setState(() {
         _currentAddress =
             ' ${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
-        // selectedCountry = place.country!;
+        userCountry = place.country!.toUpperCase();
       });
-      //getCountryId(selectedCountry);
+      // checkCountry();
     }).catchError((e) {
       debugPrint(e);
     });
+  }
+
+  void checkCountry() {
+    filteredServices.forEach((element) {
+      if (element.country == userCountry) {
+        getC(element.country, element.id, element.flag, element.code);
+        //setState(() {
+        selectedCountry == element.country;
+        //});
+      } else {
+        if (element.country == "OMAN") {
+          getC(element.country, element.id, element.flag, element.code);
+          //setState(() {
+          selectedCountry == element.country;
+          // });
+        }
+      }
+    });
+    setState(() {});
   }
 
   void getCountryId(String country) {
@@ -405,13 +426,14 @@ class _NewRegisterState extends State<NewRegister> {
     }
   }
 
-  void getC(String country, int id, String countryflag) {
+  void getC(String country, int id, String countryflag, String cCode) {
     Navigator.of(context).pop();
     setState(
       () {
         selectedCountry = country;
         countryId = id;
         flag = countryflag;
+        countryCode = cCode;
       },
     );
   }
@@ -468,29 +490,29 @@ class _NewRegisterState extends State<NewRegister> {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         extendBody: true,
-        body: SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  colorFilter: ColorFilter.mode(
-                      blackColor.withOpacity(0.6), BlendMode.darken),
-                  image: const ExactAssetImage('images/registrationpic.png'),
-                  fit: BoxFit.cover),
-            ),
-            child: loading
-                ? const Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CircularProgressIndicator(
-                          color: whiteColor,
-                        ),
-                      ],
-                    ),
-                  )
-                : Padding(
+        body: Container(
+          height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                colorFilter: ColorFilter.mode(
+                    blackColor.withOpacity(0.6), BlendMode.darken),
+                image: const ExactAssetImage('images/registrationpic.png'),
+                fit: BoxFit.cover),
+          ),
+          child: loading
+              ? const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CircularProgressIndicator(
+                        color: whiteColor,
+                      ),
+                    ],
+                  ),
+                )
+              : SingleChildScrollView(
+                  child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 12.0, vertical: 20),
                     child: Column(
@@ -702,9 +724,9 @@ class _NewRegisterState extends State<NewRegister> {
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        // const SizedBox(
+                        //   height: 10,
+                        // ),
                         Column(
                           children: [
                             Button(
@@ -756,7 +778,7 @@ class _NewRegisterState extends State<NewRegister> {
                       ],
                     ),
                   ),
-          ),
+                ),
         ),
       ),
     );
@@ -929,7 +951,8 @@ class _NewRegisterState extends State<NewRegister> {
                                 getC(
                                     filteredServices[index].country,
                                     filteredServices[index].id,
-                                    filteredServices[index].flag);
+                                    filteredServices[index].flag,
+                                    filteredServices[index].code);
                                 // addCountry(
                                 //   filteredServices[index].country,
                                 //   show,
