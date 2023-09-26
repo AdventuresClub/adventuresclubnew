@@ -10,7 +10,8 @@ import 'my_text.dart';
 
 class PhoneTextField extends StatefulWidget {
   final Function parseData;
-  const PhoneTextField(this.parseData, {super.key});
+  final String countryCode;
+  const PhoneTextField(this.parseData, this.countryCode, {super.key});
 
   @override
   State<PhoneTextField> createState() => _PhoneTextFieldState();
@@ -33,6 +34,7 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
 
   @override
   void initState() {
+    // widget.countryCode == ccCode;
     super.initState();
     getCountries();
   }
@@ -431,9 +433,9 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
                           child: ccCode != null
                               ? Text(ccCode,
                                   style: const TextStyle(color: Colors.black))
-                              : const Text(
-                                  "+1",
-                                  style: TextStyle(color: Colors.black),
+                              : Text(
+                                  widget.countryCode,
+                                  style: const TextStyle(color: Colors.black),
                                 ),
                         ),
                       ),

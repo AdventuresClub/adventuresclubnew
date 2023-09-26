@@ -9,6 +9,7 @@ import 'package:adventuresclub/models/get_country.dart';
 import 'package:adventuresclub/sign_up/sign_in.dart';
 import 'package:adventuresclub/sign_up/terms_condition.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
+import 'package:adventuresclub/widgets/loading_widget.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/text_fields.dart';
 import 'package:adventuresclub/widgets/text_fields/tf_with_suffix_icon.dart';
@@ -65,7 +66,7 @@ class _NewRegisterState extends State<NewRegister> {
   Map mapCountry = {};
   List<GetCountryModel> countriesList = [];
   String mobileNumber = "";
-  String countryCode = "";
+  String countryCode = "+1";
   String selectedLanguage = "";
   List<GetCountryModel> filteredServices = [];
   List<GetCountryModel> countriesList1 = [];
@@ -74,9 +75,9 @@ class _NewRegisterState extends State<NewRegister> {
 
   @override
   void initState() {
-    getCountries();
     super.initState();
-    //_getCurrentPosition();
+    getCountries();
+    _getCurrentPosition();
     formattedDate = 'DOB';
   }
 
@@ -340,12 +341,16 @@ class _NewRegisterState extends State<NewRegister> {
   }
 
   Future<void> _getCurrentPosition() async {
+    setState(() {
+      loading = true;
+    });
     final hasPermission = await _handleLocationPermission();
-
     if (!hasPermission) return;
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
-      setState(() => _currentPosition = position);
+      //setState(() =>
+      _currentPosition = position;
+      //);
       _getAddressFromLatLng(_currentPosition!);
     }).catchError((e) {
       debugPrint(e);
@@ -357,12 +362,12 @@ class _NewRegisterState extends State<NewRegister> {
             _currentPosition!.latitude, _currentPosition!.longitude)
         .then((List<Placemark> placemarks) {
       Placemark place = placemarks[0];
-      setState(() {
-        _currentAddress =
-            ' ${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
-        userCountry = place.country!.toUpperCase();
-      });
-      // checkCountry();
+      //setState(() {
+      _currentAddress =
+          ' ${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
+      userCountry = place.country!.toUpperCase();
+      //});
+      checkCountry();
     }).catchError((e) {
       debugPrint(e);
     });
@@ -371,20 +376,22 @@ class _NewRegisterState extends State<NewRegister> {
   void checkCountry() {
     filteredServices.forEach((element) {
       if (element.country == userCountry) {
-        getC(element.country, element.id, element.flag, element.code);
+        getC(element.country, element.id, element.flag, element.code, false);
         //setState(() {
         selectedCountry == element.country;
         //});
       } else {
         if (element.country == "OMAN") {
-          getC(element.country, element.id, element.flag, element.code);
+          getC(element.country, element.id, element.flag, "+1", false);
           //setState(() {
           selectedCountry == element.country;
           // });
         }
       }
     });
-    setState(() {});
+    setState(() {
+      loading = false;
+    });
   }
 
   void getCountryId(String country) {
@@ -420,14 +427,17 @@ class _NewRegisterState extends State<NewRegister> {
         );
         countriesList1.add(gc);
       });
-      setState(() {
-        filteredServices = countriesList1;
-      });
+      // setState(() {
+      filteredServices = countriesList1;
+      // });
     }
   }
 
-  void getC(String country, int id, String countryflag, String cCode) {
-    Navigator.of(context).pop();
+  void getC(
+      String country, int id, String countryflag, String cCode, bool check) {
+    if (check) {
+      Navigator.of(context).pop();
+    }
     setState(
       () {
         selectedCountry = country;
@@ -500,17 +510,7 @@ class _NewRegisterState extends State<NewRegister> {
                 fit: BoxFit.cover),
           ),
           child: loading
-              ? const Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CircularProgressIndicator(
-                        color: whiteColor,
-                      ),
-                    ],
-                  ),
-                )
+              ? const LoadingWidget()
               : SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -556,75 +556,74 @@ class _NewRegisterState extends State<NewRegister> {
                                 //     ),
                                 //   ],
                                 // ),
-
-                                PopupMenuButton<String>(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: language.isEmpty
-                                        ? const Icon(
-                                            Icons.language_rounded,
-                                            color: whiteColor,
-                                            size: 50,
-                                          )
-                                        : language == "english"
-                                            ? const Image(
-                                                image: ExactAssetImage(
-                                                    'images/great_britain.jpg'),
-                                                height: 60,
-                                                width: 40,
-                                              )
-                                            : const Image(
-                                                image: ExactAssetImage(
-                                                    'images/ksa_flag.png'),
-                                                height: 60,
-                                                width: 40,
-                                              ),
-                                  ),
-                                  onSelected: (String item) {
-                                    setState(() {
-                                      selectedLanguage = item;
-                                    });
-                                    changeLanguage(item);
-                                  },
-                                  itemBuilder: (BuildContext context) =>
-                                      <PopupMenuEntry<String>>[
-                                    const PopupMenuItem<String>(
-                                      value: "English",
-                                      child: Row(
-                                        children: [
-                                          Image(
-                                            image: ExactAssetImage(
-                                                'images/great_britain.jpg'),
-                                            height: 40,
-                                            width: 20,
-                                          ),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          Text('English'),
-                                        ],
-                                      ),
-                                    ),
-                                    const PopupMenuItem<String>(
-                                      value: "Arabic",
-                                      child: Row(
-                                        children: [
-                                          Image(
-                                            image: ExactAssetImage(
-                                                'images/ksa_flag.png'),
-                                            height: 40,
-                                            width: 20,
-                                          ),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          Text('Arabic'),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                // PopupMenuButton<String>(
+                                //   child: Padding(
+                                //     padding: const EdgeInsets.symmetric(
+                                //         horizontal: 8.0),
+                                //     child: language.isEmpty
+                                //         ? const Icon(
+                                //             Icons.language_rounded,
+                                //             color: whiteColor,
+                                //             size: 50,
+                                //           )
+                                //         : language == "english"
+                                //             ? const Image(
+                                //                 image: ExactAssetImage(
+                                //                     'images/great_britain.jpg'),
+                                //                 height: 60,
+                                //                 width: 40,
+                                //               )
+                                //             : const Image(
+                                //                 image: ExactAssetImage(
+                                //                     'images/ksa_flag.png'),
+                                //                 height: 60,
+                                //                 width: 40,
+                                //               ),
+                                //   ),
+                                //   onSelected: (String item) {
+                                //     setState(() {
+                                //       selectedLanguage = item;
+                                //     });
+                                //     changeLanguage(item);
+                                //   },
+                                //   itemBuilder: (BuildContext context) =>
+                                //       <PopupMenuEntry<String>>[
+                                //     const PopupMenuItem<String>(
+                                //       value: "English",
+                                //       child: Row(
+                                //         children: [
+                                //           Image(
+                                //             image: ExactAssetImage(
+                                //                 'images/great_britain.jpg'),
+                                //             height: 40,
+                                //             width: 20,
+                                //           ),
+                                //           SizedBox(
+                                //             width: 5,
+                                //           ),
+                                //           Text('English'),
+                                //         ],
+                                //       ),
+                                //     ),
+                                //     const PopupMenuItem<String>(
+                                //       value: "Arabic",
+                                //       child: Row(
+                                //         children: [
+                                //           Image(
+                                //             image: ExactAssetImage(
+                                //                 'images/ksa_flag.png'),
+                                //             height: 40,
+                                //             width: 20,
+                                //           ),
+                                //           SizedBox(
+                                //             width: 5,
+                                //           ),
+                                //           Text('Arabic'),
+                                //         ],
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
                               ],
                             ),
                             const SizedBox(height: 20),
@@ -645,7 +644,7 @@ class _NewRegisterState extends State<NewRegister> {
                             const SizedBox(
                               height: 10,
                             ),
-                            PhoneTextField(getData),
+                            PhoneTextField(getData, countryCode),
                             const SizedBox(
                               height: 10,
                             ),
@@ -724,9 +723,9 @@ class _NewRegisterState extends State<NewRegister> {
                             ),
                           ],
                         ),
-                        // const SizedBox(
-                        //   height: 10,
-                        // ),
+                        const SizedBox(
+                          height: 20,
+                        ),
                         Column(
                           children: [
                             Button(
@@ -952,7 +951,8 @@ class _NewRegisterState extends State<NewRegister> {
                                     filteredServices[index].country,
                                     filteredServices[index].id,
                                     filteredServices[index].flag,
-                                    filteredServices[index].code);
+                                    filteredServices[index].code,
+                                    true);
                                 // addCountry(
                                 //   filteredServices[index].country,
                                 //   show,

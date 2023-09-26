@@ -387,34 +387,37 @@ class _SignInState extends State<SignIn> {
                             color: whiteColor,
                             size: 24,
                           )),
-                      PopupMenuButton<String>(
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Icon(
-                            Icons.language_rounded,
-                            color: whiteColor,
-                            size: 60,
-                          ),
-                        ),
-                        onSelected: (String item) {
-                          setState(() {
-                            selectedLanguage = item;
-                          });
-                          changeLanguage(item);
-                        },
-                        itemBuilder: (BuildContext context) =>
-                            <PopupMenuEntry<String>>[
-                          const PopupMenuItem<String>(
-                            value: "English",
-                            child: Text('English'),
-                          ),
-                          const PopupMenuItem<String>(
-                            value: "Arabic",
-                            child: Text('Arabic'),
-                          ),
-                        ],
-                      ),
+                      // PopupMenuButton<String>(
+                      //   child: const Padding(
+                      //     padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      //     child: Icon(
+                      //       Icons.language_rounded,
+                      //       color: whiteColor,
+                      //       size: 60,
+                      //     ),
+                      //   ),
+                      //   onSelected: (String item) {
+                      //     setState(() {
+                      //       selectedLanguage = item;
+                      //     });
+                      //     changeLanguage(item);
+                      //   },
+                      //   itemBuilder: (BuildContext context) =>
+                      //       <PopupMenuEntry<String>>[
+                      //     const PopupMenuItem<String>(
+                      //       value: "English",
+                      //       child: Text('English'),
+                      //     ),
+                      //     const PopupMenuItem<String>(
+                      //       value: "Arabic",
+                      //       child: Text('Arabic'),
+                      //     ),
+                      //   ],
+                      // ),
                     ],
+                  ),
+                  const SizedBox(
+                    height: 20,
                   ),
                   Image.asset(
                     'images/whitelogo.png',
