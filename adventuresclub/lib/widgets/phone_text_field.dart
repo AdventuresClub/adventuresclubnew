@@ -36,6 +36,7 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
   void initState() {
     // widget.countryCode == ccCode;
     super.initState();
+    ccCode = widget.countryCode;
     getCountries();
   }
 

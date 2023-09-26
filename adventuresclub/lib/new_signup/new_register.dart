@@ -133,7 +133,6 @@ class _NewRegisterState extends State<NewRegister> {
 
   void register() async {
     SharedPreferences prefs = await Constants.getPrefs();
-    getCountryId(selectedCountry);
     try {
       if (!termsValue) {
         message("Please Agree with terms & Conditions");
@@ -379,12 +378,14 @@ class _NewRegisterState extends State<NewRegister> {
         getC(element.country, element.id, element.flag, element.code, false);
         //setState(() {
         selectedCountry == element.country;
+        countryCode == element.code;
         //});
       } else {
         if (element.country == "OMAN") {
-          getC(element.country, element.id, element.flag, "+1", false);
+          getC(element.country, element.id, element.flag, element.code, false);
           //setState(() {
           selectedCountry == element.country;
+          countryCode == element.code;
           // });
         }
       }
