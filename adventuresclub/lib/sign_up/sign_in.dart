@@ -420,13 +420,13 @@ class _SignInState extends State<SignIn> {
                     height: 20,
                   ),
                   Image.asset(
-                    'images/whitelogo.png',
-                    height: 120,
+                    'images/whiteLogo.png',
+                    height: 200,
                     width: 320,
                   ),
                   const SizedBox(height: 20),
-                  SpaceTextFields("emailorUsername".tr(), emailController, 17,
-                      whiteColor, true),
+                  SpaceTextFields(
+                      "userName".tr(), emailController, 17, whiteColor, true),
                   const SizedBox(height: 20),
                   TFWithSiffixIcon("password".tr(), Icons.visibility_off,
                       passController, true),
@@ -438,15 +438,15 @@ class _SignInState extends State<SignIn> {
                         greenishColor,
                         greenishColor,
                         whiteColor,
-                        18,
+                        20,
                         login,
                         Icons.add,
                         whiteColor,
                         false,
-                        1.3,
+                        2,
                         'Raleway',
                         FontWeight.w600,
-                        16),
+                        18),
                   ),
                   const SizedBox(height: 20),
                   GestureDetector(
@@ -457,7 +457,7 @@ class _SignInState extends State<SignIn> {
                           text: "forgotUserName?".tr(),
                           weight: FontWeight.w500,
                           color: whiteColor,
-                          size: 14,
+                          size: 16,
                         )),
                   ),
                   const SizedBox(height: 20),
@@ -469,9 +469,10 @@ class _SignInState extends State<SignIn> {
                           text: "forgotPassword".tr(),
                           weight: FontWeight.w500,
                           color: whiteColor,
-                          size: 14,
+                          size: 16,
                         )),
                   ),
+                  //const SizedBox(height: 40),
 
                   //  Align(
                   //   alignment: Alignment.bottomCenter,
@@ -498,29 +499,56 @@ class _SignInState extends State<SignIn> {
             ),
           ),
         ),
-        bottomNavigationBar: Container(
-          color: transparentColor,
-          height: 40,
-          child: GestureDetector(
-            onTap: goToSignUp,
-            child: Align(
-              alignment: Alignment.center,
-              child: Text.rich(
-                TextSpan(
-                  children: [
+        bottomNavigationBar: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Container(
+              color: transparentColor,
+              height: 40,
+              child: GestureDetector(
+                onTap: goToSignUp,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text.rich(
                     TextSpan(
-                        text: "dontHaveAnAccount?".tr(),
-                        style: const TextStyle(color: whiteColor)),
-                    TextSpan(
-                      text: "register".tr(),
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, color: whiteColor),
+                      children: [
+                        TextSpan(
+                            text: "dontHaveAnAccount?".tr(),
+                            style: const TextStyle(
+                                color: whiteColor, fontSize: 16)),
+                        // TextSpan(
+                        //   text: "register".tr(),
+                        //   style: const TextStyle(
+                        //       fontWeight: FontWeight.bold, color: whiteColor),
+                        // ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
-          ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 40),
+              child: Button(
+                  "register".tr(),
+                  greenishColor,
+                  greenishColor,
+                  whiteColor,
+                  20,
+                  goToSignUp,
+                  Icons.add,
+                  whiteColor,
+                  false,
+                  2,
+                  'Raleway',
+                  FontWeight.w600,
+                  20),
+            ),
+            const SizedBox(
+              height: 20,
+            )
+          ],
         ),
       ),
     );

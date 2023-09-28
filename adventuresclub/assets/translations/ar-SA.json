@@ -10,7 +10,7 @@
     "register":"يسجل",
     "alreadyHaveAnAccount ?": "هل لديك حساب ؟",
     "signIn":"تسجيل الدخول",
-    "emailorUsername": "البريد الإلكتروني أو اسم المستخدم",
+    "username": "اسم المستخدم",
     "forgotUserName?": "نسيت إسم المستخدم؟",
     "forgotPassword":"نسيت كلمة المرور ؟",
     "dontHaveAnAccount?": "ليس لديك حساب ؟",

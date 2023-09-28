@@ -423,7 +423,7 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 6.0, vertical: 4.0),
+                              horizontal: 4.0, vertical: 4.0),
                           margin: const EdgeInsets.symmetric(horizontal: 12.0),
                           decoration: const BoxDecoration(
                             color: whiteColor,
@@ -433,10 +433,12 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
                           ),
                           child: ccCode != null
                               ? Text(ccCode,
-                                  style: const TextStyle(color: Colors.black))
+                                  style: const TextStyle(
+                                      color: Colors.black, fontSize: 16))
                               : Text(
                                   widget.countryCode,
-                                  style: const TextStyle(color: Colors.black),
+                                  style: const TextStyle(
+                                      color: Colors.black, fontSize: 16),
                                 ),
                         ),
                       ),
@@ -468,7 +470,7 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
                   sendData();
                 },
                 style: const TextStyle(
-                  fontSize: 14,
+                  fontSize: 16,
                   fontWeight: FontWeight.w500,
                   //color: const Color(0xffABAEB9).withOpacity(0.40),
                 ),
@@ -482,7 +484,7 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
                   fillColor: whiteColor,
                   hintText: "enterPhoneNumber".tr(), //'Enter Phone Number',
                   hintStyle: TextStyle(
-                    fontSize: 14,
+                    fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: blackColor.withOpacity(0.6),
                   ),

@@ -33,10 +33,11 @@ class SplashScreenState extends State<SplashScreen> {
         child: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-                image: ExactAssetImage('images/logo.png'), fit: BoxFit.cover),
+                image: ExactAssetImage('images/blueLogo.png'),
+                fit: BoxFit.cover),
           ),
-          width: MediaQuery.of(context).size.width / 1.2,
-          height: MediaQuery.of(context).size.height / 3,
+          width: MediaQuery.of(context).size.width / 1,
+          height: MediaQuery.of(context).size.height / 1.5,
         ),
       ),
     );

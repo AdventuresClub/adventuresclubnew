@@ -59,7 +59,7 @@ class _TextFieldsState extends State<TextFields> {
                   0.6,
                 ),
                 fontWeight: FontWeight.w600,
-                fontSize: 14,
+                fontSize: 16,
                 fontFamily: 'Raleway'),
             hintMaxLines: 1,
             isDense: true,

@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
         future: getApp(),
         builder: (context, asppsnapshot) {
           // return const TempGoogleMap();
-          return const CheckProfile();
+          return const SplashScreen();
         },
       ),
     );

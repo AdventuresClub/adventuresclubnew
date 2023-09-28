@@ -42,7 +42,7 @@ class _TFWithSiffixIconState extends State<TFWithSiffixIcon> {
           hintStyle: TextStyle(
               color: blackColor.withOpacity(0.6),
               fontWeight: FontWeight.w600,
-              fontSize: 14,
+              fontSize: 16,
               fontFamily: 'Raleway'),
           suffixIcon: widget.showPassword == true
               ? IconButton(

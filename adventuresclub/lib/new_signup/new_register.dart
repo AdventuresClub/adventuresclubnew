@@ -515,7 +515,7 @@ class _NewRegisterState extends State<NewRegister> {
               : SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 12.0, vertical: 20),
+                        horizontal: 12.0, vertical: 16),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -627,13 +627,13 @@ class _NewRegisterState extends State<NewRegister> {
                                 // ),
                               ],
                             ),
-                            const SizedBox(height: 20),
+                            //const SizedBox(height: 20),
                             Image.asset(
-                              'images/whitelogo.png',
-                              height: 140,
+                              'images/whiteLogo.png',
+                              height: 200,
                               width: 320,
                             ),
-                            const SizedBox(height: 10),
+                            //const SizedBox(height: 10),
                             TextFields("userName".tr(), userNameController, 17,
                                 whiteColor, true),
                             const SizedBox(height: 10),
@@ -674,7 +674,7 @@ class _NewRegisterState extends State<NewRegister> {
                                             text: "iHaveRead"
                                                 .tr(), //'I have read   ',
                                             style: const TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 16,
                                                 color: whiteColor,
                                                 fontFamily: 'Raleway')),
                                         TextSpan(
@@ -685,7 +685,7 @@ class _NewRegisterState extends State<NewRegister> {
                                           text: "termsAndConditions"
                                               .tr(), //'Terms & Conditions',
                                           style: const TextStyle(
-                                              fontSize: 14,
+                                              fontSize: 13,
                                               decoration:
                                                   TextDecoration.underline,
                                               fontWeight: FontWeight.w500,
@@ -709,7 +709,7 @@ class _NewRegisterState extends State<NewRegister> {
                                           text: "privacyPolicy"
                                               .tr(), //'Privacy policy',
                                           style: const TextStyle(
-                                              fontSize: 14,
+                                              fontSize: 13,
                                               decoration:
                                                   TextDecoration.underline,
                                               fontWeight: FontWeight.w500,
@@ -725,7 +725,7 @@ class _NewRegisterState extends State<NewRegister> {
                           ],
                         ),
                         const SizedBox(
-                          height: 20,
+                          height: 10,
                         ),
                         Column(
                           children: [
@@ -735,7 +735,7 @@ class _NewRegisterState extends State<NewRegister> {
                                 greenishColor,
                                 greenishColor,
                                 whiteColor,
-                                18,
+                                20,
                                 register,
                                 Icons.add,
                                 whiteColor,
@@ -757,10 +757,12 @@ class _NewRegisterState extends State<NewRegister> {
                                               .tr(), //'Already have an account ?',
                                           style: const TextStyle(
                                               color: whiteColor,
-                                              fontFamily: 'Raleway')),
+                                              fontFamily: 'Raleway',
+                                              fontSize: 16)),
                                       TextSpan(
                                         text: "signIn".tr(), //'Sign In',
                                         style: const TextStyle(
+                                            fontSize: 18,
                                             fontWeight: FontWeight.bold,
                                             color: whiteColor,
                                             fontFamily: 'Raleway'),
@@ -987,13 +989,13 @@ class _NewRegisterState extends State<NewRegister> {
             ? MyText(
                 text: selectedCountry,
                 color: blackColor.withOpacity(0.6),
-                size: 14,
+                size: 16,
                 weight: FontWeight.w500,
               )
             : MyText(
                 text: currentLocation,
                 color: blackColor.withOpacity(0.6),
-                size: 14,
+                size: 16,
                 weight: FontWeight.w500,
               ),
         trailing: const Image(
