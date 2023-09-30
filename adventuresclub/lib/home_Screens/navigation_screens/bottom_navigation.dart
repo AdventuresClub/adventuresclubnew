@@ -1,7 +1,5 @@
 // ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls
-
 import 'dart:convert';
-
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/account.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/home.dart';
@@ -14,6 +12,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+
+import '../../widgets/buttons/button.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({Key? key}) : super(key: key);
@@ -29,6 +29,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   String resultAccount = "";
   String resultService = "";
   String resultRequest = "";
+  Map mapVersion = {};
 
   @override
   void initState() {
@@ -36,6 +37,23 @@ class _BottomNavigationState extends State<BottomNavigation> {
     // index = context.read<ServicesProvider>().homeIndex;
     getNotificationBadge();
     Constants.getFilter();
+    getVersion();
+  }
+
+  void getVersion() async {
+    var response = await http.get(Uri.parse(
+        "https://adventuresclub.net/adventureClubSIT/api/v1/get_app_version"));
+    if (response.statusCode == 200) {
+      mapVersion = json.decode(response.body);
+      List<dynamic> result = mapVersion['data'];
+      result.forEach((element) {
+        Constants.lastestVersion = element['version'] ?? "";
+      });
+    }
+    double lVersion = double.tryParse(Constants.lastestVersion) ?? 0;
+    if (Constants.currentVersion < lVersion) {
+      showPicker();
+    }
   }
 
   Widget getBody(int index) {
@@ -111,6 +129,83 @@ class _BottomNavigationState extends State<BottomNavigation> {
     Constants.resultAccount = account;
     Constants.resultService = serviceCounter;
     Constants.resultRequest = requestCounter;
+  }
+
+  void cancel() {
+    Navigator.of(context).pop();
+  }
+
+  void showPicker() async {
+    await showModalBottomSheet(
+      showDragHandle: false,
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext context) {
+        return BottomSheet(
+          onClosing: () {},
+          builder: (BuildContext context) {
+            return Container(
+              color: blackColor,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            GestureDetector(
+                              onTap: cancel,
+                              child: const Icon(
+                                Icons.cancel_sharp,
+                                color: whiteColor,
+                              ),
+                            )
+                          ],
+                        ),
+                        ListTile(
+                          tileColor: Colors.transparent,
+                          //onTap: showCamera,
+                          leading: const Icon(
+                            Icons.notification_important,
+                            color: whiteColor,
+                          ),
+                          title: MyText(
+                            text: "Update Available",
+                            weight: FontWeight.w600,
+                          ),
+                          trailing: const Icon(Icons.chevron_right_rounded),
+                        ),
+                        Button(
+                            "update".tr(),
+                            //'Register',
+                            greenishColor,
+                            greenishColor,
+                            whiteColor,
+                            20,
+                            () {},
+                            Icons.add,
+                            whiteColor,
+                            false,
+                            2,
+                            'Raleway',
+                            FontWeight.w600,
+                            18),
+                        const Divider()
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
   @override
