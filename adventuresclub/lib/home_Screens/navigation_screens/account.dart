@@ -35,19 +35,19 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-  List images = [
+  List<String> images = [
     'images/heart.png',
     'images/notification.png',
     'images/points.png'
   ];
-  List partnerImages = [
+  List<String> partnerImages = [
     'images/heart.png',
     'images/newservice.png',
     'images/newrequest.png'
   ];
-  List text = ["favorite", 'My Services', 'Client Requests'];
-  List userText = ["favorite", 'Notification', 'My Points'];
-  List tile1 = [
+  List<String> text = ["favorite", 'myServices', 'clientRequests'];
+  List<String> userText = ["favorite", 'Notification', 'My Points'];
+  List<String> tile1 = [
     'images/points.png',
     'images/healthCondition.png',
     'images/notification.png',
@@ -59,29 +59,29 @@ class _AccountState extends State<Account> {
     'images/logout.png',
     'images/notification.png',
   ];
-  List tile1Text = [
-    'myPoints'.tr(),
-    "healthCondition".tr(),
-    "notification".tr(),
-    "serviceQuality".tr(),
-    "settings".tr(),
-    "inviteFriends".tr(),
-    "aboutUs".tr(),
-    "contactUs".tr(),
-    "logOut".tr(),
-    "deleteAccount".tr(),
+  List<String> tile1Text = [
+    'myPoints',
+    "healthCondition",
+    "notification",
+    "serviceQuality",
+    "settings",
+    "inviteFriends",
+    "aboutUs",
+    "contactUs",
+    "logOut",
+    "deleteAccount",
   ];
-  List userListText = [
-    'healthCondition'.tr(),
-    'settings'.tr(),
-    'inviteFriends'.tr(),
-    'aboutUs'.tr(),
-    'serviceQuality'.tr(),
-    'contactUs'.tr(),
-    "logOut".tr(),
+  List<String> userListText = [
+    'healthCondition',
+    'settings',
+    'inviteFriends',
+    'aboutUs',
+    'serviceQuality',
+    'contactUs',
+    "logOut",
     //'Log out',
   ];
-  List userListIcon = [
+  List<String> userListIcon = [
     'images/healthCondition.png',
     'images/gear.png',
     'images/envelope.png',
@@ -228,7 +228,7 @@ class _AccountState extends State<Account> {
         ProfileBecomePartner bp = ProfileBecomePartner(
           id,
           userId,
-          partnerInfo['company_name'].toString() ?? "",
+          partnerInfo['company_name'] ?? "",
           partnerInfo['address'].toString() ?? "",
           partnerInfo['location'].toString() ?? "",
           partnerInfo['description'].toString() ?? "",
@@ -638,8 +638,7 @@ class _AccountState extends State<Account> {
                                           children: [
                                             GestureDetector(
                                               onTap: () {
-                                                if (userText[i] ==
-                                                    "favorite".tr()) {
+                                                if (userText[i] == "favorite") {
                                                   Navigator.of(context).push(
                                                     MaterialPageRoute(
                                                       builder: (_) {
@@ -1640,7 +1639,7 @@ class _AccountState extends State<Account> {
                               //     return const ContactUs();
                               //   }));
                               //  }
-                              if (tile1Text[index] == 'Settings') {
+                              if (tile1Text[index] == 'settings') {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (_) {
@@ -1712,13 +1711,17 @@ class _AccountState extends State<Account> {
                                     )
                                   : const SizedBox()
                             ]),
-                            title: MyText(
-                              text: tile1Text[index],
-                              color: greyColor.withOpacity(1),
-                              size: 15,
-                              weight: FontWeight.w700,
+                            title: Text(
+                              tile1Text[index].tr(),
+                              style: TextStyle(),
                             ),
-                            trailing: tile1Text[index] == 'Settings'
+                            // MyText(
+                            //   text: tile1Text[index],
+                            //   color: greyColor.withOpacity(1),
+                            //   size: 15,
+                            //   weight: FontWeight.w700,
+                            // ),
+                            trailing: tile1Text[index] == 'settings'
                                 ? SizedBox(
                                     width: Constants.country.length > 11
                                         ? 140

@@ -20,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../models/services/create_services/availability_plan_model.dart';
+import '../../widgets/Lists/Chat_list.dart/chat_attachment.dart';
 import '../../widgets/Lists/Chat_list.dart/show_chat.dart';
 
 class About extends StatefulWidget {
@@ -383,7 +384,8 @@ class _AboutState extends State<About> {
       MaterialPageRoute(
         builder: (_) {
           return ShowChat(
-              "https://adventuresclub.net/adventureClub/newreceiverchat/${Constants.userId}/${widget.sId}/${profile.id}");
+            "https://adventuresclub.net/adventureClub/newreceiverchat/${Constants.userId}/${widget.sId}/${profile.id}",
+          );
         },
       ),
     );

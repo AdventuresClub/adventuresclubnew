@@ -28,6 +28,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import '../../home_Screens/navigation_screens/bottom_navigation.dart';
+import '../../models/create_adventure/regions_model.dart';
 import '../../models/filter_data_model/durations_model.dart';
 import '../../models/filter_data_model/level_filter_mode.dart';
 
@@ -67,6 +68,7 @@ class _StackHomeState extends State<StackHome> {
   List<DurationsModel> durationFilter = [];
   List<ActivitiesIncludeModel> activitiesFilter = [];
   List<RegionFilterModel> regionFilter = [];
+  List<RegionsModel> regions = [];
   List<FilterDataModel> fDM = [];
 
   @override
@@ -99,6 +101,7 @@ class _StackHomeState extends State<StackHome> {
     regionFilter = Constants.regionFilter;
     levelFilter = Constants.levelFilter;
     activitiesFilter = Constants.activitiesFilter;
+    regions = Constants.regionList;
   }
 
   @override
@@ -165,6 +168,7 @@ class _StackHomeState extends State<StackHome> {
     durationFilter.clear();
     activitiesFilter.clear();
     regionFilter.clear();
+    regions.clear();
     dummyAm.clear();
     fDM.clear();
   }
@@ -378,7 +382,8 @@ class _StackHomeState extends State<StackHome> {
                                         weight: FontWeight.w600,
                                         size: 12),
                                     RegionDropDown(
-                                      regionFilter,
+                                      3.5,
+                                      filter: regions,
                                       show: true,
                                     ),
                                   ],
@@ -725,7 +730,7 @@ class _StackHomeState extends State<StackHome> {
                               width: 10,
                             ),
                             InkWell(
-                              // onTap: searchFilter,
+                              //onTap: searchFilter,
                               child: Container(
                                 width: 110,
                                 padding: const EdgeInsets.symmetric(

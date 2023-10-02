@@ -20,6 +20,7 @@ import 'package:adventuresclub/widgets/dropdowns/aimed_for_drop_down.dart';
 import 'package:adventuresclub/widgets/dropdowns/country_drop_down.dart';
 import 'package:adventuresclub/widgets/dropdowns/duration_drop_down.dart';
 import 'package:adventuresclub/widgets/dropdowns/level_drop_down.dart';
+import 'package:adventuresclub/widgets/dropdowns/regionFilter_dropdown.dart';
 import 'package:adventuresclub/widgets/dropdowns/region_dropdown.dart';
 import 'package:adventuresclub/widgets/dropdowns/service_category.dart';
 import 'package:adventuresclub/widgets/dropdowns/service_sector_drop_down.dart';
@@ -30,6 +31,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import '../../home_Screens/navigation_screens/bottom_navigation.dart';
+import '../../models/create_adventure/regions_model.dart';
 import '../../models/filter_data_model/durations_model.dart';
 import '../../models/filter_data_model/level_filter_mode.dart';
 import '../../models/get_country.dart';
@@ -64,6 +66,7 @@ class _FilterPageState extends State<FilterPage> {
   List<CountriesFilterModel> countriesFilter = [];
   List<LevelFilterModel> levelFilter = [];
   List<AimedForModel> dummyAm = [];
+  List<RegionsModel> regionList = [];
   List<AimedForModel> am = [];
   List<String> sectorsList = [];
   String categoryDropDown = 'One';
@@ -79,6 +82,9 @@ class _FilterPageState extends State<FilterPage> {
   List<GetCountryModel> filteredServices = [];
   RangeValues values = const RangeValues(0, 1000);
   SectorFilterModel sectorList = SectorFilterModel(0, "", "", 0, "", "", "");
+  List<bool> activityValue = [];
+  List<ActivitiesIncludeModel> activityIds = [];
+
   @override
   void initState() {
     super.initState();
@@ -109,6 +115,7 @@ class _FilterPageState extends State<FilterPage> {
   // }
 
   void getData() {
+    regionList = Constants.regionList;
     categoryFilter = Constants.categoryFilter;
     filterSectors = Constants.filterSectors;
     serviceFilter = Constants.serviceFilter;
@@ -306,6 +313,14 @@ class _FilterPageState extends State<FilterPage> {
     print(ccCode);
   }
 
+  void getActivitiesList() {
+    for (int i = 0; i < activityValue.length; i++) {
+      if (activityValue[i]) {
+        activityIds.add(activitiesFilter[i]);
+      }
+    }
+  }
+
   void addActivites() {
     showGeneralDialog(
       context: context,
@@ -470,6 +485,29 @@ class _FilterPageState extends State<FilterPage> {
                         ),
                         ListTile(
                           title: MyText(
+                            text: "Region",
+                            color: blackColor,
+                            weight: FontWeight.bold,
+                            size: 14,
+                          ),
+                          trailing: SizedBox(
+                            width: 150,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  dDIconList[index],
+                                  color: blackColor,
+                                ),
+                                RegionFilterDropDown(
+                                  regionList,
+                                  show: true,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: MyText(
                             text: "Sector",
                             color: blackColor,
                             weight: FontWeight.bold,
@@ -584,9 +622,9 @@ class _FilterPageState extends State<FilterPage> {
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 30,
-                        ),
+                        // const SizedBox(
+                        //   height: 30,
+                        // ),
                         // Padding(
                         //   padding: const EdgeInsets.only(left: 12.0),
                         //   child: Align(
@@ -621,43 +659,60 @@ class _FilterPageState extends State<FilterPage> {
                         //           size: 15,
                         //         ),
                         //         value: value,
-                        //         onChanged: ((bool? value) {
+                        //         onChanged: (value) {
                         //           setState(() {
-                        //             value = value!;
+                        //             activityValue[index] =
+                        //                 !activityValue[index];
+                        //             // activityId
+                        //             //     .add(activitiesFilter[index].id);
+                        //             // activity.add(
+                        //             //     activitiesFilter[index].activity);
                         //           });
-                        //         }),
+                        //         },
                         //       );
                         //     }),
-                        // const SizedBox(
-                        //   height: 15,
-                        // ),
-                        // ListView.builder(
-                        //     itemCount: aimedText.length,
-                        //     shrinkWrap: true,
-                        //     physics: const ClampingScrollPhysics(),
-                        //     itemBuilder: (context, index) {
-                        //       return CheckboxListTile(
-                        //         secondary: Icon(
-                        //           aimedIconList[index],
-                        //           color: blackColor,
-                        //         ),
-                        //         title: MyText(
-                        //           text: aimedText[index],
-                        //           color: blackColor.withOpacity(0.6),
-                        //           weight: FontWeight.w700,
-                        //           size: 15,
-                        //         ),
-                        //         value: value,
-                        //         onChanged: ((bool? value) {
-                        //           setState(() {
-                        //             value = value!;
-                        //           });
-                        //         }),
-                        //       );
-                        //     }),
-                        // const SizedBox(
-                        //   height: 3,
-                        // ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: MyText(
+                                text: 'Aimed For',
+                                weight: FontWeight.w800,
+                                color: blackColor,
+                                size: 18,
+                                fontFamily: 'Raleway'),
+                          ),
+                        ),
+                        ListView.builder(
+                            itemCount: aimedText.length,
+                            shrinkWrap: true,
+                            physics: const ClampingScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return CheckboxListTile(
+                                secondary: Icon(
+                                  aimedIconList[index],
+                                  color: blackColor,
+                                ),
+                                title: MyText(
+                                  text: aimedText[index],
+                                  color: blackColor.withOpacity(0.6),
+                                  weight: FontWeight.w700,
+                                  size: 15,
+                                ),
+                                value: value,
+                                onChanged: ((bool? value) {
+                                  setState(() {
+                                    value = value!;
+                                  });
+                                }),
+                              );
+                            }),
+                        const SizedBox(
+                          height: 3,
+                        ),
                         Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Row(
@@ -726,7 +781,8 @@ class _FilterPageState extends State<FilterPage> {
         ConstantsFilter.categoryId,
         ConstantsFilter.typeId,
         ConstantsFilter.levelId,
-        ConstantsFilter.durationId);
+        ConstantsFilter.durationId,
+        ConstantsFilter.regionId);
     Provider.of<ServicesProvider>(context, listen: false).searchFilter;
     Navigator.of(context).pop();
   }
@@ -1154,7 +1210,7 @@ class _FilterPageState extends State<FilterPage> {
         weight: FontWeight.w800,
       ),
       trailing: SizedBox(
-        width: 80,
+        width: 90,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,

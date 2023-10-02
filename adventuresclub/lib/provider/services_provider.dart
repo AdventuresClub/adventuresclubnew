@@ -337,62 +337,76 @@ class ServicesProvider with ChangeNotifier {
   // }
 
   void getFilterList(
-      String ccode,
-      String minPrice,
-      String maxPrice,
-      String sId,
-      String cId,
-      String serviceType,
-      String serviceLevel,
-      String duration) async {
+    String ccode,
+    String minPrice,
+    String maxPrice,
+    String sId,
+    String cId,
+    String serviceType,
+    String serviceLevel,
+    String duration,
+    String region,
+  ) async {
     filteredServices.clear();
     allServices.clear();
     gAllServices.clear();
-    dynamic body = {
-      'country_id': ccode, //'14',
-      'min_price': minPrice, //'10',
-      'max_price': maxPrice, //'100',
-      'sector_id': sId, //'1',
-      'category_id': cId, //'4',
-      'service_type': serviceType, //'1',
-      'service_level': serviceLevel, //'1',
-      'duration': duration //'1'
-    };
+    // dynamic body = {
+    //   'country': ccode, //'14',
+    //   'min_price': minPrice, //'10',
+    //   'max_price': maxPrice, //'100',
+    //   'region': region,
+    //   'service_sector': sId, //'1',
+    //   'category': cId, //'4',
+    //   'service_type': serviceType, //'1',
+    //   'duration': duration, //'1',
+    //   'service_level': serviceLevel, //'1',
+    //   'aimed_for': "",
+    //   'provider_name': "",
+    // };
     var response = await http.post(
         Uri.parse(
-            'https://adventuresclub.net/adventureClub/api/v1/filterServices'),
-        body: jsonEncode(body));
+            'https://adventuresclub.net/adventureClub/api/v1/services_filter'),
+        body: {
+          'country': ccode, //'14',
+          'min_price': minPrice, //'10',
+          'max_price': maxPrice, //'100',
+          'region': region,
+          'service_sector': sId, //'1',
+          'category': cId, //'4',
+          'service_type': serviceType, //'1',
+          'duration': duration, //'1',
+          'service_level': serviceLevel, //'1',
+          'aimed_for': "",
+          'provider_name': "", //id,
+        });
     if (response.statusCode == 200) {
       var getServicesMap = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       List<dynamic> result = getServicesMap['data'];
       String acc = "";
       result.forEach((element) {
         List<ServicesModel> all_Services = [];
-        acc = element['category'].toString() ?? "";
+        acc = element['category'] ?? "";
         categories.add(acc);
         List<dynamic> s = element['services'];
         s.forEach((services) {
           List<AvailabilityPlanModel> gAccomodationPlanModel = [];
           List<dynamic> availablePlan = services['availability'];
           availablePlan.forEach((ap) {
-            AvailabilityPlanModel amPlan = AvailabilityPlanModel(
-                ap['id'].toString() ?? "", ap['day'].toString() ?? "");
+            AvailabilityPlanModel amPlan =
+                AvailabilityPlanModel(ap['id'] ?? "", ap['day'] ?? "");
             gAccomodationPlanModel.add(amPlan);
           });
           List<AvailabilityModel> gAccomodoationAvaiModel = [];
           List<dynamic> available = services['availability'];
           available.forEach((a) {
-            AvailabilityModel am = AvailabilityModel(
-                a['start_date'].toString() ?? "",
-                a['end_date'].toString() ?? "");
+            AvailabilityModel am =
+                AvailabilityModel(a['start_date'] ?? "", a['end_date'] ?? "");
             gAccomodoationAvaiModel.add(am);
           });
           List<dynamic> becomePartner = services['become_partner'];
           becomePartner.forEach((b) {
-            BecomePartner bp = BecomePartner(
-                b['cr_name'].toString() ?? "",
-                b['cr_number'].toString() ?? "",
-                b['description'].toString() ?? "");
+            BecomePartner bp = BecomePartner(b['cr_name'] ?? "",
+                b['cr_number'] ?? "", b['description'] ?? "");
           });
           List<IncludedActivitiesModel> gIAm = [];
           List<dynamic> iActivities = services['included_activities'];
@@ -400,9 +414,9 @@ class ServicesProvider with ChangeNotifier {
             IncludedActivitiesModel iAm = IncludedActivitiesModel(
               int.tryParse(iA['id'].toString()) ?? 0,
               int.tryParse(iA['service_id'].toString()) ?? 0,
-              iA['activity_id'].toString() ?? "",
-              iA['activity'].toString() ?? "",
-              iA['image'].toString() ?? "",
+              iA['activity_id'] ?? "",
+              iA['activity'] ?? "",
+              iA['image'] ?? "",
             );
             gIAm.add(iAm);
           });

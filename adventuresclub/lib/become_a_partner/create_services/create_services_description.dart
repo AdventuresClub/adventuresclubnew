@@ -312,10 +312,11 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                       width: 10,
                     ),
                     Expanded(
-                        child: RegionFilterDropDown(
-                      regionList,
-                      show: true,
-                    )),
+                      child: RegionFilterDropDown(
+                        regionList,
+                        show: true,
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 20),

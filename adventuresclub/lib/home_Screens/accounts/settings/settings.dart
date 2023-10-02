@@ -9,7 +9,7 @@ import 'package:adventuresclub/models/get_country.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/sign_up/terms_condition.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -30,10 +30,10 @@ class _SettingsState extends State<Settings> {
   List<String> list = <String>['Change Language', 'Two', 'Three', 'Four'];
   String dropdownValue1 = 'Country Location';
   List<String> list1 = <String>['Country Location', 'Two', 'Three', 'Four'];
-  List text = [
-    'Privacy',
-    'Terms and Conditions',
-    'Contact us',
+  List settingsList = [
+    'privacy',
+    'termsConditions',
+    'contactUs',
   ];
   bool value = false;
   TextEditingController heightController = TextEditingController();
@@ -43,7 +43,7 @@ class _SettingsState extends State<Settings> {
   Map mapCountry = {};
   List<GetCountryModel> countriesList1 = [];
   List<GetCountryModel> filteredServices = [];
-
+  String selectedLanguage = "Eng";
   String selectedCountry = "Country Location";
   List pickLanguage = [
     'English',
@@ -54,6 +54,22 @@ class _SettingsState extends State<Settings> {
   void initState() {
     super.initState();
     getCountries();
+  }
+
+  void changeLanguage(String lang) {
+    if (lang == "English") {
+      context.setLocale(const Locale('en', 'US'));
+      // Navigator.of(context).pop();
+      // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      //   return const Settings();
+      // }));
+    } else if (lang == "Arabic") {
+      context.setLocale(const Locale('ar', 'SA'));
+      // Navigator.of(context).pop();
+      // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      //   return const Settings();
+      // }));
+    }
   }
 
   void goToPrivacy() {
@@ -168,7 +184,7 @@ class _SettingsState extends State<Settings> {
           ),
         ),
         title: MyText(
-          text: 'Settings',
+          text: 'settings'.tr(),
           color: bluishColor,
           weight: FontWeight.bold,
         ),
@@ -186,15 +202,65 @@ class _SettingsState extends State<Settings> {
               });
             },
             title: MyText(
-              text: 'App Notification',
+              text: "appNotification", //'App Notification',
               color: blackColor.withOpacity(0.7),
               weight: FontWeight.w500,
               size: 14,
             ),
           ),
-          pickCountry(context, 'Country Location'),
+          pickCountry(context, 'countryLocation'.tr()),
           const Divider(),
-          pickingLanguage(context, 'Change Language'),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                MyText(
+                  text: "changeLanguage",
+                  color: blackColor,
+                ),
+                PopupMenuButton<String>(
+                  child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0,
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.arrow_drop_down),
+                          MyText(
+                            text: selectedLanguage,
+                            color: blackColor,
+                          ),
+                        ],
+                      )
+                      // Icon(
+                      //   Icons.language_rounded,
+                      //   color: whiteColor,
+                      //   size: 60,
+                      // ),
+                      ),
+                  onSelected: (String item) {
+                    setState(() {
+                      selectedLanguage = item;
+                    });
+                    changeLanguage(item);
+                  },
+                  itemBuilder: (BuildContext context) =>
+                      <PopupMenuEntry<String>>[
+                    const PopupMenuItem<String>(
+                      value: "English",
+                      child: Text('English'),
+                    ),
+                    const PopupMenuItem<String>(
+                      value: "Arabic",
+                      child: Text('عربي'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          //pickingLanguage(context, 'Change Language'),
           const Divider(),
           Wrap(
             children: List.generate(3, (index) {
@@ -202,19 +268,19 @@ class _SettingsState extends State<Settings> {
                 children: [
                   ListTile(
                     onTap: () {
-                      if (text[index] == 'Privacy') {
+                      if (settingsList[index] == 'privacy') {
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (_) {
                           return const PrivacyPolicy();
                         }));
                       }
-                      if (text[index] == 'Terms and Conditions') {
+                      if (settingsList[index] == 'Terms and Conditions') {
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (_) {
                           return const TermsConditions(); //TermsAndConditions();
                         }));
                       }
-                      if (text[index] == 'Contact us') {
+                      if (settingsList[index] == 'Contact us') {
                         Navigator.of(context)
                             .push(MaterialPageRoute(builder: (_) {
                           return const ContactUs();
@@ -224,7 +290,7 @@ class _SettingsState extends State<Settings> {
                     contentPadding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
                     leading: MyText(
-                      text: text[index],
+                      text: settingsList[index],
                       color: blackColor.withOpacity(0.7),
                       weight: FontWeight.w500,
                       size: 14,
@@ -357,7 +423,7 @@ class _SettingsState extends State<Settings> {
           selectedTileColor: whiteColor,
           contentPadding: const EdgeInsets.symmetric(horizontal: 15),
           title: MyText(
-            text: selectedCountry,
+            text: selectedCountry.tr(),
             color: blackColor.withOpacity(0.6),
             size: 14,
             weight: FontWeight.w500,
@@ -369,6 +435,35 @@ class _SettingsState extends State<Settings> {
           ),
         ),
       ),
+    );
+  }
+
+  void getPopMenuData() {
+    PopupMenuButton<String>(
+      child: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8.0),
+        child: Icon(
+          Icons.language_rounded,
+          color: whiteColor,
+          size: 60,
+        ),
+      ),
+      onSelected: (String item) {
+        setState(() {
+          selectedLanguage = item;
+        });
+        changeLanguage(item);
+      },
+      itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+        const PopupMenuItem<String>(
+          value: "English",
+          child: Text('English'),
+        ),
+        const PopupMenuItem<String>(
+          value: "Arabic",
+          child: Text('Arabic'),
+        ),
+      ],
     );
   }
 
@@ -439,108 +534,7 @@ class _SettingsState extends State<Settings> {
 
   Widget pickingLanguage(context, String genderName) {
     return ListTile(
-        onTap: () => showDialog(
-            context: context,
-            builder: (context) {
-              return Dialog(
-                  backgroundColor: Colors.transparent,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(22)),
-                  child: Container(
-                    height: 300,
-                    color: whiteColor,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 16.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: MyText(
-                                text: 'Language',
-                                weight: FontWeight.bold,
-                                color: blackColor,
-                                size: 20,
-                                fontFamily: 'Raleway'),
-                          ),
-                        ),
-                        Container(
-                          height: 200,
-                          color: whiteColor,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                flex: 3,
-                                child: CupertinoPicker(
-                                  itemExtent: 82.0,
-                                  diameterRatio: 22,
-                                  backgroundColor: whiteColor,
-                                  onSelectedItemChanged: (int index) {
-                                    print(index + 1);
-                                    setState(() {
-                                      ft = (index + 1);
-                                      heightController.text = "$ft' $inches\"";
-                                    });
-                                  },
-                                  selectionOverlay:
-                                      const CupertinoPickerDefaultSelectionOverlay(
-                                    background: transparentColor,
-                                  ),
-                                  children: List.generate(2, (index) {
-                                    return Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 16),
-                                          decoration: BoxDecoration(
-                                              border: Border(
-                                                  top: BorderSide(
-                                                      color: blackColor
-                                                          .withOpacity(0.7),
-                                                      width: 1.5),
-                                                  bottom: BorderSide(
-                                                      color: blackColor
-                                                          .withOpacity(0.7),
-                                                      width: 1.5))),
-                                          child: Center(
-                                            child: MyText(
-                                                text: pickLanguage[index],
-                                                size: 14,
-                                                color: blackTypeColor4),
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  }),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            TextButton(
-                                onPressed: () {},
-                                child: MyText(
-                                  text: 'Cancel',
-                                  color: bluishColor,
-                                )),
-                            TextButton(
-                                onPressed: () {},
-                                child: MyText(
-                                  text: 'Ok',
-                                  color: bluishColor,
-                                )),
-                          ],
-                        )
-                      ],
-                    ),
-                  ));
-            }),
+        onTap: getPopMenuData,
         tileColor: greyProfileColor,
         selectedTileColor: greyProfileColor,
         contentPadding: const EdgeInsets.symmetric(horizontal: 10),
@@ -556,7 +550,7 @@ class _SettingsState extends State<Settings> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 MyText(
-                  text: 'Eng',
+                  text: selectedLanguage, //'Eng',
                   color: blackTypeColor3,
                 ),
                 const Icon(

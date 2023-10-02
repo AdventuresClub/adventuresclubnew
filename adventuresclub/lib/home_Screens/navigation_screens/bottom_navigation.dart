@@ -8,6 +8,7 @@ import 'package:adventuresclub/home_Screens/navigation_screens/visit.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/requests.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:adventuresclub/widgets/update_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -42,7 +43,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   void getVersion() async {
     var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClubSIT/api/v1/get_app_version"));
+        "https://adventuresclub.net/adventureClub/api/v1/get_app_version"));
     if (response.statusCode == 200) {
       mapVersion = json.decode(response.body);
       List<dynamic> result = mapVersion['data'];
@@ -52,8 +53,16 @@ class _BottomNavigationState extends State<BottomNavigation> {
     }
     double lVersion = double.tryParse(Constants.lastestVersion) ?? 0;
     if (Constants.currentVersion < lVersion) {
-      showPicker();
+      navUpdatePage();
     }
+  }
+
+  void navUpdatePage() {
+    Navigator.of(context).push(MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (_) {
+          return const UpdatePage();
+        }));
   }
 
   Widget getBody(int index) {
@@ -88,10 +97,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
       List<dynamic> result = decodedResponse['data'];
       result.forEach((element) {
         setState(() {
-          totalNotication = element['total_notification'].toString() ?? "";
-          resultAccount = element['resultAccount'].toString() ?? "";
-          resultService = element['resultService'].toString() ?? "";
-          resultRequest = element['resultRequest'].toString() ?? "";
+          totalNotication = element['total_notification'] ?? "";
+          resultAccount = element['resultAccount'] ?? "";
+          resultService = element['resultService'] ?? "";
+          resultRequest = element['resultRequest'] ?? "";
         });
       });
       notificationNumber(

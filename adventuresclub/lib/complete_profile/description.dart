@@ -383,11 +383,11 @@ class _DescriptionState extends State<Description> {
         int id = int.tryParse(element['id'].toString()) ?? 0;
         AimedForModel amf = AimedForModel(
           id,
-          element['AimedName'].toString() ?? "",
-          element['image'].toString() ?? "",
-          element['created_at'].toString() ?? "",
-          element['updated_at'].toString() ?? "",
-          element['deleted_at'].toString() ?? "",
+          element['AimedName'] ?? "",
+          element['image'] ?? "",
+          element['created_at'] ?? "",
+          element['updated_at'] ?? "",
+          element['deleted_at'] ?? "",
           0,
           //  selected: false,
         );
@@ -537,9 +537,9 @@ class _DescriptionState extends State<Description> {
         int rId = int.tryParse(element['region_id'].toString()) ?? 0;
         RegionsModel r = RegionsModel(
           cId,
-          element['country'].toString() ?? "",
+          element['country'] ?? "",
           rId,
-          element['region'].toString() ?? "",
+          element['region'] ?? "",
         );
         regionList.add(r);
       });
@@ -613,7 +613,8 @@ class _DescriptionState extends State<Description> {
                         width: 10,
                       ),
                       //    Description(regionFilter),
-                      Expanded(child: RegionDropDown(regionFilter)),
+                      Expanded(
+                          child: RegionDropDown(3.5, rFilter: regionFilter)),
                     ],
                   ),
                   const SizedBox(height: 20),

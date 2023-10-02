@@ -25,6 +25,18 @@ class _ActivitiesFilterListState extends State<ActivitiesFilterList> {
     Icons.get_app,
     Icons.skateboarding,
     Icons.upcoming,
+    Icons.swipe,
+    Icons.get_app,
+    Icons.skateboarding,
+    Icons.upcoming,
+    Icons.swipe,
+    Icons.get_app,
+    Icons.skateboarding,
+    Icons.upcoming,
+    Icons.swipe,
+    Icons.get_app,
+    Icons.skateboarding,
+    Icons.upcoming,
     Icons.swipe
   ];
   @override

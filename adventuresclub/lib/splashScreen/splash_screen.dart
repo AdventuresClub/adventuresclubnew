@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:adventuresclub/check_profile.dart';
+import 'package:adventuresclub/constants.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -14,7 +15,7 @@ class SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-      const Duration(seconds: 1),
+      const Duration(seconds: 3),
       () {
         Navigator.pushReplacement(
           context,
@@ -29,6 +30,7 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: greenishColor,
       body: Center(
         child: Container(
           decoration: const BoxDecoration(
@@ -36,8 +38,8 @@ class SplashScreenState extends State<SplashScreen> {
                 image: ExactAssetImage('images/blueLogo.png'),
                 fit: BoxFit.cover),
           ),
-          width: MediaQuery.of(context).size.width / 1,
-          height: MediaQuery.of(context).size.height / 1.5,
+          width: MediaQuery.of(context).size.width / 1.4,
+          height: MediaQuery.of(context).size.height / 2.5,
         ),
       ),
     );

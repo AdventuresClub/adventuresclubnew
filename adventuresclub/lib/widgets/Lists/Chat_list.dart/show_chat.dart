@@ -64,7 +64,8 @@ class _ShowChatState extends State<ShowChat> {
               centerTitle: true,
             )
           : null,
-      body: WebViewWidget(controller: controller),
+      body: WebViewWidget(
+        controller: controller),
     );
   }
 }

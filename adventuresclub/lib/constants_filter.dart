@@ -4,5 +4,6 @@ class ConstantsFilter {
   static String typeId = "";
   static String levelId = "";
   static String durationId = "";
+  static String regionId = "";
   static List<int> selectedActivitesId = [];
 }

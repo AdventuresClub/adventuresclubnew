@@ -5,11 +5,15 @@ import 'package:adventuresclub/models/filter_data_model/region_model.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../models/create_adventure/regions_model.dart';
 
 class RegionDropDown extends StatefulWidget {
-  final List<RegionFilterModel> rFilter;
+  final List<RegionFilterModel>? rFilter;
+  final List<RegionsModel>? filter;
   final bool show;
-  const RegionDropDown(this.rFilter, {this.show = false, super.key});
+  final double width;
+  const RegionDropDown(this.width,
+      {this.show = false, this.rFilter, this.filter, super.key});
 
   @override
   State<RegionDropDown> createState() => RegionDropDownState();
@@ -63,6 +67,7 @@ class RegionDropDownState extends State<RegionDropDown> {
   Widget build(BuildContext context) {
     return widget.show
         ? SizedBox(
+            width: MediaQuery.of(context).size.width / widget.width,
             child: ListTile(
               onTap: () => showDialog(
                   context: context,
@@ -105,8 +110,8 @@ class RegionDropDownState extends State<RegionDropDown> {
                                           backgroundColor: whiteColor,
                                           onSelectedItemChanged: (int index) {
                                             sendRegion(
-                                                widget.rFilter[index].regions,
-                                                widget.rFilter[index].id);
+                                                widget.filter![index].region,
+                                                widget.filter![index].regionId);
                                             //print(index + 1);
                                           },
                                           selectionOverlay:
@@ -114,11 +119,11 @@ class RegionDropDownState extends State<RegionDropDown> {
                                             background: transparentColor,
                                           ),
                                           children: List.generate(
-                                              widget.rFilter.length, (index) {
+                                              widget.filter!.length, (index) {
                                             return Center(
                                               child: MyText(
                                                   text: widget
-                                                      .rFilter[index].regions,
+                                                      .filter![index].region,
                                                   size: 14,
                                                   color: blackTypeColor4),
                                             );
@@ -219,7 +224,7 @@ class RegionDropDownState extends State<RegionDropDown> {
                     // selectedId =
                   });
                 },
-                items: widget.rFilter
+                items: widget.rFilter!
                     .map<DropdownMenuItem<String>>((RegionFilterModel rFilter) {
                   return DropdownMenuItem<String>(
                     onTap: () => sId(
