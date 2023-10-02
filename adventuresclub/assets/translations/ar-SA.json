@@ -8,7 +8,10 @@
     "termsAndConditions": "الشروط والأحكام",
     "privacyPolicy": "سياسة الخصوصية",
     "register":"يسجل",
-    "alreadyHaveAnAccount ?": "هل لديك حساب ؟",
+    "alreadyHaveAnAccount": "هل لديك حساب ؟",
+    "alreadyPartner": "بالفعل شريك",
+    "renewBefore": "تجديد قبل",
+    "toAvoidInterruption": "لتجنب الانقطاع",
     "signIn":"تسجيل الدخول",
     "username": "اسم المستخدم",
     "forgotUserName?": "نسيت إسم المستخدم؟",
@@ -60,5 +63,9 @@
     "changeLanguage": "تغيير اللغة",
     "changeLocation": "تغيير الموقع",
     "privacy": "خصوصية",
-    "termsConditions": "البنود و الظروف"
+    "termsConditions": "البنود و الظروف",
+    "description": "وصف",
+    "program": "برنامج",
+    "gatheringLocation" : "مكان التجمع",
+    "chat": "محادثة"
 }

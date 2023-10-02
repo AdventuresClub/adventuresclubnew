@@ -1206,8 +1206,7 @@ class _AccountState extends State<Account> {
                                                       ),
                                                     );
                                                   }
-                                                  if (text[i] ==
-                                                      'My Services') {
+                                                  if (text[i] == 'myServices') {
                                                     Navigator.of(context).push(
                                                       MaterialPageRoute(
                                                         builder: (_) {
@@ -1216,8 +1215,9 @@ class _AccountState extends State<Account> {
                                                       ),
                                                     );
                                                   }
+
                                                   if (text[i] ==
-                                                      'Client Requests') {
+                                                      'clientRequests') {
                                                     Navigator.of(context).push(
                                                       MaterialPageRoute(
                                                         builder: (_) {
@@ -1349,7 +1349,8 @@ class _AccountState extends State<Account> {
                                                       MainAxisAlignment.start,
                                                   children: [
                                                     MyText(
-                                                      text: 'Already a partner',
+                                                      text:
+                                                          'alreadyPartner'.tr(),
                                                       size: 18,
                                                       //fontFamily: 'Raleway',
                                                       weight: FontWeight.w600,
@@ -1367,7 +1368,7 @@ class _AccountState extends State<Account> {
                                               const SizedBox(height: 2),
                                               MyText(
                                                 text:
-                                                    "${"Renew before "}${profile.bp.endDate.substring(0, 11)}${"to avoid interruption"}", //'Kenneth Gutierrez',
+                                                    "${"renewBefore".tr()}${profile.bp.endDate.substring(0, 11)}${"toAvoidInterruption".tr()}", //'Kenneth Gutierrez',
                                                 color: redColor,
                                                 weight: FontWeight.bold,
                                                 size: 12,
@@ -1415,8 +1416,7 @@ class _AccountState extends State<Account> {
                                           children: [
                                             GestureDetector(
                                               onTap: () {
-                                                if (text[i] ==
-                                                    "favorite".tr()) {
+                                                if (text[i] == "favorite") {
                                                   Navigator.of(context).push(
                                                     MaterialPageRoute(
                                                       builder: (_) {
@@ -1425,7 +1425,7 @@ class _AccountState extends State<Account> {
                                                     ),
                                                   );
                                                 }
-                                                if (text[i] == 'My Services') {
+                                                if (text[i] == 'myServices') {
                                                   Navigator.of(context).push(
                                                     MaterialPageRoute(
                                                       builder: (_) {
@@ -1606,19 +1606,19 @@ class _AccountState extends State<Account> {
                                 vertical: 2, horizontal: 20),
                             horizontalTitleGap: 2,
                             onTap: (() {
-                              if (tile1Text[index] == 'My Points') {
+                              if (tile1Text[index] == 'myPoints') {
                                 Navigator.of(context)
                                     .push(MaterialPageRoute(builder: (_) {
                                   return const MyPoints();
                                 }));
                               }
-                              if (tile1Text[index] == 'Health Condition') {
+                              if (tile1Text[index] == 'healthCondition') {
                                 Navigator.of(context)
                                     .push(MaterialPageRoute(builder: (_) {
                                   return const HealthCondition();
                                 }));
                               }
-                              if (tile1Text[index] == 'Notification') {
+                              if (tile1Text[index] == 'notification') {
                                 Navigator.of(context)
                                     .push(MaterialPageRoute(builder: (_) {
                                   return const Notifications();

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -10,16 +12,18 @@ class UpdatePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void selected(BuildContext context) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) {
-            return const ShowChat(
-              "https://play.google.com/store/apps/details?id=com.universalskills.adventuresclub",
-              appbar: false,
-            );
-          },
-        ),
-      );
+      if (Platform.isAndroid) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) {
+              return const ShowChat(
+                "https://play.google.com/store/apps/details?id=com.universalskills.adventuresclub",
+                appbar: false,
+              );
+            },
+          ),
+        );
+      } else {}
     }
 
     return WillPopScope(

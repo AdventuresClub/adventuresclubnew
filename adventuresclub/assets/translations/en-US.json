@@ -8,7 +8,10 @@
     "termsAndConditions": "Terms & Conditions",
     "privacyPolicy": "Privacy policy",
     "register": "Register",
-    "alreadyHaveAnAccount ?": "Already have an account ?",
+    "alreadyHaveAnAccount": "Already have an account ?",
+    "alreadyPartner": "Already a partner",
+    "renewBefore": "Renew Before",
+    "toAvoidInterruption": "to avoid interruption",
     "signIn": "Sign In",
     "username": "Username",
     "forgotUserName?": "Forgot UserName?",
@@ -60,5 +63,9 @@
     "changeLanguage": "Change Language",
     "changeLocation": "Change Location",
     "privacy": "Privacy",
-    "termsConditions": "Terms & Conditions"
+    "termsConditions": "Terms & Conditions",
+    "description": "Description",
+    "program": "Program",
+    "gatheringLocation" : "Gathering Location",
+    "chat": "Chat"
 }
