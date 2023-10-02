@@ -52,12 +52,12 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
               children: [
                 RichText(
                   text: TextSpan(
-                    text: widget.text1[0],
+                    text: widget.text1[0].tr(),
                     style: const TextStyle(
                         color: greyColor2, fontSize: 14, height: 1.5),
                     children: [
                       TextSpan(
-                          text: widget.text4[0],
+                          text: widget.text4[0].tr(),
                           style: const TextStyle(
                               fontSize: 13,
                               // fontWeight: FontWeight.w300,
@@ -114,12 +114,12 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
               children: [
                 RichText(
                   text: TextSpan(
-                    text: widget.text1[1],
+                    text: widget.text1[1].tr(),
                     style: const TextStyle(
                         color: greyColor2, fontSize: 14, height: 1.5),
                     children: [
                       TextSpan(
-                          text: widget.text4[1],
+                          text: widget.text4[1].tr(),
                           style: const TextStyle(
                               fontSize: 14,
                               // fontWeight: FontWeight.w300,

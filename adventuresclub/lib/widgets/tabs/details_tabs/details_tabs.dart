@@ -11,6 +11,7 @@ import 'package:adventuresclub/widgets/tabs/details_tabs/service_description.dar
 import 'package:adventuresclub/widgets/tabs/details_tabs/service_gathering_location.dart';
 import 'package:adventuresclub/widgets/tabs/details_tabs/service_program/service_plans.dart';
 import 'package:adventuresclub/widgets/tabs/participants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -207,11 +208,11 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
   ];
   */
   List text1 = [
-    'Country  :',
-    'Region  :',
-    'Service Category  :',
-    'Available Seats :',
-    'Duration :',
+    'Country',
+    'Region',
+    'Service Category',
+    'Available Seats',
+    'Duration',
     //'Start Date :'
   ];
   List text11 = [
@@ -412,19 +413,19 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   //color: greyTextColor,
-                  child: const TabBar(
-                    padding: EdgeInsets.all(0),
+                  child: TabBar(
+                    padding: const EdgeInsets.all(0),
                     labelPadding:
-                        EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                        const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                     labelColor: blackColor,
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Raleway',
                     ),
                     indicatorColor: greenishColor,
                     isScrollable: true,
-                    unselectedLabelStyle: TextStyle(
+                    unselectedLabelStyle: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         fontFamily: "Raleway"),
@@ -434,20 +435,20 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                       SizedBox(
                         width: 90.0,
                         child: Tab(
-                          text: 'Description',
+                          text: 'description'.tr(),
                         ),
                       ),
                       SizedBox(
                         width: 70.0,
-                        child: Tab(text: 'Program'),
+                        child: Tab(text: 'program'.tr()),
                       ),
                       SizedBox(
                         width: 150.0,
-                        child: Tab(text: 'Gathering Location'),
+                        child: Tab(text: 'gatheringLocation'.tr()),
                       ),
                       SizedBox(
                         width: 60.0,
-                        child: Tab(text: 'Chat'),
+                        child: Tab(text: 'chat'.tr()),
                       ),
                     ],
                   ),

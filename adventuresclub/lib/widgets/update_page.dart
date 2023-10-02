@@ -4,6 +4,7 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'my_text.dart';
 
 class UpdatePage extends StatelessWidget {
@@ -11,19 +12,27 @@ class UpdatePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void selected(BuildContext context) {
+    void launchURL() async {
+      const iOSUrl = "https://apps.apple.com/app/adventures-club/id1668119170";
+      const androidUrl =
+          "https://play.google.com/store/apps/details?id=com.universalskills.adventuresclub";
       if (Platform.isAndroid) {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) {
-              return const ShowChat(
-                "https://play.google.com/store/apps/details?id=com.universalskills.adventuresclub",
-                appbar: false,
-              );
-            },
-          ),
-        );
-      } else {}
+        const url = androidUrl;
+        final uri = Uri.parse(url);
+        if (await canLaunchUrl(uri)) {
+          await launchUrl(uri, mode: LaunchMode.externalApplication);
+        } else {
+          throw 'Could not launch $url';
+        }
+      } else {
+        const url = iOSUrl;
+        final uri = Uri.parse(url);
+        if (await canLaunchUrl(uri)) {
+          await launchUrl(uri, mode: LaunchMode.externalApplication);
+        } else {
+          throw 'Could not launch $url';
+        }
+      }
     }
 
     return WillPopScope(
@@ -51,7 +60,7 @@ class UpdatePage extends StatelessWidget {
               height: 20,
             ),
             ElevatedButton(
-                onPressed: () => selected(context),
+                onPressed: launchURL,
                 style: ElevatedButton.styleFrom(
                   primary: greenishColor, // Background color
                 ),

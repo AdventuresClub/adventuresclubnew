@@ -2,6 +2,7 @@
 
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class DescriptionPricingWidget extends StatelessWidget {
@@ -77,14 +78,14 @@ class DescriptionPricingWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 MyText(
-                  text: 'Including gears and other taxes',
+                  text: 'includingGears'.tr(),
                   weight: FontWeight.bold,
                   color: Colors.red,
                   size: 10,
                   fontFamily: 'Roboto',
                 ),
                 MyText(
-                  text: 'Excluding gears and other taxes',
+                  text: 'excludingGears'.tr(),
                   weight: FontWeight.bold,
                   color: Colors.red,
                   size: 10,

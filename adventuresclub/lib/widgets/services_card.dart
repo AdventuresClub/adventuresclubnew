@@ -68,7 +68,7 @@ class _ServicesCardState extends State<ServicesCard> {
     widget.gm.am.forEach((element) {
       adventuresPlan.add(element.aimedName);
       if (i < 3) {
-        aPlan += "${element.aimedName} ";
+        aPlan += "${element.aimedName.tr()} ";
         i++;
       }
     });
@@ -462,7 +462,8 @@ class _ServicesCardState extends State<ServicesCard> {
                                   ),
                                 ),
                                 MyText(
-                                  text: 'Earn ${widget.gm.points} points',
+                                  text:
+                                      "${'earn'.tr()} ${widget.gm.points} '${'points'.tr()}",
                                   color: blueTextColor,
                                   size: 10,
                                   height: 1.3,

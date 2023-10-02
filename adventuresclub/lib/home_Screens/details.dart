@@ -6,6 +6,7 @@ import 'package:adventuresclub/home_Screens/plan%20_for_future.dart';
 import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
 import 'package:adventuresclub/widgets/tabs/details_tabs/details_tabs.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/home_services/services_model.dart';
@@ -279,10 +280,10 @@ class _DetailsState extends State<Details> {
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  ButtonIconLess('PLAN FOR FUTURE', whiteColor, greenishColor,
+                  ButtonIconLess('planFuture'.tr(), whiteColor, greenishColor,
                       2.5, 17, 12, plan),
-                  ButtonIconLess('BOOK NOW', greenishColor, whiteColor, 2.5, 17,
-                      12, goToBookTicket),
+                  ButtonIconLess('bookNow'.tr(), greenishColor, whiteColor, 2.5,
+                      17, 12, goToBookTicket),
                 ],
               )
             : GestureDetector(
@@ -296,7 +297,7 @@ class _DetailsState extends State<Details> {
                   width: MediaQuery.of(context).size.width,
                   child: Center(
                     child: MyText(
-                      text: "Plan For Future",
+                      text: 'planFuture'.tr(),
                       size: 16,
                       weight: FontWeight.w600,
                     ),
