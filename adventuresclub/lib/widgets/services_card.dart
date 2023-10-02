@@ -451,7 +451,7 @@ class _ServicesCardState extends State<ServicesCard> {
                               children: [
                                 Expanded(
                                   child: MyText(
-                                    text: widget.gm.region,
+                                    text: widget.gm.region.tr(),
                                     overFlow: TextOverflow.clip,
                                     maxLines: 1,
                                     //text: 'Dhufar',

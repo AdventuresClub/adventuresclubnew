@@ -359,7 +359,7 @@ class _AccountState extends State<Account> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12)),
               title: MyText(
-                text: title,
+                text: title.tr(),
                 size: 18,
                 weight: FontWeight.bold,
                 color: blackColor,
@@ -370,7 +370,7 @@ class _AccountState extends State<Account> {
                 ),
                 //Text("data"),
                 Text(
-                  message,
+                  message.tr(),
                   textAlign: TextAlign.center,
                 ),
                 // text:
@@ -386,7 +386,7 @@ class _AccountState extends State<Account> {
                     MaterialButton(
                       onPressed: () => Navigator.of(context).pop(),
                       child: MyText(
-                        text: "No",
+                        text: "no".tr(),
                         color: blackColor,
                         weight: FontWeight.bold,
                       ),
@@ -394,7 +394,7 @@ class _AccountState extends State<Account> {
                     MaterialButton(
                       onPressed: logout,
                       child: MyText(
-                        text: "Yes",
+                        text: "yes".tr(),
                         color: blackColor,
                         weight: FontWeight.bold,
                       ),
@@ -1215,7 +1215,6 @@ class _AccountState extends State<Account> {
                                                       ),
                                                     );
                                                   }
-
                                                   if (text[i] ==
                                                       'clientRequests') {
                                                     Navigator.of(context).push(
@@ -1239,7 +1238,7 @@ class _AccountState extends State<Account> {
                                                     Constants.resultRequest >
                                                                 0 &&
                                                             text[i] ==
-                                                                'Client Requests'
+                                                                'clientRequests'
                                                         ? Positioned(
                                                             bottom: -5,
                                                             right: -12,
@@ -1264,7 +1263,7 @@ class _AccountState extends State<Account> {
                                                     Constants.resultService >
                                                                 0 &&
                                                             text[i] ==
-                                                                'My Services'
+                                                                'myServices'
                                                         ? Positioned(
                                                             bottom: -5,
                                                             right: -12,
@@ -1323,7 +1322,7 @@ class _AccountState extends State<Account> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     loading
-                                        ? const Text("Loading")
+                                        ? Text("loading".tr())
                                         : Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -1435,7 +1434,7 @@ class _AccountState extends State<Account> {
                                                   );
                                                 }
                                                 if (text[i] ==
-                                                    'Client Requests') {
+                                                    'clientRequests') {
                                                   Navigator.of(context).push(
                                                     MaterialPageRoute(
                                                       builder: (_) {
@@ -1456,7 +1455,7 @@ class _AccountState extends State<Account> {
                                                   ),
                                                   Constants.resultRequest > 0 &&
                                                           text[i] ==
-                                                              'Client Requests'
+                                                              'clientRequests'
                                                       ? Positioned(
                                                           bottom: -5,
                                                           right: -12,
@@ -1478,7 +1477,7 @@ class _AccountState extends State<Account> {
                                                       : const SizedBox(),
                                                   Constants.resultService > 0 &&
                                                           text[i] ==
-                                                              'My Services'
+                                                              'myServices'
                                                       ? Positioned(
                                                           bottom: -5,
                                                           right: -12,
@@ -1648,7 +1647,7 @@ class _AccountState extends State<Account> {
                                   ),
                                 );
                               }
-                              if (tile1Text[index] == 'Invite Friends') {
+                              if (tile1Text[index] == 'inviteFriends') {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (_) {
@@ -1657,16 +1656,14 @@ class _AccountState extends State<Account> {
                                   ),
                                 );
                               }
-                              if (tile1Text[index] == 'About Us') {
+                              if (tile1Text[index] == 'aboutUs') {
                                 Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_) {
-                                      return const AboutUs();
-                                    },
-                                  ),
+                                  MaterialPageRoute(builder: (_) {
+                                    return const AboutUs();
+                                  }),
                                 );
                               }
-                              if (tile1Text[index] == 'Contact Us') {
+                              if (tile1Text[index] == 'contactUs') {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (_) {
@@ -1676,24 +1673,23 @@ class _AccountState extends State<Account> {
                                   ),
                                 );
                               }
-                              if (tile1Text[index] == 'Log Out') {
-                                showConfirmation("Log out",
-                                    "Are you sure you want to log out?");
+                              if (tile1Text[index] == 'logOut') {
+                                showConfirmation("logOut", "wantToLogOut");
                               }
-                              if (tile1Text[index] == "Delete Account") {
-                                showConfirmation("Delete Account",
-                                    "Are you sure you want to Delete your account?");
+                              if (tile1Text[index] == "deleteAccount") {
+                                showConfirmation(
+                                    "deleteAccount", "wantToDelete");
                               }
                             }),
                             leading: Stack(clipBehavior: Clip.none, children: [
                               Image(
                                 image: ExactAssetImage(tile1[index]),
                                 height:
-                                    tile1Text[index] == 'My Points' ? 35 : 25,
+                                    tile1Text[index] == 'myPoints' ? 35 : 25,
                                 width: 35,
                                 color: greyColor.withOpacity(1),
                               ),
-                              tile1Text[index] == 'Notification'
+                              tile1Text[index] == 'notification'
                                   ? Positioned(
                                       top: -8,
                                       right: -3,
@@ -1713,7 +1709,10 @@ class _AccountState extends State<Account> {
                             ]),
                             title: Text(
                               tile1Text[index].tr(),
-                              style: TextStyle(),
+                              style: const TextStyle(
+                                  color: greyColor,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w700),
                             ),
                             // MyText(
                             //   text: tile1Text[index],
@@ -1769,13 +1768,13 @@ class _AccountState extends State<Account> {
                               //     return const MyPoints();
                               //   }));
                               // }
-                              if (userListText[index] == 'Health Condition') {
+                              if (userListText[index] == 'healthCondition') {
                                 Navigator.of(context)
                                     .push(MaterialPageRoute(builder: (_) {
                                   return const HealthCondition();
                                 }));
                               }
-                              if (userListText[index] == 'Settings') {
+                              if (userListText[index] == 'settings') {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (_) {
@@ -1784,7 +1783,7 @@ class _AccountState extends State<Account> {
                                   ),
                                 );
                               }
-                              if (userListText[index] == 'Invite Friends') {
+                              if (userListText[index] == 'inviteFriends') {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (_) {
@@ -1793,7 +1792,7 @@ class _AccountState extends State<Account> {
                                   ),
                                 );
                               }
-                              if (userListText[index] == 'About us') {
+                              if (userListText[index] == 'aboutUs') {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (_) {
@@ -1802,7 +1801,7 @@ class _AccountState extends State<Account> {
                                   ),
                                 );
                               }
-                              if (userListText[index] == 'Contact us') {
+                              if (userListText[index] == 'contactUs') {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (_) {
@@ -1812,7 +1811,7 @@ class _AccountState extends State<Account> {
                                   ),
                                 );
                               }
-                              if (userListText[index] == "Log Out") {
+                              if (userListText[index] == "logOut") {
                                 logout();
                               }
                             }),
@@ -1871,7 +1870,7 @@ class _AccountState extends State<Account> {
                             borderRadius: BorderRadius.circular(12)),
                         child: Center(
                           child: MyText(
-                            text: "App Version : 2.0",
+                            text: "appVersion".tr(),
                             color: whiteColor,
                             weight: FontWeight.w600,
                           ),

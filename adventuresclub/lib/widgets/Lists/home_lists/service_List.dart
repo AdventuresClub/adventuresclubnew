@@ -84,14 +84,14 @@ class ServiceListState extends State<ServiceList> {
         Provider.of<ServicesProvider>(context).filteredServices;
     bool loading = Provider.of<ServicesProvider>(context).loading;
     return loading
-        ? const Center(
+        ? Center(
             child: Column(
               children: [
-                Text("Loading ....."),
-                SizedBox(
+                Text("loading".tr()),
+                const SizedBox(
                   height: 10,
                 ),
-                CircularProgressIndicator()
+                const CircularProgressIndicator()
               ],
             ),
           )
