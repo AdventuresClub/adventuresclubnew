@@ -451,22 +451,22 @@ class Constants {
           BpIncludesModel eList = BpIncludesModel(
             int.tryParse(e['id'].toString()) ?? 0,
             int.tryParse(e['package_id'].toString()) ?? 0,
-            e['title'].toString() ?? "",
+            e['title'] ?? "",
             int.tryParse(e['detail_type'].toString()) ?? 0,
           );
           gEList.add(eList);
         });
         PackagesBecomePartnerModel pBp = PackagesBecomePartnerModel(
             int.tryParse(element['id'].toString()) ?? 0,
-            element['title'].toString() ?? "",
-            element['symbol'].toString() ?? "",
-            element['duration'].toString() ?? "",
-            element['cost'].toString() ?? "",
+            element['title'] ?? "",
+            element['symbol'] ?? "",
+            element['duration'] ?? "",
+            element['cost'] ?? "",
             int.tryParse(element['days'].toString()) ?? 0,
             int.tryParse(element['status'].toString()) ?? 0,
-            element['created_at'].toString() ?? "",
-            element['updated_at'].toString() ?? "",
-            element['deleted_at'].toString() ?? "",
+            element['created_at'] ?? "",
+            element['updated_at'] ?? "",
+            element['deleted_at'] ?? "",
             gIList,
             gEList);
         freegBp.add(pBp);
@@ -618,9 +618,9 @@ class Constants {
         int rId = int.tryParse(element['region_id'].toString()) ?? 0;
         RegionsModel r = RegionsModel(
           cId,
-          element['country'].toString() ?? "",
+          element['country'] ?? "",
           rId,
-          element['region'].toString() ?? "",
+          element['region'] ?? "",
         );
         regionList.add(r);
       });
@@ -644,11 +644,11 @@ class Constants {
         int id = int.tryParse(element['id'].toString()) ?? 0;
         AimedForModel amf = AimedForModel(
           id,
-          element['AimedName'].toString() ?? "",
-          element['image'].toString() ?? "",
-          element['created_at'].toString() ?? "",
-          element['updated_at'].toString() ?? "",
-          element['deleted_at'].toString() ?? "",
+          element['AimedName'] ?? "",
+          element['image'] ?? "",
+          element['created_at'] ?? "",
+          element['updated_at'] ?? "",
+          element['deleted_at'] ?? "",
           0,
           //  selected: false,
         );
@@ -668,11 +668,11 @@ class Constants {
         int id = int.tryParse(element['id'].toString()) ?? 0;
         DependenciesModel amf = DependenciesModel(
           id,
-          element['dependency_name'].toString() ?? "",
-          element['image'].toString() ?? "",
-          element['created_at'].toString() ?? "",
-          element['updated_at'].toString() ?? "",
-          element['deleted_at'].toString() ?? "",
+          element['dependency_name'] ?? "",
+          element['image'] ?? "",
+          element['created_at'] ?? "",
+          element['updated_at'] ?? "",
+          element['deleted_at'] ?? "",
           //  selected: false,
         );
         dependency.add(amf);

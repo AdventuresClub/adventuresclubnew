@@ -32,11 +32,11 @@ class _AboutUsState extends State<AboutUs> {
       dynamic result = mapAimedFilter['data'];
       AboutUsModel au = AboutUsModel(
         int.tryParse(result['id'].toString()) ?? 0,
-        result['image'].toString() ?? "",
-        result['content'].toString() ?? "",
-        result['created_at'].toString() ?? "",
-        result['updated_at'].toString() ?? "",
-        result['deleted_at'].toString() ?? "",
+        result['image'] ?? "",
+        result['content'] ?? "",
+        result['created_at'] ?? "",
+        result['updated_at'] ?? "",
+        result['deleted_at'] ?? "",
       );
       setState(() {
         about = au;

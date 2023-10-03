@@ -18,9 +18,7 @@ import 'package:adventuresclub/widgets/grid/provided_adventure_grid.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 import '../../models/services/create_services/availability_plan_model.dart';
-import '../../widgets/Lists/Chat_list.dart/chat_attachment.dart';
 import '../../widgets/Lists/Chat_list.dart/show_chat.dart';
 
 class About extends StatefulWidget {
@@ -110,64 +108,64 @@ class _AboutState extends State<About> {
         ProfileBecomePartner bp = ProfileBecomePartner(
           id,
           userId,
-          partnerInfo['company_name'].toString() ?? "",
-          partnerInfo['address'].toString() ?? "",
-          partnerInfo['location'].toString() ?? "",
-          partnerInfo['description'].toString() ?? "",
-          partnerInfo['license'].toString() ?? "",
-          partnerInfo['cr_name'].toString() ?? "",
-          partnerInfo['cr_number'].toString() ?? "",
-          partnerInfo['cr_copy'].toString() ?? "",
+          partnerInfo['company_name'] ?? "",
+          partnerInfo['address'] ?? "",
+          partnerInfo['location'] ?? "",
+          partnerInfo['description'] ?? "",
+          partnerInfo['license'] ?? "",
+          partnerInfo['cr_name'] ?? "",
+          partnerInfo['cr_number'] ?? "",
+          partnerInfo['cr_copy'] ?? "",
           debitCard,
           visaCard,
-          partnerInfo['payon_arrival'].toString() ?? "",
-          partnerInfo['paypal'].toString() ?? "",
-          partnerInfo['bankname'].toString() ?? "",
-          partnerInfo['account_holdername'].toString() ?? "",
-          partnerInfo['account_number'].toString() ?? "",
-          partnerInfo['is_online'].toString() ?? "",
-          partnerInfo['is_approved'].toString() ?? "",
+          partnerInfo['payon_arrival'] ?? "",
+          partnerInfo['paypal'] ?? "",
+          partnerInfo['bankname'] ?? "",
+          partnerInfo['account_holdername'] ?? "",
+          partnerInfo['account_number'] ?? "",
+          partnerInfo['is_online'] ?? "",
+          partnerInfo['is_approved'] ?? "",
           packagesId,
-          partnerInfo['start_date'].toString() ?? "",
-          partnerInfo['end_date'].toString() ?? "",
-          partnerInfo['is_wiretransfer'].toString() ?? "",
-          partnerInfo['is_free_used'].toString() ?? "",
-          partnerInfo['created_at'].toString() ?? "",
-          partnerInfo['updated_at'].toString() ?? "",
+          partnerInfo['start_date'] ?? "",
+          partnerInfo['end_date'] ?? "",
+          partnerInfo['is_wiretransfer'] ?? "",
+          partnerInfo['is_free_used'] ?? "",
+          partnerInfo['created_at'] ?? "",
+          partnerInfo['updated_at'] ?? "",
         );
         pbp = bp;
       }
       UserProfileModel up = UserProfileModel(
           userLoginId,
-          userData['users_role'].toString() ?? "",
-          userData['profile_image'].toString() ?? "",
-          userData['name'].toString() ?? "",
-          userData['height'].toString() ?? "",
-          userData['weight'].toString() ?? "",
-          userData['email'].toString() ?? "",
+          userData['users_role'] ?? "",
+          userData['profile_image'] ?? "",
+          userData['name'] ?? "",
+          userData['height'] ?? "",
+          userData['weight'] ?? "",
+          userData['email'] ?? "",
           countryId,
-          userData['region_id'].toString() ?? "",
-          userData['city_id'].toString() ?? "",
-          userData['now_in'].toString() ?? "",
-          userData['mobile'].toString() ?? "",
-          userData['mobile_verified_at'].toString() ?? "",
-          userData['dob'].toString() ?? "",
-          userData['gender'].toString() ?? "",
+          userData['region_id'] ?? "",
+          userData['city_id'] ?? "",
+          userData['now_in'] ?? "",
+          userData['mobile'] ?? "",
+          userData['mobile_verified_at'] ?? "",
+          userData['dob'] ?? "",
+          userData['gender'] ?? "",
           languageId,
-          userData['nationality_id'].toString() ?? "",
+          userData['nationality_id'] ?? "",
           currencyId,
-          userData['app_notification'].toString() ?? "",
-          userData['points'].toString() ?? "",
-          userData['health_conditions'].toString() ?? "",
-          userData['health_conditions_id'].toString() ?? "",
-          userData['email_verified_at'].toString() ?? "",
-          userData['mobile_code'].toString() ?? "",
-          userData['status'].toString() ?? "",
+          userData['app_notification'] ?? "",
+          userData['points'] ?? "",
+          userData['health_conditions'] ?? "",
+          userData['health_conditions_id'] ?? "",
+          userData['email_verified_at'] ?? "",
+          userData['mobile_code'] ?? "",
+          userData['status'] ?? "",
           addedFrom,
-          userData['created_at'].toString() ?? "",
-          userData['updated_at'].toString() ?? "",
-          userData['deleted_at'].toString() ?? "",
-          userData['device_id'].toString() ?? "",
+          userData['created_at'] ?? "",
+          userData['updated_at'] ?? "",
+          userData['deleted_at'] ?? "",
+          userData['device_id'] ?? "",
           pbp);
       setState(() {
         profile = up;
@@ -201,8 +199,8 @@ class _AboutState extends State<About> {
         if (element['availability'] != null) {
           List<dynamic> availablePlan = element['availability'];
           availablePlan.forEach((ap) {
-            AvailabilityPlanModel amPlan = AvailabilityPlanModel(
-                ap['id'].toString() ?? "", ap['day'].toString() ?? "");
+            AvailabilityPlanModel amPlan =
+                AvailabilityPlanModel(ap['id'] ?? "", ap['day'] ?? "");
             gAccomodationPlanModel.add(amPlan);
           });
         }
@@ -210,19 +208,16 @@ class _AboutState extends State<About> {
         if (element['availability'] != null) {
           List<dynamic> available = element['availability'];
           available.forEach((a) {
-            AvailabilityModel am = AvailabilityModel(
-                a['start_date'].toString() ?? "",
-                a['end_date'].toString() ?? "");
+            AvailabilityModel am =
+                AvailabilityModel(a['start_date'] ?? "", a['end_date'] ?? "");
             gAccomodoationAvaiModel.add(am);
           });
         }
         if (element['become_partner'] != null) {
           List<dynamic> becomePartner = element['become_partner'];
           becomePartner.forEach((b) {
-            BecomePartner bp = BecomePartner(
-                b['cr_name'].toString() ?? "",
-                b['cr_number'].toString() ?? "",
-                b['description'].toString() ?? "");
+            BecomePartner bp = BecomePartner(b['cr_name'] ?? "",
+                b['cr_number'] ?? "", b['description'] ?? "");
           });
         }
         List<IncludedActivitiesModel> gIAm = [];
@@ -232,9 +227,9 @@ class _AboutState extends State<About> {
             IncludedActivitiesModel iAm = IncludedActivitiesModel(
               int.tryParse(iA['id'].toString()) ?? 0,
               int.tryParse(iA['service_id'].toString()) ?? 0,
-              iA['activity_id'].toString() ?? "",
-              iA['activity'].toString() ?? "",
-              iA['image'].toString() ?? "",
+              iA['activity_id'] ?? "",
+              iA['activity'] ?? "",
+              iA['image'] ?? "",
             );
             gIAm.add(iAm);
           });
@@ -245,11 +240,11 @@ class _AboutState extends State<About> {
           dependency.forEach((d) {
             DependenciesModel dm = DependenciesModel(
               int.tryParse(d['id'].toString()) ?? 0,
-              d['dependency_name'].toString() ?? "",
-              d['image'].toString() ?? "",
-              d['updated_at'].toString() ?? "",
-              d['created_at'].toString() ?? "",
-              d['deleted_at'].toString() ?? "",
+              d['dependency_name'] ?? "",
+              d['image'] ?? "",
+              d['updated_at'] ?? "",
+              d['created_at'] ?? "",
+              d['deleted_at'] ?? "",
             );
             gdM.add(dm);
           });
@@ -260,11 +255,11 @@ class _AboutState extends State<About> {
           aF.forEach((a) {
             AimedForModel afm = AimedForModel(
               int.tryParse(a['id'].toString()) ?? 0,
-              a['AimedName'].toString() ?? "",
-              a['image'].toString() ?? "",
-              a['created_at'].toString() ?? "",
-              a['updated_at'].toString() ?? "",
-              a['deleted_at'].toString() ?? "",
+              a['AimedName'] ?? "",
+              a['image'] ?? "",
+              a['created_at'] ?? "",
+              a['updated_at'] ?? "",
+              a['deleted_at'] ?? "",
               int.tryParse(a['service_id'].toString()) ?? 0,
             );
             gAccomodationAimedfm.add(afm);
