@@ -13,7 +13,6 @@ import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
 import 'package:map_launcher/map_launcher.dart' as ml;
 import 'package:map_launcher/src/models.dart' as mt;
 
@@ -160,18 +159,16 @@ class _VisitDetailsState extends State<VisitDetails> {
           List<dynamic> userD = element['userData'];
           userD.forEach((u) {
             ReviewUserDataModel reviewUser = ReviewUserDataModel(
-                u['profile_image'].toString() ?? "",
-                u['name'].toString() ?? "",
-                u['country'].toString() ?? "");
+                u['profile_image'] ?? "", u['name'] ?? "", u['country'] ?? "");
             reviewUserModelList = reviewUser;
           });
         }
         int count = int.tryParse(reviewsList['count'].toString()) ?? 0;
         LocationReviewModel rm = LocationReviewModel(
-          element['location_id'].toString() ?? "",
-          element['user_id'].toString() ?? "",
-          element['rating'].toString() ?? "",
-          element['rating_description'].toString() ?? "",
+          element['location_id'] ?? "",
+          element['user_id'] ?? "",
+          element['rating'] ?? "",
+          element['rating_description'] ?? "",
           reviewUserModelList,
           count,
         );

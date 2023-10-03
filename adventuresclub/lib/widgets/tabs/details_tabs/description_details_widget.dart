@@ -94,7 +94,8 @@ class DescriptionDetailsWidget extends StatelessWidget {
                       ),
                       Align(
                         child: MyText(
-                          text: "$stars ${" "} ($reviewedBy ${"Reviews)"} ",
+                          text:
+                              "$stars ${" "} ($reviewedBy ${"reviews)".tr()} ",
                           color: yellowcolor,
                           weight: FontWeight.bold,
                         ),
@@ -198,7 +199,7 @@ class DescriptionDetailsWidget extends StatelessWidget {
                             height: 1.5),
                       ),
                       TextSpan(
-                        text: ", ${gm.remainingSeats} seat left",
+                        text: ", ${gm.remainingSeats}",
                         style: const TextStyle(
                             fontSize: 13,
                             // fontWeight: FontWeight.w300,

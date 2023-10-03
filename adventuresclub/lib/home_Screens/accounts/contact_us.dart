@@ -9,6 +9,7 @@ import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
 import 'package:adventuresclub/widgets/text_fields/multiline_field.dart';
 import 'package:adventuresclub/widgets/text_fields/tf_container.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -218,7 +219,7 @@ class _ContactUsState extends State<ContactUs> {
               ),
             ),
             title: MyText(
-              text: 'Contact Us',
+              text: 'contactUs'.tr(),
               color: bluishColor,
               weight: FontWeight.bold,
             ),
@@ -295,7 +296,7 @@ class _ContactUsState extends State<ContactUs> {
                     height: 20,
                   ),
                   ButtonIconLess(
-                      'Send', bluishColor, whiteColor, 1.3, 17, 16, contactUs),
+                      'send', bluishColor, whiteColor, 1.3, 17, 16, contactUs),
                   const SizedBox(
                     height: 20,
                   ),

@@ -424,9 +424,11 @@ class _ServicesCardState extends State<ServicesCard> {
                                     alignment: Alignment.centerRight,
                                     child: RatingBar.builder(
                                       ignoreGestures: true,
-                                      initialRating: convert(widget.gm.stars),
+                                      initialRating:
+                                          convert(widget.gm.stars.toString()),
                                       itemSize: 10,
-                                      minRating: convert(widget.gm.stars),
+                                      minRating:
+                                          convert(widget.gm.stars.toString()),
                                       direction: Axis.horizontal,
                                       allowHalfRating: true,
                                       itemCount: 5,

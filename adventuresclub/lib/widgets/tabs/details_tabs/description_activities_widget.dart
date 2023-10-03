@@ -1,6 +1,7 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/services/included_activities_model.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class DescriptionActivitiesWidget extends StatelessWidget {
@@ -22,7 +23,7 @@ class DescriptionActivitiesWidget extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: MyText(
-                text: 'Activities Includes',
+                text: 'activitiesIncludes'.tr(),
                 color: greyColor.withOpacity(0.6),
                 weight: FontWeight.bold,
                 fontFamily: 'Roboto',

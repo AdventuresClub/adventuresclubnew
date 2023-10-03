@@ -6,6 +6,7 @@ import 'package:adventuresclub/choose_language.dart';
 import 'package:adventuresclub/models/get_country.dart';
 import 'package:adventuresclub/models/profile_models/profile_become_partner.dart';
 import 'package:adventuresclub/models/user_profile_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'constants.dart';
@@ -282,16 +283,16 @@ class CheckProfileState extends State<CheckProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            CircularProgressIndicator(color: Colors.purple),
-            SizedBox(height: 20),
+            const CircularProgressIndicator(color: Colors.purple),
+            const SizedBox(height: 20),
             Text(
-              "Loading Profile ...",
-              style: TextStyle(color: Colors.purple),
+              "loadingProfile".tr(),
+              style: const TextStyle(color: Colors.purple),
             ),
           ],
         ),

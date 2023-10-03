@@ -1,5 +1,4 @@
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/widgets/phone_text_field.dart';
 import 'package:flutter/material.dart';
 
 class NewGetOtp extends StatelessWidget {

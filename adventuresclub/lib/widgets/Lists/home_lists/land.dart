@@ -236,7 +236,8 @@ class LandState extends State<Land> {
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: RatingBar.builder(
-                                      initialRating: convert(gm[index].stars),
+                                      initialRating:
+                                          convert(gm[index].stars.toString()),
                                       itemSize: 10,
                                       //minRating: 1,
                                       direction: Axis.horizontal,

@@ -104,7 +104,8 @@ class _VisitListState extends State<VisitList> {
                           ),
                           const SizedBox(width: 20),
                           RatingBar.builder(
-                            initialRating: convert(widget.gGv[index].rS), //3,
+                            initialRating:
+                                convert(widget.gGv[index].rS.toString()), //3,
                             itemSize: 12,
                             minRating: 1,
                             direction: Axis.horizontal,

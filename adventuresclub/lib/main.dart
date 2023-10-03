@@ -1,4 +1,3 @@
-import 'package:adventuresclub/check_profile.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/splashScreen/splash_screen.dart';

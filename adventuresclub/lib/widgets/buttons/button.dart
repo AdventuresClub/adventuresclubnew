@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class Button extends StatefulWidget {
@@ -62,7 +63,7 @@ class _ButtonState extends State<Button> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    widget.name,
+                    widget.name.tr(),
                     style: TextStyle(
                         color: widget.textColor,
                         fontWeight: widget.fontWeight,

@@ -2,6 +2,7 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/Lists/request_list/req_completed_list.dart';
 import 'package:adventuresclub/widgets/Lists/request_list/requests_lists.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class Requests extends StatefulWidget {
@@ -24,7 +25,7 @@ class _RequestsState extends State<Requests> {
         elevation: 1.5,
         centerTitle: true,
         title: MyText(
-          text: 'Requests ',
+          text: 'requests'.tr(),
           color: bluishColor,
           weight: FontWeight.bold,
         ),
@@ -54,7 +55,7 @@ class _RequestsState extends State<Requests> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: MyText(
-                        text: 'Upcoming',
+                        text: 'upcoming'.tr(),
                         color: whiteColor,
                         size: 16,
                       ),
@@ -76,7 +77,7 @@ class _RequestsState extends State<Requests> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: MyText(
-                        text: 'Completed',
+                        text: 'completed'.tr(),
                         color: whiteColor,
                         size: 16,
                       ),

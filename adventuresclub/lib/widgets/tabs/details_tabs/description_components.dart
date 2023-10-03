@@ -1,5 +1,6 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class DescriptionComponents extends StatelessWidget {
@@ -17,7 +18,7 @@ class DescriptionComponents extends StatelessWidget {
           child: ExpansionTile(
             tilePadding: const EdgeInsets.symmetric(horizontal: 10),
             title: Text(
-              title,
+              title.tr(),
               style: const TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.w500,

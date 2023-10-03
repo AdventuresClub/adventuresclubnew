@@ -17,6 +17,7 @@ import 'package:adventuresclub/models/services/dependencies_model.dart';
 import 'package:adventuresclub/models/services/included_activities_model.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -46,7 +47,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
       "",
       "",
       "",
-      "",
+      0,
       0,
       DateTime.now(),
       DateTime.now(),
@@ -85,7 +86,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
       bp,
       am,
       programmes,
-      "",
+      0,
       0,
       "",
       images,
@@ -137,8 +138,8 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
               int.tryParse(i['id'].toString()) ?? 0,
               int.tryParse(i['service_id'].toString()) ?? 0,
               int.tryParse(i['is_default'].toString()) ?? 0,
-              i['image_url'].toString() ?? "",
-              i['thumbnail'].toString() ?? "",
+              i['image_url'] ?? "",
+              i['thumbnail'] ?? "",
             );
             gSim.add(sm);
           });
@@ -156,9 +157,9 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
               element["provider_name"].toString() ?? "",
               element["height"].toString() ?? "",
               element["weight"].toString() ?? "",
-              element["health_conditions"].toString() ?? "",
-              element["booking_date"].toString() ?? "",
-              element["activity_date"].toString() ?? "",
+              element["health_conditions"] ?? "",
+              element["booking_date"] ?? "",
+              element["activity_date"] ?? "",
               int.tryParse(element["adult"].toString()) ?? 0,
               int.tryParse(element["kids"].toString()) ?? 0,
               element["unit_cost"].toString() ?? "",
@@ -185,47 +186,6 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
       print(e);
     }
   }
-
-  // void getChats() async {
-  //   // setState(() {
-  //   //   loading = true;
-  //   // });
-  //   try {
-  //     var response = await http.get(
-  //       Uri.parse(
-  //           "https://adventuresclub.net/adventureClub/newreceiverchat/3/1/3"),
-  //     );
-  //     if (response.statusCode == 200) {
-  //       mapChat = json.decode(response.body);
-  //       List<dynamic> result = mapChat['data'];
-  //       result.forEach((element) {});
-  //     }
-  //     // setState(() {
-  //     //   loading = false;
-  //     // });
-  //     print(response.statusCode);
-  //     print(response.body);
-  //     print(response.headers);
-  //   } catch (e) {
-  //     print(e.toString());
-  //   }
-  // }
-
-  // Future getReqList() async {
-  //   var response = await http.get(Uri.parse(
-  //       "https://adventuresclub.net/adventureClub/api/v1/get_requests?user_id=27&type=1"));
-  //   try {
-  //     if (response.statusCode == 200) {
-  //       Ulist = json.decode(response.body);
-  //       List<dynamic> result = Ulist['data'];
-  //       result.forEach((element) {});
-  //     }
-  //     print(response.statusCode);
-  //     print(response.body);
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
 
   Future getDetails(String serviceId, String userId) async {
     setState(() {
@@ -330,15 +290,15 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
       ServicesModel nSm = ServicesModel(
         int.tryParse(result['id'].toString()) ?? 0,
         int.tryParse(result['owner'].toString()) ?? 0,
-        result['adventure_name'].toString() ?? "",
-        result['country'].toString() ?? "",
-        result['region'].toString() ?? "",
+        result['adventure_name'] ?? "",
+        result['country'] ?? "",
+        result['region'] ?? "",
         result['city_id'].toString() ?? "",
         result['service_sector'].toString() ?? "",
         result['service_category'].toString() ?? "",
         result['service_type'].toString() ?? "",
         result['service_level'].toString() ?? "",
-        result['duration'].toString() ?? "",
+        int.tryParse(result['duration'].toString()) ?? 0,
         int.tryParse(result['availability_seats'].toString()) ?? 0,
         sDate,
         eDate,
@@ -379,7 +339,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
         nBp,
         gAccomodationAimedfm,
         gPm,
-        result['stars'].toString() ?? "",
+        int.tryParse(result['stars'].toString()) ?? 0,
         int.tryParse(result['is_liked'].toString()) ?? 0,
         result['baseurl'].toString() ?? "",
         gAccomodationServImgModel,
@@ -562,7 +522,6 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
             'user_id': Constants.userId.toString(),
             'status': "5",
           });
-      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       if (response.statusCode == 200) {
         message("Deleted Successfully");
         // homePage();
@@ -580,7 +539,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               MyText(
-                text: "Loading...",
+                text: "loading".tr(),
                 color: bluishColor,
                 weight: FontWeight.w700,
               ),
@@ -642,49 +601,53 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                       children: [
                                         if (uRequestList[index].status == "0")
                                           MyText(
-                                            text: "Requested", //'Confirmed',
+                                            text:
+                                                "requested".tr(), //'Confirmed',
                                             color: blueColor1,
                                             weight: FontWeight.bold,
                                           ),
                                         if (uRequestList[index].status == "1")
                                           MyText(
-                                            text: "Accepted", //'Confirmed',
+                                            text:
+                                                "accepted".tr(), //'Confirmed',
                                             color: orangeColor,
                                             weight: FontWeight.bold,
                                           ),
                                         if (uRequestList[index].status == "2")
                                           MyText(
-                                            text: "Paid", //'Confirmed',
+                                            text: "paid".tr(), //'Confirmed',
                                             color: greenColor1,
                                             weight: FontWeight.bold,
                                           ),
                                         if (uRequestList[index].status == "3")
                                           MyText(
-                                            text: "Declined", //'Confirmed',
+                                            text:
+                                                "declined".tr(), //'Confirmed',
                                             color: redColor,
                                             weight: FontWeight.bold,
                                           ),
                                         if (uRequestList[index].status == "4")
                                           MyText(
-                                            text: "Completed", //'Confirmed',
+                                            text:
+                                                "completed".tr(), //'Confirmed',
                                             color: greenColor1,
                                             weight: FontWeight.bold,
                                           ),
                                         if (uRequestList[index].status == "5")
                                           MyText(
-                                            text: "Dropped", //'Confirmed',
+                                            text: "dropped".tr(), //'Confirmed',
                                             color: redColor,
                                             weight: FontWeight.bold,
                                           ),
                                         if (uRequestList[index].status == "6")
                                           MyText(
-                                            text: "Confirm", //'Confirmed',
+                                            text: "confirm".tr(), //'Confirmed',
                                             color: greenColor1,
                                             weight: FontWeight.bold,
                                           ),
                                         if (uRequestList[index].status == "7")
                                           MyText(
-                                            text: "UnPaid", //'Confirmed',
+                                            text: "unPaid".tr(), //'Confirmed',
                                             color: greenColor1,
                                             weight: FontWeight.bold,
                                           ),
@@ -731,7 +694,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                               MainAxisAlignment.start,
                                           children: [
                                             MyText(
-                                              text: "Booking Number: ",
+                                              text: "bookingNumber".tr(),
                                               color: blackColor,
                                               weight: FontWeight.w700,
                                               size: 13,
@@ -752,7 +715,8 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                         ),
                                         RichText(
                                           text: TextSpan(
-                                            text: "Activity Name: ",
+                                            text: "activityName"
+                                                .tr(), //"Activity Name: ",
                                             style: const TextStyle(
                                                 color: blackColor,
                                                 fontSize: 13,
@@ -778,7 +742,8 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                               MainAxisAlignment.start,
                                           children: [
                                             MyText(
-                                              text: "Provider Name: ",
+                                              text: "providerName"
+                                                  .tr(), //"Provider Name: ",
                                               color: blackColor,
                                               weight: FontWeight.w700,
                                               size: 13,
@@ -798,7 +763,8 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                               MainAxisAlignment.start,
                                           children: [
                                             MyText(
-                                              text: "Booking Date: ",
+                                              text: "bookingDate"
+                                                  .tr(), //"Booking Date: ",
                                               color: blackColor,
                                               weight: FontWeight.w700,
                                               size: 13,
@@ -818,7 +784,8 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                               MainAxisAlignment.start,
                                           children: [
                                             MyText(
-                                              text: "Activity Date : ",
+                                              text: "activityDate"
+                                                  .tr(), //"Activity Date : ",
                                               color: blackColor,
                                               weight: FontWeight.w700,
                                               size: 13,
@@ -838,7 +805,8 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                               MainAxisAlignment.start,
                                           children: [
                                             MyText(
-                                              text: "Registrations :",
+                                              text: "registrations"
+                                                  .tr(), //"Registrations :",
                                               color: blackColor,
                                               weight: FontWeight.w700,
                                               size: 13,
@@ -859,7 +827,8 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                               MainAxisAlignment.start,
                                           children: [
                                             MyText(
-                                              text: "Unit Cost : ",
+                                              text: "unitCost"
+                                                  .tr(), //"Unit Cost : ",
                                               color: blackColor,
                                               weight: FontWeight.w700,
                                               size: 13,
@@ -881,7 +850,8 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                               MainAxisAlignment.start,
                                           children: [
                                             MyText(
-                                              text: "Total Cost : ",
+                                              text: "totalCost"
+                                                  .tr(), //"Total Cost : ",
                                               color: blackColor,
                                               weight: FontWeight.w700,
                                               size: 13,
@@ -903,7 +873,8 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                               MainAxisAlignment.start,
                                           children: [
                                             MyText(
-                                              text: "Payable Cost : ",
+                                              text: "payableCost"
+                                                  .tr(), //"Payable Cost : ",
                                               color: blackColor,
                                               weight: FontWeight.w700,
                                               size: 13,
@@ -925,7 +896,8 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                               MainAxisAlignment.start,
                                           children: [
                                             MyText(
-                                              text: "Payment Channel : ",
+                                              text: "paymentChannel"
+                                                  .tr(), //"Payment Channel : ",
                                               color: blackColor,
                                               weight: FontWeight.w700,
                                               size: 13,
@@ -977,10 +949,11 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                               uRequestList[index]
                                                   .providerId
                                                   .toString()),
-                                          child: const Center(
+                                          child: Center(
                                             child: Text(
-                                              'View Details',
-                                              style: TextStyle(
+                                              "viewDetails"
+                                                  .tr(), //'View Details',
+                                              style: const TextStyle(
                                                   color: whiteColor,
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w700),
@@ -1019,10 +992,10 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                               ? () =>
                                                   goToMyAd(uRequestList[index])
                                               : () {},
-                                          child: const Center(
+                                          child: Center(
                                             child: Text(
-                                              'Rate Now',
-                                              style: TextStyle(
+                                              "rateNow".tr(), //'Rate Now',
+                                              style: const TextStyle(
                                                   color: whiteColor,
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w700),
@@ -1048,10 +1021,11 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                               context,
                                               uRequestList[index].serviceId,
                                               uRequestList[index].providerId),
-                                          child: const Center(
+                                          child: Center(
                                             child: Text(
-                                              'Chat Provider',
-                                              style: TextStyle(
+                                              "chatProvider"
+                                                  .tr(), //'Chat Provider',
+                                              style: const TextStyle(
                                                   color: whiteColor,
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w700),

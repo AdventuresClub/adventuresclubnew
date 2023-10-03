@@ -54,7 +54,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
         text4.insert(1, widget.sm.region);
         text4.insert(2, widget.sm.serviceCategory);
         text4.insert(3, widget.sm.aSeats.toString());
-        text4.insert(4, widget.sm.duration);
+        text4.insert(4, widget.sm.duration.toString());
         widget.sm.availability.isEmpty
             ? text4.insert(5, "Start Date")
             : text4.insert(5, st);
@@ -75,7 +75,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
         text4.insert(1, widget.sm.region);
         text4.insert(2, widget.sm.serviceCategory);
         text4.insert(3, widget.sm.aSeats.toString());
-        text4.insert(4, widget.sm.duration);
+        text4.insert(4, widget.sm.duration.toString());
         text4.insert(5, aPlan);
         text6.insert(0, widget.sm.reviewdBy);
         text6.insert(1, widget.sm.serviceSector);
@@ -170,8 +170,8 @@ class _MyServicesTabState extends State<MyServicesTab> {
               int.tryParse(i['id'].toString()) ?? 0,
               int.tryParse(i['service_id'].toString()) ?? 0,
               int.tryParse(i['is_default'].toString()) ?? 0,
-              i['image_url'].toString() ?? "",
-              i['thumbnail'].toString() ?? "",
+              i['image_url'] ?? "",
+              i['thumbnail'] ?? "",
             );
             gSim.add(sm);
           });
@@ -189,34 +189,34 @@ class _MyServicesTabState extends State<MyServicesTab> {
             bookingId,
             bookingUser,
             providerId,
-            element['provider_profile'].toString() ?? "",
-            element['email'].toString() ?? "",
+            element['provider_profile'] ?? "",
+            element['email'] ?? "",
             nationalityId,
             ownerId,
             serviceId,
-            element['health_conditions'].toString() ?? "",
-            element['country'].toString() ?? "",
-            element['region'].toString() ?? "",
-            element['adventure_name'].toString() ?? "",
-            element['provider_name'].toString() ?? "",
-            element['customer'].toString() ?? "",
-            element['service_date'].toString() ?? "",
-            element['booked_on'].toString() ?? "",
+            element['health_conditions'] ?? "",
+            element['country'] ?? "",
+            element['region'] ?? "",
+            element['adventure_name'] ?? "",
+            element['provider_name'] ?? "",
+            element['customer'] ?? "",
+            element['service_date'] ?? "",
+            element['booked_on'] ?? "",
             adult,
             kids,
-            element['unit_cost'].toString() ?? "",
-            element['total_cost'].toString() ?? "",
-            element['discounted_amount'].toString() ?? "",
-            element['payment_channel'].toString() ?? "",
-            element['currency'].toString() ?? "",
-            element['dob'].toString() ?? "",
-            element['height'].toString() ?? "",
-            element['weight'].toString() ?? "",
-            element['message'].toString() ?? "",
-            element['booking_status'].toString() ?? "",
-            element['status'].toString() ?? "",
-            element['category'].toString() ?? "",
-            element['nationality'].toString() ?? "",
+            element['unit_cost'] ?? "",
+            element['total_cost'] ?? "",
+            element['discounted_amount'] ?? "",
+            element['payment_channel'] ?? "",
+            element['currency'] ?? "",
+            element['dob'] ?? "",
+            element['height'] ?? "",
+            element['weight'] ?? "",
+            element['message'] ?? "",
+            element['booking_status'] ?? "",
+            element['status'] ?? "",
+            element['category'] ?? "",
+            element['nationality'] ?? "",
             gSim);
         gGM.add(gm);
       });
@@ -285,7 +285,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
                     text4,
                     text5,
                     text6,
-                    convert(widget.sm.stars),
+                    convert(widget.sm.stars.toString()),
                     widget.sm.reviewdBy.toString(),
                     widget.sm.id.toString(),
                     show: true,

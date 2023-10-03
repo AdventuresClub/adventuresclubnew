@@ -18,6 +18,7 @@ import 'package:adventuresclub/models/services/service_image_model.dart';
 import 'package:adventuresclub/models/user_profile_model.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -56,7 +57,7 @@ class _RequestListViewState extends State<RequestListView> {
       "",
       "",
       "",
-      "",
+      0,
       0,
       DateTime.now(),
       DateTime.now(),
@@ -95,7 +96,7 @@ class _RequestListViewState extends State<RequestListView> {
       bp,
       am,
       programmes,
-      "",
+      0,
       0,
       "",
       images,
@@ -402,7 +403,7 @@ class _RequestListViewState extends State<RequestListView> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 00),
+      padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 00),
       shrinkWrap: true,
       physics: const ClampingScrollPhysics(),
       itemCount: uRequestListInv.length,
@@ -415,14 +416,15 @@ class _RequestListViewState extends State<RequestListView> {
           key: Key(uRequestListInv[index].BookingId.toString()),
           elevation: 4,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 5),
+            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 2),
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     MyText(
-                      text: uRequestListInv[index].region, //'Location Name',
+                      text:
+                          uRequestListInv[index].region.tr(), //'Location Name',
                       color: blackColor,
                       weight: FontWeight.bold,
                     ),
@@ -430,49 +432,49 @@ class _RequestListViewState extends State<RequestListView> {
                       children: [
                         if (uRequestListInv[index].status == "0")
                           MyText(
-                            text: "REQUESTED", //'Confirmed',
+                            text: "requested".tr(), //'Confirmed',
                             color: blueColor1,
                             weight: FontWeight.bold,
                           ),
                         if (uRequestListInv[index].status == "1")
                           MyText(
-                            text: "ACCEPTED", //'Confirmed',
+                            text: "accepted".tr(), //'Confirmed',
                             color: orangeColor,
                             weight: FontWeight.bold,
                           ),
                         if (uRequestListInv[index].status == "2")
                           MyText(
-                            text: "PAID", //'Confirmed',
+                            text: "paid".tr(), //'Confirmed',
                             color: greenColor1,
                             weight: FontWeight.bold,
                           ),
                         if (uRequestListInv[index].status == "3")
                           MyText(
-                            text: "DECLINED", //'Confirmed',
+                            text: "declined".tr(), //'Confirmed',
                             color: redColor,
                             weight: FontWeight.bold,
                           ),
                         if (uRequestListInv[index].status == "4")
                           MyText(
-                            text: "COMPLETED", //'Confirmed',
+                            text: "completed".tr(), //'Confirmed',
                             color: greenColor1,
                             weight: FontWeight.bold,
                           ),
                         if (uRequestListInv[index].status == "5")
                           MyText(
-                            text: "DROPPED", //'Confirmed',
+                            text: "dropped".tr(), //'Confirmed',
                             color: redColor,
                             weight: FontWeight.bold,
                           ),
                         if (uRequestListInv[index].status == "6")
                           MyText(
-                            text: "CONFIRM", //'Confirmed',
+                            text: "confirm".tr(), //'Confirmed',
                             color: greenColor1,
                             weight: FontWeight.bold,
                           ),
                         if (uRequestListInv[index].status == "7")
                           MyText(
-                            text: "UNPAID", //'Confirmed',
+                            text: "unpaid".tr(), //'Confirmed',
                             color: greenColor1,
                             weight: FontWeight.bold,
                           ),

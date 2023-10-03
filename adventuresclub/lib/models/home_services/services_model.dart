@@ -18,7 +18,7 @@ class ServicesModel {
   String serviceCategory;
   String serviceType;
   String serviceLevel;
-  String duration;
+  int duration;
   int aSeats;
   DateTime startDate;
   DateTime endDate;
@@ -57,7 +57,7 @@ class ServicesModel {
   List<BecomePartner> bp; // new
   List<AimedForModel> am; // new
   List<ProgrammesModel> programmes;
-  String stars;
+  int stars;
   int isLiked;
   String baseURL;
   List<ServiceImageModel> images;

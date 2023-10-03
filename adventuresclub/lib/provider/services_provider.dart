@@ -128,7 +128,7 @@ class ServicesProvider with ChangeNotifier {
       String acc = "";
       result.forEach((element) {
         List<ServicesModel> all_Services = [];
-        acc = element['category'].toString() ?? "";
+        acc = element['category'] ?? "";
         categories.add(acc);
         List<dynamic> s = element['services'];
         s.forEach((services) {
@@ -142,17 +142,14 @@ class ServicesProvider with ChangeNotifier {
           List<AvailabilityModel> gAccomodoationAvaiModel = [];
           List<dynamic> available = services['availability'];
           available.forEach((a) {
-            AvailabilityModel am = AvailabilityModel(
-                a['start_date'].toString() ?? "",
-                a['end_date'].toString() ?? "");
+            AvailabilityModel am =
+                AvailabilityModel(a['start_date'] ?? "", a['end_date'] ?? "");
             gAccomodoationAvaiModel.add(am);
           });
           List<dynamic> becomePartner = services['become_partner'];
           becomePartner.forEach((b) {
-            BecomePartner bp = BecomePartner(
-                b['cr_name'].toString() ?? "",
-                b['cr_number'].toString() ?? "",
-                b['description'].toString() ?? "");
+            BecomePartner bp = BecomePartner(b['cr_name'] ?? "",
+                b['cr_number'] ?? "", b['description'] ?? "");
           });
           List<IncludedActivitiesModel> gIAm = [];
           List<dynamic> iActivities = services['included_activities'];
@@ -160,9 +157,9 @@ class ServicesProvider with ChangeNotifier {
             IncludedActivitiesModel iAm = IncludedActivitiesModel(
               int.tryParse(iA['id'].toString()) ?? 0,
               int.tryParse(iA['service_id'].toString()) ?? 0,
-              iA['activity_id'].toString() ?? "",
-              iA['activity'].toString() ?? "",
-              iA['image'].toString() ?? "",
+              iA['activity_id'] ?? "",
+              iA['activity'] ?? "",
+              iA['image'] ?? "",
             );
             gIAm.add(iAm);
           });
@@ -171,11 +168,11 @@ class ServicesProvider with ChangeNotifier {
           dependency.forEach((d) {
             DependenciesModel dm = DependenciesModel(
               int.tryParse(d['id'].toString()) ?? 0,
-              d['dependency_name'].toString() ?? "",
-              d['image'].toString() ?? "",
-              d['updated_at'].toString() ?? "",
-              d['created_at'].toString() ?? "",
-              d['deleted_at'].toString() ?? "",
+              d['dependency_name'] ?? "",
+              d['image'] ?? "",
+              d['updated_at'] ?? "",
+              d['created_at'] ?? "",
+              d['deleted_at'] ?? "",
             );
             gdM.add(dm);
           });
@@ -184,11 +181,11 @@ class ServicesProvider with ChangeNotifier {
           aF.forEach((a) {
             AimedForModel afm = AimedForModel(
               int.tryParse(a['id'].toString()) ?? 0,
-              a['AimedName'].toString() ?? "",
-              a['image'].toString() ?? "",
-              a['created_at'].toString() ?? "",
-              a['updated_at'].toString() ?? "",
-              a['deleted_at'].toString() ?? "",
+              a['AimedName'] ?? "",
+              a['image'] ?? "",
+              a['created_at'] ?? "",
+              a['updated_at'] ?? "",
+              a['deleted_at'] ?? "",
               int.tryParse(a['service_id'].toString()) ?? 0,
             );
             gAccomodationAimedfm.add(afm);
@@ -200,8 +197,8 @@ class ServicesProvider with ChangeNotifier {
               int.tryParse(i['id'].toString()) ?? 0,
               int.tryParse(i['service_id'].toString()) ?? 0,
               int.tryParse(i['is_default'].toString()) ?? 0,
-              i['image_url'].toString() ?? "",
-              i['thumbnail'].toString() ?? "",
+              i['image_url'] ?? "",
+              i['thumbnail'] ?? "",
             );
             gAccomodationServImgModel.add(sm);
           });
@@ -211,10 +208,10 @@ class ServicesProvider with ChangeNotifier {
             ProgrammesModel pm = ProgrammesModel(
               int.tryParse(p['id'].toString()) ?? 0,
               int.tryParse(p['service_id'].toString()) ?? 0,
-              p['title'].toString() ?? "",
-              p['start_datetime'].toString() ?? "",
-              p['end_datetime'].toString() ?? "",
-              p['description'].toString() ?? "",
+              p['title'] ?? "",
+              p['start_datetime'] ?? "",
+              p['end_datetime'] ?? "",
+              p['description'] ?? "",
             );
             gPm.add(pm);
           });
@@ -227,59 +224,59 @@ class ServicesProvider with ChangeNotifier {
           ServicesModel nSm = ServicesModel(
             int.tryParse(services['id'].toString()) ?? 0,
             int.tryParse(services['owner'].toString()) ?? 0,
-            services['adventure_name'].toString() ?? "",
-            services['country'].toString() ?? "",
-            services['region'].toString() ?? "",
-            services['city_id'].toString() ?? "",
-            services['service_sector'].toString() ?? "",
-            services['service_category'].toString() ?? "",
-            services['service_type'].toString() ?? "",
-            services['service_level'].toString() ?? "",
-            services['duration'].toString() ?? "",
+            services['adventure_name'] ?? "",
+            services['country'] ?? "",
+            services['region'] ?? "",
+            services['city_id'] ?? "",
+            services['service_sector'] ?? "",
+            services['service_category'] ?? "",
+            services['service_type'] ?? "",
+            services['service_level'] ?? "",
+            int.tryParse(services['duration'].toString()) ?? 0,
             int.tryParse(services['available_seats'].toString()) ?? 0,
             sDate,
             eDate,
-            services['latitude'].toString() ?? "",
-            services['longitude'].toString() ?? "",
-            services['write_information'].toString() ?? "",
+            services['latitude'] ?? "",
+            services['longitude'] ?? "",
+            services['write_information'] ?? "",
             int.tryParse(services['service_plan'].toString()) ?? 0,
             int.tryParse(services['sfor_id'].toString()) ?? 0,
             gAccomodoationAvaiModel,
             gAccomodationPlanModel,
-            services['geo_location'].toString() ?? "",
-            services['specific_address'].toString() ?? "",
-            services['cost_inc'].toString() ?? "",
-            services['cost_exc'].toString() ?? "",
-            services['currency'].toString() ?? "",
+            services['geo_location'] ?? "",
+            services['specific_address'] ?? "",
+            services['cost_inc'] ?? "",
+            services['cost_exc'] ?? "",
+            services['currency'] ?? "",
             int.tryParse(services['points'].toString()) ?? 0,
-            services['pre_requisites'].toString() ?? "",
-            services['minimum_requirements'].toString() ?? "",
-            services['terms_conditions'].toString() ?? "",
+            services['pre_requisites'] ?? "",
+            services['minimum_requirements'] ?? "",
+            services['terms_conditions'] ?? "",
             int.tryParse(services['recommended'].toString()) ?? 0,
-            services['status'].toString() ?? "",
-            services['image'].toString() ?? "",
-            services['descreption]'].toString() ?? "",
-            services['favourite_image'].toString() ?? "",
-            services['created_at'].toString() ?? "",
-            services['updated_at'].toString() ?? "",
-            services['delete_at'].toString() ?? "",
+            services['status'] ?? "",
+            services['image'] ?? "",
+            services['descreption]'] ?? "",
+            services['favourite_image'] ?? "",
+            services['created_at'] ?? "",
+            services['updated_at'] ?? "",
+            services['delete_at'] ?? "",
             int.tryParse(services['provider_id'].toString()) ?? 0,
             int.tryParse(services['service_id'].toString()) ?? 0,
-            services['provided_name'].toString() ?? "",
-            services['provider_profile'].toString() ?? "",
-            services['including_gerea_and_other_taxes'].toString() ?? "",
-            services['excluding_gerea_and_other_taxes'].toString() ?? "",
+            services['provided_name'] ?? "",
+            services['provider_profile'] ?? "",
+            services['including_gerea_and_other_taxes'] ?? "",
+            services['excluding_gerea_and_other_taxes'] ?? "",
             gIAm,
             gdM,
             nBp,
             gAccomodationAimedfm,
             gPm,
-            services['stars'].toString() ?? "",
+            int.tryParse(services['stars'].toString()) ?? 0,
             int.tryParse(services['is_liked'].toString()) ?? 0,
-            services['baseurl'].toString() ?? "",
+            services['baseurl'] ?? "",
             gAccomodationServImgModel,
-            element['rating'].toString() ?? "",
-            services['reviewd_by'].toString() ?? "",
+            element['rating'] ?? "",
+            services['reviewd_by'] ?? "",
             int.tryParse(services['remaining_seats'].toString()) ?? 0,
           );
           allServices.add(nSm);
@@ -425,11 +422,11 @@ class ServicesProvider with ChangeNotifier {
           dependency.forEach((d) {
             DependenciesModel dm = DependenciesModel(
               int.tryParse(d['id'].toString()) ?? 0,
-              d['dependency_name'].toString() ?? "",
-              d['image'].toString() ?? "",
-              d['updated_at'].toString() ?? "",
-              d['created_at'].toString() ?? "",
-              d['deleted_at'].toString() ?? "",
+              d['dependency_name'] ?? "",
+              d['image'] ?? "",
+              d['updated_at'] ?? "",
+              d['created_at'] ?? "",
+              d['deleted_at'] ?? "",
             );
             gdM.add(dm);
           });
@@ -438,11 +435,11 @@ class ServicesProvider with ChangeNotifier {
           aF.forEach((a) {
             AimedForModel afm = AimedForModel(
               int.tryParse(a['id'].toString()) ?? 0,
-              a['AimedName'].toString() ?? "",
-              a['image'].toString() ?? "",
-              a['created_at'].toString() ?? "",
-              a['updated_at'].toString() ?? "",
-              a['deleted_at'].toString() ?? "",
+              a['AimedName'] ?? "",
+              a['image'] ?? "",
+              a['created_at'] ?? "",
+              a['updated_at'] ?? "",
+              a['deleted_at'] ?? "",
               int.tryParse(a['service_id'].toString()) ?? 0,
             );
             gAccomodationAimedfm.add(afm);
@@ -454,8 +451,8 @@ class ServicesProvider with ChangeNotifier {
               int.tryParse(i['id'].toString()) ?? 0,
               int.tryParse(i['service_id'].toString()) ?? 0,
               int.tryParse(i['is_default'].toString()) ?? 0,
-              i['image_url'].toString() ?? "",
-              i['thumbnail'].toString() ?? "",
+              i['image_url'] ?? "",
+              i['thumbnail'] ?? "",
             );
             gAccomodationServImgModel.add(sm);
           });
@@ -465,10 +462,10 @@ class ServicesProvider with ChangeNotifier {
             ProgrammesModel pm = ProgrammesModel(
               int.tryParse(p['id'].toString()) ?? 0,
               int.tryParse(p['service_id'].toString()) ?? 0,
-              p['title'].toString() ?? "",
-              p['start_datetime'].toString() ?? "",
-              p['end_datetime'].toString() ?? "",
-              p['description'].toString() ?? "",
+              p['title'] ?? "",
+              p['start_datetime'] ?? "",
+              p['end_datetime'] ?? "",
+              p['description'] ?? "",
             );
             gPm.add(pm);
           });
@@ -481,59 +478,59 @@ class ServicesProvider with ChangeNotifier {
           ServicesModel nSm = ServicesModel(
             int.tryParse(services['id'].toString()) ?? 0,
             int.tryParse(services['owner'].toString()) ?? 0,
-            services['adventure_name'].toString() ?? "",
-            services['country'].toString() ?? "",
-            services['region'].toString() ?? "",
-            services['city_id'].toString() ?? "",
-            services['service_sector'].toString() ?? "",
-            services['service_category'].toString() ?? "",
-            services['service_type'].toString() ?? "",
-            services['service_level'].toString() ?? "",
-            services['duration'].toString() ?? "",
+            services['adventure_name'] ?? "",
+            services['country'] ?? "",
+            services['region'] ?? "",
+            services['city_id'] ?? "",
+            services['service_sector'] ?? "",
+            services['service_category'] ?? "",
+            services['service_type'] ?? "",
+            services['service_level'] ?? "",
+            services['duration'] ?? "",
             int.tryParse(services['available_seats'].toString()) ?? 0,
             sDate,
             eDate,
-            services['latitude'].toString() ?? "",
-            services['longitude'].toString() ?? "",
-            services['write_information'].toString() ?? "",
+            services['latitude'] ?? "",
+            services['longitude'] ?? "",
+            services['write_information'] ?? "",
             int.tryParse(services['service_plan'].toString()) ?? 0,
             int.tryParse(services['sfor_id'].toString()) ?? 0,
             gAccomodoationAvaiModel,
             gAccomodationPlanModel,
-            services['geo_location'].toString() ?? "",
-            services['specific_address'].toString() ?? "",
-            services['cost_inc'].toString() ?? "",
-            services['cost_exc'].toString() ?? "",
-            services['currency'].toString() ?? "",
+            services['geo_location'] ?? "",
+            services['specific_address'] ?? "",
+            services['cost_inc'] ?? "",
+            services['cost_exc'] ?? "",
+            services['currency'] ?? "",
             int.tryParse(services['points'].toString()) ?? 0,
-            services['pre_requisites'].toString() ?? "",
-            services['minimum_requirements'].toString() ?? "",
-            services['terms_conditions'].toString() ?? "",
+            services['pre_requisites'] ?? "",
+            services['minimum_requirements'] ?? "",
+            services['terms_conditions'] ?? "",
             int.tryParse(services['recommended'].toString()) ?? 0,
-            services['status'].toString() ?? "",
-            services['image'].toString() ?? "",
-            services['descreption]'].toString() ?? "",
-            services['favourite_image'].toString() ?? "",
-            services['created_at'].toString() ?? "",
-            services['updated_at'].toString() ?? "",
-            services['delete_at'].toString() ?? "",
+            services['status'] ?? "",
+            services['image'] ?? "",
+            services['descreption]'] ?? "",
+            services['favourite_image'] ?? "",
+            services['created_at'] ?? "",
+            services['updated_at'] ?? "",
+            services['delete_at'] ?? "",
             int.tryParse(services['provider_id'].toString()) ?? 0,
             int.tryParse(services['service_id'].toString()) ?? 0,
-            services['provided_name'].toString() ?? "",
-            services['provider_profile'].toString() ?? "",
-            services['including_gerea_and_other_taxes'].toString() ?? "",
-            services['excluding_gerea_and_other_taxes'].toString() ?? "",
+            services['provided_name'] ?? "",
+            services['provider_profile'] ?? "",
+            services['including_gerea_and_other_taxes'] ?? "",
+            services['excluding_gerea_and_other_taxes'] ?? "",
             gIAm,
             gdM,
             nBp,
             gAccomodationAimedfm,
             gPm,
-            services['stars'].toString() ?? "",
+            int.tryParse(services['stars'].toString()) ?? 0,
             int.tryParse(services['is_liked'].toString()) ?? 0,
-            services['baseurl'].toString() ?? "",
+            services['baseurl'] ?? "",
             gAccomodationServImgModel,
-            element['rating'].toString() ?? "",
-            services['reviewd_by'].toString() ?? "",
+            element['rating'] ?? "",
+            services['reviewd_by'] ?? "",
             int.tryParse(services['remaining_seats'].toString()) ?? 0,
           );
           allServices.add(nSm);
@@ -810,30 +807,27 @@ class ServicesProvider with ChangeNotifier {
       List<dynamic> result = getServicesMap['data'];
       result.forEach((element) {
         if (element['category'] == "Accomodation") {
-          String acc = element['category'].toString() ?? "";
+          String acc = element['category'] ?? "";
           List<dynamic> s = element['services'];
           s.forEach((services) {
             List<AvailabilityPlanModel> gAccomodationPlanModel = [];
             List<dynamic> availablePlan = services['availability'];
             availablePlan.forEach((ap) {
-              AvailabilityPlanModel amPlan = AvailabilityPlanModel(
-                  ap['id'].toString() ?? "", ap['day'].toString() ?? "");
+              AvailabilityPlanModel amPlan =
+                  AvailabilityPlanModel(ap['id'] ?? "", ap['day'] ?? "");
               gAccomodationPlanModel.add(amPlan);
             });
             List<AvailabilityModel> gAccomodoationAvaiModel = [];
             List<dynamic> available = services['availability'];
             available.forEach((a) {
-              AvailabilityModel am = AvailabilityModel(
-                  a['start_date'].toString() ?? "",
-                  a['end_date'].toString() ?? "");
+              AvailabilityModel am =
+                  AvailabilityModel(a['start_date'] ?? "", a['end_date'] ?? "");
               gAccomodoationAvaiModel.add(am);
             });
             List<dynamic> becomePartner = services['become_partner'];
             becomePartner.forEach((b) {
-              BecomePartner bp = BecomePartner(
-                  b['cr_name'].toString() ?? "",
-                  b['cr_number'].toString() ?? "",
-                  b['description'].toString() ?? "");
+              BecomePartner bp = BecomePartner(b['cr_name'] ?? "",
+                  b['cr_number'] ?? "", b['description'] ?? "");
             });
             List<IncludedActivitiesModel> gIAm = [];
             List<dynamic> iActivities = services['included_activities'];
@@ -841,9 +835,9 @@ class ServicesProvider with ChangeNotifier {
               IncludedActivitiesModel iAm = IncludedActivitiesModel(
                 int.tryParse(iA['id'].toString()) ?? 0,
                 int.tryParse(iA['service_id'].toString()) ?? 0,
-                iA['activity_id'].toString() ?? "",
-                iA['activity'].toString() ?? "",
-                iA['image'].toString() ?? "",
+                iA['activity_id'] ?? "",
+                iA['activity'] ?? "",
+                iA['image'] ?? "",
               );
               gIAm.add(iAm);
             });
@@ -852,11 +846,11 @@ class ServicesProvider with ChangeNotifier {
             dependency.forEach((d) {
               DependenciesModel dm = DependenciesModel(
                 int.tryParse(d['id'].toString()) ?? 0,
-                d['dependency_name'].toString() ?? "",
-                d['image'].toString() ?? "",
-                d['updated_at'].toString() ?? "",
-                d['created_at'].toString() ?? "",
-                d['deleted_at'].toString() ?? "",
+                d['dependency_name'] ?? "",
+                d['image'] ?? "",
+                d['updated_at'] ?? "",
+                d['created_at'] ?? "",
+                d['deleted_at'] ?? "",
               );
               gdM.add(dm);
             });
@@ -866,10 +860,10 @@ class ServicesProvider with ChangeNotifier {
               AimedForModel afm = AimedForModel(
                 int.tryParse(a['id'].toString()) ?? 0,
                 a['AimedName'].toString() ?? "",
-                a['image'].toString() ?? "",
-                a['created_at'].toString() ?? "",
-                a['updated_at'].toString() ?? "",
-                a['deleted_at'].toString() ?? "",
+                a['image'] ?? "",
+                a['created_at'] ?? "",
+                a['updated_at'] ?? "",
+                a['deleted_at'] ?? "",
                 int.tryParse(a['service_id'].toString()) ?? 0,
               );
               gAccomodationAimedfm.add(afm);
@@ -881,8 +875,8 @@ class ServicesProvider with ChangeNotifier {
                 int.tryParse(i['id'].toString()) ?? 0,
                 int.tryParse(i['service_id'].toString()) ?? 0,
                 int.tryParse(i['is_default'].toString()) ?? 0,
-                i['image_url'].toString() ?? "",
-                i['thumbnail'].toString() ?? "",
+                i['image_url'] ?? "",
+                i['thumbnail'] ?? "",
               );
               gAccomodationServImgModel.add(sm);
             });
@@ -892,10 +886,10 @@ class ServicesProvider with ChangeNotifier {
               ProgrammesModel pm = ProgrammesModel(
                 int.tryParse(p['id'].toString()) ?? 0,
                 int.tryParse(p['service_id'].toString()) ?? 0,
-                p['title'].toString() ?? "",
-                p['start_datetime'].toString() ?? "",
-                p['end_datetime'].toString() ?? "",
-                p['description'].toString() ?? "",
+                p['title'] ?? "",
+                p['start_datetime'] ?? "",
+                p['end_datetime'] ?? "",
+                p['description'] ?? "",
               );
               gPm.add(pm);
             });
@@ -908,61 +902,61 @@ class ServicesProvider with ChangeNotifier {
             ServicesModel nSm = ServicesModel(
               int.tryParse(services['id'].toString()) ?? 0,
               int.tryParse(services['owner'].toString()) ?? 0,
-              services['adventure_name'].toString() ?? "",
-              services['country'].toString() ?? "",
-              services['region'].toString() ?? "",
-              services['city_id'].toString() ?? "",
-              services['service_sector'].toString() ?? "",
-              services['service_category'].toString() ?? "",
-              services['service_type'].toString() ?? "",
-              services['service_level'].toString() ?? "",
-              services['duration'].toString() ?? "",
+              services['adventure_name'] ?? "",
+              services['country'] ?? "",
+              services['region'] ?? "",
+              services['city_id'] ?? "",
+              services['service_sector'] ?? "",
+              services['service_category'] ?? "",
+              services['service_type'] ?? "",
+              services['service_level'] ?? "",
+              services['duration'] ?? "",
               int.tryParse(services['available_seats'].toString()) ?? 0,
               sDate,
               eDate,
               //int.tryParse(services['start_date'].toString()) ?? "",
               //int.tryParse(services['end_date'].toString()) ?? "",
-              services['latitude'].toString() ?? "",
-              services['longitude'].toString() ?? "",
-              services['write_information'].toString() ?? "",
+              services['latitude'] ?? "",
+              services['longitude'] ?? "",
+              services['write_information'] ?? "",
               int.tryParse(services['service_plan'].toString()) ?? 0,
               int.tryParse(services['sfor_id'].toString()) ?? 0,
               gAccomodoationAvaiModel,
               gAccomodationPlanModel,
-              services['geo_location'].toString() ?? "",
-              services['specific_address'].toString() ?? "",
-              services['cost_inc'].toString() ?? "",
-              services['cost_exc'].toString() ?? "",
-              services['currency'].toString() ?? "",
+              services['geo_location'] ?? "",
+              services['specific_address'] ?? "",
+              services['cost_inc'] ?? "",
+              services['cost_exc'] ?? "",
+              services['currency'] ?? "",
               int.tryParse(services['points'].toString()) ?? 0,
-              services['pre_requisites'].toString() ?? "",
-              services['minimum_requirements'].toString() ?? "",
-              services['terms_conditions'].toString() ?? "",
+              services['pre_requisites'] ?? "",
+              services['minimum_requirements'] ?? "",
+              services['terms_conditions'] ?? "",
               int.tryParse(services['recommended'].toString()) ?? 0,
-              services['status'].toString() ?? "",
-              services['image'].toString() ?? "",
-              services['descreption]'].toString() ?? "",
-              services['favourite_image'].toString() ?? "",
-              services['created_at'].toString() ?? "",
-              services['updated_at'].toString() ?? "",
-              services['delete_at'].toString() ?? "",
+              services['status'] ?? "",
+              services['image'] ?? "",
+              services['descreption]'] ?? "",
+              services['favourite_image'] ?? "",
+              services['created_at'] ?? "",
+              services['updated_at'] ?? "",
+              services['delete_at'] ?? "",
               int.tryParse(services['provider_id'].toString()) ?? 0,
               int.tryParse(services['service_id'].toString()) ?? 0,
-              services['provided_name'].toString() ?? "",
-              services['provider_profile'].toString() ?? "",
-              services['including_gerea_and_other_taxes'].toString() ?? "",
-              services['excluding_gerea_and_other_taxes'].toString() ?? "",
+              services['provided_name'] ?? "",
+              services['provider_profile'] ?? "",
+              services['including_gerea_and_other_taxes'] ?? "",
+              services['excluding_gerea_and_other_taxes'] ?? "",
               gIAm,
               gdM,
               nBp,
               gAccomodationAimedfm,
               gPm,
-              services['stars'].toString() ?? "",
+              services['stars'] ?? "",
               int.tryParse(services['is_liked'].toString()) ?? 0,
-              services['baseurl'].toString() ?? "",
+              services['baseurl'] ?? "",
               gAccomodationServImgModel,
-              element['rating'].toString() ?? "",
-              services['reviewd_by'].toString() ?? "",
+              element['rating'] ?? "",
+              services['reviewd_by'] ?? "",
               int.tryParse(services['remaining_seats'].toString()) ?? 0,
             );
             //gAccomodationSModel.add(nSm);
@@ -982,24 +976,21 @@ class ServicesProvider with ChangeNotifier {
             List<AvailabilityPlanModel> gTransportPlanModel = [];
             List<dynamic> availablePlan = tServices['availability'];
             availablePlan.forEach((ap) {
-              AvailabilityPlanModel tPlan = AvailabilityPlanModel(
-                  ap['id'].toString() ?? "", ap['day'].toString() ?? "");
+              AvailabilityPlanModel tPlan =
+                  AvailabilityPlanModel(ap['id'] ?? "", ap['day'] ?? "");
               gTransportPlanModel.add(tPlan);
             });
             List<AvailabilityModel> gTransportAvaiModel = [];
             List<dynamic> tAvailable = tServices['availability'];
             tAvailable.forEach((aS) {
               AvailabilityModel tAM = AvailabilityModel(
-                  aS['start_date'].toString() ?? "",
-                  aS['end_date'].toString() ?? "");
+                  aS['start_date'] ?? "", aS['end_date'] ?? "");
               gTransportAvaiModel.add(tAM);
             });
             List<dynamic> tBecomePartner = tServices['become_partner'];
             tBecomePartner.forEach((bS) {
-              BecomePartner transportBp = BecomePartner(
-                  bS['cr_name'].toString() ?? "",
-                  bS['cr_number'].toString() ?? "",
-                  bS['description'].toString() ?? "");
+              BecomePartner transportBp = BecomePartner(bS['cr_name'] ?? "",
+                  bS['cr_number'] ?? "", bS['description'] ?? "");
             });
             List<IncludedActivitiesModel> gIAm = [];
             List<dynamic> iActivities = tServices['included_activities'];
@@ -1007,9 +998,9 @@ class ServicesProvider with ChangeNotifier {
               IncludedActivitiesModel iAm = IncludedActivitiesModel(
                 int.tryParse(iA['id'].toString()) ?? 0,
                 int.tryParse(iA['service_id'].toString()) ?? 0,
-                iA['activity_id'].toString() ?? "",
-                iA['activity'].toString() ?? "",
-                iA['image'].toString() ?? "",
+                iA['activity_id'] ?? "",
+                iA['activity'] ?? "",
+                iA['image'] ?? "",
               );
               gIAm.add(iAm);
             });
@@ -1082,7 +1073,7 @@ class ServicesProvider with ChangeNotifier {
               tServices['service_category'].toString() ?? "",
               tServices['service_type'].toString() ?? "",
               tServices['service_level'].toString() ?? "",
-              tServices['duration'].toString() ?? "",
+              int.tryParse(tServices['duration'].toString()) ?? 0,
               int.tryParse(tServices['availability_seats'].toString()) ?? 0,
               sDate,
               eDate,
@@ -1121,7 +1112,7 @@ class ServicesProvider with ChangeNotifier {
               transportBp,
               gTransportAimedfm,
               gPm,
-              tServices['stars'].toString() ?? "",
+              int.tryParse(tServices['stars'].toString()) ?? 0,
               int.tryParse(tServices['is_liked'].toString()) ?? 0,
               tServices['baseurl'].toString() ?? "",
               gTransportServImgModel,
@@ -1247,7 +1238,7 @@ class ServicesProvider with ChangeNotifier {
               skyServices['service_category'].toString() ?? "",
               skyServices['service_type'].toString() ?? "",
               skyServices['service_level'].toString() ?? "",
-              skyServices['duration'].toString() ?? "",
+              int.tryParse(skyServices['duration'].toString()) ?? 0,
               int.tryParse(skyServices['availability_seats'].toString()) ?? 0,
               sDate,
               eDate,
@@ -1286,7 +1277,7 @@ class ServicesProvider with ChangeNotifier {
               skyBp,
               gSkyAimedfm,
               gPm,
-              skyServices['stars'].toString() ?? "",
+              int.tryParse(skyServices['stars'].toString()) ?? 0,
               int.tryParse(skyServices['is_liked'].toString()) ?? 0,
               skyServices['baseurl'].toString() ?? "",
               gSkyServImgModel,
@@ -1409,7 +1400,7 @@ class ServicesProvider with ChangeNotifier {
               waterServices['service_category'].toString() ?? "",
               waterServices['service_type'].toString() ?? "",
               waterServices['service_level'].toString() ?? "",
-              waterServices['duration'].toString() ?? "",
+              int.tryParse(waterServices['duration'].toString()) ?? 0,
               int.tryParse(waterServices['availability_seats'].toString()) ?? 0,
               sDate,
               eDate,
@@ -1448,7 +1439,7 @@ class ServicesProvider with ChangeNotifier {
               waterBp,
               gWaterAimedfm,
               gPm,
-              waterServices['stars'].toString() ?? "",
+              int.tryParse(waterServices['stars'].toString()) ?? 0,
               int.tryParse(waterServices['is_liked'].toString()) ?? 0,
               waterServices['baseurl'].toString() ?? "",
               gWaterServImgModel,
@@ -1571,7 +1562,7 @@ class ServicesProvider with ChangeNotifier {
               landServices['service_category'].toString() ?? "",
               landServices['service_type'].toString() ?? "",
               landServices['service_level'].toString() ?? "",
-              landServices['duration'].toString() ?? "",
+              int.tryParse(landServices['duration'].toString()) ?? 0,
               int.tryParse(landServices['availability_seats'].toString()) ?? 0,
               sDate,
               eDate,
@@ -1610,7 +1601,7 @@ class ServicesProvider with ChangeNotifier {
               landBp,
               gLandAimedfm,
               gPm,
-              landServices['stars'].toString() ?? "",
+              int.tryParse(landServices['stars'].toString()) ?? 0,
               int.tryParse(landServices['is_liked'].toString()) ?? 0,
               landServices['baseurl'].toString() ?? "",
               gLandServImgModel,
@@ -1733,7 +1724,7 @@ class ServicesProvider with ChangeNotifier {
               otherElement['service_category'].toString() ?? "",
               otherElement['service_type'].toString() ?? "",
               otherElement['service_level'].toString() ?? "",
-              otherElement['duration'].toString() ?? "",
+              int.tryParse(otherElement['duration'].toString()) ?? 0,
               int.tryParse(otherElement['availability_seats'].toString()) ?? 0,
               sDate,
               eDate,
@@ -1772,7 +1763,7 @@ class ServicesProvider with ChangeNotifier {
               waterBp,
               gWaterAimedfm,
               gPm,
-              otherElement['stars'].toString() ?? "",
+              int.tryParse(otherElement['stars'].toString()) ?? 0,
               int.tryParse(otherElement['is_liked'].toString()) ?? 0,
               otherElement['baseurl'].toString() ?? "",
               gWaterServImgModel,

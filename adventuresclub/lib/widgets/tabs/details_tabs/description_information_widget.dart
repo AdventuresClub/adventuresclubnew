@@ -1,5 +1,6 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class DescriptionInformationWidget extends StatelessWidget {
@@ -18,7 +19,7 @@ class DescriptionInformationWidget extends StatelessWidget {
             Align(
                 alignment: Alignment.centerLeft,
                 child: MyText(
-                  text: 'Information',
+                  text: 'information'.tr(),
                   color: greyColor2,
                   weight: FontWeight.w500,
                   fontFamily: 'Roboto',

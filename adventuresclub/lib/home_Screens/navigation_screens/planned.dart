@@ -7,8 +7,8 @@ import 'package:adventuresclub/models/services/create_services/availability_plan
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/services_card.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../models/filter_data_model/programs_model.dart';
@@ -495,7 +495,7 @@ class _PlannedState extends State<Planned> {
                       final text = DateFormat.E().format(day);
                       return Center(
                         child: Text(
-                          text,
+                          text.tr(),
                           style: const TextStyle(
                               color: greyColor, fontWeight: FontWeight.w500),
                         ),
@@ -510,7 +510,7 @@ class _PlannedState extends State<Planned> {
                       margin: const EdgeInsets.all(10.0),
                       child: Center(
                         child: Text(
-                          datetime.day.toString(),
+                          datetime.day.toString().tr(),
                           style: const TextStyle(color: Colors.white),
                         ),
                       ),
@@ -523,7 +523,7 @@ class _PlannedState extends State<Planned> {
                           color: whiteColor,
                           borderRadius: BorderRadius.circular(32.0)),
                       child: Text(
-                        date.day.toString(),
+                        date.day.toString().tr(),
                         style: const TextStyle(
                             color: blackColor, fontWeight: FontWeight.w600),
                       )),
@@ -535,15 +535,18 @@ class _PlannedState extends State<Planned> {
             ),
           ),
           loading
-              ? const Center(
+              ? Center(
                   child: Column(
-                    children: [CircularProgressIndicator(), Text("Loading...")],
+                    children: [
+                      const CircularProgressIndicator(),
+                      Text("loading".tr())
+                    ],
                   ),
                 )
               : Align(
                   alignment: Alignment.center,
                   child: MyText(
-                    text: 'Scheduled Sessions',
+                    text: 'scheduledSessions'.tr(),
                     color: greyColor,
                     weight: FontWeight.bold,
                   )),
@@ -570,260 +573,9 @@ class _PlannedState extends State<Planned> {
                         return GestureDetector(
                           onTap: () => goToDetails(allSer[index]),
                           child: ServicesCard(allSer[index]),
-                          // child: SizedBox(
-                          //   height: 200,
-                          //   child: Card(
-                          //     shape: RoundedRectangleBorder(
-                          //         borderRadius: BorderRadius.circular(16)),
-                          //     elevation: 2,
-                          //     child: Padding(
-                          //       padding: const EdgeInsets.all(8.0),
-                          //       child: Column(
-                          //         children: [
-                          //           Stack(
-                          //             children: [
-                          //               Container(
-                          //                 width: MediaQuery.of(context)
-                          //                         .size
-                          //                         .width /
-                          //                     2,
-                          //                 height: 100,
-                          //                 decoration: BoxDecoration(
-                          //                   borderRadius:
-                          //                       BorderRadius.circular(8),
-                          //                   image: const DecorationImage(
-                          //                       // colorFilter: ColorFilter.mode(
-                          //                       //     Colors.black.withOpacity(0.1),
-                          //                       //     BlendMode.darken),
-                          //                       image: ExactAssetImage(
-                          //                         'images/overseas.png',
-                          //                         // ),
-                          //                         //   NetworkImage(
-                          //                         // "${gm[index].baseURL}${gm[index].images[index].imageUrl}",
-                          //                         //gm[index].images[index].imageUrl,
-                          //                       ),
-                          //                       fit: BoxFit.cover),
-                          //                 ),
-                          //               ),
-                          //               const Positioned(
-                          //                 bottom: 5,
-                          //                 right: 5,
-                          //                 child: CircleAvatar(
-                          //                   radius: 12,
-                          //                   backgroundColor: transparentColor,
-                          //                   child: Image(
-                          //                     image: ExactAssetImage(
-                          //                       'images/heart.png',
-                          //                     ),
-                          //                     height: 14,
-                          //                   ),
-                          //                 ),
-                          //               ),
-                          //             ],
-                          //           ),
-                          //           const SizedBox(height: 5),
-                          //           SizedBox(
-                          //             width: MediaQuery.of(context).size.width /
-                          //                 2.2,
-                          //             child: Row(
-                          //               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //               // crossAxisAlignment: CrossAxisAlignment.start,
-                          //               children: [
-                          //                 Expanded(
-                          //                   child: Column(
-                          //                     crossAxisAlignment:
-                          //                         CrossAxisAlignment.start,
-                          //                     mainAxisAlignment:
-                          //                         MainAxisAlignment.start,
-                          //                     children: [
-                          //                       MyText(
-                          //                         text: gm[index]
-                          //                             .sm[index]
-                          //                             .adventureName,
-                          //                         maxLines: 1,
-                          //                         color: blackColor,
-                          //                         size: 11,
-                          //                         fontFamily: 'Roboto',
-                          //                         weight: FontWeight.bold,
-                          //                         height: 1.3,
-                          //                       ),
-                          //                       MyText(
-                          //                         text: gm[index]
-                          //                             .sm[index]
-                          //                             .geoLocation,
-                          //                         //text: 'Dhufar',
-                          //                         color: greyColor3,
-                          //                         size: 10,
-                          //                         height: 1.3,
-                          //                       ),
-                          //                       MyText(
-                          //                         text: gm[index]
-                          //                             .sm[index]
-                          //                             .serviceLevel,
-                          //                         //text: 'Advanced',
-                          //                         color: blackTypeColor3,
-                          //                         size: 10,
-                          //                         height: 1.3,
-                          //                       ),
-                          //                       Row(
-                          //                         children: [
-                          //                           MyText(
-                          //                             text: gm[index]
-                          //                                 .sm[index]
-                          //                                 .am[index]
-                          //                                 .aimedName,
-                          //                             color: redColor,
-                          //                             size: 10,
-                          //                             height: 1.3,
-                          //                           ),
-                          //                           const SizedBox(width: 10),
-                          //                         ],
-                          //                       ),
-                          //                     ],
-                          //                   ),
-                          //                 ),
-                          //                 const SizedBox(height: 5),
-                          //                 Expanded(
-                          //                   child: Column(
-                          //                     crossAxisAlignment:
-                          //                         CrossAxisAlignment.end,
-                          //                     mainAxisAlignment:
-                          //                         MainAxisAlignment.start,
-                          //                     children: [
-                          //                       const SizedBox(height: 2),
-                          //                       Align(
-                          //                         alignment:
-                          //                             Alignment.centerRight,
-                          //                         child: RatingBar.builder(
-                          //                           initialRating: convert(
-                          //                               gm[index]
-                          //                                   .sm[index]
-                          //                                   .stars),
-                          //                           itemSize: 10,
-                          //                           //minRating: 1,
-                          //                           direction: Axis.horizontal,
-                          //                           allowHalfRating: true,
-                          //                           itemCount: 5,
-                          //                           itemPadding:
-                          //                               const EdgeInsets
-                          //                                       .symmetric(
-                          //                                   horizontal: 1.0),
-                          //                           itemBuilder: (context, _) =>
-                          //                               const Icon(
-                          //                             Icons.star,
-                          //                             color: Colors.amber,
-                          //                             size: 12,
-                          //                           ),
-                          //                           onRatingUpdate: (rating) {
-                          //                             print(rating);
-                          //                           },
-                          //                         ),
-                          //                       ),
-                          //                       const SizedBox(height: 2),
-                          //                       MyText(
-                          //                         text: 'Earn 0 points',
-                          //                         color: blueTextColor,
-                          //                         size: 10,
-                          //                         height: 1.3,
-                          //                       ),
-                          //                       MyText(
-                          //                         text: '',
-                          //                         color: blueTextColor,
-                          //                         size: 10,
-                          //                         height: 1.3,
-                          //                       ),
-                          //                       MyText(
-                          //                         text:
-                          //                             "${gm[index].sm[index].costExc} "
-                          //                             "${gm[index].sm[index].currency}",
-                          //                         //text: 'OMR 20.00',
-                          //                         color: blackTypeColor3,
-                          //                         size: 10,
-                          //                         height: 1.3,
-                          //                       ),
-                          //                       const SizedBox(height: 2),
-                          //                     ],
-                          //                   ),
-                          //                 ),
-                          //               ],
-                          //             ),
-                          //           ),
-                          //           Image(
-                          //             image: const ExactAssetImage(
-                          //               'images/line.png',
-                          //             ),
-                          //             width: MediaQuery.of(context).size.width /
-                          //                 2.4,
-                          //           ),
-                          //           SizedBox(
-                          //             width: MediaQuery.of(context).size.width /
-                          //                 2.4,
-                          //             child: Padding(
-                          //               padding: const EdgeInsets.all(2.0),
-                          //               child: GestureDetector(
-                          //                 onTap: goToProvider,
-                          //                 child: Row(
-                          //                   mainAxisAlignment:
-                          //                       MainAxisAlignment.start,
-                          //                   crossAxisAlignment:
-                          //                       CrossAxisAlignment.center,
-                          //                   children: [
-                          //                     CircleAvatar(
-                          //                         radius: 10,
-                          //                         backgroundColor:
-                          //                             transparentColor,
-                          //                         child: Image(
-                          //                           height: 40,
-                          //                           width: 50,
-                          //                           image: NetworkImage(
-                          //                               gm[index]
-                          //                                   .sm[index]
-                          //                                   .pProfile),
-                          //                           //ExactAssetImage('images/avatar.png'),
-                          //                           fit: BoxFit.cover,
-                          //                         )),
-                          //                     const SizedBox(width: 2),
-
-                          //                     //   MyText(text: 'Provided By AdventuresClub',color:blackColor,fontStyle: FontStyle.italic,size: 10,),
-                          //                     Text.rich(
-                          //                       TextSpan(
-                          //                         children: [
-                          //                           const TextSpan(
-                          //                               text: "Provided By ",
-                          //                               style: TextStyle(
-                          //                                 color: greyColor,
-                          //                                 fontSize: 8,
-                          //                               )),
-                          //                           TextSpan(
-                          //                             text: gm[index]
-                          //                                 .sm[index]
-                          //                                 .pName,
-                          //                             //text: 'AdventuresClub',
-                          //                             style: const TextStyle(
-                          //                               fontWeight:
-                          //                                   FontWeight.bold,
-                          //                               color: blackTypeColor4,
-                          //                               fontSize: 9,
-                          //                             ),
-                          //                           ),
-                          //                         ],
-                          //                       ),
-                          //                     ),
-                          //                   ],
-                          //                 ),
-                          //               ),
-                          //             ),
-                          //           ),
-                          //         ],
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
                         );
                       },
                     ),
-                    // const PlannedGrid()
-                    //const RecommendedActivity()
                   ),
                 ),
         ],

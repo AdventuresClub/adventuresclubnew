@@ -1,6 +1,7 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -37,7 +38,7 @@ class _InviteFriendsState extends State<InviteFriends> {
           ),
         ),
         title: MyText(
-          text: 'Invite Friends',
+          text: 'inviteFriends'.tr(),
           color: bluishColor,
           weight: FontWeight.bold,
         ),
@@ -63,7 +64,7 @@ class _InviteFriendsState extends State<InviteFriends> {
               height: 10,
             ),
             const Button(
-                "Invite",
+                "invite",
                 bluishColor,
                 bluishColor,
                 whiteColor,

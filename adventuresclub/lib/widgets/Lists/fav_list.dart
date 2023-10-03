@@ -8,6 +8,7 @@ import 'package:adventuresclub/models/getFavourite/get_favourite.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -115,8 +116,8 @@ class _FavListState extends State<FavList> {
   @override
   Widget build(BuildContext context) {
     return loading
-        ? const Center(
-            child: Text("Loading...."),
+        ? Center(
+            child: Text("loading".tr()),
           )
         : ListView.builder(
             padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20),

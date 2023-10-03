@@ -91,21 +91,21 @@ class _VisitState extends State<Visit> {
           GetVisitModel gv = GetVisitModel(
             int.tryParse(element['id'].toString()) ?? 0,
             int.tryParse(element['user_id'].toString()) ?? 0,
-            element['destination_image'].toString() ?? "",
-            element['destination_name'].toString() ?? "",
-            element['destination_type'].toString() ?? "",
-            element['geo_location'].toString() ?? "",
-            element['destination_address'].toString() ?? "",
-            element['dest_mobile'].toString() ?? "",
-            element['dest_website'].toString() ?? "",
-            element['dest_description'].toString() ?? "",
-            element['is_approved'].toString() ?? "",
-            element['latitude'].toString() ?? "",
-            element['longitude'].toString() ?? "",
-            element['created_at'].toString() ?? "",
-            element['updated_at'].toString() ?? "",
-            element['deleted_at'].toString() ?? "",
-            element['rating_start'].toString() ?? "",
+            element['destination_image'] ?? "",
+            element['destination_name'] ?? "",
+            element['destination_type'] ?? "",
+            element['geo_location'] ?? "",
+            element['destination_address'] ?? "",
+            element['dest_mobile'] ?? "",
+            element['dest_website'] ?? "",
+            element['dest_description'] ?? "",
+            element['is_approved'] ?? "",
+            element['latitude'] ?? "",
+            element['longitude'] ?? "",
+            element['created_at'] ?? "",
+            element['updated_at'] ?? "",
+            element['deleted_at'] ?? "",
+            int.tryParse(element['rating_start'].toString()) ?? 0,
           );
           gGv.add(gv);
         }
@@ -145,13 +145,13 @@ class _VisitState extends State<Visit> {
       mapVisit = json.decode(response.body);
       List<dynamic> result = mapVisit['data'];
       result.forEach((element) {
-        String destinationType = element['destination_type'].toString() ?? "";
+        String destinationType = element['destination_type'] ?? "";
         if ((titleModel
                 .indexWhere((element) => element.title == destinationType)) <
             0) {
           GetVisitedTitleModel gm = GetVisitedTitleModel(
-            element['destination_type'].toString() ?? "",
-            element['destination_image'].toString() ?? "",
+            element['destination_type'] ?? "",
+            element['destination_image'] ?? "",
           );
           titleModel.add(gm);
         }
@@ -178,21 +178,21 @@ class _VisitState extends State<Visit> {
         GetVisitModel gv = GetVisitModel(
           int.tryParse(element['id'].toString()) ?? 0,
           int.tryParse(element['user_id'].toString()) ?? 0,
-          element['destination_image'].toString() ?? "",
-          element['destination_name'].toString() ?? "",
-          element['destination_type'].toString() ?? "",
-          element['geo_location'].toString() ?? "",
-          element['destination_address'].toString() ?? "",
-          element['dest_mobile'].toString() ?? "",
-          element['dest_website'].toString() ?? "",
-          element['dest_description'].toString() ?? "",
-          element['is_approved'].toString() ?? "",
-          element['latitude'].toString() ?? "",
-          element['longitude'].toString() ?? "",
-          element['created_at'].toString() ?? "",
-          element['updated_at'].toString() ?? "",
-          element['deleted_at'].toString() ?? "",
-          element['rating_start'].toString() ?? "",
+          element['destination_image'] ?? "",
+          element['destination_name'] ?? "",
+          element['destination_type'] ?? "",
+          element['geo_location'] ?? "",
+          element['destination_address'] ?? "",
+          element['dest_mobile'] ?? "",
+          element['dest_website'] ?? "",
+          element['dest_description'] ?? "",
+          element['is_approved'] ?? "",
+          element['latitude'] ?? "",
+          element['longitude'] ?? "",
+          element['created_at'] ?? "",
+          element['updated_at'] ?? "",
+          element['deleted_at'] ?? "",
+          element['rating_start'] ?? "",
         );
         gGv.add(gv);
       });

@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -219,7 +220,7 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
             Align(
                 alignment: Alignment.centerLeft,
                 child: MyText(
-                  text: 'Description',
+                  text: 'description'.tr(),
                   color: blackColor,
                   weight: FontWeight.w700,
                   size: 16,
@@ -244,7 +245,7 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
             loading
                 ? Center(
                     child: MyText(
-                      text: "Loading Location...",
+                      text: "loadingLocation".tr(),
                       color: blackColor,
                       weight: FontWeight.bold,
                     ),
@@ -257,7 +258,7 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
                         Align(
                             alignment: Alignment.centerLeft,
                             child: MyText(
-                              text: 'Full Address',
+                              text: 'fullAddress'.tr(),
                               color: blackColor,
                               weight: FontWeight.w700,
                               size: 16,
@@ -265,7 +266,7 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
                         Row(
                           children: [
                             MyText(
-                              text: 'Get Direction',
+                              text: 'getDirection'.tr(),
                               color: greyColor,
                               weight: FontWeight.w700,
                             ),
@@ -293,12 +294,12 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
             ),
             RichText(
               text: TextSpan(
-                text: 'Address: ',
+                text: 'address'.tr(),
                 style: TextStyle(
                     color: greyishColor.withOpacity(0.7), fontSize: 14),
                 children: <TextSpan>[
                   TextSpan(
-                      text: widget.sAddress,
+                      text: widget.sAddress.tr(),
                       style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 14,
@@ -311,12 +312,12 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
             ),
             RichText(
               text: TextSpan(
-                text: 'Region : ',
+                text: 'Region'.tr(),
                 style: TextStyle(
                     color: greyishColor.withOpacity(0.7), fontSize: 14),
                 children: <TextSpan>[
                   TextSpan(
-                      text: widget.region,
+                      text: widget.region.tr(),
                       //text: ' Omani',
                       style: const TextStyle(fontSize: 14, color: blackColor)),
                 ],
@@ -327,12 +328,12 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
             ),
             RichText(
               text: TextSpan(
-                text: 'Country :',
+                text: 'Country'.tr(),
                 style: TextStyle(
                     color: greyishColor.withOpacity(0.7), fontSize: 14),
                 children: <TextSpan>[
                   TextSpan(
-                      text: widget.country,
+                      text: widget.country.tr(),
                       //text: ' Oman',
                       style: const TextStyle(fontSize: 14, color: blackColor)),
                 ],
@@ -343,7 +344,7 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
             ),
             RichText(
               text: TextSpan(
-                text: 'Geo Location :',
+                text: 'geoLocation'.tr(),
                 style: TextStyle(
                     color: greyishColor.withOpacity(0.7), fontSize: 14),
                 children: <TextSpan>[

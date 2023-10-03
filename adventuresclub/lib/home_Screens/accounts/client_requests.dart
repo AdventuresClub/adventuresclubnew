@@ -6,6 +6,7 @@ import 'package:adventuresclub/models/getClientRequest/get_client_request_model.
 import 'package:adventuresclub/models/services/service_image_model.dart';
 import 'package:adventuresclub/widgets/Lists/request_list/client_request_list.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -272,7 +273,7 @@ class _ClientsRequestsState extends State<ClientsRequests> {
           ),
         ),
         title: MyText(
-          text: 'Client Requests',
+          text: 'clientRequests'.tr(),
           color: bluishColor,
           weight: FontWeight.bold,
         ),

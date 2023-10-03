@@ -15,7 +15,7 @@ class GetVisitModel {
   String ca;
   String ua;
   String da;
-  String rS;
+  int rS;
   GetVisitModel(
       this.id,
       this.userID,

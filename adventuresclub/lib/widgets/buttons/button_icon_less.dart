@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:adventuresclub/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ButtonIconLess extends StatefulWidget {
@@ -42,7 +43,7 @@ class _ButtonIconLessState extends State<ButtonIconLess> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    widget.name,
+                    widget.name.tr(),
                     style: TextStyle(
                         color: widget.textColor,
                         fontSize: widget.fontSize,

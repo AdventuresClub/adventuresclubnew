@@ -43,9 +43,9 @@ class ServiceDescription extends StatelessWidget {
           DescriptionActivitiesWidget(gm.activityIncludes),
           DescriptionAimedFor(gm.am),
           DescriptionDependency(gm.dependency),
-          DescriptionComponents('Pre-requisites', gm.preRequisites),
-          DescriptionComponents('Minimum Requirement', gm.mRequirements),
-          DescriptionComponents('Terms & Conditions', gm.tnc),
+          DescriptionComponents('prerequisites', gm.preRequisites),
+          DescriptionComponents('minimumRequirements', gm.mRequirements),
+          DescriptionComponents('termsAndConditions', gm.tnc),
         ],
       ),
     );

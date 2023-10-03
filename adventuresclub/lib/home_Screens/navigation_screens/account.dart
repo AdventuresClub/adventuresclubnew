@@ -554,7 +554,7 @@ class _AccountState extends State<Account> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   loading
-                                      ? const Text("Loading")
+                                      ? Text("loading".tr())
                                       : Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -734,7 +734,7 @@ class _AccountState extends State<Account> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   loading
-                                      ? const Text("Loading")
+                                      ? Text("loading".tr())
                                       : Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -826,7 +826,7 @@ class _AccountState extends State<Account> {
                                                   );
                                                 }
                                                 if (userText[i] ==
-                                                    'Notification') {
+                                                    'notification'.tr()) {
                                                   Navigator.of(context).push(
                                                     MaterialPageRoute(
                                                       builder: (_) {
@@ -836,7 +836,7 @@ class _AccountState extends State<Account> {
                                                   );
                                                 }
                                                 if (userText[i] ==
-                                                    'My Points') {
+                                                    'myPoints'.tr()) {
                                                   Navigator.of(context).push(
                                                     MaterialPageRoute(
                                                       builder: (_) {
@@ -858,7 +858,8 @@ class _AccountState extends State<Account> {
                                                   Constants.totalNotication >
                                                               0 &&
                                                           text[i] ==
-                                                              'Notifications'
+                                                              'notifications'
+                                                                  .tr()
                                                       ? Positioned(
                                                           bottom: -5,
                                                           right: -12,
@@ -885,7 +886,7 @@ class _AccountState extends State<Account> {
                                               height: 5,
                                             ),
                                             MyText(
-                                              text: userText[i],
+                                              text: userText[i].tr(),
                                               color: greyColor.withOpacity(1),
                                               weight: FontWeight.bold,
                                             )
@@ -914,7 +915,7 @@ class _AccountState extends State<Account> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     loading
-                                        ? const Text("Loading")
+                                        ? Text("loading".tr())
                                         : Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -997,8 +998,7 @@ class _AccountState extends State<Account> {
                                           children: [
                                             GestureDetector(
                                               onTap: () {
-                                                if (userText[i] ==
-                                                    "favorite".tr()) {
+                                                if (userText[i] == "favorite") {
                                                   Navigator.of(context).push(
                                                     MaterialPageRoute(
                                                       builder: (_) {
@@ -1008,7 +1008,7 @@ class _AccountState extends State<Account> {
                                                   );
                                                 }
                                                 if (userText[i] ==
-                                                    'Notification') {
+                                                    'notification') {
                                                   Navigator.of(context).push(
                                                     MaterialPageRoute(
                                                       builder: (_) {
@@ -1017,8 +1017,7 @@ class _AccountState extends State<Account> {
                                                     ),
                                                   );
                                                 }
-                                                if (userText[i] ==
-                                                    'My Points') {
+                                                if (userText[i] == 'myPoints') {
                                                   Navigator.of(context).push(
                                                     MaterialPageRoute(
                                                       builder: (_) {
@@ -1040,7 +1039,7 @@ class _AccountState extends State<Account> {
                                                   Constants.totalNotication >
                                                               0 &&
                                                           text[i] ==
-                                                              'Notifications'
+                                                              'notifications'
                                                       ? Positioned(
                                                           bottom: -5,
                                                           right: -12,
@@ -1067,7 +1066,7 @@ class _AccountState extends State<Account> {
                                               height: 5,
                                             ),
                                             MyText(
-                                              text: userText[i],
+                                              text: userText[i].tr(),
                                               color: greyColor.withOpacity(1),
                                               weight: FontWeight.bold,
                                             )
@@ -1103,7 +1102,7 @@ class _AccountState extends State<Account> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       loading
-                                          ? const Text("Loading")
+                                          ? Text("loading".tr())
                                           : Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
@@ -1196,8 +1195,7 @@ class _AccountState extends State<Account> {
                                             children: [
                                               GestureDetector(
                                                 onTap: () {
-                                                  if (text[i] ==
-                                                      "favorite".tr()) {
+                                                  if (text[i] == "favorite") {
                                                     Navigator.of(context).push(
                                                       MaterialPageRoute(
                                                         builder: (_) {

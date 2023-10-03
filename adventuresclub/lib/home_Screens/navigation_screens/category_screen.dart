@@ -214,7 +214,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               nBp,
               gAccomodationAimedfm,
               gPm,
-              services['stars'].toString() ?? "",
+              int.tryParse(services['stars'].toString()) ?? 0,
               int.tryParse(services['is_liked'].toString()) ?? 0,
               services['baseurl'] ?? "",
               gAccomodationServImgModel,

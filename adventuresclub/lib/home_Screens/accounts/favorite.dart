@@ -2,6 +2,7 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/Lists/fav_list.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class Favorite extends StatefulWidget {
@@ -28,7 +29,7 @@ class _FavoriteState extends State<Favorite> {
             ),
           ),
           title: MyText(
-            text: 'Favorite',
+            text: 'favorite'.tr(),
             color: bluishColor,
             weight: FontWeight.bold,
           ),
