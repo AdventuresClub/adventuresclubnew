@@ -87,7 +87,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
     }
   }
 
-  List text1 = [
+  List<String> text1 = [
     'Country  :',
     'Region  :',
     'Service Category  :',
@@ -96,7 +96,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
     //'Start Date :'
   ];
 
-  List text11 = [
+  List<String> text11 = [
     'Country  :',
     'Region  :',
     'Service Category  :',
@@ -104,17 +104,17 @@ class _MyServicesTabState extends State<MyServicesTab> {
     'Duration :',
     'Availaibilty :'
   ];
-  List text4 = [
+  List<String> text4 = [
     //'Oman', 'Salalah', 'Sea', '70', '36 hours', '25 Jul 2020'
   ];
-  List text5 = [
+  List<String> text5 = [
     '4.8 (1048 Reviews)',
     'Service Sector  :',
     'Service Type :',
     'Level  :',
     // 'End Date :',
   ];
-  List text6 = [];
+  List<String> text6 = [];
 
   List schedule = [
     ' Pick and drop from gathering location,',

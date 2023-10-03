@@ -83,7 +83,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
     if (widget.gm.sPlan == 1) {
       getSteps();
       setState(() {
-        text1.insert(5, "Availability : ");
+        text1.insert(5, "Availability");
         text4.insert(0, widget.gm.country);
         text4.insert(1, widget.gm.region);
         text4.insert(2, widget.gm.serviceCategory);
@@ -207,7 +207,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
     )),
   ];
   */
-  List text1 = [
+  List<String> text1 = [
     'Country',
     'Region',
     'Service Category',
@@ -215,7 +215,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
     'Duration',
     //'Start Date :'
   ];
-  List text11 = [
+  List<String> text11 = [
     'Country  :',
     'Region  :',
     'Service Category  :',
@@ -223,21 +223,21 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
     'Duration :',
     'Availaibilty :'
   ];
-  List text4 = [
+  List<String> text4 = [
     //'Oman', 'Salalah', 'Sea', '70', '36 hours', '25 Jul 2020'
   ];
-  List text5 = [
+  List<String> text5 = [
     '4.8 (1048 Reviews)',
     'Service Sector  :',
     'Service Type :',
     'Level  :',
     // 'End Date :',
   ];
-  List text6 = [];
-  List aimedFor = ['Ladies,', 'Gents'];
+  List<String> text6 = [];
+  List<String> aimedFor = ['Ladies,', 'Gents'];
 
-  List dependencyList = ['Health Conditions', 'License '];
-  List activitesInclude = [
+  List<String> dependencyList = ['Health Conditions', 'License '];
+  List<String> activitesInclude = [
     'Transportation from gathering area',
     'Snacks',
     'Bike Riding'

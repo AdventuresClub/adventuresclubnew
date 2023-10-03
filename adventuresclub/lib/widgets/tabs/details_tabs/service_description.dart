@@ -11,10 +11,10 @@ import '../../../models/home_services/services_model.dart';
 
 class ServiceDescription extends StatelessWidget {
   final ServicesModel gm;
-  final List<dynamic> text1;
-  final List<dynamic> text4;
-  final List<dynamic> text5;
-  final List<dynamic> text6;
+  final List<String> text1;
+  final List<String> text4;
+  final List<String> text5;
+  final List<String> text6;
   final double stars;
   final String reviewedBy;
   final String id;

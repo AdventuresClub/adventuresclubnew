@@ -4,14 +4,15 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/reviews.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-class DescriptionDetailsWidget extends StatefulWidget {
-  final List<dynamic> text1;
-  final List<dynamic> text4;
-  final List<dynamic> text5;
-  final List<dynamic> text6;
+class DescriptionDetailsWidget extends StatelessWidget {
+  final List<String> text1;
+  final List<String> text4;
+  final List<String> text5;
+  final List<String> text6;
   final double stars;
   final String reviewedBy;
   final String id;
@@ -20,13 +21,7 @@ class DescriptionDetailsWidget extends StatefulWidget {
       this.stars, this.reviewedBy, this.id, this.gm,
       {super.key});
 
-  @override
-  State<DescriptionDetailsWidget> createState() =>
-      _DescriptionDetailsWidgetState();
-}
-
-class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
-  void goToReviews(String id) {
+  void goToReviews(BuildContext context, String id) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
@@ -50,14 +45,15 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                //Text(widget.text1[0]),
                 RichText(
                   text: TextSpan(
-                    text: widget.text1[0].tr(),
+                    text: text1[0].tr(),
                     style: const TextStyle(
                         color: greyColor2, fontSize: 14, height: 1.5),
                     children: [
                       TextSpan(
-                          text: widget.text4[0].tr(),
+                          text: text4[0].tr(),
                           style: const TextStyle(
                               fontSize: 13,
                               // fontWeight: FontWeight.w300,
@@ -66,15 +62,15 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
                     ],
                   ),
                 ),
-                //Spacer(),
+                Spacer(),
                 GestureDetector(
-                  onTap: () => goToReviews(widget.id),
+                  onTap: () => goToReviews(context, id),
                   child: Column(
                     children: [
                       Align(
                         alignment: Alignment.bottomLeft,
                         child: RatingBar.builder(
-                          initialRating: widget.stars,
+                          initialRating: stars,
                           ignoreGestures: true,
                           itemSize: 14,
                           minRating: 0,
@@ -98,8 +94,7 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
                       ),
                       Align(
                         child: MyText(
-                          text:
-                              "${widget.stars} ${" "} (${widget.reviewedBy} ${"Reviews)"} ",
+                          text: "$stars ${" "} ($reviewedBy ${"Reviews)"} ",
                           color: yellowcolor,
                           weight: FontWeight.bold,
                         ),
@@ -114,12 +109,12 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
               children: [
                 RichText(
                   text: TextSpan(
-                    text: widget.text1[1].tr(),
+                    text: text1[1],
                     style: const TextStyle(
                         color: greyColor2, fontSize: 14, height: 1.5),
                     children: [
                       TextSpan(
-                          text: widget.text4[1].tr(),
+                          text: text4[1].tr(),
                           style: const TextStyle(
                               fontSize: 14,
                               // fontWeight: FontWeight.w300,
@@ -131,7 +126,7 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
                 //Spacer(),
                 RichText(
                   text: TextSpan(
-                    text: widget.text5[0],
+                    text: text5[0].tr(),
                     style: const TextStyle(
                       color: greyColor2,
                       fontSize: 14,
@@ -139,7 +134,7 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
                     ),
                     children: <TextSpan>[
                       TextSpan(
-                          text: widget.text6[0],
+                          text: text6[0].tr(),
                           style: const TextStyle(
                               fontSize: 14, color: blackColor, height: 1.5)),
                     ],
@@ -152,12 +147,12 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
               children: [
                 RichText(
                   text: TextSpan(
-                    text: widget.text1[2],
+                    text: text1[2].tr(),
                     style: const TextStyle(
                         color: greyColor2, fontSize: 13, height: 1.5),
                     children: [
                       TextSpan(
-                          text: widget.text4[2],
+                          text: text4[2].tr(),
                           style: const TextStyle(
                               fontSize: 13,
                               // fontWeight: FontWeight.w300,
@@ -169,7 +164,7 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
                 //Spacer(),
                 RichText(
                   text: TextSpan(
-                    text: widget.text5[1],
+                    text: text5[1].tr(),
                     style: const TextStyle(
                       color: greyColor2,
                       fontSize: 13,
@@ -177,7 +172,7 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
                     ),
                     children: <TextSpan>[
                       TextSpan(
-                          text: widget.text6[1],
+                          text: text6[1].tr(),
                           style: const TextStyle(
                               fontSize: 13, color: blackColor, height: 1.5)),
                     ],
@@ -190,12 +185,12 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
               children: [
                 RichText(
                   text: TextSpan(
-                    text: widget.text1[3],
+                    text: text1[3].tr(),
                     style: const TextStyle(
                         color: greyColor2, fontSize: 13, height: 1.5),
                     children: [
                       TextSpan(
-                        text: widget.text4[3],
+                        text: text4[3].tr(),
                         style: const TextStyle(
                             fontSize: 13,
                             // fontWeight: FontWeight.w300,
@@ -203,7 +198,7 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
                             height: 1.5),
                       ),
                       TextSpan(
-                        text: ", ${widget.gm.remainingSeats} seat left",
+                        text: ", ${gm.remainingSeats} seat left",
                         style: const TextStyle(
                             fontSize: 13,
                             // fontWeight: FontWeight.w300,
@@ -216,7 +211,7 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
                 //Spacer(),
                 RichText(
                   text: TextSpan(
-                    text: widget.text5[2],
+                    text: text5[2].tr(),
                     style: const TextStyle(
                       color: greyColor2,
                       fontSize: 13,
@@ -224,7 +219,7 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
                     ),
                     children: <TextSpan>[
                       TextSpan(
-                          text: widget.text6[2],
+                          text: text6[2].tr(),
                           style: const TextStyle(
                               fontSize: 13, color: blackColor, height: 1.5)),
                     ],
@@ -237,12 +232,12 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
               children: [
                 RichText(
                   text: TextSpan(
-                    text: widget.text1[4],
+                    text: text1[4].tr(),
                     style: const TextStyle(
                         color: greyColor2, fontSize: 13, height: 1.5),
                     children: [
                       TextSpan(
-                          text: widget.text4[4],
+                          text: text4[4].tr(),
                           style: const TextStyle(
                               fontSize: 13,
                               // fontWeight: FontWeight.w300,
@@ -254,7 +249,7 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
                 //Spacer(),
                 RichText(
                   text: TextSpan(
-                    text: widget.text5[3],
+                    text: text5[3].tr(),
                     style: const TextStyle(
                       color: greyColor2,
                       fontSize: 13,
@@ -262,7 +257,7 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
                     ),
                     children: <TextSpan>[
                       TextSpan(
-                          text: widget.text6[3],
+                          text: text6[3].tr(),
                           style: const TextStyle(
                               fontSize: 13, color: blackColor, height: 1.5)),
                     ],
@@ -275,12 +270,12 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
               children: [
                 RichText(
                   text: TextSpan(
-                    text: widget.text1[5],
+                    text: text1[5].tr(),
                     style: const TextStyle(
                         color: greyColor2, fontSize: 13, height: 1.5),
                     children: [
                       TextSpan(
-                          text: widget.text4[5],
+                          text: text4[5].tr(),
                           style: const TextStyle(
                               fontSize: 13,
                               // fontWeight: FontWeight.w300,
@@ -289,7 +284,7 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
                     ],
                   ),
                 ),
-                if (widget.gm.sPlan == 2)
+                if (gm.sPlan == 2)
                   RichText(
                     text: TextSpan(
                       text: "End Date : ",
@@ -300,7 +295,7 @@ class _DescriptionDetailsWidgetState extends State<DescriptionDetailsWidget> {
                       ),
                       children: <TextSpan>[
                         TextSpan(
-                            text: widget.text6[4],
+                            text: text6[4].tr(),
                             style: const TextStyle(
                                 fontSize: 14, color: blackColor, height: 1.5)),
                       ],

@@ -128,152 +128,169 @@ class _ReviewsState extends State<Reviews> {
         ),
       ),
       backgroundColor: greyProfileColor,
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-            shrinkWrap: true,
-            physics: const ClampingScrollPhysics(),
-            itemCount: reviewList.length,
-            scrollDirection: Axis.vertical,
-            itemBuilder: (context, index) {
-              return loading
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const CircularProgressIndicator(),
-                        MyText(
-                          text: "Loading",
-                          fontStyle: FontWeight.bold,
-                        )
-                      ],
-                    )
-                  : Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            // MyText(
-                            //   text: "${'Reviews'} "
-                            //       " (${reviewList[index].count})",
-                            //   color: greyTextColor,
-                            //   weight: FontWeight.w700,
-                            //   size: 14,
-                            // ),
-                            Row(
-                              children: [
-                                MyText(
-                                  text: "${reviewList[index].star}",
-                                  color: greyTextColor,
-                                  weight: FontWeight.w700,
-                                  size: 14,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                RatingBar.builder(
-                                  ignoreGestures: true,
-                                  initialRating: convert(
-                                      reviewList[index].star.toString()),
-                                  itemSize: 15,
-                                  minRating: 0,
-                                  direction: Axis.horizontal,
-                                  allowHalfRating: true,
-                                  itemCount: 5,
-                                  itemPadding: const EdgeInsets.symmetric(
-                                      horizontal: 1.0),
-                                  itemBuilder: (context, _) => const Icon(
-                                    Icons.star,
-                                    color: Colors.amber,
-                                    size: 12,
+      body: reviewList.isEmpty
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.hourglass_empty_sharp,
+                      size: 60, color: greenishColor),
+                  MyText(
+                    text: "No Reviews",
+                    size: 18,
+                    color: blackColor,
+                  )
+                ],
+              ),
+            )
+          : Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: ListView.builder(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: reviewList.length,
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (context, index) {
+                    return loading
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const CircularProgressIndicator(),
+                              MyText(
+                                text: "Loading",
+                                fontStyle: FontWeight.bold,
+                              )
+                            ],
+                          )
+                        : Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  // MyText(
+                                  //   text: "${'Reviews'} "
+                                  //       " (${reviewList[index].count})",
+                                  //   color: greyTextColor,
+                                  //   weight: FontWeight.w700,
+                                  //   size: 14,
+                                  // ),
+                                  Row(
+                                    children: [
+                                      MyText(
+                                        text: "${reviewList[index].star}",
+                                        color: greyTextColor,
+                                        weight: FontWeight.w700,
+                                        size: 14,
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      RatingBar.builder(
+                                        ignoreGestures: true,
+                                        initialRating: convert(
+                                            reviewList[index].star.toString()),
+                                        itemSize: 15,
+                                        minRating: 0,
+                                        direction: Axis.horizontal,
+                                        allowHalfRating: true,
+                                        itemCount: 5,
+                                        itemPadding: const EdgeInsets.symmetric(
+                                            horizontal: 1.0),
+                                        itemBuilder: (context, _) => const Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
+                                          size: 12,
+                                        ),
+                                        onRatingUpdate: (rating) {
+                                          print(rating);
+                                        },
+                                      ),
+                                    ],
                                   ),
-                                  onRatingUpdate: (rating) {
-                                    print(rating);
-                                  },
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            reviewList[index].um[index].id == 1
-                                ? MyText(
-                                    text:
-                                        "${(reviewList[index].um[index].name)} ${'|'} ${("Oman")}", //"ReviJohn Doe | California | 9days ago",
-                                    color: blackTypeColor4,
-                                    weight: FontWeight.w600,
-                                  )
-                                : MyText(
-                                    text:
-                                        "${(reviewList[index].um[index].name)} ${'|'} ${(reviewList[index].ca.substring(0, 10))} ", //"ReviJohn Doe | California | 9days ago",
-                                    color: blackTypeColor4,
-                                    weight: FontWeight.w600,
-                                  ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            RatingBar.builder(
-                              ignoreGestures: true,
-                              initialRating:
-                                  convert(reviewList[index].star.toString()),
-                              itemSize: 15,
-                              minRating: 1,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemPadding:
-                                  const EdgeInsets.symmetric(horizontal: 1.0),
-                              itemBuilder: (context, _) => const Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                                size: 12,
+                                ],
                               ),
-                              onRatingUpdate: (rating) {
-                                print(rating);
-                              },
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            MyText(
-                              text: reviewList[index].remarks,
-                              //'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer finibus eros nec ex aliquam iaculis. Donec et magna viverra, gravida lacus eget, posuere dui. Suspendisse convallis condimentum dolor, ',
-                              color: blackTypeColor4,
-                              size: 12,
-                              weight: FontWeight.w600,
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Row(
-                              children: [
-                                const Image(
-                                    image: ExactAssetImage('images/like.png')),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                MyText(
-                                  text: '0',
-                                  color: blackTypeColor4,
-                                  size: 10,
-                                ),
-                              ],
-                            ),
-                            Divider(
-                              thickness: 1,
-                              color: blackColor.withOpacity(0.3),
-                            )
-                          ],
-                        ),
-                      ],
-                    );
-            }),
-      ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  reviewList[index].um[index].id == 1
+                                      ? MyText(
+                                          text:
+                                              "${(reviewList[index].um[index].name)} ${'|'} ${("Oman")}", //"ReviJohn Doe | California | 9days ago",
+                                          color: blackTypeColor4,
+                                          weight: FontWeight.w600,
+                                        )
+                                      : MyText(
+                                          text:
+                                              "${(reviewList[index].um[index].name)} ${'|'} ${(reviewList[index].ca.substring(0, 10))} ", //"ReviJohn Doe | California | 9days ago",
+                                          color: blackTypeColor4,
+                                          weight: FontWeight.w600,
+                                        ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  RatingBar.builder(
+                                    ignoreGestures: true,
+                                    initialRating: convert(
+                                        reviewList[index].star.toString()),
+                                    itemSize: 15,
+                                    minRating: 1,
+                                    direction: Axis.horizontal,
+                                    allowHalfRating: true,
+                                    itemCount: 5,
+                                    itemPadding: const EdgeInsets.symmetric(
+                                        horizontal: 1.0),
+                                    itemBuilder: (context, _) => const Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                      size: 12,
+                                    ),
+                                    onRatingUpdate: (rating) {
+                                      print(rating);
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  MyText(
+                                    text: reviewList[index].remarks,
+                                    //'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer finibus eros nec ex aliquam iaculis. Donec et magna viverra, gravida lacus eget, posuere dui. Suspendisse convallis condimentum dolor, ',
+                                    color: blackTypeColor4,
+                                    size: 12,
+                                    weight: FontWeight.w600,
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Image(
+                                          image: ExactAssetImage(
+                                              'images/like.png')),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      MyText(
+                                        text: '0',
+                                        color: blackTypeColor4,
+                                        size: 10,
+                                      ),
+                                    ],
+                                  ),
+                                  Divider(
+                                    thickness: 1,
+                                    color: blackColor.withOpacity(0.3),
+                                  )
+                                ],
+                              ),
+                            ],
+                          );
+                  }),
+            ),
     );
   }
 }
