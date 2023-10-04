@@ -1,12 +1,15 @@
-import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/constants_filter.dart';
 import 'package:adventuresclub/models/filter_data_model/category_filter_model.dart';
 import 'package:flutter/material.dart';
 
+import '../constants.dart';
+
 class CategoryDropDown extends StatefulWidget {
   final List<CategoryFilterModel>? dropDownList;
+  final String title;
   final double width;
-  const CategoryDropDown(this.width, {this.dropDownList, super.key});
+  const CategoryDropDown(this.width,
+      {required this.title, required this.dropDownList, super.key});
 
   @override
   State<CategoryDropDown> createState() => _CategoryDropDownState();
@@ -16,17 +19,24 @@ class _CategoryDropDownState extends State<CategoryDropDown> {
   String dropdownValue = 'One';
   String category = "";
   List<CategoryFilterModel> categoryList = [];
+  late CategoryFilterModel selected;
+  bool isSelected = false;
 
-  @override
-  void initState() {
-    super.initState();
-    getData();
+  List<PopupMenuEntry<CategoryFilterModel>> itemBuilder(BuildContext context) {
+    return widget.dropDownList!.map((e) {
+      return PopupMenuItem(
+        value: e,
+        child: Text(e.category),
+      );
+    }).toList();
   }
 
-  void getData() {
-    categoryList = Constants.categoryFilter;
-    category = categoryList[0].category;
-    ConstantsFilter.categoryId = categoryList[0].id.toString();
+  void select(CategoryFilterModel s) {
+    setState(() {
+      selected = s;
+      isSelected = true;
+      ConstantsFilter.sectorId = s.id.toString();
+    });
   }
 
   void updateData(CategoryFilterModel s) {
@@ -35,36 +45,26 @@ class _CategoryDropDownState extends State<CategoryDropDown> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      width: MediaQuery.of(context).size.width / widget.width,
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          isExpanded: true,
-          value: category,
-          icon: const Icon(Icons.keyboard_arrow_down),
-          elevation: 12,
-          style: const TextStyle(color: blackTypeColor),
-          onChanged: (String? value) {
-            // This is called when the user selects an item.
-            setState(() {
-              category = value!;
-            });
-          },
-          items: categoryList
-              .map<DropdownMenuItem<String>>((CategoryFilterModel value) {
-            return DropdownMenuItem<String>(
-              onTap: () => updateData(value),
-              value: value.category,
-              child: Text(
-                value.category,
-                style:
-                    const TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
-              ),
-            );
-          }).toList(),
-        ),
-      ),
-    );
+    return SizedBox(
+        width: MediaQuery.of(context).size.width / widget.width,
+        child: PopupMenuButton(
+          itemBuilder: itemBuilder,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          offset: const Offset(10, 45),
+          onSelected: (CategoryFilterModel result) => select(result),
+          child: ListTile(
+            leading: const Icon(
+              Icons.place_rounded,
+              color: blackColor,
+            ),
+            horizontalTitleGap: 5,
+            title: Text(
+              widget.title,
+            ),
+            subtitle: isSelected ? Text(selected.category) : const Text(""),
+            trailing: const Icon(Icons.keyboard_arrow_down),
+          ),
+        ));
   }
 }

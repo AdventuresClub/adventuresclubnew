@@ -54,7 +54,7 @@ class LevelDropDownState extends State<LevelDropDown> {
   @override
   Widget build(BuildContext context) {
     return widget.show
-        ? const LevelDropDownList(3.5)
+        ? LevelDropDownList(widget.lFilter, "Level", 3.5)
         : Container(
             width: MediaQuery.of(context).size.width / 2.4,
             //padding: const EdgeInsets.all(0),

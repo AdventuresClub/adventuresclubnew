@@ -48,7 +48,11 @@ class ServiceCategoryDropDownState extends State<ServiceCategoryDropDown> {
   @override
   Widget build(BuildContext context) {
     return widget.show
-        ? CategoryDropDown(3.5, dropDownList: widget.cFilter)
+        ? CategoryDropDown(
+            3,
+            dropDownList: widget.cFilter,
+            title: "Category",
+          )
         // SizedBox(
         //     child: ListTile(
         //       onTap: () => showDialog(

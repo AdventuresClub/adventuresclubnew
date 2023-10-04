@@ -364,17 +364,17 @@ class ServicesProvider with ChangeNotifier {
         Uri.parse(
             'https://adventuresclub.net/adventureClub/api/v1/services_filter'),
         body: {
-          'country': ccode, //'14',
-          'min_price': minPrice, //'10',
-          'max_price': maxPrice, //'100',
+          'country': ccode,
+          'min_price': minPrice,
+          'max_price': maxPrice,
           'region': region,
-          'service_sector': sId, //'1',
-          'category': cId, //'4',
-          'service_type': serviceType, //'1',
-          'duration': duration, //'1',
-          'service_level': serviceLevel, //'1',
+          'service_sector': sId,
+          'category': cId,
+          'service_type': serviceType,
+          'duration': duration,
+          'service_level': serviceLevel,
           'aimed_for': "",
-          'provider_name': "", //id,
+          'provider_name': "",
         });
     if (response.statusCode == 200) {
       var getServicesMap = jsonDecode(utf8.decode(response.bodyBytes)) as Map;

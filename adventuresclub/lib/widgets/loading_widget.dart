@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class LoadingWidget extends StatelessWidget {
@@ -5,15 +6,15 @@ class LoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          CircularProgressIndicator(color: Colors.purple),
-          SizedBox(height: 20),
+          const CircularProgressIndicator(color: Colors.purple),
+          const SizedBox(height: 20),
           Text(
-            "Loading Profile ...",
-            style: TextStyle(color: Colors.purple),
+            "loadingProfile".tr(),
+            style: const TextStyle(color: Colors.purple),
           ),
         ],
       ),

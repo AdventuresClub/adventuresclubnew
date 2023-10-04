@@ -54,7 +54,7 @@ class DurationDropDownState extends State<DurationDropDown> {
   @override
   Widget build(BuildContext context) {
     return widget.show
-        ? const DurationDropDownList(3.5)
+        ? DurationDropDownList(widget.dFilter, 3.5)
         : Container(
             width: MediaQuery.of(context).size.width / 2.4,
             //padding: const EdgeInsets.all(0),

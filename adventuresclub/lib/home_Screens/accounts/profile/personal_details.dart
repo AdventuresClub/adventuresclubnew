@@ -145,6 +145,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
             'mobile': phoneController.text,
             'forgot_password': "0",
           });
+      if (response.statusCode == 200) {}
     } catch (e) {
       print(e.toString());
     }

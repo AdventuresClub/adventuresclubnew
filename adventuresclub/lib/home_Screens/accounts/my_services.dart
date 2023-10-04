@@ -124,7 +124,7 @@ class _MyServicesState extends State<MyServices> {
             ],
           ),
         ),
-        children: [],
+        children: const [],
       ),
     );
   }
@@ -218,7 +218,7 @@ class _MyServicesState extends State<MyServices> {
           dependency.forEach((d) {
             DependenciesModel dm = DependenciesModel(
               int.tryParse(d['id'].toString()) ?? 0,
-              d['dependency_name'].toString() ?? "",
+              d['dependency_name'] ?? "",
               d['image'].toString() ?? "",
               d['updated_at'].toString() ?? "",
               d['created_at'].toString() ?? "",

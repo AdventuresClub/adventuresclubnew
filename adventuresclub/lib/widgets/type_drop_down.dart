@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import '../models/filter_data_model/service_types_filter.dart';
 
 class TypeDropDown extends StatefulWidget {
+  final List<ServiceTypeFilterModel> sFilter;
+  final String title;
   final double width;
-  const TypeDropDown(this.width, {super.key});
+  const TypeDropDown(this.sFilter, this.title, this.width, {super.key});
 
   @override
   State<TypeDropDown> createState() => _TypeDropDownState();
@@ -14,55 +16,47 @@ class TypeDropDown extends StatefulWidget {
 class _TypeDropDownState extends State<TypeDropDown> {
   String type = "";
   List<ServiceTypeFilterModel> typeList = [];
+  late ServiceTypeFilterModel selected;
+  bool isSelected = false;
 
-  @override
-  void initState() {
-    super.initState();
-    getData();
+  List<PopupMenuEntry<ServiceTypeFilterModel>> itemBuilder(
+      BuildContext context) {
+    return widget.sFilter.map((e) {
+      return PopupMenuItem(
+        value: e,
+        child: Text(e.type),
+      );
+    }).toList();
   }
 
-  void getData() {
-    typeList = Constants.serviceFilter;
-    type = typeList[0].type;
-    ConstantsFilter.typeId = typeList[0].id.toString();
-  }
-
-  void updateData(ServiceTypeFilterModel t) {
-    ConstantsFilter.typeId = t.id.toString();
+  void select(ServiceTypeFilterModel s) {
+    setState(() {
+      selected = s;
+      isSelected = true;
+      ConstantsFilter.typeId = s.id.toString();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      width: MediaQuery.of(context).size.width / widget.width,
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          isExpanded: true,
-          value: type,
-          icon: const Icon(Icons.keyboard_arrow_down),
-          elevation: 12,
-          style: const TextStyle(color: blackTypeColor),
-          onChanged: (String? value) {
-            // This is called when the user selects an item.
-            setState(() {
-              type = value!;
-            });
-          },
-          items: typeList
-              .map<DropdownMenuItem<String>>((ServiceTypeFilterModel value) {
-            return DropdownMenuItem<String>(
-              onTap: () => updateData(value),
-              value: value.type,
-              child: Text(
-                value.type,
-                style:
-                    const TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
-              ),
-            );
-          }).toList(),
-        ),
-      ),
-    );
+    return SizedBox(
+        width: MediaQuery.of(context).size.width / widget.width,
+        child: PopupMenuButton(
+          itemBuilder: itemBuilder,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          offset: const Offset(10, 45),
+          onSelected: (ServiceTypeFilterModel result) => select(result),
+          child: ListTile(
+            horizontalTitleGap: 5,
+            title: Text(widget.title),
+            leading: const Icon(
+              Icons.place_rounded,
+              color: blackColor,
+            ),
+            subtitle: isSelected ? Text(selected.type) : const Text(""),
+            trailing: const Icon(Icons.keyboard_arrow_down),
+          ),
+        ));
   }
 }

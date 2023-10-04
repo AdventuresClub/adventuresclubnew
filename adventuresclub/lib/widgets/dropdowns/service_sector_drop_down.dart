@@ -52,8 +52,9 @@ class ServiceSectorDropDownState extends State<ServiceSectorDropDown> {
     //filterSectors = Provider.of<FilterProvider>(context).filterSectors;
     return widget.show
         ? SectorDropDown(
-            3.5,
+            3,
             dropDownList: widget.sFilter,
+            title: "Sector",
           )
         // SizedBox(
         //     child: ListTile(

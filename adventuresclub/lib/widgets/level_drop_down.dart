@@ -4,8 +4,10 @@ import 'package:adventuresclub/models/filter_data_model/level_filter_mode.dart';
 import 'package:flutter/material.dart';
 
 class LevelDropDownList extends StatefulWidget {
+  final List<LevelFilterModel> lFilter;
+  final String title;
   final double width;
-  const LevelDropDownList(this.width, {super.key});
+  const LevelDropDownList(this.lFilter, this.title, this.width, {super.key});
 
   @override
   State<LevelDropDownList> createState() => _LevelDropDownListState();
@@ -14,17 +16,24 @@ class LevelDropDownList extends StatefulWidget {
 class _LevelDropDownListState extends State<LevelDropDownList> {
   String level = "";
   List<LevelFilterModel> levelList = [];
+  late LevelFilterModel selected;
+  bool isSelected = false;
 
-  @override
-  void initState() {
-    super.initState();
-    getData();
+  List<PopupMenuEntry<LevelFilterModel>> itemBuilder(BuildContext context) {
+    return widget.lFilter.map((e) {
+      return PopupMenuItem(
+        value: e,
+        child: Text(e.level),
+      );
+    }).toList();
   }
 
-  void getData() {
-    levelList = Constants.levelFilter;
-    level = levelList[0].level;
-    ConstantsFilter.levelId = levelList[0].id.toString();
+  void select(LevelFilterModel s) {
+    setState(() {
+      selected = s;
+      isSelected = true;
+      ConstantsFilter.levelId = s.id.toString();
+    });
   }
 
   void updateData(LevelFilterModel t) {
@@ -33,36 +42,24 @@ class _LevelDropDownListState extends State<LevelDropDownList> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      width: MediaQuery.of(context).size.width / widget.width,
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          isExpanded: true,
-          value: level,
-          icon: const Icon(Icons.keyboard_arrow_down),
-          elevation: 12,
-          style: const TextStyle(color: blackTypeColor),
-          onChanged: (String? value) {
-            // This is called when the user selects an item.
-            setState(() {
-              level = value!;
-            });
-          },
-          items:
-              levelList.map<DropdownMenuItem<String>>((LevelFilterModel value) {
-            return DropdownMenuItem<String>(
-              onTap: () => updateData(value),
-              value: value.level,
-              child: Text(
-                value.level,
-                style:
-                    const TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
-              ),
-            );
-          }).toList(),
-        ),
-      ),
-    );
+    return SizedBox(
+        width: MediaQuery.of(context).size.width / widget.width,
+        child: PopupMenuButton(
+          itemBuilder: itemBuilder,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          offset: const Offset(10, 45),
+          onSelected: (LevelFilterModel result) => select(result),
+          child: ListTile(
+            horizontalTitleGap: 5,
+            title: Text(widget.title),
+            leading: const Icon(
+              Icons.place_rounded,
+              color: blackColor,
+            ),
+            subtitle: isSelected ? Text(selected.level) : const Text(""),
+            trailing: const Icon(Icons.keyboard_arrow_down),
+          ),
+        ));
   }
 }

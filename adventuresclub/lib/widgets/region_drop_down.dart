@@ -33,7 +33,6 @@ class _RegionDropDownState extends State<RegionDropDown> {
   void getData() {
     regions = Constants.regionList;
     sector = regions[0].region;
-    ConstantsFilter.regionId = regions[0].regionId.toString();
   }
 
   void updateData(RegionsModel s) {

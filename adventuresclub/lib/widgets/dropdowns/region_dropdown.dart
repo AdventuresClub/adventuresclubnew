@@ -24,7 +24,7 @@ class RegionDropDownState extends State<RegionDropDown> {
   List<String> rList = [];
   //String selectedRegion = "";
   int selectedId = 0;
-  String selectedRegion = "Muscat";
+  String selectedRegion = "";
   int id = 0;
 
   @override
@@ -58,9 +58,17 @@ class RegionDropDownState extends State<RegionDropDown> {
   void sendRegion(String gRegion, int sRegionId) {
     setState(() {
       selectedRegion = gRegion;
-      ConstantsCreateNewServices.countryId = sRegionId;
+      ConstantsCreateNewServices.selectedRegionId = sRegionId;
     });
     //  ConstantsCreateNewServices.selectedRegionId = selectedRegionId;
+  }
+
+  void clearData() {
+    Navigator.of(context).pop();
+    setState(() {
+      selectedRegion = "";
+      ConstantsCreateNewServices.selectedRegionId = 0;
+    });
   }
 
   @override
@@ -161,8 +169,7 @@ class RegionDropDownState extends State<RegionDropDown> {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   TextButton(
-                                      onPressed: () =>
-                                          Navigator.of(context).pop(),
+                                      onPressed: () => clearData(),
                                       child: MyText(
                                         text: 'Cancel',
                                         color: bluishColor,

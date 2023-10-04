@@ -42,7 +42,7 @@ class _SignInState extends State<SignIn> {
   List<GetCountryModel> countriesList1 = [];
   ProfileBecomePartner pbp = ProfileBecomePartner(0, 0, "", "", "", "", "", "",
       "", "", 0, 0, "", "", "", "", "", "", "", 0, "", "", "", "", "", "");
-  String selectedLanguage = "";
+  String language = "";
 
   @override
   void initState() {
@@ -178,6 +178,7 @@ class _SignInState extends State<SignIn> {
         countriesList1.add(gc);
       });
     }
+    language = getCurrentLanguage(context);
   }
 
   void login() async {
@@ -342,11 +343,16 @@ class _SignInState extends State<SignIn> {
   }
 
   void changeLanguage(String lang) {
-    if (lang == "English") {
+    if (lang == "en") {
       context.setLocale(const Locale('en', 'US'));
-    } else if (lang == "Arabic") {
+    } else if (lang == "ar") {
       context.setLocale(const Locale('ar', 'SA'));
     }
+  }
+
+  String getCurrentLanguage(BuildContext context) {
+    Locale currentLocale = EasyLocalization.of(context)!.locale;
+    return currentLocale.languageCode;
   }
 
   @override
@@ -387,33 +393,40 @@ class _SignInState extends State<SignIn> {
                             color: whiteColor,
                             size: 24,
                           )),
-                      // PopupMenuButton<String>(
-                      //   child: const Padding(
-                      //     padding: EdgeInsets.symmetric(horizontal: 8.0),
-                      //     child: Icon(
-                      //       Icons.language_rounded,
-                      //       color: whiteColor,
-                      //       size: 60,
-                      //     ),
-                      //   ),
-                      //   onSelected: (String item) {
-                      //     setState(() {
-                      //       selectedLanguage = item;
-                      //     });
-                      //     changeLanguage(item);
-                      //   },
-                      //   itemBuilder: (BuildContext context) =>
-                      //       <PopupMenuEntry<String>>[
-                      //     const PopupMenuItem<String>(
-                      //       value: "English",
-                      //       child: Text('English'),
-                      //     ),
-                      //     const PopupMenuItem<String>(
-                      //       value: "Arabic",
-                      //       child: Text('Arabic'),
-                      //     ),
-                      //   ],
-                      // ),
+                      PopupMenuButton<String>(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: language == "en"
+                              ? const Image(
+                                  image: ExactAssetImage(
+                                      'images/great_britain.jpg'),
+                                  height: 70,
+                                  width: 50,
+                                )
+                              : const Image(
+                                  image: ExactAssetImage('images/ksa_flag.png'),
+                                  height: 70,
+                                  width: 50,
+                                ),
+                        ),
+                        onSelected: (String item) {
+                          setState(() {
+                            language = item;
+                          });
+                          changeLanguage(item);
+                        },
+                        itemBuilder: (BuildContext context) =>
+                            <PopupMenuEntry<String>>[
+                          const PopupMenuItem<String>(
+                            value: "en",
+                            child: Text('English'),
+                          ),
+                          const PopupMenuItem<String>(
+                            value: "ar",
+                            child: Text('Arabic'),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                   const SizedBox(

@@ -52,7 +52,11 @@ class ServiceTypeDropDownState extends State<ServiceTypeDropDown> {
   @override
   Widget build(BuildContext context) {
     return widget.show
-        ? const TypeDropDown(3.5)
+        ? TypeDropDown(
+            widget.sFilter,
+            "Type",
+            3.5,
+          )
         : Container(
             width: MediaQuery.of(context).size.width / 2.4,
             //padding: const EdgeInsets.all(0),
