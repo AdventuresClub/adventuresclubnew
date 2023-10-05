@@ -399,14 +399,14 @@ class _SignInState extends State<SignIn> {
                           child: language == "en"
                               ? const Image(
                                   image: ExactAssetImage(
-                                      'images/great_britain.jpg'),
-                                  height: 70,
-                                  width: 50,
+                                      'images/great_britain.png'),
+                                  height: 80,
+                                  width: 60,
                                 )
                               : const Image(
                                   image: ExactAssetImage('images/ksa_flag.png'),
-                                  height: 70,
-                                  width: 50,
+                                  height: 80,
+                                  width: 60,
                                 ),
                         ),
                         onSelected: (String item) {

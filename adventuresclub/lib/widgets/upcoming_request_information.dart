@@ -240,8 +240,8 @@ class _UpcomingRequestInformationState
       List<AvailabilityPlanModel> gAccomodationPlanModel = [];
       List<dynamic> availablePlan = result['availability'];
       availablePlan.forEach((ap) {
-        AvailabilityPlanModel amPlan =
-            AvailabilityPlanModel(ap['id'].toString(), ap['day'].toString());
+        AvailabilityPlanModel amPlan = AvailabilityPlanModel(
+            int.tryParse(ap['id'].toString()) ?? 0, ap['day'].toString());
         gAccomodationPlanModel.add(amPlan);
       });
       List<AvailabilityModel> gAccomodoationAvaiModel = [];

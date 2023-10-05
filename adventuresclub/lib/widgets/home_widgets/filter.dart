@@ -23,6 +23,7 @@ import 'package:adventuresclub/widgets/dropdowns/service_sector_drop_down.dart';
 import 'package:adventuresclub/widgets/dropdowns/service_type_drop_down.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/search_container.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -334,13 +335,13 @@ class _FilterPageState extends State<FilterPage> {
                   elevation: 5,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(22)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             GestureDetector(
@@ -359,7 +360,7 @@ class _FilterPageState extends State<FilterPage> {
                             ),
                             Center(
                               child: MyText(
-                                  text: 'Filter',
+                                  text: 'filter'.tr(),
                                   weight: FontWeight.w800,
                                   color: blackColor.withOpacity(0.7),
                                   size: 18,
@@ -368,354 +369,354 @@ class _FilterPageState extends State<FilterPage> {
                             const SizedBox(width: 40),
                           ],
                         ),
-                      ),
-                      pickCountry(context, 'Country Location'),
-                      Divider(
-                        indent: 18,
-                        endIndent: 18,
-                        color: blackColor.withOpacity(0.3),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12.0),
-                            child: MyText(
-                              text: "Price Range",
-                              weight: FontWeight.w800,
-                              color: blackColor,
-                              size: 18,
+                        pickCountry(context, 'Country Location'),
+                        Divider(
+                          indent: 18,
+                          endIndent: 18,
+                          color: blackColor.withOpacity(0.3),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              height: 10,
                             ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 10),
-                            //width: Get.width,
-                            child: Column(
-                              children: [
-                                RangeSlider(
-                                    activeColor: greyColor,
-                                    inactiveColor: greyColor.withOpacity(0.3),
-                                    min: 0,
-                                    max: 1000,
-                                    values: values,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        values = value;
-                                      });
-                                    }),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 35.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 22, vertical: 5),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            border: Border.all(
-                                                color: greyColor
-                                                    .withOpacity(0.6))),
-                                        child: Column(
-                                          children: [
-                                            MyText(
-                                              text: 'Minimum',
-                                              color: greyColor,
-                                              size: 12,
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text("\$${values.start.toInt()}"),
-                                          ],
+                            Padding(
+                              padding: const EdgeInsets.only(left: 12.0),
+                              child: MyText(
+                                text: "priceRange".tr(),
+                                weight: FontWeight.w800,
+                                color: blackColor,
+                                size: 18,
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(top: 10),
+                              //width: Get.width,
+                              child: Column(
+                                children: [
+                                  RangeSlider(
+                                      activeColor: greyColor,
+                                      inactiveColor: greyColor.withOpacity(0.3),
+                                      min: 0,
+                                      max: 1000,
+                                      values: values,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          values = value;
+                                        });
+                                      }),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 35.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 22, vertical: 5),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              border: Border.all(
+                                                  color: greyColor
+                                                      .withOpacity(0.6))),
+                                          child: Column(
+                                            children: [
+                                              MyText(
+                                                text: 'minimum'.tr(),
+                                                color: greyColor,
+                                                size: 12,
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text("\$${values.start.toInt()}"),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 22, vertical: 5),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            border: Border.all(
-                                                color: greyColor
-                                                    .withOpacity(0.6))),
-                                        child: Column(
-                                          children: [
-                                            MyText(
-                                              text: 'Maximum',
-                                              color: greyColor,
-                                              size: 12,
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                                "\$${values.end.toInt().toString()}"),
-                                          ],
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 22, vertical: 5),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              border: Border.all(
+                                                  color: greyColor
+                                                      .withOpacity(0.6))),
+                                          child: Column(
+                                            children: [
+                                              MyText(
+                                                text: 'maximum'.tr(),
+                                                color: greyColor,
+                                                size: 12,
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                  "\$${values.end.toInt().toString()}"),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                          ],
+                        ),
+                        Divider(
+                          indent: 18,
+                          endIndent: 18,
+                          color: blackColor.withOpacity(0.5),
+                        ),
+                        ListTile(
+                          title: MyText(
+                            text: "Region".tr(),
+                            color: blackColor,
+                            weight: FontWeight.bold,
+                            size: 14,
+                          ),
+                          trailing: SizedBox(
+                            width: 170,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  dDIconList[index],
+                                  color: blackColor,
+                                ),
+                                RegionFilterDropDown(
+                                  regionList,
+                                  show: true,
                                 ),
                               ],
                             ),
                           ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        indent: 18,
-                        endIndent: 18,
-                        color: blackColor.withOpacity(0.5),
-                      ),
-                      ListTile(
-                        title: MyText(
-                          text: "Region",
-                          color: blackColor,
-                          weight: FontWeight.bold,
-                          size: 14,
                         ),
-                        trailing: SizedBox(
-                          width: 170,
+                        ListTile(
+                          title: MyText(
+                            text: "Sector".tr(),
+                            color: blackColor,
+                            weight: FontWeight.bold,
+                            size: 14,
+                          ),
+                          trailing: SizedBox(
+                            width: 180,
+                            child: ServiceSectorDropDown(
+                              filterSectors,
+                              title: "",
+                              show: true,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: MyText(
+                            text: "Category".tr(),
+                            color: blackColor,
+                            weight: FontWeight.bold,
+                            size: 14,
+                          ),
+                          trailing: SizedBox(
+                            width: 180,
+                            child: ServiceCategoryDropDown(
+                              categoryFilter,
+                              show: true,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: MyText(
+                            text: "Type".tr(),
+                            color: blackColor,
+                            weight: FontWeight.bold,
+                            size: 14,
+                          ),
+                          trailing: SizedBox(
+                            width: 180,
+                            child: ServiceTypeDropDown(
+                              serviceFilter,
+                              show: true,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: MyText(
+                            text: "Level".tr(),
+                            color: blackColor,
+                            weight: FontWeight.bold,
+                            size: 14,
+                          ),
+                          trailing: SizedBox(
+                            width: 180,
+                            child: LevelDropDown(
+                              levelFilter,
+                              show: true,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: MyText(
+                            text: "Duration".tr(),
+                            color: blackColor,
+                            weight: FontWeight.bold,
+                            size: 14,
+                          ),
+                          trailing: SizedBox(
+                            width: 180,
+                            child: DurationDropDown(
+                              durationFilter,
+                              show: true,
+                            ),
+                          ),
+                        ),
+                        // const SizedBox(
+                        //   height: 30,
+                        // ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(left: 12.0),
+                        //   child: Align(
+                        //     alignment: Alignment.centerLeft,
+                        //     child: MyText(
+                        //         text: 'Acitivities',
+                        //         weight: FontWeight.w800,
+                        //         color: blackColor,
+                        //         size: 18,
+                        //         fontFamily: 'Raleway'),
+                        //   ),
+                        // ),
+                        // const SizedBox(
+                        //   height: 20,
+                        // ),
+                        // const ActivitiesFilterList(),
+                        // ListView.builder(
+                        //     itemCount: activitiesList.length,
+                        //     shrinkWrap: true,
+                        //     padding: const EdgeInsets.only(top: 10),
+                        //     physics: const ClampingScrollPhysics(),
+                        //     itemBuilder: (context, index) {
+                        //       return CheckboxListTile(
+                        //         secondary: Icon(
+                        //           iconList[index],
+                        //           color: blackColor,
+                        //         ),
+                        //         title: MyText(
+                        //           text: activitiesList[index],
+                        //           color: blackColor.withOpacity(0.6),
+                        //           weight: FontWeight.w700,
+                        //           size: 15,
+                        //         ),
+                        //         value: value,
+                        //         onChanged: (value) {
+                        //           setState(() {
+                        //             activityValue[index] =
+                        //                 !activityValue[index];
+                        //             // activityId
+                        //             //     .add(activitiesFilter[index].id);
+                        //             // activity.add(
+                        //             //     activitiesFilter[index].activity);
+                        //           });
+                        //         },
+                        //       );
+                        //     }),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: MyText(
+                                text: 'aimedFor'.tr(),
+                                weight: FontWeight.w800,
+                                color: blackColor,
+                                size: 18,
+                                fontFamily: 'Raleway'),
+                          ),
+                        ),
+                        ListView.builder(
+                            itemCount: aimedText.length,
+                            shrinkWrap: true,
+                            physics: const ClampingScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return CheckboxListTile(
+                                secondary: Icon(
+                                  aimedIconList[index],
+                                  color: blackColor,
+                                ),
+                                title: MyText(
+                                  text: aimedText[index],
+                                  color: blackColor.withOpacity(0.6),
+                                  weight: FontWeight.w700,
+                                  size: 15,
+                                ),
+                                value: value,
+                                onChanged: ((bool? value) {
+                                  setState(() {
+                                    value = value!;
+                                  });
+                                }),
+                              );
+                            }),
+                        const SizedBox(
+                          height: 3,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Icon(
-                                dDIconList[index],
-                                color: blackColor,
+                              GestureDetector(
+                                onTap: changeStatus,
+                                child: Container(
+                                    width: 130,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 15, horizontal: 18),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        border: Border.all(color: redColor),
+                                        color: whiteColor),
+                                    child: Center(
+                                        child: MyText(
+                                      text: 'clearFilter'.tr(),
+                                      color: redColor,
+                                      weight: FontWeight.bold,
+                                      size: 14,
+                                    ))),
                               ),
-                              RegionFilterDropDown(
-                                regionList,
-                                show: true,
+                              const SizedBox(
+                                width: 10,
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      ListTile(
-                        title: MyText(
-                          text: "Sector",
-                          color: blackColor,
-                          weight: FontWeight.bold,
-                          size: 14,
-                        ),
-                        trailing: SizedBox(
-                          width: 180,
-                          child: ServiceSectorDropDown(
-                            filterSectors,
-                            title: "",
-                            show: true,
-                          ),
-                        ),
-                      ),
-                      ListTile(
-                        title: MyText(
-                          text: "Category",
-                          color: blackColor,
-                          weight: FontWeight.bold,
-                          size: 14,
-                        ),
-                        trailing: SizedBox(
-                          width: 180,
-                          child: ServiceCategoryDropDown(
-                            categoryFilter,
-                            show: true,
-                          ),
-                        ),
-                      ),
-                      ListTile(
-                        title: MyText(
-                          text: "Type",
-                          color: blackColor,
-                          weight: FontWeight.bold,
-                          size: 14,
-                        ),
-                        trailing: SizedBox(
-                          width: 180,
-                          child: ServiceTypeDropDown(
-                            serviceFilter,
-                            show: true,
-                          ),
-                        ),
-                      ),
-                      ListTile(
-                        title: MyText(
-                          text: "Level",
-                          color: blackColor,
-                          weight: FontWeight.bold,
-                          size: 14,
-                        ),
-                        trailing: SizedBox(
-                          width: 180,
-                          child: LevelDropDown(
-                            levelFilter,
-                            show: true,
-                          ),
-                        ),
-                      ),
-                      ListTile(
-                        title: MyText(
-                          text: "Duration",
-                          color: blackColor,
-                          weight: FontWeight.bold,
-                          size: 14,
-                        ),
-                        trailing: SizedBox(
-                          width: 180,
-                          child: DurationDropDown(
-                            durationFilter,
-                            show: true,
-                          ),
-                        ),
-                      ),
-                      // const SizedBox(
-                      //   height: 30,
-                      // ),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(left: 12.0),
-                      //   child: Align(
-                      //     alignment: Alignment.centerLeft,
-                      //     child: MyText(
-                      //         text: 'Acitivities',
-                      //         weight: FontWeight.w800,
-                      //         color: blackColor,
-                      //         size: 18,
-                      //         fontFamily: 'Raleway'),
-                      //   ),
-                      // ),
-                      // const SizedBox(
-                      //   height: 20,
-                      // ),
-                      // const ActivitiesFilterList(),
-                      // ListView.builder(
-                      //     itemCount: activitiesList.length,
-                      //     shrinkWrap: true,
-                      //     padding: const EdgeInsets.only(top: 10),
-                      //     physics: const ClampingScrollPhysics(),
-                      //     itemBuilder: (context, index) {
-                      //       return CheckboxListTile(
-                      //         secondary: Icon(
-                      //           iconList[index],
-                      //           color: blackColor,
-                      //         ),
-                      //         title: MyText(
-                      //           text: activitiesList[index],
-                      //           color: blackColor.withOpacity(0.6),
-                      //           weight: FontWeight.w700,
-                      //           size: 15,
-                      //         ),
-                      //         value: value,
-                      //         onChanged: (value) {
-                      //           setState(() {
-                      //             activityValue[index] =
-                      //                 !activityValue[index];
-                      //             // activityId
-                      //             //     .add(activitiesFilter[index].id);
-                      //             // activity.add(
-                      //             //     activitiesFilter[index].activity);
-                      //           });
-                      //         },
-                      //       );
-                      //     }),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 12.0),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: MyText(
-                              text: 'Aimed For',
-                              weight: FontWeight.w800,
-                              color: blackColor,
-                              size: 18,
-                              fontFamily: 'Raleway'),
-                        ),
-                      ),
-                      ListView.builder(
-                          itemCount: aimedText.length,
-                          shrinkWrap: true,
-                          physics: const ClampingScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return CheckboxListTile(
-                              secondary: Icon(
-                                aimedIconList[index],
-                                color: blackColor,
-                              ),
-                              title: MyText(
-                                text: aimedText[index],
-                                color: blackColor.withOpacity(0.6),
-                                weight: FontWeight.w700,
-                                size: 15,
-                              ),
-                              value: value,
-                              onChanged: ((bool? value) {
-                                setState(() {
-                                  value = value!;
-                                });
-                              }),
-                            );
-                          }),
-                      const SizedBox(
-                        height: 3,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            GestureDetector(
-                              onTap: changeStatus,
-                              child: Container(
-                                  width: 130,
+                              InkWell(
+                                onTap: searchFilter,
+                                child: Container(
+                                  width: 110,
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 15, horizontal: 18),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(12),
-                                      border: Border.all(color: redColor),
-                                      color: whiteColor),
+                                      border: Border.all(color: bluishColor),
+                                      color: bluishColor),
                                   child: Center(
-                                      child: MyText(
-                                    text: 'Clear Filter',
-                                    color: redColor,
-                                    weight: FontWeight.bold,
-                                    size: 14,
-                                  ))),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            InkWell(
-                              onTap: searchFilter,
-                              child: Container(
-                                width: 110,
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 15, horizontal: 18),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(color: bluishColor),
-                                    color: bluishColor),
-                                child: Center(
-                                  child: MyText(
-                                    text: 'Search',
-                                    color: whiteColor,
-                                    weight: FontWeight.bold,
-                                    size: 14,
+                                    child: MyText(
+                                      text: 'search'.tr(),
+                                      color: whiteColor,
+                                      weight: FontWeight.bold,
+                                      size: 14,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   )),
             ),
           );
@@ -888,7 +889,7 @@ class _FilterPageState extends State<FilterPage> {
               //     ],
               //   ),
               // ),
-              SearchContainer('Search adventure name', 1.4, 8, searchController,
+              SearchContainer('searchAdventure'.tr(), 1.4, 8, searchController,
                   'images/maskGroup51.png', true, true, Constants.country, 12),
               const SizedBox(
                 width: 8,
@@ -1064,10 +1065,10 @@ class _FilterPageState extends State<FilterPage> {
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
                   children: [
-                    const Row(children: [
+                    Row(children: [
                       Text(
-                        "Select Your Country",
-                        style: TextStyle(
+                        "selectYourCountry".tr(),
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
                             fontFamily: 'Raleway-Black'),
@@ -1104,7 +1105,7 @@ class _FilterPageState extends State<FilterPage> {
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 8, horizontal: 8),
-                              hintText: 'Country',
+                              hintText: 'Country'.tr(),
                               filled: true,
                               fillColor: lightGreyColor,
                               suffixIcon: GestureDetector(
@@ -1144,7 +1145,7 @@ class _FilterPageState extends State<FilterPage> {
                                     width: 40,
                                   )
                                 : null,
-                            title: Text(filteredServices[index].country),
+                            title: Text(filteredServices[index].country.tr()),
                             onTap: () {
                               getC(
                                   filteredServices[index].country,
@@ -1163,19 +1164,19 @@ class _FilterPageState extends State<FilterPage> {
           }),
       contentPadding: const EdgeInsets.symmetric(horizontal: 15),
       title: MyText(
-        text: "Country",
+        text: "Country".tr(),
         color: blackColor,
         size: 16,
         weight: FontWeight.w800,
       ),
       trailing: SizedBox(
-        width: 90,
+        width: 100,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             MyText(
-              text: "Country",
+              text: "Country".tr(),
               color: blackColor.withOpacity(0.6),
               size: 10,
               weight: FontWeight.w500,
@@ -1194,7 +1195,7 @@ class _FilterPageState extends State<FilterPage> {
                   width: 5,
                 ),
                 Text(
-                  Constants.country,
+                  Constants.country.tr(),
                   style: const TextStyle(
                       color: blackColor,
                       fontWeight: FontWeight.w700,

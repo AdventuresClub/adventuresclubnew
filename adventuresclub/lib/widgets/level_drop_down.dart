@@ -1,6 +1,7 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/constants_filter.dart';
 import 'package:adventuresclub/models/filter_data_model/level_filter_mode.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class LevelDropDownList extends StatefulWidget {
@@ -23,7 +24,7 @@ class _LevelDropDownListState extends State<LevelDropDownList> {
     return widget.lFilter.map((e) {
       return PopupMenuItem(
         value: e,
-        child: Text(e.level),
+        child: Text(e.level.tr()),
       );
     }).toList();
   }
@@ -52,12 +53,12 @@ class _LevelDropDownListState extends State<LevelDropDownList> {
           onSelected: (LevelFilterModel result) => select(result),
           child: ListTile(
             horizontalTitleGap: 5,
-            title: Text(widget.title),
+            title: Text(widget.title.tr()),
             leading: const Icon(
               Icons.place_rounded,
               color: blackColor,
             ),
-            subtitle: isSelected ? Text(selected.level) : const Text(""),
+            subtitle: isSelected ? Text(selected.level.tr()) : const Text(""),
             trailing: const Icon(Icons.keyboard_arrow_down),
           ),
         ));

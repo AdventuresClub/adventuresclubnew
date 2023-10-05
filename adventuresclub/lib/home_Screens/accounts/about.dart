@@ -16,6 +16,7 @@ import 'package:adventuresclub/models/services/service_image_model.dart';
 import 'package:adventuresclub/models/user_profile_model.dart';
 import 'package:adventuresclub/widgets/grid/provided_adventure_grid.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../models/services/create_services/availability_plan_model.dart';
@@ -199,8 +200,8 @@ class _AboutState extends State<About> {
         if (element['availability'] != null) {
           List<dynamic> availablePlan = element['availability'];
           availablePlan.forEach((ap) {
-            AvailabilityPlanModel amPlan =
-                AvailabilityPlanModel(ap['id'] ?? "", ap['day'] ?? "");
+            AvailabilityPlanModel amPlan = AvailabilityPlanModel(
+                int.tryParse(ap['id'].toString()) ?? 0, ap['day'] ?? "");
             gAccomodationPlanModel.add(amPlan);
           });
         }
@@ -311,7 +312,7 @@ class _AboutState extends State<About> {
           element['service_category'] ?? "",
           element['service_type'] ?? "",
           element['service_level'] ?? "",
-          element['duration'] ?? "",
+          int.tryParse(element['duration'].toString()) ?? 0,
           int.tryParse(element['available_seats'].toString()) ?? 0,
           sDate,
           eDate,
@@ -357,7 +358,7 @@ class _AboutState extends State<About> {
           element['baseurl'] ?? "",
           gAccomodationServImgModel,
           element['rating'] ?? "",
-          element['reviewd_by'] ?? "",
+          element['reviewd_by'].toString() ?? "",
           int.tryParse(element['remaining_seats'].toString()) ?? 0,
         );
         //gAccomodationSModel.add(nSm);
@@ -405,13 +406,13 @@ class _AboutState extends State<About> {
           ),
         ),
         title: MyText(
-          text: 'Service Provider Profile',
+          text: 'serviceProviderProfile'.tr(),
           color: bluishColor,
           weight: FontWeight.bold,
         ),
       ),
       body: loading
-          ? const Text("Loading...")
+          ? Text("loading".tr())
           : SingleChildScrollView(
               child: Column(
                 children: [
@@ -491,15 +492,15 @@ class _AboutState extends State<About> {
                             color: Colors.transparent,
                             child: InkWell(
                               onTap: () => selected(context),
-                              child: const Center(
+                              child: Center(
                                 child: Padding(
-                                  padding: EdgeInsets.only(left: 0),
+                                  padding: const EdgeInsets.only(left: 0),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        'Chat',
-                                        style: TextStyle(
+                                        'chat'.tr(),
+                                        style: const TextStyle(
                                             color: whiteColor,
                                             fontWeight: FontWeight.w400,
                                             letterSpacing: 0.8,
@@ -516,7 +517,7 @@ class _AboutState extends State<About> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: MyText(
-                            text: 'About',
+                            text: 'about'.tr(),
                             color: greyColor,
                             size: 18,
                             weight: FontWeight.bold,
@@ -568,7 +569,7 @@ class _AboutState extends State<About> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: MyText(
-                        text: 'Provided Adventures',
+                        text: 'providerAdventure'.tr(),
                         color: greyColor,
                         weight: FontWeight.w600,
                         size: 16,
@@ -576,7 +577,7 @@ class _AboutState extends State<About> {
                     ),
                   ),
                   pLoading
-                      ? MyText(text: "Loading...")
+                      ? MyText(text: "loading".tr())
                       : ProvidedAdventureGrid(allServices)
                 ],
               ),

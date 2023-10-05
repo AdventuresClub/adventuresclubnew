@@ -200,7 +200,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
       List<dynamic> availablePlan = result['availability'];
       availablePlan.forEach((ap) {
         AvailabilityPlanModel amPlan = AvailabilityPlanModel(
-            ap['id'].toString() ?? "", ap['day'].toString() ?? "");
+            int.tryParse(ap['id'].toString()) ?? 0, ap['day'].toString() ?? "");
         gAccomodationPlanModel.add(amPlan);
       });
       List<AvailabilityModel> gAccomodoationAvaiModel = [];

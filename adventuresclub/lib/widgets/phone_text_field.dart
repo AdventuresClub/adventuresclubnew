@@ -423,7 +423,7 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 4.0, vertical: 4.0),
+                              horizontal: 4.0, vertical: 0.0),
                           margin: const EdgeInsets.symmetric(horizontal: 12.0),
                           decoration: const BoxDecoration(
                             color: whiteColor,
@@ -478,7 +478,7 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
                   alignLabelWithHint: true,
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 0,
-                    vertical: 15,
+                    vertical: 12,
                   ),
                   filled: true,
                   fillColor: whiteColor,

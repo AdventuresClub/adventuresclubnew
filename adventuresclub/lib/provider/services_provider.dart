@@ -136,7 +136,8 @@ class ServicesProvider with ChangeNotifier {
           List<dynamic> availablePlan = services['availability'];
           availablePlan.forEach((ap) {
             AvailabilityPlanModel amPlan = AvailabilityPlanModel(
-                ap['id'].toString() ?? "", ap['day'].toString() ?? "");
+                int.tryParse(ap['id'].toString()) ?? 0,
+                ap['day'].toString() ?? "");
             gAccomodationPlanModel.add(amPlan);
           });
           List<AvailabilityModel> gAccomodoationAvaiModel = [];
@@ -1139,7 +1140,8 @@ class ServicesProvider with ChangeNotifier {
             List<dynamic> availablePlan = skyServices['availability'];
             availablePlan.forEach((ap) {
               AvailabilityPlanModel skyPlan = AvailabilityPlanModel(
-                  ap['id'].toString() ?? "", ap['day'].toString() ?? "");
+                  int.tryParse(ap['id'].toString()) ?? 0,
+                  ap['day'].toString() ?? "");
               gSkyPlanModel.add(skyPlan);
             });
             List<AvailabilityModel> gSkyAvaiModel = [];
@@ -1300,7 +1302,8 @@ class ServicesProvider with ChangeNotifier {
             List<dynamic> availablePlan = waterServices['availability'];
             availablePlan.forEach((ap) {
               AvailabilityPlanModel waterPlan = AvailabilityPlanModel(
-                  ap['id'].toString() ?? "", ap['day'].toString() ?? "");
+                  int.tryParse(ap['id'].toString()) ?? 0,
+                  ap['day'].toString() ?? "");
               gWaterPlanModel.add(waterPlan);
             });
             List<AvailabilityModel> gWaterAvaiModel = [];
@@ -1462,7 +1465,8 @@ class ServicesProvider with ChangeNotifier {
             List<dynamic> availablePlan = landServices['availability'];
             availablePlan.forEach((ap) {
               AvailabilityPlanModel landPlan = AvailabilityPlanModel(
-                  ap['id'].toString() ?? "", ap['day'].toString() ?? "");
+                  int.tryParse(ap['id'].toString()) ?? 0,
+                  ap['day'].toString() ?? "");
               glandPlanModel.add(landPlan);
             });
             List<AvailabilityModel> gLandAvaiModel = [];
@@ -1624,7 +1628,8 @@ class ServicesProvider with ChangeNotifier {
             List<dynamic> availablePlan = otherElement['availability'];
             availablePlan.forEach((ap) {
               AvailabilityPlanModel waterPlan = AvailabilityPlanModel(
-                  ap['id'].toString() ?? "", ap['day'].toString() ?? "");
+                  int.tryParse(ap['id'].toString()) ?? 0,
+                  ap['day'].toString() ?? "");
               gWaterPlanModel.add(waterPlan);
             });
             List<AvailabilityModel> gWaterAvaiModel = [];

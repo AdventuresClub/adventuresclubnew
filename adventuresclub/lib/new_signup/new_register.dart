@@ -546,15 +546,15 @@ class _NewRegisterState extends State<NewRegister> {
                                     child: language == "en"
                                         ? const Image(
                                             image: ExactAssetImage(
-                                                'images/great_britain.jpg'),
-                                            height: 70,
-                                            width: 50,
+                                                'images/great_britain.png'),
+                                            height: 60,
+                                            width: 40,
                                           )
                                         : const Image(
                                             image: ExactAssetImage(
                                                 'images/ksa_flag.png'),
-                                            height: 70,
-                                            width: 50,
+                                            height: 60,
+                                            width: 40,
                                           ),
                                   ),
                                   onSelected: (String item) {
@@ -571,7 +571,7 @@ class _NewRegisterState extends State<NewRegister> {
                                         children: [
                                           Image(
                                             image: ExactAssetImage(
-                                                'images/great_britain.jpg'),
+                                                'images/great_britain.png'),
                                             height: 40,
                                             width: 20,
                                           ),
@@ -621,7 +621,9 @@ class _NewRegisterState extends State<NewRegister> {
                             const SizedBox(
                               height: 10,
                             ),
-                            PhoneTextField(getData, countryCode),
+                            SizedBox(
+                                height: 60,
+                                child: PhoneTextField(getData, countryCode)),
                             const SizedBox(
                               height: 10,
                             ),

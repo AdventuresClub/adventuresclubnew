@@ -15,16 +15,16 @@ class DescriptionInformationWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Align(
-                alignment: Alignment.centerLeft,
-                child: MyText(
-                  text: 'information'.tr(),
-                  color: greyColor2,
-                  weight: FontWeight.w500,
-                  fontFamily: 'Roboto',
-                  size: 16,
-                )),
+            MyText(
+              text: 'information'.tr(),
+              color: greyColor2,
+              weight: FontWeight.w500,
+              fontFamily: 'Roboto',
+              size: 16,
+            ),
             const SizedBox(height: 5),
             MyText(
               text: writeInformation,

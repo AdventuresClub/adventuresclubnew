@@ -1,5 +1,6 @@
 import 'package:adventuresclub/constants_filter.dart';
 import 'package:adventuresclub/models/filter_data_model/sector_filter_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -34,7 +35,7 @@ class _SectorDropDownState extends State<SectorDropDown> {
     return widget.dropDownList!.map((e) {
       return PopupMenuItem(
         value: e,
-        child: Text(e.sector),
+        child: Text(e.sector.tr()),
       );
     }).toList();
   }
@@ -63,12 +64,12 @@ class _SectorDropDownState extends State<SectorDropDown> {
           onSelected: (SectorFilterModel result) => select(result),
           child: ListTile(
             horizontalTitleGap: 5,
-            title: Text(widget.title),
+            title: Text(widget.title.tr()),
             leading: const Icon(
               Icons.place_rounded,
               color: blackColor,
             ),
-            subtitle: isSelected ? Text(selected.sector) : const Text(""),
+            subtitle: isSelected ? Text(selected.sector.tr()) : const Text(""),
             trailing: const Icon(Icons.keyboard_arrow_down),
           ),
         )

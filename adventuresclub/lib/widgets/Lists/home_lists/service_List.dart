@@ -99,15 +99,14 @@ class ServiceListState extends State<ServiceList> {
             children: [
               for (int i = 0; i < gAllServices.length; i++)
                 Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: MyText(
-                        text: gAllServices[i].category.tr(),
-                        color: blackColor.withOpacity(0.6),
-                        weight: FontWeight.bold,
-                        size: 18,
-                      ),
+                    MyText(
+                      text: gAllServices[i].category.tr(),
+                      color: blackColor.withOpacity(0.6),
+                      weight: FontWeight.bold,
+                      size: 18,
                     ),
                     const SizedBox(
                       height: 5,

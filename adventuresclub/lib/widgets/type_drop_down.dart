@@ -1,5 +1,6 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/constants_filter.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../models/filter_data_model/service_types_filter.dart';
 
@@ -24,7 +25,7 @@ class _TypeDropDownState extends State<TypeDropDown> {
     return widget.sFilter.map((e) {
       return PopupMenuItem(
         value: e,
-        child: Text(e.type),
+        child: Text(e.type.tr()),
       );
     }).toList();
   }
@@ -49,12 +50,12 @@ class _TypeDropDownState extends State<TypeDropDown> {
           onSelected: (ServiceTypeFilterModel result) => select(result),
           child: ListTile(
             horizontalTitleGap: 5,
-            title: Text(widget.title),
+            title: Text(widget.title.tr()),
             leading: const Icon(
               Icons.place_rounded,
               color: blackColor,
             ),
-            subtitle: isSelected ? Text(selected.type) : const Text(""),
+            subtitle: isSelected ? Text(selected.type.tr()) : const Text(""),
             trailing: const Icon(Icons.keyboard_arrow_down),
           ),
         ));

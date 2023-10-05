@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:adventuresclub/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -57,15 +58,14 @@ class _ShowChatState extends State<ShowChat> {
                       weight: FontWeight.bold,
                     )
                   : MyText(
-                      text: 'Chat',
+                      text: 'chat'.tr(),
                       color: blackColor,
                       weight: FontWeight.bold,
                     ),
               centerTitle: true,
             )
           : null,
-      body: WebViewWidget(
-        controller: controller),
+      body: WebViewWidget(controller: controller),
     );
   }
 }

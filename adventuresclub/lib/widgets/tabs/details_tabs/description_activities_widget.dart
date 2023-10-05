@@ -15,37 +15,72 @@ class DescriptionActivitiesWidget extends StatelessWidget {
       elevation: 1,
       child: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          // mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: MyText(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              MyText(
                 text: 'activitiesIncludes'.tr(),
                 color: greyColor.withOpacity(0.6),
                 weight: FontWeight.bold,
                 fontFamily: 'Roboto',
               ),
-            ),
-            const SizedBox(height: 10),
-            Wrap(
-              children: [
-                for (int i = 0; i < activities.length; i++)
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+              const SizedBox(height: 10),
+              Wrap(
+                children: [
+                  for (int i = 0; i < activities.length; i++)
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.network(
+                            "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${activities[i].image}",
+                            height: 18,
+                            width: 18,
+                          ),
+                          const SizedBox(width: 5),
+                          MyText(
+                            text: activities[i].activity,
+                            color: greyTextColor,
+                            weight: FontWeight.w500,
+                            fontFamily: 'Roboto',
+                            size: 12,
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
+              /*
+              GridView.count(
+        //                primary: false,
+        //                physics: const ScrollPhysics(),
+                shrinkWrap: true,
+                addAutomaticKeepAlives: true,
+                mainAxisSpacing: 0,
+                childAspectRatio: 4,
+                crossAxisSpacing: 4,
+                crossAxisCount: 3,
+                children:
+                    List.generate(activities.length, //activitesInclude.length,
+                        (index) {
+                  return SizedBox(
+                    height: 20,
                     child: Row(
-                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Image.network(
-                          "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${activities[i].image}",
+                          "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${activities[index].image}",
                           height: 18,
                           width: 18,
                         ),
-                        const SizedBox(width: 5),
+                        const SizedBox(
+                          width: 5,
+                        ),
                         MyText(
-                          text: activities[i].activity,
+                          text: activities[index].activity,
                           color: greyTextColor,
                           weight: FontWeight.w500,
                           fontFamily: 'Roboto',
@@ -53,48 +88,12 @@ class DescriptionActivitiesWidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ),
-              ],
-            ),
-            /*
-            GridView.count(
-//                primary: false,
-//                physics: const ScrollPhysics(),
-              shrinkWrap: true,
-              addAutomaticKeepAlives: true,
-              mainAxisSpacing: 0,
-              childAspectRatio: 4,
-              crossAxisSpacing: 4,
-              crossAxisCount: 3,
-              children:
-                  List.generate(activities.length, //activitesInclude.length,
-                      (index) {
-                return SizedBox(
-                  height: 20,
-                  child: Row(
-                    children: [
-                      Image.network(
-                        "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${activities[index].image}",
-                        height: 18,
-                        width: 18,
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      MyText(
-                        text: activities[index].activity,
-                        color: greyTextColor,
-                        weight: FontWeight.w500,
-                        fontFamily: 'Roboto',
-                        size: 12,
-                      ),
-                    ],
-                  ),
-                );
-              }),
-            ),
-            */
-          ],
+                  );
+                }),
+              ),
+              */
+            ],
+          ),
         ),
       ),
     );

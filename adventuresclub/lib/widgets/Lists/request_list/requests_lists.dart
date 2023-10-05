@@ -25,6 +25,7 @@ import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/Lists/request_list/request_list_view.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/upcoming_request_information.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../../models/services/service_image_model.dart';
@@ -300,8 +301,8 @@ class _RequestsListState extends State<RequestsList> {
       List<AvailabilityPlanModel> gAccomodationPlanModel = [];
       List<dynamic> availablePlan = result['availability'];
       availablePlan.forEach((ap) {
-        AvailabilityPlanModel amPlan =
-            AvailabilityPlanModel(ap['id'].toString(), ap['day'].toString());
+        AvailabilityPlanModel amPlan = AvailabilityPlanModel(
+            int.tryParse(ap['id'].toString()) ?? 0, ap['day'].toString());
         gAccomodationPlanModel.add(amPlan);
       });
       List<AvailabilityModel> gAccomodoationAvaiModel = [];
@@ -704,9 +705,9 @@ class _RequestsListState extends State<RequestsList> {
   @override
   Widget build(BuildContext context) {
     return uRequestListInv.isEmpty
-        ? const Center(
+        ? Center(
             child: Column(
-              children: [Text("There is no upcoming adventure yet")],
+              children: [Text("thereIsNoUpcomingAdventureYet".tr())],
             ),
           )
         : RequestListView(uRequestListInv, getDetails);

@@ -1,6 +1,7 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/constants_filter.dart';
 import 'package:adventuresclub/models/filter_data_model/durations_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class DurationDropDownList extends StatefulWidget {
@@ -27,7 +28,7 @@ class _DurationDropDownListState extends State<DurationDropDownList> {
     return widget.dFilter.map((e) {
       return PopupMenuItem(
         value: e,
-        child: Text(e.duration),
+        child: Text(e.duration.tr()),
       );
     }).toList();
   }
@@ -56,12 +57,13 @@ class _DurationDropDownListState extends State<DurationDropDownList> {
           onSelected: (DurationsModel result) => select(result),
           child: ListTile(
             horizontalTitleGap: 5,
-            title: const Text("Duration"),
+            title: Text("Duration".tr()),
             leading: const Icon(
               Icons.place_rounded,
               color: blackColor,
             ),
-            subtitle: isSelected ? Text(selected.duration) : const Text(""),
+            subtitle:
+                isSelected ? Text(selected.duration.tr()) : const Text(""),
             trailing: const Icon(Icons.keyboard_arrow_down),
           ),
         ));

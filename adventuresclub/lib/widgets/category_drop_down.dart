@@ -1,5 +1,6 @@
 import 'package:adventuresclub/constants_filter.dart';
 import 'package:adventuresclub/models/filter_data_model/category_filter_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -26,7 +27,7 @@ class _CategoryDropDownState extends State<CategoryDropDown> {
     return widget.dropDownList!.map((e) {
       return PopupMenuItem(
         value: e,
-        child: Text(e.category),
+        child: Text(e.category.tr()),
       );
     }).toList();
   }
@@ -60,9 +61,10 @@ class _CategoryDropDownState extends State<CategoryDropDown> {
             ),
             horizontalTitleGap: 5,
             title: Text(
-              widget.title,
+              widget.title.tr(),
             ),
-            subtitle: isSelected ? Text(selected.category) : const Text(""),
+            subtitle:
+                isSelected ? Text(selected.category.tr()) : const Text(""),
             trailing: const Icon(Icons.keyboard_arrow_down),
           ),
         ));
