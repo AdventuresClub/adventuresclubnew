@@ -782,19 +782,19 @@ class _NewRegisterState extends State<NewRegister> {
                         height: 15,
                       ),
                       nowIn
-                          ? const Row(children: [
+                          ? Row(children: [
                               Text(
-                                "Select the country you are now in",
-                                style: TextStyle(
+                                "selectYourCountryYouAreNowIn".tr(),
+                                style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
                                     fontFamily: 'Raleway-Black'),
                               )
                             ])
-                          : const Row(children: [
+                          : Row(children: [
                               Text(
-                                "Select Your Nationality",
-                                style: TextStyle(
+                                "selectYourNationality".tr(),
+                                style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
                                     fontFamily: 'Raleway-Black'),
@@ -834,7 +834,7 @@ class _NewRegisterState extends State<NewRegister> {
                                       contentPadding:
                                           const EdgeInsets.symmetric(
                                               vertical: 8, horizontal: 8),
-                                      hintText: 'Country',
+                                      hintText: 'Country'.tr(),
                                       filled: true,
                                       fillColor: lightGreyColor,
                                       suffixIcon: GestureDetector(
@@ -925,7 +925,7 @@ class _NewRegisterState extends State<NewRegister> {
                                     )
                                   : null,
                               title: nowIn
-                                  ? Text(filteredServices[index].country)
+                                  ? Text(filteredServices[index].country.tr())
                                   : Text(filteredServices[index].shortName),
                               onTap: () {
                                 getC(
@@ -944,9 +944,9 @@ class _NewRegisterState extends State<NewRegister> {
                           }),
                         ),
                       ),
-                      const Text(
-                        "Request to add country from contact us menu after making a registration",
-                        style: TextStyle(
+                      Text(
+                        "requestToAddCountry".tr(),
+                        style: const TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 14,
                             color: redColor,
@@ -965,13 +965,13 @@ class _NewRegisterState extends State<NewRegister> {
         contentPadding: const EdgeInsets.symmetric(horizontal: 15),
         title: show == true
             ? MyText(
-                text: selectedCountry,
+                text: selectedCountry.tr(),
                 color: blackColor.withOpacity(0.6),
                 size: 16,
                 weight: FontWeight.w500,
               )
             : MyText(
-                text: currentLocation,
+                text: currentLocation.tr(),
                 color: blackColor.withOpacity(0.6),
                 size: 16,
                 weight: FontWeight.w500,
