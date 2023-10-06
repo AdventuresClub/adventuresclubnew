@@ -77,7 +77,7 @@ class _AdventureCategoryState extends State<AdventureCategory> {
         CategoryModel cm = CategoryModel(
           int.tryParse(element['id'].toString()) ?? 0,
           element['category'].toString() ?? "",
-          element['image'].toString() ?? "",
+          element['image'] ?? "",
           int.tryParse(element['status'].toString()) ?? 0,
         );
         pCM.add(cm);
