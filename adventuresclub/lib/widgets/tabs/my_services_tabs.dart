@@ -8,6 +8,7 @@ import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
 import 'package:adventuresclub/widgets/tabs/details_tabs/service_description.dart';
 import 'package:adventuresclub/widgets/tabs/participants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -70,7 +71,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
     if (widget.sm.sPlan == 1) {
       getSteps();
       setState(() {
-        text1.insert(5, "Availability : ");
+        text1.insert(5, "Availability");
         text4.insert(0, widget.sm.country);
         text4.insert(1, widget.sm.region);
         text4.insert(2, widget.sm.serviceCategory);
@@ -88,11 +89,11 @@ class _MyServicesTabState extends State<MyServicesTab> {
   }
 
   List<String> text1 = [
-    'Country  :',
-    'Region  :',
-    'Service Category  :',
-    'Available Seats :',
-    'Duration :',
+    'Country',
+    'Region',
+    'Service Category',
+    'Available Seats',
+    'Duration',
     //'Start Date :'
   ];
 
@@ -109,9 +110,9 @@ class _MyServicesTabState extends State<MyServicesTab> {
   ];
   List<String> text5 = [
     '4.8 (1048 Reviews)',
-    'Service Sector  :',
-    'Service Type :',
-    'Level  :',
+    'Service Sector',
+    'Service Type',
+    'Level',
     // 'End Date :',
   ];
   List<String> text6 = [];
@@ -144,7 +145,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
 
   void getSteps() {
     widget.sm.availabilityPlan.forEach((element) {
-      adventuresPlan.add(element.day);
+      adventuresPlan.add(element.day.tr());
     });
     aPlan = adventuresPlan.join(", ");
   }
@@ -266,10 +267,10 @@ class _MyServicesTabState extends State<MyServicesTab> {
                 indicatorSize: TabBarIndicatorSize.tab,
                 unselectedLabelColor: greyColor,
                 tabs: [
-                  const Tab(
-                    text: 'Adventure Details',
+                  Tab(
+                    text: 'adventureDetails'.tr(),
                   ),
-                  Tab(text: "${'Participants'} " "(${gGM.length})"),
+                  Tab(text: "${'participants'.tr()} " "(${gGM.length})"),
                 ],
               ),
             ),

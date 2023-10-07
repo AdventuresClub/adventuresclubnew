@@ -203,5 +203,10 @@
     "providerAdventure": "المغامرات المقدمة",
     "thereIsNoUpcomingAdventureYet": "لا توجد مغامرة قادمة حتى الآن",
     "cancelRequest":"إلغاء الطلب",
-    "makePayment": "قم بالدفع"
+    "makePayment": "قم بالدفع",
+    "pendingApproval": "في انتظار الموافقة",
+    "adventureDetails":"تفاصيل المغامرة",
+    "participants": "المشاركون",
+    "schedule": "جدول"       
+
 }

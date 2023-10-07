@@ -203,5 +203,8 @@
     "thereIsNoUpcomingAdventureYet": "There is no upcoming adventure yet",
     "cancelRequest":"Cancel Request",
     "makePayment": "Make Payment",
-    "pendingApproval": "Pending Approval"      
+    "pendingApproval": "Pending Approval",
+    "adventureDetails":"Adventure Details",
+    "participants": "Participants",
+    "schedule": "Schedule"   
 }

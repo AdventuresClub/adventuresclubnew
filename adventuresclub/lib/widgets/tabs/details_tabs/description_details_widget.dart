@@ -110,7 +110,7 @@ class DescriptionDetailsWidget extends StatelessWidget {
               children: [
                 RichText(
                   text: TextSpan(
-                    text: text1[1],
+                    text: text1[1].tr(),
                     style: const TextStyle(
                         color: greyColor2, fontSize: 14, height: 1.5),
                     children: [

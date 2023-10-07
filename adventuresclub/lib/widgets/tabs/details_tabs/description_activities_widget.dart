@@ -43,7 +43,7 @@ class DescriptionActivitiesWidget extends StatelessWidget {
                           ),
                           const SizedBox(width: 5),
                           MyText(
-                            text: activities[i].activity,
+                            text: activities[i].activity.tr(),
                             color: greyTextColor,
                             weight: FontWeight.w500,
                             fontFamily: 'Roboto',

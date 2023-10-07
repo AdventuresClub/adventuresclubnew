@@ -9,6 +9,7 @@ import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/Lists/my_services_list.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/tabs/my_services_tabs.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -293,7 +294,7 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
                           width: 5,
                         ),
                         MyText(
-                          text: widget.sm.sAddress, //'Muscat Oman',
+                          text: widget.sm.sAddress.tr(), //'Muscat Oman',
                           color: greyColor,
                           weight: FontWeight.w500,
                         )
@@ -319,8 +320,7 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
                               height: 2,
                             ),
                             MyText(
-                              text:
-                                  "including grears & other taxes", //'\$ 100.50',
+                              text: "includingGears".tr(), //'\$ 100.50',
                               color: Colors.red[600],
                               weight: FontWeight.w600,
                               fontFamily: "Roboto",
@@ -345,8 +345,7 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
                               height: 2,
                             ),
                             MyText(
-                              text:
-                                  "excluding grears & other taxes", //'\$ 100.50',
+                              text: "excludingGears".tr(), //'\$ 100.50',
                               color: Colors.red[600],
                               weight: FontWeight.w600,
                               fontFamily: "Roboto",

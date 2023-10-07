@@ -46,7 +46,7 @@ class DescriptionDependency extends StatelessWidget {
                           width: 5,
                         ),
                         MyText(
-                          text: dm[i].dName,
+                          text: dm[i].dName.tr(),
                           //text: aimedFor[index],
                           color: greyColor2,
                           weight: FontWeight.w500,
