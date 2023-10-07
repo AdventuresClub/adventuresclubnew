@@ -57,7 +57,7 @@ class _RequestListViewState extends State<RequestListView> {
       "",
       "",
       "",
-      0,
+      "",
       0,
       DateTime.now(),
       DateTime.now(),

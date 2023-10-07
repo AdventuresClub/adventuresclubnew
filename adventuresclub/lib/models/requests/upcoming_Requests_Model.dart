@@ -23,7 +23,7 @@ class UpcomingRequestsModel {
   String pChanel;
   String status;
   String pStatus;
-  String points;
+  int points;
   String des;
   String registration;
   List<ServiceImageModel> sImage;

@@ -18,7 +18,7 @@ class ServicesModel {
   String serviceCategory;
   String serviceType;
   String serviceLevel;
-  int duration;
+  String duration;
   int aSeats;
   DateTime startDate;
   DateTime endDate;

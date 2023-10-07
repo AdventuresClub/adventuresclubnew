@@ -312,7 +312,7 @@ class _AboutState extends State<About> {
           element['service_category'] ?? "",
           element['service_type'] ?? "",
           element['service_level'] ?? "",
-          int.tryParse(element['duration'].toString()) ?? 0,
+          element['duration'] ?? "",
           int.tryParse(element['available_seats'].toString()) ?? 0,
           sDate,
           eDate,
