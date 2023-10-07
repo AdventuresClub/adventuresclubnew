@@ -86,6 +86,7 @@
     "Region": "Region  :",
     "loadingProfile": "Loading Profile...",
     "loadingLocation":"Loading Location...",
+    "loadingInformation": "Loading Information...",
     "fullAddress": "Full Address",
     "address": "Address  :",
     "geoLocation":"Geo Location :",
@@ -168,6 +169,7 @@
     "Youngsters": "Youngsters",
     "Mixed gender": "Mixed gender",
     "Adults": "Adults",
+    "adult": "Adult, ",
     "Aged": "Aged",
     "searchAdventure":"Search adventure name",
     "Sector": "Sector",
@@ -198,6 +200,8 @@
     "Rock Climbing": "Rock Climbing",
     "serviceProviderProfile": "Service Provider Profile",
     "providerAdventure": "Provided Adventures",
-    "thereIsNoUpcomingAdventureYet": "There is no upcoming adventure yet"
-      
+    "thereIsNoUpcomingAdventureYet": "There is no upcoming adventure yet",
+    "cancelRequest":"Cancel Request",
+    "makePayment": "Make Payment",
+    "pendingApproval": "Pending Approval"      
 }

@@ -81,7 +81,7 @@ class _ServicesCardState extends State<ServicesCard> {
       availabilityPlanText.add(element.day);
       if (i < 4) {
         //availability += availabilityPlanText.join("| ");
-        availability += "${element.day} ";
+        availability += "${element.day.tr()} ";
         i++;
       }
     });
@@ -175,7 +175,7 @@ class _ServicesCardState extends State<ServicesCard> {
                                   //   width: 2,
                                   // ),
                                   MyText(
-                                    text: widget.gm.sAddress,
+                                    text: widget.gm.sAddress.tr(),
                                     maxLines: 1,
                                     color: blackColor,
                                     size: 10,
@@ -198,7 +198,7 @@ class _ServicesCardState extends State<ServicesCard> {
                                     ),
                                     MyText(
                                       //text: "testing",
-                                      text: "Pending Approval",
+                                      text: "pendingApproval".tr(),
                                       //text: 'Advanced',
                                       weight: FontWeight.w500,
                                       color: redColor,
@@ -220,7 +220,7 @@ class _ServicesCardState extends State<ServicesCard> {
                                     // ),
                                     MyText(
                                       //text: "testing",
-                                      text: "Accepted",
+                                      text: "accepted".tr(),
                                       //text: 'Advanced',
                                       weight: FontWeight.w500,
                                       color: greenColor1,
@@ -285,65 +285,6 @@ class _ServicesCardState extends State<ServicesCard> {
                       ],
                     ),
                   ),
-                  // Image(
-                  //   image: const ExactAssetImage(
-                  //     'images/line.png',
-                  //   ),
-                  //   width: MediaQuery.of(context).size.width / 2.4,
-                  // ),
-                  // const SizedBox(
-                  //   height: 3,
-                  // ),
-                  // SizedBox(
-                  //   width: MediaQuery.of(context).size.width / 2.3,
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.all(2.0),
-                  //     child: GestureDetector(
-                  //       onTap: () =>
-                  //           goToProvider(widget.gm.providerId.toString()),
-                  //       child: Row(
-                  //         mainAxisAlignment: MainAxisAlignment.start,
-                  //         crossAxisAlignment: CrossAxisAlignment.center,
-                  //         children: [
-                  //           CircleAvatar(
-                  //             radius: 10,
-                  //             backgroundColor: transparentColor,
-                  //             child: Image(
-                  //               height: 70,
-                  //               width: 60,
-                  //               image: NetworkImage(widget.gm.pProfile),
-                  //               //ExactAssetImage('images/avatar.png'),
-                  //               fit: BoxFit.cover,
-                  //             ),
-                  //           ),
-                  //           const SizedBox(width: 2),
-                  //           //   MyText(text: 'Provided By AdventuresClub',color:blackColor,fontStyle: FontStyle.italic,size: 10,),
-                  //           Text.rich(
-                  //             TextSpan(
-                  //               children: [
-                  //                 const TextSpan(
-                  //                     text: "Provided By ",
-                  //                     style: TextStyle(
-                  //                       color: greyColor3,
-                  //                       fontSize: 10,
-                  //                     )),
-                  //                 TextSpan(
-                  //                   text: widget.gm.pName,
-                  //                   //text: 'AdventuresClub',
-                  //                   style: const TextStyle(
-                  //                       fontWeight: FontWeight.bold,
-                  //                       color: blackTypeColor4,
-                  //                       fontSize: 11,
-                  //                       fontFamily: "Roboto"),
-                  //                 ),
-                  //               ],
-                  //             ),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               ),
             ),

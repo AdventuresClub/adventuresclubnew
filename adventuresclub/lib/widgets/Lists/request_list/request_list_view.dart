@@ -524,7 +524,7 @@ class _RequestListViewState extends State<RequestListView> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   MyText(
-                                    text: "Booking Number : ",
+                                    text: "bookingNumber".tr(),
                                     color: blackColor,
                                     weight: FontWeight.w500,
                                     size: 13,
@@ -543,14 +543,16 @@ class _RequestListViewState extends State<RequestListView> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   MyText(
-                                    text: "Activity Name : ",
+                                    text: "activityName".tr(),
                                     color: blackColor,
                                     weight: FontWeight.w500,
                                     size: 13,
                                     height: 1.8,
                                   ),
                                   MyText(
-                                    text: uRequestListInv[index].adventureName,
+                                    text: uRequestListInv[index]
+                                        .adventureName
+                                        .tr(),
                                     color: greyColor,
                                     weight: FontWeight.w400,
                                     size: 13,
@@ -562,14 +564,14 @@ class _RequestListViewState extends State<RequestListView> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   MyText(
-                                    text: "Provider Name : ",
+                                    text: "providerName".tr(),
                                     color: blackColor,
                                     weight: FontWeight.w500,
                                     size: 13,
                                     height: 1.8,
                                   ),
                                   MyText(
-                                    text: uRequestListInv[index].pName,
+                                    text: uRequestListInv[index].pName.tr(),
                                     color: greyColor,
                                     weight: FontWeight.w400,
                                     size: 13,
@@ -581,14 +583,14 @@ class _RequestListViewState extends State<RequestListView> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   MyText(
-                                    text: "Booking Date : ",
+                                    text: "bookingDate".tr(),
                                     color: blackColor,
                                     weight: FontWeight.w500,
                                     size: 13,
                                     height: 1.8,
                                   ),
                                   MyText(
-                                    text: uRequestListInv[index].bDate,
+                                    text: uRequestListInv[index].bDate.tr(),
                                     color: greyColor,
                                     weight: FontWeight.w400,
                                     size: 13,
@@ -600,14 +602,14 @@ class _RequestListViewState extends State<RequestListView> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   MyText(
-                                    text: "Activity Date : ",
+                                    text: "activityDate".tr(),
                                     color: blackColor,
                                     weight: FontWeight.w500,
                                     size: 13,
                                     height: 1.8,
                                   ),
                                   MyText(
-                                    text: uRequestListInv[index].aDate,
+                                    text: uRequestListInv[index].aDate.tr(),
                                     color: greyColor,
                                     weight: FontWeight.w400,
                                     size: 13,
@@ -619,7 +621,7 @@ class _RequestListViewState extends State<RequestListView> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   MyText(
-                                    text: 'Registrations : ',
+                                    text: "registrations".tr(),
                                     color: blackColor,
                                     weight: FontWeight.w400,
                                     size: 13,
@@ -628,7 +630,8 @@ class _RequestListViewState extends State<RequestListView> {
                                   if (uRequestListInv[index].adult != 0)
                                     MyText(
                                       text: "${uRequestListInv[index].adult} "
-                                          " ${"Adult, "}",
+                                              " ${"adult"}"
+                                          .tr(),
                                       color: greyTextColor,
                                       weight: FontWeight.w400,
                                       size: 12,
@@ -637,7 +640,8 @@ class _RequestListViewState extends State<RequestListView> {
                                   if (uRequestListInv[index].kids != 0)
                                     MyText(
                                       text: "${uRequestListInv[index].kids} "
-                                          " ${"Kids"}",
+                                              " ${"kids"}"
+                                          .tr(),
                                       color: greyTextColor,
                                       weight: FontWeight.w400,
                                       size: 12,
@@ -649,14 +653,14 @@ class _RequestListViewState extends State<RequestListView> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   MyText(
-                                    text: "Unit Cost : ",
+                                    text: "unitCost".tr(),
                                     color: blackColor,
                                     weight: FontWeight.w500,
                                     size: 13,
                                     height: 1.8,
                                   ),
                                   MyText(
-                                    text: uRequestListInv[index].uCost,
+                                    text: uRequestListInv[index].uCost.tr(),
                                     color: greyColor,
                                     weight: FontWeight.w400,
                                     size: 13,
@@ -668,14 +672,14 @@ class _RequestListViewState extends State<RequestListView> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   MyText(
-                                    text: "Total Cost : ",
+                                    text: "totalCost".tr(),
                                     color: blackColor,
                                     weight: FontWeight.w500,
                                     size: 13,
                                     height: 1.8,
                                   ),
                                   MyText(
-                                    text: uRequestListInv[index].tCost,
+                                    text: uRequestListInv[index].tCost.tr(),
                                     color: greyColor,
                                     weight: FontWeight.w400,
                                     size: 13,
@@ -687,14 +691,14 @@ class _RequestListViewState extends State<RequestListView> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   MyText(
-                                    text: "Payable Cost : ",
+                                    text: "payableCost".tr(),
                                     color: blackColor,
                                     weight: FontWeight.w500,
                                     size: 13,
                                     height: 1.8,
                                   ),
                                   MyText(
-                                    text: uRequestListInv[index].tCost,
+                                    text: uRequestListInv[index].tCost.tr(),
                                     color: greyColor,
                                     weight: FontWeight.w400,
                                     size: 13,
@@ -706,14 +710,14 @@ class _RequestListViewState extends State<RequestListView> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   MyText(
-                                    text: "Payment Channel : ",
+                                    text: "paymentChannel".tr(),
                                     color: blackColor,
                                     weight: FontWeight.w500,
                                     size: 13,
                                     height: 1.8,
                                   ),
                                   MyText(
-                                    text: uRequestListInv[index].pChanel,
+                                    text: uRequestListInv[index].pChanel.tr(),
                                     color: greyColor,
                                     weight: FontWeight.w400,
                                     size: 13,
@@ -753,10 +757,10 @@ class _RequestListViewState extends State<RequestListView> {
                             onTap: () => widget.getDetails(
                                 uRequestListInv[index].serviceId.toString(),
                                 uRequestListInv[index].providerId.toString()),
-                            child: const Center(
+                            child: Center(
                               child: Text(
-                                'View Details',
-                                style: TextStyle(
+                                "viewDetails".tr(),
+                                style: const TextStyle(
                                     color: whiteColor,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w700),
@@ -781,10 +785,10 @@ class _RequestListViewState extends State<RequestListView> {
                                     index), //     () => showConfirmation(
                             //   widget.uRequestListInv[index].BookingId.toString(),
                             // ),
-                            child: const Center(
+                            child: Center(
                               child: Text(
-                                'Cancel Request',
-                                style: TextStyle(
+                                'cancelRequest'.tr(),
+                                style: const TextStyle(
                                     color: whiteColor,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w700),
@@ -820,10 +824,10 @@ class _RequestListViewState extends State<RequestListView> {
                                     uRequestListInv[index].tCost,
                                     uRequestListInv[index])
                                 : () {},
-                            child: const Center(
+                            child: Center(
                               child: Text(
-                                'Make Payment',
-                                style: TextStyle(
+                                'makePayment'.tr(),
+                                style: const TextStyle(
                                     color: whiteColor,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w700),

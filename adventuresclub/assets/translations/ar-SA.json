@@ -87,6 +87,7 @@
     "Region": "المنطقة  :",
     "loadingProfile": "جارٍ تحميل الملف الشخصي...",
     "loadingLocation":"جارٍ تحميل الموقع...",
+    "loadingInformation": "جاري تحميل المعلومات...",
     "fullAddress": "العنوان الكامل",
     "address": "العنوان  :",
     "geoLocation":"الموقع الجغرافيs    :",
@@ -169,6 +170,7 @@
     "Youngsters": "الشباب",
     "Mixed gender": "الجنس المختلط",
     "Adults": "الكبار",
+    "adult": "بالغ",
     "Aged": "مسن",
     "searchAdventure":"البحث عن اسم المغامرة",
     "Sector": "قطاع",
@@ -199,5 +201,7 @@
     "Rock Climbing": "تسلق الصخور",
     "serviceProviderProfile": "ملف تعريف مقدم الخدمة",
     "providerAdventure": "المغامرات المقدمة",
-    "thereIsNoUpcomingAdventureYet": "لا توجد مغامرة قادمة حتى الآن"
+    "thereIsNoUpcomingAdventureYet": "لا توجد مغامرة قادمة حتى الآن",
+    "cancelRequest":"إلغاء الطلب",
+    "makePayment": "قم بالدفع"
 }

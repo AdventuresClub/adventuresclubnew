@@ -527,7 +527,7 @@ class _AccountState extends State<Account> {
         body: loading
             ? Center(
                 child: MyText(
-                text: "Loading...",
+                text: "loading".tr(),
                 weight: FontWeight.bold,
                 size: 16,
                 color: blackColor,
