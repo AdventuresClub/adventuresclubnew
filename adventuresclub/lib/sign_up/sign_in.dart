@@ -433,7 +433,7 @@ class _SignInState extends State<SignIn> {
                     height: 20,
                   ),
                   Image.asset(
-                    'images/whiteLogo.png',
+                    'images/whitelogo.png',
                     height: 200,
                     width: 320,
                   ),

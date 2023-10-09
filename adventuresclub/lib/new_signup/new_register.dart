@@ -605,7 +605,7 @@ class _NewRegisterState extends State<NewRegister> {
                             ),
                             //const SizedBox(height: 20),
                             Image.asset(
-                              'images/whiteLogo.png',
+                              'images/whitelogo.png',
                               height: 200,
                               width: 320,
                             ),
