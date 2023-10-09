@@ -82,7 +82,7 @@ class _TopListState extends State<TopList> {
         result.forEach((element) {
           CategoryModel cm = CategoryModel(
             int.tryParse(element['id'].toString()) ?? 0,
-            element['category'].toString() ?? "",
+            element['category'] ?? "",
             element['image'].toString() ?? "",
             int.tryParse(element['status'].toString()) ?? 0,
           );
