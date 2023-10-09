@@ -3,6 +3,7 @@ import 'package:adventuresclub/models/getClientRequest/get_client_request_model.
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/circle_image_avatar.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class RequestInformation extends StatefulWidget {
@@ -76,7 +77,7 @@ class _RequestInformationState extends State<RequestInformation> {
                   children: [
                     MyText(
                       text:
-                          "Booked On : ", //'Booked on : 25 Sep, 2020 | 10:30',
+                          "bookedOn".tr(), //'Booked on : 25 Sep, 2020 | 10:30',
                       color: bluishColor,
                       weight: FontWeight.w800,
                       fontFamily: 'Roboto',
@@ -123,7 +124,7 @@ class _RequestInformationState extends State<RequestInformation> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         MyText(
-                          text: 'Booking ID : ',
+                          text: 'bookingId'.tr(),
                           color: blackColor,
                           weight: FontWeight.w500,
                           size: 12,
@@ -141,7 +142,7 @@ class _RequestInformationState extends State<RequestInformation> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(
-                          text: 'UserName : ',
+                          text: 'userName'.tr(),
                           color: blackColor,
                           weight: FontWeight.w500,
                           size: 12,
@@ -159,7 +160,7 @@ class _RequestInformationState extends State<RequestInformation> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(
-                          text: 'Nationality: ',
+                          text: 'nationality'.tr(),
                           color: blackColor,
                           weight: FontWeight.w500,
                           size: 12,
@@ -195,7 +196,7 @@ class _RequestInformationState extends State<RequestInformation> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(
-                          text: 'Service Date: ',
+                          text: 'serviceDate'.tr(),
                           color: blackColor,
                           weight: FontWeight.w500,
                           size: 12,
@@ -213,7 +214,7 @@ class _RequestInformationState extends State<RequestInformation> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(
-                          text: 'Registrations: ',
+                          text: 'registrations'.tr(),
                           color: blackColor,
                           weight: FontWeight.w500,
                           size: 12,
@@ -237,7 +238,7 @@ class _RequestInformationState extends State<RequestInformation> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(
-                          text: 'Unit Cost: ',
+                          text: 'unitCost'.tr(),
                           color: blackColor,
                           weight: FontWeight.w500,
                           size: 12,
@@ -255,7 +256,7 @@ class _RequestInformationState extends State<RequestInformation> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(
-                          text: 'Total Cost: ',
+                          text: 'totalCost'.tr(),
                           color: blackColor,
                           weight: FontWeight.w500,
                           size: 12,
@@ -273,7 +274,7 @@ class _RequestInformationState extends State<RequestInformation> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(
-                          text: 'Payable Cost: ',
+                          text: 'payableCost'.tr(),
                           color: blackColor,
                           weight: FontWeight.w500,
                           size: 12,
@@ -291,7 +292,7 @@ class _RequestInformationState extends State<RequestInformation> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(
-                          text: 'Payment Channel: ',
+                          text: 'paymentChannel'.tr(),
                           color: blackColor,
                           weight: FontWeight.w500,
                           size: 12,
@@ -328,7 +329,7 @@ class _RequestInformationState extends State<RequestInformation> {
                     ),
                     RichText(
                       text: TextSpan(
-                        text: 'Health Condition: ',
+                        text: 'healthCondition'.tr(),
                         style: const TextStyle(
                             color: blackColor,
                             fontSize: 13,
@@ -354,7 +355,7 @@ class _RequestInformationState extends State<RequestInformation> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(
-                          text: 'Height: ',
+                          text: 'height'.tr(),
                           color: blackColor,
                           weight: FontWeight.w500,
                           size: 12,
@@ -372,7 +373,7 @@ class _RequestInformationState extends State<RequestInformation> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(
-                          text: 'Weight: ',
+                          text: 'weight'.tr(),
                           color: blackColor,
                           weight: FontWeight.w500,
                           size: 12,
@@ -388,7 +389,7 @@ class _RequestInformationState extends State<RequestInformation> {
                     ),
                     RichText(
                       text: TextSpan(
-                        text: 'Client Message: ',
+                        text: 'clientMessage'.tr(),
                         style: const TextStyle(
                             color: blackColor,
                             fontSize: 13,
@@ -468,10 +469,10 @@ class _RequestInformationState extends State<RequestInformation> {
                     child: InkWell(
                       onTap: () => selected(context, widget.gRM.serviceId,
                           widget.gRM.bookingUser),
-                      child: const Center(
+                      child: Center(
                         child: Text(
-                          'Chat Client',
-                          style: TextStyle(
+                          'chatClient'.tr(),
+                          style: const TextStyle(
                               color: whiteColor,
                               fontSize: 12,
                               fontWeight: FontWeight.w700),
@@ -496,10 +497,10 @@ class _RequestInformationState extends State<RequestInformation> {
                         widget.index,
                         //gRM.providerId
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Text(
-                          'Accept',
-                          style: TextStyle(
+                          'accept'.tr(),
+                          style: const TextStyle(
                               color: whiteColor,
                               fontSize: 12,
                               fontWeight: FontWeight.w700),
@@ -525,10 +526,10 @@ class _RequestInformationState extends State<RequestInformation> {
                         //widget.rm[index].providerId
                         widget.index,
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Text(
-                          'Decline',
-                          style: TextStyle(
+                          'decline'.tr(),
+                          style: const TextStyle(
                               color: whiteColor,
                               fontSize: 12,
                               fontWeight: FontWeight.w700),

@@ -112,6 +112,8 @@
     "information": "Information",
     "requested": "REQUESTED",
     "accepted": "ACCEPTED",
+    "accept": "Accept",
+    "decline": "Decline",
     "paid": "PAID",
     "declined":"DECLINED",
     "dropped":"DROPPED",

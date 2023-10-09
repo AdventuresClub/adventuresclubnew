@@ -113,6 +113,8 @@
     "information": "معلومة",
     "requested": "تم الطلب",
     "accepted": "تم القبول، سدد الرسوم",
+    "accept": "تقبل",
+    "decline": "رفض",
     "paid": "تم التسديد",
     "declined":"رفض طلبك",
     "dropped":"تم الإلغاء",
