@@ -118,6 +118,7 @@
     "confirm": "CONFIRM",
     "unpaid": "UNPAID",
     "bookingNumber": "Booking Number: ",
+    "bookingId": "Booking Id : ",
     "activityName": "Activity Name:  ",
     "providerName": "Provider Name:  ",
     "bookingDate": "Booking Date:  ",
@@ -206,5 +207,10 @@
     "pendingApproval": "Pending Approval",
     "adventureDetails":"Adventure Details",
     "participants": "Participants",
-    "schedule": "Schedule"   
+    "schedule": "Schedule",
+    "Breakfast": "Breakfast",
+    "Dinner": "Dinner",
+    "4x4 Car":"4x4 Car",
+    "Tools": "Tools",
+    "nationality": "Nationality"   
 }

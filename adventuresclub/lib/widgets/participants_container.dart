@@ -1,6 +1,7 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/getParticipants/get_participants_model.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ParticipantsContainer extends StatefulWidget {
@@ -113,49 +114,49 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                   children: [
                     if (widget.gm.status == "0")
                       MyText(
-                        text: "REQUESTED", //'Confirmed',
+                        text: "requested".tr(), //'Confirmed',
                         color: blueColor1,
                         weight: FontWeight.bold,
                       ),
                     if (widget.gm.status == "1")
                       MyText(
-                        text: "ACCEPTED", //'Confirmed',
+                        text: "accepted".tr(), //'Confirmed',
                         color: orangeColor,
                         weight: FontWeight.bold,
                       ),
                     if (widget.gm.status == "2")
                       MyText(
-                        text: "PAID", //'Confirmed',
+                        text: "paid".tr(), //'Confirmed',
                         color: greenColor1,
                         weight: FontWeight.bold,
                       ),
                     if (widget.gm.status == "3")
                       MyText(
-                        text: "DECLINED", //'Confirmed',
+                        text: "declined".tr(), //'Confirmed',
                         color: redColor,
                         weight: FontWeight.bold,
                       ),
                     if (widget.gm.status == "4")
                       MyText(
-                        text: "COMPLETED", //'Confirmed',
+                        text: "completed".tr(), //'Confirmed',
                         color: greenColor1,
                         weight: FontWeight.bold,
                       ),
                     if (widget.gm.status == "5")
                       MyText(
-                        text: "DROPPED", //'Confirmed',
+                        text: "dropped".tr(), //'Confirmed',
                         color: redColor,
                         weight: FontWeight.bold,
                       ),
                     if (widget.gm.status == "6")
                       MyText(
-                        text: "CONFIRM", //'Confirmed',
+                        text: "confirm".tr(), //'Confirmed',
                         color: greenColor1,
                         weight: FontWeight.bold,
                       ),
                     if (widget.gm.status == "7")
                       MyText(
-                        text: "UNPAID", //'Confirmed',
+                        text: "unpaid".tr(), //'Confirmed',
                         color: greenColor1,
                         weight: FontWeight.bold,
                       ),
@@ -218,7 +219,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(
-                          text: 'Booking Id : ',
+                          text: 'bookingId'.tr(),
                           color: blackColor,
                           weight: FontWeight.w700,
                           size: 14,
@@ -237,7 +238,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(
-                          text: 'UserName : ',
+                          text: 'userName'.tr(),
                           color: blackColor,
                           weight: FontWeight.w700,
                           size: 14,
@@ -252,30 +253,30 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                         ),
                       ],
                     ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.start,
+                    //   children: [
+                    //     MyText(
+                    //       text: 'How Old : ',
+                    //       color: blackColor,
+                    //       weight: FontWeight.w700,
+                    //       size: 14,
+                    //       height: 1.8,
+                    //     ),
+                    //     MyText(
+                    //       text: calculateAge(widget.gm.dob),
+                    //       color: greyTextColor,
+                    //       weight: FontWeight.w400,
+                    //       size: 12,
+                    //       height: 1.8,
+                    //     ),
+                    //   ],
+                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(
-                          text: 'How Old : ',
-                          color: blackColor,
-                          weight: FontWeight.w700,
-                          size: 14,
-                          height: 1.8,
-                        ),
-                        MyText(
-                          text: calculateAge(widget.gm.dob),
-                          color: greyTextColor,
-                          weight: FontWeight.w400,
-                          size: 12,
-                          height: 1.8,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        MyText(
-                          text: 'Nationality : ',
+                          text: 'nationality',
                           color: blackColor,
                           weight: FontWeight.w700,
                           size: 14,

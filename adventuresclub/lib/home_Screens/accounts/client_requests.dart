@@ -278,9 +278,7 @@ class _ClientsRequestsState extends State<ClientsRequests> {
           weight: FontWeight.bold,
         ),
       ),
-      body: SingleChildScrollView(
-        child: ClientRequestList(gRM),
-      ),
+      body: ClientRequestList(gRM),
     );
   }
 }

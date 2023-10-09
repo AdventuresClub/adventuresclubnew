@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/request_information.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -138,14 +140,36 @@ class _ClientRequestListState extends State<ClientRequestList> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 00),
-      shrinkWrap: true,
-      physics: const ClampingScrollPhysics(),
-      itemCount: gRM.length,
-      itemBuilder: (context, index) {
-        return RequestInformation(gRM[index], accept, decline, index);
-      },
-    );
+    return gRM.isEmpty
+        ? Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.hourglass_empty_sharp,
+                  size: 40,
+                  color: greenishColor,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                MyText(
+                  text: "No Client Requests",
+                  size: 18,
+                  color: greenishColor,
+                )
+              ],
+            ),
+          )
+        : ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 00),
+            shrinkWrap: true,
+            physics: const ClampingScrollPhysics(),
+            itemCount: gRM.length,
+            itemBuilder: (context, index) {
+              return RequestInformation(gRM[index], accept, decline, index);
+            },
+          );
   }
 }
