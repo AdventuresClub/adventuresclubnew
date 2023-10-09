@@ -109,15 +109,11 @@ class _RequestInformationState extends State<RequestInformation> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        MyText(
-                          text: widget.gRM.adventureName, //'Wadi Hawar',
-                          color: blackColor,
-                          weight: FontWeight.bold,
-                          size: 18,
-                        ),
-                      ],
+                    MyText(
+                      text: widget.gRM.adventureName, //'Wadi Hawar',
+                      color: blackColor,
+                      weight: FontWeight.bold,
+                      size: 18,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
