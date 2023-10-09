@@ -222,6 +222,23 @@
     "serviceDate": "تاريخ الخدمة  :",
     "weight": "ثقل  :",
     "height": "ارتفاع  :",
-    "clientMessage": "رسالة العميل  :"    
+    "clientMessage": "رسالة العميل  :",
+    "bookTicket": "حجز تذكرة",
+    "startDate": "بدء العرض",
+    "selectDesiredDate": "حدد التاريخ المطلوب",
+    "desiredDate": "التاريخ المطلوب",
+    "planningFor": "التخطيط ل",
+    "child": "طفل",
+    "typeMessageHere...Name, Ages or Health Conditions": "اكتب الرسالة هنا.. الاسم أو الأعمار أو الظروف الصحية",
+    "useEarnedPoints": "النقاط المكتسبة من قبل المستخدم",
+    "availablePoints": "النقاط المتاحة",
+    "optToUse": "اختر الاستخدام",
+    "applyPromoCode": "تطبيق الرمز الترويجي",
+    "apply": "طبق",
+    "perPerson": "للشخص الواحد",
+    "totalPerson": "مجموع الأشخاص",
+    "promoCode": "الرمز الترويجي",
+    "totalAmount": "المبلغ الإجمالي",
+    "sendRequest": "إرسال طلب"     
     
 }

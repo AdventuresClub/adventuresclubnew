@@ -221,5 +221,22 @@
     "serviceDate": "Service Date  :",
     "weight": "Weight  :",
     "height": "Height  :",
-    "clientMessage": "Client Message"    
+    "clientMessage": "Client Message",
+    "bookTicket": "Book Ticket",
+    "startDate": "Start Date",
+    "selectDesiredDate": "Select Desired Date",
+    "desiredDate": "Desired Date",
+    "planningFor": "Planning For",
+    "child": "Child : ",
+    "typeMessageHere...Name, Ages or Health Conditions": "Type Message here..Name, Ages or Health Conditions",
+    "useEarnedPoints": "User Earned Points",
+    "availablePoints": "Available Points",
+    "optToUse": "Opt To Use",
+    "applyPromoCode": "Apply Promo Code",
+    "apply": "Apply",
+    "perPerson": "Per Person",
+    "totalPerson": "Total Person",
+    "promoCode": "Promo Code",
+    "totalAmount": "Total Amount",
+    "sendRequest": "Send Request"    
 }

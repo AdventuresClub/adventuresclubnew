@@ -6,6 +6,7 @@ import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -64,7 +65,7 @@ class _BookTicketState extends State<BookTicket> {
   @override
   void initState() {
     super.initState();
-    formattedDate = 'Desired Date';
+    formattedDate = 'desiredDate'.tr();
     addPerson();
     convert(widget.gm.costInc);
     setState(() {
@@ -245,7 +246,7 @@ class _BookTicketState extends State<BookTicket> {
       child: Scaffold(
         appBar: AppBar(
           title: MyText(
-            text: 'Book Ticket',
+            text: 'bookTicket'.tr(),
             color: greenishColor,
             weight: FontWeight.bold,
           ),
@@ -274,7 +275,7 @@ class _BookTicketState extends State<BookTicket> {
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: MyText(
-                                    text: 'Start Date',
+                                    text: 'startDate'.tr(),
                                     weight: FontWeight.bold,
                                     color: blackTypeColor4,
                                     size: 22,
@@ -288,7 +289,7 @@ class _BookTicketState extends State<BookTicket> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     MyText(
-                                      text: 'Select Desired Date',
+                                      text: 'selectDesiredDate'.tr(),
                                       weight: FontWeight.w600,
                                       color: greyTextColor,
                                       size: 16,
@@ -322,7 +323,7 @@ class _BookTicketState extends State<BookTicket> {
                               ? Align(
                                   alignment: Alignment.centerLeft,
                                   child: MyText(
-                                    text: 'Planning For',
+                                    text: 'planningFor'.tr(),
                                     weight: FontWeight.bold,
                                     color: blackTypeColor4,
                                     size: 22,
@@ -330,7 +331,7 @@ class _BookTicketState extends State<BookTicket> {
                               : Align(
                                   alignment: Alignment.centerLeft,
                                   child: MyText(
-                                    text: 'Booking For',
+                                    text: 'bookingFor'.tr(),
                                     weight: FontWeight.bold,
                                     color: blackTypeColor4,
                                     size: 22,
@@ -344,7 +345,7 @@ class _BookTicketState extends State<BookTicket> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               MyText(
-                                text: 'Adult',
+                                text: 'adult'.tr(),
                                 color: blackColor,
                               ),
                               Container(
@@ -394,7 +395,7 @@ class _BookTicketState extends State<BookTicket> {
                                 ),
                               ),
                               MyText(
-                                text: 'Child:',
+                                text: 'child'.tr(),
                                 color: blackColor,
                               ),
                               Container(
@@ -454,7 +455,8 @@ class _BookTicketState extends State<BookTicket> {
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 15, horizontal: 15),
                               hintText:
-                                  'Type Message here... Name, Ages or Health Conditions',
+                                  'typeMessageHere...Name, Ages or Health Conditions'
+                                      .tr(),
                               hintStyle: const TextStyle(
                                   fontWeight: FontWeight.w400,
                                   fontSize: 14,
@@ -499,7 +501,7 @@ class _BookTicketState extends State<BookTicket> {
                       CheckboxListTile(
                           value: value,
                           title: MyText(
-                              text: 'Use earned Points',
+                              text: 'useEarnedPoints'.tr(),
                               weight: FontWeight.bold,
                               size: 18,
                               color: blackTypeColor1,
@@ -516,13 +518,13 @@ class _BookTicketState extends State<BookTicket> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             RichText(
-                              text: const TextSpan(
-                                text: 'Available Points',
-                                style: TextStyle(
+                              text: TextSpan(
+                                text: 'availablePoints'.tr(),
+                                style: const TextStyle(
                                     color: blueTextColor,
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold),
-                                children: <TextSpan>[
+                                children: const <TextSpan>[
                                   TextSpan(
                                       text: ' 0',
                                       style: TextStyle(
@@ -539,7 +541,7 @@ class _BookTicketState extends State<BookTicket> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 MyText(
-                                  text: 'Opt to use',
+                                  text: 'optToUse'.tr(),
                                   color: blueTextColor,
                                   size: 12,
                                   weight: FontWeight.bold,
@@ -557,7 +559,7 @@ class _BookTicketState extends State<BookTicket> {
                                   hintText: "0",
                                   hintStyle: const TextStyle(
                                       color: blackColor, fontSize: 16),
-                                  suffixText: "Apply",
+                                  suffixText: "apply".tr(),
                                   contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 2,
                                   ),
@@ -606,7 +608,7 @@ class _BookTicketState extends State<BookTicket> {
                         Align(
                             alignment: Alignment.centerLeft,
                             child: MyText(
-                                text: 'Apply Promo Code',
+                                text: 'applyPromoCode'.tr(),
                                 weight: FontWeight.bold,
                                 color: blackTypeColor4,
                                 size: 22,
@@ -616,14 +618,14 @@ class _BookTicketState extends State<BookTicket> {
                         ),
                         TextField(
                           decoration: InputDecoration(
-                            hintText: "Apply",
+                            hintText: "apply".tr(),
                             hintStyle: const TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
                                 fontFamily: 'Raleway'),
                             suffixStyle: const TextStyle(
                                 color: bluishColor, fontFamily: 'Roboto'),
-                            suffixText: 'Apply',
+                            suffixText: 'apply'.tr(),
                             border: OutlineInputBorder(
                               borderRadius: const BorderRadius.all(
                                 Radius.circular(10.0),
@@ -671,7 +673,7 @@ class _BookTicketState extends State<BookTicket> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             MyText(
-                                text: "Per Person",
+                                text: "perPerson".tr(),
                                 color: blackTypeColor3,
                                 weight: FontWeight.bold,
                                 fontFamily: 'Roboto'),
@@ -691,7 +693,7 @@ class _BookTicketState extends State<BookTicket> {
                           children: [
                             MyText(
                                 text:
-                                    "${'Total Person'} ${"  "} ${"x"} $totalPerson",
+                                    "${'totalPerson'.tr()} ${"  "} ${"x"} $totalPerson",
                                 color: blackTypeColor3,
                                 weight: FontWeight.bold,
                                 fontFamily: 'Roboto'),
@@ -711,7 +713,7 @@ class _BookTicketState extends State<BookTicket> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             MyText(
-                                text: 'Promo Code',
+                                text: 'promoCode'.tr(),
                                 color: blueTextColor,
                                 weight: FontWeight.bold,
                                 fontFamily: 'Roboto'),
@@ -730,7 +732,7 @@ class _BookTicketState extends State<BookTicket> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             MyText(
-                                text: 'Points',
+                                text: 'points'.tr(),
                                 color: blueTextColor,
                                 weight: FontWeight.bold,
                                 fontFamily: 'Roboto'),
@@ -751,7 +753,7 @@ class _BookTicketState extends State<BookTicket> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             MyText(
-                                text: 'Total Amount',
+                                text: 'totalAmount'.tr(),
                                 color: blackTypeColor3,
                                 weight: FontWeight.bold,
                                 size: 18,
@@ -774,8 +776,8 @@ class _BookTicketState extends State<BookTicket> {
                 const SizedBox(
                   height: 20,
                 ),
-                ButtonIconLess(
-                    'Send Request', bluishColor, whiteColor, 1.7, 17, 18, book),
+                ButtonIconLess('sendRequest'.tr(), bluishColor, whiteColor, 1.7,
+                    17, 18, book),
                 const SizedBox(
                   height: 20,
                 ),
