@@ -129,6 +129,8 @@
     "payableCost": "Payable Cost: ",
     "paymentChannel": "Payment Channel:  ",
     "chatProvider": "Chat Provider",
+    "chatClient": "Chat Client",
+    "rateUser": "Rate User",
     "rateNow": "Rate Now",
     "viewDetails": "View Details",
     "activitiesIncludes": "Activities Includes",
@@ -212,5 +214,10 @@
     "Dinner": "Dinner",
     "4x4 Car":"4x4 Car",
     "Tools": "Tools",
-    "nationality": "Nationality"   
+    "nationality": "Nationality  :",
+    "bookedOn": "Booked On  :",
+    "serviceDate": "Service Date  :",
+    "weight": "Weight  :",
+    "height": "Height  :",
+    "clientMessage": "Client Message"    
 }

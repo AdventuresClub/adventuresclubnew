@@ -130,6 +130,8 @@
     "payableCost": "التكلفة المستحقة الدفع:   ",
     "paymentChannel": "قناة تسديد الرسوم:   ",
     "chatProvider": "تواصل مع المزود ",
+    "chatClient": "عميل الدردشة",
+    "rateUser": "قيم المستخدم",
     "rateNow": "قيم الآن ",
     "viewDetails": "عرض التفاصيل",
     "activitiesIncludes": "النشاط يتضمن",
@@ -213,7 +215,11 @@
     "Dinner": "عشاء",
     "4x4 Car":"سيارة 4x4",
     "Tools": "ادوات",
-    "nationality": "جنسية"   
-       
-
+    "nationality": "جنسية  :",
+    "bookedOn": "حجزت في  :",
+    "serviceDate": "تاريخ الخدمة  :",
+    "weight": "ثقل  :",
+    "height": "ارتفاع  :",
+    "clientMessage": "رسالة العميل  :"    
+    
 }

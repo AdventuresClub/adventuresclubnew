@@ -276,7 +276,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(
-                          text: 'nationality',
+                          text: 'nationality'.tr(),
                           color: blackColor,
                           weight: FontWeight.w700,
                           size: 14,
@@ -295,7 +295,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(
-                          text: 'Booked On : ',
+                          text: 'bookedOn'.tr(),
                           color: blackColor,
                           weight: FontWeight.w700,
                           size: 14,
@@ -314,7 +314,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(
-                          text: 'Service Date : ',
+                          text: 'serviceDate'.tr(),
                           color: blackColor,
                           weight: FontWeight.w700,
                           size: 14,
@@ -334,7 +334,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                     ),
                     RichText(
                       text: TextSpan(
-                        text: 'Registrations : ',
+                        text: 'registrations'.tr(),
                         style: const TextStyle(
                             color: blackColor,
                             fontSize: 14,
@@ -359,7 +359,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(
-                          text: 'Unit Cost : ',
+                          text: 'unitCost'.tr(),
                           color: blackColor,
                           weight: FontWeight.w700,
                           size: 14,
@@ -380,7 +380,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                       // mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(
-                          text: 'Total Cost : ',
+                          text: 'totalCost'.tr(),
                           color: blackColor,
                           weight: FontWeight.w700,
                           size: 14,
@@ -400,7 +400,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(
-                          text: 'Payable Cost : ',
+                          text: 'payableCost'.tr(),
                           color: blackColor,
                           weight: FontWeight.w700,
                           size: 14,
@@ -420,7 +420,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         MyText(
-                          text: 'Weight : ',
+                          text: 'weight'.tr(),
                           color: blackColor,
                           weight: FontWeight.w700,
                           size: 14,
@@ -440,7 +440,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                     ),
                     RichText(
                       text: TextSpan(
-                        text: 'Health : ',
+                        text: 'healthCondition'.tr(),
                         style: const TextStyle(
                             color: blackColor,
                             fontSize: 15,
@@ -463,29 +463,29 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                     // const SizedBox(
                     //   height: 5,
                     // ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        MyText(
-                          text: 'Height : ',
-                          color: blackColor,
-                          weight: FontWeight.w700,
-                          size: 14,
-                          height: 1.8,
-                        ),
-                        MyText(
-                          overFlow: TextOverflow.clip,
-                          text: "${widget.gm.height} ",
-                          color: greyTextColor,
-                          weight: FontWeight.w400,
-                          size: 12,
-                          height: 1.5,
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.start,
+                    //   children: [
+                    //     MyText(
+                    //       text: 'height'.tr(),
+                    //       color: blackColor,
+                    //       weight: FontWeight.w700,
+                    //       size: 14,
+                    //       height: 1.8,
+                    //     ),
+                    //     MyText(
+                    //       overFlow: TextOverflow.clip,
+                    //       text: "${widget.gm.height} ",
+                    //       color: greyTextColor,
+                    //       weight: FontWeight.w400,
+                    //       size: 12,
+                    //       height: 1.5,
+                    //     ),
+                    //   ],
+                    // ),
                     RichText(
                       text: TextSpan(
-                        text: 'Client Message : ',
+                        text: 'clientMessage'.tr(),
                         style: const TextStyle(
                             color: blackColor,
                             fontSize: 14,
@@ -525,10 +525,10 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                     child: InkWell(
                       onTap: () => widget.selected(
                           context, widget.gm.serviceId, widget.gm.bookingUser),
-                      child: const Center(
+                      child: Center(
                         child: Text(
-                          'Chat Client',
-                          style: TextStyle(
+                          'chatClient'.tr(),
+                          style: const TextStyle(
                               color: whiteColor,
                               fontSize: 12,
                               fontWeight: FontWeight.w700),
@@ -549,10 +549,10 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                     color: Colors.transparent,
                     child: InkWell(
                       onTap: () => widget.rateUser,
-                      child: const Center(
+                      child: Center(
                         child: Text(
-                          'Rate User',
-                          style: TextStyle(
+                          'rateUser'.tr(),
+                          style: const TextStyle(
                               color: whiteColor,
                               fontSize: 12,
                               fontWeight: FontWeight.w700),
