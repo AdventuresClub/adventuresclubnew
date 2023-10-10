@@ -1,4 +1,3 @@
-
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/buttons/my_button.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +6,7 @@ class BottomButton extends StatelessWidget {
   BottomButton({
     Key? key,
     this.onTap,
-    this.buttonText = 'Continue',
+    this.buttonText = 'continue',
     this.bgColor,
   }) : super(key: key);
   final String? buttonText;

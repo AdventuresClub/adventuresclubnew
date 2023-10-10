@@ -67,7 +67,7 @@ class _CostState extends State<Cost> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12.0, vertical: 10),
                       child: MyText(
-                          text: 'Activities Included',
+                          text: 'activitiesIncludes',
                           weight: FontWeight.bold,
                           color: blackColor,
                           size: 14,
@@ -78,7 +78,7 @@ class _CostState extends State<Cost> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 30.0, vertical: 15),
                       child: Button(
-                          'Okay ,Got it',
+                          'okGotIt',
                           greenishColor,
                           greyColorShade400,
                           whiteColor,
@@ -231,7 +231,7 @@ class _CostState extends State<Cost> {
               decoration: InputDecoration(
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                hintText: 'Enter: Geolocation',
+                hintText: 'enterGeolocation',
                 filled: true,
                 fillColor: lightGreyColor,
                 suffixIcon: GestureDetector(
@@ -264,7 +264,7 @@ class _CostState extends State<Cost> {
             height: 10,
           ),
           TFWithSize(
-            'Type Specific Address/Location',
+            'typeSpecificAddress/Location',
             widget.specificAddress,
             15,
             lightGreyColor,
@@ -280,7 +280,7 @@ class _CostState extends State<Cost> {
               Expanded(
                 child: TFWithSize(
                   show: TextInputType.number,
-                  'Set Cost',
+                  'setCost',
                   widget.costOne,
                   16,
                   lightGreyColor,
@@ -294,7 +294,7 @@ class _CostState extends State<Cost> {
               Expanded(
                 child: TFWithSize(
                   show: TextInputType.number,
-                  'Set Cost',
+                  'setCost',
                   widget.costTwo,
                   16,
                   lightGreyColor,
@@ -319,7 +319,7 @@ class _CostState extends State<Cost> {
                   ),
                   child: Center(
                     child: MyText(
-                      text: "OMR", //getCountry.toString(),
+                      text: "omr", //getCountry.toString(),
                       color: blackTypeColor.withOpacity(0.5),
                       size: 14,
                       weight: FontWeight.w500,
@@ -337,7 +337,7 @@ class _CostState extends State<Cost> {
               SizedBox(
                 width: 130,
                 child: MyText(
-                  text: "Including Gears & Other Taxes",
+                  text: "includingGears",
                   color: redColor,
                   size: 12,
                   weight: FontWeight.bold,
@@ -346,7 +346,7 @@ class _CostState extends State<Cost> {
               SizedBox(
                 width: 130,
                 child: MyText(
-                  text: "Excluding Gears & Other Taxes",
+                  text: "excludingGears",
                   color: redColor,
                   size: 12,
                   weight: FontWeight.bold,
@@ -379,7 +379,7 @@ class _CostState extends State<Cost> {
           //       weight: FontWeight.w500,
           //     )),
           MultiLineField(
-            'Type Pre-Requisites….',
+            'prerequisites',
             5,
             lightGreyColor,
             widget.preRequisites,
@@ -387,7 +387,7 @@ class _CostState extends State<Cost> {
           ),
           const SizedBox(height: 10),
           MultiLineField(
-            'Type Minimum Requirement....',
+            'minimumRequirements',
             5,
             lightGreyColor,
             widget.minimumRequirement,
@@ -395,7 +395,7 @@ class _CostState extends State<Cost> {
           ),
           const SizedBox(height: 10),
           MultiLineField(
-            'Type Terms & Conditions.....',
+            'termsAndConditions',
             4,
             lightGreyColor,
             widget.terms,

@@ -281,14 +281,14 @@ class ServiceSectorDropDownState extends State<ServiceSectorDropDown> {
                                       onPressed: () =>
                                           Navigator.of(context).pop(),
                                       child: MyText(
-                                        text: 'Cancel',
+                                        text: 'cancel'.tr(),
                                         color: bluishColor,
                                       )),
                                   TextButton(
                                       onPressed: () =>
                                           Navigator.of(context).pop(),
                                       child: MyText(
-                                        text: 'Ok',
+                                        text: 'ok'.tr(),
                                         color: bluishColor,
                                       )),
                                 ],

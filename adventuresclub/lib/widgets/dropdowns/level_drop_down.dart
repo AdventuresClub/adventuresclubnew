@@ -4,6 +4,7 @@ import 'package:adventuresclub/constants_create_new_services.dart';
 import 'package:adventuresclub/models/filter_data_model/level_filter_mode.dart';
 import 'package:adventuresclub/widgets/level_drop_down.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class LevelDropDownState extends State<LevelDropDown> {
   String country = "";
   //String selectedRegion = "";
   int selectedId = 0;
-  String selectedRegion = "Select Level";
+  String selectedRegion = "selectLevel";
   int id = 0;
 
   @override
@@ -84,7 +85,7 @@ class LevelDropDownState extends State<LevelDropDown> {
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: MyText(
-                                      text: 'Select Level',
+                                      text: 'selectLevel'.tr(),
                                       weight: FontWeight.bold,
                                       color: blackColor,
                                       size: 20,
@@ -161,14 +162,14 @@ class LevelDropDownState extends State<LevelDropDown> {
                                       onPressed: () =>
                                           Navigator.of(context).pop(),
                                       child: MyText(
-                                        text: 'Cancel',
+                                        text: 'cancel'.tr(),
                                         color: bluishColor,
                                       )),
                                   TextButton(
                                       onPressed: () =>
                                           Navigator.of(context).pop(),
                                       child: MyText(
-                                        text: 'Ok',
+                                        text: 'ok'.tr(),
                                         color: bluishColor,
                                       )),
                                 ],

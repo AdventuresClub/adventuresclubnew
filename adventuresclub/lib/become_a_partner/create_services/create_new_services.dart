@@ -339,7 +339,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         id.add(3);
       } else if (element == "Wed") {
         id.add(4);
-      } else if (element == "Thur") {
+      } else if (element == "Thu") {
         id.add(5);
       } else if (element == "Fri") {
         id.add(6);

@@ -1,6 +1,6 @@
-
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -38,7 +38,7 @@ class MyButton extends StatelessWidget {
         onPressed: onPressed,
         child: Center(
           child: MyText(
-            text: '$buttonText',
+            text: '$buttonText'.tr(),
             size: 16,
             color: whiteColor,
           ),

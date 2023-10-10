@@ -212,7 +212,7 @@ class ServiceCategoryDropDownState extends State<ServiceCategoryDropDown> {
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: MyText(
-                                      text: 'selectSector'.tr(),
+                                      text: 'selectCategory'.tr(),
                                       weight: FontWeight.bold,
                                       color: blackColor,
                                       size: 20,
@@ -290,14 +290,14 @@ class ServiceCategoryDropDownState extends State<ServiceCategoryDropDown> {
                                       onPressed: () =>
                                           Navigator.of(context).pop(),
                                       child: MyText(
-                                        text: 'Cancel',
+                                        text: 'cancel'.tr(),
                                         color: bluishColor,
                                       )),
                                   TextButton(
                                       onPressed: () =>
                                           Navigator.of(context).pop(),
                                       child: MyText(
-                                        text: 'Ok',
+                                        text: 'ok'.tr(),
                                         color: bluishColor,
                                       )),
                                 ],

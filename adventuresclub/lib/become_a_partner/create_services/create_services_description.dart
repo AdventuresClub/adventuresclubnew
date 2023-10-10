@@ -143,6 +143,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
     // print(selectedActivites);
     // Provider.of<CompleteProfileProvider>(context, listen: false)
     //     .activityLevel(a, id);
+    print(ConstantsCreateNewServices.selectedActivitesId);
   }
 
   void addActivites() {
@@ -174,7 +175,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 12.0, vertical: 10),
                                 child: MyText(
-                                    text: 'activitiesIncluded'.tr(),
+                                    text: 'activitiesIncludes'.tr(),
                                     weight: FontWeight.bold,
                                     color: blackColor,
                                     size: 16,
@@ -318,7 +319,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                     Expanded(
                       child: RegionFilterDropDown(
                         regionList,
-                        show: true,
+                        //show: true,
                       ),
                     ),
                   ],
@@ -360,7 +361,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                     ),
                     Expanded(
                       child: TFWithSize(
-                        'availableSeats',
+                        'Available Seats',
                         widget.available,
                         16,
                         lightGreyColor,
