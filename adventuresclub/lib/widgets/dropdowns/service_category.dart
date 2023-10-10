@@ -3,6 +3,7 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/constants_create_new_services.dart';
 import 'package:adventuresclub/widgets/category_drop_down.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../models/filter_data_model/category_filter_model.dart';
@@ -51,7 +52,7 @@ class ServiceCategoryDropDownState extends State<ServiceCategoryDropDown> {
         ? CategoryDropDown(
             3,
             dropDownList: widget.cFilter,
-            title: "Category",
+            title: "category",
           )
         // SizedBox(
         //     child: ListTile(
@@ -211,7 +212,7 @@ class ServiceCategoryDropDownState extends State<ServiceCategoryDropDown> {
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: MyText(
-                                      text: 'Select Sector',
+                                      text: 'selectSector'.tr(),
                                       weight: FontWeight.bold,
                                       color: blackColor,
                                       size: 20,
@@ -247,7 +248,8 @@ class ServiceCategoryDropDownState extends State<ServiceCategoryDropDown> {
                                             return Center(
                                               child: MyText(
                                                   text: widget
-                                                      .cFilter[index].category,
+                                                      .cFilter[index].category
+                                                      .tr(),
                                                   size: 14,
                                                   color: blackTypeColor4),
                                             );

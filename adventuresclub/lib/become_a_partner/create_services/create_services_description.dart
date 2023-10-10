@@ -24,6 +24,7 @@ import 'package:adventuresclub/widgets/dropdowns/service_type_drop_down.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
 import 'package:adventuresclub/widgets/text_fields/multiline_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -36,14 +37,14 @@ class CreateServicesDescription extends StatefulWidget {
   final Widget servicePlan;
   final Widget dependency;
   const CreateServicesDescription(
-      this.adventureName,
-      this.available,
-      this.info,
-      this.aimedFor,
-      this.daysBeforeActController,
-      this.servicePlan,
-      this.dependency,
-      {super.key});
+      {required this.adventureName,
+      required this.available,
+      required this.info,
+      required this.aimedFor,
+      required this.daysBeforeActController,
+      required this.servicePlan,
+      required this.dependency,
+      super.key});
 
   @override
   State<CreateServicesDescription> createState() =>
@@ -173,7 +174,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 12.0, vertical: 10),
                                 child: MyText(
-                                    text: 'Activities Included',
+                                    text: 'activitiesIncluded'.tr(),
                                     weight: FontWeight.bold,
                                     color: blackColor,
                                     size: 16,
@@ -209,7 +210,8 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                                           });
                                         },
                                         title: MyText(
-                                          text: activitiesFilter[i].activity,
+                                          text:
+                                              activitiesFilter[i].activity.tr(),
                                           color: greyColor,
                                           fontFamily: 'Raleway',
                                           size: 18,
@@ -231,7 +233,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 30.0, vertical: 15),
                                 child: Button(
-                                    'Done',
+                                    'done'.tr(),
                                     greenishColor,
                                     greyColorShade400,
                                     whiteColor,
@@ -259,7 +261,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
   void parseActivity(List<ActivitiesIncludeModel> am) {
     am.forEach((element) {
       if (element.activity.isNotEmpty) {
-        activityList.add(element.activity);
+        activityList.add(element.activity.tr());
       }
     });
     activityList.forEach(
@@ -277,13 +279,15 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
           )
         : SingleChildScrollView(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                TFWithSize('Adventure Name', widget.adventureName, 12,
+                TFWithSize('adventureName', widget.adventureName, 12,
                     lightGreyColor, 1),
                 const SizedBox(height: 10),
                 MultiLineField(
-                    'Type Information', 5, lightGreyColor, widget.info),
+                    'typeInformation', 5, lightGreyColor, widget.info),
                 const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -301,7 +305,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: MyText(
-                          text: Constants.country, //getCountry.toString(),
+                          text: Constants.country.tr(), //getCountry.toString(),
                           color: blackTypeColor,
                           size: 14,
                           weight: FontWeight.w500,
@@ -356,7 +360,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                     ),
                     Expanded(
                       child: TFWithSize(
-                        'Available Seats',
+                        'availableSeats',
                         widget.available,
                         16,
                         lightGreyColor,
@@ -380,18 +384,18 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           MyText(
-                              text: 'Activities Includes',
+                              text: 'activitiesIncludes'.tr(),
                               weight: FontWeight.bold,
                               color: blackTypeColor1),
                           MyText(
                               text:
-                                  "$activitiesLength ${"Activites Included}"}",
+                                  "$activitiesLength ${"activitiesIncludes".tr()}",
                               weight: FontWeight.bold,
                               color: blackTypeColor),
                         ],
                       ),
                       Button(
-                          'Add Activities',
+                          'addActivities',
                           bluishColor,
                           bluishColor,
                           whiteColor,
@@ -418,15 +422,12 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                   height: 20,
                 ),
                 // aimed for
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: MyText(
-                    text: 'Aimed For',
-                    color: blackTypeColor1,
-                    size: 16,
-                    align: TextAlign.center,
-                    weight: FontWeight.bold,
-                  ),
+                MyText(
+                  text: 'aimedFor'.tr(),
+                  color: blackTypeColor1,
+                  size: 16,
+                  align: TextAlign.center,
+                  weight: FontWeight.bold,
                 ),
                 widget.aimedFor,
                 const SizedBox(
@@ -439,35 +440,29 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                 const SizedBox(
                   height: 20,
                 ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: MyText(
-                    text: 'Dependency',
-                    color: blackTypeColor1,
-                    align: TextAlign.center,
-                    weight: FontWeight.bold,
-                    size: 16,
-                  ),
+                MyText(
+                  text: 'dependency'.tr(),
+                  color: blackTypeColor1,
+                  align: TextAlign.center,
+                  weight: FontWeight.bold,
+                  size: 16,
                 ),
                 widget.dependency,
                 Divider(
                   thickness: 1.5,
                   color: blackColor.withOpacity(0.4),
                 ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: MyText(
-                    text: 'Registration Closed By',
-                    color: greyShadeColor,
-                    align: TextAlign.center,
-                    weight: FontWeight.w500,
-                    size: 16,
-                  ),
+                MyText(
+                  text: 'registrationClosedBy'.tr(),
+                  color: greyShadeColor,
+                  align: TextAlign.center,
+                  weight: FontWeight.w500,
+                  size: 16,
                 ),
                 Row(
                   children: [
                     MyText(
-                      text: 'Days before the activity starts',
+                      text: 'daysBeforeTheActivityStarts',
                       color: greyShadeColor,
                       align: TextAlign.center,
                       size: 14,

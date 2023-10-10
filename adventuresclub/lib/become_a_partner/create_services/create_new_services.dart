@@ -15,6 +15,7 @@ import 'package:adventuresclub/models/services/create_services/create_services_p
 import 'package:adventuresclub/models/services/dependencies_model.dart';
 import 'package:adventuresclub/widgets/buttons/bottom_button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
@@ -40,7 +41,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   TextEditingController minimumRequirement = TextEditingController();
   TextEditingController terms = TextEditingController();
   TextEditingController daysExpiry = TextEditingController();
-  List text = ['Banner', 'Description', 'Program', 'Cost/GeoLoc'];
+  List stepTitle = ['banner', 'description', 'program', 'cost/geoloc'];
   List text1 = ['1', '2', '3', '4'];
   int count = 0;
   int i = 1;
@@ -50,8 +51,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   List<bool> aimedValue = [];
   List<bool> dependencyValue = [];
   List aimedText = [];
-  List dependencyText = [];
-  List days = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
+  List<String> dependencyText = [];
+  List days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   List<bool> daysValue = [false, false, false, false, false, false, false];
   List<String> servicePlanDays = [];
   List<int> servicePlanDaysId = [];
@@ -119,8 +120,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     super.initState();
     DateTime dt = DateTime(currentDate.year, currentDate.month, currentDate.day,
         time.hour, time.minute);
-    formattedDate = 'Start Date';
-    endDate = "End Date";
+    formattedDate = 'startDate';
+    endDate = "endDate";
     getData();
     // addProgramData();
   }
@@ -253,7 +254,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   void parseDependency(List<DependenciesModel> dm) {
     dm.forEach((element) {
       if (element.dName.isNotEmpty) {
-        dependencyText.add(element.dName);
+        dependencyText.add(element.dName.tr());
       }
     });
     dependencyText.forEach((element) {
@@ -836,13 +837,13 @@ class _CreateNewServicesState extends State<CreateNewServices> {
             onPressed: previous, //() => Navigator.of(context).pop(),
           ),
           title: MyText(
-            text: 'Create Adventure',
+            text: 'createAdventure'.tr(),
             color: bluishColor,
             weight: FontWeight.bold,
           ),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
           child: Column(
             children: [
               const SizedBox(
@@ -851,8 +852,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: MyText(
-                  text:
-                      'Just follow simple four steps to list up your adventure',
+                  text: 'justFollowSimpleFourStepsToListUpYourAdventure'.tr(),
                   size: 12,
                   weight: FontWeight.w600,
                   color: greyColor,
@@ -865,7 +865,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                 padding: 0,
                 totalSteps: text1.length,
                 currentStep: count + 1,
-                size: 60,
+                size: 85,
                 selectedColor: bluishColor,
                 unselectedColor: greyColor,
                 customStep: (index, color, _) => color == bluishColor
@@ -898,15 +898,17 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                               ),
                             ],
                           ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: MyText(
-                              text: text[index],
-                              color: bluishColor,
-                              weight: FontWeight.w700,
-                              fontFamily: 'Roboto',
-                              size: 12,
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              MyText(
+                                text: stepTitle[index],
+                                color: bluishColor,
+                                weight: FontWeight.w700,
+                                fontFamily: 'Roboto',
+                                size: 12,
+                              ),
+                            ],
                           ),
                         ],
                       )
@@ -940,18 +942,18 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                 ),
                             ],
                           ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: MyText(
-                              text: text[index],
-                              color: greyColor,
-                              weight: FontWeight.w700,
-                              fontFamily: 'Roboto',
-                              size: 12,
-                            ),
+                          MyText(
+                            text: stepTitle[index],
+                            color: greyColor,
+                            weight: FontWeight.w700,
+                            fontFamily: 'Roboto',
+                            size: 12,
                           ),
                         ],
                       ),
+              ),
+              const SizedBox(
+                height: 20,
               ),
               //Text((selectedActivitesId.join(""))),
               Expanded(
@@ -960,10 +962,10 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                   children: [
                     BannerPage(getImages),
                     CreateServicesDescription(
-                      adventureName,
-                      availableSeatsController,
-                      infoController,
-                      Wrap(
+                      adventureName: adventureName,
+                      available: availableSeatsController,
+                      info: infoController,
+                      aimedFor: Wrap(
                         direction: Axis.vertical,
                         children: List.generate(
                           aimedFilter.length,
@@ -971,8 +973,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                             return SizedBox(
                               width: MediaQuery.of(context).size.width,
                               child: CheckboxListTile(
-                                contentPadding: const EdgeInsets.only(
-                                    left: 0, top: 0, bottom: 0, right: 25),
+                                // contentPadding: const EdgeInsets.only(
+                                //     left: 0, top: 0, bottom: 0, right: 0),
                                 side: const BorderSide(color: bluishColor),
                                 checkboxShape: const RoundedRectangleBorder(
                                   side: BorderSide(color: bluishColor),
@@ -991,7 +993,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                 title: MyText(
                                   text:
                                       //aimedText[index],
-                                      aimedFilter[index].aimedName,
+                                      aimedFilter[index].aimedName.tr(),
                                   color: blackTypeColor.withOpacity(0.5),
                                   fontFamily: 'Raleway',
                                   size: 16,
@@ -1002,8 +1004,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                           },
                         ),
                       ),
-                      daysExpiry,
-                      Column(
+                      daysBeforeActController: daysExpiry,
+                      servicePlan: Column(
                         children: [
                           particularWeek == false
                               ? Column(
@@ -1011,7 +1013,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                     Align(
                                       alignment: Alignment.centerLeft,
                                       child: MyText(
-                                        text: 'Service Plan',
+                                        text: 'servicePlan'.tr(),
                                         color: blackTypeColor1,
                                         align: TextAlign.center,
                                         weight: FontWeight.bold,
@@ -1038,8 +1040,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                                     addServicePlan();
                                                   }),
                                               MyText(
-                                                text:
-                                                    'Every particular week days',
+                                                text: 'everyParticularWeekDays'
+                                                    .tr(),
                                                 color: blackTypeColor,
                                                 align: TextAlign.center,
                                                 weight: FontWeight.w600,
@@ -1119,8 +1121,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                                 daysPlan();
                                               }),
                                           MyText(
-                                            text:
-                                                'Every particular calendar date',
+                                            text: 'everyParticularCalenderDate'
+                                                .tr(),
                                             color: blackTypeColor,
                                             align: TextAlign.center,
                                             weight: FontWeight.w600,
@@ -1158,7 +1160,9 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                                           vertical: 0,
                                                           horizontal: 10),
                                                   leading: Text(
-                                                    formattedDate.toString(),
+                                                    formattedDate
+                                                        .toString()
+                                                        .tr(),
                                                     style: TextStyle(
                                                         color: blackColor
                                                             .withOpacity(0.6)),
@@ -1203,7 +1207,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                                           vertical: 0,
                                                           horizontal: 10),
                                                   leading: Text(
-                                                    endDate.toString(),
+                                                    endDate.toString().tr(),
                                                     style: TextStyle(
                                                         color: blackColor
                                                             .withOpacity(0.6)),
@@ -1226,14 +1230,14 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                               : Container(),
                         ],
                       ),
-                      Wrap(
+                      dependency: Wrap(
                         direction: Axis.vertical,
                         children: List.generate(dependencyText.length, (index) {
                           return SizedBox(
                             width: MediaQuery.of(context).size.width,
                             child: CheckboxListTile(
-                              contentPadding: const EdgeInsets.only(
-                                  left: 0, top: 0, bottom: 0, right: 25),
+                              // contentPadding: const EdgeInsets.only(
+                              //     left: 0, top: 0, bottom: 0, right: 25),
                               side: const BorderSide(color: bluishColor),
                               checkboxShape: const RoundedRectangleBorder(
                                 side: BorderSide(color: bluishColor),
@@ -1282,7 +1286,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                       width: 5,
                                     ),
                                     MyText(
-                                      text: 'Add More Schedule',
+                                      text: 'addMoreSchedule'.tr(),
                                       color: bluishColor,
                                     ),
                                   ],
@@ -1314,7 +1318,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                       width: 5,
                                     ),
                                     MyText(
-                                      text: 'Add More Schedule',
+                                      text: 'addMoreSchedule',
                                       color: bluishColor,
                                     ),
                                   ],

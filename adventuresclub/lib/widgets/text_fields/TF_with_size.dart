@@ -1,4 +1,5 @@
 import 'package:adventuresclub/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class TFWithSize extends StatefulWidget {
@@ -49,7 +50,7 @@ class _TFWithSizeState extends State<TFWithSize> {
               fontFamily: 'Raleway'),
           // contentPadding: EdgeInsets.symmetric(
           //     vertical: widget.verticalPadding, horizontal: 18),
-          hintText: widget.hintText,
+          hintText: widget.hintText.tr(),
           hintStyle: TextStyle(
               color: blackColor.withOpacity(0.5),
               fontWeight: FontWeight.w500,

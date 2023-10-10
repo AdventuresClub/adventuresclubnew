@@ -3,6 +3,7 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/constants_create_new_services.dart';
 import 'package:adventuresclub/widgets/duration_drop_downlist.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../models/filter_data_model/durations_model.dart';
@@ -84,7 +85,7 @@ class DurationDropDownState extends State<DurationDropDown> {
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: MyText(
-                                      text: 'Duration',
+                                      text: 'duration'.tr(),
                                       weight: FontWeight.bold,
                                       color: blackColor,
                                       size: 20,
@@ -120,7 +121,8 @@ class DurationDropDownState extends State<DurationDropDown> {
                                             return Center(
                                               child: MyText(
                                                   text: widget
-                                                      .dFilter[index].duration,
+                                                      .dFilter[index].duration
+                                                      .tr(),
                                                   size: 14,
                                                   color: blackTypeColor4),
                                             );

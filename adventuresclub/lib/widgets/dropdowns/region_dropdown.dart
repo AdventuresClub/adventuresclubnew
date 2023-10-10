@@ -3,6 +3,7 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/constants_create_new_services.dart';
 import 'package:adventuresclub/models/filter_data_model/region_model.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../models/create_adventure/regions_model.dart';
@@ -95,7 +96,7 @@ class RegionDropDownState extends State<RegionDropDown> {
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: MyText(
-                                      text: 'Select Region',
+                                      text: 'selectRegion'.tr(),
                                       weight: FontWeight.bold,
                                       color: blackColor,
                                       size: 20,
@@ -131,7 +132,8 @@ class RegionDropDownState extends State<RegionDropDown> {
                                             return Center(
                                               child: MyText(
                                                   text: widget
-                                                      .filter![index].region,
+                                                      .filter![index].region
+                                                      .tr(),
                                                   size: 14,
                                                   color: blackTypeColor4),
                                             );

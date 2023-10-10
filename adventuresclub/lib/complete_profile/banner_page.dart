@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -161,7 +162,7 @@ class _BannerPageState extends State<BannerPage> {
   @override
   Widget build(BuildContext context) {
     return loading
-        ? const Text("loading....")
+        ? Text("loading".tr())
         : SingleChildScrollView(
             child: Column(
               children: [
@@ -177,7 +178,7 @@ class _BannerPageState extends State<BannerPage> {
                         width: 5,
                       ),
                       MyText(
-                        text: 'Add More',
+                        text: 'addMore'.tr(),
                         color: bluishColor,
                       )
                     ],
@@ -219,7 +220,7 @@ class _BannerPageState extends State<BannerPage> {
                                           height: 20,
                                         ),
                                         MyText(
-                                          text: 'Tap to browse',
+                                          text: 'tapToBrowse'.tr(),
                                           color: greyColor,
                                         ),
                                         const SizedBox(
@@ -227,7 +228,8 @@ class _BannerPageState extends State<BannerPage> {
                                         ),
                                         MyText(
                                           text:
-                                              'Add banner(image) to effectively adventure',
+                                              'addBannerImageToEffectivelyAdventure'
+                                                  .tr(),
                                           color: greyColor,
                                           align: TextAlign.center,
                                         ),

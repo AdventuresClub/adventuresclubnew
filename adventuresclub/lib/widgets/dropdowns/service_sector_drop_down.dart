@@ -4,6 +4,7 @@ import 'package:adventuresclub/constants_create_new_services.dart';
 import 'package:adventuresclub/models/filter_data_model/sector_filter_model.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/sector_drop_down.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -202,7 +203,7 @@ class ServiceSectorDropDownState extends State<ServiceSectorDropDown> {
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: MyText(
-                                      text: 'Select Category',
+                                      text: 'selectCategory'.tr(),
                                       weight: FontWeight.bold,
                                       color: blackColor,
                                       size: 20,
@@ -238,7 +239,8 @@ class ServiceSectorDropDownState extends State<ServiceSectorDropDown> {
                                             return Center(
                                               child: MyText(
                                                   text: widget
-                                                      .sFilter[index].sector,
+                                                      .sFilter[index].sector
+                                                      .tr(),
                                                   size: 14,
                                                   color: blackTypeColor4),
                                             );

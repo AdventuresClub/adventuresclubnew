@@ -1,4 +1,5 @@
 import 'package:adventuresclub/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class MultiLineField extends StatefulWidget {
@@ -24,7 +25,7 @@ class _MultiLineFieldState extends State<MultiLineField> {
       decoration: InputDecoration(
           // contentPadding:
           //     const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-          hintText: widget.hinttext,
+          hintText: widget.hinttext.tr(),
           hintStyle: const TextStyle(
               color: blackColor,
               fontWeight: FontWeight.w400,

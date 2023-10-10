@@ -1,5 +1,6 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/services/create_services/create_services_plan_one.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class CreatePlanOne extends StatefulWidget {
@@ -53,7 +54,8 @@ class _CreatePlanOneState extends State<CreatePlanOne> {
                   },
                   keyboardType: TextInputType.multiline,
                   controller: titleController,
-                  decoration: Constants.getInputDecoration("Schedule Title")),
+                  decoration:
+                      Constants.getInputDecoration("scheduleTitle".tr())),
             ),
             const SizedBox(
               height: 10,
@@ -72,7 +74,7 @@ class _CreatePlanOneState extends State<CreatePlanOne> {
                   keyboardType: TextInputType.multiline,
                   controller: scheduleController,
                   decoration:
-                      Constants.getInputDecoration("Schedule Description")),
+                      Constants.getInputDecoration("scheduleDescription".tr())),
             ),
           ],
         ),

@@ -3,6 +3,7 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/constants_create_new_services.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/type_drop_down.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../models/filter_data_model/service_types_filter.dart';
@@ -86,7 +87,7 @@ class ServiceTypeDropDownState extends State<ServiceTypeDropDown> {
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: MyText(
-                                      text: 'Select Type',
+                                      text: 'selectType'.tr(),
                                       weight: FontWeight.bold,
                                       color: blackColor,
                                       size: 20,
@@ -122,7 +123,8 @@ class ServiceTypeDropDownState extends State<ServiceTypeDropDown> {
                                             return Center(
                                               child: MyText(
                                                   text: widget
-                                                      .sFilter[index].type,
+                                                      .sFilter[index].type
+                                                      .tr(),
                                                   size: 14,
                                                   color: blackTypeColor4),
                                             );

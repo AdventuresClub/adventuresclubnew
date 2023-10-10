@@ -4,6 +4,7 @@ import 'package:adventuresclub/constants_create_new_services.dart';
 import 'package:adventuresclub/models/create_adventure/regions_model.dart';
 import 'package:adventuresclub/models/filter_data_model/region_model.dart';
 import 'package:adventuresclub/widgets/dropdowns/region_dropdown.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class RegionFilterDropDown extends StatefulWidget {
@@ -119,7 +120,7 @@ class RegionFilterDropDownState extends State<RegionFilterDropDown> {
                     onTap: () => sId(
                       rFilter,
                     ),
-                    value: rFilter.region,
+                    value: rFilter.region.tr(),
                     child: Text(rFilter.region),
                   );
                 }).toList(),
