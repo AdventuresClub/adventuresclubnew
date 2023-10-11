@@ -227,7 +227,6 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
     //'Oman', 'Salalah', 'Sea', '70', '36 hours', '25 Jul 2020'
   ];
   List<String> text5 = [
-    '""',
     'Service Sector',
     'Service Type',
     'Level',

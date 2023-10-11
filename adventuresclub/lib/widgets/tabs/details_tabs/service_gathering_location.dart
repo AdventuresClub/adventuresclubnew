@@ -217,31 +217,31 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Align(
-                alignment: Alignment.centerLeft,
-                child: MyText(
-                  text: 'description'.tr(),
-                  color: blackColor,
-                  weight: FontWeight.w700,
-                  size: 16,
-                )),
-            const SizedBox(
-              height: 10,
-            ),
-            MyText(
-              text: widget.writeInformation,
-              // text:
-              //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-              color: blackColor,
-              weight: FontWeight.w400,
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Divider(
-              thickness: 1,
-              color: blackColor.withOpacity(0.3),
-            ),
+            // Align(
+            //     alignment: Alignment.centerLeft,
+            //     child: MyText(
+            //       text: 'description'.tr(),
+            //       color: blackColor,
+            //       weight: FontWeight.w700,
+            //       size: 16,
+            //     )),
+            // const SizedBox(
+            //   height: 10,
+            // ),
+            // MyText(
+            //   text: widget.writeInformation,
+            //   // text:
+            //   //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+            //   color: blackColor,
+            //   weight: FontWeight.w400,
+            // ),
+            // const SizedBox(
+            //   height: 5,
+            // ),
+            // Divider(
+            //   thickness: 1,
+            //   color: blackColor.withOpacity(0.3),
+            // ),
             loading
                 ? Center(
                     child: MyText(
@@ -365,7 +365,7 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
               ),
             ),
             const SizedBox(
-              height: 5,
+              height: 10,
             ),
             // Container(
             //   height: 200,

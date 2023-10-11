@@ -68,7 +68,11 @@ class _ServicesCardState extends State<ServicesCard> {
     widget.gm.am.forEach((element) {
       adventuresPlan.add(element.aimedName);
       if (i < 3) {
-        aPlan += "${element.aimedName.tr()} ";
+        if (i < 3) {
+          aPlan += "${element.aimedName.tr()} ${","} ";
+        } else {
+          aPlan += element.aimedName.tr();
+        }
         i++;
       }
     });
@@ -405,12 +409,22 @@ class _ServicesCardState extends State<ServicesCard> {
                                   ),
                                 ),
                                 MyText(
-                                  text:
-                                      "${'earn'.tr()} ${widget.gm.points} '${'points'.tr()}",
-                                  color: blueTextColor,
+                                  text: "${widget.gm.currency}"
+                                      " "
+                                      "${widget.gm.costInc} ",
+                                  //text: 'OMR 20.00',
+                                  weight: FontWeight.bold,
+                                  color: blackTypeColor3,
                                   size: 10,
                                   height: 1.3,
                                 ),
+                                // MyText(
+                                //   text:
+                                //       "${'earn'.tr()} ${widget.gm.points} '${'points'.tr()}",
+                                //   color: blueTextColor,
+                                //   size: 10,
+                                //   height: 1.3,
+                                // ),
                               ],
                             ),
                             const SizedBox(height: 2),
@@ -436,26 +450,26 @@ class _ServicesCardState extends State<ServicesCard> {
                               const SizedBox(height: 5),
                             Row(
                               children: [
-                                Expanded(
-                                  child: MyText(
-                                    text:
-                                        aPlan.tr(), //widget.gm.am[0].aimedName,
-                                    color: redColor,
-                                    weight: FontWeight.w600,
-                                    size: 10,
-                                    height: 1.3,
-                                  ),
-                                ),
-                                MyText(
-                                  text: "${widget.gm.currency}"
-                                      " "
-                                      "${widget.gm.costInc} ",
-                                  //text: 'OMR 20.00',
-                                  weight: FontWeight.w600,
-                                  color: blackTypeColor3,
-                                  size: 10,
-                                  height: 1.3,
-                                ),
+                                // Expanded(
+                                //   child: MyText(
+                                //     text:
+                                //         aPlan.tr(), //widget.gm.am[0].aimedName,
+                                //     color: redColor,
+                                //     weight: FontWeight.w600,
+                                //     size: 10,
+                                //     height: 1.3,
+                                //   ),
+                                // ),
+                                // MyText(
+                                //   text: "${widget.gm.currency}"
+                                //       " "
+                                //       "${widget.gm.costInc} ",
+                                //   //text: 'OMR 20.00',
+                                //   weight: FontWeight.w600,
+                                //   color: blackTypeColor3,
+                                //   size: 10,
+                                //   height: 1.3,
+                                // ),
                               ],
                             ),
                           ],

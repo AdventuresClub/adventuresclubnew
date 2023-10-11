@@ -513,7 +513,7 @@ class _NewRegisterState extends State<NewRegister> {
           decoration: BoxDecoration(
             image: DecorationImage(
                 colorFilter: ColorFilter.mode(
-                    blackColor.withOpacity(0.6), BlendMode.darken),
+                    blackColor.withOpacity(0.75), BlendMode.darken),
                 image: const ExactAssetImage('images/registrationpic.png'),
                 fit: BoxFit.cover),
           ),
@@ -605,11 +605,11 @@ class _NewRegisterState extends State<NewRegister> {
                             ),
                             //const SizedBox(height: 20),
                             Image.asset(
-                              'images/whitelogo.png',
+                              'images/blueLogo.png', //'images/whitelogo.png',
                               height: 200,
                               width: 320,
                             ),
-                            //const SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             TextFields("userName".tr(), userNameController, 17,
                                 whiteColor, true),
                             const SizedBox(height: 10),

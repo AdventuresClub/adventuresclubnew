@@ -371,11 +371,12 @@ class _SignInState extends State<SignIn> {
           child: Container(
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
-                image: DecorationImage(
-                    colorFilter: ColorFilter.mode(
-                        blackColor.withOpacity(0.6), BlendMode.darken),
-                    image: const ExactAssetImage('images/login.png'),
-                    fit: BoxFit.cover)),
+              image: DecorationImage(
+                  colorFilter: ColorFilter.mode(
+                      blackColor.withOpacity(0.75), BlendMode.darken),
+                  image: const ExactAssetImage('images/login.png'),
+                  fit: BoxFit.cover),
+            ),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
@@ -429,11 +430,11 @@ class _SignInState extends State<SignIn> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
                   Image.asset(
-                    'images/whitelogo.png',
+                    'images/blueLogo.png', //'images/whitelogo.png',
                     height: 200,
                     width: 320,
                   ),

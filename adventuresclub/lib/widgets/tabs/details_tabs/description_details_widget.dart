@@ -199,7 +199,7 @@ class DescriptionDetailsWidget extends StatelessWidget {
                             height: 1.5),
                       ),
                       TextSpan(
-                        text: ", ${gm.remainingSeats}",
+                        text: ", ${gm.remainingSeats} ${"left".tr()}",
                         style: const TextStyle(
                             fontSize: 13,
                             // fontWeight: FontWeight.w300,
@@ -250,7 +250,7 @@ class DescriptionDetailsWidget extends StatelessWidget {
                 //Spacer(),
                 RichText(
                   text: TextSpan(
-                    text: text5[3].tr(),
+                    // text: text5[3].tr(),
                     style: const TextStyle(
                       color: greyColor2,
                       fontSize: 13,
