@@ -419,6 +419,8 @@ class _AboutState extends State<About> {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ListTile(
                           leading: CircleAvatar(
@@ -437,27 +439,66 @@ class _AboutState extends State<About> {
                                 color: blackColor,
                                 size: 18,
                               ),
-                              MyText(
-                                text: profile
-                                    .bp.companyName, //'Travel Instructor',
-                                weight: FontWeight.w500,
-                                color: greyTextColor,
-                                size: 14,
-                              ),
-                              MyText(
-                                overFlow: TextOverflow.fade,
-                                text: "${profile.bp.location}"
-                                    "${","}"
-                                    "${profile.bp.address}", //'County, City',
-                                weight: FontWeight.w500,
-                                color: greyTextColor,
-                                size: 12,
-                              ),
+                              // MyText(
+                              //   text: profile
+                              //       .bp.companyName, //'Travel Instructor',
+                              //   weight: FontWeight.w500,
+                              //   color: greyTextColor,
+                              //   size: 14,
+                              // ),
+                              // MyText(
+                              //   overFlow: TextOverflow.fade,
+                              //   text: "${profile.bp.location}"
+                              //       "${","}"
+                              //       "${profile.bp.address}", //'County, City',
+                              //   weight: FontWeight.w500,
+                              //   color: greyTextColor,
+                              //   size: 12,
+                              // ),
                             ],
                           ),
-                          trailing: const Image(
-                            image: ExactAssetImage('images/forward.png'),
+                          trailing: Container(
+                            height: MediaQuery.of(context).size.height / 20,
+                            width: MediaQuery.of(context).size.width / 4,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: const Color.fromARGB(255, 15, 71, 116),
+                                width: 2.0,
+                              ),
+                              color: const Color.fromARGB(255, 15, 71, 116),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(28)),
+                            ),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () => selected(context),
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'chat'.tr(),
+                                          style: const TextStyle(
+                                              color: whiteColor,
+                                              fontWeight: FontWeight.w400,
+                                              letterSpacing: 0.8,
+                                              fontFamily: "Roboto",
+                                              fontSize: 14),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
+                          // const Image(
+                          //   image: ExactAssetImage('images/forward.png'),
+                          // ),
                         ),
                         const SizedBox(
                           height: 10,
@@ -476,66 +517,86 @@ class _AboutState extends State<About> {
                         //     'Roboto',
                         //     FontWeight.w400,
                         //     26),
-                        Container(
-                          height: MediaQuery.of(context).size.height / 20,
-                          width: MediaQuery.of(context).size.width / 4,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: const Color.fromARGB(255, 15, 71, 116),
-                              width: 2.0,
+                        // Container(
+                        //   height: MediaQuery.of(context).size.height / 20,
+                        //   width: MediaQuery.of(context).size.width / 4,
+                        //   decoration: BoxDecoration(
+                        //     border: Border.all(
+                        //       color: const Color.fromARGB(255, 15, 71, 116),
+                        //       width: 2.0,
+                        //     ),
+                        //     color: const Color.fromARGB(255, 15, 71, 116),
+                        //     borderRadius:
+                        //         const BorderRadius.all(Radius.circular(28)),
+                        //   ),
+                        //   child: Material(
+                        //     color: Colors.transparent,
+                        //     child: InkWell(
+                        //       onTap: () => selected(context),
+                        //       child: Center(
+                        //         child: Padding(
+                        //           padding: const EdgeInsets.only(left: 0),
+                        //           child: Row(
+                        //             mainAxisAlignment: MainAxisAlignment.center,
+                        //             children: [
+                        //               Text(
+                        //                 'chat'.tr(),
+                        //                 style: const TextStyle(
+                        //                     color: whiteColor,
+                        //                     fontWeight: FontWeight.w400,
+                        //                     letterSpacing: 0.8,
+                        //                     fontFamily: "Roboto",
+                        //                     fontSize: 14),
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            MyText(
+                              text: 'about'.tr(),
+                              color: greyColor,
+                              size: 18,
+                              weight: FontWeight.bold,
                             ),
-                            color: const Color.fromARGB(255, 15, 71, 116),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(28)),
-                          ),
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              onTap: () => selected(context),
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'chat'.tr(),
-                                        style: const TextStyle(
-                                            color: whiteColor,
-                                            fontWeight: FontWeight.w400,
-                                            letterSpacing: 0.8,
-                                            fontFamily: "Roboto",
-                                            fontSize: 14),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                            MyText(
+                              text:
+                                  profile.bp.companyName, //'Travel Instructor',
+                              weight: FontWeight.w500,
+                              color: greyTextColor,
+                              size: 14,
                             ),
-                          ),
+                            MyText(
+                              overFlow: TextOverflow.fade,
+                              text: "${profile.bp.location}"
+                                  "${","}"
+                                  "${profile.bp.address}", //'County, City',
+                              weight: FontWeight.w500,
+                              color: greyTextColor,
+                              size: 12,
+                            ),
+                          ],
                         ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: MyText(
-                            text: 'about'.tr(),
-                            color: greyColor,
-                            size: 18,
-                            weight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: MyText(
-                            text: profile.bp
-                                .description, //'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu tempus dolor, sit amet laoreet libero. Quisque eleifend, elit placerat condimentum condimentum, nibh lectus mollis eros, at condimentum metus turpis et turpis. Maecenas eu finibus erat. Ut nec gravida nibh. Donec sed nisi volutpat, fermentum felis in, bibendum dolor. ',
-                            color: greyColor,
-                            size: 14,
-                            weight: FontWeight.w500,
-                          ),
-                        ),
+                        // const SizedBox(
+                        //   height: 10,
+                        // ),
+
+                        // Align(
+                        //   alignment: Alignment.centerLeft,
+                        //   child: MyText(
+                        //     text: profile.bp
+                        //         .description, //'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu tempus dolor, sit amet laoreet libero. Quisque eleifend, elit placerat condimentum condimentum, nibh lectus mollis eros, at condimentum metus turpis et turpis. Maecenas eu finibus erat. Ut nec gravida nibh. Donec sed nisi volutpat, fermentum felis in, bibendum dolor. ',
+                        //     color: greyColor,
+                        //     size: 14,
+                        //     weight: FontWeight.w500,
+                        //   ),
+                        // ),
                         // Container(
                         //     padding: const EdgeInsets.only(bottom: 15),
                         //     child: Row(

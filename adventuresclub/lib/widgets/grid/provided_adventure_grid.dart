@@ -48,7 +48,7 @@ class _ProvidedAdventureGridState extends State<ProvidedAdventureGrid> {
       physics: const ScrollPhysics(),
       shrinkWrap: true,
       mainAxisSpacing: 0.3,
-      childAspectRatio: 0.75,
+      childAspectRatio: 1,
       crossAxisSpacing: 0.3,
       crossAxisCount: 2,
       children: List.generate(

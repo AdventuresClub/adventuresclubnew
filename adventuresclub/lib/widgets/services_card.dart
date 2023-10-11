@@ -597,63 +597,72 @@ class _ServicesCardState extends State<ServicesCard> {
                       //     ],
                       //   ),
                       // ),
-                      Image(
-                        image: const ExactAssetImage(
-                          'images/line.png',
-                        ),
-                        width: MediaQuery.of(context).size.width / 2.4,
-                      ),
+                      widget.providerShow!
+                          ? Image(
+                              image: const ExactAssetImage(
+                                'images/line.png',
+                              ),
+                              width: MediaQuery.of(context).size.width / 2.4,
+                            )
+                          : Container(
+                              height: 1,
+                            ),
                       const SizedBox(
                         height: 2,
                       ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width / 2.3,
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: GestureDetector(
-                            onTap: () => goToProvider(
-                                widget.gm.providerId.toString(),
-                                widget.gm.serviceId),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                CircleAvatar(
-                                  radius: 10,
-                                  backgroundImage:
-                                      NetworkImage(widget.gm.pProfile),
-                                  backgroundColor: transparentColor,
-                                ),
-                                const SizedBox(width: 1),
-                                //   MyText(text: 'Provided By AdventuresClub',color:blackColor,fontStyle: FontStyle.italic,size: 10,),
-                                Expanded(
-                                  child: Text.rich(
-                                    TextSpan(
-                                      children: [
-                                        TextSpan(
-                                            text: "providedBy".tr(),
-                                            style: const TextStyle(
-                                              color: greyColor3,
-                                              fontSize: 10,
-                                            )),
-                                        TextSpan(
-                                          text: widget.gm.pName,
-                                          //text: 'AdventuresClub',
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: blackTypeColor4,
-                                              fontSize: 10,
-                                              fontFamily: "Roboto"),
+                      widget.providerShow!
+                          ? SizedBox(
+                              width: MediaQuery.of(context).size.width / 2.3,
+                              child: Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: GestureDetector(
+                                  onTap: () => goToProvider(
+                                      widget.gm.providerId.toString(),
+                                      widget.gm.serviceId),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 10,
+                                        backgroundImage:
+                                            NetworkImage(widget.gm.pProfile),
+                                        backgroundColor: transparentColor,
+                                      ),
+                                      const SizedBox(width: 1),
+                                      //   MyText(text: 'Provided By AdventuresClub',color:blackColor,fontStyle: FontStyle.italic,size: 10,),
+                                      Expanded(
+                                        child: Text.rich(
+                                          TextSpan(
+                                            children: [
+                                              TextSpan(
+                                                  text: "providedBy".tr(),
+                                                  style: const TextStyle(
+                                                    color: greyColor3,
+                                                    fontSize: 10,
+                                                  )),
+                                              TextSpan(
+                                                text: widget.gm.pName,
+                                                //text: 'AdventuresClub',
+                                                style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: blackTypeColor4,
+                                                    fontSize: 10,
+                                                    fontFamily: "Roboto"),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ],
-                                    ),
+                                      )
+                                    ],
                                   ),
                                 ),
-                              ],
+                              ),
+                            )
+                          : Container(
+                              height: 1,
                             ),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ),
