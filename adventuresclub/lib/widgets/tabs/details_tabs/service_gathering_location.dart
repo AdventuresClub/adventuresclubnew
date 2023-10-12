@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -263,29 +264,6 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
                               weight: FontWeight.w700,
                               size: 16,
                             )),
-                        Row(
-                          children: [
-                            MyText(
-                              text: 'getDirection'.tr(),
-                              color: greyColor,
-                              weight: FontWeight.w700,
-                            ),
-                            Card(
-                              elevation: 1,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(64)),
-                              child: const CircleAvatar(
-                                radius: 14,
-                                backgroundColor: whiteColor,
-                                child: Image(
-                                  image: ExactAssetImage(
-                                      'images/location-arrow.png'),
-                                  height: 15,
-                                ),
-                              ),
-                            )
-                          ],
-                        )
                       ],
                     ),
                   ),
@@ -352,7 +330,7 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
                       text:
                           "${"Lat:"} ${widget.lat.substring(0, 7)} ${","} ${"Lng:"} ${widget.lng.substring(0, 7)}", //widget.geoLocation, //widget.lat.substring(0, 7),
                       //text: ' 60.25455415, 54.2555125',
-                      style: const TextStyle(fontSize: 14, color: blackColor)),
+                      style: const TextStyle(fontSize: 14, color: blackColor))
                   // const TextSpan(
                   //     text: " , ",
                   //     //text: ' 60.25455415, 54.2555125',
@@ -394,6 +372,37 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
                   gController.showMarkerInfoWindow(markers[0].markerId);
                 },
               ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                MyText(
+                  text: 'getDirection'.tr(),
+                  color: blackColor,
+                  weight: FontWeight.w700,
+                ),
+                Card(
+                  elevation: 1,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(64)),
+                  child: const CircleAvatar(
+                      radius: 14,
+                      backgroundColor: whiteColor,
+                      child: Icon(
+                        Icons.directions,
+                        color: redColor,
+                        size: 24,
+                      )
+                      // Image(
+                      //   image: ExactAssetImage('images/location-arrow.png'),
+                      //   height: 15,
+                      // ),
+                      ),
+                )
+              ],
             ),
           ],
         ),

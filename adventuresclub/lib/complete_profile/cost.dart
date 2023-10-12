@@ -291,17 +291,17 @@ class _CostState extends State<Cost> {
               const SizedBox(
                 width: 10,
               ),
-              Expanded(
-                child: TFWithSize(
-                  show: TextInputType.number,
-                  'setCost',
-                  widget.costTwo,
-                  16,
-                  lightGreyColor,
-                  3.4,
-                  type: true,
-                ),
-              ),
+              // Expanded(
+              //   child: TFWithSize(
+              //     show: TextInputType.number,
+              //     'setCost',
+              //     widget.costTwo,
+              //     16,
+              //     lightGreyColor,
+              //     3.4,
+              //     type: true,
+              //   ),
+              // ),
               const SizedBox(
                 width: 10,
               ),
@@ -335,7 +335,7 @@ class _CostState extends State<Cost> {
           Row(
             children: [
               SizedBox(
-                width: 130,
+                width: 190,
                 child: MyText(
                   text: "includingGears",
                   color: redColor,
@@ -343,15 +343,15 @@ class _CostState extends State<Cost> {
                   weight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
-                width: 130,
-                child: MyText(
-                  text: "excludingGears",
-                  color: redColor,
-                  size: 12,
-                  weight: FontWeight.bold,
-                ),
-              ),
+              // SizedBox(
+              //   width: 130,
+              //   child: MyText(
+              //     text: "excludingGears",
+              //     color: redColor,
+              //     size: 12,
+              //     weight: FontWeight.bold,
+              //   ),
+              // ),
             ],
           ),
           // Row(

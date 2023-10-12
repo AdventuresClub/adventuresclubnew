@@ -22,7 +22,7 @@ class DescriptionPricingWidget extends StatelessWidget {
       ),
       elevation: 1,
       child: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 12),
         child: Column(
           children: [
             Row(
@@ -38,6 +38,15 @@ class DescriptionPricingWidget extends StatelessWidget {
                     size: 16,
                   ),
                 ),
+
+                MyText(
+                  text: "$costInc "
+                      "$currency",
+                  //'\$150.00',
+                  weight: FontWeight.bold,
+                  color: blackColor,
+                  size: 16,
+                ),
                 // Expanded(
                 //   child: MyText(
                 //     text: 'Earn 180 Points',
@@ -48,51 +57,36 @@ class DescriptionPricingWidget extends StatelessWidget {
                 // ),
               ],
             ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MyText(
-                  text: "$costInc "
-                      "$currency",
-                  //'\$150.00',
-                  weight: FontWeight.bold,
-                  color: blackColor,
-                  size: 14,
-                ),
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: MyText(
-                      text: "${costExc} "
-                          "${currency}",
-                      //'\$18.18',
-                      weight: FontWeight.w600,
-                      color: blackColor,
-                      size: 14,
-                      fontFamily: 'Roboto',
-                    )),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MyText(
-                  text: 'includingGears'.tr(),
-                  weight: FontWeight.bold,
-                  color: Colors.red,
-                  size: 10,
-                  fontFamily: 'Roboto',
-                ),
-                MyText(
-                  text: 'excludingGears'.tr(),
-                  weight: FontWeight.bold,
-                  color: Colors.red,
-                  size: 10,
-                  fontFamily: 'Roboto',
-                ),
-              ],
-            ),
+            // const SizedBox(height: 10),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     // Align(
+            //     //     alignment: Alignment.centerLeft,
+            //     //     child: MyText(
+            //     //       text: "${costExc} "
+            //     //           "${currency}",
+            //     //       //'\$18.18',
+            //     //       weight: FontWeight.w600,
+            //     //       color: blackColor,
+            //     //       size: 14,
+            //     //       fontFamily: 'Roboto',
+            //     //     )),
+            //   ],
+            // ),
+            // const SizedBox(height: 10),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     // MyText(
+            //     //   text: 'excludingGears'.tr(),
+            //     //   weight: FontWeight.bold,
+            //     //   color: Colors.red,
+            //     //   size: 10,
+            //     //   fontFamily: 'Roboto',
+            //     // ),
+            //   ],
+            // ),
           ],
         ),
       ),

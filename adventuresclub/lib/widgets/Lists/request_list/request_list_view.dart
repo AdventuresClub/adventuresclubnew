@@ -660,7 +660,9 @@ class _RequestListViewState extends State<RequestListView> {
                                     height: 1.8,
                                   ),
                                   MyText(
-                                    text: uRequestListInv[index].uCost.tr(),
+                                    text: "${uRequestListInv[index].uCost.tr()}"
+                                        " "
+                                        "${uRequestListInv[index].currency}",
                                     color: greyColor,
                                     weight: FontWeight.w400,
                                     size: 13,
@@ -679,7 +681,9 @@ class _RequestListViewState extends State<RequestListView> {
                                     height: 1.8,
                                   ),
                                   MyText(
-                                    text: uRequestListInv[index].tCost.tr(),
+                                    text: "${uRequestListInv[index].tCost.tr()}"
+                                        " "
+                                        "${uRequestListInv[index].currency}",
                                     color: greyColor,
                                     weight: FontWeight.w400,
                                     size: 13,
@@ -698,7 +702,9 @@ class _RequestListViewState extends State<RequestListView> {
                                     height: 1.8,
                                   ),
                                   MyText(
-                                    text: uRequestListInv[index].tCost.tr(),
+                                    text: "${uRequestListInv[index].tCost.tr()}"
+                                        " "
+                                        "${uRequestListInv[index].currency}",
                                     color: greyColor,
                                     weight: FontWeight.w400,
                                     size: 13,

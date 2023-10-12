@@ -248,22 +248,22 @@ class DescriptionDetailsWidget extends StatelessWidget {
                   ),
                 ),
                 //Spacer(),
-                RichText(
-                  text: TextSpan(
-                    // text: text5[3].tr(),
-                    style: const TextStyle(
-                      color: greyColor2,
-                      fontSize: 13,
-                      height: 1.5,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: text6[3].tr(),
-                          style: const TextStyle(
-                              fontSize: 13, color: blackColor, height: 1.5)),
-                    ],
-                  ),
-                ),
+                // RichText(
+                //   text: TextSpan(
+                //     text: text5[2].tr(),
+                //     style: const TextStyle(
+                //       color: greyColor2,
+                //       fontSize: 13,
+                //       height: 1.5,
+                //     ),
+                //     children: <TextSpan>[
+                //       TextSpan(
+                //           text: text6[2].tr(),
+                //           style: const TextStyle(
+                //               fontSize: 13, color: blackColor, height: 1.5)),
+                //     ],
+                //   ),
+                // ),
               ],
             ),
             Row(

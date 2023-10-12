@@ -62,7 +62,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
     if (widget.gm.sPlan == 2) {
       setState(() {
         text1.insert(5, "Start Date : ");
-        text5.insert(4, "End Date");
+        text5.insert(3, "End Date");
         text4.insert(0, widget.gm.country);
         text4.insert(1, widget.gm.region);
         text4.insert(2, widget.gm.serviceCategory);
@@ -71,7 +71,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
         widget.gm.availability.isEmpty
             ? text4.insert(5, "2023-10-24")
             : text4.insert(5, st);
-        text6.insert(0, widget.gm.reviewdBy);
+        // text6.insert(0, widget.gm.reviewdBy);
         text6.insert(1, widget.gm.serviceSector);
         text6.insert(2, widget.gm.serviceType);
         text6.insert(3, widget.gm.serviceLevel);
@@ -93,10 +93,10 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
         );
         text4.insert(4, widget.gm.duration.toString());
         text4.insert(5, aPlan);
-        text6.insert(0, widget.gm.reviewdBy);
-        text6.insert(1, widget.gm.serviceSector);
-        text6.insert(2, widget.gm.serviceType);
-        text6.insert(3, widget.gm.serviceLevel);
+        //text6.insert(0, widget.gm.reviewdBy);
+        text6.insert(0, widget.gm.serviceSector);
+        text6.insert(1, widget.gm.serviceType);
+        text6.insert(2, widget.gm.serviceLevel);
         // text6.insert(4, widget.gm.availability[0].ed);
         // text6.insert(4, widget.gm.availability[0].ed);
       });
