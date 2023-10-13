@@ -95,7 +95,7 @@ class _HealthConditionState extends State<HealthCondition> {
         int id = int.tryParse(h['Id'].toString()) ?? 0;
         WnHModel heightModel = WnHModel(
           id,
-          h['heightName'].toString() ?? "",
+          h['heightName'] ?? "",
           h['image'].toString() ?? "",
           h['deleted_at'].toString() ?? "",
           h['created_at'].toString() ?? "",
@@ -108,7 +108,7 @@ class _HealthConditionState extends State<HealthCondition> {
         int id = int.tryParse(w['Id'].toString()) ?? 0;
         WnHModel weightModel = WnHModel(
           id,
-          w['weightName'].toString() ?? "",
+          w['weightName'] ?? "",
           w['image'].toString() ?? "",
           w['deleted_at'].toString() ?? "",
           w['created_at'].toString() ?? "",
@@ -120,7 +120,7 @@ class _HealthConditionState extends State<HealthCondition> {
   }
 
   Future getHealth() async {
-    getWeightNHeight();
+    await getWeightNHeight();
     setState(() {
       loading = true;
     });
