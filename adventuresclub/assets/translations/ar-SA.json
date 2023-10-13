@@ -285,5 +285,14 @@
     "enterGeolocation": "أدخل: الموقع الجغرافي",
     "typeSpecificAddress/Location": "اكتب عنوانًا / موقعًا محددًا",
     "setCost": "تحديد التكلفة",
-    "omr": "ريال عماني (OMR)"
+    "omr": "ريال عماني (OMR)",
+    "alert": "تنبيه",
+    "paymentMethodsFromClient": "طرق الدفع من العميل",
+    "areYouSureYouWantToDeleteThis": "هل أنت متأكد أنك تريد حذف هذا؟",
+    "payment": "الدفع",
+    "paymentMethod": "طريقة الدفع",
+    "afterYouFirstPaymentWeWillSaveYourDetailsForFutureUse": "بعد دفعك الأول، سوف نحتفظ بتفاصيلك للاستخدام في المستقبل",
+    "ContactProviderForPayment": "اتصل بالمزود للدفع، هل أنت متأكد أنك تريد تأكيد الحجز؟",
+    "bankCard": "بطاقة البنك",
+    "payOnArrival": "الدفع عند الوصول"
 }

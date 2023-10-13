@@ -141,14 +141,11 @@ class _PaymentDetailsState extends State<PaymentDetails> {
             // const SizedBox(
             //   height: 10,
             // ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: MyText(
-                text: "Payment methods from client",
-                align: TextAlign.left,
-                color: blackColor,
-                size: 16,
-              ),
+            MyText(
+              text: "paymentMethodsFromClient",
+              align: TextAlign.left,
+              color: blackColor,
+              size: 16,
             ),
             const SizedBox(
               height: 10,

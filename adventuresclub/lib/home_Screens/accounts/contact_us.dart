@@ -293,52 +293,49 @@ class _ContactUsState extends State<ContactUs> {
                   MultiLineField('Start writing here', 5, lightGreyColor,
                       messageController),
                   const SizedBox(
-                    height: 20,
+                    height: 40,
                   ),
                   ButtonIconLess(
                       'send', bluishColor, whiteColor, 1.3, 17, 16, contactUs),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      GestureDetector(
-                        onTap: showConfirmation,
-                        child: const CircleAvatar(
-                          backgroundColor: bluishColor,
-                          child: Image(
-                              image: ExactAssetImage('images/phonepic.png')),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () => launchURL("ins"),
-                        child: const CircleAvatar(
-                          radius: 20,
-                          backgroundColor: bluishColor,
-                          child:
-                              Image(image: ExactAssetImage('images/insta.png')),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () => launchURL("whatsapp"),
-                        child: const CircleAvatar(
-                          backgroundColor: bluishColor,
-                          child: Image(
-                              image:
-                                  ExactAssetImage('images/feather-mail.png')),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () => launchURL("skype"),
-                        child: const CircleAvatar(
-                          backgroundColor: bluishColor,
-                          child:
-                              Image(image: ExactAssetImage('images/skype.png')),
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //   children: [
+                  //     GestureDetector(
+                  //       onTap: showConfirmation,
+                  //       child: const CircleAvatar(
+                  //         backgroundColor: bluishColor,
+                  //         child: Image(
+                  //             image: ExactAssetImage('images/phonepic.png')),
+                  //       ),
+                  //     ),
+                  //     GestureDetector(
+                  //       onTap: () => launchURL("ins"),
+                  //       child: const CircleAvatar(
+                  //         radius: 20,
+                  //         backgroundColor: bluishColor,
+                  //         child:
+                  //             Image(image: ExactAssetImage('images/insta.png')),
+                  //       ),
+                  //     ),
+                  //     GestureDetector(
+                  //       onTap: () => launchURL("whatsapp"),
+                  //       child: const CircleAvatar(
+                  //         backgroundColor: bluishColor,
+                  //         child: Image(
+                  //             image:
+                  //                 ExactAssetImage('images/feather-mail.png')),
+                  //       ),
+                  //     ),
+                  //     GestureDetector(
+                  //       onTap: () => launchURL("skype"),
+                  //       child: const CircleAvatar(
+                  //         backgroundColor: bluishColor,
+                  //         child:
+                  //             Image(image: ExactAssetImage('images/skype.png')),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   // const SizedBox(
                   //   height: 20,
                   // ),

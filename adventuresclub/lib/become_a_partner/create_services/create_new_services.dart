@@ -400,53 +400,63 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       });
     } else if (imageList.isEmpty) {
       message("Images cannot be empty");
-    } else if (count == 1 &&
-        adventureName.text.isNotEmpty &&
-        ConstantsCreateNewServices.selectedRegionId > 0 &&
-        ConstantsCreateNewServices.selectedSectorId > 0 &&
-        ConstantsCreateNewServices.selectedCategoryId > 0 &&
-        ConstantsCreateNewServices.serviceTypeId > 0 &&
-        ConstantsCreateNewServices.selectedDurationId > 0 &&
-        ConstantsCreateNewServices.selectedlevelId > 0 &&
-        availableSeatsController.text.isNotEmpty &&
-        sPlan > 0 &&
-        selectedActivitesId.isNotEmpty &&
-        selectedDependencyId.isNotEmpty &&
-        planChecked) {
+    } else if (count == 1) {
+      (selectedDependencyId.isNotEmpty && planChecked);
+      if (adventureName.text.isEmpty) {
+        message("Please enter the adventure name");
+        return;
+      }
+      if (ConstantsCreateNewServices.selectedRegionId == 0) {
+        message("Please select region");
+        return;
+      }
+      if (ConstantsCreateNewServices.selectedSectorId == 0) {
+        message("Please select service sector");
+        return;
+      }
+      if (ConstantsCreateNewServices.selectedCategoryId == 0) {
+        message("Please select category");
+        return;
+      }
+      if (ConstantsCreateNewServices.serviceTypeId == 0) {
+        message("Please select service type");
+        return;
+      }
+      if (ConstantsCreateNewServices.selectedDurationId == 0) {
+        message("Please select duration");
+        return;
+      }
+      if (ConstantsCreateNewServices.selectedlevelId == 0) {
+        message("Please select level");
+        return;
+      }
+      if (availableSeatsController.text.isEmpty) {
+        message("Please add availaible seats");
+        return;
+      }
+      if (sPlan == 0) {
+        message("Please select from the service plan");
+        return;
+      }
+      if (ConstantsCreateNewServices.selectedActivitesId.isEmpty) {
+        message("Please Activities Included");
+        return;
+      }
+      if (selectedActivitesId.isEmpty) {
+        message("Please select from aimed for");
+        return;
+      }
+      if (selectedDependencyId.isEmpty) {
+        message("Please select Dependency");
+        return;
+      }
       pm[0].startDate = startDate;
       pm[0].endDate = currentDate;
       pm[0].adventureStartDate = startDate;
       pm[0].adventureEndDate = currentDate;
-      // await convertProgramData();
-      // aimed();
-      //dependency();
       setState(() {
         count = 2;
       });
-    } else if (adventureName.text.isEmpty) {
-      message("Please enter the adventure name");
-    } else if (ConstantsCreateNewServices.selectedRegionId == 0) {
-      message("Please select region");
-    } else if (ConstantsCreateNewServices.selectedSectorId == 0) {
-      message("Please select service sector");
-    } else if (ConstantsCreateNewServices.selectedCategoryId == 0) {
-      message("Please select category");
-    } else if (ConstantsCreateNewServices.serviceTypeId == 0) {
-      message("Please select service type");
-    } else if (ConstantsCreateNewServices.selectedDurationId == 0) {
-      message("Please select duration");
-    } else if (ConstantsCreateNewServices.selectedlevelId == 0) {
-      message("Please select level");
-    } else if (availableSeatsController.text.isEmpty) {
-      message("Please add availaible seats");
-    } else if (sPlan == 0) {
-      message("Please select from the service plan");
-    } else if (ConstantsCreateNewServices.selectedActivitesId.isEmpty) {
-      message("Please select from the activities");
-    } else if (selectedActivitesId.isEmpty) {
-      message("Please select from aimed for");
-    } else if (selectedDependencyId.isEmpty) {
-      message("Please select Dependency");
     } else if (count == 2 && pm.isNotEmpty && isTimeAfter == false) {
       setState(() {
         count = 3;
@@ -485,6 +495,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   }
 
   void previous() {
+    clearAll();
     if (count == 0) {
       Navigator.of(context).pop();
     } else {

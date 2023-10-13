@@ -7,6 +7,7 @@ import 'package:adventuresclub/models/currency_model.dart';
 import 'package:adventuresclub/models/requests/upcoming_Requests_Model.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -39,11 +40,11 @@ class _PaymentMethodsState extends State<PaymentMethods> {
     //'images/wire_transfer.png'
   ];
 
-  List text = [
+  List<String> text = [
     // 'Oman Debit Cards (Omannat)',
     // 'Paypal',
-    'Bank Card',
-    'Pay On Arrival',
+    'bankCard',
+    'payOnArrival',
     // 'Wire Transfer'
   ];
 
@@ -154,24 +155,24 @@ class _PaymentMethodsState extends State<PaymentMethods> {
               contentPadding: const EdgeInsets.all(12),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12)),
-              title: const Text(
-                "Alert",
+              title: Text(
+                "alert".tr(),
                 textAlign: TextAlign.center,
               ),
               actions: [
-                const Text(
-                  "Contact the provider for payment, Are you sure you want to confirmt the booking ?",
+                Text(
+                  "ContactProviderForPayment".tr(),
                   textAlign: TextAlign.center,
                 ),
                 Row(
                   children: [
                     MaterialButton(
                       onPressed: cancel,
-                      child: const Text("No"),
+                      child: Text("no".tr()),
                     ),
                     MaterialButton(
                       onPressed: update,
-                      child: const Text("Yes"),
+                      child: Text("yes".tr()),
                     ),
                   ],
                 ),
@@ -236,7 +237,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
             ),
           ),
           title: MyText(
-            text: 'Payment',
+            text: 'payment',
             color: bluishColor,
           ),
         ),
@@ -250,7 +251,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
                   Align(
                       alignment: Alignment.centerLeft,
                       child: MyText(
-                        text: 'Payment Method',
+                        text: 'paymentMethod',
                         weight: FontWeight.bold,
                         color: blackColor,
                         size: 19,
@@ -260,7 +261,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
                       alignment: Alignment.centerLeft,
                       child: MyText(
                         text:
-                            'After your first payment, we will save your details for future use.',
+                            'afterYouFirstPaymentWeWillSaveYourDetailsForFutureUse',
                         weight: FontWeight.w400,
                         color: greyColor,
                         size: 14,

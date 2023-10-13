@@ -323,7 +323,7 @@ class _RequestListViewState extends State<RequestListView> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12)),
               title: MyText(
-                text: "Alert",
+                text: "alert",
                 size: 18,
                 weight: FontWeight.bold,
                 color: blackColor,
@@ -333,8 +333,8 @@ class _RequestListViewState extends State<RequestListView> {
                   height: 10,
                 ),
                 //Text("data"),
-                const Text(
-                  "Are you sure you want to Delete This?",
+                Text(
+                  "areYouSureYouWantToDeleteThis".tr(),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(
@@ -345,7 +345,7 @@ class _RequestListViewState extends State<RequestListView> {
                     MaterialButton(
                       onPressed: () => Navigator.of(context).pop(),
                       child: MyText(
-                        text: "No",
+                        text: "no",
                         color: blackColor,
                         weight: FontWeight.bold,
                       ),
@@ -353,7 +353,7 @@ class _RequestListViewState extends State<RequestListView> {
                     MaterialButton(
                       onPressed: () => dropped(bookingId, index),
                       child: MyText(
-                        text: "Yes",
+                        text: "yes",
                         color: blackColor,
                         weight: FontWeight.bold,
                       ),

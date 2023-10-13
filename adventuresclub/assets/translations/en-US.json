@@ -284,5 +284,14 @@
     "enterGeolocation": "Enter: Geolocation",
     "typeSpecificAddress/Location": "Type Specific Address/Location",
     "setCost": "Set Cost",
-    "omr": "OMR"
+    "omr": "OMR",
+    "alert": "Alert",
+    "paymentMethodsFromClient": "Payment methods from client",
+    "areYouSureYouWantToDeleteThis":"Are you sure you want to Delete This?",
+    "payment": "Payment",
+    "paymentMethod": "Payment Method",
+    "afterYouFirstPaymentWeWillSaveYourDetailsForFutureUse": "After your first payment we will save your details for futures use",
+    "ContactProviderForPayment":"Contact the provider for payment, Are you sure you want to confirmt the booking ?",
+    "bankCard":"Bank Card",
+    "payOnArrival": "Pay On Arrival"
 }
