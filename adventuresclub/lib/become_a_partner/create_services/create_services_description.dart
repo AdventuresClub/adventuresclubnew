@@ -120,13 +120,6 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
     if (ConstantsCreateNewServices.selectedActivitesId.contains(id)) {
       ConstantsCreateNewServices.selectedActivitesId.remove(id);
     }
-    List<ActivitiesIncludeModel> r = [];
-    for (int i = 0; i < activityValue.length; i++) {
-      if (ConstantsCreateNewServices.selectedActivitesId
-          .contains(!activityValue[i])) {
-        r.remove(activitiesFilter[i]);
-      }
-    }
     print(ConstantsCreateNewServices.selectedActivitesId);
   }
 
@@ -135,11 +128,13 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
   }
 
   void abc() {
-    // Navigator.of(context).pop();
+    Navigator.of(context).pop();
     List<ActivitiesIncludeModel> a = [];
     for (int i = 0; i < activityValue.length; i++) {
       if (activityValue[i]) {
-        a.add(activitiesFilter[i]);
+        if (!a.contains(activitiesFilter[i])) {
+          a.add(activitiesFilter[i]);
+        }
       }
     }
     sId(a);
@@ -223,7 +218,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                                           setState(() {
                                             activityValue[i] =
                                                 !activityValue[i];
-                                            removeId(i);
+                                            removeId(activitiesFilter[i].id);
                                             // activityId
                                             //     .add(activitiesFilter[index].id);
                                             // activity.add(
