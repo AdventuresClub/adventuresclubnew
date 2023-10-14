@@ -160,6 +160,12 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                         color: greenColor1,
                         weight: FontWeight.bold,
                       ),
+                    if (widget.gm.status == "8")
+                      MyText(
+                        text: "payOnArrival".tr(), //'Confirmed',
+                        color: greenColor1,
+                        weight: FontWeight.bold,
+                      ),
                     const SizedBox(
                       width: 5,
                     ),

@@ -110,9 +110,11 @@ class _PaymentMethodsState extends State<PaymentMethods> {
             "booking_id": widget.bookingId,
             'user_id':
                 Constants.userId.toString(), //"3", //Constants.userId, //"27",
-            'status': "/",
+            'status': "8",
+            "payment_channel": "Pay On Arrival",
           });
       if (response.statusCode != 200) {
+        cancel();
       } else {
         //  message("Cancelled Successfully");
       }

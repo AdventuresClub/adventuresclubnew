@@ -5,13 +5,11 @@ import 'dart:developer';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_launcher/map_launcher.dart' as ml;
 import 'package:permission_handler/permission_handler.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:map_launcher/src/models.dart' as mt;
 
 class ServiceGatheringLocation extends StatefulWidget {
@@ -376,33 +374,36 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
             const SizedBox(
               height: 10,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                MyText(
-                  text: 'getDirection'.tr(),
-                  color: blackColor,
-                  weight: FontWeight.w700,
-                ),
-                Card(
-                  elevation: 1,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(64)),
-                  child: const CircleAvatar(
-                      radius: 14,
-                      backgroundColor: whiteColor,
-                      child: Icon(
-                        Icons.directions,
-                        color: redColor,
-                        size: 24,
-                      )
-                      // Image(
-                      //   image: ExactAssetImage('images/location-arrow.png'),
-                      //   height: 15,
-                      // ),
-                      ),
-                )
-              ],
+            InkWell(
+              onTap: () => selected(context),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  MyText(
+                    text: 'getDirection'.tr(),
+                    color: blackColor,
+                    weight: FontWeight.w700,
+                  ),
+                  Card(
+                    elevation: 1,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(64)),
+                    child: const CircleAvatar(
+                        radius: 14,
+                        backgroundColor: whiteColor,
+                        child: Icon(
+                          Icons.directions,
+                          color: redColor,
+                          size: 24,
+                        )
+                        // Image(
+                        //   image: ExactAssetImage('images/location-arrow.png'),
+                        //   height: 15,
+                        // ),
+                        ),
+                  )
+                ],
+              ),
             ),
           ],
         ),

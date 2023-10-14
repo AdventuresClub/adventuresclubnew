@@ -478,6 +478,12 @@ class _RequestListViewState extends State<RequestListView> {
                             color: greenColor1,
                             weight: FontWeight.bold,
                           ),
+                        if (uRequestListInv[index].status == "8")
+                          MyText(
+                            text: "payOnArrival".tr(), //'Confirmed',
+                            color: greenColor1,
+                            weight: FontWeight.bold,
+                          ),
                         const SizedBox(
                           width: 5,
                         ),
