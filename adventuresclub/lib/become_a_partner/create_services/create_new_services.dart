@@ -483,7 +483,6 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         iLiveInController.text.isNotEmpty &&
         specificAddressController.text.isNotEmpty &&
         costOne.text.isNotEmpty &&
-        costTwo.text.isNotEmpty &&
         preRequisites.text.isNotEmpty &&
         minimumRequirement.text.isNotEmpty) {
       //convertProgramData();
@@ -494,8 +493,6 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       message("Specific Address Cannot be empty");
     } else if (costOne.text.isEmpty) {
       message("Please set cost one");
-    } else if (costTwo.text.isEmpty) {
-      message("Please set cost two");
     } else if (preRequisites.text.isEmpty) {
       message("Please Type prerequisites");
     } else if (minimumRequirement.text.isEmpty) {
