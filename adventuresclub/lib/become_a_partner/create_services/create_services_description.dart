@@ -116,8 +116,26 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
     parseActivity(Constants.activitiesFilter);
   }
 
-  void abc() {
+  void removeId(int id) {
+    if (ConstantsCreateNewServices.selectedActivitesId.contains(id)) {
+      ConstantsCreateNewServices.selectedActivitesId.remove(id);
+    }
+    List<ActivitiesIncludeModel> r = [];
+    for (int i = 0; i < activityValue.length; i++) {
+      if (ConstantsCreateNewServices.selectedActivitesId
+          .contains(!activityValue[i])) {
+        r.remove(activitiesFilter[i]);
+      }
+    }
+    print(ConstantsCreateNewServices.selectedActivitesId);
+  }
+
+  void cancel() {
     Navigator.of(context).pop();
+  }
+
+  void abc() {
+    // Navigator.of(context).pop();
     List<ActivitiesIncludeModel> a = [];
     for (int i = 0; i < activityValue.length; i++) {
       if (activityValue[i]) {
@@ -148,6 +166,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
 
   void addActivites() {
     activitiesLength = 0;
+    selectedActivitesid.clear;
     showDialog(
         context: context,
         builder: (context) {
@@ -204,6 +223,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                                           setState(() {
                                             activityValue[i] =
                                                 !activityValue[i];
+                                            removeId(i);
                                             // activityId
                                             //     .add(activitiesFilter[index].id);
                                             // activity.add(
