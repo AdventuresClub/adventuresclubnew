@@ -457,12 +457,17 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       setState(() {
         count = 2;
       });
-    } else if (count == 2 && pm.isNotEmpty && isTimeAfter == false) {
+    } else if (count == 2 &&
+        pm[0].title.isNotEmpty &&
+        pm[0].description.isNotEmpty &&
+        isTimeAfter == false) {
       setState(() {
         count = 3;
       });
-    } else if (pm.isEmpty) {
-      message("Please enter program");
+    } else if (pm[0].title.isEmpty) {
+      message("Please enter program title");
+    } else if (pm[0].description.isEmpty) {
+      message("Please enter program desctiption");
     } else if (isTimeAfter) {
       message("End Time Cannot be before Start Time");
     } else if (count == 3 &&

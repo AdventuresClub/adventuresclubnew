@@ -101,6 +101,29 @@ class _PaymentMethodsState extends State<PaymentMethods> {
     }
   }
 
+  void decline() async {
+    try {
+      var response = await http.post(
+          Uri.parse(
+              "https://adventuresclub.net/adventureClub/api/v1/booking_accept"),
+          body: {
+            "booking_id": widget.bookingId,
+            'user_id':
+                Constants.userId.toString(), //"3", //Constants.userId, //"27",
+            'status': "/",
+          });
+      if (response.statusCode != 200) {
+      } else {
+        //  message("Cancelled Successfully");
+      }
+      print(response.statusCode);
+      print(response.body);
+      print(response.headers);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   void selected(BuildContext context, String bookingId) {
     generateRandomString(count);
     // transaction id is random uniuq generated number
@@ -204,8 +227,9 @@ class _PaymentMethodsState extends State<PaymentMethods> {
           });
       if (response.statusCode == 200) {
         message("PayMent Method Updated Successfly");
-        cancel();
       }
+      decline();
+      cancel();
       print(response.statusCode);
       print(response.body);
       print(response.headers);
