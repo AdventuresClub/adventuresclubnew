@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls, prefer_typing_uninitialized_variables, unused_local_variable
 import 'dart:developer';
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:adventuresclub/become_a_partner/create_services/create_plan_one.dart';
 import 'package:adventuresclub/become_a_partner/create_services/create_program.dart';
 import 'package:adventuresclub/become_a_partner/create_services/create_services_description.dart';
@@ -457,22 +456,31 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       setState(() {
         count = 2;
       });
-    } else if (count == 2 &&
-        pm[0].title.isNotEmpty &&
-        pm[0].description.isNotEmpty &&
-        isTimeAfter == false) {
+    } else if (count == 2
+        // &&
+        //     pm[0].title.isNotEmpty &&
+        //     pm[0].description.isNotEmpty &&
+        //     isTimeAfter == false
+        ) {
+      if (particularWeekDays) {
+        // onePlan.isEmpty;
+        // message("Please enter program title");
+        // return;
+      } else if (!particularWeekDays) {
+        // pm[0].title.isEmpty;
+        // pm[0].description.isEmpty;
+        // message("Please fill the empty fields");
+        // return;
+      } else if (isTimeAfter) {
+        message("End Time Cannot be before Start Time");
+      }
       setState(() {
         count = 3;
       });
-    } else if (pm[0].title.isEmpty) {
-      message("Please enter program title");
-    } else if (pm[0].description.isEmpty) {
-      message("Please enter program desctiption");
-    } else if (isTimeAfter) {
-      message("End Time Cannot be before Start Time");
     } else if (count == 3 &&
         // ConstantsCreateNewServices.lat > 0 &&
         // ConstantsCreateNewServices.lng >  &&
+        iLiveInController.text.isNotEmpty &&
         specificAddressController.text.isNotEmpty &&
         costOne.text.isNotEmpty &&
         costTwo.text.isNotEmpty &&
@@ -480,6 +488,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         minimumRequirement.text.isNotEmpty) {
       //convertProgramData();
       createService();
+    } else if (iLiveInController.text.isEmpty) {
+      message("Location Cannot be empty");
     } else if (specificAddressController.text.isEmpty) {
       message("Specific Address Cannot be empty");
     } else if (costOne.text.isEmpty) {
