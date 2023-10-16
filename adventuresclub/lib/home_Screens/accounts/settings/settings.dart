@@ -321,7 +321,7 @@ class _SettingsState extends State<Settings> {
                     padding: const EdgeInsets.all(12.0),
                     child: Column(
                       children: [
-                        Row(children: const [
+                        const Row(children: [
                           Text(
                             "Select Your Country",
                             style: TextStyle(
