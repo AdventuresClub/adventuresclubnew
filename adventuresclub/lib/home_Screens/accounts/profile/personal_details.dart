@@ -3,12 +3,17 @@
 import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/get_country.dart';
+import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/text_fields.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../sign_up/sign_in.dart';
 
 class PersonalDetails extends StatefulWidget {
   const PersonalDetails({super.key});
@@ -193,6 +198,79 @@ class _PersonalDetailsState extends State<PersonalDetails> {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  void showConfirmation(String title, String message) async {
+    showDialog(
+        context: context,
+        builder: (ctx) => SimpleDialog(
+              contentPadding: const EdgeInsets.all(12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              title: MyText(
+                text: title.tr(),
+                size: 18,
+                weight: FontWeight.bold,
+                color: blackColor,
+              ),
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                //Text("data"),
+                Text(
+                  message.tr(),
+                  textAlign: TextAlign.center,
+                ),
+                // text:
+                //     "After approval you'll be notified and have to buy your subscription package",
+                // size: 18,
+                // weight: FontWeight.w500,
+                // color: blackColor.withOpacity(0.6),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    MaterialButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: MyText(
+                        text: "no".tr(),
+                        color: blackColor,
+                        weight: FontWeight.bold,
+                      ),
+                    ),
+                    MaterialButton(
+                      onPressed: logout,
+                      child: MyText(
+                        text: "yes".tr(),
+                        color: blackColor,
+                        weight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                //BottomButton(bgColor: blueButtonColor, onTap: homePage)
+              ],
+            ));
+  }
+
+  void changeIndex() {
+    Provider.of<ServicesProvider>(context, listen: false).homeIndex = 0;
+  }
+
+  void logout() {
+    Constants.clear();
+    changeIndex();
+    print(Constants.userId);
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (_) {
+          return const SignIn();
+        },
+      ),
+      (route) => false,
+    );
   }
 
   void enterOTP() {
@@ -404,6 +482,17 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                   endIndent: 4,
                   color: greyColor.withOpacity(0.5),
                 ),
+                // ListTile(
+                //   leading: const Icon(
+                //     Icons.delete_forever,
+                //     color: redColor,
+                //   ),
+                //   title: MyText(
+                //     text: "Delete Account",
+                //     color: blackColor,
+                //     size: 14,
+                //   ),
+                // ),
                 const SizedBox(
                   height: 30,
                 ),
@@ -421,6 +510,66 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                     'Raleway',
                     FontWeight.w600,
                     16),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height / 16,
+                  width: MediaQuery.of(context).size.width / 1.3,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: redColor,
+                      width: 2.0,
+                    ),
+                    color: redColor,
+                    borderRadius: const BorderRadius.all(Radius.circular(28)),
+                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () =>
+                          showConfirmation("deleteAccount", "wantToDelete"),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "deleteAccount".tr(),
+                                style: const TextStyle(
+                                    color: whiteColor,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: 0.8,
+                                    fontSize: 16),
+                              ),
+                              // SizedBox(width: 3),
+                              // Icon(
+                              //   Icons.delete,
+                              //   color: whiteColor,
+                              // ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+                // Button(
+                //     'Delete Account',
+                //     redColor,
+                //     redColor,
+                //     whiteColor,
+                //     18,
+                //     showConfirmation,
+                //     Icons.add,
+                //     whiteColor,
+                //     false,
+                //     1.3,
+                //     'Raleway',
+                //     FontWeight.w600,
+                //     16),
               ],
             ),
           ),

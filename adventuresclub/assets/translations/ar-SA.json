@@ -294,5 +294,6 @@
     "afterYouFirstPaymentWeWillSaveYourDetailsForFutureUse": "بعد دفعك الأول، سوف نحتفظ بتفاصيلك للاستخدام في المستقبل",
     "ContactProviderForPayment": "اتصل بالمزود للدفع، هل أنت متأكد أنك تريد تأكيد الحجز؟",
     "bankCard": "بطاقة البنك",
-    "payOnArrival": "الدفع عند الوصول"
+    "payOnArrival": "الدفع عند الوصول",
+    "addCountry": "البلد"
 }

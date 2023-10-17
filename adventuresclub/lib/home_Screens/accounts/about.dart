@@ -362,7 +362,9 @@ class _AboutState extends State<About> {
           int.tryParse(element['remaining_seats'].toString()) ?? 0,
         );
         //gAccomodationSModel.add(nSm);
-        allServices.add(nSm);
+        if (nSm.status != "0") {
+          allServices.add(nSm);
+        }
         setState(() {
           pLoading = false;
         });

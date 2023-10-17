@@ -14,6 +14,7 @@ import 'package:adventuresclub/home_Screens/accounts/profile/profile.dart';
 import 'package:adventuresclub/home_Screens/accounts/health_condition.dart';
 import 'package:adventuresclub/home_Screens/accounts/settings/settings.dart';
 import 'package:adventuresclub/home_Screens/invite_friends.dart';
+import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:adventuresclub/models/profile_models/profile_become_partner.dart';
 import 'package:adventuresclub/models/user_profile_model.dart';
 import 'package:adventuresclub/sign_up/sign_in.dart';
@@ -23,6 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../models/get_country.dart';
 import '../../models/packages_become_partner/packages_become_partner_model.dart';
 import '../../provider/services_provider.dart';
 import '../become_partner/become_partner_packages.dart';
@@ -35,6 +37,7 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
+  TextEditingController searchController = TextEditingController();
   List<String> images = [
     'images/heart.png',
     'images/notification.png',
@@ -51,29 +54,35 @@ class _AccountState extends State<Account> {
     'images/points.png',
     'images/healthCondition.png',
     'images/notification.png',
-    'images/payment.png',
-    'images/gear.png',
-    'images/envelope.png',
+    //'images/payment.png',
+    //'images/gear.png',
+    'images/about.png',
+    'images/notification.png',
+    //'images/envelope.png',
     'images/about.png',
     'images/phone.png',
     'images/logout.png',
-    'images/notification.png',
+    //'images/notification.png',
   ];
   List<String> tile1Text = [
     'myPoints',
     "healthCondition",
     "notification",
-    "serviceQuality",
-    "settings",
-    "inviteFriends",
+    // "serviceQuality",
+    //"settings",
+    "changeLanguage",
+    "addCountry",
+    //"inviteFriends",
     "aboutUs",
     "contactUs",
     "logOut",
-    "deleteAccount",
+    // "deleteAccount",
   ];
   List<String> userListText = [
     'healthCondition',
     'settings',
+    "changeLanguage",
+    "addCountry",
     'inviteFriends',
     'aboutUs',
     'serviceQuality',
@@ -84,6 +93,8 @@ class _AccountState extends State<Account> {
   List<String> userListIcon = [
     'images/healthCondition.png',
     'images/gear.png',
+    'images/about.png',
+    'images/notification.png',
     'images/envelope.png',
     'images/about.png',
     'images/payment.png',
@@ -106,6 +117,10 @@ class _AccountState extends State<Account> {
   DateTime today = DateTime.now();
   DateTime expiryDate = DateTime.now();
   bool expired = false;
+  String selectedCountry = "Country Location";
+  List<GetCountryModel> countriesList1 = [];
+  List<GetCountryModel> filteredServices = [];
+  Map mapCountry = {};
   static ProfileBecomePartner pbp = ProfileBecomePartner(
       0,
       0,
@@ -173,6 +188,12 @@ class _AccountState extends State<Account> {
     getProfile();
     //Constants.getProfile();
     convert();
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
   }
 
   void requestSent() async {
@@ -301,6 +322,7 @@ class _AccountState extends State<Account> {
   }
 
   void convert() {
+    getCountries();
     if (profile.userRole == "2" && profile.bp.endDate != "null") {
       setState(() {
         loading = true;
@@ -514,6 +536,214 @@ class _AccountState extends State<Account> {
     } else if (lang == "Arabic") {
       context.setLocale(const Locale('ar', 'SA'));
     }
+  }
+
+  void clearAll() {
+    Provider.of<ServicesProvider>(context, listen: false).clearAll();
+  }
+
+  void updateCountryId(int id) async {
+    try {
+      var response = await http.post(
+          Uri.parse(
+              "https://adventuresclub.net/adventureClub/api/v1/updateCountry"),
+          body: {
+            'user_id': Constants.userId.toString(), //ccCode.toString(),
+            'country_id': id.toString(),
+          });
+      print(response.statusCode);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  void addCountry(String country, int id, String flag) async {
+    clearAll();
+    Navigator.of(context).pop();
+    updateCountryId(id);
+    SharedPreferences prefs = await Constants.getPrefs();
+    prefs.setInt("countryId", id);
+    prefs.setString("country", country);
+    prefs.setString("countryFlag", flag);
+    setState(() {
+      Constants.countryId = id;
+      Constants.country = country;
+      Constants.countryFlag = flag;
+    });
+    homePage();
+  }
+
+  void homePage() {
+    changeIndex();
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return const BottomNavigation();
+    }));
+  }
+
+  Future getCountries() async {
+    filteredServices.clear();
+    var response = await http.get(Uri.parse(
+        "https://adventuresclub.net/adventureClub/api/v1/get_countries"));
+    if (response.statusCode == 200) {
+      mapCountry = json.decode(response.body);
+      List<dynamic> result = mapCountry['data'];
+      result.forEach((element) {
+        GetCountryModel gc = GetCountryModel(
+          element['country'],
+          element['short_name'],
+          element['flag'],
+          element['code'],
+          element['id'],
+        );
+        countriesList1.add(gc);
+      });
+      setState(() {
+        filteredServices = countriesList1;
+      });
+    }
+  }
+
+  void showPicker() async {
+    await showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(builder: (context, setState) {
+          return Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              children: [
+                const Row(children: [
+                  Text(
+                    "Select Your Country",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        fontFamily: 'Raleway-Black'),
+                  )
+                ]),
+                const SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: blackColor.withOpacity(0.5),
+                    ),
+                  ),
+                  child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                      child: TextField(
+                        onChanged: (value) {
+                          if (value.isNotEmpty) {
+                            filteredServices = countriesList1
+                                .where((element) => element.country
+                                    .toLowerCase()
+                                    .contains(value))
+                                .toList();
+                            //log(filteredServices.length.toString());
+                          } else {
+                            filteredServices = countriesList1;
+                          }
+                          setState(() {});
+                        },
+                        controller: searchController,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 8),
+                          hintText: 'Country',
+                          filled: true,
+                          fillColor: lightGreyColor,
+                          suffixIcon: GestureDetector(
+                            //onTap: openMap,
+                            child: const Icon(Icons.search),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10.0)),
+                            borderSide:
+                                BorderSide(color: greyColor.withOpacity(0.2)),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10.0)),
+                            borderSide:
+                                BorderSide(color: greyColor.withOpacity(0.2)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10.0)),
+                            borderSide:
+                                BorderSide(color: greyColor.withOpacity(0.2)),
+                          ),
+                        ),
+                      )),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: filteredServices.length,
+                    itemBuilder: ((context, index) {
+                      return ListTile(
+                        leading: searchController.text.isEmpty
+                            ? Image.network(
+                                "${"https://adventuresclub.net/adventureClub/public/"}${countriesList1[index].flag}",
+                                height: 25,
+                                width: 40,
+                              )
+                            : null,
+                        title: Text(filteredServices[index].country),
+                        onTap: () {
+                          addCountry(
+                            filteredServices[index].country,
+                            filteredServices[index].id,
+                            filteredServices[index].flag,
+                          );
+                        },
+                      );
+                    }),
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
+      },
+    );
+  }
+
+  void getPopUp() {
+    PopupMenuButton<String>(
+      child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 8.0,
+          ),
+          child: Row(
+            children: [
+              const Icon(Icons.arrow_drop_down),
+              MyText(
+                text: selectedLanguage,
+                color: blackColor,
+              ),
+            ],
+          )),
+      onSelected: (String item) {
+        setState(() {
+          selectedLanguage = item;
+        });
+        changeLanguage(item);
+      },
+      itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+        const PopupMenuItem<String>(
+          value: "English",
+          child: Text('English'),
+        ),
+        const PopupMenuItem<String>(
+          value: "Arabic",
+          child: Text('عربي'),
+        ),
+      ],
+    );
   }
 
   @override
@@ -1645,6 +1875,20 @@ class _AccountState extends State<Account> {
                                   ),
                                 );
                               }
+                              // if (tile1Text[index] == 'changeLanguage') {
+                              //   Navigator.of(context).push(
+                              //     MaterialPageRoute(
+                              //       builder: (_) {
+                              //         return const Settings();
+                              //       },
+                              //     ),
+                              //   );
+                              // }
+                              if (tile1Text[index] == 'addCountry') {
+                                showPicker();
+                                // Navigator.of(context).push(Material)
+                                // pickCountry(context, 'countryLocation'.tr());
+                              }
                               if (tile1Text[index] == 'inviteFriends') {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
@@ -1718,7 +1962,8 @@ class _AccountState extends State<Account> {
                             //   size: 15,
                             //   weight: FontWeight.w700,
                             // ),
-                            trailing: tile1Text[index] == 'settings'
+                            trailing: tile1Text[index] ==
+                                    'addCountry' //settings
                                 ? SizedBox(
                                     width: Constants.country.length > 11
                                         ? 140
@@ -1741,9 +1986,58 @@ class _AccountState extends State<Account> {
                                       ],
                                     ),
                                   )
-                                : const SizedBox(
-                                    width: 0,
-                                  ),
+                                : tile1Text[index] ==
+                                        'changeLanguage' //settings
+                                    ? Container(
+                                        width: 90,
+                                        height: 50,
+                                        child: PopupMenuButton<String>(
+                                          child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: 8.0,
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  const Icon(
+                                                      Icons.arrow_drop_down),
+                                                  MyText(
+                                                    text: selectedLanguage,
+                                                    color: blackColor,
+                                                  ),
+                                                ],
+                                              )
+                                              // Icon(
+                                              //   Icons.language_rounded,
+                                              //   color: whiteColor,
+                                              //   size: 60,
+                                              // ),
+                                              ),
+                                          onSelected: (String item) {
+                                            setState(() {
+                                              selectedLanguage = item;
+                                            });
+                                            changeLanguage(item);
+                                          },
+                                          itemBuilder: (BuildContext context) =>
+                                              <PopupMenuEntry<String>>[
+                                            const PopupMenuItem<String>(
+                                              value: "English",
+                                              child: Text('English'),
+                                            ),
+                                            const PopupMenuItem<String>(
+                                              value: "Arabic",
+                                              child: Text('عربي'),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    // IconButton(
+                                    //     onPressed: getPopUp,
+                                    //     icon: const Icon(Icons.arrow_drop_down))
+                                    : const SizedBox(
+                                        width: 0,
+                                      ),
                           );
                         },
                       ),
@@ -1780,6 +2074,12 @@ class _AccountState extends State<Account> {
                                     },
                                   ),
                                 );
+                              }
+                              if (tile1Text[index] == 'addCountry') {
+                                showPicker();
+                              }
+                              if (tile1Text[index] == 'addCountry') {
+                                pickCountry(context, 'countryLocation'.tr());
                               }
                               if (userListText[index] == 'inviteFriends') {
                                 Navigator.of(context).push(
@@ -1830,35 +2130,9 @@ class _AccountState extends State<Account> {
                         },
                       ),
                     ),
-                  // PopupMenuButton<String>(
-                  //   child: const Padding(
-                  //     padding: EdgeInsets.symmetric(horizontal: 8.0),
-                  //     child: Icon(
-                  //       Icons.language_rounded,
-                  //       color: whiteColor,
-                  //       size: 60,
-                  //     ),
-                  //   ),
-                  //   onSelected: (String item) {
-                  //     setState(() {
-                  //       selectedLanguage = item;
-                  //     });
-                  //     changeLanguage(item);
-                  //   },
-                  //   itemBuilder: (BuildContext context) =>
-                  //       <PopupMenuEntry<String>>[
-                  //     const PopupMenuItem<String>(
-                  //       value: "English",
-                  //       child: Text('English'),
-                  //     ),
-                  //     const PopupMenuItem<String>(
-                  //       value: "Arabic",
-                  //       child: Text('Arabic'),
-                  //     ),
-                  //   ],
-                  // ),
+                  //pickCountry(context, 'countryLocation'.tr()),
                   GestureDetector(
-                    onTap: logout,
+                    //onTap: logout,
                     child: Center(
                       child: Container(
                         height: 40,
@@ -1881,5 +2155,124 @@ class _AccountState extends State<Account> {
               ),
       ),
     );
+  }
+
+  Widget pickCountry(context, String countryName) {
+    return Container(
+        decoration: BoxDecoration(
+          color: Colors.grey.withOpacity(0.1),
+        ),
+        child: SizedBox(
+          child: ListTile(
+            onTap: () => showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return StatefulBuilder(builder: (context, setState) {
+                    return Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        children: [
+                          const Row(children: [
+                            Text(
+                              "Select Your Country",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  fontFamily: 'Raleway-Black'),
+                            )
+                          ]),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: blackColor.withOpacity(0.5),
+                              ),
+                            ),
+                            child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 0.0),
+                                child: TextField(
+                                  onChanged: (value) {
+                                    if (value.isNotEmpty) {
+                                      filteredServices = countriesList1
+                                          .where((element) => element.country
+                                              .toLowerCase()
+                                              .contains(value))
+                                          .toList();
+                                      //log(filteredServices.length.toString());
+                                    } else {
+                                      filteredServices = countriesList1;
+                                    }
+                                    setState(() {});
+                                  },
+                                  controller: searchController,
+                                  decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 8, horizontal: 8),
+                                    hintText: 'Country',
+                                    filled: true,
+                                    fillColor: lightGreyColor,
+                                    suffixIcon: GestureDetector(
+                                      //onTap: openMap,
+                                      child: const Icon(Icons.search),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                      borderSide: BorderSide(
+                                          color: greyColor.withOpacity(0.2)),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                      borderSide: BorderSide(
+                                          color: greyColor.withOpacity(0.2)),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                      borderSide: BorderSide(
+                                          color: greyColor.withOpacity(0.2)),
+                                    ),
+                                  ),
+                                )),
+                          ),
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: filteredServices.length,
+                              itemBuilder: ((context, index) {
+                                return ListTile(
+                                  leading: searchController.text.isEmpty
+                                      ? Image.network(
+                                          "${"https://adventuresclub.net/adventureClub/public/"}${countriesList1[index].flag}",
+                                          height: 25,
+                                          width: 40,
+                                        )
+                                      : null,
+                                  title: Text(filteredServices[index].country),
+                                  onTap: () {
+                                    addCountry(
+                                      filteredServices[index].country,
+                                      filteredServices[index].id,
+                                      filteredServices[index].flag,
+                                    );
+                                  },
+                                );
+                              }),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  });
+                }),
+
+            //contentPadding: const EdgeInsets.symmetric(horizontal: 15),
+          ),
+        ));
   }
 }

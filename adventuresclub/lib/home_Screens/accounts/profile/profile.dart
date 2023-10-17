@@ -3,18 +3,22 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:adventuresclub/camera/camera_access.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/profile/profile_tab.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/text_fields.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
+
+import '../../../provider/services_provider.dart';
+import '../../../sign_up/sign_in.dart';
 
 class Profile extends StatefulWidget {
   final bool? expired;
@@ -80,6 +84,74 @@ class _ProfileState extends State<Profile> {
       return false;
     }
     return true;
+  }
+
+  void changeIndex() {
+    Provider.of<ServicesProvider>(context, listen: false).homeIndex = 0;
+  }
+
+  void logout() {
+    Constants.clear();
+    changeIndex();
+    print(Constants.userId);
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (_) {
+          return const SignIn();
+        },
+      ),
+      (route) => false,
+    );
+  }
+
+  void showConfirmation(String title, String message) async {
+    showDialog(
+        context: context,
+        builder: (ctx) => SimpleDialog(
+              contentPadding: const EdgeInsets.all(12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              title: MyText(
+                text: title.tr(),
+                size: 18,
+                weight: FontWeight.bold,
+                color: blackColor,
+              ),
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                //Text("data"),
+                Text(
+                  message.tr(),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    MaterialButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: MyText(
+                        text: "no".tr(),
+                        color: blackColor,
+                        weight: FontWeight.bold,
+                      ),
+                    ),
+                    MaterialButton(
+                      onPressed: logout,
+                      child: MyText(
+                        text: "yes".tr(),
+                        color: blackColor,
+                        weight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                //BottomButton(bgColor: blueButtonColor, onTap: homePage)
+              ],
+            ));
   }
 
   void pickMedia(String from) async {

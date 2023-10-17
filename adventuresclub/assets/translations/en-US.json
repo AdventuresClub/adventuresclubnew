@@ -293,5 +293,6 @@
     "afterYouFirstPaymentWeWillSaveYourDetailsForFutureUse": "After your first payment we will save your details for futures use",
     "ContactProviderForPayment":"Contact the provider for payment, Are you sure you want to confirmt the booking ?",
     "bankCard":"Bank Card",
-    "payOnArrival": "Pay On Arrival"
+    "payOnArrival": "Pay On Arrival",
+    "addCountry": "Country"
 }
