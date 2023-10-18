@@ -208,154 +208,156 @@ class _ContactUsState extends State<ContactUs> {
         }
       },
       child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: whiteColor,
-            elevation: 1,
-            leading: IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: Image.asset(
-                'images/backArrow.png',
-                height: 20,
-              ),
+        appBar: AppBar(
+          backgroundColor: whiteColor,
+          elevation: 1,
+          leading: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: Image.asset(
+              'images/backArrow.png',
+              height: 20,
             ),
-            title: MyText(
-              text: 'contactUs'.tr(),
-              color: bluishColor,
-              weight: FontWeight.bold,
-            ),
-            centerTitle: true,
           ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 14.0, vertical: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  TFContainer(
-                      'AdventuresClub', nameController, 16, lightGreyColor, 1),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TFContainer('96123588', numController, 16, lightGreyColor, 1),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TFContainer('info@adventureclub.net', emailController, 16,
-                      lightGreyColor, 1),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  purposeListWidget(context, "Select Purpose"),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  //   child: Container(
-                  //     padding:
-                  //         const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                  //     decoration: BoxDecoration(
-                  //         color: lightGreyColor,
-                  //         borderRadius: BorderRadius.circular(12),
-                  //         border: Border.all(
-                  //           color: greyColor.withOpacity(0.2),
-                  //         )),
-                  //     child: DropdownButtonHideUnderline(
-                  //       child: DropdownButton<String>(
-                  //         isExpanded: true,
-                  //         value: dropdownValue,
-                  //         icon: const Icon(Icons.arrow_drop_down),
-                  //         elevation: 16,
-                  //         style: const TextStyle(color: blackTypeColor),
-                  //         onChanged: (String? value) {
-                  //           // This is called when the user selects an item.
-                  //           setState(() {
-                  //             value = value!;
-                  //           });
-                  //         },
-                  //         items:
-                  //             list.map<DropdownMenuItem<String>>((String value) {
-                  //           return DropdownMenuItem<String>(
-                  //             value: value,
-                  //             child: Text(value),
-                  //           );
-                  //         }).toList(),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TFWithSize(
-                      'Subject', subjectController, 16, lightGreyColor, 1),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  MultiLineField('Start writing here', 5, lightGreyColor,
-                      messageController),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  ButtonIconLess(
-                      'send', bluishColor, whiteColor, 1.3, 17, 16, contactUs),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //   children: [
-                  //     GestureDetector(
-                  //       onTap: showConfirmation,
-                  //       child: const CircleAvatar(
-                  //         backgroundColor: bluishColor,
-                  //         child: Image(
-                  //             image: ExactAssetImage('images/phonepic.png')),
-                  //       ),
-                  //     ),
-                  //     GestureDetector(
-                  //       onTap: () => launchURL("ins"),
-                  //       child: const CircleAvatar(
-                  //         radius: 20,
-                  //         backgroundColor: bluishColor,
-                  //         child:
-                  //             Image(image: ExactAssetImage('images/insta.png')),
-                  //       ),
-                  //     ),
-                  //     GestureDetector(
-                  //       onTap: () => launchURL("whatsapp"),
-                  //       child: const CircleAvatar(
-                  //         backgroundColor: bluishColor,
-                  //         child: Image(
-                  //             image:
-                  //                 ExactAssetImage('images/feather-mail.png')),
-                  //       ),
-                  //     ),
-                  //     GestureDetector(
-                  //       onTap: () => launchURL("skype"),
-                  //       child: const CircleAvatar(
-                  //         backgroundColor: bluishColor,
-                  //         child:
-                  //             Image(image: ExactAssetImage('images/skype.png')),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-                  // const SizedBox(
-                  //   height: 20,
-                  // ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //   children: [
-                  //     const Image(
-                  //       image: ExactAssetImage('images/icon-location-on.png'),
-                  //       height: 25,
-                  //     ),
-                  //     MyText(
-                  //       text: Constants.profile.l,
-                  //       color: greyColor,
-                  //     ),
-                  //   ],
-                  // ),
-                ],
-              ),
+          title: MyText(
+            text: 'contactUs'.tr(),
+            color: bluishColor,
+            weight: FontWeight.bold,
+          ),
+          centerTitle: true,
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                TFContainer(
+                    'AdventuresClub', nameController, 16, lightGreyColor, 1),
+                const SizedBox(
+                  height: 15,
+                ),
+                TFContainer('96123588', numController, 16, lightGreyColor, 1),
+                const SizedBox(
+                  height: 15,
+                ),
+                TFContainer('info@adventureclub.net', emailController, 16,
+                    lightGreyColor, 1),
+                const SizedBox(
+                  height: 15,
+                ),
+                purposeListWidget(context, "Select Purpose"),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                //   child: Container(
+                //     padding:
+                //         const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                //     decoration: BoxDecoration(
+                //         color: lightGreyColor,
+                //         borderRadius: BorderRadius.circular(12),
+                //         border: Border.all(
+                //           color: greyColor.withOpacity(0.2),
+                //         )),
+                //     child: DropdownButtonHideUnderline(
+                //       child: DropdownButton<String>(
+                //         isExpanded: true,
+                //         value: dropdownValue,
+                //         icon: const Icon(Icons.arrow_drop_down),
+                //         elevation: 16,
+                //         style: const TextStyle(color: blackTypeColor),
+                //         onChanged: (String? value) {
+                //           // This is called when the user selects an item.
+                //           setState(() {
+                //             value = value!;
+                //           });
+                //         },
+                //         items:
+                //             list.map<DropdownMenuItem<String>>((String value) {
+                //           return DropdownMenuItem<String>(
+                //             value: value,
+                //             child: Text(value),
+                //           );
+                //         }).toList(),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                const SizedBox(
+                  height: 15,
+                ),
+                TFWithSize('Subject', subjectController, 16, lightGreyColor, 1),
+                const SizedBox(
+                  height: 15,
+                ),
+                MultiLineField(
+                    'Start writing here', 7, lightGreyColor, messageController),
+                const SizedBox(
+                  height: 40,
+                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //   children: [
+                //     GestureDetector(
+                //       onTap: showConfirmation,
+                //       child: const CircleAvatar(
+                //         backgroundColor: bluishColor,
+                //         child: Image(
+                //             image: ExactAssetImage('images/phonepic.png')),
+                //       ),
+                //     ),
+                //     GestureDetector(
+                //       onTap: () => launchURL("ins"),
+                //       child: const CircleAvatar(
+                //         radius: 20,
+                //         backgroundColor: bluishColor,
+                //         child:
+                //             Image(image: ExactAssetImage('images/insta.png')),
+                //       ),
+                //     ),
+                //     GestureDetector(
+                //       onTap: () => launchURL("whatsapp"),
+                //       child: const CircleAvatar(
+                //         backgroundColor: bluishColor,
+                //         child: Image(
+                //             image:
+                //                 ExactAssetImage('images/feather-mail.png')),
+                //       ),
+                //     ),
+                //     GestureDetector(
+                //       onTap: () => launchURL("skype"),
+                //       child: const CircleAvatar(
+                //         backgroundColor: bluishColor,
+                //         child:
+                //             Image(image: ExactAssetImage('images/skype.png')),
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                // const SizedBox(
+                //   height: 20,
+                // ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //   children: [
+                //     const Image(
+                //       image: ExactAssetImage('images/icon-location-on.png'),
+                //       height: 25,
+                //     ),
+                //     MyText(
+                //       text: Constants.profile.l,
+                //       color: greyColor,
+                //     ),
+                //   ],
+                // ),
+              ],
             ),
-          )),
+          ),
+        ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 42.0, vertical: 12),
+          child: ButtonIconLess(
+              'send', bluishColor, whiteColor, 1.3, 17, 16, contactUs),
+        ),
+      ),
     );
   }
 

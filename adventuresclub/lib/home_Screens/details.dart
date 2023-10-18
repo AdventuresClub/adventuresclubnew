@@ -145,12 +145,12 @@ class _DetailsState extends State<Details> {
         elevation: 0,
         iconTheme: const IconThemeData(color: whiteColor),
         centerTitle: true,
-        title: MyText(
-          text: widget.gm!.adventureName,
-          weight: FontWeight.bold,
-          color: whiteColor,
-          size: 32,
-        ),
+        // title: MyText(
+        //   text: widget.gm!.adventureName,
+        //   weight: FontWeight.bold,
+        //   color: whiteColor,
+        //   size: 32,
+        // ),
       ),
       body: Column(
         children: [
