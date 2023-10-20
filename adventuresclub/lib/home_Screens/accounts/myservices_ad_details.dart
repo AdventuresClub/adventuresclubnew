@@ -90,10 +90,10 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
         dynamic body = jsonDecode(response.body);
         // error = decodedError['data']['name'];
         // Constants.showMessage(context, body['message'].toString());
-        showConfirmation(body['message'].toString());
+        showdelete(body['message'].toString());
       } else {
         dynamic body = jsonDecode(response.body);
-        showConfirmation(body['message'].toString());
+        showdelete(body['message'].toString());
       }
       print(response.statusCode);
     } catch (e) {
@@ -118,7 +118,7 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
                   child: const Text("No"),
                 ),
                 MaterialButton(
-                  onPressed: () => showdelete(title),
+                  onPressed: () => deleteService(title),
                   child: const Text("Yes"),
                 )
               ],
@@ -269,8 +269,8 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
                               width: 20,
                             ),
                             GestureDetector(
-                              onTap: () =>
-                                  deleteService(widget.sm.serviceId.toString()),
+                              onTap: () => showConfirmation(
+                                  widget.sm.serviceId.toString()),
                               child: const Image(
                                 image: ExactAssetImage('images/bin.png'),
                                 height: 20,
