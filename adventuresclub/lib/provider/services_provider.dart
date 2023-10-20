@@ -277,7 +277,7 @@ class ServicesProvider with ChangeNotifier {
             services['baseurl'] ?? "",
             gAccomodationServImgModel,
             element['rating'] ?? "",
-            services['reviewd_by'] ?? "",
+            services['reviewd_by'].toString() ?? "",
             int.tryParse(services['remaining_seats'].toString()) ?? 0,
           );
           allServices.add(nSm);
@@ -531,7 +531,7 @@ class ServicesProvider with ChangeNotifier {
             services['baseurl'] ?? "",
             gAccomodationServImgModel,
             element['rating'] ?? "",
-            services['reviewd_by'] ?? "",
+            services['reviewd_by'].toString() ?? "",
             int.tryParse(services['remaining_seats'].toString()) ?? 0,
           );
           allServices.add(nSm);
@@ -957,7 +957,7 @@ class ServicesProvider with ChangeNotifier {
               services['baseurl'] ?? "",
               gAccomodationServImgModel,
               element['rating'] ?? "",
-              services['reviewd_by'] ?? "",
+              services['reviewd_by'].toString() ?? "",
               int.tryParse(services['remaining_seats'].toString()) ?? 0,
             );
             //gAccomodationSModel.add(nSm);

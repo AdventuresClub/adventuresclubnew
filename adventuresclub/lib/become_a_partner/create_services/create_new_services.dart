@@ -544,7 +544,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       });
       // programSelecteDate1 = d.join(",");
       pm.forEach((element) {
-        st.add(element.startDate.toString());
+        st.add(element.startTime.toString());
       });
       // programStartTime1 = st.join(",");
       pm.forEach((element) {
