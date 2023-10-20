@@ -57,7 +57,7 @@ class ServicesModel {
   List<BecomePartner> bp; // new
   List<AimedForModel> am; // new
   List<ProgrammesModel> programmes;
-  int stars;
+  String stars;
   int isLiked;
   String baseURL;
   List<ServiceImageModel> images;

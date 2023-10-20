@@ -213,12 +213,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
             nBp,
             gAccomodationAimedfm,
             gPm,
-            int.tryParse(services['stars'].toString()) ?? 0,
+            services['stars'].toString() ?? "",
             int.tryParse(services['is_liked'].toString()) ?? 0,
             services['baseurl'] ?? "",
             gAccomodationServImgModel,
             element['rating'] ?? "",
-            services['reviewd_by'] ?? "",
+            services['reviewd_by'].toString() ?? "",
             int.tryParse(services['remaining_seats'].toString()) ?? 0,
           );
           if (nSm.serviceCategory == type) {

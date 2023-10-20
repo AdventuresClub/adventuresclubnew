@@ -62,7 +62,7 @@ class DescriptionDetailsWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 GestureDetector(
                   onTap: () => goToReviews(context, id),
                   child: Column(
@@ -92,13 +92,22 @@ class DescriptionDetailsWidget extends StatelessWidget {
                       const SizedBox(
                         height: 5,
                       ),
-                      Align(
-                        child: MyText(
-                          text:
-                              "$stars ${" "} ($reviewedBy ${"reviews)".tr()} ",
-                          color: yellowcolor,
-                          weight: FontWeight.bold,
-                        ),
+                      Row(
+                        children: [
+                          MyText(
+                            text: "($reviewedBy)",
+                            color: yellowcolor,
+                            weight: FontWeight.bold,
+                          ),
+                          const SizedBox(
+                            width: 2,
+                          ),
+                          MyText(
+                            text: "Reviews",
+                            color: yellowcolor,
+                            weight: FontWeight.bold,
+                          ),
+                        ],
                       )
                     ],
                   ),
@@ -125,22 +134,22 @@ class DescriptionDetailsWidget extends StatelessWidget {
                   ),
                 ),
                 //Spacer(),
-                RichText(
-                  text: TextSpan(
-                    text: text5[0].tr(),
-                    style: const TextStyle(
-                      color: greyColor2,
-                      fontSize: 14,
-                      height: 1.5,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: text6[0].tr(),
-                          style: const TextStyle(
-                              fontSize: 14, color: blackColor, height: 1.5)),
-                    ],
-                  ),
-                ),
+                // RichText(
+                //   text: TextSpan(
+                //     text: text5[0].tr(),
+                //     style: const TextStyle(
+                //       color: greyColor2,
+                //       fontSize: 14,
+                //       height: 1.5,
+                //     ),
+                //     children: <TextSpan>[
+                //       TextSpan(
+                //           text: text6[0].tr(),
+                //           style: const TextStyle(
+                //               fontSize: 14, color: blackColor, height: 1.5)),
+                //     ],
+                //   ),
+                // ),
               ],
             ),
             Row(

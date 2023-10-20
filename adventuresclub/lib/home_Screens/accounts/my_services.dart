@@ -327,12 +327,12 @@ class _MyServicesState extends State<MyServices> {
           nBp,
           gAccomodationAimedfm,
           gPm,
-          element['stars'] ?? "",
+          element['stars'].toString() ?? "",
           int.tryParse(element['is_liked'].toString()) ?? 0,
           element['baseurl'] ?? "",
           gAccomodationServImgModel,
           element['rating'] ?? "",
-          element['reviewd_by'] ?? "",
+          element['reviewd_by'].toString() ?? "",
           int.tryParse(element['remaining_seats'].toString()) ?? 0,
         );
         //gAccomodationSModel.add(nSm);

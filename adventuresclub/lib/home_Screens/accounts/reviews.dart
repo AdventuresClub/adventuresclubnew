@@ -181,7 +181,7 @@ class _ReviewsState extends State<Reviews> {
                                       MyText(
                                         text: "${reviewList[index].star}",
                                         color: greyTextColor,
-                                        weight: FontWeight.w700,
+                                        //weight: FontWeight.w700,
                                         size: 14,
                                       ),
                                       const SizedBox(
@@ -222,13 +222,13 @@ class _ReviewsState extends State<Reviews> {
                                           text:
                                               "${(reviewList[index].um[index].name)} ${'|'} ${("Oman")}", //"ReviJohn Doe | California | 9days ago",
                                           color: blackTypeColor4,
-                                          weight: FontWeight.w600,
+                                          // weight: FontWeight.w600,
                                         )
                                       : MyText(
                                           text:
                                               "${(reviewList[index].um[index].name)} ${'|'} ${(reviewList[index].ca.substring(0, 10))} ", //"ReviJohn Doe | California | 9days ago",
                                           color: blackTypeColor4,
-                                          weight: FontWeight.w600,
+                                          // weight: FontWeight.w600,
                                         ),
                                   const SizedBox(
                                     height: 5,
@@ -261,26 +261,26 @@ class _ReviewsState extends State<Reviews> {
                                     //'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer finibus eros nec ex aliquam iaculis. Donec et magna viverra, gravida lacus eget, posuere dui. Suspendisse convallis condimentum dolor, ',
                                     color: blackTypeColor4,
                                     size: 12,
-                                    weight: FontWeight.w600,
+                                    //weight: FontWeight.w600,
                                   ),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Image(
-                                          image: ExactAssetImage(
-                                              'images/like.png')),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      MyText(
-                                        text: '0',
-                                        color: blackTypeColor4,
-                                        size: 10,
-                                      ),
-                                    ],
-                                  ),
+                                  // const SizedBox(
+                                  //   height: 15,
+                                  // ),
+                                  // Row(
+                                  //   children: [
+                                  //     const Image(
+                                  //         image: ExactAssetImage(
+                                  //             'images/like.png')),
+                                  //     const SizedBox(
+                                  //       width: 10,
+                                  //     ),
+                                  //     MyText(
+                                  //       text: '0',
+                                  //       color: blackTypeColor4,
+                                  //       size: 10,
+                                  //     ),
+                                  //   ],
+                                  // ),
                                   Divider(
                                     thickness: 1,
                                     color: blackColor.withOpacity(0.3),
