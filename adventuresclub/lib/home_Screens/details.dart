@@ -26,6 +26,7 @@ class _DetailsState extends State<Details> {
   bool favourite = false;
   int _activePage = 0;
   int index = 0;
+  bool future = false;
   @override
   void dispose() {
     super.dispose();
@@ -53,6 +54,18 @@ class _DetailsState extends State<Details> {
         curve: Curves.easeIn,
       );
     });
+    if (widget.gm!.sPlan == 2) {
+      DateTime d = widget.gm!.startDate;
+      DateTime now = DateTime.now();
+      if (d.year < now.year) {
+        future = true;
+      } else if (d.month < now.month) {
+        future = true;
+      } else if (d.day <= now.day) {
+        future = true;
+      }
+    }
+    setState(() {});
   }
 
   abc() {}
@@ -277,15 +290,16 @@ class _DetailsState extends State<Details> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
         child: widget.gm!.sPlan == 2
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ButtonIconLess('planFuture'.tr(), whiteColor, greenishColor,
-                      2.5, 17, 12, plan),
-                  ButtonIconLess('bookNow'.tr(), greenishColor, whiteColor, 2.5,
-                      17, 12, goToBookTicket),
-                ],
-              )
+            ? future
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ButtonIconLess('planFuture'.tr(), whiteColor,
+                          greenishColor, 2, 17, 12, plan),
+                    ],
+                  )
+                : ButtonIconLess('bookNow'.tr(), greenishColor, whiteColor, 2,
+                    17, 12, goToBookTicket)
             : GestureDetector(
                 onTap: plan,
                 child: Container(
