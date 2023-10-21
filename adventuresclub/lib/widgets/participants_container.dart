@@ -465,7 +465,9 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                             fontWeight: FontWeight.bold),
                         children: <TextSpan>[
                           TextSpan(
-                            text: "${widget.gm.healthConditions} ",
+                            text: widget.gm.healthConditions.isNotEmpty
+                                ? "${widget.gm.healthConditions} "
+                                : "",
                             style: const TextStyle(
                               fontSize: 13,
                               wordSpacing: 1,
@@ -492,7 +494,9 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                         ),
                         MyText(
                           overFlow: TextOverflow.clip,
-                          text: "${widget.gm.height} ",
+                          text: widget.gm.height.isNotEmpty
+                              ? "${widget.gm.height} "
+                              : "",
                           color: greyTextColor,
                           weight: FontWeight.w400,
                           size: 12,
