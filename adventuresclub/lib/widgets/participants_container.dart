@@ -80,6 +80,9 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
   }
 
   String calculateAge(String d) {
+    if (d.isEmpty) {
+      d = widget.gm.bookedOn;
+    }
     DateTime birthdate = DateTime.parse(d);
     final now = DateTime.now();
     var age = now.year - birthdate.year;
@@ -259,25 +262,33 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                         ),
                       ],
                     ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.start,
-                    //   children: [
-                    //     MyText(
-                    //       text: 'How Old : ',
-                    //       color: blackColor,
-                    //       weight: FontWeight.w700,
-                    //       size: 14,
-                    //       height: 1.8,
-                    //     ),
-                    //     MyText(
-                    //       text: calculateAge(widget.gm.dob),
-                    //       color: greyTextColor,
-                    //       weight: FontWeight.w400,
-                    //       size: 12,
-                    //       height: 1.8,
-                    //     ),
-                    //   ],
-                    // ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        MyText(
+                          text: 'How Old : ',
+                          color: blackColor,
+                          weight: FontWeight.w700,
+                          size: 14,
+                          height: 1.8,
+                        ),
+                        widget.gm.dob.isEmpty
+                            ? MyText(
+                                text: calculateAge(widget.gm.dob),
+                                color: greyTextColor,
+                                weight: FontWeight.w400,
+                                size: 12,
+                                height: 1.8,
+                              )
+                            : MyText(
+                                text: "",
+                                color: greyTextColor,
+                                weight: FontWeight.w400,
+                                size: 12,
+                                height: 1.8,
+                              ),
+                      ],
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -469,26 +480,29 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                     // const SizedBox(
                     //   height: 5,
                     // ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.start,
-                    //   children: [
-                    //     MyText(
-                    //       text: 'height'.tr(),
-                    //       color: blackColor,
-                    //       weight: FontWeight.w700,
-                    //       size: 14,
-                    //       height: 1.8,
-                    //     ),
-                    //     MyText(
-                    //       overFlow: TextOverflow.clip,
-                    //       text: "${widget.gm.height} ",
-                    //       color: greyTextColor,
-                    //       weight: FontWeight.w400,
-                    //       size: 12,
-                    //       height: 1.5,
-                    //     ),
-                    //   ],
-                    // ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        MyText(
+                          text: 'height'.tr(),
+                          color: blackColor,
+                          weight: FontWeight.w700,
+                          size: 14,
+                          height: 1.8,
+                        ),
+                        MyText(
+                          overFlow: TextOverflow.clip,
+                          text: "${widget.gm.height} ",
+                          color: greyTextColor,
+                          weight: FontWeight.w400,
+                          size: 12,
+                          height: 1.5,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     RichText(
                       text: TextSpan(
                         text: 'clientMessage'.tr(),
