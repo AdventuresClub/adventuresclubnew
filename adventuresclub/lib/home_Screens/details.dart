@@ -294,8 +294,8 @@ class _DetailsState extends State<Details> {
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      ButtonIconLess('planFuture'.tr(), whiteColor,
-                          greenishColor, 2, 17, 12, plan),
+                      ButtonIconLess('planFuture'.tr(), greenishColor,
+                          whiteColor, 2, 17, 12, plan),
                     ],
                   )
                 : ButtonIconLess('bookNow'.tr(), greenishColor, whiteColor, 2,
@@ -308,7 +308,7 @@ class _DetailsState extends State<Details> {
                     color: bluishColor,
                   ),
                   height: 50,
-                  width: MediaQuery.of(context).size.width,
+                  width: MediaQuery.of(context).size.width / 2,
                   child: Center(
                     child: MyText(
                       text: 'planFuture'.tr(),

@@ -112,13 +112,24 @@ class _NewRegisterState extends State<NewRegister> {
     }
   }
 
+  // void goToHome() {
+  //   Navigator.of(context).push(
+  //     MaterialPageRoute(
+  //       builder: (_) {
+  //         return const BottomNavigation();
+  //       },
+  //     ),
+  //   );
+  // }
+
   void goToHome() {
-    Navigator.of(context).push(
+    Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (_) {
           return const BottomNavigation();
         },
       ),
+      (route) => false,
     );
   }
 

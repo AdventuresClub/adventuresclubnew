@@ -54,29 +54,21 @@ class _AccountState extends State<Account> {
     'images/points.png',
     'images/healthCondition.png',
     'images/notification.png',
-    //'images/payment.png',
-    //'images/gear.png',
     'images/about.png',
     'images/notification.png',
-    //'images/envelope.png',
     'images/about.png',
     'images/phone.png',
     'images/logout.png',
-    //'images/notification.png',
   ];
   List<String> tile1Text = [
     'myPoints',
     "healthCondition",
     "notification",
-    // "serviceQuality",
-    //"settings",
     "changeLanguage",
     "addCountry",
-    //"inviteFriends",
     "aboutUs",
     "contactUs",
     "logOut",
-    // "deleteAccount",
   ];
   List<String> userListText = [
     'healthCondition',
@@ -2045,7 +2037,7 @@ class _AccountState extends State<Account> {
                   if (profile.userRole == "3")
                     Wrap(
                       children: List.generate(
-                        userListText.length,
+                        tile1Text.length,
                         (index) {
                           return ListTile(
                             visualDensity: const VisualDensity(
@@ -2060,13 +2052,13 @@ class _AccountState extends State<Account> {
                               //     return const MyPoints();
                               //   }));
                               // }
-                              if (userListText[index] == 'healthCondition') {
+                              if (tile1Text[index] == 'healthCondition') {
                                 Navigator.of(context)
                                     .push(MaterialPageRoute(builder: (_) {
                                   return const HealthCondition();
                                 }));
                               }
-                              if (userListText[index] == 'settings') {
+                              if (tile1Text[index] == 'settings') {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (_) {
@@ -2081,7 +2073,7 @@ class _AccountState extends State<Account> {
                               if (tile1Text[index] == 'addCountry') {
                                 pickCountry(context, 'countryLocation'.tr());
                               }
-                              if (userListText[index] == 'inviteFriends') {
+                              if (tile1Text[index] == 'inviteFriends') {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (_) {
@@ -2090,7 +2082,7 @@ class _AccountState extends State<Account> {
                                   ),
                                 );
                               }
-                              if (userListText[index] == 'aboutUs') {
+                              if (tile1Text[index] == 'aboutUs') {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (_) {
@@ -2099,7 +2091,7 @@ class _AccountState extends State<Account> {
                                   ),
                                 );
                               }
-                              if (userListText[index] == 'contactUs') {
+                              if (tile1Text[index] == 'contactUs') {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (_) {
@@ -2109,7 +2101,7 @@ class _AccountState extends State<Account> {
                                   ),
                                 );
                               }
-                              if (userListText[index] == "logOut") {
+                              if (tile1Text[index] == "logOut") {
                                 logout();
                               }
                             }),
@@ -2121,7 +2113,7 @@ class _AccountState extends State<Account> {
                               ),
                             ]),
                             title: MyText(
-                              text: userListText[index],
+                              text: tile1Text[index],
                               color: greyColor.withOpacity(1),
                               size: 15,
                               weight: FontWeight.w700,

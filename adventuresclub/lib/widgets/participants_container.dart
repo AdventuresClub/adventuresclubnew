@@ -272,7 +272,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                           size: 14,
                           height: 1.8,
                         ),
-                        widget.gm.dob.isEmpty
+                        widget.gm.dob.isNotEmpty
                             ? MyText(
                                 text: calculateAge(widget.gm.dob),
                                 color: greyTextColor,
@@ -281,7 +281,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                                 height: 1.8,
                               )
                             : MyText(
-                                text: "",
+                                text: "Null",
                                 color: greyTextColor,
                                 weight: FontWeight.w400,
                                 size: 12,

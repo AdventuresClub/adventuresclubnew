@@ -47,6 +47,9 @@ class _RequestInformationState extends State<RequestInformation> {
   }
 
   String calculateAge(String d) {
+    if (d.isEmpty) {
+      d = widget.gRM.bookedOn;
+    }
     DateTime birthdate = DateTime.parse(d);
     final now = DateTime.now();
     var age = now.year - birthdate.year;
@@ -170,24 +173,31 @@ class _RequestInformationState extends State<RequestInformation> {
                         ),
                       ],
                     ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.start,
-                    //   children: [
-                    //     MyText(
-                    //       text: 'How Old: ',
-                    //       color: blackColor,
-                    //       weight: FontWeight.w500,
-                    //       size: 12,
-                    //       height: 1.6,
-                    //     ),
-                    //     MyText(
-                    //       text: calculateAge(widget.gRM.dob),
-                    //       color: greyColor,
-                    //       weight: FontWeight.w400,
-                    //       size: 12,
-                    //     ),
-                    //   ],
-                    // ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        MyText(
+                          text: 'How Old: ',
+                          color: blackColor,
+                          weight: FontWeight.w500,
+                          size: 12,
+                          height: 1.6,
+                        ),
+                        widget.gRM.dob.isNotEmpty
+                            ? MyText(
+                                text: calculateAge(widget.gRM.dob),
+                                color: greyColor,
+                                weight: FontWeight.w400,
+                                size: 12,
+                              )
+                            : MyText(
+                                text: "Null",
+                                color: greyColor,
+                                weight: FontWeight.w400,
+                                size: 12,
+                              ),
+                      ],
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
