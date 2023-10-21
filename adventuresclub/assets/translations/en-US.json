@@ -294,5 +294,6 @@
     "ContactProviderForPayment":"Contact the provider for payment, Are you sure you want to confirmt the booking ?",
     "bankCard":"Bank Card",
     "payOnArrival": "Pay On Arrival",
-    "addCountry": "Country"
+    "addCountry": "Country",
+    "bookings": "Bookings"
 }

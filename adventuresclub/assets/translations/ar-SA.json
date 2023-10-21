@@ -295,5 +295,6 @@
     "ContactProviderForPayment": "اتصل بالمزود للدفع، هل أنت متأكد أنك تريد تأكيد الحجز؟",
     "bankCard": "بطاقة البنك",
     "payOnArrival": "الدفع عند الوصول",
-    "addCountry": "البلد"
+    "addCountry": "البلد",
+    "bookings": "طلباتي"
 }

@@ -340,6 +340,13 @@ class _BecomePartnerPackagesState extends State<BecomePartnerPackages> {
         elevation: 0,
         iconTheme: const IconThemeData(color: blackColor),
         backgroundColor: whiteColor,
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Image.asset(
+            'images/backArrow.png',
+            height: 20,
+          ),
+        ),
         title: MyText(
           text: 'Become a partner',
           color: blackColor,

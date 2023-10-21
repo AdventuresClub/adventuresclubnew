@@ -133,7 +133,7 @@ class _HomeState extends State<Home> {
           backgroundColor: greyProfileColor,
           body: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+              padding: const EdgeInsets.symmetric(horizontal: 0.0),
               child: Column(
                 children: [
                   FilterPage(banners),

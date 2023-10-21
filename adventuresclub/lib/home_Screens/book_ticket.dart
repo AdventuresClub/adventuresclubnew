@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'dart:convert';
+
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/requests.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
@@ -180,6 +182,14 @@ class _BookTicketState extends State<BookTicket> {
   }
 
   void bookAdventure(var date) async {
+    if (currentDate.day.isNaN) {
+      message("Please Select from Desired Date");
+      return;
+    }
+    if (messageController.text.isEmpty) {
+      message("Please Enter Message");
+      return;
+    }
     if (totalPerson > 0) {
       try {
         var response = await http.post(
@@ -205,11 +215,16 @@ class _BookTicketState extends State<BookTicket> {
         if (response.statusCode == 200) {
           message("Booking sent successfully");
           goToHome();
+        } else {
+          dynamic body = jsonDecode(response.body);
+          message(body['message'].toString());
         }
         print(response.statusCode);
         print(response.body);
       } catch (e) {
-        print(e);
+        dynamic body = jsonDecode(e.toString());
+        message(e.toString());
+        // print(e);
       }
     } else {
       message("Persons cannot be empty");
@@ -222,11 +237,12 @@ class _BookTicketState extends State<BookTicket> {
   }
 
   void message(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
-    );
+    Constants.showMessage(context, message);
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   SnackBar(
+    //     content: Text(message),
+    //   ),
+    // );
   }
 
   void goToHome() {

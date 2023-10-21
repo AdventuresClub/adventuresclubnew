@@ -29,7 +29,7 @@ class SearchContainerState extends State<SearchContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 4),
+      padding: const EdgeInsets.only(left: 8),
       width: MediaQuery.of(context).size.width / widget.width,
       height: MediaQuery.of(context).size.width / widget.height,
       decoration: BoxDecoration(
@@ -47,21 +47,23 @@ class SearchContainerState extends State<SearchContainer> {
               const Icon(
                 Icons.search,
                 color: greyColor,
-                size: 30,
+                size: 20,
               ),
               const SizedBox(
                 width: 10,
               ),
-              SizedBox(
-                width: widget.countryName == true
-                    ? MediaQuery.of(context).size.width / 2.8
-                    : MediaQuery.of(context).size.width / 1.7,
-                child: TextField(
-                  controller: widget.controller,
-                  decoration: InputDecoration(
-                      hintText: widget.hinttext.toString(),
-                      border: InputBorder.none,
-                      hintStyle: const TextStyle(fontSize: 16)),
+              Center(
+                child: SizedBox(
+                  width: widget.countryName == true
+                      ? MediaQuery.of(context).size.width / 2.8
+                      : MediaQuery.of(context).size.width / 1.7,
+                  child: TextField(
+                    controller: widget.controller,
+                    decoration: InputDecoration(
+                        hintText: widget.hinttext.toString(),
+                        border: InputBorder.none,
+                        hintStyle: const TextStyle(fontSize: 16)),
+                  ),
                 ),
               ),
               // Text(

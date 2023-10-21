@@ -563,8 +563,8 @@ class _PlannedState extends State<Planned> {
                   child: GridView.count(
                     physics: const ScrollPhysics(),
                     shrinkWrap: true,
-                    mainAxisSpacing: 0.2,
-                    childAspectRatio: 0.82,
+                    mainAxisSpacing: 0.4,
+                    childAspectRatio: 1,
                     crossAxisSpacing: 0.2,
                     crossAxisCount: 2,
                     children: List.generate(

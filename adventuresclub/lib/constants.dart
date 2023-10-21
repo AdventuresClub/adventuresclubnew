@@ -811,9 +811,11 @@ class Constants {
   static void showMessage(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        backgroundColor: greenishColor,
         content: Text(
           message,
-          style: const TextStyle(fontWeight: FontWeight.w500),
+          style:
+              const TextStyle(fontWeight: FontWeight.w500, color: whiteColor),
         ),
       ),
     );

@@ -285,7 +285,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                         size: 9,
                       )))
             ]),
-            label: 'requests'.tr(),
+            label: 'bookings'.tr(),
             //  ),
             activeIcon: Stack(
               clipBehavior: Clip.none,

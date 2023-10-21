@@ -797,12 +797,12 @@ class _FilterPageState extends State<FilterPage> {
         ),
         Positioned(
           top: 35,
-          left: 20,
+          left: 10,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
-                onTap: addActivites,
+                // onTap: addActivites,
                 child: Container(
                   height: 30,
                   width: 30,
@@ -818,7 +818,7 @@ class _FilterPageState extends State<FilterPage> {
                 ),
               ),
               const SizedBox(
-                width: 8,
+                width: 14,
               ),
               // Container(
               //   padding:
@@ -889,10 +889,10 @@ class _FilterPageState extends State<FilterPage> {
               //     ],
               //   ),
               // ),
-              SearchContainer('searchAdventure'.tr(), 1.4, 8, searchController,
+              SearchContainer('searchAdventure'.tr(), 1.4, 10, searchController,
                   'images/maskGroup51.png', true, true, Constants.country, 12),
               const SizedBox(
-                width: 8,
+                width: 12,
               ),
               Stack(
                 children: [
@@ -901,7 +901,7 @@ class _FilterPageState extends State<FilterPage> {
                     child: const Icon(
                       Icons.message,
                       color: whiteColor,
-                      size: 30,
+                      size: 40,
                     ),
                   ),
                   if (Constants.chatCount != "0")
@@ -969,9 +969,9 @@ class _FilterPageState extends State<FilterPage> {
         //         ),
         //       )
         Positioned(
-          top: 100,
-          left: 15,
-          right: 15,
+          top: 90,
+          left: 10,
+          right: 10,
           child: SizedBox(
             height: MediaQuery.of(context).size.height / 5,
             child: PageView.builder(
