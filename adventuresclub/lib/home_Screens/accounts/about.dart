@@ -190,190 +190,195 @@ class _AboutState extends State<About> {
     setState(() {
       pLoading == true;
     });
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/serviceProviderProfile?id=${widget.id}"));
-    if (response.statusCode == 200) {
-      mapCountry = json.decode(response.body);
-      List<dynamic> result = mapCountry['data'];
-      result.forEach((element) {
-        List<AvailabilityPlanModel> gAccomodationPlanModel = [];
-        if (element['availability'] != null) {
-          List<dynamic> availablePlan = element['availability'];
-          availablePlan.forEach((ap) {
-            AvailabilityPlanModel amPlan = AvailabilityPlanModel(
-                int.tryParse(ap['id'].toString()) ?? 0, ap['day'] ?? "");
-            gAccomodationPlanModel.add(amPlan);
+    try {
+      var response = await http.get(Uri.parse(
+          "https://adventuresclub.net/adventureClub/api/v1/serviceProviderProfile?id=${widget.id}"));
+      if (response.statusCode == 200) {
+        mapCountry = json.decode(response.body);
+        List<dynamic> result = mapCountry['data'];
+        result.forEach((element) {
+          List<AvailabilityPlanModel> gAccomodationPlanModel = [];
+          if (element['availability'] != null) {
+            List<dynamic> availablePlan = element['availability'];
+            availablePlan.forEach((ap) {
+              AvailabilityPlanModel amPlan = AvailabilityPlanModel(
+                  int.tryParse(ap['id'].toString()) ?? 0, ap['day'] ?? "");
+              gAccomodationPlanModel.add(amPlan);
+            });
+          }
+          List<AvailabilityModel> gAccomodoationAvaiModel = [];
+          if (element['availability'] != null) {
+            List<dynamic> available = element['availability'];
+            available.forEach((a) {
+              AvailabilityModel am =
+                  AvailabilityModel(a['start_date'] ?? "", a['end_date'] ?? "");
+              gAccomodoationAvaiModel.add(am);
+            });
+          }
+          if (element['become_partner'] != null) {
+            List<dynamic> becomePartner = element['become_partner'];
+            becomePartner.forEach((b) {
+              BecomePartner bp = BecomePartner(b['cr_name'] ?? "",
+                  b['cr_number'] ?? "", b['description'] ?? "");
+            });
+          }
+          List<IncludedActivitiesModel> gIAm = [];
+          if (element['included_activities'] != null) {
+            List<dynamic> iActivities = element['included_activities'];
+            iActivities.forEach((iA) {
+              IncludedActivitiesModel iAm = IncludedActivitiesModel(
+                int.tryParse(iA['id'].toString()) ?? 0,
+                int.tryParse(iA['service_id'].toString()) ?? 0,
+                iA['activity_id'] ?? "",
+                iA['activity'] ?? "",
+                iA['image'] ?? "",
+              );
+              gIAm.add(iAm);
+            });
+          }
+          List<DependenciesModel> gdM = [];
+          if (element['dependencies'] != null) {
+            List<dynamic> dependency = element['dependencies'];
+            dependency.forEach((d) {
+              DependenciesModel dm = DependenciesModel(
+                int.tryParse(d['id'].toString()) ?? 0,
+                d['dependency_name'] ?? "",
+                d['image'] ?? "",
+                d['updated_at'] ?? "",
+                d['created_at'] ?? "",
+                d['deleted_at'] ?? "",
+              );
+              gdM.add(dm);
+            });
+          }
+          List<AimedForModel> gAccomodationAimedfm = [];
+          if (element['aimed_for'] != null) {
+            List<dynamic> aF = element['aimed_for'];
+            aF.forEach((a) {
+              AimedForModel afm = AimedForModel(
+                int.tryParse(a['id'].toString()) ?? 0,
+                a['AimedName'] ?? "",
+                a['image'] ?? "",
+                a['created_at'] ?? "",
+                a['updated_at'] ?? "",
+                a['deleted_at'] ?? "",
+                int.tryParse(a['service_id'].toString()) ?? 0,
+              );
+              gAccomodationAimedfm.add(afm);
+            });
+          }
+          List<ServiceImageModel> gAccomodationServImgModel = [];
+          if (element['images'] != null) {
+            List<dynamic> image = element['images'];
+            image.forEach((i) {
+              ServiceImageModel sm = ServiceImageModel(
+                int.tryParse(i['id'].toString()) ?? 0,
+                int.tryParse(i['service_id'].toString()) ?? 0,
+                int.tryParse(i['is_default'].toString()) ?? 0,
+                i['image_url'] ?? "",
+                i['thumbnail'] ?? "",
+              );
+              gAccomodationServImgModel.add(sm);
+            });
+          }
+          List<ProgrammesModel> gPm = [];
+          if (element['images'] != null) {
+            List<dynamic> programs = element['programs'];
+            programs.forEach((p) {
+              ProgrammesModel pm = ProgrammesModel(
+                int.tryParse(p['id'].toString()) ?? 0,
+                int.tryParse(p['service_id'].toString()) ?? 0,
+                p['title'] ?? "",
+                p['start_datetime'] ?? "",
+                p['end_datetime'] ?? "",
+                p['description'] ?? "",
+              );
+              gPm.add(pm);
+            });
+          }
+          DateTime sDate =
+              DateTime.tryParse(element['start_date'].toString()) ??
+                  DateTime.now();
+          DateTime eDate = DateTime.tryParse(element['end_date'].toString()) ??
+              DateTime.now();
+          log(sDate.day.toString());
+          //DateTime e
+          ServicesModel nSm = ServicesModel(
+            int.tryParse(element['id'].toString()) ?? 0,
+            int.tryParse(element['owner'].toString()) ?? 0,
+            element['adventure_name'] ?? "",
+            element['country'] ?? "",
+            element['region'] ?? "",
+            element['city_id'] ?? "",
+            element['service_sector'] ?? "",
+            element['service_category'] ?? "",
+            element['service_type'] ?? "",
+            element['service_level'] ?? "",
+            element['duration'] ?? "",
+            int.tryParse(element['available_seats'].toString()) ?? 0,
+            sDate,
+            eDate,
+            //int.tryParse(element['start_date'].toString()) ?? "",
+            //int.tryParse(element['end_date'].toString()) ?? "",
+            element['latitude'] ?? "",
+            element['longitude'] ?? "",
+            element['write_information'] ?? "",
+            int.tryParse(element['service_plan'].toString()) ?? 0,
+            int.tryParse(element['sfor_id'].toString()) ?? 0,
+            gAccomodoationAvaiModel,
+            gAccomodationPlanModel,
+            element['geo_location'] ?? "",
+            element['specific_address'] ?? "",
+            element['cost_inc'] ?? "",
+            element['cost_exc'] ?? "",
+            element['currency'] ?? "",
+            int.tryParse(element['points'].toString()) ?? 0,
+            element['pre_requisites'] ?? "",
+            element['minimum_requirements'] ?? "",
+            element['terms_conditions'] ?? "",
+            int.tryParse(element['recommended'].toString()) ?? 0,
+            element['status'] ?? "",
+            element['image'] ?? "",
+            element['descreption]'] ?? "",
+            element['favourite_image'] ?? "",
+            element['created_at'] ?? "",
+            element['updated_at'] ?? "",
+            element['delete_at'] ?? "",
+            int.tryParse(element['provider_id'].toString()) ?? 0,
+            int.tryParse(element['service_id'].toString()) ?? 0,
+            element['name'] ?? "",
+            element['provider_profile'] ?? "",
+            element['including_gerea_and_other_taxes'] ?? "",
+            element['excluding_gerea_and_other_taxes'] ?? "",
+            gIAm,
+            gdM,
+            nBp,
+            gAccomodationAimedfm,
+            gPm,
+            element['stars'] ?? "",
+            element['is_liked'] ?? 0,
+            element['baseurl'] ?? "",
+            gAccomodationServImgModel,
+            element['rating'] ?? "",
+            element['reviewd_by'].toString() ?? "",
+            int.tryParse(element['remaining_seats'].toString()) ?? 0,
+          );
+          //gAccomodationSModel.add(nSm);
+          if (nSm.status != "0") {
+            allServices.add(nSm);
+          }
+          setState(() {
+            pLoading = false;
           });
-        }
-        List<AvailabilityModel> gAccomodoationAvaiModel = [];
-        if (element['availability'] != null) {
-          List<dynamic> available = element['availability'];
-          available.forEach((a) {
-            AvailabilityModel am =
-                AvailabilityModel(a['start_date'] ?? "", a['end_date'] ?? "");
-            gAccomodoationAvaiModel.add(am);
-          });
-        }
-        if (element['become_partner'] != null) {
-          List<dynamic> becomePartner = element['become_partner'];
-          becomePartner.forEach((b) {
-            BecomePartner bp = BecomePartner(b['cr_name'] ?? "",
-                b['cr_number'] ?? "", b['description'] ?? "");
-          });
-        }
-        List<IncludedActivitiesModel> gIAm = [];
-        if (element['included_activities'] != null) {
-          List<dynamic> iActivities = element['included_activities'];
-          iActivities.forEach((iA) {
-            IncludedActivitiesModel iAm = IncludedActivitiesModel(
-              int.tryParse(iA['id'].toString()) ?? 0,
-              int.tryParse(iA['service_id'].toString()) ?? 0,
-              iA['activity_id'] ?? "",
-              iA['activity'] ?? "",
-              iA['image'] ?? "",
-            );
-            gIAm.add(iAm);
-          });
-        }
-        List<DependenciesModel> gdM = [];
-        if (element['dependencies'] != null) {
-          List<dynamic> dependency = element['dependencies'];
-          dependency.forEach((d) {
-            DependenciesModel dm = DependenciesModel(
-              int.tryParse(d['id'].toString()) ?? 0,
-              d['dependency_name'] ?? "",
-              d['image'] ?? "",
-              d['updated_at'] ?? "",
-              d['created_at'] ?? "",
-              d['deleted_at'] ?? "",
-            );
-            gdM.add(dm);
-          });
-        }
-        List<AimedForModel> gAccomodationAimedfm = [];
-        if (element['aimed_for'] != null) {
-          List<dynamic> aF = element['aimed_for'];
-          aF.forEach((a) {
-            AimedForModel afm = AimedForModel(
-              int.tryParse(a['id'].toString()) ?? 0,
-              a['AimedName'] ?? "",
-              a['image'] ?? "",
-              a['created_at'] ?? "",
-              a['updated_at'] ?? "",
-              a['deleted_at'] ?? "",
-              int.tryParse(a['service_id'].toString()) ?? 0,
-            );
-            gAccomodationAimedfm.add(afm);
-          });
-        }
-        List<ServiceImageModel> gAccomodationServImgModel = [];
-        if (element['images'] != null) {
-          List<dynamic> image = element['images'];
-          image.forEach((i) {
-            ServiceImageModel sm = ServiceImageModel(
-              int.tryParse(i['id'].toString()) ?? 0,
-              int.tryParse(i['service_id'].toString()) ?? 0,
-              int.tryParse(i['is_default'].toString()) ?? 0,
-              i['image_url'] ?? "",
-              i['thumbnail'] ?? "",
-            );
-            gAccomodationServImgModel.add(sm);
-          });
-        }
-        List<ProgrammesModel> gPm = [];
-        if (element['images'] != null) {
-          List<dynamic> programs = element['programs'];
-          programs.forEach((p) {
-            ProgrammesModel pm = ProgrammesModel(
-              int.tryParse(p['id'].toString()) ?? 0,
-              int.tryParse(p['service_id'].toString()) ?? 0,
-              p['title'] ?? "",
-              p['start_datetime'] ?? "",
-              p['end_datetime'] ?? "",
-              p['description'] ?? "",
-            );
-            gPm.add(pm);
-          });
-        }
-        DateTime sDate = DateTime.tryParse(element['start_date'].toString()) ??
-            DateTime.now();
-        DateTime eDate =
-            DateTime.tryParse(element['end_date'].toString()) ?? DateTime.now();
-        log(sDate.day.toString());
-        //DateTime e
-        ServicesModel nSm = ServicesModel(
-          int.tryParse(element['id'].toString()) ?? 0,
-          int.tryParse(element['owner'].toString()) ?? 0,
-          element['adventure_name'] ?? "",
-          element['country'] ?? "",
-          element['region'] ?? "",
-          element['city_id'] ?? "",
-          element['service_sector'] ?? "",
-          element['service_category'] ?? "",
-          element['service_type'] ?? "",
-          element['service_level'] ?? "",
-          element['duration'] ?? "",
-          int.tryParse(element['available_seats'].toString()) ?? 0,
-          sDate,
-          eDate,
-          //int.tryParse(element['start_date'].toString()) ?? "",
-          //int.tryParse(element['end_date'].toString()) ?? "",
-          element['latitude'] ?? "",
-          element['longitude'] ?? "",
-          element['write_information'] ?? "",
-          int.tryParse(element['service_plan'].toString()) ?? 0,
-          int.tryParse(element['sfor_id'].toString()) ?? 0,
-          gAccomodoationAvaiModel,
-          gAccomodationPlanModel,
-          element['geo_location'] ?? "",
-          element['specific_address'] ?? "",
-          element['cost_inc'] ?? "",
-          element['cost_exc'] ?? "",
-          element['currency'] ?? "",
-          int.tryParse(element['points'].toString()) ?? 0,
-          element['pre_requisites'] ?? "",
-          element['minimum_requirements'] ?? "",
-          element['terms_conditions'] ?? "",
-          int.tryParse(element['recommended'].toString()) ?? 0,
-          element['status'] ?? "",
-          element['image'] ?? "",
-          element['descreption]'] ?? "",
-          element['favourite_image'] ?? "",
-          element['created_at'] ?? "",
-          element['updated_at'] ?? "",
-          element['delete_at'] ?? "",
-          int.tryParse(element['provider_id'].toString()) ?? 0,
-          int.tryParse(element['service_id'].toString()) ?? 0,
-          element['name'] ?? "",
-          element['provider_profile'] ?? "",
-          element['including_gerea_and_other_taxes'] ?? "",
-          element['excluding_gerea_and_other_taxes'] ?? "",
-          gIAm,
-          gdM,
-          nBp,
-          gAccomodationAimedfm,
-          gPm,
-          element['stars'] ?? "",
-          int.tryParse(element['is_liked'].toString()) ?? 0,
-          element['baseurl'] ?? "",
-          gAccomodationServImgModel,
-          element['rating'] ?? "",
-          element['reviewd_by'].toString() ?? "",
-          int.tryParse(element['remaining_seats'].toString()) ?? 0,
-        );
-        //gAccomodationSModel.add(nSm);
-        if (nSm.status != "0") {
-          allServices.add(nSm);
-        }
-        setState(() {
-          pLoading = false;
-        });
 
-        // accomodation.add(adv);
-        // accomodation.forEach((acco) {
-        //   gm.add(acco);
-        // });
-      });
+          // accomodation.add(adv);
+          // accomodation.forEach((acco) {
+          //   gm.add(acco);
+          // });
+        });
+      }
+    } catch (e) {
+      log(e.toString());
     }
   }
 

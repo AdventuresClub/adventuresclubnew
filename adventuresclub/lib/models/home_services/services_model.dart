@@ -58,7 +58,7 @@ class ServicesModel {
   List<AimedForModel> am; // new
   List<ProgrammesModel> programmes;
   String stars;
-  int isLiked;
+  dynamic isLiked;
   String baseURL;
   List<ServiceImageModel> images;
   String rating;

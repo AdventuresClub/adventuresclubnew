@@ -544,11 +544,19 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       });
       // programSelecteDate1 = d.join(",");
       pm.forEach((element) {
-        st.add(element.startTime.toString());
+        String startTime = element.startDate.hour.toString();
+        startTime += ":${element.startDate.minute}";
+        startTime += ":${element.startDate.second}";
+        st.add(startTime);
+        //st.add(element.startTime.toString());
       });
       // programStartTime1 = st.join(",");
       pm.forEach((element) {
-        et.add(element.endTime.toString());
+        String endTime = element.endDate.hour.toString();
+        endTime += ":${element.endDate.minute}";
+        endTime += ":${element.endDate.second}";
+        et.add(endTime);
+        //et.add(element.endTime.toString());
       });
       //programEndTime = et.join(",");
     }

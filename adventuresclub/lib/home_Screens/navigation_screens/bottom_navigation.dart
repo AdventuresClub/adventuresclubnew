@@ -58,11 +58,14 @@ class _BottomNavigationState extends State<BottomNavigation> {
   }
 
   void navUpdatePage() {
-    Navigator.of(context).push(MaterialPageRoute(
+    Navigator.of(context).push(
+      MaterialPageRoute(
         fullscreenDialog: true,
         builder: (_) {
           return const UpdatePage();
-        }));
+        },
+      ),
+    );
   }
 
   Widget getBody(int index) {
