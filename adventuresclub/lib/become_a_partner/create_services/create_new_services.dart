@@ -390,6 +390,10 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     if (sPlan == 2 && planChecked == false) {}
   }
 
+  void next1() {
+    createService();
+  }
+
   void next() async {
     checkPlan();
     if (count == 0 && imageList.isNotEmpty) {
@@ -577,7 +581,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       var request = http.MultipartRequest(
         "POST",
         Uri.parse(
-            "https://adventuresclub.net/adventureClub/api/v1/create_service"),
+            //https://adventuresclub.net/adventureClubSIT
+            "${Constants.baseUrl}/api/v1/create_service"),
       );
       banners.forEach((element) {
         String fileName =
@@ -585,118 +590,170 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         request.files.add(http.MultipartFile.fromBytes('banner[]', element,
             filename: fileName));
       });
-      dynamic programData = {
-        'customer_id': Constants.userId.toString(),
-        'adventure_name': adventureName.text,
-        "country": Constants.countryId.toString(),
-        'region': ConstantsCreateNewServices.selectedRegionId
-            .toString(), //selectedRegionId.toString(),
-        "service_sector": ConstantsCreateNewServices.selectedSectorId
-            .toString(), //selectedSectorId.toString(), //"",
-        "service_category": ConstantsCreateNewServices.selectedCategoryId
-            .toString(), //"", //selectedCategoryId.toString(), //"",
-        "service_type": ConstantsCreateNewServices.serviceTypeId
-            .toString(), // //serviceTypeId.toString(), //"",
-        "service_level": ConstantsCreateNewServices.selectedlevelId
-            .toString(), //selectedlevelId.toString(), //"",
-        "duration": ConstantsCreateNewServices.selectedDurationId
-            .toString(), //selectedDurationId.toString(), //"",
-        "available_seats": availableSeatsController.text, //"",
-        "start_date":
-            ConstantsCreateNewServices.startDate.toString(), //startDate, //"",
-        "end_date":
-            ConstantsCreateNewServices.endDate.toString(), //endDate, //"",
-        "write_information": infoController.text, //infoController.text, //"",
-        // it is for particular week or calender
-        "service_plan": sPlan.toString(), //"1", //"",
-        "cost_inc": costOne.text, //setCost1.text, //"",
-        "cost_exc": costOne.text, //costTwo.text, //setCost2.text, //"",
-        "currency": "1", //  %%% this is hardcoded
-        "pre_requisites":
-            preRequisites.text, //"", //preReqController.text, //"",
-        "minimum_requirements":
-            minimumRequirement.text, //minController.text, //"",
-        "terms_conditions": terms.text, //tncController.text, //"",
-        "recommended": "1", // this is hardcoded
-        // this key needs to be discussed,
-        "service_plan_days": servicePlanId, //selectedActivitesId
-        //.toString(), //"1,6,7", //// %%%%this needs discussion
-        // "availability": servicePlanId,
-        "service_for": selectedActivitesId, //selectedActivitesId.toString(),
-        "particular_date":
-            ConstantsCreateNewServices.startDate, //gatheringDate, //"",
-        // this is an array
-        // "schedule_title[]":
-        //   programTitle, //titleController, //scheduleController.text, //scheduleController.text, //"",
-        // schedule title in array is skipped
-        // this is an array
-        //"gathering_date[]": programSelecteDate1, //gatheringDate, //"",
-        // api did not accept list here
-        "activities": selectedActivityIncludesId, //"5", // activityId, //"",
-        "specific_address": specificAddressController
-            .text, //"", //iLiveInController.text, //"",
-        // this is a wrong field only for testing purposes....
-        // this is an array
-        //"gathering_start_time[]": programStartTime2, //"10",
-        // this is an arrayt
-        //"gathering_end_time[]": programEndTime, //"15",
-        //"" //gatheringDate, //"",
-        // this is an array
-        // "program_description[]":
-        //"scheule 2 , schule 1", // scheduleControllerList, //scheduleDesController.text, //"",
-        // "service_for": selectedActivitesId
-        //     .toString(), //"1,2,5", //"4", //["1", "4", "5", "7"], //"",
-        "dependency":
-            selectedDependencyId, //selectedDependencyId.toString(), //["1", "2", "3"],
-        //"banners[]": "${banners[0]},test032423231108.png",
-        //"banner[]":
-        //"${banners[0]},test0324232311147.png", //adventureOne.toString(), //"",
-        // banner image name.
-        // we need file name,
-        // after bytes array when adding into parameter. send the name of file.
-        //
-        "latitude":
-            ConstantsCreateNewServices.lat.toString(), //lat.toString(), //"",
-        "longitude":
-            ConstantsCreateNewServices.lng.toString(), //lng.toString(), //"",
-        // 'mobile_code': ccCode,
-      };
-      String space = "";
-      st.forEach((element) {
-        programData["gathering_start_time[]$space"] = element;
-        space += " ";
-      });
-      // String programDataString = jsonEncode(programData);
-      // int index = programDataString.indexOf("}");
-      // String first = programDataString.substring(0, index);
+      // dynamic programData = {
+      //   'customer_id': Constants.userId.toString(),
+      //   'adventure_name': adventureName.text,
+      //   "country": Constants.countryId.toString(),
+      //   'region': ConstantsCreateNewServices.selectedRegionId
+      //       .toString(), //selectedRegionId.toString(),
+      //   "service_sector": ConstantsCreateNewServices.selectedSectorId
+      //       .toString(), //selectedSectorId.toString(), //"",
+      //   "service_category": ConstantsCreateNewServices.selectedCategoryId
+      //       .toString(), //"", //selectedCategoryId.toString(), //"",
+      //   "service_type": ConstantsCreateNewServices.serviceTypeId
+      //       .toString(), // //serviceTypeId.toString(), //"",
+      //   "service_level": ConstantsCreateNewServices.selectedlevelId
+      //       .toString(), //selectedlevelId.toString(), //"",
+      //   "duration": ConstantsCreateNewServices.selectedDurationId
+      //       .toString(), //selectedDurationId.toString(), //"",
+      //   "available_seats": availableSeatsController.text, //"",
+      //   "start_date":
+      //       ConstantsCreateNewServices.startDate.toString(), //startDate, //"",
+      //   "end_date":
+      //       ConstantsCreateNewServices.endDate.toString(), //endDate, //"",
+      //   "write_information": infoController.text, //infoController.text, //"",
+      //   // it is for particular week or calender
+      //   "service_plan": sPlan.toString(), //"1", //"",
+      //   "cost_inc": costOne.text, //setCost1.text, //"",
+      //   "cost_exc": costOne.text, //costTwo.text, //setCost2.text, //"",
+      //   "currency": "1", //  %%% this is hardcoded
+      //   "pre_requisites":
+      //       preRequisites.text, //"", //preReqController.text, //"",
+      //   "minimum_requirements":
+      //       minimumRequirement.text, //minController.text, //"",
+      //   "terms_conditions": terms.text, //tncController.text, //"",
+      //   "recommended": "1", // this is hardcoded
+      //   // this key needs to be discussed,
+      //   "service_plan_days": servicePlanId, //selectedActivitesId
+      //   //.toString(), //"1,6,7", //// %%%%this needs discussion
+      //   // "availability": servicePlanId,
+      //   "service_for": selectedActivitesId, //selectedActivitesId.toString(),
+      //   "particular_date":
+      //       ConstantsCreateNewServices.startDate, //gatheringDate, //"",
+      //   // this is an array
+      //   // "schedule_title[]":
+      //   //   programTitle, //titleController, //scheduleController.text, //scheduleController.text, //"",
+      //   // schedule title in array is skipped
+      //   // this is an array
+      //   //"gathering_date[]": programSelecteDate1, //gatheringDate, //"",
+      //   // api did not accept list here
+      //   "activities": selectedActivityIncludesId, //"5", // activityId, //"",
+      //   "specific_address": specificAddressController
+      //       .text, //"", //iLiveInController.text, //"",
+      //   // this is a wrong field only for testing purposes....
+      //   // this is an array
+      //   //"gathering_start_time[]": programStartTime2, //"10",
+      //   // this is an arrayt
+      //   //"gathering_end_time[]": programEndTime, //"15",
+      //   //"" //gatheringDate, //"",
+      //   // this is an array
+      //   // "program_description[]":
+      //   //"scheule 2 , schule 1", // scheduleControllerList, //scheduleDesController.text, //"",
+      //   // "service_for": selectedActivitesId
+      //   //     .toString(), //"1,2,5", //"4", //["1", "4", "5", "7"], //"",
+      //   "dependency":
+      //       selectedDependencyId, //selectedDependencyId.toString(), //["1", "2", "3"],
+      //   //"banners[]": "${banners[0]},test032423231108.png",
+      //   //"banner[]":
+      //   //"${banners[0]},test0324232311147.png", //adventureOne.toString(), //"",
+      //   // banner image name.
+      //   // we need file name,
+      //   // after bytes array when adding into parameter. send the name of file.
+      //   //
+      //   "latitude":
+      //       ConstantsCreateNewServices.lat.toString(), //lat.toString(), //"",
+      //   "longitude":
+      //       ConstantsCreateNewServices.lng.toString(), //lng.toString(), //"",
+      //   // 'mobile_code': ccCode,
+      //   // "gathering_start_time[]": "13:0:0",
+      //   // "gathering_end_time[]": "15:0:0",
+      // };
+      // String space = "";
       // st.forEach((element) {
-      //   String i = ",gathering_start_time[]:'$element'";
-      //   first += i;
+      //   log(element);
+      //   programData["gathering_start_time[]"] = element;
+      //   space += " ";
       // });
-      // first += "}";
-      // programData = jsonDecode(first);
-      //log(first);
-      space = "";
-      et.forEach((element) {
-        programData["gathering_end_time[]$space"] = element;
-        space += " ";
+      // // String programDataString = jsonEncode(programData);
+      // // int index = programDataString.indexOf("}");
+      // // String first = programDataString.substring(0, index);
+      // // st.forEach((element) {
+      // //   String i = ",gathering_start_time[]:'$element'";
+      // //   first += i;
+      // // });
+      // // first += "}";
+      // // programData = jsonDecode(first);
+      // //log(first);
+      // space = "";
+      // et.forEach((element1) {
+      //   log(element1);
+      //   programData["gathering_end_time[]"] = element1;
+      //   space += " ";
+      // });
+      // space = "";
+      // titleList.forEach((element) {
+      //   programData["schedule_title[]$space"] = element;
+      //   space += " ";
+      // });
+      // space = "";
+      // descriptionList.forEach((element) {
+      //   programData["program_description[]$space"] = element;
+      //   space += " ";
+      // });
+      // space = "";
+      // d.forEach((element) {
+      //   programData["gathering_date[]$space"] = element;
+      //   space += " ";
+      // });
+      //request.fields.addAll(programData);
+
+      //   "service_for": selectedActivitesId, //selectedActivitesId.toString(),
+      //   "particular_date":
+      //       ConstantsCreateNewServices.startDate, //gatheringDate, //"",
+      //   "activities": selectedActivityIncludesId, //"5", // activityId, //"",
+      //   "specific_address": specificAddressController
+      //       .text, //"", //iLiveInController.text, //"",
+      //   "dependency":
+      //       selectedDependencyId, //selectedDependencyId.toString(), //["1", "2", "3"],
+
+      request.fields.addAll({
+        'customer_id': Constants.userId.toString(),
+        'adventure_name': adventureName.text.trim(),
+        'country': Constants.countryId.toString(),
+        'region': ConstantsCreateNewServices.selectedRegionId.toString(),
+        'service_sector':
+            ConstantsCreateNewServices.selectedSectorId.toString(),
+        'service_category':
+            ConstantsCreateNewServices.selectedCategoryId.toString(),
+        'service_type': ConstantsCreateNewServices.serviceTypeId.toString(),
+        'service_level': ConstantsCreateNewServices.selectedlevelId.toString(),
+        'duration': ConstantsCreateNewServices.selectedDurationId.toString(),
+        'available_seats': availableSeatsController.text.trim(),
+        'start_date': ConstantsCreateNewServices.startDate.toString(),
+        'end_date': ConstantsCreateNewServices.endDate.toString(),
+        'write_information': infoController.text.trim(),
+        'service_plan': sPlan.toString(),
+        'cost_inc': costOne.text.trim(),
+        'cost_exc': costOne.text.trim(),
+        'currency': '1',
+        'pre_requisites': preRequisites.text.trim(),
+        'minimum_requirements': minimumRequirement.text.trim(),
+        'terms_conditions': terms.text.trim(),
+        'recommended': '1',
+        'service_plan_days': servicePlanId,
+        'schedule_title[]': titleList[0],
+        'gathering_date[]': d[0],
+        'activities': selectedActivityIncludesId,
+        'specific_address': specificAddressController.text.trim(),
+        'gathering_start_time[]': st[0],
+        'gathering_end_time[]': et[0],
+        'program_description[]': descriptionList[0],
+        'service_for': selectedActivitesId,
+        'dependency': selectedDependencyId,
+        //'program_description[]': 'descfirst',
+        'latitude': ConstantsCreateNewServices.lat.toString(),
+        'longitude': ConstantsCreateNewServices.lng.toString(),
       });
-      space = "";
-      titleList.forEach((element) {
-        programData["schedule_title[]$space"] = element;
-        space += " ";
-      });
-      space = "";
-      descriptionList.forEach((element) {
-        programData["program_description[]$space"] = element;
-        space += " ";
-      });
-      space = "";
-      d.forEach((element) {
-        programData["gathering_date[]$space"] = element;
-        space += " ";
-      });
-      request.fields.addAll(programData);
       log(request.fields.toString());
       final response = await request.send();
 
