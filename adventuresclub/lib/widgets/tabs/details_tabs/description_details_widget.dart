@@ -276,7 +276,7 @@ class DescriptionDetailsWidget extends StatelessWidget {
                 if (gm.sPlan == 2)
                   RichText(
                     text: TextSpan(
-                      text: "End Date : ",
+                      text: text5[3].tr(),
                       style: const TextStyle(
                         color: greyColor2,
                         fontSize: 14,
@@ -311,23 +311,23 @@ class DescriptionDetailsWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                // if (gm.sPlan == 2)
-                //   RichText(
-                //     text: TextSpan(
-                //       text: "End Date : ",
-                //       style: const TextStyle(
-                //         color: greyColor2,
-                //         fontSize: 14,
-                //         height: 1.5,
-                //       ),
-                //       children: <TextSpan>[
-                //         TextSpan(
-                //             text: text6[3].tr(),
-                //             style: const TextStyle(
-                //                 fontSize: 14, color: blackColor, height: 1.5)),
-                //       ],
-                //     ),
-                //   ),
+                if (gm.sPlan == 2)
+                  RichText(
+                    text: TextSpan(
+                      text: "End Date : ",
+                      style: const TextStyle(
+                        color: greyColor2,
+                        fontSize: 14,
+                        height: 1.5,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: text6[4].tr(),
+                            style: const TextStyle(
+                                fontSize: 14, color: blackColor, height: 1.5)),
+                      ],
+                    ),
+                  ),
               ],
             ),
             //Spacer(),
