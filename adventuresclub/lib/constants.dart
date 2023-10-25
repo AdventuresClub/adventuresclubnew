@@ -3,7 +3,6 @@
 import 'dart:convert';
 import 'dart:math';
 import 'dart:ui';
-
 import 'package:adventuresclub/models/filter_data_model/activities_inc_model.dart';
 import 'package:adventuresclub/models/filter_data_model/category_filter_model.dart';
 import 'package:adventuresclub/models/filter_data_model/countries_filter.dart';
@@ -189,7 +188,28 @@ class Constants {
     return result;
   }
 
-  static void clear() {
+  static Future<void> clear() async {
+    profile.bp.paypal = "";
+    profile.bp.accountHoldername = "";
+    profile.bp.accountNumber = "";
+    profile.bp.address = "";
+    profile.bp.bankName = "";
+    profile.bp.ca = "";
+    profile.bp.companyName = "";
+    profile.bp.crCopy = "";
+    profile.bp.crName = "";
+    profile.bp.crNumber = "";
+    profile.bp.debitCard = 0;
+    profile.bp.description = "";
+    profile.bp.endDate = "";
+    profile.bp.id = 0;
+    profile.bp.isApproved = "";
+    profile.bp.isFreeUsed = "";
+    profile.bp.visaCard = 0;
+    profile.bp.userId = 0;
+    profile.bp.ua = "";
+    profile.bp.packagesId = 0;
+    profile.bp.isWiretransfer = "";
     clearServicesList();
     prefs!.clear();
     userId == 0;

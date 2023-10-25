@@ -424,10 +424,10 @@ class _AccountState extends State<Account> {
     Provider.of<ServicesProvider>(context, listen: false).homeIndex = 0;
   }
 
-  void logout() {
-    Constants.clear();
+  void logout() async {
+    await Constants.clear();
+    clearData();
     changeIndex();
-    print(Constants.userId);
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (_) {
@@ -436,6 +436,30 @@ class _AccountState extends State<Account> {
       ),
       (route) => false,
     );
+  }
+
+  void clearData() {
+    profile.bp.paypal = "";
+    profile.bp.accountHoldername = "";
+    profile.bp.accountNumber = "";
+    profile.bp.address = "";
+    profile.bp.bankName = "";
+    profile.bp.ca = "";
+    profile.bp.companyName = "";
+    profile.bp.crCopy = "";
+    profile.bp.crName = "";
+    profile.bp.crNumber = "";
+    profile.bp.debitCard = 0;
+    profile.bp.description = "";
+    profile.bp.endDate = "";
+    profile.bp.id = 0;
+    profile.bp.isApproved = "";
+    profile.bp.isFreeUsed = "";
+    profile.bp.visaCard = 0;
+    profile.bp.userId = 0;
+    profile.bp.ua = "";
+    profile.bp.packagesId = 0;
+    profile.bp.isWiretransfer = "";
   }
 
   void getList() async {
@@ -2102,7 +2126,7 @@ class _AccountState extends State<Account> {
                                 );
                               }
                               if (tile1Text[index] == "logOut") {
-                                logout();
+                                showConfirmation("logOut", "wantToLogOut");
                               }
                             }),
                             leading: Stack(clipBehavior: Clip.none, children: [
@@ -2118,6 +2142,82 @@ class _AccountState extends State<Account> {
                               size: 15,
                               weight: FontWeight.w700,
                             ),
+                            trailing: tile1Text[index] ==
+                                    'addCountry' //settings
+                                ? SizedBox(
+                                    width: Constants.country.length > 11
+                                        ? 140
+                                        : 100,
+                                    //60,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        MyText(
+                                          text: Constants.country, //'OMAN',
+                                          color: greyColor.withOpacity(0.9),
+                                          weight: FontWeight.bold,
+                                        ),
+                                        Image.network(
+                                          "${"https://adventuresclub.net/adventureClub/public/"}${Constants.countryFlag}",
+                                          height: 15,
+                                          width: 30,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : tile1Text[index] ==
+                                        'changeLanguage' //settings
+                                    ? Container(
+                                        width: 90,
+                                        height: 50,
+                                        child: PopupMenuButton<String>(
+                                          child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: 8.0,
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  const Icon(
+                                                      Icons.arrow_drop_down),
+                                                  MyText(
+                                                    text: selectedLanguage,
+                                                    color: blackColor,
+                                                  ),
+                                                ],
+                                              )
+                                              // Icon(
+                                              //   Icons.language_rounded,
+                                              //   color: whiteColor,
+                                              //   size: 60,
+                                              // ),
+                                              ),
+                                          onSelected: (String item) {
+                                            setState(() {
+                                              selectedLanguage = item;
+                                            });
+                                            changeLanguage(item);
+                                          },
+                                          itemBuilder: (BuildContext context) =>
+                                              <PopupMenuEntry<String>>[
+                                            const PopupMenuItem<String>(
+                                              value: "English",
+                                              child: Text('English'),
+                                            ),
+                                            const PopupMenuItem<String>(
+                                              value: "Arabic",
+                                              child: Text('عربي'),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    // IconButton(
+                                    //     onPressed: getPopUp,
+                                    //     icon: const Icon(Icons.arrow_drop_down))
+                                    : const SizedBox(
+                                        width: 0,
+                                      ),
                           );
                         },
                       ),
