@@ -72,12 +72,19 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
             ? text4.insert(5, "2023-10-24")
             : text4.insert(5, st);
         // text6.insert(0, widget.gm.reviewdBy);
-        text6.insert(0, widget.gm.serviceSector);
-        text6.insert(1, widget.gm.serviceType);
-        text6.insert(2, widget.gm.serviceLevel);
+        text6.insert(0, widget.gm.reviewdBy);
+        text6.insert(1, widget.gm.serviceSector);
+        text6.insert(2, widget.gm.serviceType);
+        text6.insert(3, widget.gm.serviceLevel);
         widget.gm.availability.isEmpty
-            ? text6.insert(3, "End Date")
-            : text6.insert(3, ed);
+            ? text6.insert(4, "End Date")
+            : text6.insert(4, ed);
+        // text6.insert(0, widget.gm.serviceSector);
+        // text6.insert(1, widget.gm.serviceType);
+        // text6.insert(2, widget.gm.serviceLevel);
+        // widget.gm.availability.isEmpty
+        //     ? text6.insert(3, "End Date")
+        //     : text6.insert(3, ed);
       });
     }
     if (widget.gm.sPlan == 1) {
