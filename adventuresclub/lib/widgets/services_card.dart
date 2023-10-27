@@ -122,7 +122,7 @@ class _ServicesCardState extends State<ServicesCard> {
                                 borderRadius: BorderRadius.circular(8),
                                 image: DecorationImage(
                                     image: NetworkImage(
-                                      "${"https://adventuresclub.net/adventureClub/public/uploads/"}${widget.gm.images[0].imageUrl}",
+                                      "${"${Constants.baseUrl}/public/uploads/"}${widget.gm.images[0].imageUrl}",
                                     ),
                                     fit: BoxFit.cover),
                               ),
@@ -325,7 +325,7 @@ class _ServicesCardState extends State<ServicesCard> {
                                     borderRadius: BorderRadius.circular(8),
                                     image: DecorationImage(
                                         image: NetworkImage(
-                                          "${"https://adventuresclub.net/adventureClub/public/uploads/"}${widget.gm.images[0].imageUrl}",
+                                          "${"${Constants.baseUrl}/public/uploads/"}${widget.gm.images[0].imageUrl}",
                                         ),
                                         fit: BoxFit.cover),
                                   ),

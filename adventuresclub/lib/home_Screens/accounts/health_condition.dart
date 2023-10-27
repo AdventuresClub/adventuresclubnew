@@ -85,8 +85,8 @@ class _HealthConditionState extends State<HealthCondition> {
   }
 
   Future getWeightNHeight() async {
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_heights_weights"));
+    var response = await http
+        .get(Uri.parse("${Constants.baseUrl}/api/v1/get_heights_weights"));
     if (response.statusCode == 200) {
       mapCountry = json.decode(response.body);
       dynamic result = mapCountry['data'];
@@ -124,8 +124,8 @@ class _HealthConditionState extends State<HealthCondition> {
     setState(() {
       loading = true;
     });
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_healths"));
+    var response =
+        await http.get(Uri.parse("${Constants.baseUrl}/api/v1/get_healths"));
     if (response.statusCode == 200) {
       mapCountry = json.decode(response.body);
       List<dynamic> result = mapCountry['data'];
@@ -194,8 +194,7 @@ class _HealthConditionState extends State<HealthCondition> {
     health();
     try {
       var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/update_health_conditions"),
+          Uri.parse("${Constants.baseUrl}/api/v1/update_health_conditions"),
           body: {
             'user_id': Constants.userId.toString(), //ccCode.toString(),
             "health_conditions": selectedHealthId,

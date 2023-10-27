@@ -62,8 +62,8 @@ class _ParticipantsListState extends State<ParticipantsList> {
       MaterialPageRoute(
         builder: (_) {
           return ShowChat(
-              "https://adventuresclub.net/adventureClub/newchat/${Constants.userId}/$serviceId/$bookingUser");
-          // "https://adventuresclub.net/adventureClub/newreceiverchat/${providerId}/${serviceId}/${Constants.userId}");
+              "${Constants.baseUrl}/newchat/${Constants.userId}/$serviceId/$bookingUser");
+          // "${Constants.baseUrl}/newreceiverchat/${providerId}/${serviceId}/${Constants.userId}");
         },
       ),
     );
@@ -85,7 +85,7 @@ class _ParticipantsListState extends State<ParticipantsList> {
 
   List<String> titleValue = [];
 
-  //// https://adventuresclub.net/adventureClub/newchat/3/2/6 //provider = 3 , service = 2 , member/userId = 6
+  //// ${Constants.baseUrl}/newchat/3/2/6 //provider = 3 , service = 2 , member/userId = 6
 
   void showConfirmation(String bookingId, String bookingUser, int index) async {
     showDialog(
@@ -190,7 +190,7 @@ class _ParticipantsListState extends State<ParticipantsList> {
     message("Success");
   }
 
-  //https://adventuresclub.net/adventureClub/api/v1/booking_accept
+  //${Constants.baseUrl}/api/v1/booking_accept
 
   void delete(String bookingId, String bookingUser, int index) async {
     Navigator.of(context).pop();
@@ -199,14 +199,12 @@ class _ParticipantsListState extends State<ParticipantsList> {
       setState(() {
         gm.removeAt(index);
       });
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/booking_delete"),
-          body: {
-            'booking_id': bookingId,
-            // 'user_id': bookingUser,
-            // 'status': "3",
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/booking_delete"), body: {
+        'booking_id': bookingId,
+        // 'user_id': bookingUser,
+        // 'status': "3",
+      });
       if (response.statusCode != 200) {
         setState(() {
           gm.insert(index, pm);
@@ -376,7 +374,7 @@ class _ParticipantsListState extends State<ParticipantsList> {
     //           //     backgroundImage:
     //           //         //ExactAssetImage('images/airrides.png'),
     //           //         NetworkImage(
-    //           //       "${'https://adventuresclub.net/adventureClub/public/'}${gm[index].providerProfile},",
+    //           //       "${'${Constants.baseUrl}/public/'}${gm[index].providerProfile},",
     //           //     ),
     //           //   ),
     //           // ),
@@ -386,7 +384,7 @@ class _ParticipantsListState extends State<ParticipantsList> {
     //           //       ExactAssetImage('images/airrides.png'),
     //           // ),
     //           // NetworkImage(
-    //           //     "${'https://adventuresclub.net/adventureClub/public/uploads/'}${gm[index].sm[index].imageUrl}")),,
+    //           //     "${'${Constants.baseUrl}/public/uploads/'}${gm[index].sm[index].imageUrl}")),,
     //           title: Column(
     //             crossAxisAlignment: CrossAxisAlignment.start,
     //             mainAxisAlignment: MainAxisAlignment.start,

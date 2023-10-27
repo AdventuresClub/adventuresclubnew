@@ -50,8 +50,8 @@ class _HomeState extends State<Home> {
   }
 
   Future getChatNotification() async {
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/unreadchatcount/${Constants.userId}"));
+    var response = await http.get(
+        Uri.parse("${Constants.baseUrl}/unreadchatcount/${Constants.userId}"));
     if (response.statusCode == 200) {
       mapChatNotification = json.decode(response.body);
       dynamic result = mapChatNotification['unread'];
@@ -68,11 +68,10 @@ class _HomeState extends State<Home> {
       loading = true;
     });
     try {
-      var response = await http.post(
-          Uri.parse("https://adventuresclub.net/adventureClub/api/v1/banners"),
-          body: {
-            'country_id': Constants.countryId.toString(), //"1",
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/banners"), body: {
+        'country_id': Constants.countryId.toString(), //"1",
+      });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       List<dynamic> result = decodedResponse['data'];
       result.forEach((element) {

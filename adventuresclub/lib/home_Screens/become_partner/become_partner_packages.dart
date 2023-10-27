@@ -51,8 +51,8 @@ class _BecomePartnerPackagesState extends State<BecomePartnerPackages> {
     setState(() {
       loading = true;
     });
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_packages"));
+    var response =
+        await http.get(Uri.parse("${Constants.baseUrl}/api/v1/get_packages"));
     if (response.statusCode == 200) {
       getPackages = json.decode(response.body);
       List<dynamic> result = getPackages['data'];
@@ -167,8 +167,7 @@ class _BecomePartnerPackagesState extends State<BecomePartnerPackages> {
     generateRandomString(count);
     try {
       var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/update_subscription"),
+          Uri.parse("${Constants.baseUrl}/api/v1/update_subscription"),
           body: {
             'user_id': Constants.userId.toString(), //"27",
             'packages_id': "1",
@@ -190,20 +189,18 @@ class _BecomePartnerPackagesState extends State<BecomePartnerPackages> {
 
   void transactionApi(String id, String price) async {
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/transaction"),
-          body: {
-            'user_id': Constants.userId.toString(), //"27",
-            //'packages_id ': id, //"0",
-            'transaction_id': t.toString(),
-            "type": "booking",
-            "transaction_type": "booking",
-            "method": "card",
-            "status": "pending",
-            "price": price, //"0",
-            "order_type": "subscription",
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/transaction"), body: {
+        'user_id': Constants.userId.toString(), //"27",
+        //'packages_id ': id, //"0",
+        'transaction_id': t.toString(),
+        "type": "booking",
+        "transaction_type": "booking",
+        "method": "card",
+        "status": "pending",
+        "price": price, //"0",
+        "order_type": "subscription",
+      });
       print(response.statusCode);
       print(response.body);
       print(response.headers);

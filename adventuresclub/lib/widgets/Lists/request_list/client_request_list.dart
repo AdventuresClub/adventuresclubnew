@@ -74,14 +74,12 @@ class _ClientRequestListState extends State<ClientRequestList> {
       gRM.removeAt(index);
     });
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/booking_accept"),
-          body: {
-            "booking_id": bookingId,
-            'user_id': userId, //"3", //Constants.userId, //"27",
-            'status': "3",
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/booking_accept"), body: {
+        "booking_id": bookingId,
+        'user_id': userId, //"3", //Constants.userId, //"27",
+        'status': "3",
+      });
       if (response.statusCode != 200) {
         setState(() {
           gRM.insert(index, gR);
@@ -103,15 +101,13 @@ class _ClientRequestListState extends State<ClientRequestList> {
       gRM.removeAt(index);
     });
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/booking_accept"),
-          body: {
-            "booking_id": bookingId,
-            'user_id': userId, //"3", //Constants.userId, //"27",
-            'status': "1",
-            // 'id': "2",
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/booking_accept"), body: {
+        "booking_id": bookingId,
+        'user_id': userId, //"3", //Constants.userId, //"27",
+        'status': "1",
+        // 'id': "2",
+      });
       // setState(() {
       //   favourite = true;
       // });

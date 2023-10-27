@@ -57,8 +57,8 @@ class _ContactUsState extends State<ContactUs> {
   }
 
   void getPurposeList() async {
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_contact_us_pupose"));
+    var response = await http
+        .get(Uri.parse("${Constants.baseUrl}/api/v1/get_contact_us_pupose"));
     if (response.statusCode == 200) {
       MapPurpore = json.decode(response.body);
       List<dynamic> result = MapPurpore['data'];
@@ -89,8 +89,7 @@ class _ContactUsState extends State<ContactUs> {
               if (selectedPurposeId > 0) {
                 if (messageController.text.isNotEmpty) {
                   var response = await http.post(
-                      Uri.parse(
-                          "https://adventuresclub.net/adventureClub/api/v1/contact_us"),
+                      Uri.parse("${Constants.baseUrl}/api/v1/contact_us"),
                       body: {
                         'user_id': Constants.userId.toString(),
                         'name': nameController.text, //"3",

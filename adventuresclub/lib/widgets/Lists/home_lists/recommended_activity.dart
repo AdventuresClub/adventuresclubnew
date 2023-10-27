@@ -78,8 +78,8 @@ class _RecommendedActivityState extends State<RecommendedActivity> {
   //   });
   //   var response = await http.post(
   //       Uri.parse(
-  //           "https://adventuresclub.net/adventureClub/api/v1/get_allservices"
-  //           //"https://adventuresclub.net/adventureClub/api/v1/services/$id"
+  //           "${Constants.baseUrl}/api/v1/get_allservices"
+  //           //"${Constants.baseUrl}/api/v1/services/$id"
   //           ),
   //       body: {
   //         "country_id": id,
@@ -186,8 +186,8 @@ class _RecommendedActivityState extends State<RecommendedActivity> {
   //   });
   //   var response = await http.post(
   //       Uri.parse(
-  //           "https://adventuresclub.net/adventureClub/api/v1/get_allservices"
-  //           //"https://adventuresclub.net/adventureClub/api/v1/services/$id"
+  //           "${Constants.baseUrl}/api/v1/get_allservices"
+  //           //"${Constants.baseUrl}/api/v1/services/$id"
   //           ),
   //       body: {
   //         "country_id": id,
@@ -439,7 +439,7 @@ class _RecommendedActivityState extends State<RecommendedActivity> {
                                         //   'images/overseas.png',
                                         // ),
                                         NetworkImage(
-                                      "${"https://adventuresclub.net/adventureClub/public/uploads/"}${gm[index].images[2].thumbnail}",
+                                      "${"${Constants.baseUrl}/public/uploads/"}${gm[index].images[2].thumbnail}",
                                     ),
                                     fit: BoxFit.cover),
                               ),

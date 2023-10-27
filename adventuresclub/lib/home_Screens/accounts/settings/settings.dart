@@ -83,8 +83,8 @@ class _SettingsState extends State<Settings> {
   }
 
   Future getCountries() async {
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_countries"));
+    var response =
+        await http.get(Uri.parse("${Constants.baseUrl}/api/v1/get_countries"));
     if (response.statusCode == 200) {
       mapCountry = json.decode(response.body);
       List<dynamic> result = mapCountry['data'];
@@ -126,20 +126,18 @@ class _SettingsState extends State<Settings> {
 
   void updateCountryId(int id) async {
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/updateCountry"),
-          body: {
-            'user_id': Constants.userId.toString(), //ccCode.toString(),
-            'country_id': id.toString(),
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/updateCountry"), body: {
+        'user_id': Constants.userId.toString(), //ccCode.toString(),
+        'country_id': id.toString(),
+      });
       print(response.statusCode);
     } catch (e) {
       print(e.toString());
     }
   }
 
-//   https://adventuresclub.net/adventureClub/api/v1/update_profile
+//   ${Constants.baseUrl}/api/v1/update_profile
 // user_id:2
 // name:fgfd
 // mobile_code:+91
@@ -397,7 +395,7 @@ class _SettingsState extends State<Settings> {
                               return ListTile(
                                 leading: searchController.text.isEmpty
                                     ? Image.network(
-                                        "${"https://adventuresclub.net/adventureClub/public/"}${countriesList1[index].flag}",
+                                        "${"${Constants.baseUrl}/public/"}${countriesList1[index].flag}",
                                         height: 25,
                                         width: 40,
                                       )

@@ -40,7 +40,7 @@ class DescriptionAimedFor extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Image.network(
-                            "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${am[i].image}",
+                            "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${am[i].image}",
                             height: 18,
                             width: 18,
                           ),

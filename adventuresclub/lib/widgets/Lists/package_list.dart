@@ -64,8 +64,7 @@ class _PackageListState extends State<PackageList> {
     generateRandomString(8);
     try {
       var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/update_subscription"),
+          Uri.parse("${Constants.baseUrl}/api/v1/update_subscription"),
           body: {
             'user_id': Constants.userId.toString(),
             "packages_id": id,
@@ -125,25 +124,23 @@ class _PackageListState extends State<PackageList> {
   void transactionApi(String price, String id) async {
     generateRandomString(8);
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/transaction"),
-          body: {
-            'user_id': Constants.userId.toString(), //"27",
-            // 'packages_id': "1",
-            'transaction_id': transactionId,
-            //Booking OR Subsreption
-            "type": "subscription",
-            //Booking OR Subsreption
-            "transaction_type": "subscription",
-            // in case of paid
-            //WireTransfer
-            "method": "WireTransfer",
-            "status": "success",
-            "price": price, //price, //"0",
-            // 1 in case of subscription && 0 in case of booking
-            "order_type": "1",
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/transaction"), body: {
+        'user_id': Constants.userId.toString(), //"27",
+        // 'packages_id': "1",
+        'transaction_id': transactionId,
+        //Booking OR Subsreption
+        "type": "subscription",
+        //Booking OR Subsreption
+        "transaction_type": "subscription",
+        // in case of paid
+        //WireTransfer
+        "method": "WireTransfer",
+        "status": "success",
+        "price": price, //price, //"0",
+        // 1 in case of subscription && 0 in case of booking
+        "order_type": "1",
+      });
       if (response.statusCode == 200) {
         update(id, price);
       }

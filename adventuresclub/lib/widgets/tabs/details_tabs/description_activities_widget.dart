@@ -37,7 +37,7 @@ class DescriptionActivitiesWidget extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Image.network(
-                            "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${activities[i].image}",
+                            "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${activities[i].image}",
                             height: 18,
                             width: 18,
                           ),
@@ -72,7 +72,7 @@ class DescriptionActivitiesWidget extends StatelessWidget {
                     child: Row(
                       children: [
                         Image.network(
-                          "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${activities[index].image}",
+                          "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${activities[index].image}",
                           height: 18,
                           width: 18,
                         ),

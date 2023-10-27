@@ -354,13 +354,12 @@ class Constants {
   static void getProfile() async {
     SharedPreferences prefs = await Constants.getPrefs();
     try {
-      var response = await http.post(
-          Uri.parse("https://adventuresclub.net/adventureClub/api/v1/login"),
-          body: {
-            'email': Constants.emailId, //"hamza@gmail.com",
-            'password': Constants.password, //"Upendra@321",
-            'device_id': "0"
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/login"), body: {
+        'email': Constants.emailId, //"hamza@gmail.com",
+        'password': Constants.password, //"Upendra@321",
+        'device_id': "0"
+      });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       if (response.statusCode == 200) {
         dynamic userData = decodedResponse['data'];
@@ -451,8 +450,8 @@ class Constants {
   }
 
   static Future getPackagesApi() async {
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_packages"));
+    var response =
+        await http.get(Uri.parse("${Constants.baseUrl}/api/v1/get_packages"));
     if (response.statusCode == 200) {
       getPackages = json.decode(response.body);
       List<dynamic> result = getPackages['data'];
@@ -507,8 +506,8 @@ class Constants {
     activitiesFilter.clear();
     getRegions();
     getProfile();
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/filter_modal_data"));
+    var response = await http
+        .get(Uri.parse("${Constants.baseUrl}/api/v1/filter_modal_data"));
     if (response.statusCode == 200) {
       mapFilter = json.decode(response.body);
       dynamic result = mapFilter['data'];
@@ -626,12 +625,10 @@ class Constants {
     regionList.clear();
     aimedFor();
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/get_regions"),
-          body: {
-            'country_id': Constants.countryId.toString(),
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/get_regions"), body: {
+        'country_id': Constants.countryId.toString(),
+      });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       List<dynamic> rm = decodedResponse['data'];
       rm.forEach((element) {
@@ -656,8 +653,8 @@ class Constants {
   static void aimedFor() async {
     dependeny();
     am.clear();
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/getServiceFor"));
+    var response =
+        await http.get(Uri.parse("${Constants.baseUrl}/api/v1/getServiceFor"));
     if (response.statusCode == 200) {
       mapAimedFilter = json.decode(response.body);
       List<dynamic> result = mapAimedFilter['message'];
@@ -680,8 +677,8 @@ class Constants {
 
   static void dependeny() async {
     dependency.clear();
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/getallDependency"));
+    var response = await http
+        .get(Uri.parse("${Constants.baseUrl}/api/v1/getallDependency"));
     if (response.statusCode == 200) {
       mapAimedFilter = json.decode(response.body);
       List<dynamic> result = mapAimedFilter['message'];
@@ -714,8 +711,8 @@ class Constants {
     List<AimedForModel> am,
     List<FilterDataModel> fDM,
   ) async {
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/filter_modal_data"));
+    var response = await http
+        .get(Uri.parse("${Constants.baseUrl}/api/v1/filter_modal_data"));
     if (response.statusCode == 200) {
       mapFilter = json.decode(response.body);
       dynamic result = mapFilter['data'];

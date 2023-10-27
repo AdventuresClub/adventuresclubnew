@@ -374,8 +374,8 @@ class _DescriptionState extends State<Description> {
   }
 
   void aimedFor() async {
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/getServiceFor"));
+    var response =
+        await http.get(Uri.parse("${Constants.baseUrl}/api/v1/getServiceFor"));
     if (response.statusCode == 200) {
       mapAimedFilter = json.decode(response.body);
       List<dynamic> result = mapAimedFilter['message'];
@@ -402,8 +402,8 @@ class _DescriptionState extends State<Description> {
     setState(() {
       loading = true;
     });
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/filter_modal_data"));
+    var response = await http
+        .get(Uri.parse("${Constants.baseUrl}/api/v1/filter_modal_data"));
     if (response.statusCode == 200) {
       mapFilter = json.decode(response.body);
       dynamic result = mapFilter['data'];
@@ -524,12 +524,10 @@ class _DescriptionState extends State<Description> {
 
   void getRegions() async {
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/get_regions"),
-          body: {
-            'country_id': "1",
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/get_regions"), body: {
+        'country_id': "1",
+      });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       List<dynamic> rm = decodedResponse['data'];
       rm.forEach((element) {

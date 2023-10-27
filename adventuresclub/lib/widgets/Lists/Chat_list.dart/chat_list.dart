@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls
 
-
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/notifications/notifications_list_model.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
@@ -61,13 +60,12 @@ class _ChatListState extends State<ChatList> {
 
   void selected() {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return const ShowChat(
-          'https://adventuresclub.net/adventureClub/grouplist/3');
+      return ShowChat('${Constants.baseUrl}/grouplist/3');
     }));
   }
 
   void launchURL() async {
-    const url = 'https://adventuresclub.net/adventureClub/grouplist/3';
+    String url = '${Constants.baseUrl}/grouplist/3';
     final uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
@@ -82,7 +80,7 @@ class _ChatListState extends State<ChatList> {
   //   });
   //   try {
   //     var response = await http.get(
-  //       Uri.parse("https://adventuresclub.net/adventureClub/grouplist/2"),
+  //       Uri.parse("${Constants.baseUrl}/grouplist/2"),
   //     );
   //     if (response.statusCode == 200) {
   //       mapChat = json.decode(response.body);

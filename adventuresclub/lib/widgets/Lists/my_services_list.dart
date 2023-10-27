@@ -1,3 +1,4 @@
+import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +39,7 @@ class _MyServicesListState extends State<MyServicesList> {
                               //   'images/picture1.png',
                               // ),
                               NetworkImage(
-                            "${"https://adventuresclub.net/adventureClub/public/uploads/"}${widget.sm.images[index].imageUrl}",
+                            "${"${Constants.baseUrl}/public/uploads/"}${widget.sm.images[index].imageUrl}",
                           ),
                           fit: BoxFit.cover)),
                 ),

@@ -29,8 +29,8 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
     setState(() {
       loading = true;
     });
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/privacy-policy"));
+    var response =
+        await http.get(Uri.parse("${Constants.baseUrl}/api/v1/privacy-policy"));
     if (response.statusCode == 200) {
       mapFilter = json.decode(response.body);
       List<dynamic> result = mapFilter['data'];

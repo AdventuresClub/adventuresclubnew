@@ -581,7 +581,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       var request = http.MultipartRequest(
         "POST",
         Uri.parse(
-            //https://adventuresclub.net/adventureClubSIT
+            //${Constants.baseUrl}SIT
             "${Constants.baseUrl}/api/v1/create_service"),
       );
       banners.forEach((element) {

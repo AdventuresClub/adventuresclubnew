@@ -216,13 +216,12 @@ class _AccountState extends State<Account> {
     });
     SharedPreferences prefs = await Constants.getPrefs();
     try {
-      var response = await http.post(
-          Uri.parse("https://adventuresclub.net/adventureClub/api/v1/login"),
-          body: {
-            'email': Constants.emailId, //"hamza@gmail.com",
-            'password': Constants.password, //"Upendra@321",
-            'device_id': "0"
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/login"), body: {
+        'email': Constants.emailId, //"hamza@gmail.com",
+        'password': Constants.password, //"Upendra@321",
+        'device_id': "0"
+      });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       dynamic userData = decodedResponse['data'];
       int userLoginId = int.tryParse(userData['id'].toString()) ?? 0;
@@ -560,13 +559,11 @@ class _AccountState extends State<Account> {
 
   void updateCountryId(int id) async {
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/updateCountry"),
-          body: {
-            'user_id': Constants.userId.toString(), //ccCode.toString(),
-            'country_id': id.toString(),
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/updateCountry"), body: {
+        'user_id': Constants.userId.toString(), //ccCode.toString(),
+        'country_id': id.toString(),
+      });
       print(response.statusCode);
     } catch (e) {
       print(e.toString());
@@ -598,8 +595,8 @@ class _AccountState extends State<Account> {
 
   Future getCountries() async {
     filteredServices.clear();
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_countries"));
+    var response =
+        await http.get(Uri.parse("${Constants.baseUrl}/api/v1/get_countries"));
     if (response.statusCode == 200) {
       mapCountry = json.decode(response.body);
       List<dynamic> result = mapCountry['data'];
@@ -703,7 +700,7 @@ class _AccountState extends State<Account> {
                       return ListTile(
                         leading: searchController.text.isEmpty
                             ? Image.network(
-                                "${"https://adventuresclub.net/adventureClub/public/"}${countriesList1[index].flag}",
+                                "${"${Constants.baseUrl}/public/"}${countriesList1[index].flag}",
                                 height: 25,
                                 width: 40,
                               )
@@ -849,7 +846,7 @@ class _AccountState extends State<Account> {
                                           child: CircleAvatar(
                                             radius: 38,
                                             backgroundImage: NetworkImage(
-                                                "${'https://adventuresclub.net/adventureClub/public/'}${profile.profileImage}"),
+                                                "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
                                           ),
                                         )
                                       : GestureDetector(
@@ -1029,7 +1026,7 @@ class _AccountState extends State<Account> {
                                           child: CircleAvatar(
                                             radius: 38,
                                             backgroundImage: NetworkImage(
-                                                "${'https://adventuresclub.net/adventureClub/public/'}${profile.profileImage}"),
+                                                "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
                                           ),
                                         )
                                       : GestureDetector(
@@ -1211,7 +1208,7 @@ class _AccountState extends State<Account> {
                                             child: CircleAvatar(
                                               radius: 38,
                                               backgroundImage: NetworkImage(
-                                                  "${'https://adventuresclub.net/adventureClub/public/'}${profile.profileImage}"),
+                                                  "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
                                             ),
                                           )
                                         : GestureDetector(
@@ -1408,7 +1405,7 @@ class _AccountState extends State<Account> {
                                               child: CircleAvatar(
                                                 radius: 35,
                                                 backgroundImage: NetworkImage(
-                                                    "${'https://adventuresclub.net/adventureClub/public/'}${profile.profileImage}"),
+                                                    "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
                                               ),
                                             )
                                           : GestureDetector(
@@ -1626,7 +1623,7 @@ class _AccountState extends State<Account> {
                                             child: CircleAvatar(
                                               radius: 30,
                                               backgroundImage: NetworkImage(
-                                                  "${'https://adventuresclub.net/adventureClub/public/'}${profile.profileImage}"),
+                                                  "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
                                             ),
                                           )
                                         : GestureDetector(
@@ -1995,7 +1992,7 @@ class _AccountState extends State<Account> {
                                           weight: FontWeight.bold,
                                         ),
                                         Image.network(
-                                          "${"https://adventuresclub.net/adventureClub/public/"}${Constants.countryFlag}",
+                                          "${"${Constants.baseUrl}/public/"}${Constants.countryFlag}",
                                           height: 15,
                                           width: 30,
                                         ),
@@ -2159,7 +2156,7 @@ class _AccountState extends State<Account> {
                                           weight: FontWeight.bold,
                                         ),
                                         Image.network(
-                                          "${"https://adventuresclub.net/adventureClub/public/"}${Constants.countryFlag}",
+                                          "${"${Constants.baseUrl}/public/"}${Constants.countryFlag}",
                                           height: 15,
                                           width: 30,
                                         ),
@@ -2340,7 +2337,7 @@ class _AccountState extends State<Account> {
                                 return ListTile(
                                   leading: searchController.text.isEmpty
                                       ? Image.network(
-                                          "${"https://adventuresclub.net/adventureClub/public/"}${countriesList1[index].flag}",
+                                          "${"${Constants.baseUrl}/public/"}${countriesList1[index].flag}",
                                           height: 25,
                                           width: 40,
                                         )

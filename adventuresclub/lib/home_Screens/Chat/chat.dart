@@ -23,8 +23,7 @@ class _ChatState extends State<Chat> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: greyProfileColor,
-      body: ShowChat(
-          'https://adventuresclub.net/adventureClub/grouplist/$userId'),
+      body: ShowChat('${Constants.baseUrl}/grouplist/$userId'),
     );
   }
 }

@@ -268,8 +268,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
     });
     try {
       var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/get_participant"),
+          Uri.parse("${Constants.baseUrl}/api/v1/get_participant"),
           body: {
             'service_id': widget.gm.id.toString(),
           });
@@ -485,22 +484,22 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                           widget.gm.lat,
                           widget.gm.lng),
                       // 4th Tab /////////
-                      // https://adventuresclub.net/adventureClub/newchat/18/126/20
+                      // ${Constants.baseUrl}/newchat/18/126/20
                       // 18: user_id of provider
                       // 126: Service_id
                       // 20: user_id of the client
                       // if (widget.gm.providerId.toString() ==
                       //     Constants.userId.toString())
                       // ShowChat(
-                      //   "https://adventuresclub.net/adventureClub/receiverlist/20/126",
+                      //   "${Constants.baseUrl}/receiverlist/20/126",
                       //   appbar: false,
                       // ),
                       ShowChat(
-                        "https://adventuresclub.net/adventureClub/receiverlist/${Constants.userId}/${widget.gm.id}",
+                        "${Constants.baseUrl}/receiverlist/${Constants.userId}/${widget.gm.id}",
                         appbar: false,
                       ),
                       //AdventureChatDetails(widget.gm.serviceId.toString())
-                      // "https://adventuresclub.net/adventureClub/receiverlist/27/'${widget.serviceId}'"
+                      // "${Constants.baseUrl}/receiverlist/27/'${widget.serviceId}'"
                     ],
                   ),
                 ),

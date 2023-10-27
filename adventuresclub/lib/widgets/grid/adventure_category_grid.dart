@@ -66,7 +66,7 @@ class _AdventureCategoryGridState extends State<AdventureCategoryGrid> {
                     borderRadius: BorderRadius.circular(6),
                     image: DecorationImage(
                         image: NetworkImage(
-                            //"${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${
+                            //"${"${Constants.baseUrl}/public/uploads/selection_manager/"}${
                             widget.pCM[index].image
                             //}
                             //"

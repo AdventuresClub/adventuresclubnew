@@ -26,8 +26,7 @@ class _ReviewAdState extends State<ReviewAd> {
       if (descriptionController.text.length >= 10) {
         try {
           var response = await http.post(
-              Uri.parse(
-                  "https://adventuresclub.net/adventureClub/api/v1/add_review_location"),
+              Uri.parse("${Constants.baseUrl}/api/v1/add_review_location"),
               body: {
                 'user_id': Constants.userId.toString(),
                 'location_id': widget.id,

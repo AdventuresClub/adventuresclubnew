@@ -25,8 +25,8 @@ class _AboutUsState extends State<AboutUs> {
   }
 
   void aboutUs() async {
-    var response = await http.get(
-        Uri.parse("https://adventuresclub.net/adventureClub/api/v1/about-us"));
+    var response =
+        await http.get(Uri.parse("${Constants.baseUrl}/api/v1/about-us"));
     if (response.statusCode == 200) {
       mapAimedFilter = json.decode(response.body);
       dynamic result = mapAimedFilter['data'];

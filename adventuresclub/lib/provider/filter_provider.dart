@@ -7,6 +7,7 @@ import 'package:adventuresclub/models/filter_data_model/sector_filter_model.dart
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
+import '../constants.dart';
 import '../models/filter_data_model/activities_inc_model.dart';
 import '../models/filter_data_model/category_filter_model.dart';
 import '../models/filter_data_model/countries_filter.dart';
@@ -31,8 +32,8 @@ class FilterProvider with ChangeNotifier {
   List<AimedForModel> am = [];
 
   void getFilter() async {
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/filter_modal_data"));
+    var response = await http
+        .get(Uri.parse("${Constants.baseUrl}/api/v1/filter_modal_data"));
     if (response.statusCode == 200) {
       mapFilter = json.decode(response.body);
       dynamic result = mapFilter['data'];

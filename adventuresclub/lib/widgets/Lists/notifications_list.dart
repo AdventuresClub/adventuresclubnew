@@ -66,8 +66,7 @@ class _NotificationsListState extends State<NotificationsList> {
     });
     try {
       var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/get_notification_list"),
+          Uri.parse("${Constants.baseUrl}/api/v1/get_notification_list"),
           body: {
             'user_id': Constants.userId.toString(), //"27",
           });
@@ -111,8 +110,7 @@ class _NotificationsListState extends State<NotificationsList> {
     });
     try {
       var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/delete_notification"),
+          Uri.parse("${Constants.baseUrl}/api/v1/delete_notification"),
           body: {
             "notification_id": id, //ccCode.toString(),
           });

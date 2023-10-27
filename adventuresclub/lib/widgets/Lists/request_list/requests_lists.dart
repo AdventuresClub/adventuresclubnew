@@ -137,7 +137,7 @@ class _RequestsListState extends State<RequestsList> {
 
   Future getList() async {
     var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_requests?user_id=${Constants.userId}&type=0"));
+        "${Constants.baseUrl}/api/v1/get_requests?user_id=${Constants.userId}&type=0"));
     try {
       List<UpcomingRequestsModel> uRequestList = [];
       if (response.statusCode == 200) {
@@ -238,7 +238,7 @@ class _RequestsListState extends State<RequestsList> {
   //     MaterialPageRoute(
   //       builder: (_) {
   //         return ShowChat(
-  //             "https://adventuresclub.net/adventureClub/newreceiverchat/${Constants.userId}/$serviceId/$providerId");
+  //             "${Constants.baseUrl}/newreceiverchat/${Constants.userId}/$serviceId/$providerId");
   //       },
   //     ),
   //   );
@@ -261,14 +261,12 @@ class _RequestsListState extends State<RequestsList> {
       uRequestListInv.removeAt(index);
     });
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/booking_accept"),
-          body: {
-            'booking_id': bookingId,
-            'user_id': Constants.userId.toString(),
-            'status': "5",
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/booking_accept"), body: {
+        'booking_id': bookingId,
+        'user_id': Constants.userId.toString(),
+        'status': "5",
+      });
       if (response.statusCode == 200) {
         setState(() {
           uRequestListInv.insert(index, gR);
@@ -294,7 +292,7 @@ class _RequestsListState extends State<RequestsList> {
       loading = true;
     });
     var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/services/$serviceId?user_id=$userId"));
+        "${Constants.baseUrl}/api/v1/services/$serviceId?user_id=$userId"));
     if (response.statusCode == 200) {
       mapDetails = json.decode(response.body);
       dynamic result = mapDetails['data'];
@@ -514,12 +512,10 @@ class _RequestsListState extends State<RequestsList> {
       loading = true;
     });
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/get_profile"),
-          body: {
-            'user_id': providerId, //"hamza@gmail.com",
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/get_profile"), body: {
+        'user_id': providerId, //"hamza@gmail.com",
+      });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       dynamic userData = decodedResponse['data'];
       int userLoginId = int.tryParse(userData['id'].toString()) ?? 0;
@@ -819,7 +815,7 @@ class _RequestsListState extends State<RequestsList> {
     //                     backgroundImage:
     //                         //ExactAssetImage('images/airrides.png'),
     //                         NetworkImage(
-    //                             "${'https://adventuresclub.net/adventureClub/public/uploads/'}${uRequestListInv[index].sImage[index].thumbnail}"),
+    //                             "${'${Constants.baseUrl}/public/uploads/'}${uRequestListInv[index].sImage[index].thumbnail}"),
     //                   ),
     //                   Padding(
     //                     padding: const EdgeInsets.symmetric(

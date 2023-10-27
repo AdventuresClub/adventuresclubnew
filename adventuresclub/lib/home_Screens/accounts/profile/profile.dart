@@ -249,8 +249,7 @@ class _ProfileState extends State<Profile> {
         if (oldPassword.text.isNotEmpty) {
           try {
             var response = await http.post(
-                Uri.parse(
-                    "https://adventuresclub.net/adventureClub/api/v1/change_password"),
+                Uri.parse("${Constants.baseUrl}/api/v1/change_password"),
                 body: {
                   'user_id': Constants.userId.toString(), //"",
                   'old_password': oldPassword.text.trim(),
@@ -299,8 +298,7 @@ class _ProfileState extends State<Profile> {
     try {
       var request = http.MultipartRequest(
         "POST",
-        Uri.parse(
-            "https://adventuresclub.net/adventureClub/api/v1/profilePhotoUpdate"),
+        Uri.parse("${Constants.baseUrl}/api/v1/profilePhotoUpdate"),
       );
       String fileName =
           "${DateTime.now().millisecondsSinceEpoch.toString()}.png";
@@ -393,7 +391,7 @@ class _ProfileState extends State<Profile> {
                       ? CircleAvatar(
                           radius: 60,
                           backgroundImage: NetworkImage(
-                              "${'https://adventuresclub.net/adventureClub/public/'}${Constants.profile.profileImage}"),
+                              "${'${Constants.baseUrl}/public/'}${Constants.profile.profileImage}"),
                         )
                       : Container(
                           decoration: BoxDecoration(
@@ -435,7 +433,7 @@ class _ProfileState extends State<Profile> {
             Expanded(child: ProfileTab(widget.role)),
           ],
         ),
-//   https://adventuresclub.net/adventureClub/api/v1/update_profile
+//   ${Constants.baseUrl}/api/v1/update_profile
 // user_id:2
 // name:fgfd
 // mobile_code:+91

@@ -197,7 +197,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                 backgroundImage:
                     //ExactAssetImage('images/airrides.png'),
                     NetworkImage(
-                        "${'https://adventuresclub.net/adventureClub/public/'}${widget.gm.providerProfile}"),
+                        "${'${Constants.baseUrl}/public/'}${widget.gm.providerProfile}"),
               ),
               //     const CircleAvatar(
               //   radius: 28,
@@ -205,7 +205,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
               //       ExactAssetImage('images/airrides.png'),
               // ),
               // NetworkImage(
-              //     "${'https://adventuresclub.net/adventureClub/public/uploads/'}${gm.sm.imageUrl}")),,
+              //     "${'${Constants.baseUrl}/public/uploads/'}${gm.sm.imageUrl}")),,
               title: SizedBox(
                 width: 80,
                 child: Column(

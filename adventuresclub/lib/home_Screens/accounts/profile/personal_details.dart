@@ -55,7 +55,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
     });
   }
 
-  //   https://adventuresclub.net/adventureClub/api/v1/update_profile
+  //   ${Constants.baseUrl}/api/v1/update_profile
 // user_id:2
 // name:fgfd
 // mobile_code:+91
@@ -67,8 +67,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
         if (emailController.text.isNotEmpty) {
           try {
             var response = await http.post(
-                Uri.parse(
-                    "https://adventuresclub.net/adventureClub/api/v1/update_profile"),
+                Uri.parse("${Constants.baseUrl}/api/v1/update_profile"),
                 body: {
                   'user_id': Constants.userId.toString(), //ccCode.toString(),
                   'name': nameController.text.trim(),
@@ -114,17 +113,14 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   void verifyOtp() async {
     Navigator.of(context).pop();
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/verify/otp"),
-          body: {
-            'user_id': Constants.userId.toString(),
-            'mobile_code': ccCode.toString(),
-            'mobile': phoneController.text.trim(),
-            //"3353414905", //"3214181273", //phoneController.text.trim(),
-            'otp': otpController.text
-                .trim(), //"9567", //otpController.text.trim(),
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/verify/otp"), body: {
+        'user_id': Constants.userId.toString(),
+        'mobile_code': ccCode.toString(),
+        'mobile': phoneController.text.trim(),
+        //"3353414905", //"3214181273", //phoneController.text.trim(),
+        'otp': otpController.text.trim(), //"9567", //otpController.text.trim(),
+      });
       if (response.statusCode == 200) {
         SharedPreferences prefs = await Constants.getPrefs();
         prefs.setString("phone", phoneController.text.trim());
@@ -143,13 +139,12 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   void confirmOtp() async {
     enterOTP();
     try {
-      var response = await http.post(
-          Uri.parse("https://adventuresclub.net/adventureClub/api/v1/get_otp"),
-          body: {
-            'mobile_code': ccCode.toString(), //ccCode.toString(),
-            'mobile': phoneController.text,
-            'forgot_password': "0",
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/get_otp"), body: {
+        'mobile_code': ccCode.toString(), //ccCode.toString(),
+        'mobile': phoneController.text,
+        'forgot_password': "0",
+      });
       if (response.statusCode == 200) {}
     } catch (e) {
       print(e.toString());
@@ -162,7 +157,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   //   var request = http.MultipartRequest(
   //       'POST',
   //       Uri.parse(
-  //           "https://adventuresclub.net/adventureClubDev/api/v1/update/number"));
+  //           "${Constants.baseUrl}Dev/api/v1/update/number"));
   //   request.fields.addAll({
   //     'user_id': Constants.userId,
   //     'mobile_code': ccCode.toString(),
@@ -183,15 +178,13 @@ class _PersonalDetailsState extends State<PersonalDetails> {
     print(Constants.userId);
     enterOTP();
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/update/number"),
-          body: {
-            'user_id': Constants.userId.toString(),
-            'mobile_code': ccCode.toString(),
-            'mobile': phoneController.text.trim(),
-            //"3353414905", //"3214181273", //phoneController.text.trim(),
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/update/number"), body: {
+        'user_id': Constants.userId.toString(),
+        'mobile_code': ccCode.toString(),
+        'mobile': phoneController.text.trim(),
+        //"3353414905", //"3214181273", //phoneController.text.trim(),
+      });
       if (response.statusCode == 200) {
         message("Number Updated Successfully");
       }
@@ -359,8 +352,8 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   }
 
   Future getCountries() async {
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_countries"));
+    var response =
+        await http.get(Uri.parse("${Constants.baseUrl}/api/v1/get_countries"));
     if (response.statusCode == 200) {
       mapCountry = json.decode(response.body);
       List<dynamic> result = mapCountry['data'];
@@ -695,7 +688,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                         return ListTile(
                                           leading: searchController.text.isEmpty
                                               ? Image.network(
-                                                  "${"https://adventuresclub.net/adventureClub/public/"}${countriesList1[index].flag}",
+                                                  "${"${Constants.baseUrl}/public/"}${countriesList1[index].flag}",
                                                   height: 25,
                                                   width: 40,
                                                 )

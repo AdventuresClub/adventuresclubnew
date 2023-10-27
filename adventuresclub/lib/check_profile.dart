@@ -151,13 +151,12 @@ class CheckProfileState extends State<CheckProfile> {
     SharedPreferences prefs = await Constants.getPrefs();
     String pass = prefs.getString("password") ?? "";
     String e = prefs.getString("email") ?? "";
-    var response = await http.post(
-        Uri.parse("https://adventuresclub.net/adventureClub/api/v1/login"),
-        body: {
-          'email': e,
-          'password': pass,
-          'device_id': "0",
-        });
+    var response =
+        await http.post(Uri.parse("${Constants.baseUrl}/api/v1/login"), body: {
+      'email': e,
+      'password': pass,
+      'device_id': "0",
+    });
     if (response.statusCode == 200) {
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       dynamic userData = decodedResponse['data'];
@@ -263,8 +262,8 @@ class CheckProfileState extends State<CheckProfile> {
   }
 
   Future getCountries() async {
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_countries"));
+    var response =
+        await http.get(Uri.parse("${Constants.baseUrl}/api/v1/get_countries"));
     if (response.statusCode == 200) {
       mapCountry = json.decode(response.body);
       List<dynamic> result = mapCountry['data'];

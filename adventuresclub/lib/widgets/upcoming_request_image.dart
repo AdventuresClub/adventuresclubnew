@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../constants.dart';
 import '../models/services/service_image_model.dart';
 
 class UpcomingRequestImage extends StatelessWidget {
@@ -13,7 +14,7 @@ class UpcomingRequestImage extends StatelessWidget {
       backgroundImage:
           //ExactAssetImage('images/airrides.png'),
           NetworkImage(
-              "${'https://adventuresclub.net/adventureClub/public/uploads/'}${rm.imageUrl}"),
+              "${'${Constants.baseUrl}/public/uploads/'}${rm.imageUrl}"),
     );
   }
 }

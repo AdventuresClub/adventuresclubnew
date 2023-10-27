@@ -37,12 +37,10 @@ class _ReviewsListState extends State<ReviewsList> {
       loading = true;
     });
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/get_reviews"),
-          body: {
-            'service_id': widget.serviceId, //widget.serviceId,//"1",
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/get_reviews"), body: {
+        'service_id': widget.serviceId, //widget.serviceId,//"1",
+      });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       dynamic services = decodedResponse['data'];
       List<dynamic> rev = services['review'];

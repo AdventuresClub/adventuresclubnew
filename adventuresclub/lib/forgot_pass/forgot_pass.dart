@@ -45,8 +45,8 @@ class _ForgotPassState extends State<ForgotPass> {
   }
 
   Future getCountries() async {
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_countries"));
+    var response =
+        await http.get(Uri.parse("${Constants.baseUrl}/api/v1/get_countries"));
     if (response.statusCode == 200) {
       mapCountry = json.decode(response.body);
       List<dynamic> result = mapCountry['data'];
@@ -99,14 +99,12 @@ class _ForgotPassState extends State<ForgotPass> {
     String otpNumber = otpController.text.trim();
     Navigator.of(context).pop();
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/verify_otp"),
-          body: {
-            'user_id': userID.toString(),
-            'otp': otpNumber,
-            'forgot_password': "2",
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/verify_otp"), body: {
+        'user_id': userID.toString(),
+        'otp': otpNumber,
+        'forgot_password': "2",
+      });
       if (response.statusCode == 200) {
         mapFilter = json.decode(response.body);
         dynamic result = mapFilter['data'];
@@ -133,13 +131,12 @@ class _ForgotPassState extends State<ForgotPass> {
   void getOtp() async {
     enterOTP();
     try {
-      var response = await http.post(
-          Uri.parse("https://adventuresclub.net/adventureClub/api/v1/get_otp"),
-          body: {
-            'mobile_code': ccCode.toString(), //ccCode.toString(),
-            'mobile': numController.text,
-            'forgot_password': "2",
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/get_otp"), body: {
+        'mobile_code': ccCode.toString(), //ccCode.toString(),
+        'mobile': numController.text,
+        'forgot_password': "2",
+      });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       if (response.statusCode == 200) {
         setState(() {
@@ -427,7 +424,7 @@ class _ForgotPassState extends State<ForgotPass> {
                                     itemBuilder: ((context, index) {
                                       return ListTile(
                                         leading: Image.network(
-                                          "${"https://adventuresclub.net/adventureClub/public/"}${countriesList1[index].flag}",
+                                          "${"${Constants.baseUrl}/public/"}${countriesList1[index].flag}",
                                           height: 25,
                                           width: 40,
                                         ),

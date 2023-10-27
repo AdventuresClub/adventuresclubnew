@@ -251,7 +251,7 @@ class _OfficialDetailsState extends State<OfficialDetails> {
   //         try {
   //           var response = await http.post(
   //               Uri.parse(
-  //                   "https://adventuresclub.net/adventureClub/api/v1/edit_partner_official_details"),
+  //                   "${Constants.baseUrl}/api/v1/edit_partner_official_details"),
   //               body: {
   //                 'user_id': Constants.userId.toString(), //"27", //27, //"27",
   //                 'company_name': nameController.text, //deles
@@ -321,7 +321,7 @@ class _OfficialDetailsState extends State<OfficialDetails> {
             var request = http.MultipartRequest(
               "POST",
               Uri.parse(
-                  "https://adventuresclub.net/adventureClub/api/v1/edit_partner_official_details"),
+                  "${Constants.baseUrl}/api/v1/edit_partner_official_details"),
             );
             String fileName =
                 "${DateTime.now().millisecondsSinceEpoch.toString()}.png";
@@ -520,7 +520,7 @@ class _OfficialDetailsState extends State<OfficialDetails> {
                         child: Column(children: [
                           // licenseImage.isNotEmpty
                           //     ? Image.network(
-                          //         "${"https://adventuresclub.net/adventureClub/public/uploads/"}$licenseImage",
+                          //         "${"${Constants.baseUrl}/public/uploads/"}$licenseImage",
                           //         height: 50,
                           //         width: 50,
                           //       )

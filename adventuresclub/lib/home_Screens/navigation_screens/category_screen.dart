@@ -57,12 +57,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
     });
     //gAllServices.clear();
     //getServicesListy1();
-    var response = await http.post(
-        Uri.parse(
-            "https://adventuresclub.net/adventureClub/api/v1/get_allservices"),
-        body: {
-          "country_id": Constants.countryId.toString(), //id,
-        });
+    var response = await http
+        .post(Uri.parse("${Constants.baseUrl}/api/v1/get_allservices"), body: {
+      "country_id": Constants.countryId.toString(), //id,
+    });
     if (response.statusCode == 200) {
       var getServicesMap = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       List<dynamic> result = getServicesMap['data'];

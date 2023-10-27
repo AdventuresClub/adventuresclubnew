@@ -42,8 +42,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
   }
 
   void getVersion() async {
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_app_version"));
+    var response = await http
+        .get(Uri.parse("${Constants.baseUrl}/api/v1/get_app_version"));
     if (response.statusCode == 200) {
       mapVersion = json.decode(response.body);
       List<dynamic> result = mapVersion['data'];
@@ -91,8 +91,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   void getNotificationBadge() async {
     try {
       var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/get_notification_list_budge"),
+          Uri.parse("${Constants.baseUrl}/api/v1/get_notification_list_budge"),
           body: {
             'user_id': Constants.userId.toString(), //"27",
           });

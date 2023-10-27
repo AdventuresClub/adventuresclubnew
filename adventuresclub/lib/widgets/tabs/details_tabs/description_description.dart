@@ -38,7 +38,7 @@ class DescriptionDependency extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Image.network(
-                          "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${dm[i].name}",
+                          "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${dm[i].name}",
                           height: 18,
                           width: 18,
                         ),

@@ -86,7 +86,7 @@ class SearchContainerState extends State<SearchContainer> {
                 ),
               if (widget.value == true)
                 Image.network(
-                  "${"https://adventuresclub.net/adventureClub/public/"}${Constants.countryFlag}",
+                  "${"${Constants.baseUrl}/public/"}${Constants.countryFlag}",
                   height: 15,
                   width: 15,
                 ),

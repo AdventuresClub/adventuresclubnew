@@ -150,8 +150,8 @@ class _SignUpState extends State<SignUp> {
 
   Future getCountries() async {
     getHealth();
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_countries"));
+    var response =
+        await http.get(Uri.parse("${Constants.baseUrl}/api/v1/get_countries"));
     if (response.statusCode == 200) {
       mapCountry = json.decode(response.body);
       List<dynamic> result = mapCountry['data'];
@@ -184,8 +184,8 @@ class _SignUpState extends State<SignUp> {
   }
 
   Future getWeightNHeight() async {
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_heights_weights"));
+    var response = await http
+        .get(Uri.parse("${Constants.baseUrl}/api/v1/get_heights_weights"));
     if (response.statusCode == 200) {
       mapCountry = json.decode(response.body);
       dynamic result = mapCountry['data'];
@@ -220,8 +220,8 @@ class _SignUpState extends State<SignUp> {
 
   Future getHealth() async {
     getWeightNHeight();
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_healths"));
+    var response =
+        await http.get(Uri.parse("${Constants.baseUrl}/api/v1/get_healths"));
     if (response.statusCode == 200) {
       mapCountry = json.decode(response.body);
       List<dynamic> result = mapCountry['data'];
@@ -265,13 +265,12 @@ class _SignUpState extends State<SignUp> {
   void getOtp() async {
     enterOTP();
     try {
-      var response = await http.post(
-          Uri.parse("https://adventuresclub.net/adventureClub/api/v1/get_otp"),
-          body: {
-            'mobile_code': ccCode.toString(), //ccCode.toString(),
-            'mobile': numController.text,
-            'forgot_password': "0",
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/get_otp"), body: {
+        'mobile_code': ccCode.toString(), //ccCode.toString(),
+        'mobile': numController.text,
+        'forgot_password': "0",
+      });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       setState(() {
         userID = decodedResponse['data']['user_id'];
@@ -286,14 +285,12 @@ class _SignUpState extends State<SignUp> {
   void verifyOtp() async {
     Navigator.of(context).pop();
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/verify_otp"),
-          body: {
-            'user_id': userID.toString(),
-            'otp': otpController.text,
-            'forgot_password': "0"
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/verify_otp"), body: {
+        'user_id': userID.toString(),
+        'otp': otpController.text,
+        'forgot_password': "0"
+      });
       print(response.statusCode);
       print(response.body);
       print(response.headers);
@@ -407,7 +404,7 @@ class _SignUpState extends State<SignUp> {
                           if (getheight.isNotEmpty && getWeight.isNotEmpty) {
                             var response = await http.post(
                                 Uri.parse(
-                                    "https://adventuresclub.net/adventureClub/api/v1/register"),
+                                    "${Constants.baseUrl}/api/v1/register"),
                                 body: {
                                   "name": userNameController.text,
                                   "email": emailController
@@ -1028,7 +1025,7 @@ class _SignUpState extends State<SignUp> {
                                         return ListTile(
                                           leading: searchController.text.isEmpty
                                               ? Image.network(
-                                                  "${"https://adventuresclub.net/adventureClub/public/"}${countriesList1[index].flag}",
+                                                  "${"${Constants.baseUrl}/public/"}${countriesList1[index].flag}",
                                                   height: 25,
                                                   width: 40,
                                                 )
@@ -1348,7 +1345,7 @@ class _SignUpState extends State<SignUp> {
                             return ListTile(
                               leading: searchController.text.isEmpty
                                   ? Image.network(
-                                      "${"https://adventuresclub.net/adventureClub/public/"}${filteredServices[index].flag}",
+                                      "${"${Constants.baseUrl}/public/"}${filteredServices[index].flag}",
                                       height: 25,
                                       width: 40,
                                     )

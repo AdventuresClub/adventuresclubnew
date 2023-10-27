@@ -56,7 +56,7 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
       MaterialPageRoute(
         builder: (_) {
           return ShowChat(
-              "https://adventuresclub.net/adventureClub/chatlist/${Constants.userId}/$serviceId/$providerId");
+              "${Constants.baseUrl}/chatlist/${Constants.userId}/$serviceId/$providerId");
         },
       ),
     );
@@ -64,13 +64,11 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
 
   void editService(String id, String providerId) async {
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/edit_service"),
-          body: {
-            'service_id': id,
-            'customer_id': providerId, //ccCode.toString(),
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/edit_service"), body: {
+        'service_id': id,
+        'customer_id': providerId, //ccCode.toString(),
+      });
       print(response.statusCode);
     } catch (e) {
       print(e.toString());
@@ -80,8 +78,7 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
   void deleteService(String id) async {
     try {
       var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/services_delete"),
+          Uri.parse("${Constants.baseUrl}/api/v1/services_delete"),
           body: {
             'services_id': id,
           });
@@ -156,7 +153,7 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
 
   Future getChatNotification() async {
     var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/unreadchatcount/'${Constants.userId}/${widget.sm.serviceId}"));
+        "${Constants.baseUrl}/unreadchatcount/'${Constants.userId}/${widget.sm.serviceId}"));
     if (response.statusCode == 200) {
       mapChatNotification = json.decode(response.body);
       dynamic result = mapChatNotification['unread'];

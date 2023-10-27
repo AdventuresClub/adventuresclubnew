@@ -66,8 +66,7 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
     }
     try {
       var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/forgot_password"),
+          Uri.parse("${Constants.baseUrl}/api/v1/forgot_password"),
           body: {
             'user_id': widget.userId, //"",
             'password': passController.text.trim(),

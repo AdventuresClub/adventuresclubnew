@@ -162,8 +162,8 @@ class _SignInState extends State<SignIn> {
   }
 
   Future getCountries() async {
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_countries"));
+    var response =
+        await http.get(Uri.parse("${Constants.baseUrl}/api/v1/get_countries"));
     if (response.statusCode == 200) {
       mapCountry = json.decode(response.body);
       List<dynamic> result = mapCountry['data'];
@@ -186,14 +186,12 @@ class _SignInState extends State<SignIn> {
     try {
       if (emailController.text.isNotEmpty) {
         if (passController.text.isNotEmpty) {
-          var response = await http.post(
-              Uri.parse(
-                  "https://adventuresclub.net/adventureClub/api/v1/login"),
-              body: {
-                'email': emailController.text,
-                'password': passController.text,
-                'device_id': "0",
-              });
+          var response = await http
+              .post(Uri.parse("${Constants.baseUrl}/api/v1/login"), body: {
+            'email': emailController.text,
+            'password': passController.text,
+            'device_id': "0",
+          });
           if (response.statusCode == 200) {
             var decodedResponse =
                 jsonDecode(utf8.decode(response.bodyBytes)) as Map;

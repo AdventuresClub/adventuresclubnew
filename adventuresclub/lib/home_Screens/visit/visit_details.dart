@@ -144,8 +144,7 @@ class _VisitDetailsState extends State<VisitDetails> {
     String id = widget.vm!.id.toString();
     try {
       var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/get_location_reviews"),
+          Uri.parse("${Constants.baseUrl}/api/v1/get_location_reviews"),
           body: {
             'location_id': id,
           });
@@ -217,7 +216,7 @@ class _VisitDetailsState extends State<VisitDetails> {
             decoration: BoxDecoration(
                 image: DecorationImage(
               image: NetworkImage(
-                "${"https://adventuresclub.net/adventureClub/public/uploads/"}${widget.vm!.destinationImage}",
+                "${"${Constants.baseUrl}/public/uploads/"}${widget.vm!.destinationImage}",
               ),
               fit: BoxFit.cover,
             )),

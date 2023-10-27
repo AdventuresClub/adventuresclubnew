@@ -85,12 +85,10 @@ class _AboutState extends State<About> {
       loading = true;
     });
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/get_profile"),
-          body: {
-            'user_id': widget.id, //"hamza@gmail.com",
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/get_profile"), body: {
+        'user_id': widget.id, //"hamza@gmail.com",
+      });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       dynamic userData = decodedResponse['data'];
       int userLoginId = int.tryParse(userData['id'].toString()) ?? 0;
@@ -192,7 +190,7 @@ class _AboutState extends State<About> {
     });
     try {
       var response = await http.get(Uri.parse(
-          "https://adventuresclub.net/adventureClub/api/v1/serviceProviderProfile?id=${widget.id}"));
+          "${Constants.baseUrl}/api/v1/serviceProviderProfile?id=${widget.id}"));
       if (response.statusCode == 200) {
         mapCountry = json.decode(response.body);
         List<dynamic> result = mapCountry['data'];
@@ -387,14 +385,14 @@ class _AboutState extends State<About> {
       MaterialPageRoute(
         builder: (_) {
           return ShowChat(
-            "https://adventuresclub.net/adventureClub/newreceiverchat/${Constants.userId}/${widget.sId}/${profile.id}",
+            "${Constants.baseUrl}/newreceiverchat/${Constants.userId}/${widget.sId}/${profile.id}",
           );
         },
       ),
     );
   }
 
-  // Chat Provider : https://adventuresclub.net/adventureClub/newreceiverchat/3/34/24
+  // Chat Provider : ${Constants.baseUrl}/newreceiverchat/3/34/24
   // string ChatUrl = $"{CommonConstantUrl.ChatUrl}newreceiverchat/{Settings.UserId}/{completedDataModel.service_id}/{completedDataModel.provider_id}";
 
   abc() {}
@@ -433,7 +431,7 @@ class _AboutState extends State<About> {
                           leading: CircleAvatar(
                             radius: 40,
                             backgroundImage: NetworkImage(
-                              "${'https://adventuresclub.net/adventureClub/public/'}${profile.profileImage}",
+                              "${'${Constants.baseUrl}/public/'}${profile.profileImage}",
                             ),
                           ),
                           title: Column(

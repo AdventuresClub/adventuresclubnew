@@ -133,12 +133,10 @@ class _UpcomingRequestInformationState
       loading = true;
     });
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/get_profile"),
-          body: {
-            'user_id': providerId, //"hamza@gmail.com",
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/get_profile"), body: {
+        'user_id': providerId, //"hamza@gmail.com",
+      });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       dynamic userData = decodedResponse['data'];
       int userLoginId = int.tryParse(userData['id'].toString()) ?? 0;
@@ -233,7 +231,7 @@ class _UpcomingRequestInformationState
       loading = true;
     });
     var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/services/$serviceId?user_id=$userId"));
+        "${Constants.baseUrl}/api/v1/services/$serviceId?user_id=$userId"));
     if (response.statusCode == 200) {
       mapDetails = json.decode(response.body);
       dynamic result = mapDetails['data'];
@@ -601,7 +599,7 @@ class _UpcomingRequestInformationState
                 //   backgroundImage:
                 //       //ExactAssetImage('images/airrides.png'),
                 //       NetworkImage(
-                //           "${'https://adventuresclub.net/adventureClub/public/uploads/'}${widget.uRequestList.sImage[1].imageUrl}"),
+                //           "${'${Constants.baseUrl}/public/uploads/'}${widget.uRequestList.sImage[1].imageUrl}"),
                 // ),
                 Padding(
                   padding:

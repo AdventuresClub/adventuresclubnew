@@ -66,7 +66,7 @@ class _PlannedState extends State<Planned> {
   //   });
   //   var response = await http.post(
   //       Uri.parse(
-  //           "https://adventuresclub.net/adventureClub/api/v1/get_allservices"),
+  //           "${Constants.baseUrl}/api/v1/get_allservices"),
   //       body: {
   //         "country_id": id,
   //       });
@@ -182,7 +182,7 @@ class _PlannedState extends State<Planned> {
   //     loading = true;
   //   });
   //   var response = await http.get(Uri.parse(
-  //       "https://adventuresclub.net/adventureClub/api/v1/services/$id"));
+  //       "${Constants.baseUrl}/api/v1/services/$id"));
   //   if (response.statusCode == 200) {
   //     getServicesMap = json.decode(response.body);
   //     dynamic result = getServicesMap['data'];

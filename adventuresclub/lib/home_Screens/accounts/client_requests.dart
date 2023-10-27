@@ -130,8 +130,7 @@ class _ClientsRequestsState extends State<ClientsRequests> {
     });
     try {
       var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/get_client_requests"),
+          Uri.parse("${Constants.baseUrl}/api/v1/get_client_requests"),
           body: {
             'partner_id': Constants.userId.toString(), //"3",
             'country_id': Constants.countryId.toString(), //"1",

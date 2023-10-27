@@ -153,7 +153,7 @@ class SkyState extends State<Sky> {
                                     //   'images/overseas.png',
                                     // ),
                                     image: NetworkImage(
-                                      "${"https://adventuresclub.net/adventureClub/public/uploads/"}${gm[index].images[index].imageUrl}",
+                                      "${"${Constants.baseUrl}/public/uploads/"}${gm[index].images[index].imageUrl}",
                                     ),
                                     fit: BoxFit.cover),
                               ),

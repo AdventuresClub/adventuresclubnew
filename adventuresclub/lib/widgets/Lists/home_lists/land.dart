@@ -155,7 +155,7 @@ class LandState extends State<Land> {
                                         //   'images/overseas.png',
                                         // ),
                                         NetworkImage(
-                                      "${"https://adventuresclub.net/adventureClub/public/uploads/"}${gm[index].images[index].imageUrl}",
+                                      "${"${Constants.baseUrl}/public/uploads/"}${gm[index].images[index].imageUrl}",
                                     ),
                                     fit: BoxFit.cover),
                               ),

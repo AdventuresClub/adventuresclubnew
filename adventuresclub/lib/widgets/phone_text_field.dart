@@ -49,8 +49,8 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
   }
 
   Future getCountries() async {
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_countries"));
+    var response =
+        await http.get(Uri.parse("${Constants.baseUrl}/api/v1/get_countries"));
     if (response.statusCode == 200) {
       mapCountry = json.decode(response.body);
       List<dynamic> result = mapCountry['data'];
@@ -158,14 +158,12 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
   void verifyOtp() async {
     Navigator.of(context).pop();
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/verify_otp"),
-          body: {
-            'user_id': userID.toString(),
-            'otp': otpController.text,
-            'forgot_password': "0"
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/verify_otp"), body: {
+        'user_id': userID.toString(),
+        'otp': otpController.text,
+        'forgot_password': "0"
+      });
       if (response.statusCode == 200) {
         message("Otp Verified");
         goRegister();
@@ -219,13 +217,12 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
     }
     enterOTP();
     try {
-      var response = await http.post(
-          Uri.parse("https://adventuresclub.net/adventureClub/api/v1/get_otp"),
-          body: {
-            'mobile_code': ccCode.toString(), //ccCode.toString(),
-            'mobile': numController.text,
-            'forgot_password': "0",
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/get_otp"), body: {
+        'mobile_code': ccCode.toString(), //ccCode.toString(),
+        'mobile': numController.text,
+        'forgot_password': "0",
+      });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       setState(() {
         userID = decodedResponse['data']['user_id'];
@@ -381,7 +378,7 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
                                               leading:
                                                   searchController.text.isEmpty
                                                       ? Image.network(
-                                                          "${"https://adventuresclub.net/adventureClub/public/"}${countriesList1[index].flag}",
+                                                          "${"${Constants.baseUrl}/public/"}${countriesList1[index].flag}",
                                                           height: 25,
                                                           width: 40,
                                                         )

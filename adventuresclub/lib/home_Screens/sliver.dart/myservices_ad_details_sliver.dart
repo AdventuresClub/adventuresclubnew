@@ -56,7 +56,7 @@
 //       MaterialPageRoute(
 //         builder: (_) {
 //           return ShowChat(
-//               "https://adventuresclub.net/adventureClub/chatlist/${Constants.userId}/$serviceId/$providerId");
+//               "${Constants.baseUrl}/chatlist/${Constants.userId}/$serviceId/$providerId");
 //         },
 //       ),
 //     );
@@ -66,7 +66,7 @@
 //     try {
 //       var response = await http.post(
 //           Uri.parse(
-//               "https://adventuresclub.net/adventureClub/api/v1/edit_service"),
+//               "${Constants.baseUrl}/api/v1/edit_service"),
 //           body: {
 //             'service_id': id,
 //             'customer_id': providerId, //ccCode.toString(),
@@ -81,7 +81,7 @@
 //     try {
 //       var response = await http.post(
 //           Uri.parse(
-//               "https://adventuresclub.net/adventureClub/api/v1/services_delete"),
+//               "${Constants.baseUrl}/api/v1/services_delete"),
 //           body: {
 //             'services_id': id,
 //           });
@@ -157,7 +157,7 @@
 
 //   Future getChatNotification() async {
 //     var response = await http.get(Uri.parse(
-//         "https://adventuresclub.net/adventureClub/unreadchatcount/'${Constants.userId}/${widget.sm.serviceId}"));
+//         "${Constants.baseUrl}/unreadchatcount/'${Constants.userId}/${widget.sm.serviceId}"));
 //     if (response.statusCode == 200) {
 //       mapChatNotification = json.decode(response.body);
 //       dynamic result = mapChatNotification['unread'];

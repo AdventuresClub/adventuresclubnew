@@ -314,8 +314,7 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
     try {
       var request = http.MultipartRequest(
         "POST",
-        Uri.parse(
-            "https://adventuresclub.net/adventureClub/api/v1/become_partner"),
+        Uri.parse("${Constants.baseUrl}/api/v1/become_partner"),
       );
       String fileName =
           "${DateTime.now().millisecondsSinceEpoch.toString()}.png";

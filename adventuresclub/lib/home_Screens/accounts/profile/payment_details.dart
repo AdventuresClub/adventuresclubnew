@@ -53,8 +53,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
         if (accountNumberController.text.isNotEmpty) {
           try {
             var response = await http.post(
-                Uri.parse(
-                    "https://adventuresclub.net/adventureClub/api/v1/edit_payment_details"),
+                Uri.parse("${Constants.baseUrl}/api/v1/edit_payment_details"),
                 body: {
                   'user_id': Constants.userId.toString(), //ccCode.toString(),
                   "debit_card": "1",

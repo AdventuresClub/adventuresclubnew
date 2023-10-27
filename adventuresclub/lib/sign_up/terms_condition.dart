@@ -30,8 +30,8 @@ class _TermsConditionsState extends State<TermsConditions> {
     setState(() {
       loading = true;
     });
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/terms-conditions"));
+    var response = await http
+        .get(Uri.parse("${Constants.baseUrl}/api/v1/terms-conditions"));
     if (response.statusCode == 200) {
       MapFilter = json.decode(response.body);
       List<dynamic> result = MapFilter['data'];

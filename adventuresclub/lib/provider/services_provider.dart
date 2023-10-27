@@ -116,12 +116,10 @@ class ServicesProvider with ChangeNotifier {
     filteredServices.clear();
     allServices.clear();
     gAllServices.clear();
-    var response = await http.post(
-        Uri.parse(
-            "https://adventuresclub.net/adventureClub/api/v1/get_allservices"),
-        body: {
-          "country_id": Constants.countryId.toString(), //id,
-        });
+    var response = await http
+        .post(Uri.parse("${Constants.baseUrl}/api/v1/get_allservices"), body: {
+      "country_id": Constants.countryId.toString(), //id,
+    });
     if (response.statusCode == 200) {
       var getServicesMap = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       List<dynamic> result = getServicesMap['data'];
@@ -314,7 +312,7 @@ class ServicesProvider with ChangeNotifier {
   //   var request = http.MultipartRequest(
   //       'POST',
   //       Uri.parse(
-  //           'https://adventuresclub.net/adventureClubDev/api/v1/filterServices'));
+  //           '${Constants.baseUrl}Dev/api/v1/filterServices'));
   //   request.fields.addAll({
   //     'country_id': ccode, //'14',
   //     'min_price': minPrice, //'10',
@@ -361,22 +359,20 @@ class ServicesProvider with ChangeNotifier {
     //   'aimed_for': "",
     //   'provider_name': "",
     // };
-    var response = await http.post(
-        Uri.parse(
-            'https://adventuresclub.net/adventureClub/api/v1/services_filter'),
-        body: {
-          'country': ccode,
-          'min_price': minPrice,
-          'max_price': maxPrice,
-          'region': region,
-          'service_sector': sId,
-          'category': cId,
-          'service_type': serviceType,
-          'duration': duration,
-          'service_level': serviceLevel,
-          'aimed_for': "",
-          'provider_name': "",
-        });
+    var response = await http
+        .post(Uri.parse('${Constants.baseUrl}/api/v1/services_filter'), body: {
+      'country': ccode,
+      'min_price': minPrice,
+      'max_price': maxPrice,
+      'region': region,
+      'service_sector': sId,
+      'category': cId,
+      'service_type': serviceType,
+      'duration': duration,
+      'service_level': serviceLevel,
+      'aimed_for': "",
+      'provider_name': "",
+    });
     if (response.statusCode == 200) {
       var getServicesMap = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       List<dynamic> result = getServicesMap['data'];
@@ -559,9 +555,7 @@ class ServicesProvider with ChangeNotifier {
   Future<void> g() async {
     var headers = {'Content-Type': 'application/json'};
     var request = http.Request(
-        'POST',
-        Uri.parse(
-            'https://adventuresclub.net/adventureClub/api/v1/filterServices'));
+        'POST', Uri.parse('${Constants.baseUrl}/api/v1/filterServices'));
     request.body =
         '''{\r\n    "country_id": 14,\r\n    "min_price": 0,\r\n    "max_price": 1000,\r\n    "sector_id": 3,\r\n    "category_id": 7,\r\n    "service_type": 2,\r\n    "service_level": 2,\r\n    "duration": 3\r\n}''';
     request.headers.addAll(headers);
@@ -582,7 +576,7 @@ class ServicesProvider with ChangeNotifier {
   //   try {
   //     var response = await http.post(
   //         Uri.parse(
-  //             "https://adventuresclub.net/adventureClub/api/v1/services_filter"),
+  //             "${Constants.baseUrl}/api/v1/services_filter"),
   //         body: {
   //           "category": "",
   //           "country": Constants.countryId.toString(),
@@ -783,7 +777,7 @@ class ServicesProvider with ChangeNotifier {
   //   var request = http.Request(
   //       'POST',
   //       Uri.parse(
-  //           'https://adventuresclub.net/adventureClub/api/v1/filterServices'));
+  //           '${Constants.baseUrl}/api/v1/filterServices'));
   //   request.body =
   //       '''{\r\n    "country_id": 14,\r\n    "min_price": 0,\r\n    "max_price": 1000,\r\n    "sector_id": 3,\r\n    "category_id": 7,\r\n    "service_type": 2,\r\n    "service_level": 2,\r\n    "duration": 3\r\n}''';
   //   request.headers.addAll(headers);
@@ -797,12 +791,10 @@ class ServicesProvider with ChangeNotifier {
   // }
 
   Future getServicesListy1() async {
-    var response = await http.post(
-        Uri.parse(
-            "https://adventuresclub.net/adventureClub/api/v1/get_allservices"),
-        body: {
-          "country_id": Constants.countryId.toString(), //id,
-        });
+    var response = await http
+        .post(Uri.parse("${Constants.baseUrl}/api/v1/get_allservices"), body: {
+      "country_id": Constants.countryId.toString(), //id,
+    });
     if (response.statusCode == 200) {
       var getServicesMap = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       List<dynamic> result = getServicesMap['data'];

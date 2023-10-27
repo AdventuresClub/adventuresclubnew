@@ -152,13 +152,11 @@ class _MyServicesState extends State<MyServices> {
       loading = true;
     });
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/myserviceapi"),
-          body: {
-            'owner': Constants.userId.toString(), //"3",
-            'country_id': Constants.countryId.toString(),
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/myserviceapi"), body: {
+        'owner': Constants.userId.toString(), //"3",
+        'country_id': Constants.countryId.toString(),
+      });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       List<dynamic> result = decodedResponse['data'];
       filteredServices.clear();

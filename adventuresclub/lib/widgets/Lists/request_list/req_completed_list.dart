@@ -125,7 +125,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
       loading = true;
     });
     var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_requests?user_id=${Constants.userId}&type=1"));
+        "${Constants.baseUrl}/api/v1/get_requests?user_id=${Constants.userId}&type=1"));
     try {
       if (response.statusCode == 200) {
         Ulist = json.decode(response.body);
@@ -192,7 +192,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
       loading = true;
     });
     var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/services/$serviceId?user_id=$userId"));
+        "${Constants.baseUrl}/api/v1/services/$serviceId?user_id=$userId"));
     if (response.statusCode == 200) {
       mapDetails = json.decode(response.body);
       dynamic result = mapDetails['data'];
@@ -397,7 +397,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
   //     MaterialPageRoute(
   //       builder: (_) {
   //         return ShowChat(
-  //             "https://adventuresclub.net/adventureClub/newreceiverchat/${Constants.userId}/${widget.sId}/${profile.id}");
+  //             "${Constants.baseUrl}/newreceiverchat/${Constants.userId}/${widget.sId}/${profile.id}");
   //       },
   //     ),
   //   );
@@ -408,7 +408,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
       MaterialPageRoute(
         builder: (_) {
           return ShowChat(
-              "https://adventuresclub.net/adventureClub/newreceiverchat/${Constants.userId}/$serviceId/$providerUserId");
+              "${Constants.baseUrl}/newreceiverchat/${Constants.userId}/$serviceId/$providerUserId");
         },
       ),
     );
@@ -476,14 +476,12 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
       uRequestList.removeAt(index);
     });
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/booking_accept"),
-          body: {
-            'booking_id': id,
-            'status': "5",
-            'user_id': Constants.userId.toString(),
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/booking_accept"), body: {
+        'booking_id': id,
+        'status': "5",
+        'user_id': Constants.userId.toString(),
+      });
       if (response.statusCode != 200) {
         setState(() {
           uRequestList.insert(index, uR);
@@ -514,14 +512,12 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
   void dropped(String bookingId) async {
     Navigator.of(context).pop();
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/booking_accept"),
-          body: {
-            'booking_id': bookingId,
-            'user_id': Constants.userId.toString(),
-            'status': "5",
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/booking_accept"), body: {
+        'booking_id': bookingId,
+        'user_id': Constants.userId.toString(),
+        'status': "5",
+      });
       if (response.statusCode == 200) {
         message("Deleted Successfully");
         // homePage();
@@ -680,7 +676,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                     backgroundImage:
                                         //  ExactAssetImage('images/airrides.png'),
                                         NetworkImage(
-                                            "${'https://adventuresclub.net/adventureClub/public/uploads/'}${uRequestList[index].sImage[0].thumbnail}"),
+                                            "${'${Constants.baseUrl}/public/uploads/'}${uRequestList[index].sImage[0].thumbnail}"),
                                   ),
                                   title: Column(
                                       crossAxisAlignment:

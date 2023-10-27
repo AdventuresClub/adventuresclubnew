@@ -67,8 +67,8 @@ class _AdventureCategoryState extends State<AdventureCategory> {
     setState(() {
       loading = false;
     });
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/categories"));
+    var response =
+        await http.get(Uri.parse("${Constants.baseUrl}/api/v1/categories"));
     if (response.statusCode == 200) {
       mapCategory = json.decode(response.body);
       categoryFilter.forEach((i) {});

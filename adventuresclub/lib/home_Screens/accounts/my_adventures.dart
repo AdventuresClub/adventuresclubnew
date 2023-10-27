@@ -39,15 +39,13 @@ class _MyAdventuresState extends State<MyAdventures> {
 
   void addReview() async {
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/add_review"),
-          body: {
-            'user_id': Constants.userId.toString(),
-            'service_id': widget.gm.serviceId.toString(),
-            "star": stars.toString(),
-            'remark': commentController.text,
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/add_review"), body: {
+        'user_id': Constants.userId.toString(),
+        'service_id': widget.gm.serviceId.toString(),
+        "star": stars.toString(),
+        'remark': commentController.text,
+      });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       if (response.statusCode == 200) {
         cancel();
@@ -101,7 +99,7 @@ class _MyAdventuresState extends State<MyAdventures> {
                   backgroundImage:
                       //  ExactAssetImage('images/airrides.png'),
                       NetworkImage(
-                          "${'https://adventuresclub.net/adventureClub/public/uploads/'}${widget.gm.sImage[0].thumbnail}"),
+                          "${'${Constants.baseUrl}/public/uploads/'}${widget.gm.sImage[0].thumbnail}"),
                 ),
                 title: Row(
                   children: [

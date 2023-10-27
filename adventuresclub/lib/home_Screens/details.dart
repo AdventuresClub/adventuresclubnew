@@ -107,13 +107,11 @@ class _DetailsState extends State<Details> {
       favourite = true;
     });
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/add_favourite"),
-          body: {
-            'user_id': Constants.userId.toString(), //"27",
-            'service_id': widget.gm!.serviceId.toString(),
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/add_favourite"), body: {
+        'user_id': Constants.userId.toString(), //"27",
+        'service_id': widget.gm!.serviceId.toString(),
+      });
       if (response.statusCode == 200) {
         cancel();
         message("Adventure has been added to your favourites");
@@ -197,7 +195,7 @@ class _DetailsState extends State<Details> {
                                       //     'images/River-rafting.png'),
                                       // fit: BoxFit.cover,
                                       NetworkImage(
-                                    "${"https://adventuresclub.net/adventureClub/public/uploads/"}${widget.gm!.images[index].imageUrl}",
+                                    "${"${Constants.baseUrl}/public/uploads/"}${widget.gm!.images[index].imageUrl}",
                                   ),
                                   fit: BoxFit.fill
                                   // const ExactAssetImage(

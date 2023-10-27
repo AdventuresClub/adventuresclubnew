@@ -103,16 +103,14 @@ class _PaymentMethodsState extends State<PaymentMethods> {
 
   void decline() async {
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/booking_accept"),
-          body: {
-            "booking_id": widget.bookingId,
-            'user_id':
-                Constants.userId.toString(), //"3", //Constants.userId, //"27",
-            'status': "8",
-            "payment_channel": "Pay On Arrival",
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/booking_accept"), body: {
+        "booking_id": widget.bookingId,
+        'user_id':
+            Constants.userId.toString(), //"3", //Constants.userId, //"27",
+        'status': "8",
+        "payment_channel": "Pay On Arrival",
+      });
       if (response.statusCode != 200) {
         cancel();
       } else {
@@ -213,8 +211,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
     DateTime now = DateTime.now();
     try {
       var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/update_payments"),
+          Uri.parse("${Constants.baseUrl}/api/v1/update_payments"),
           body: {
             "user_id": Constants.userId.toString(),
             "service_id": widget.uRequestList.serviceId.toString(),

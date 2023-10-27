@@ -94,7 +94,7 @@ class _ViewDetailsGridState extends State<ViewDetailsGrid> {
                                       //   'images/overseas.png',
                                       // ),
                                       NetworkImage(
-                                    "${"https://adventuresclub.net/adventureClub/public/uploads/"}${widget.gm[index].images[index].imageUrl}",
+                                    "${"${Constants.baseUrl}/public/uploads/"}${widget.gm[index].images[index].imageUrl}",
                                   ),
                                   fit: BoxFit.cover),
                             ),

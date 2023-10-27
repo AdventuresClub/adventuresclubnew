@@ -151,8 +151,7 @@ class _AddLocationState extends State<AddLocation> {
     try {
       var request = http.MultipartRequest(
         "POST",
-        Uri.parse(
-            "https://adventuresclub.net/adventureClub/api/v1/visited_location"),
+        Uri.parse("${Constants.baseUrl}/api/v1/visited_location"),
       );
       String fileName =
           "${DateTime.now().millisecondsSinceEpoch.toString()}.png";

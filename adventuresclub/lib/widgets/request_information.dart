@@ -24,8 +24,8 @@ class _RequestInformationState extends State<RequestInformation> {
       MaterialPageRoute(
         builder: (_) {
           return ShowChat(
-              "https://adventuresclub.net/adventureClub/newchat/${Constants.userId}/$serviceId/$bookingUser");
-          // "https://adventuresclub.net/adventureClub/newreceiverchat/${providerId}/${serviceId}/${Constants.userId}");
+              "${Constants.baseUrl}/newchat/${Constants.userId}/$serviceId/$bookingUser");
+          // "${Constants.baseUrl}/newreceiverchat/${providerId}/${serviceId}/${Constants.userId}");
         },
       ),
     );
@@ -106,7 +106,7 @@ class _RequestInformationState extends State<RequestInformation> {
                   backgroundImage:
                       //ExactAssetImage('images/airrides.png'),
                       NetworkImage(
-                          "${'https://adventuresclub.net/adventureClub/public/'}${widget.gRM.profileImage}"),
+                          "${'${Constants.baseUrl}/public/'}${widget.gRM.profileImage}"),
                 ),
                 title: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -445,7 +445,7 @@ class _RequestInformationState extends State<RequestInformation> {
             //     //   backgroundImage:
             //     //       //ExactAssetImage('images/airrides.png'),
             //     //       NetworkImage(
-            //     //           "${'https://adventuresclub.net/adventureClub/public/uploads/'}${widget.rm[index].sm[index].thumbnail}"),
+            //     //           "${'${Constants.baseUrl}/public/uploads/'}${widget.rm[index].sm[index].thumbnail}"),
             //     // ),
             //     // const SizedBox(
             //     //   width: 20,

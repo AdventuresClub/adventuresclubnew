@@ -68,7 +68,7 @@ class _VisitListState extends State<VisitList> {
                                     Colors.black.withOpacity(0.2),
                                     BlendMode.darken),
                                 image: NetworkImage(
-                                  "${"https://adventuresclub.net/adventureClub/public/uploads/"}${widget.gGv[index].destinationImage}",
+                                  "${"${Constants.baseUrl}/public/uploads/"}${widget.gGv[index].destinationImage}",
                                 ),
                                 // const ExactAssetImage(
                                 //   'images/image13.png',

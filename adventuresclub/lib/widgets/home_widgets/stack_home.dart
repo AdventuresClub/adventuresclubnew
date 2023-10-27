@@ -192,8 +192,8 @@ class _StackHomeState extends State<StackHome> {
   }
 
   void aimedFor() async {
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/getServiceFor"));
+    var response =
+        await http.get(Uri.parse("${Constants.baseUrl}/api/v1/getServiceFor"));
     if (response.statusCode == 200) {
       mapAimedFilter = json.decode(response.body);
       List<dynamic> result = mapAimedFilter['message'];
@@ -898,7 +898,7 @@ class _StackHomeState extends State<StackHome> {
               //             ),
               //           ),
               //           Image.network(
-              //             "${"https://adventuresclub.net/adventureClub/public/"}${Constants.countryFlag}",
+              //             "${"${Constants.baseUrl}/public/"}${Constants.countryFlag}",
               //             height: 15,
               //             width: 15,
               //           ),
@@ -979,7 +979,7 @@ class _StackHomeState extends State<StackHome> {
         //                       image: const DecorationImage(
         //                         image: ExactAssetImage('images/maskGroup1.png'),
         //                         //   //   NetworkImage(
-        //                         //   // "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${widget.images[0]}",
+        //                         //   // "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.images[0]}",
         //                       ),
         //                     ),
         //                   );
@@ -1015,13 +1015,13 @@ class _StackHomeState extends State<StackHome> {
                         ? const DecorationImage(
                             image: ExactAssetImage('images/maskGroup1.png'),
                             //   //   NetworkImage(
-                            //   // "${"https://adventuresclub.net/adventureClub/public/uploads/selection_manager/"}${widget.images[0]}",
+                            //   // "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.images[0]}",
                           )
                         : DecorationImage(
                             image:
                                 //ExactAssetImage('images/maskGroup1.png'),
                                 NetworkImage(
-                              "${"https://adventuresclub.net/adventureClub/public/"}${widget.images[index]}",
+                              "${"${Constants.baseUrl}/public/"}${widget.images[index]}",
                             ),
                             fit: BoxFit.cover,
                           ),

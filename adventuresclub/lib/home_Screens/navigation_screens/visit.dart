@@ -81,8 +81,8 @@ class _VisitState extends State<Visit> {
     setState(() {
       loading = true;
     });
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_visited_location"));
+    var response = await http
+        .get(Uri.parse("${Constants.baseUrl}/api/v1/get_visited_location"));
     if (response.statusCode == 200) {
       mapVisit = json.decode(response.body);
       List<dynamic> result = mapVisit['data'];
@@ -139,8 +139,8 @@ class _VisitState extends State<Visit> {
     setState(() {
       loading = true;
     });
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_visited_location"));
+    var response = await http
+        .get(Uri.parse("${Constants.baseUrl}/api/v1/get_visited_location"));
     if (response.statusCode == 200) {
       mapVisit = json.decode(response.body);
       List<dynamic> result = mapVisit['data'];
@@ -169,8 +169,8 @@ class _VisitState extends State<Visit> {
     setState(() {
       loading = true;
     });
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_visited_location"));
+    var response = await http
+        .get(Uri.parse("${Constants.baseUrl}/api/v1/get_visited_location"));
     if (response.statusCode == 200) {
       mapVisit = json.decode(response.body);
       List<dynamic> result = mapVisit['data'];
@@ -400,7 +400,7 @@ class _VisitState extends State<Visit> {
               children: [
                 Image(
                   image: NetworkImage(
-                    "${"https://adventuresclub.net/adventureClub/public/uploads/"}$image",
+                    "${"${Constants.baseUrl}/public/uploads/"}$image",
                   ),
                   height: 30,
                   width: 30,

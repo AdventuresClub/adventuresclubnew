@@ -124,12 +124,10 @@ class _RequestListViewState extends State<RequestListView> {
       loading = true;
     });
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/get_profile"),
-          body: {
-            'user_id': providerId, //"hamza@gmail.com",
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/get_profile"), body: {
+        'user_id': providerId, //"hamza@gmail.com",
+      });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       dynamic userData = decodedResponse['data'];
       int userLoginId = int.tryParse(userData['id'].toString()) ?? 0;
@@ -372,14 +370,12 @@ class _RequestListViewState extends State<RequestListView> {
       uRequestListInv.removeAt(index);
     });
     try {
-      var response = await http.post(
-          Uri.parse(
-              "https://adventuresclub.net/adventureClub/api/v1/booking_accept"),
-          body: {
-            'booking_id': bookingId,
-            'user_id': Constants.userId.toString(),
-            'status': "5",
-          });
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/booking_accept"), body: {
+        'booking_id': bookingId,
+        'user_id': Constants.userId.toString(),
+        'status': "5",
+      });
       if (response.statusCode != 200) {
         setState(() {
           uRequestListInv.insert(index, gR);
@@ -515,7 +511,7 @@ class _RequestListViewState extends State<RequestListView> {
                       backgroundImage:
                           //ExactAssetImage('images/airrides.png'),
                           NetworkImage(
-                              "${'https://adventuresclub.net/adventureClub/public/uploads/'}${uRequestListInv[index].sImage[0].imageUrl}"),
+                              "${'${Constants.baseUrl}/public/uploads/'}${uRequestListInv[index].sImage[0].imageUrl}"),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(

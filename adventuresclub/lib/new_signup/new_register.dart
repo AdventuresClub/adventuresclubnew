@@ -163,17 +163,15 @@ class _NewRegisterState extends State<NewRegister> {
         return;
       }
       if (formattedDate != null) {
-        var response = await http.post(
-            Uri.parse(
-                "https://adventuresclub.net/adventureClub/api/v1/register_new"),
-            body: {
-              "language_id": "1",
-              "name": userNameController.text,
-              "email": emailController.text,
-              "password": passController.text,
-              "mobile": mobileNumber, //widget.mobileNumber,
-              "country_id": countryId.toString(),
-            });
+        var response = await http
+            .post(Uri.parse("${Constants.baseUrl}/api/v1/register_new"), body: {
+          "language_id": "1",
+          "name": userNameController.text,
+          "email": emailController.text,
+          "password": passController.text,
+          "mobile": mobileNumber, //widget.mobileNumber,
+          "country_id": countryId.toString(),
+        });
         var decodedResponse =
             jsonDecode(utf8.decode(response.bodyBytes)) as Map;
         if (response.statusCode == 200) {
@@ -426,8 +424,8 @@ class _NewRegisterState extends State<NewRegister> {
   }
 
   Future getCountries() async {
-    var response = await http.get(Uri.parse(
-        "https://adventuresclub.net/adventureClub/api/v1/get_countries"));
+    var response =
+        await http.get(Uri.parse("${Constants.baseUrl}/api/v1/get_countries"));
     if (response.statusCode == 200) {
       mapCountry = json.decode(response.body);
       List<dynamic> result = mapCountry['data'];
@@ -930,7 +928,7 @@ class _NewRegisterState extends State<NewRegister> {
                             return ListTile(
                               leading: searchController.text.isEmpty
                                   ? Image.network(
-                                      "${"https://adventuresclub.net/adventureClub/public/"}${filteredServices[index].flag}",
+                                      "${"${Constants.baseUrl}/public/"}${filteredServices[index].flag}",
                                       height: 25,
                                       width: 40,
                                     )
