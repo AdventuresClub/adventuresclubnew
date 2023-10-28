@@ -269,11 +269,11 @@ class CheckProfileState extends State<CheckProfile> {
       List<dynamic> result = mapCountry['data'];
       result.forEach((element) {
         GetCountryModel gc = GetCountryModel(
-          element['country'],
-          element['short_name'],
-          element['flag'],
-          element['code'],
-          element['id'],
+          element['country'] ?? "",
+          element['short_name'] ?? "",
+          element['flag'] ?? "",
+          element['code'] ?? "",
+          element['id'] ?? "",
         );
         countriesList1.add(gc);
       });

@@ -567,7 +567,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   }
 
   void createService() async {
-    await convertProgramData();
+    //await convertProgramData();
     selectedActivityIncludesId =
         ConstantsCreateNewServices.selectedActivitesId.join(",");
     List<Uint8List> banners = [];
@@ -575,21 +575,83 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       banners.add(element.readAsBytesSync());
     });
     try {
-      // if (selectedActivityIncludesId.isNotEmpty) {
-      // if (selectedActivitesId.isNotEmpty) {
-      //if (selectedDependencyId.isNotEmpty) {
       var request = http.MultipartRequest(
-        "POST",
-        Uri.parse(
-            //${Constants.baseUrl}SIT
-            "${Constants.baseUrl}/api/v1/create_service"),
-      );
+          'POST',
+          Uri.parse(
+              'https://adventuresclub.net/adventureClub/api/v1/create_service'));
+      request.fields.addAll({
+        'customer_id': Constants.userId.toString(),
+        'adventure_name': adventureName.text.trim(),
+        'country': Constants.countryId.toString(),
+        'region': ConstantsCreateNewServices.selectedRegionId.toString(),
+        'service_sector':
+            ConstantsCreateNewServices.selectedSectorId.toString(),
+        'service_category':
+            ConstantsCreateNewServices.selectedCategoryId.toString(),
+        'service_type': ConstantsCreateNewServices.serviceTypeId.toString(),
+        'service_level': ConstantsCreateNewServices.selectedlevelId.toString(),
+        'duration': ConstantsCreateNewServices.selectedDurationId.toString(),
+        'available_seats': availableSeatsController.text.trim(),
+        'start_date': '2023-10-15',
+        'end_date': '2023-10-16',
+        'write_information': infoController.text.trim(),
+        'service_plan': sPlan.toString(),
+        'cost_inc': costOne.text.trim(),
+        'cost_exc': costOne.text.trim(),
+        'currency': '1',
+        'pre_requisites': preRequisites.text.trim(),
+        'minimum_requirements': minimumRequirement.text.trim(),
+        'terms_conditions': terms.text.trim(),
+        'recommended': '1',
+        'service_plan_days': servicePlanId,
+        'schedule_title[]': titleList[0],
+        'gathering_date[]': '2023-10-23', //d[0],
+        'activities': selectedActivityIncludesId,
+        'specific_address': specificAddressController.text.trim(),
+        'gathering_start_time[]': '13:0:0',
+        'gathering_end_time[]': '15:0:0',
+        'program_description[]': 'descfirst',
+        'service_for': '1',
+        'dependency': '1,2,3',
+        'latitude': '3.79',
+        'longitude': '6.798'
+      });
+      // request.files.add(await http.MultipartFile.fromPath(
+      //     'banners[]', '/C:/Users/Manish-Pc/Desktop/Images/1.jpg'));
+      // request.files.add(await http.MultipartFile.fromPath(
+      //     'banners[]', '/C:/Users/Manish-Pc/Desktop/Images/2.jpg'));
+      // request.files.add(await http.MultipartFile.fromPath(
+      //     'banners[]', '/C:/Users/Manish-Pc/Desktop/Images/3.jpg'));
       banners.forEach((element) {
         String fileName =
             "${DateTime.now().millisecondsSinceEpoch.toString()}.png";
         request.files.add(http.MultipartFile.fromBytes('banner[]', element,
             filename: fileName));
       });
+
+      http.StreamedResponse response = await request.send();
+
+      if (response.statusCode == 200) {
+        print(await response.stream.bytesToString());
+      } else {
+        print(response.reasonPhrase);
+      }
+
+      // if (selectedActivityIncludesId.isNotEmpty) {
+      // if (selectedActivitesId.isNotEmpty) {
+      //if (selectedDependencyId.isNotEmpty) {
+      // var request = http.MultipartRequest(
+      //   "POST",
+      //   Uri.parse(
+      //       //${Constants.baseUrl}SIT
+      //       "${Constants.baseUrl}/api/v1/create_service"),
+      // );
+      // banners.forEach((element) {
+      //   String fileName =
+      //       "${DateTime.now().millisecondsSinceEpoch.toString()}.png";
+      //   request.files.add(http.MultipartFile.fromBytes('banner[]', element,
+      //       filename: fileName));
+      // });
       // dynamic programData = {
       //   'customer_id': Constants.userId.toString(),
       //   'adventure_name': adventureName.text,
@@ -716,46 +778,46 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       //   "dependency":
       //       selectedDependencyId, //selectedDependencyId.toString(), //["1", "2", "3"],
 
-      request.fields.addAll({
-        'customer_id': Constants.userId.toString(),
-        'adventure_name': adventureName.text.trim(),
-        'country': Constants.countryId.toString(),
-        'region': ConstantsCreateNewServices.selectedRegionId.toString(),
-        'service_sector':
-            ConstantsCreateNewServices.selectedSectorId.toString(),
-        'service_category':
-            ConstantsCreateNewServices.selectedCategoryId.toString(),
-        'service_type': ConstantsCreateNewServices.serviceTypeId.toString(),
-        'service_level': ConstantsCreateNewServices.selectedlevelId.toString(),
-        'duration': ConstantsCreateNewServices.selectedDurationId.toString(),
-        'available_seats': availableSeatsController.text.trim(),
-        'start_date': ConstantsCreateNewServices.startDate.toString(),
-        'end_date': ConstantsCreateNewServices.endDate.toString(),
-        'write_information': infoController.text.trim(),
-        'service_plan': sPlan.toString(),
-        'cost_inc': costOne.text.trim(),
-        'cost_exc': costOne.text.trim(),
-        'currency': '1',
-        'pre_requisites': preRequisites.text.trim(),
-        'minimum_requirements': minimumRequirement.text.trim(),
-        'terms_conditions': terms.text.trim(),
-        'recommended': '1',
-        'service_plan_days': servicePlanId,
-        'schedule_title[]': titleList[0],
-        'gathering_date[]': d[0],
-        'activities': selectedActivityIncludesId,
-        'specific_address': specificAddressController.text.trim(),
-        'gathering_start_time[]': st[0],
-        'gathering_end_time[]': et[0],
-        'program_description[]': descriptionList[0],
-        'service_for': selectedActivitesId,
-        'dependency': selectedDependencyId,
-        //'program_description[]': 'descfirst',
-        'latitude': ConstantsCreateNewServices.lat.toString(),
-        'longitude': ConstantsCreateNewServices.lng.toString(),
-      });
-      log(request.fields.toString());
-      final response = await request.send();
+      // request.fields.addAll({
+      //   'customer_id': Constants.userId.toString(),
+      //   'adventure_name': adventureName.text.trim(),
+      //   'country': Constants.countryId.toString(),
+      //   'region': ConstantsCreateNewServices.selectedRegionId.toString(),
+      //   'service_sector':
+      //       ConstantsCreateNewServices.selectedSectorId.toString(),
+      //   'service_category':
+      //       ConstantsCreateNewServices.selectedCategoryId.toString(),
+      //   'service_type': ConstantsCreateNewServices.serviceTypeId.toString(),
+      //   'service_level': ConstantsCreateNewServices.selectedlevelId.toString(),
+      //   'duration': ConstantsCreateNewServices.selectedDurationId.toString(),
+      //   'available_seats': availableSeatsController.text.trim(),
+      //   'start_date': ConstantsCreateNewServices.startDate.toString(),
+      //   'end_date': ConstantsCreateNewServices.endDate.toString(),
+      //   'write_information': infoController.text.trim(),
+      //   'service_plan': sPlan.toString(),
+      //   'cost_inc': costOne.text.trim(),
+      //   'cost_exc': costOne.text.trim(),
+      //   'currency': '1',
+      //   'pre_requisites': preRequisites.text.trim(),
+      //   'minimum_requirements': minimumRequirement.text.trim(),
+      //   'terms_conditions': terms.text.trim(),
+      //   'recommended': '1',
+      //   'service_plan_days': servicePlanId,
+      //   'schedule_title[]': titleList[0],
+      //   'gathering_date[]': d[0],
+      //   'activities': selectedActivityIncludesId,
+      //   'specific_address': specificAddressController.text.trim(),
+      //   'gathering_start_time[]': st[0],
+      //   'gathering_end_time[]': et[0],
+      //   'program_description[]': descriptionList[0],
+      //   'service_for': selectedActivitesId,
+      //   'dependency': selectedDependencyId,
+      //   //'program_description[]': 'descfirst',
+      //   'latitude': ConstantsCreateNewServices.lat.toString(),
+      //   'longitude': ConstantsCreateNewServices.lng.toString(),
+      // });
+      // log(request.fields.toString());
+      // final response = await request.send();
 
       log(response.toString());
       print(response.statusCode);
