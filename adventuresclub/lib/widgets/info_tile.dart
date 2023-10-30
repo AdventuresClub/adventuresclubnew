@@ -76,7 +76,7 @@ class _InfoTileState extends State<InfoTile> {
             "${" "}"
             "$sd"
             "${" -"}"
-            " $sTime ${"-"} $eTime  ",
+            " ($sTime)", //${"-"} ", //$eTime  ",
         color: blackColor,
         weight: FontWeight.bold,
         fontFamily: 'Raleway',
