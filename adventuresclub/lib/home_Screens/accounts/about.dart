@@ -353,7 +353,7 @@ class _AboutState extends State<About> {
             nBp,
             gAccomodationAimedfm,
             gPm,
-            element['stars'] ?? "",
+            element['stars'].toString() ?? "",
             element['is_liked'] ?? 0,
             element['baseurl'] ?? "",
             gAccomodationServImgModel,
