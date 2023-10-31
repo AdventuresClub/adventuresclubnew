@@ -70,10 +70,8 @@ class _VisitState extends State<Visit> {
 
   void setMarker() {
     markers.clear();
-    setState(() {
-      markers.add(
-          Marker(markerId: const MarkerId("14"), position: LatLng(lat, long)));
-    });
+    markers.add(
+        Marker(markerId: const MarkerId("14"), position: LatLng(lat, long)));
   }
 
   Future getFilteredVisit(String title) async {
@@ -112,11 +110,14 @@ class _VisitState extends State<Visit> {
       });
       double l = double.tryParse(gGv[0].lat) ?? 0;
       double ln = double.tryParse(gGv[0].lng) ?? 0;
-      setState(() {
-        lat = l;
-        long = ln;
-        loading = false;
-      });
+      if (mounted) {
+        setState(() {
+          lat = l;
+          long = ln;
+          loading = false;
+        });
+      }
+
       setMarker();
     }
   }
@@ -158,9 +159,11 @@ class _VisitState extends State<Visit> {
       });
       filteredtitleModel = titleModel.toSet().toList();
       //getFilteredList(titleModel);
-      setState(() {
-        loading = false;
-      });
+      if (mounted) {
+        setState(() {
+          loading = false;
+        });
+      }
     }
     getFilteredVisit(filteredtitleModel[0].title);
   }

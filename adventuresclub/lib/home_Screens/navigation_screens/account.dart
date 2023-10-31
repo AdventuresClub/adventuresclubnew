@@ -610,9 +610,11 @@ class _AccountState extends State<Account> {
         );
         countriesList1.add(gc);
       });
-      setState(() {
-        filteredServices = countriesList1;
-      });
+      if (mounted) {
+        setState(() {
+          filteredServices = countriesList1;
+        });
+      }
     }
   }
 
