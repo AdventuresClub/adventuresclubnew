@@ -29,11 +29,11 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Adventures Club needs access to camera so you can take/share photo/video</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Adventures Club needs access to location if you allow it, it can save your time in/out</string>
+	<string>Adventures Club needs access to location if you allow it, it can show you adventures in your area</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Adventures Club needs access to location if you allow it and the app is in use, it can save your time in/out</string>
+	<string>Adventures Club needs access to location if you allow it and the app is in use, it can show you adventures in your area</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Adventures Club needs access to location if you allow it and the app is in use, it can save your time in/out</string>
+	<string>Adventures Club needs access to location if you allow it and the app is in use, it can show you adventures in your area</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Adventures Club needs access to mic for your videos</string>
 	<key>NSPhotoLibraryUsageDescription</key>
