@@ -174,7 +174,7 @@ class DescriptionDetailsWidget extends StatelessWidget {
                 //Spacer(),
                 RichText(
                   text: TextSpan(
-                    text: text5[1].tr(),
+                    text: text5[0].tr(),
                     style: const TextStyle(
                       color: greyColor2,
                       fontSize: 13,
@@ -221,7 +221,7 @@ class DescriptionDetailsWidget extends StatelessWidget {
                 //Spacer(),
                 RichText(
                   text: TextSpan(
-                    text: text5[2].tr(),
+                    text: text5[1].tr(),
                     style: const TextStyle(
                       color: greyColor2,
                       fontSize: 13,
@@ -276,7 +276,7 @@ class DescriptionDetailsWidget extends StatelessWidget {
                 if (gm.sPlan == 2)
                   RichText(
                     text: TextSpan(
-                      text: text5[3].tr(),
+                      text: text5[2].tr(),
                       style: const TextStyle(
                         color: greyColor2,
                         fontSize: 14,
