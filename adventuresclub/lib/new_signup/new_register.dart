@@ -354,7 +354,12 @@ class _NewRegisterState extends State<NewRegister> {
       loading = true;
     });
     final hasPermission = await _handleLocationPermission();
-    if (!hasPermission) return;
+    if (!hasPermission) {
+      setState(() {
+        loading = false;
+      });
+      return;
+    }
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
       //setState(() =>
