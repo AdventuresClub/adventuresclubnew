@@ -3,5 +3,6 @@ class RegionsModel {
   String country;
   int regionId;
   String region;
-  RegionsModel(this.countryId, this.country, this.regionId, this.region);
+  bool? showCountry = false;
+  RegionsModel(this.countryId, this.country, this.regionId, this.region, );
 }

@@ -70,6 +70,16 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
   List<FilterDataModel> fDM = [];
   List<String> selectedActivites = [];
   List<int> selectedActivitesid = [];
+  bool showRegion = false;
+  int selectedRegion = 0;
+  
+  int selectedCategory = 0;
+  
+  int selectedServiceSector = 0;
+  int selectedServiceType = 0;
+  
+  int selectedDuration = 0;
+  int selectedLevel = 0;
   int? currentIndex;
   var getCountry = 'Oman';
   List<WnHModel> weightList = [];
@@ -305,87 +315,223 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                 MultiLineField(
                     'typeInformation', 5, lightGreyColor, widget.info),
                 const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Container(
+                  //width: MediaQuery.of(context).size.width / 2.4,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 15, vertical: 20),
+                  decoration: BoxDecoration(
+                    color: lightGreyColor,
+                    border: Border.all(
+                        color: greyColor.withOpacity(0.2), width: 1.5),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: MyText(
+                    text: Constants.country.tr(), //getCountry.toString(),
+                    color: blackTypeColor,
+                    size: 14,
+                    weight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                ExpansionTile(
+                  title: Text(
+                regionList[selectedRegion].showCountry == true
+                    ? regionList[selectedRegion].region
+                    : 'Select Region',
+                  ),
                   children: [
-                    //pickingWeight(context, 'Oman'),
-                    Expanded(
-                      child: Container(
-                        //width: MediaQuery.of(context).size.width / 2.4,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 20),
-                        decoration: BoxDecoration(
-                          color: lightGreyColor,
-                          border: Border.all(
-                              color: greyColor.withOpacity(0.2), width: 1.5),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: MyText(
-                          text: Constants.country.tr(), //getCountry.toString(),
-                          color: blackTypeColor,
-                          size: 14,
-                          weight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: RegionFilterDropDown(
-                        regionList,
-                        //show: true,
-                      ),
-                    ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: regionList.length,
+                  itemBuilder: (context, index) {
+                    return CheckboxListTile(
+                      value: selectedRegion == index
+                          ? regionList[index].showCountry
+                          : false,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedRegion = index;
+                          regionList[selectedRegion].showCountry =
+                              value;
+                        });
+                      },
+                      title: Text(regionList[index].region),
+                    );
+                  },
+                )
                   ],
                 ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //const SizedBox(height: 20),
+                ExpansionTile(
+                  title: Text(
+                categoryFilter[selectedServiceSector].showCategoryFilter == true
+                    ? categoryFilter[selectedServiceSector].category
+                    : 'Service Sector',
+                  ),
                   children: [
-                    Expanded(
-                      child: ServiceCategoryDropDown(categoryFilter),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Expanded(
-                      child: ServiceSectorDropDown(filterSectors),
-                    ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: categoryFilter.length,
+                  itemBuilder: (context, index) {
+                    return CheckboxListTile(
+                      value: selectedServiceSector == index
+                          ? categoryFilter[index].showCategoryFilter
+                          : false,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedServiceSector = index;
+                          categoryFilter[selectedServiceSector].showCategoryFilter =
+                              value;
+                        });
+                      },
+                      title: Text(categoryFilter[index].category),
+                    );
+                  },
+                )
                   ],
                 ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // Expanded(
+                //   child: ServiceCategoryDropDown(categoryFilter),
+                // ),
+                const SizedBox(
+                  width: 5,
+                ),
+                 ExpansionTile(
+                  title: Text(
+                 filterSectors[selectedCategory].showfilterSectors == true
+                     ? filterSectors[selectedCategory].sector
+                     : 'Filter Sector',
+                  ),
                   children: [
-                    Expanded(
-                      child: ServiceTypeDropDown(serviceFilter),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(child: DurationDropDown(durationFilter))
+                 ListView.builder(
+                   shrinkWrap: true,
+                   physics: const ClampingScrollPhysics(),
+                   itemCount: filterSectors.length,
+                   itemBuilder: (context, index) {
+                     return CheckboxListTile(
+                       value: selectedCategory == index
+                           ? filterSectors[index].showfilterSectors
+                           : false,
+                       onChanged: (value) {
+                         setState(() {
+                           selectedCategory = index;
+                           filterSectors[selectedCategory].showfilterSectors =
+                               value;
+                         });
+                       },
+                       title: Text(filterSectors[index].sector),
+                     );
+                   },
+                 )
                   ],
                 ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(child: LevelDropDown(levelFilter)),
+         //       const SizedBox(height: 20),
+                ExpansionTile(
+                 title: Text(
+                serviceFilter[selectedServiceSector].showServiceFilter == true
+                    ? serviceFilter[selectedServiceSector].ca
+                    : 'Service Filter',
+                 ),
+                 children: [
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: serviceFilter.length,
+                  itemBuilder: (context, index) {
+                    return CheckboxListTile(
+                      value: selectedServiceSector == index
+                          ? serviceFilter[index].showServiceFilter
+                          : false,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedServiceSector = index;
+                          serviceFilter[selectedServiceSector].showServiceFilter =value;
+                        });
+                      },
+                      title: Text(serviceFilter[index].ca),
+                    );
+                  },
+                )
+                 ],
+                 ),
+                    // Expanded(
+                    //   child: ServiceTypeDropDown(serviceFilter),
+                    // ),
                     const SizedBox(
-                      width: 10,
+                 width: 10,
                     ),
-                    Expanded(
-                      child: TFWithSize(
-                        'Available Seats',
-                        widget.available,
-                        16,
-                        lightGreyColor,
-                        2.4,
-                        show: TextInputType.number,
-                      ),
-                    ),
-                  ],
-                ),
+                  ExpansionTile(
+                 title: Text(
+                  durationFilter[selectedDuration].showDuration == true
+                      ? durationFilter[selectedDuration].duration
+                      : 'Duration',
+                 ),
+                 children: [
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    itemCount: durationFilter.length,
+                    itemBuilder: (context, index) {
+                      return CheckboxListTile(
+                         value: selectedDuration == index
+                            ? durationFilter[index].showDuration
+                            : false,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedDuration = index;
+                            durationFilter[selectedDuration].showDuration =value;
+                          });
+                        },
+                        title: Text(durationFilter[index].duration),
+                      );
+                    },
+                  )
+                 ],
+                   ),
+                ExpansionTile(
+                   title: Text(
+                levelFilter[selectedLevel].showLevel == true
+                    ? levelFilter[selectedLevel].level
+                    : 'Level Filter',
+                   ),
+                   children: [
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: levelFilter.length,
+                  itemBuilder: (context, index) {
+                    return CheckboxListTile(
+                      value: selectedLevel == index
+                          ? levelFilter[index].showLevel
+                          : false,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedLevel = index;
+                          levelFilter[selectedLevel].showLevel =value;
+                        });
+                      },
+                      title: Text(levelFilter[index].level),
+                    );
+                  },
+                )
+                   ],
+                 ),
+                 // Expanded(child: LevelDropDown(levelFilter)),
+                 const SizedBox(
+                   width: 10,
+                 ),
+                 TFWithSize(
+                   'Available Seats',
+                   widget.available,
+                   16,
+                   lightGreyColor,
+                   2.4,
+                   show: TextInputType.number,
+                 ),
                 const SizedBox(height: 20),
                 const Divider(),
                 widget.servicePlan,

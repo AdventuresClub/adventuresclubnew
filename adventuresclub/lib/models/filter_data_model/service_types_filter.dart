@@ -6,6 +6,7 @@ class ServiceTypeFilterModel {
   String ca;
   String ua;
   dynamic da;
+  bool? showServiceFilter= false;
   ServiceTypeFilterModel(
-      this.id, this.type, this.image, this.status, this.ca, this.ua, this.da);
+      this.id, this.type, this.image, this.status, this.ca, this.ua, this.da , );
 }
