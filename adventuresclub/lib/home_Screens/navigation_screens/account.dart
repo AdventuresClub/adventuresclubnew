@@ -211,6 +211,9 @@ class _AccountState extends State<Account> {
   }
 
   void getProfile() async {
+    if (loading) {
+      return;
+    }
     setState(() {
       loading = true;
     });
@@ -595,6 +598,7 @@ class _AccountState extends State<Account> {
 
   Future getCountries() async {
     filteredServices.clear();
+    countriesList1.clear();
     var response =
         await http.get(Uri.parse("${Constants.baseUrl}/api/v1/get_countries"));
     if (response.statusCode == 200) {

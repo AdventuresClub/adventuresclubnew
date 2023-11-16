@@ -90,9 +90,11 @@ class _TopListState extends State<TopList> {
           //listAdd(pCM);
         });
       }
-      setState(() {
-        loading = false;
-      });
+      if (mounted) {
+        setState(() {
+          loading = false;
+        });
+      }
     }
   }
 

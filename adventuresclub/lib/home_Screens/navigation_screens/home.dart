@@ -55,9 +55,11 @@ class _HomeState extends State<Home> {
     if (response.statusCode == 200) {
       mapChatNotification = json.decode(response.body);
       dynamic result = mapChatNotification['unread'];
-      setState(() {
-        Constants.chatCount = result.toString();
-      });
+      if (mounted) {
+        setState(() {
+          Constants.chatCount = result.toString();
+        });
+      }
       print(result);
       print(Constants.chatCount);
     }
