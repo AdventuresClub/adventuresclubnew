@@ -15,12 +15,6 @@ import 'package:adventuresclub/models/filter_data_model/sector_filter_model.dart
 import 'package:adventuresclub/models/filter_data_model/service_types_filter.dart';
 import 'package:adventuresclub/models/weightnheight_model.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
-import 'package:adventuresclub/widgets/dropdowns/duration_drop_down.dart';
-import 'package:adventuresclub/widgets/dropdowns/level_drop_down.dart';
-import 'package:adventuresclub/widgets/dropdowns/regionFilter_dropdown.dart';
-import 'package:adventuresclub/widgets/dropdowns/service_category.dart';
-import 'package:adventuresclub/widgets/dropdowns/service_sector_drop_down.dart';
-import 'package:adventuresclub/widgets/dropdowns/service_type_drop_down.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
 import 'package:adventuresclub/widgets/text_fields/multiline_field.dart';
@@ -349,8 +343,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                   ],
                 ),
                 ExpansionTile(
-                  collapsedBackgroundColor: greyBackgroundColor,
-                  title: Text(
+                   title: Text(
                     regionList[selectedRegion].showCountry == true
                         ? regionList[selectedRegion].region
                         : 'Select Region',
@@ -367,6 +360,10 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                           value: selectedRegion == index
                               ? regionList[index].showCountry
                               : false,
+                               checkboxShape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12))),
+                         
                           onChanged: (value) {
                             setState(() {
                               selectedRegion = index;
@@ -404,6 +401,10 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                           value: selectedServiceSector == index
                               ? categoryFilter[index].showCategoryFilter
                               : false,
+                           checkboxShape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12))),
+                         
                           onChanged: (value) {
                             setState(() {
                               selectedServiceSector = index;
@@ -427,7 +428,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                   title: Text(
                     filterSectors[selectedCategory].showfilterSectors == true
                         ? filterSectors[selectedCategory].sector
-                        : 'Type',
+                        : 'Service Category',
                   ),
                   children: [
                     ListView.builder(
@@ -443,6 +444,10 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                           ),
                           dense: true,
                           visualDensity: VisualDensity.compact,
+                          checkboxShape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12))),
+                         
                           value: selectedCategory == index
                               ? filterSectors[index].showfilterSectors
                               : false,
@@ -465,7 +470,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                     serviceFilter[selectedServiceSector].showServiceFilter ==
                             true
                         ? serviceFilter[selectedServiceSector].type
-                        : 'Service Filter',
+                        : 'Service Type',
                   ),
                   children: [
                     ListView.builder(
@@ -481,6 +486,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                           ),
                           dense: true,
                           visualDensity: VisualDensity.compact,
+                         
                           checkboxShape: const RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(12))),
@@ -524,6 +530,10 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                           value: selectedDuration == index
                               ? durationFilter[index].showDuration
                               : false,
+                          checkboxShape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12))),
+                         
                           onChanged: (value) {
                             setState(() {
                               selectedDuration = index;
@@ -541,7 +551,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                   title: Text(
                     levelFilter[selectedLevel].showLevel == true
                         ? levelFilter[selectedLevel].level
-                        : 'Level Filter',
+                        : 'Select Level',
                   ),
                   children: [
                     ListView.builder(
@@ -550,8 +560,17 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                       itemCount: levelFilter.length,
                       itemBuilder: (context, index) {
                         return CheckboxListTile(
+                           secondary: Image.network(
+                            "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${levelFilter[index].image}",
+                            height: 24,
+                            width: 24,
+                          ),
                           dense: true,
                           visualDensity: VisualDensity.compact,
+                          checkboxShape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12))),
+                         
                           value: selectedLevel == index
                               ? levelFilter[index].showLevel
                               : false,
@@ -567,7 +586,11 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                     )
                   ],
                 ),
-                // Expanded(child: LevelDropDown(levelFilter)),
+            //  Row(
+            //    children: [
+            //      Expanded(child: LevelDropDown(levelFilter)),
+            //    ],
+            //  ),
                 const SizedBox(
                   width: 10,
                 ),

@@ -1059,10 +1059,6 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                                       color: bluishColor,
                                                       width: 2),
                                                   value: particularWeekDays,
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              28)),
                                                   onChanged: (bool? value) {
                                                     addServicePlan();
                                                   }),
@@ -1093,12 +1089,6 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                                       activeColor: bluishColor,
                                                       checkColor: whiteColor,
                                                       value: daysValue[index],
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          30)),
                                                       onChanged: (bool? value) {
                                                         if (particularWeekDays) {
                                                           setState(
@@ -1140,10 +1130,6 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                               activeColor: bluishColor,
                                               checkColor: whiteColor,
                                               value: particularDay,
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          28)),
                                               onChanged: (bool? value) {
                                                 daysPlan();
                                               }),
