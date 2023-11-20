@@ -476,11 +476,14 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                         return CheckboxListTile(
                           secondary: Image.network(
                             "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${serviceFilter[index].image}",
-                            height: 18,
-                            width: 18,
+                            height: 24,
+                            width: 24,
                           ),
                           dense: true,
                           visualDensity: VisualDensity.compact,
+                          checkboxShape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12))),
                           value: selectedServiceSector == index
                               ? serviceFilter[index].showServiceFilter
                               : false,
