@@ -162,6 +162,12 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
             "key": Constants.googleMapsApi,
           },
         );
+      } else if (await ml.MapLauncher.isMapAvailable(mt.MapType.apple) == true) {
+        await ml.MapLauncher.showDirections(
+          mapType: mt.MapType.apple,
+          destination: ml.Coords(lt, ln),
+          origin: ml.Coords(myLat, myLng),
+        );
       }
       setState(() {
         loading = false;
