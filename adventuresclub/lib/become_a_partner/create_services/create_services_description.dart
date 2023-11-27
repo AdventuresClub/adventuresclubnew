@@ -30,6 +30,8 @@ class CreateServicesDescription extends StatefulWidget {
   final TextEditingController daysBeforeActController;
   final Widget servicePlan;
   final Widget dependency;
+  final Function tapped;
+  final Function getActivityIds;
   const CreateServicesDescription(
       {required this.adventureName,
       required this.available,
@@ -38,6 +40,8 @@ class CreateServicesDescription extends StatefulWidget {
       required this.daysBeforeActController,
       required this.servicePlan,
       required this.dependency,
+      required this.tapped,
+      required this.getActivityIds,
       super.key});
 
   @override
@@ -118,10 +122,13 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
   }
 
   void removeId(int id) {
-    if (ConstantsCreateNewServices.selectedActivitesId.contains(id)) {
-      ConstantsCreateNewServices.selectedActivitesId.remove(id);
+    // if (ConstantsCreateNewServices.selectedActivitesId.contains(id)) {
+    //   ConstantsCreateNewServices.selectedActivitesId.remove(id);
+    // }
+    if (selectedActivitesid.contains(id)) {
+      selectedActivitesid.remove(id);
     }
-    print(ConstantsCreateNewServices.selectedActivitesId);
+    print(selectedActivitesid);
   }
 
   void cancel() {
@@ -149,15 +156,17 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
       selectedActivites.add(element.activity);
       selectedActivitesid.add(element.id);
     });
-    setState(() {
-      ConstantsCreateNewServices.selectedActivites = selectedActivites;
-      ConstantsCreateNewServices.selectedActivitesId = selectedActivitesid;
-    });
+    widget.getActivityIds(selectedActivitesid);
+    // setState(() {
+    //   ConstantsCreateNewServices.selectedActivites = selectedActivites;
+    //   ConstantsCreateNewServices.selectedActivitesId = selectedActivitesid;
+    // });
     // print(selectedActivites);
     // print(selectedActivites);
     // Provider.of<CompleteProfileProvider>(context, listen: false)
     //     .activityLevel(a, id);
-    print(ConstantsCreateNewServices.selectedActivitesId);
+    //print(ConstantsCreateNewServices.selectedActivitesId);
+    print(selectedActivitesid);
   }
 
   void addActivites() {
@@ -288,6 +297,13 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
     );
   }
 
+  void parseData(String type, int regionId) {
+    widget.tapped(
+      type,
+      regionId,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return loading
@@ -367,6 +383,9 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                             setState(() {
                               selectedRegion = index;
                               regionList[selectedRegion].showCountry = value;
+                              parseData("region", regionList[index].regionId);
+                              // ConstantsCreateNewServices.selectedRegionId =
+                              //     regionList[index].regionId;
                             });
                           },
                           title: Text(regionList[index].region),
@@ -378,8 +397,9 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                 //const SizedBox(height: 20),
                 ExpansionTile(
                   title: Text(
-                    categoryFilter[selectedCategory].showCategoryFilter == true
-                        ? categoryFilter[selectedCategory].category
+                    categoryFilter[selectedServiceSector].showCategoryFilter ==
+                            true
+                        ? categoryFilter[selectedServiceSector].category
                         : 'Service Sector',
                   ),
                   children: [
@@ -391,8 +411,8 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                         return CheckboxListTile(
                           secondary: Image.network(
                             "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${categoryFilter[index].image}",
-                            height: 18,
-                            width: 18,
+                            height: 36,
+                            width: 26,
                           ),
                           dense: true,
                           visualDensity: VisualDensity.compact,
@@ -407,6 +427,9 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                               selectedServiceSector = index;
                               categoryFilter[selectedServiceSector]
                                   .showCategoryFilter = value;
+                              parseData("sector", categoryFilter[index].id);
+                              // ConstantsCreateNewServices.selectedSectorId =
+                              //     categoryFilter[index].id;
                             });
                           },
                           title: Text(categoryFilter[index].category),
@@ -436,8 +459,8 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                         return CheckboxListTile(
                           secondary: Image.network(
                             "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${filterSectors[index].image}",
-                            height: 18,
-                            width: 18,
+                            height: 36,
+                            width: 26,
                           ),
                           dense: true,
                           visualDensity: VisualDensity.compact,
@@ -452,6 +475,9 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                               selectedCategory = index;
                               filterSectors[selectedCategory]
                                   .showfilterSectors = value;
+                              parseData("category", filterSectors[index].id);
+                              // ConstantsCreateNewServices.selectedCategoryId =
+                              //     filterSectors[index].id;
                             });
                           },
                           title: Text(filterSectors[index].sector),
@@ -477,8 +503,8 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                         return CheckboxListTile(
                           secondary: Image.network(
                             "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${serviceFilter[index].image}",
-                            height: 24,
-                            width: 24,
+                            height: 36,
+                            width: 26,
                           ),
                           dense: true,
                           visualDensity: VisualDensity.compact,
@@ -493,6 +519,9 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                               selectedServiceSector = index;
                               serviceFilter[selectedServiceSector]
                                   .showServiceFilter = value;
+                              parseData("type", serviceFilter[index].id);
+                              // ConstantsCreateNewServices.serviceTypeId =
+                              //     serviceFilter[index].id;
                             });
                           },
                           title: Text(serviceFilter[index].type),
@@ -533,6 +562,9 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                               selectedDuration = index;
                               durationFilter[selectedDuration].showDuration =
                                   value;
+                              parseData("duration", durationFilter[index].id);
+                              // ConstantsCreateNewServices.selectedDurationId =
+                              //     durationFilter[index].id;
                             });
                           },
                           title: Text(durationFilter[index].duration),
@@ -556,8 +588,8 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                         return CheckboxListTile(
                           secondary: Image.network(
                             "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${levelFilter[index].image}",
-                            height: 24,
-                            width: 24,
+                            height: 36,
+                            width: 26,
                           ),
                           dense: true,
                           visualDensity: VisualDensity.compact,
@@ -571,6 +603,9 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                             setState(() {
                               selectedLevel = index;
                               levelFilter[selectedLevel].showLevel = value;
+                              parseData("level", levelFilter[index].id);
+                              // ConstantsCreateNewServices.selectedlevelId =
+                              //     levelFilter[index].id;
                             });
                           },
                           title: Text(levelFilter[index].level),

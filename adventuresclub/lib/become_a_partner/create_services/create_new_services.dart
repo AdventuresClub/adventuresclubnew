@@ -113,6 +113,13 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   List<String> programOnetitleList = [];
   List<String> programOnedescriptionList = [];
   bool isTimeAfter = false;
+  int regionId = 0;
+  int sectorId = 0;
+  int categoryId = 0;
+  int typeId = 0;
+  int durationId = 0;
+  int levelId = 0;
+  List<int> activitiesId = [];
 
   @override
   void initState() {
@@ -409,27 +416,33 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         message("Please enter the adventure name");
         return;
       }
-      if (ConstantsCreateNewServices.selectedRegionId == 0) {
+      //if (ConstantsCreateNewServices.selectedRegionId == 0)
+      if (regionId == 0) {
         message("Please select region");
         return;
       }
-      if (ConstantsCreateNewServices.selectedSectorId == 0) {
+      // if (ConstantsCreateNewServices.selectedSectorId == 0)
+      if (sectorId == 0) {
         message("Please select service sector");
         return;
       }
-      if (ConstantsCreateNewServices.selectedCategoryId == 0) {
+      //if (ConstantsCreateNewServices.selectedCategoryId == 0)
+      if (categoryId == 0) {
         message("Please select category");
         return;
       }
-      if (ConstantsCreateNewServices.serviceTypeId == 0) {
+      //if (ConstantsCreateNewServices.serviceTypeId == 0)
+      if (typeId == 0) {
         message("Please select service type");
         return;
       }
-      if (ConstantsCreateNewServices.selectedDurationId == 0) {
+      //if (ConstantsCreateNewServices.selectedDurationId == 0)
+      if (durationId == 0) {
         message("Please select duration");
         return;
       }
-      if (ConstantsCreateNewServices.selectedlevelId == 0) {
+      //if (ConstantsCreateNewServices.selectedlevelId == 0)
+      if (levelId == 0) {
         message("Please select level");
         return;
       }
@@ -441,7 +454,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         message("Please select from the service plan");
         return;
       }
-      if (ConstantsCreateNewServices.selectedActivitesId.isEmpty) {
+      //if (ConstantsCreateNewServices.selectedActivitesId.isEmpty)
+      if (activitiesId.isEmpty) {
         message("Please Activities Included");
         return;
       }
@@ -568,8 +582,9 @@ class _CreateNewServicesState extends State<CreateNewServices> {
 
   void createService() async {
     await convertProgramData();
-    selectedActivityIncludesId =
-        ConstantsCreateNewServices.selectedActivitesId.join(",");
+    selectedActivityIncludesId = activitiesId.join(",");
+    //ConstantsCreateNewServices.selectedActivitesId.join(",");
+
     List<Uint8List> banners = [];
     imageList.forEach((element) {
       banners.add(element.readAsBytesSync());
@@ -591,18 +606,19 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         'customer_id': Constants.userId.toString(),
         'adventure_name': adventureName.text,
         "country": Constants.countryId.toString(),
-        'region': ConstantsCreateNewServices.selectedRegionId
-            .toString(), //selectedRegionId.toString(),
-        "service_sector": ConstantsCreateNewServices.selectedSectorId
-            .toString(), //selectedSectorId.toString(), //"",
-        "service_category": ConstantsCreateNewServices.selectedCategoryId
-            .toString(), //"", //selectedCategoryId.toString(), //"",
-        "service_type": ConstantsCreateNewServices.serviceTypeId
-            .toString(), // //serviceTypeId.toString(), //"",
-        "service_level": ConstantsCreateNewServices.selectedlevelId
-            .toString(), //selectedlevelId.toString(), //"",
-        "duration": ConstantsCreateNewServices.selectedDurationId
-            .toString(), //selectedDurationId.toString(), //"",
+        'region':
+            regionId.toString(), //ConstantsCreateNewServices.selectedRegionId
+        //.toString(), //selectedRegionId.toString(),
+        "service_sector": sectorId
+            .toString(), //ConstantsCreateNewServices.selectedSectorId.toString(), //selectedSectorId.toString(), //"",
+        "service_category": categoryId
+            .toString(), //ConstantsCreateNewServices.selectedCategoryId.toString(), //"", //selectedCategoryId.toString(), //"",
+        "service_type": typeId
+            .toString(), //ConstantsCreateNewServices.serviceTypeId.toString(), // //serviceTypeId.toString(), //"",
+        "service_level": levelId
+            .toString(), //ConstantsCreateNewServices.selectedlevelId.toString(), //selectedlevelId.toString(), //"",
+        "duration": durationId
+            .toString(), //ConstantsCreateNewServices.selectedDurationId.toString(), //selectedDurationId.toString(), //"",
         "available_seats": availableSeatsController.text, //"",
         "start_date":
             ConstantsCreateNewServices.startDate.toString(), //startDate, //"",
@@ -841,6 +857,26 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     // }
   }
 
+  void getIds(String type, int id) {
+    if (type == "region") {
+      regionId = id;
+    } else if (type == "sector") {
+      sectorId = id;
+    } else if (type == "category") {
+      categoryId = id;
+    } else if (type == "type") {
+      typeId = id;
+    } else if (type == "duration") {
+      durationId = id;
+    } else if (type == "level") {
+      levelId = id;
+    }
+  }
+
+  void getActivityId(List<int> aId) {
+    activitiesId = aId;
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -989,6 +1025,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                   children: [
                     BannerPage(getImages),
                     CreateServicesDescription(
+                      getActivityIds: getActivityId,
+                      tapped: getIds,
                       adventureName: adventureName,
                       available: availableSeatsController,
                       info: infoController,
@@ -1000,6 +1038,11 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                             return SizedBox(
                               width: MediaQuery.of(context).size.width,
                               child: CheckboxListTile(
+                                secondary: Image.network(
+                                  "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${aimedFilter[index].image}",
+                                  height: 36,
+                                  width: 26,
+                                ),
                                 // contentPadding: const EdgeInsets.only(
                                 //     left: 0, top: 0, bottom: 0, right: 0),
                                 side: const BorderSide(color: bluishColor),
