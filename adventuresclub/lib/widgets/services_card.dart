@@ -6,8 +6,6 @@ import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:intl/intl.dart';
-
 import '../models/home_services/services_model.dart';
 
 class ServicesCard extends StatefulWidget {
@@ -178,14 +176,16 @@ class _ServicesCardState extends State<ServicesCard> {
                                   // const SizedBox(
                                   //   width: 2,
                                   // ),
-                                  MyText(
-                                    text: widget.gm.sAddress.tr(),
-                                    maxLines: 1,
-                                    color: blackColor,
-                                    size: 10,
-                                    weight: FontWeight.w500,
-                                    fontFamily: 'Roboto',
-                                    height: 1.3,
+                                  Expanded(
+                                    child: MyText(
+                                      text: widget.gm.sAddress.tr(),
+                                      maxLines: 1,
+                                      color: blackColor,
+                                      size: 10,
+                                      weight: FontWeight.w500,
+                                      fontFamily: 'Roboto',
+                                      height: 1.3,
+                                    ),
                                   ),
                                 ],
                               ),
