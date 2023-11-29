@@ -255,17 +255,20 @@ class _VisitDetailsState extends State<VisitDetails> {
                         19)
                   ],
                 ),
-                MyText(
-                  text: widget.vm!.destDes, //'Omani Food : 1.5 mi',
-                  color: greyColor,
-                ),
                 const SizedBox(
                   height: 5,
                 ),
                 MyText(
-                  text: 'Open - Closed : 10:30',
+                  text: widget.vm!.destDes, //'Omani Food : 1.5 mi',
                   color: greyColor,
                 ),
+                // const SizedBox(
+                //   height: 5,
+                // ),
+                // MyText(
+                //   text: 'Open - Closed : 10:30',
+                //   color: greyColor,
+                // ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -326,25 +329,25 @@ class _VisitDetailsState extends State<VisitDetails> {
                 //         weight: FontWeight.bold),
                 //   ],
                 // ),
-                Divider(thickness: 2, color: greyColor.withOpacity(0.2)),
-                const SizedBox(
-                  height: 10,
-                ),
-                MyText(
-                  text: 'Description',
-                  color: greyColor,
-                  weight: FontWeight.bold,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                MyText(
-                  text: widget.vm!
-                      .destDes, //"Call the crib, same number, same hood. It's all good.",
-                  color: blackTypeColor1,
-                  weight: FontWeight.w500,
-                  size: 12,
-                ),
+                //Divider(thickness: 2, color: greyColor.withOpacity(0.2)),
+                // const SizedBox(
+                //   height: 10,
+                // ),
+                // MyText(
+                //   text: 'Description',
+                //   color: greyColor,
+                //   weight: FontWeight.bold,
+                // ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
+                // MyText(
+                //   text: widget.vm!
+                //       .destDes, //"Call the crib, same number, same hood. It's all good.",
+                //   color: blackTypeColor1,
+                //   weight: FontWeight.w500,
+                //   size: 12,
+                // ),
                 const SizedBox(
                   height: 10,
                 ),

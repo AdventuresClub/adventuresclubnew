@@ -251,10 +251,14 @@ class CheckProfileState extends State<CheckProfile> {
       //Constants.userRole = "3";
       goToNavigation();
     } else {
-      dynamic body = jsonDecode(response.body);
-      // error = decodedError['data']['name'];
-      Constants.showMessage(context, body['message'].toString());
-      home();
+      if (response.statusCode != 422) {
+        dynamic body = jsonDecode(response.body);
+        // error = decodedError['data']['name'];
+        Constants.showMessage(context, body['message'].toString());
+        home();
+      } else {
+        home();
+      }
     }
     print(response.statusCode);
     print(response.body);

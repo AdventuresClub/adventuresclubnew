@@ -120,6 +120,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   int durationId = 0;
   int levelId = 0;
   List<int> activitiesId = [];
+  double lat = 0;
+  double lng = 0;
 
   @override
   void initState() {
@@ -401,6 +403,21 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     createService();
   }
 
+  bool checkOnePlan() {
+    bool result = false;
+    int i = onePlan.length;
+    onePlan.forEach((element) {
+      if (element.title.trim().isEmpty) {
+        result = false;
+      } else if (element.description.trim().isEmpty) {
+        result = false;
+      } else {
+        result = true;
+      }
+    });
+    return result;
+  }
+
   void next() async {
     checkPlan();
     if (count == 0 && imageList.isNotEmpty) {
@@ -412,8 +429,16 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       message("Images cannot be empty");
     } else if (count == 1) {
       (selectedDependencyId.isNotEmpty && planChecked);
-      if (adventureName.text.isEmpty) {
+      if (adventureName.text.trim().isEmpty) {
         message("Please enter the adventure name");
+        return;
+      }
+      if (infoController.text.trim().isEmpty) {
+        message("Please type information");
+        return;
+      }
+      if (availableSeatsController.text.trim().isEmpty) {
+        message("Please add availaible seats");
         return;
       }
       //if (ConstantsCreateNewServices.selectedRegionId == 0)
@@ -446,10 +471,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         message("Please select level");
         return;
       }
-      if (availableSeatsController.text.isEmpty) {
-        message("Please add availaible seats");
-        return;
-      }
+
       if (sPlan == 0) {
         message("Please select from the service plan");
         return;
@@ -480,6 +502,11 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         //     pm[0].description.isNotEmpty &&
         //     isTimeAfter == false
         ) {
+      bool check = checkOnePlan();
+      if (!check) {
+        message("Please Fill Empty fields");
+        return;
+      }
       if (particularWeekDays) {
         // onePlan.isEmpty;
         // message("Please enter program title");
@@ -498,24 +525,29 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     } else if (count == 3 &&
         // ConstantsCreateNewServices.lat > 0 &&
         // ConstantsCreateNewServices.lng >  &&
-        iLiveInController.text.isNotEmpty &&
-        specificAddressController.text.isNotEmpty &&
-        costOne.text.isNotEmpty &&
-        preRequisites.text.isNotEmpty &&
-        minimumRequirement.text.isNotEmpty) {
+        iLiveInController.text.trim().isNotEmpty &&
+        specificAddressController.text.trim().isNotEmpty &&
+        costOne.text.trim().isNotEmpty &&
+        preRequisites.text.trim().isNotEmpty &&
+        minimumRequirement.text.trim().isNotEmpty &&
+        terms.text.trim().isNotEmpty) {
       //convertProgramData();
       createService();
-    } else if (iLiveInController.text.isEmpty) {
+    } else if (ConstantsCreateNewServices.lat == 0) {
+      message("Please set location Correctly");
+    } else if (ConstantsCreateNewServices.lng == 0) {
+      message("Please set location Correctly");
+    } else if (iLiveInController.text.trim().isEmpty) {
       message("Location Cannot be empty");
-    } else if (specificAddressController.text.isEmpty) {
+    } else if (specificAddressController.text.trim().isEmpty) {
       message("Specific Address Cannot be empty");
-    } else if (costOne.text.isEmpty) {
+    } else if (costOne.text.trim().isEmpty) {
       message("Please set cost one");
-    } else if (preRequisites.text.isEmpty) {
+    } else if (preRequisites.text.trim().isEmpty) {
       message("Please Type prerequisites");
-    } else if (minimumRequirement.text.isEmpty) {
+    } else if (minimumRequirement.text.trim().isEmpty) {
       message("Please Type Minimum Requirements");
-    } else if (terms.text.isEmpty) {
+    } else if (terms.text.trim().isEmpty) {
       message("Please Type Terms");
     }
   }
@@ -1384,6 +1416,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                           ),
                     Cost(
                       iLiveInController,
+                      lat,
+                      lng,
                       specificAddressController,
                       costOne,
                       costTwo,

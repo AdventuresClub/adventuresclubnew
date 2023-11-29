@@ -396,6 +396,57 @@ class _RequestListViewState extends State<RequestListView> {
     );
   }
 
+  void cancel() {
+    Navigator.of(context).pop();
+  }
+
+  void paymentPromt() async {
+    showDialog(
+        context: context,
+        builder: (ctx) => SimpleDialog(
+              contentPadding: const EdgeInsets.all(12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              title: const Icon(
+                Icons.notifications,
+                size: 80,
+                color: greenColor1,
+              ),
+              children: [
+                const SizedBox(
+                  height: 10,
+                ), //Text("data"),
+                const Text(
+                  "You can only make payments once the adventure request has been approved.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
+                // text:
+                //     "After approval you'll be notified and have to buy your subscription package",
+                // size: 18,
+                // weight: FontWeight.w500,
+                // color: blackColor.withOpacity(0.6),
+                const SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton(
+                    onPressed: cancel,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: bluishColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    child: MyText(
+                      text: "Okay, Got it",
+                      weight: FontWeight.bold,
+                      color: whiteColor,
+                    ))
+                //BottomButton(bgColor: blueButtonColor, onTap: homePage)
+              ],
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -500,253 +551,264 @@ class _RequestListViewState extends State<RequestListView> {
                   thickness: 1,
                   color: greyColor,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //CircleImageAvatar(uRequestList.sImage),
-                    //UpcomingRequestImage(rm),
-                    CircleAvatar(
-                      radius: 26,
-                      backgroundImage:
-                          //ExactAssetImage('images/airrides.png'),
-                          NetworkImage(
-                              "${'${Constants.baseUrl}/public/uploads/'}${uRequestListInv[index].sImage[0].imageUrl}"),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 5),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Wrap(
-                            direction: Axis.vertical,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  MyText(
-                                    text: "bookingNumber".tr(),
-                                    color: blackColor,
-                                    weight: FontWeight.w500,
-                                    size: 13,
-                                    height: 1.8,
-                                  ),
-                                  MyText(
-                                    text: uRequestListInv[index].BookingId,
-                                    color: greyColor,
-                                    weight: FontWeight.w400,
-                                    size: 13,
-                                    height: 1.8,
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  MyText(
-                                    text: "activityName".tr(),
-                                    color: blackColor,
-                                    weight: FontWeight.w500,
-                                    size: 13,
-                                    height: 1.8,
-                                  ),
-                                  MyText(
-                                    text: uRequestListInv[index]
-                                        .adventureName
-                                        .tr(),
-                                    color: greyColor,
-                                    weight: FontWeight.w400,
-                                    size: 13,
-                                    height: 1.8,
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  MyText(
-                                    text: "providerName".tr(),
-                                    color: blackColor,
-                                    weight: FontWeight.w500,
-                                    size: 13,
-                                    height: 1.8,
-                                  ),
-                                  MyText(
-                                    text: uRequestListInv[index].pName.tr(),
-                                    color: greyColor,
-                                    weight: FontWeight.w400,
-                                    size: 13,
-                                    height: 1.8,
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  MyText(
-                                    text: "bookingDate".tr(),
-                                    color: blackColor,
-                                    weight: FontWeight.w500,
-                                    size: 13,
-                                    height: 1.8,
-                                  ),
-                                  MyText(
-                                    text: uRequestListInv[index].bDate.tr(),
-                                    color: greyColor,
-                                    weight: FontWeight.w400,
-                                    size: 13,
-                                    height: 1.8,
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  MyText(
-                                    text: "activityDate".tr(),
-                                    color: blackColor,
-                                    weight: FontWeight.w500,
-                                    size: 13,
-                                    height: 1.8,
-                                  ),
-                                  MyText(
-                                    text: uRequestListInv[index].aDate.tr(),
-                                    color: greyColor,
-                                    weight: FontWeight.w400,
-                                    size: 13,
-                                    height: 1.8,
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  MyText(
-                                    text: "registrations".tr(),
-                                    color: blackColor,
-                                    weight: FontWeight.w400,
-                                    size: 13,
-                                    height: 1.8,
-                                  ),
-                                  if (uRequestListInv[index].adult != 0)
-                                    MyText(
-                                      text: "${uRequestListInv[index].adult} "
-                                              " ${"adult"}"
-                                          .tr(),
-                                      color: greyTextColor,
-                                      weight: FontWeight.w400,
-                                      size: 12,
-                                      height: 1.8,
-                                    ),
-                                  if (uRequestListInv[index].kids != 0)
-                                    MyText(
-                                      text: "${uRequestListInv[index].kids} "
-                                              " ${"kids"}"
-                                          .tr(),
-                                      color: greyTextColor,
-                                      weight: FontWeight.w400,
-                                      size: 12,
-                                      height: 1.8,
-                                    ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  MyText(
-                                    text: "unitCost".tr(),
-                                    color: blackColor,
-                                    weight: FontWeight.w500,
-                                    size: 13,
-                                    height: 1.8,
-                                  ),
-                                  MyText(
-                                    text: "${uRequestListInv[index].uCost.tr()}"
-                                        " "
-                                        "${uRequestListInv[index].currency}",
-                                    color: greyColor,
-                                    weight: FontWeight.w400,
-                                    size: 13,
-                                    height: 1.8,
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  MyText(
-                                    text: "totalCost".tr(),
-                                    color: blackColor,
-                                    weight: FontWeight.w500,
-                                    size: 13,
-                                    height: 1.8,
-                                  ),
-                                  MyText(
-                                    text: "${uRequestListInv[index].tCost.tr()}"
-                                        " "
-                                        "${uRequestListInv[index].currency}",
-                                    color: greyColor,
-                                    weight: FontWeight.w400,
-                                    size: 13,
-                                    height: 1.8,
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  MyText(
-                                    text: "payableCost".tr(),
-                                    color: blackColor,
-                                    weight: FontWeight.w500,
-                                    size: 13,
-                                    height: 1.8,
-                                  ),
-                                  MyText(
-                                    text: "${uRequestListInv[index].tCost.tr()}"
-                                        " "
-                                        "${uRequestListInv[index].currency}",
-                                    color: greyColor,
-                                    weight: FontWeight.w400,
-                                    size: 13,
-                                    height: 1.8,
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  MyText(
-                                    text: "paymentChannel".tr(),
-                                    color: blackColor,
-                                    weight: FontWeight.w500,
-                                    size: 13,
-                                    height: 1.8,
-                                  ),
-                                  MyText(
-                                    text: uRequestListInv[index].pChanel.tr(),
-                                    color: greyColor,
-                                    weight: FontWeight.w400,
-                                    size: 13,
-                                    height: 1.8,
-                                  ),
-                                ],
-                              ),
+                ListTile(
+                  // mainAxisAlignment: MainAxisAlignment.start,
+                  // crossAxisAlignment: CrossAxisAlignment.start,
+                  //children: [
+                  //CircleImageAvatar(uRequestList.sImage),
+                  //UpcomingRequestImage(rm),
+                  leading: CircleAvatar(
+                    radius: 26,
+                    backgroundImage:
+                        //ExactAssetImage('images/airrides.png'),
+                        NetworkImage(
+                            "${'${Constants.baseUrl}/public/uploads/'}${uRequestListInv[index].sImage[0].imageUrl}"),
+                  ),
+                  title: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12.0, vertical: 5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            MyText(
+                              text: "bookingNumber".tr(),
+                              color: blackColor,
+                              weight: FontWeight.w500,
+                              size: 13,
+                              height: 1.8,
+                            ),
+                            MyText(
+                              text: uRequestListInv[index].BookingId,
+                              color: greyColor,
+                              weight: FontWeight.w400,
+                              size: 13,
+                              height: 1.8,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 2),
+                        RichText(
+                          text: TextSpan(
+                            text: "activityName".tr(), //"Activity Name: ",
+                            style: const TextStyle(
+                              color: blackColor,
+                              fontSize: 13,
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: uRequestListInv[index].adventureName,
+                                  style: const TextStyle(
+                                      fontSize: 13,
+                                      color: greyColor,
+                                      letterSpacing: 1,
+                                      fontWeight: FontWeight.w300,
+                                      fontFamily: 'Roboto')),
                             ],
-                            // List.generate(
-                            //   text.length,
-                            //   (index) {
-                            //     return
-
-                            //   },
-                            // ),
                           ),
-                          const SizedBox(height: 10),
-                        ],
-                      ),
+                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.start,
+                        //   children: [
+                        //     Expanded(
+                        //       child: MyText(
+                        //         text: "activityName".tr(),
+                        //         color: blackColor,
+                        //         weight: FontWeight.w500,
+                        //         size: 13,
+                        //         height: 1.8,
+                        //       ),
+                        //     ),
+                        //     Expanded(
+                        //       child: MyText(
+                        //         text:
+                        //             uRequestListInv[index].adventureName.tr(),
+                        //         color: greyColor,
+                        //         weight: FontWeight.w400,
+                        //         size: 13,
+                        //         height: 1.8,
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            MyText(
+                              text: "providerName".tr(),
+                              color: blackColor,
+                              weight: FontWeight.w500,
+                              size: 13,
+                              height: 1.8,
+                            ),
+                            MyText(
+                              text: uRequestListInv[index].pName.tr(),
+                              color: greyColor,
+                              weight: FontWeight.w400,
+                              size: 13,
+                              height: 1.8,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            MyText(
+                              text: "bookingDate".tr(),
+                              color: blackColor,
+                              weight: FontWeight.w500,
+                              size: 13,
+                              height: 1.8,
+                            ),
+                            MyText(
+                              text: uRequestListInv[index].bDate.tr(),
+                              color: greyColor,
+                              weight: FontWeight.w400,
+                              size: 13,
+                              height: 1.8,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            MyText(
+                              text: "activityDate".tr(),
+                              color: blackColor,
+                              weight: FontWeight.w500,
+                              size: 13,
+                              height: 1.8,
+                            ),
+                            MyText(
+                              text: uRequestListInv[index].aDate.tr(),
+                              color: greyColor,
+                              weight: FontWeight.w400,
+                              size: 13,
+                              height: 1.8,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            MyText(
+                              text: "registrations".tr(),
+                              color: blackColor,
+                              weight: FontWeight.w400,
+                              size: 13,
+                              height: 1.8,
+                            ),
+                            if (uRequestListInv[index].adult != 0)
+                              MyText(
+                                text: "${uRequestListInv[index].adult} "
+                                        " ${"adult"}"
+                                    .tr(),
+                                color: greyTextColor,
+                                weight: FontWeight.w400,
+                                size: 12,
+                                height: 1.8,
+                              ),
+                            if (uRequestListInv[index].kids != 0)
+                              MyText(
+                                text: "${uRequestListInv[index].kids} "
+                                        " ${"kids"}"
+                                    .tr(),
+                                color: greyTextColor,
+                                weight: FontWeight.w400,
+                                size: 12,
+                                height: 1.8,
+                              ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            MyText(
+                              text: "unitCost".tr(),
+                              color: blackColor,
+                              weight: FontWeight.w500,
+                              size: 13,
+                              height: 1.8,
+                            ),
+                            MyText(
+                              text: "${uRequestListInv[index].uCost.tr()}"
+                                  " "
+                                  "${uRequestListInv[index].currency}",
+                              color: greyColor,
+                              weight: FontWeight.w400,
+                              size: 13,
+                              height: 1.8,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            MyText(
+                              text: "totalCost".tr(),
+                              color: blackColor,
+                              weight: FontWeight.w500,
+                              size: 13,
+                              height: 1.8,
+                            ),
+                            MyText(
+                              text: "${uRequestListInv[index].tCost.tr()}"
+                                  " "
+                                  "${uRequestListInv[index].currency}",
+                              color: greyColor,
+                              weight: FontWeight.w400,
+                              size: 13,
+                              height: 1.8,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            MyText(
+                              text: "payableCost".tr(),
+                              color: blackColor,
+                              weight: FontWeight.w500,
+                              size: 13,
+                              height: 1.8,
+                            ),
+                            MyText(
+                              text: "${uRequestListInv[index].tCost.tr()}"
+                                  " "
+                                  "${uRequestListInv[index].currency}",
+                              color: greyColor,
+                              weight: FontWeight.w400,
+                              size: 13,
+                              height: 1.8,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            MyText(
+                              text: "paymentChannel".tr(),
+                              color: blackColor,
+                              weight: FontWeight.w500,
+                              size: 13,
+                              height: 1.8,
+                            ),
+                            MyText(
+                              text: uRequestListInv[index].pChanel.tr(),
+                              color: greyColor,
+                              weight: FontWeight.w400,
+                              size: 13,
+                              height: 1.8,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                      ],
                     ),
-                  ],
+                  ),
+                  // ],
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -831,7 +893,9 @@ class _RequestListViewState extends State<RequestListView> {
                                     uRequestListInv[index].currency,
                                     uRequestListInv[index].tCost,
                                     uRequestListInv[index])
-                                : () {},
+                                : uRequestListInv[index].status != "2"
+                                    ? paymentPromt
+                                    : () {},
                             child: Center(
                               child: Text(
                                 'makePayment'.tr(),

@@ -14,14 +14,24 @@ import 'package:geocoding/geocoding.dart';
 
 class Cost extends StatefulWidget {
   final TextEditingController iliveController;
+  final double lat;
+  final double lng;
   final TextEditingController specificAddress;
   final TextEditingController costOne;
   final TextEditingController costTwo;
   final TextEditingController preRequisites;
   final TextEditingController minimumRequirement;
   final TextEditingController terms;
-  const Cost(this.iliveController, this.specificAddress, this.costOne,
-      this.costTwo, this.preRequisites, this.minimumRequirement, this.terms,
+  const Cost(
+      this.iliveController,
+      this.lat,
+      this.lng,
+      this.specificAddress,
+      this.costOne,
+      this.costTwo,
+      this.preRequisites,
+      this.minimumRequirement,
+      this.terms,
       {super.key});
 
   @override
@@ -201,6 +211,8 @@ class _CostState extends State<Cost> {
 
   void addLocation(lat, lng) {
     setState(() {
+      // widget.lat == lat;
+      // widget.lng == lng;
       ConstantsCreateNewServices.lat = lat;
       ConstantsCreateNewServices.lng = lng;
     });
@@ -227,6 +239,8 @@ class _CostState extends State<Cost> {
           SizedBox(
             width: MediaQuery.of(context).size.width,
             child: TextField(
+              onTap: openGoogle,
+              readOnly: true,
               controller: widget.iliveController,
               decoration: InputDecoration(
                 contentPadding:

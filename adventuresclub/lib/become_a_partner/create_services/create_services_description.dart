@@ -212,6 +212,11 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                                   child: Column(
                                     children: [
                                       CheckboxListTile(
+                                        //          secondary: Image.network(
+                                        //   "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${activitiesFilter[i].}",
+                                        //   height: 36,
+                                        //   width: 26,
+                                        // ),
                                         side: const BorderSide(
                                             color: bluishColor),
                                         checkboxShape:
@@ -383,7 +388,12 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                             setState(() {
                               selectedRegion = index;
                               regionList[selectedRegion].showCountry = value;
-                              parseData("region", regionList[index].regionId);
+                              if (value == true) {
+                                parseData("region", regionList[index].regionId);
+                              } else {
+                                parseData("region", 0);
+                              }
+
                               // ConstantsCreateNewServices.selectedRegionId =
                               //     regionList[index].regionId;
                             });
@@ -427,7 +437,12 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                               selectedServiceSector = index;
                               categoryFilter[selectedServiceSector]
                                   .showCategoryFilter = value;
-                              parseData("sector", categoryFilter[index].id);
+                              if (value == true) {
+                                parseData("category", categoryFilter[index].id);
+                              } else {
+                                parseData("category", 0);
+                              }
+
                               // ConstantsCreateNewServices.selectedSectorId =
                               //     categoryFilter[index].id;
                             });
@@ -475,7 +490,12 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                               selectedCategory = index;
                               filterSectors[selectedCategory]
                                   .showfilterSectors = value;
-                              parseData("category", filterSectors[index].id);
+                              if (value == true) {
+                                parseData("sector", filterSectors[index].id);
+                              } else {
+                                parseData("sector", 0);
+                              }
+
                               // ConstantsCreateNewServices.selectedCategoryId =
                               //     filterSectors[index].id;
                             });
@@ -489,9 +509,8 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                 //       const SizedBox(height: 20),
                 ExpansionTile(
                   title: Text(
-                    serviceFilter[selectedServiceSector].showServiceFilter ==
-                            true
-                        ? serviceFilter[selectedServiceSector].type
+                    serviceFilter[selectedServiceType].showServiceFilter == true
+                        ? serviceFilter[selectedServiceType].type
                         : 'Service Type',
                   ),
                   children: [
@@ -511,15 +530,20 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                           checkboxShape: const RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(12))),
-                          value: selectedServiceSector == index
+                          value: selectedServiceType == index
                               ? serviceFilter[index].showServiceFilter
                               : false,
                           onChanged: (value) {
                             setState(() {
-                              selectedServiceSector = index;
-                              serviceFilter[selectedServiceSector]
+                              selectedServiceType = index;
+                              serviceFilter[selectedServiceType]
                                   .showServiceFilter = value;
-                              parseData("type", serviceFilter[index].id);
+                              if (value == true) {
+                                parseData("type", serviceFilter[index].id);
+                              } else {
+                                parseData("type", 0);
+                              }
+
                               // ConstantsCreateNewServices.serviceTypeId =
                               //     serviceFilter[index].id;
                             });
@@ -562,7 +586,12 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                               selectedDuration = index;
                               durationFilter[selectedDuration].showDuration =
                                   value;
-                              parseData("duration", durationFilter[index].id);
+                              if (value == true) {
+                                parseData("duration", durationFilter[index].id);
+                              } else {
+                                parseData("duration", 0);
+                              }
+
                               // ConstantsCreateNewServices.selectedDurationId =
                               //     durationFilter[index].id;
                             });
@@ -603,7 +632,12 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                             setState(() {
                               selectedLevel = index;
                               levelFilter[selectedLevel].showLevel = value;
-                              parseData("level", levelFilter[index].id);
+                              if (value == true) {
+                                parseData("level", levelFilter[index].id);
+                              } else {
+                                parseData("level", 0);
+                              }
+
                               // ConstantsCreateNewServices.selectedlevelId =
                               //     levelFilter[index].id;
                             });

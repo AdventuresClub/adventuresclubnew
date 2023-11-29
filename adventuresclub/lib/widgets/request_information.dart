@@ -1,7 +1,6 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/getClientRequest/get_client_request_model.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
-import 'package:adventuresclub/widgets/circle_image_avatar.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

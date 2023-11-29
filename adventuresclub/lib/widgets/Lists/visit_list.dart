@@ -55,12 +55,15 @@ class _VisitListState extends State<VisitList> {
             child: Padding(
               padding: const EdgeInsets.only(left: 3.0),
               child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 child: Column(children: [
                   Stack(
                     children: [
                       Container(
                         width: MediaQuery.of(context).size.width / 2.1,
-                        height: 100,
+                        height: 80,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
                             image: DecorationImage(
@@ -87,7 +90,7 @@ class _VisitListState extends State<VisitList> {
                               ))),
                     ],
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 5),
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 2.1,
                     child: Padding(
@@ -95,32 +98,36 @@ class _VisitListState extends State<VisitList> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          MyText(
-                            text: widget
-                                .gGv[index].destinationName, //text[index],
-                            color: blackColor,
-                            size: 14,
-                            weight: FontWeight.w700,
-                          ),
-                          const SizedBox(width: 20),
-                          RatingBar.builder(
-                            initialRating:
-                                convert(widget.gGv[index].rS.toString()), //3,
-                            itemSize: 12,
-                            minRating: 1,
-                            direction: Axis.horizontal,
-                            allowHalfRating: true,
-                            itemCount: 5,
-                            itemPadding:
-                                const EdgeInsets.symmetric(horizontal: 1.0),
-                            itemBuilder: (context, _) => const Icon(
-                              Icons.star,
-                              color: Colors.amber,
+                          Expanded(
+                            child: MyText(
+                              text: widget
+                                  .gGv[index].destinationName, //text[index],
+                              color: blackColor,
                               size: 12,
+                              weight: FontWeight.w700,
                             ),
-                            onRatingUpdate: (rating) {
-                              print(rating);
-                            },
+                          ),
+                          const SizedBox(width: 2),
+                          Expanded(
+                            child: RatingBar.builder(
+                              initialRating:
+                                  convert(widget.gGv[index].rS.toString()), //3,
+                              itemSize: 12,
+                              minRating: 1,
+                              direction: Axis.horizontal,
+                              allowHalfRating: true,
+                              itemCount: 5,
+                              itemPadding:
+                                  const EdgeInsets.symmetric(horizontal: 1.0),
+                              itemBuilder: (context, _) => const Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                                size: 12,
+                              ),
+                              onRatingUpdate: (rating) {
+                                print(rating);
+                              },
+                            ),
                           ),
                         ],
                       ),
