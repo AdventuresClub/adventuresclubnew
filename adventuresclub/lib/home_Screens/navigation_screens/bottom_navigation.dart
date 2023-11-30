@@ -6,14 +6,20 @@ import 'package:adventuresclub/home_Screens/navigation_screens/home.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/planned.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/visit.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/requests.dart';
+import 'package:adventuresclub/new_signup/new_register.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
+import 'package:adventuresclub/sign_up/sign_in.dart';
+import 'package:adventuresclub/widgets/loading_widget.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/update_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
+import '../../models/get_country.dart';
 import '../../widgets/buttons/button.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -31,14 +37,164 @@ class _BottomNavigationState extends State<BottomNavigation> {
   String resultService = "";
   String resultRequest = "";
   Map mapVersion = {};
+  bool loading = false;
+  String? _currentAddress;
+  Position? _currentPosition;
+  String userCountry = "";
+  String mobileNumber = "";
+  String countryCode = "+1";
+  String selectedLanguage = "";
+  List<GetCountryModel> filteredServices = [];
+  String selectedCountry = 'Now In';
+  String flag = "";
+  int countryId = 0;
+  Map mapCountry = {};
+  List<GetCountryModel> countriesList1 = [];
 
   @override
   void initState() {
     super.initState();
+    getCountries();
+
     // index = context.read<ServicesProvider>().homeIndex;
     getNotificationBadge();
     Constants.getFilter();
     getVersion();
+  }
+
+  Future getCountries() async {
+    var response =
+        await http.get(Uri.parse("${Constants.baseUrl}/api/v1/get_countries"));
+    if (response.statusCode == 200) {
+      mapCountry = json.decode(response.body);
+      List<dynamic> result = mapCountry['data'];
+      result.forEach((element) {
+        GetCountryModel gc = GetCountryModel(
+          element['country'],
+          element['short_name'],
+          element['flag'],
+          element['code'],
+          element['id'],
+        );
+        countriesList1.add(gc);
+      });
+      // setState(() {
+      filteredServices = countriesList1;
+      // });
+    }
+    _getCurrentPosition();
+  }
+
+  Future<void> _getCurrentPosition() async {
+    setState(() {
+      loading = true;
+    });
+    final hasPermission = await _handleLocationPermission();
+    if (!hasPermission) {
+      setState(() {
+        loading = false;
+      });
+      checkCountry();
+      return;
+    }
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) {
+      //setState(() =>
+      _currentPosition = position;
+      //);
+      _getAddressFromLatLng(_currentPosition!);
+    }).catchError((e) {
+      debugPrint(e);
+    });
+  }
+
+  Future<bool> _handleLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location services are disabled. Please enable the services')));
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Location permissions are denied')));
+        return false;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location permissions are permanently denied, we cannot request permissions.')));
+      return false;
+    }
+    return true;
+  }
+
+  Future<void> _getAddressFromLatLng(Position position) async {
+    await placemarkFromCoordinates(
+            _currentPosition!.latitude, _currentPosition!.longitude)
+        .then((List<Placemark> placemarks) {
+      Placemark place = placemarks[0];
+      //setState(() {
+      _currentAddress =
+          ' ${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
+      userCountry = place.country!.toUpperCase();
+      //});
+      checkCountry();
+    }).catchError((e) {
+      debugPrint(e);
+    });
+  }
+
+  void checkCountry() {
+    filteredServices.forEach((element) {
+      if (element.country == userCountry) {
+        getC(element.country, element.id, element.flag, element.code, false);
+        //setState(() {
+        selectedCountry == element.country;
+        countryCode == element.code;
+        Constants.country = selectedCountry;
+        Constants.countryFlag = element.flag;
+        Constants.countryId = element.id;
+        //});
+      } else {
+        if (element.country == "OMAN") {
+          getC(element.country, element.id, element.flag, element.code, false);
+          //setState(() {
+          selectedCountry == element.country;
+          countryCode == element.code;
+          Constants.country = selectedCountry;
+          Constants.countryFlag = element.flag;
+          Constants.countryId = element.id;
+          // });
+        }
+      }
+    });
+    setState(() {
+      loading = false;
+    });
+  }
+
+  void getC(
+      String country, int id, String countryflag, String cCode, bool check) {
+    if (check) {
+      Navigator.of(context).pop();
+    }
+    setState(
+      () {
+        selectedCountry = country;
+        countryId = id;
+        flag = countryflag;
+        countryCode = cCode;
+      },
+    );
   }
 
   void getVersion() async {
@@ -146,6 +302,143 @@ class _BottomNavigationState extends State<BottomNavigation> {
     Navigator.of(context).pop();
   }
 
+  void navLogin() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return const SignIn();
+    }));
+  }
+
+  void navRegister() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return const NewRegister();
+    }));
+  }
+
+  void loginPrompt() async {
+    await showModalBottomSheet(
+      showDragHandle: false,
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext context) {
+        return BottomSheet(
+          onClosing: () {},
+          builder: (BuildContext context) {
+            return Container(
+              color: blackColor,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            GestureDetector(
+                              onTap: cancel,
+                              child: const Icon(
+                                Icons.cancel_sharp,
+                                color: whiteColor,
+                              ),
+                            )
+                          ],
+                        ),
+                        ListTile(
+                          tileColor: Colors.transparent,
+                          //onTap: showCamera,
+                          leading: const Icon(
+                            Icons.notification_important,
+                            color: whiteColor,
+                          ),
+                          title: MyText(
+                            text: "You Are Not logged In",
+                            weight: FontWeight.w600,
+                          ),
+                          trailing: const Icon(Icons.chevron_right_rounded),
+                        ),
+                        Button(
+                            "login".tr(),
+                            //'Register',
+                            greenishColor,
+                            greenishColor,
+                            whiteColor,
+                            20,
+                            () {},
+                            Icons.add,
+                            whiteColor,
+                            false,
+                            2,
+                            'Raleway',
+                            FontWeight.w600,
+                            18),
+                        const Divider(),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              color: transparentColor,
+                              height: 40,
+                              child: GestureDetector(
+                                onTap: navRegister,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        TextSpan(
+                                            text: "dontHaveAnAccount?".tr(),
+                                            style: const TextStyle(
+                                                color: whiteColor,
+                                                fontSize: 16)),
+                                        // TextSpan(
+                                        //   text: "register".tr(),
+                                        //   style: const TextStyle(
+                                        //       fontWeight: FontWeight.bold, color: whiteColor),
+                                        // ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 40),
+                              child: Button(
+                                  "register".tr(),
+                                  greenishColor,
+                                  greenishColor,
+                                  whiteColor,
+                                  20,
+                                  navRegister,
+                                  Icons.add,
+                                  whiteColor,
+                                  false,
+                                  2,
+                                  'Raleway',
+                                  FontWeight.w600,
+                                  20),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
   void showPicker() async {
     await showModalBottomSheet(
       showDragHandle: false,
@@ -223,7 +516,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   Widget build(BuildContext context) {
     int index = Provider.of<ServicesProvider>(context).homeIndex;
     return Scaffold(
-      body: getBody(index),
+      body: loading ? const LoadingWidget() : getBody(index),
       bottomNavigationBar: BottomNavigationBar(
         elevation: 0,
         currentIndex: index,

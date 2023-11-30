@@ -26,7 +26,9 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/get_country.dart';
 import '../../models/packages_become_partner/packages_become_partner_model.dart';
+import '../../new_signup/new_register.dart';
 import '../../provider/services_provider.dart';
+import '../../widgets/buttons/button.dart';
 import '../become_partner/become_partner_packages.dart';
 
 class Account extends StatefulWidget {
@@ -765,6 +767,18 @@ class _AccountState extends State<Account> {
     );
   }
 
+  void navLogin() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return const SignIn();
+    }));
+  }
+
+  void navRegister() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return const NewRegister();
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -773,576 +787,140 @@ class _AccountState extends State<Account> {
       },
       child: Scaffold(
         backgroundColor: Colors.grey.withOpacity(0.1),
-        body: loading
-            ? Center(
-                child: MyText(
-                text: "loading".tr(),
-                weight: FontWeight.bold,
-                size: 16,
+        body: Constants.userId == 0
+            ? Container(
+                height: MediaQuery.of(context).size.height,
                 color: blackColor,
-              ))
-            : ListView(
-                children: [
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  Column(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        children: [
+                          // Row(
+                          //   crossAxisAlignment: CrossAxisAlignment.end,
+                          //   mainAxisAlignment: MainAxisAlignment.end,
+                          //   children: [
+                          //     GestureDetector(
+                          //       onTap: cancel,
+                          //       child: const Icon(
+                          //         Icons.cancel_sharp,
+                          //         color: whiteColor,
+                          //       ),
+                          //     )
+                          //   ],
+                          // ),
+                          ListTile(
+                            tileColor: Colors.transparent,
+                            //onTap: showCamera,
+                            leading: const Icon(
+                              Icons.notification_important,
+                              color: whiteColor,
+                            ),
+                            title: MyText(
+                              text: "You Are Not logged In",
+                              weight: FontWeight.w600,
+                            ),
+                            trailing: const Icon(Icons.chevron_right_rounded),
+                          ),
+                          Button(
+                              "login".tr(),
+                              //'Register',
+                              greenishColor,
+                              greenishColor,
+                              whiteColor,
+                              20,
+                              () {},
+                              Icons.add,
+                              whiteColor,
+                              false,
+                              2,
+                              'Raleway',
+                              FontWeight.w600,
+                              18),
+                          const Divider(),
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Container(
+                                color: transparentColor,
+                                height: 40,
+                                child: GestureDetector(
+                                  onTap: navRegister,
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text.rich(
+                                      TextSpan(
+                                        children: [
+                                          TextSpan(
+                                              text: "dontHaveAnAccount?".tr(),
+                                              style: const TextStyle(
+                                                  color: whiteColor,
+                                                  fontSize: 16)),
+                                          // TextSpan(
+                                          //   text: "register".tr(),
+                                          //   style: const TextStyle(
+                                          //       fontWeight: FontWeight.bold, color: whiteColor),
+                                          // ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 40),
+                                child: Button(
+                                    "register".tr(),
+                                    greenishColor,
+                                    greenishColor,
+                                    whiteColor,
+                                    20,
+                                    navRegister,
+                                    Icons.add,
+                                    whiteColor,
+                                    false,
+                                    2,
+                                    'Raleway',
+                                    FontWeight.w600,
+                                    20),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : loading
+                ? Center(
+                    child: MyText(
+                    text: "loading".tr(),
+                    weight: FontWeight.bold,
+                    size: 16,
+                    color: blackColor,
+                  ))
+                : ListView(
                     children: [
                       const SizedBox(
-                        height: 10,
+                        height: 2,
                       ),
-                      if (profile.userRole == "3")
-                        Column(
-                          children: [
-                            Container(
-                              color: transparentColor,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  loading
-                                      ? Text("loading".tr())
-                                      : Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            MyText(
-                                              text: profile
-                                                  .name, //'Kenneth Gutierrez',
-                                              color: blackColor,
-                                              weight: FontWeight.bold,
-                                              size: 22,
-                                              fontFamily: "Raleway",
-                                            ),
-                                            GestureDetector(
-                                              onTap: () {
-                                                Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                        builder: (_) {
-                                                  return const BecomePartnerNew();
-                                                }));
-                                              },
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  MyText(
-                                                    text: 'Become A partner',
-                                                    size: 16,
-                                                    //fontFamily: 'Raleway',
-                                                    weight: FontWeight.w600,
-                                                    color: greyColor
-                                                        .withOpacity(1),
-                                                  ),
-                                                  const Icon(
-                                                    Icons.arrow_forward_ios,
-                                                    color: bluishColor,
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                  profileUrl != null
-                                      ? GestureDetector(
-                                          onTap: () => goToProfile(
-                                              expired, profile.userRole),
-                                          child: CircleAvatar(
-                                            radius: 38,
-                                            backgroundImage: NetworkImage(
-                                                "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
-                                          ),
-                                        )
-                                      : GestureDetector(
-                                          onTap: () => goToProfile(
-                                              expired, profile.userRole),
-                                          child: CircleAvatar(
-                                            radius: 38,
-                                            backgroundImage:
-                                                NetworkImage(profileUrl),
-                                          ),
-                                        ),
-                                ],
-                              ),
-                            ),
-                            // const SizedBox(
-                            //   height: 10,
-                            // ),
-                            Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Card(
-                                elevation: 1,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      for (int i = 0; i < 3; i++)
-                                        Column(
-                                          children: [
-                                            GestureDetector(
-                                              onTap: () {
-                                                if (userText[i] == "favorite") {
-                                                  Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                      builder: (_) {
-                                                        return const Favorite();
-                                                      },
-                                                    ),
-                                                  );
-                                                }
-                                                if (userText[i] ==
-                                                    'Notification') {
-                                                  Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                      builder: (_) {
-                                                        return const Notifications();
-                                                      },
-                                                    ),
-                                                  );
-                                                }
-                                                if (userText[i] ==
-                                                    'myPoints'.tr()) {
-                                                  Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                      builder: (_) {
-                                                        return const MyPoints();
-                                                      },
-                                                    ),
-                                                  );
-                                                }
-                                              },
-                                              child: Stack(
-                                                clipBehavior: Clip.none,
-                                                children: [
-                                                  Image(
-                                                    image: ExactAssetImage(
-                                                        images[i]),
-                                                    height: 30,
-                                                    width: 30,
-                                                  ),
-                                                  Constants.totalNotication >
-                                                              0 &&
-                                                          text[i] ==
-                                                              'Notifications'
-                                                      ? Positioned(
-                                                          bottom: -5,
-                                                          right: -12,
-                                                          child: CircleAvatar(
-                                                            radius: 10,
-                                                            backgroundColor:
-                                                                redColor,
-                                                            child: MyText(
-                                                              text: Constants
-                                                                  .resultService
-                                                                  .toString(), //'12',
-                                                              color: whiteColor,
-                                                              weight: FontWeight
-                                                                  .bold,
-                                                              size: 9,
-                                                            ),
-                                                          ),
-                                                        )
-                                                      : const SizedBox()
-                                                ],
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 5,
-                                            ),
-                                            MyText(
-                                              text: userText[i],
-                                              color: greyColor.withOpacity(1),
-                                              weight: FontWeight.bold,
-                                            )
-                                          ],
-                                        )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      if (profile.bp.packagesId == 0 &&
-                          profile.bp.isApproved == "0" &&
-                          profile.userRole == "2")
-                        Column(
-                          children: [
-                            Container(
-                              color: transparentColor,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  loading
-                                      ? Text("loading".tr())
-                                      : Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            MyText(
-                                              text: profile
-                                                  .name, //'Kenneth Gutierrez',
-                                              color: blackColor,
-                                              weight: FontWeight.bold,
-                                              size: 22,
-                                              fontFamily: "Raleway",
-                                            ),
-                                            GestureDetector(
-                                              onTap: requestSent,
-                                              // () {
-                                              //   Navigator.of(context)
-                                              //       .push(MaterialPageRoute(builder: (_) {
-                                              //     return const BecomePartnerNew();
-                                              //   }));
-                                              // },
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  MyText(
-                                                    text: 'Become A partner',
-                                                    size: 18,
-                                                    //fontFamily: 'Raleway',
-                                                    weight: FontWeight.w600,
-                                                    color: greyColor
-                                                        .withOpacity(1),
-                                                  ),
-                                                  const Icon(
-                                                    Icons.arrow_forward_ios,
-                                                    color: bluishColor,
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                  profileUrl != null
-                                      ? GestureDetector(
-                                          onTap: () => goToProfile(
-                                              expired, profile.userRole),
-                                          child: CircleAvatar(
-                                            radius: 38,
-                                            backgroundImage: NetworkImage(
-                                                "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
-                                          ),
-                                        )
-                                      : GestureDetector(
-                                          onTap: () => goToProfile(
-                                              expired, profile.userRole),
-                                          child: CircleAvatar(
-                                            radius: 38,
-                                            backgroundImage:
-                                                NetworkImage(profileUrl),
-                                          ),
-                                        ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Card(
-                                elevation: 1,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      for (int i = 0; i < 3; i++)
-                                        Column(
-                                          children: [
-                                            GestureDetector(
-                                              onTap: () {
-                                                if (userText[i] ==
-                                                    "favorite".tr()) {
-                                                  Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                      builder: (_) {
-                                                        return const Favorite();
-                                                      },
-                                                    ),
-                                                  );
-                                                }
-                                                if (userText[i] ==
-                                                    'notification'.tr()) {
-                                                  Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                      builder: (_) {
-                                                        return const Notifications();
-                                                      },
-                                                    ),
-                                                  );
-                                                }
-                                                if (userText[i] ==
-                                                    'myPoints'.tr()) {
-                                                  Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                      builder: (_) {
-                                                        return const MyPoints();
-                                                      },
-                                                    ),
-                                                  );
-                                                }
-                                              },
-                                              child: Stack(
-                                                clipBehavior: Clip.none,
-                                                children: [
-                                                  Image(
-                                                    image: ExactAssetImage(
-                                                        images[i]),
-                                                    height: 30,
-                                                    width: 30,
-                                                  ),
-                                                  Constants.totalNotication >
-                                                              0 &&
-                                                          text[i] ==
-                                                              'notifications'
-                                                                  .tr()
-                                                      ? Positioned(
-                                                          bottom: -5,
-                                                          right: -12,
-                                                          child: CircleAvatar(
-                                                            radius: 10,
-                                                            backgroundColor:
-                                                                redColor,
-                                                            child: MyText(
-                                                              text: Constants
-                                                                  .resultService
-                                                                  .toString(), //'12',
-                                                              color: whiteColor,
-                                                              weight: FontWeight
-                                                                  .bold,
-                                                              size: 9,
-                                                            ),
-                                                          ),
-                                                        )
-                                                      : const SizedBox()
-                                                ],
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 5,
-                                            ),
-                                            MyText(
-                                              text: userText[i].tr(),
-                                              color: greyColor.withOpacity(1),
-                                              weight: FontWeight.bold,
-                                            )
-                                          ],
-                                        )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      if (profile.bp.packagesId == 0 &&
-                          profile.bp.isApproved == "1" &&
-                          profile.userRole == "2")
-                        Column(
-                          children: [
-                            GestureDetector(
-                              //  onTap: getProfile,
-                              child: Container(
-                                color: transparentColor,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 15),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    loading
-                                        ? Text("loading".tr())
-                                        : Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              MyText(
-                                                text: profile
-                                                    .name, //'Kenneth Gutierrez',
-                                                color: blackColor,
-                                                weight: FontWeight.bold,
-                                                size: 22,
-                                                fontFamily: "Raleway",
-                                              ),
-                                              GestureDetector(
-                                                onTap: () => packagesList1(
-                                                    true), //requestSent,
-                                                // () {
-                                                //   Navigator.of(context)
-                                                //       .push(MaterialPageRoute(builder: (_) {
-                                                //     return const BecomePartnerNew();
-                                                //   }));
-                                                // },
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    MyText(
-                                                      text: 'Become A partner',
-                                                      size: 18,
-                                                      //fontFamily: 'Raleway',
-                                                      weight: FontWeight.w600,
-                                                      color: greyColor
-                                                          .withOpacity(1),
-                                                    ),
-                                                    const Icon(
-                                                      Icons.arrow_forward_ios,
-                                                      color: bluishColor,
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                    profileUrl.isEmpty
-                                        ? GestureDetector(
-                                            onTap: () => goToProfile(
-                                                expired, profile.userRole),
-                                            child: CircleAvatar(
-                                              radius: 38,
-                                              backgroundImage: NetworkImage(
-                                                  "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
-                                            ),
-                                          )
-                                        : GestureDetector(
-                                            onTap: () => goToProfile(
-                                                expired, profile.userRole),
-                                            child: CircleAvatar(
-                                              radius: 38,
-                                              backgroundImage:
-                                                  NetworkImage(profileUrl),
-                                            ),
-                                          ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Card(
-                                elevation: 1,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      for (int i = 0; i < 3; i++)
-                                        Column(
-                                          children: [
-                                            GestureDetector(
-                                              onTap: () {
-                                                if (userText[i] == "favorite") {
-                                                  Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                      builder: (_) {
-                                                        return const Favorite();
-                                                      },
-                                                    ),
-                                                  );
-                                                }
-                                                if (userText[i] ==
-                                                    'notification') {
-                                                  Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                      builder: (_) {
-                                                        return const Notifications();
-                                                      },
-                                                    ),
-                                                  );
-                                                }
-                                                if (userText[i] == 'myPoints') {
-                                                  Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                      builder: (_) {
-                                                        return const MyPoints();
-                                                      },
-                                                    ),
-                                                  );
-                                                }
-                                              },
-                                              child: Stack(
-                                                clipBehavior: Clip.none,
-                                                children: [
-                                                  Image(
-                                                    image: ExactAssetImage(
-                                                        images[i]),
-                                                    height: 30,
-                                                    width: 30,
-                                                  ),
-                                                  Constants.totalNotication >
-                                                              0 &&
-                                                          text[i] ==
-                                                              'notifications'
-                                                      ? Positioned(
-                                                          bottom: -5,
-                                                          right: -12,
-                                                          child: CircleAvatar(
-                                                            radius: 10,
-                                                            backgroundColor:
-                                                                redColor,
-                                                            child: MyText(
-                                                              text: Constants
-                                                                  .resultService
-                                                                  .toString(), //'12',
-                                                              color: whiteColor,
-                                                              weight: FontWeight
-                                                                  .bold,
-                                                              size: 9,
-                                                            ),
-                                                          ),
-                                                        )
-                                                      : const SizedBox()
-                                                ],
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 5,
-                                            ),
-                                            MyText(
-                                              text: userText[i].tr(),
-                                              color: greyColor.withOpacity(1),
-                                              weight: FontWeight.bold,
-                                            )
-                                          ],
-                                        )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      if (profile.bp.packagesId > 0 &&
-                              profile.bp.isApproved == "1" &&
-                              profile.userRole == "2"
-                          // &&
-                          // expired == false
-                          )
-                        if (expired &&
-                            profile.bp.isApproved == "1" &&
-                            profile.userRole == "2" &&
-                            profile.bp.packagesId > 0)
-                          Column(
-                            children: [
-                              GestureDetector(
-                                // onTap: getProfile,
-                                child: Container(
+                      Column(
+                        children: [
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          if (profile.userRole == "3")
+                            Column(
+                              children: [
+                                Container(
                                   color: transparentColor,
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 15),
@@ -1365,7 +943,197 @@ class _AccountState extends State<Account> {
                                                   fontFamily: "Raleway",
                                                 ),
                                                 GestureDetector(
-                                                  onTap: ex,
+                                                  onTap: () {
+                                                    Navigator.of(context).push(
+                                                        MaterialPageRoute(
+                                                            builder: (_) {
+                                                      return const BecomePartnerNew();
+                                                    }));
+                                                  },
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      MyText(
+                                                        text:
+                                                            'Become A partner',
+                                                        size: 16,
+                                                        //fontFamily: 'Raleway',
+                                                        weight: FontWeight.w600,
+                                                        color: greyColor
+                                                            .withOpacity(1),
+                                                      ),
+                                                      const Icon(
+                                                        Icons.arrow_forward_ios,
+                                                        color: bluishColor,
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                      profileUrl != null
+                                          ? GestureDetector(
+                                              onTap: () => goToProfile(
+                                                  expired, profile.userRole),
+                                              child: CircleAvatar(
+                                                radius: 38,
+                                                backgroundImage: NetworkImage(
+                                                    "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
+                                              ),
+                                            )
+                                          : GestureDetector(
+                                              onTap: () => goToProfile(
+                                                  expired, profile.userRole),
+                                              child: CircleAvatar(
+                                                radius: 38,
+                                                backgroundImage:
+                                                    NetworkImage(profileUrl),
+                                              ),
+                                            ),
+                                    ],
+                                  ),
+                                ),
+                                // const SizedBox(
+                                //   height: 10,
+                                // ),
+                                Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Card(
+                                    elevation: 1,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          for (int i = 0; i < 3; i++)
+                                            Column(
+                                              children: [
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    if (userText[i] ==
+                                                        "favorite") {
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        MaterialPageRoute(
+                                                          builder: (_) {
+                                                            return const Favorite();
+                                                          },
+                                                        ),
+                                                      );
+                                                    }
+                                                    if (userText[i] ==
+                                                        'Notification') {
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        MaterialPageRoute(
+                                                          builder: (_) {
+                                                            return const Notifications();
+                                                          },
+                                                        ),
+                                                      );
+                                                    }
+                                                    if (userText[i] ==
+                                                        'myPoints'.tr()) {
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        MaterialPageRoute(
+                                                          builder: (_) {
+                                                            return const MyPoints();
+                                                          },
+                                                        ),
+                                                      );
+                                                    }
+                                                  },
+                                                  child: Stack(
+                                                    clipBehavior: Clip.none,
+                                                    children: [
+                                                      Image(
+                                                        image: ExactAssetImage(
+                                                            images[i]),
+                                                        height: 30,
+                                                        width: 30,
+                                                      ),
+                                                      Constants.totalNotication >
+                                                                  0 &&
+                                                              text[i] ==
+                                                                  'Notifications'
+                                                          ? Positioned(
+                                                              bottom: -5,
+                                                              right: -12,
+                                                              child:
+                                                                  CircleAvatar(
+                                                                radius: 10,
+                                                                backgroundColor:
+                                                                    redColor,
+                                                                child: MyText(
+                                                                  text: Constants
+                                                                      .resultService
+                                                                      .toString(), //'12',
+                                                                  color:
+                                                                      whiteColor,
+                                                                  weight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  size: 9,
+                                                                ),
+                                                              ),
+                                                            )
+                                                          : const SizedBox()
+                                                    ],
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 5,
+                                                ),
+                                                MyText(
+                                                  text: userText[i],
+                                                  color:
+                                                      greyColor.withOpacity(1),
+                                                  weight: FontWeight.bold,
+                                                )
+                                              ],
+                                            )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          if (profile.bp.packagesId == 0 &&
+                              profile.bp.isApproved == "0" &&
+                              profile.userRole == "2")
+                            Column(
+                              children: [
+                                Container(
+                                  color: transparentColor,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      loading
+                                          ? Text("loading".tr())
+                                          : Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                MyText(
+                                                  text: profile
+                                                      .name, //'Kenneth Gutierrez',
+                                                  color: blackColor,
+                                                  weight: FontWeight.bold,
+                                                  size: 22,
+                                                  fontFamily: "Raleway",
+                                                ),
+                                                GestureDetector(
+                                                  onTap: requestSent,
                                                   // () {
                                                   //   Navigator.of(context)
                                                   //       .push(MaterialPageRoute(builder: (_) {
@@ -1378,7 +1146,7 @@ class _AccountState extends State<Account> {
                                                     children: [
                                                       MyText(
                                                         text:
-                                                            'Your Subscription expired',
+                                                            'Become A partner',
                                                         size: 18,
                                                         //fontFamily: 'Raleway',
                                                         weight: FontWeight.w600,
@@ -1392,16 +1160,6 @@ class _AccountState extends State<Account> {
                                                     ],
                                                   ),
                                                 ),
-                                                const SizedBox(height: 2),
-                                                MyText(
-                                                  text:
-                                                      "${"Your Plan expired on "}${profile.bp.endDate}",
-                                                  //"${" before "}${profile.bp.endDate}", //'Kenneth Gutierrez',
-                                                  color: redColor,
-                                                  weight: FontWeight.bold,
-                                                  size: 14,
-                                                  fontFamily: "Raleway",
-                                                ),
                                               ],
                                             ),
                                       profileUrl != null
@@ -1409,7 +1167,7 @@ class _AccountState extends State<Account> {
                                               onTap: () => goToProfile(
                                                   expired, profile.userRole),
                                               child: CircleAvatar(
-                                                radius: 35,
+                                                radius: 38,
                                                 backgroundImage: NetworkImage(
                                                     "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
                                               ),
@@ -1418,7 +1176,7 @@ class _AccountState extends State<Account> {
                                               onTap: () => goToProfile(
                                                   expired, profile.userRole),
                                               child: CircleAvatar(
-                                                radius: 35,
+                                                radius: 38,
                                                 backgroundImage:
                                                     NetworkImage(profileUrl),
                                               ),
@@ -1426,828 +1184,1269 @@ class _AccountState extends State<Account> {
                                     ],
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Card(
-                                  elevation: 1,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
+                                Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Card(
+                                    elevation: 1,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          for (int i = 0; i < 3; i++)
+                                            Column(
+                                              children: [
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    if (userText[i] ==
+                                                        "favorite".tr()) {
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        MaterialPageRoute(
+                                                          builder: (_) {
+                                                            return const Favorite();
+                                                          },
+                                                        ),
+                                                      );
+                                                    }
+                                                    if (userText[i] ==
+                                                        'notification'.tr()) {
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        MaterialPageRoute(
+                                                          builder: (_) {
+                                                            return const Notifications();
+                                                          },
+                                                        ),
+                                                      );
+                                                    }
+                                                    if (userText[i] ==
+                                                        'myPoints'.tr()) {
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        MaterialPageRoute(
+                                                          builder: (_) {
+                                                            return const MyPoints();
+                                                          },
+                                                        ),
+                                                      );
+                                                    }
+                                                  },
+                                                  child: Stack(
+                                                    clipBehavior: Clip.none,
+                                                    children: [
+                                                      Image(
+                                                        image: ExactAssetImage(
+                                                            images[i]),
+                                                        height: 30,
+                                                        width: 30,
+                                                      ),
+                                                      Constants.totalNotication >
+                                                                  0 &&
+                                                              text[i] ==
+                                                                  'notifications'
+                                                                      .tr()
+                                                          ? Positioned(
+                                                              bottom: -5,
+                                                              right: -12,
+                                                              child:
+                                                                  CircleAvatar(
+                                                                radius: 10,
+                                                                backgroundColor:
+                                                                    redColor,
+                                                                child: MyText(
+                                                                  text: Constants
+                                                                      .resultService
+                                                                      .toString(), //'12',
+                                                                  color:
+                                                                      whiteColor,
+                                                                  weight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  size: 9,
+                                                                ),
+                                                              ),
+                                                            )
+                                                          : const SizedBox()
+                                                    ],
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 5,
+                                                ),
+                                                MyText(
+                                                  text: userText[i].tr(),
+                                                  color:
+                                                      greyColor.withOpacity(1),
+                                                  weight: FontWeight.bold,
+                                                )
+                                              ],
+                                            )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          if (profile.bp.packagesId == 0 &&
+                              profile.bp.isApproved == "1" &&
+                              profile.userRole == "2")
+                            Column(
+                              children: [
+                                GestureDetector(
+                                  //  onTap: getProfile,
+                                  child: Container(
+                                    color: transparentColor,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
                                     child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        for (int i = 0; i < 3; i++)
-                                          Column(
-                                            children: [
-                                              GestureDetector(
-                                                onTap: () {
-                                                  if (text[i] == "favorite") {
-                                                    Navigator.of(context).push(
-                                                      MaterialPageRoute(
-                                                        builder: (_) {
-                                                          return const Favorite();
-                                                        },
-                                                      ),
-                                                    );
-                                                  }
-                                                  if (text[i] == 'myServices') {
-                                                    Navigator.of(context).push(
-                                                      MaterialPageRoute(
-                                                        builder: (_) {
-                                                          return const MyServices();
-                                                        },
-                                                      ),
-                                                    );
-                                                  }
-                                                  if (text[i] ==
-                                                      'clientRequests') {
-                                                    Navigator.of(context).push(
-                                                      MaterialPageRoute(
-                                                        builder: (_) {
-                                                          return const ClientsRequests();
-                                                        },
-                                                      ),
-                                                    );
-                                                  }
-                                                },
-                                                child: Stack(
-                                                  clipBehavior: Clip.none,
-                                                  children: [
-                                                    Image(
-                                                      image: ExactAssetImage(
-                                                          partnerImages[i]),
-                                                      height: 30,
-                                                      width: 30,
+                                        loading
+                                            ? Text("loading".tr())
+                                            : Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  MyText(
+                                                    text: profile
+                                                        .name, //'Kenneth Gutierrez',
+                                                    color: blackColor,
+                                                    weight: FontWeight.bold,
+                                                    size: 22,
+                                                    fontFamily: "Raleway",
+                                                  ),
+                                                  GestureDetector(
+                                                    onTap: () => packagesList1(
+                                                        true), //requestSent,
+                                                    // () {
+                                                    //   Navigator.of(context)
+                                                    //       .push(MaterialPageRoute(builder: (_) {
+                                                    //     return const BecomePartnerNew();
+                                                    //   }));
+                                                    // },
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        MyText(
+                                                          text:
+                                                              'Become A partner',
+                                                          size: 18,
+                                                          //fontFamily: 'Raleway',
+                                                          weight:
+                                                              FontWeight.w600,
+                                                          color: greyColor
+                                                              .withOpacity(1),
+                                                        ),
+                                                        const Icon(
+                                                          Icons
+                                                              .arrow_forward_ios,
+                                                          color: bluishColor,
+                                                        )
+                                                      ],
                                                     ),
-                                                    Constants.resultRequest >
-                                                                0 &&
-                                                            text[i] ==
-                                                                'clientRequests'
-                                                        ? Positioned(
-                                                            bottom: -5,
-                                                            right: -12,
-                                                            child: CircleAvatar(
-                                                              radius: 10,
-                                                              backgroundColor:
-                                                                  redColor,
-                                                              child: MyText(
-                                                                text: Constants
-                                                                    .resultRequest
-                                                                    .toString(), //'12',
-                                                                color:
-                                                                    whiteColor,
-                                                                weight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                size: 9,
-                                                              ),
-                                                            ),
-                                                          )
-                                                        : const SizedBox(),
-                                                    Constants.resultService >
-                                                                0 &&
-                                                            text[i] ==
-                                                                'myServices'
-                                                        ? Positioned(
-                                                            bottom: -5,
-                                                            right: -12,
-                                                            child: CircleAvatar(
-                                                              radius: 10,
-                                                              backgroundColor:
-                                                                  redColor,
-                                                              child: MyText(
-                                                                text: Constants
-                                                                    .resultService
-                                                                    .toString(), //'12',
-                                                                color:
-                                                                    whiteColor,
-                                                                weight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                size: 9,
-                                                              ),
-                                                            ),
-                                                          )
-                                                        : const SizedBox()
-                                                  ],
+                                                  ),
+                                                ],
+                                              ),
+                                        profileUrl.isEmpty
+                                            ? GestureDetector(
+                                                onTap: () => goToProfile(
+                                                    expired, profile.userRole),
+                                                child: CircleAvatar(
+                                                  radius: 38,
+                                                  backgroundImage: NetworkImage(
+                                                      "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
+                                                ),
+                                              )
+                                            : GestureDetector(
+                                                onTap: () => goToProfile(
+                                                    expired, profile.userRole),
+                                                child: CircleAvatar(
+                                                  radius: 38,
+                                                  backgroundImage:
+                                                      NetworkImage(profileUrl),
                                                 ),
                                               ),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              MyText(
-                                                text: text[i],
-                                                color: greyColor.withOpacity(1),
-                                                weight: FontWeight.bold,
-                                              )
-                                            ],
-                                          )
                                       ],
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                      if (expired == false &&
-                          profile.bp.isApproved == "1" &&
-                          profile.userRole == "2" &&
-                          profile.bp.packagesId > 0)
-                        Column(
-                          children: [
-                            GestureDetector(
-                              // onTap: getProfile,
-                              child: Container(
-                                color: transparentColor,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 15),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    loading
-                                        ? Text("loading".tr())
-                                        : Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              MyText(
-                                                text: Constants.profile
-                                                    .name, //'Kenneth Gutierrez',
-                                                color: blackColor,
-                                                weight: FontWeight.bold,
-                                                size: 20,
-                                                fontFamily: "Raleway",
-                                              ),
-                                              GestureDetector(
-                                                onTap: packagesList,
-                                                // () {
-                                                //   Navigator.of(context)
-                                                //       .push(MaterialPageRoute(builder: (_) {
-                                                //     return const BecomePartnerNew();
-                                                //   }));
-                                                // },
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
+                                Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Card(
+                                    elevation: 1,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          for (int i = 0; i < 3; i++)
+                                            Column(
+                                              children: [
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    if (userText[i] ==
+                                                        "favorite") {
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        MaterialPageRoute(
+                                                          builder: (_) {
+                                                            return const Favorite();
+                                                          },
+                                                        ),
+                                                      );
+                                                    }
+                                                    if (userText[i] ==
+                                                        'notification') {
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        MaterialPageRoute(
+                                                          builder: (_) {
+                                                            return const Notifications();
+                                                          },
+                                                        ),
+                                                      );
+                                                    }
+                                                    if (userText[i] ==
+                                                        'myPoints') {
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        MaterialPageRoute(
+                                                          builder: (_) {
+                                                            return const MyPoints();
+                                                          },
+                                                        ),
+                                                      );
+                                                    }
+                                                  },
+                                                  child: Stack(
+                                                    clipBehavior: Clip.none,
+                                                    children: [
+                                                      Image(
+                                                        image: ExactAssetImage(
+                                                            images[i]),
+                                                        height: 30,
+                                                        width: 30,
+                                                      ),
+                                                      Constants.totalNotication >
+                                                                  0 &&
+                                                              text[i] ==
+                                                                  'notifications'
+                                                          ? Positioned(
+                                                              bottom: -5,
+                                                              right: -12,
+                                                              child:
+                                                                  CircleAvatar(
+                                                                radius: 10,
+                                                                backgroundColor:
+                                                                    redColor,
+                                                                child: MyText(
+                                                                  text: Constants
+                                                                      .resultService
+                                                                      .toString(), //'12',
+                                                                  color:
+                                                                      whiteColor,
+                                                                  weight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  size: 9,
+                                                                ),
+                                                              ),
+                                                            )
+                                                          : const SizedBox()
+                                                    ],
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 5,
+                                                ),
+                                                MyText(
+                                                  text: userText[i].tr(),
+                                                  color:
+                                                      greyColor.withOpacity(1),
+                                                  weight: FontWeight.bold,
+                                                )
+                                              ],
+                                            )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          if (profile.bp.packagesId > 0 &&
+                                  profile.bp.isApproved == "1" &&
+                                  profile.userRole == "2"
+                              // &&
+                              // expired == false
+                              )
+                            if (expired &&
+                                profile.bp.isApproved == "1" &&
+                                profile.userRole == "2" &&
+                                profile.bp.packagesId > 0)
+                              Column(
+                                children: [
+                                  GestureDetector(
+                                    // onTap: getProfile,
+                                    child: Container(
+                                      color: transparentColor,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          loading
+                                              ? Text("loading".tr())
+                                              : Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     MyText(
-                                                      text:
-                                                          'alreadyPartner'.tr(),
-                                                      size: 18,
-                                                      //fontFamily: 'Raleway',
-                                                      weight: FontWeight.w600,
-                                                      color: greyColor
-                                                          .withOpacity(1),
+                                                      text: profile
+                                                          .name, //'Kenneth Gutierrez',
+                                                      color: blackColor,
+                                                      weight: FontWeight.bold,
+                                                      size: 22,
+                                                      fontFamily: "Raleway",
                                                     ),
-                                                    const Icon(
-                                                      Icons.arrow_forward_ios,
-                                                      color: bluishColor,
-                                                      size: 16,
-                                                    )
+                                                    GestureDetector(
+                                                      onTap: ex,
+                                                      // () {
+                                                      //   Navigator.of(context)
+                                                      //       .push(MaterialPageRoute(builder: (_) {
+                                                      //     return const BecomePartnerNew();
+                                                      //   }));
+                                                      // },
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          MyText(
+                                                            text:
+                                                                'Your Subscription expired',
+                                                            size: 18,
+                                                            //fontFamily: 'Raleway',
+                                                            weight:
+                                                                FontWeight.w600,
+                                                            color: greyColor
+                                                                .withOpacity(1),
+                                                          ),
+                                                          const Icon(
+                                                            Icons
+                                                                .arrow_forward_ios,
+                                                            color: bluishColor,
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 2),
+                                                    MyText(
+                                                      text:
+                                                          "${"Your Plan expired on "}${profile.bp.endDate}",
+                                                      //"${" before "}${profile.bp.endDate}", //'Kenneth Gutierrez',
+                                                      color: redColor,
+                                                      weight: FontWeight.bold,
+                                                      size: 14,
+                                                      fontFamily: "Raleway",
+                                                    ),
                                                   ],
                                                 ),
+                                          profileUrl != null
+                                              ? GestureDetector(
+                                                  onTap: () => goToProfile(
+                                                      expired,
+                                                      profile.userRole),
+                                                  child: CircleAvatar(
+                                                    radius: 35,
+                                                    backgroundImage: NetworkImage(
+                                                        "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
+                                                  ),
+                                                )
+                                              : GestureDetector(
+                                                  onTap: () => goToProfile(
+                                                      expired,
+                                                      profile.userRole),
+                                                  child: CircleAvatar(
+                                                    radius: 35,
+                                                    backgroundImage:
+                                                        NetworkImage(
+                                                            profileUrl),
+                                                  ),
+                                                ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Card(
+                                      elevation: 1,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(12.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            for (int i = 0; i < 3; i++)
+                                              Column(
+                                                children: [
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      if (text[i] ==
+                                                          "favorite") {
+                                                        Navigator.of(context)
+                                                            .push(
+                                                          MaterialPageRoute(
+                                                            builder: (_) {
+                                                              return const Favorite();
+                                                            },
+                                                          ),
+                                                        );
+                                                      }
+                                                      if (text[i] ==
+                                                          'myServices') {
+                                                        Navigator.of(context)
+                                                            .push(
+                                                          MaterialPageRoute(
+                                                            builder: (_) {
+                                                              return const MyServices();
+                                                            },
+                                                          ),
+                                                        );
+                                                      }
+                                                      if (text[i] ==
+                                                          'clientRequests') {
+                                                        Navigator.of(context)
+                                                            .push(
+                                                          MaterialPageRoute(
+                                                            builder: (_) {
+                                                              return const ClientsRequests();
+                                                            },
+                                                          ),
+                                                        );
+                                                      }
+                                                    },
+                                                    child: Stack(
+                                                      clipBehavior: Clip.none,
+                                                      children: [
+                                                        Image(
+                                                          image:
+                                                              ExactAssetImage(
+                                                                  partnerImages[
+                                                                      i]),
+                                                          height: 30,
+                                                          width: 30,
+                                                        ),
+                                                        Constants.resultRequest >
+                                                                    0 &&
+                                                                text[i] ==
+                                                                    'clientRequests'
+                                                            ? Positioned(
+                                                                bottom: -5,
+                                                                right: -12,
+                                                                child:
+                                                                    CircleAvatar(
+                                                                  radius: 10,
+                                                                  backgroundColor:
+                                                                      redColor,
+                                                                  child: MyText(
+                                                                    text: Constants
+                                                                        .resultRequest
+                                                                        .toString(), //'12',
+                                                                    color:
+                                                                        whiteColor,
+                                                                    weight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    size: 9,
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            : const SizedBox(),
+                                                        Constants.resultService >
+                                                                    0 &&
+                                                                text[i] ==
+                                                                    'myServices'
+                                                            ? Positioned(
+                                                                bottom: -5,
+                                                                right: -12,
+                                                                child:
+                                                                    CircleAvatar(
+                                                                  radius: 10,
+                                                                  backgroundColor:
+                                                                      redColor,
+                                                                  child: MyText(
+                                                                    text: Constants
+                                                                        .resultService
+                                                                        .toString(), //'12',
+                                                                    color:
+                                                                        whiteColor,
+                                                                    weight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    size: 9,
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            : const SizedBox()
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  MyText(
+                                                    text: text[i],
+                                                    color: greyColor
+                                                        .withOpacity(1),
+                                                    weight: FontWeight.bold,
+                                                  )
+                                                ],
+                                              )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                          if (expired == false &&
+                              profile.bp.isApproved == "1" &&
+                              profile.userRole == "2" &&
+                              profile.bp.packagesId > 0)
+                            Column(
+                              children: [
+                                GestureDetector(
+                                  // onTap: getProfile,
+                                  child: Container(
+                                    color: transparentColor,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        loading
+                                            ? Text("loading".tr())
+                                            : Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  MyText(
+                                                    text: Constants.profile
+                                                        .name, //'Kenneth Gutierrez',
+                                                    color: blackColor,
+                                                    weight: FontWeight.bold,
+                                                    size: 20,
+                                                    fontFamily: "Raleway",
+                                                  ),
+                                                  GestureDetector(
+                                                    onTap: packagesList,
+                                                    // () {
+                                                    //   Navigator.of(context)
+                                                    //       .push(MaterialPageRoute(builder: (_) {
+                                                    //     return const BecomePartnerNew();
+                                                    //   }));
+                                                    // },
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        MyText(
+                                                          text: 'alreadyPartner'
+                                                              .tr(),
+                                                          size: 18,
+                                                          //fontFamily: 'Raleway',
+                                                          weight:
+                                                              FontWeight.w600,
+                                                          color: greyColor
+                                                              .withOpacity(1),
+                                                        ),
+                                                        const Icon(
+                                                          Icons
+                                                              .arrow_forward_ios,
+                                                          color: bluishColor,
+                                                          size: 16,
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 2),
+                                                  MyText(
+                                                    text:
+                                                        "${"renewBefore".tr()}${profile.bp.endDate.substring(0, 11)}${"toAvoidInterruption".tr()}", //'Kenneth Gutierrez',
+                                                    color: redColor,
+                                                    weight: FontWeight.bold,
+                                                    size: 12,
+                                                    fontFamily: "Raleway",
+                                                  ),
+                                                ],
                                               ),
-                                              const SizedBox(height: 2),
-                                              MyText(
-                                                text:
-                                                    "${"renewBefore".tr()}${profile.bp.endDate.substring(0, 11)}${"toAvoidInterruption".tr()}", //'Kenneth Gutierrez',
-                                                color: redColor,
-                                                weight: FontWeight.bold,
-                                                size: 12,
-                                                fontFamily: "Raleway",
+                                        profileUrl != null
+                                            ? GestureDetector(
+                                                onTap: () => goToProfile(
+                                                    expired, profile.userRole),
+                                                child: CircleAvatar(
+                                                  radius: 30,
+                                                  backgroundImage: NetworkImage(
+                                                      "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
+                                                ),
+                                              )
+                                            : GestureDetector(
+                                                onTap: () => goToProfile(
+                                                    expired, profile.userRole),
+                                                child: CircleAvatar(
+                                                  radius: 30,
+                                                  backgroundImage:
+                                                      NetworkImage(profileUrl),
+                                                ),
                                               ),
-                                            ],
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Card(
+                                    elevation: 1,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          for (int i = 0; i < 3; i++)
+                                            Column(
+                                              children: [
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    if (text[i] == "favorite") {
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        MaterialPageRoute(
+                                                          builder: (_) {
+                                                            return const Favorite();
+                                                          },
+                                                        ),
+                                                      );
+                                                    }
+                                                    if (text[i] ==
+                                                        'myServices') {
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        MaterialPageRoute(
+                                                          builder: (_) {
+                                                            return const MyServices();
+                                                          },
+                                                        ),
+                                                      );
+                                                    }
+                                                    if (text[i] ==
+                                                        'clientRequests') {
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        MaterialPageRoute(
+                                                          builder: (_) {
+                                                            return const ClientsRequests();
+                                                          },
+                                                        ),
+                                                      );
+                                                    }
+                                                  },
+                                                  child: Stack(
+                                                    clipBehavior: Clip.none,
+                                                    children: [
+                                                      Image(
+                                                        image: ExactAssetImage(
+                                                            partnerImages[i]),
+                                                        height: 30,
+                                                        width: 30,
+                                                      ),
+                                                      Constants.resultRequest >
+                                                                  0 &&
+                                                              text[i] ==
+                                                                  'clientRequests'
+                                                          ? Positioned(
+                                                              bottom: -5,
+                                                              right: -12,
+                                                              child:
+                                                                  CircleAvatar(
+                                                                radius: 10,
+                                                                backgroundColor:
+                                                                    redColor,
+                                                                child: MyText(
+                                                                  text: Constants
+                                                                      .resultRequest
+                                                                      .toString(), //'12',
+                                                                  color:
+                                                                      whiteColor,
+                                                                  weight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  size: 9,
+                                                                ),
+                                                              ),
+                                                            )
+                                                          : const SizedBox(),
+                                                      Constants.resultService >
+                                                                  0 &&
+                                                              text[i] ==
+                                                                  'myServices'
+                                                          ? Positioned(
+                                                              bottom: -5,
+                                                              right: -12,
+                                                              child:
+                                                                  CircleAvatar(
+                                                                radius: 10,
+                                                                backgroundColor:
+                                                                    redColor,
+                                                                child: MyText(
+                                                                  text: Constants
+                                                                      .resultService
+                                                                      .toString(), //'12',
+                                                                  color:
+                                                                      whiteColor,
+                                                                  weight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  size: 9,
+                                                                ),
+                                                              ),
+                                                            )
+                                                          : const SizedBox()
+                                                    ],
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 5,
+                                                ),
+                                                MyText(
+                                                  text: text[i],
+                                                  color:
+                                                      greyColor.withOpacity(1),
+                                                  weight: FontWeight.bold,
+                                                )
+                                              ],
+                                            )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          // if (Constants.profile.bp.packagesId == 0 &&
+                          //     Constants.profile.bp.isApproved == "")
+                          //   GestureDetector(
+                          //     // onTap: getProfile,
+                          //     child: Container(
+                          //       color: transparentColor,
+                          //       padding: const EdgeInsets.symmetric(horizontal: 15),
+                          //       child: Row(
+                          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //         children: [
+                          //           loading
+                          //               ? const Text("Loading")
+                          //               : Column(
+                          //                   crossAxisAlignment:
+                          //                       CrossAxisAlignment.start,
+                          //                   children: [
+                          //                     MyText(
+                          //                       text: Constants.profile
+                          //                           .name, //'Kenneth Gutierrez',
+                          //                       color: blackColor,
+                          //                       weight: FontWeight.bold,
+                          //                       size: 22,
+                          //                       fontFamily: "Raleway",
+                          //                     ),
+                          //                     GestureDetector(
+                          //                       onTap: () {
+                          //                         Navigator.of(context).push(
+                          //                             MaterialPageRoute(builder: (_) {
+                          //                           return const BecomePartnerNew();
+                          //                         }));
+                          //                       },
+                          //                       child: Row(
+                          //                         mainAxisAlignment:
+                          //                             MainAxisAlignment.start,
+                          //                         children: [
+                          //                           MyText(
+                          //                             text: 'Become A partner',
+                          //                             size: 16,
+                          //                             //fontFamily: 'Raleway',
+                          //                             weight: FontWeight.w600,
+                          //                             color: greyColor.withOpacity(1),
+                          //                           ),
+                          //                           const Icon(
+                          //                             Icons.arrow_forward_ios,
+                          //                             color: bluishColor,
+                          //                           )
+                          //                         ],
+                          //                       ),
+                          //                     ),
+                          //                   ],
+                          //                 ),
+                          //           profileUrl != null
+                          //               ? GestureDetector(
+                          //                   onTap: () => goToProfile(
+                          //                       expired, Constants.userRole),
+                          //                   child: const CircleAvatar(
+                          //                     radius: 38,
+                          //                     backgroundImage: ExactAssetImage(
+                          //                         'images/avatar2.png'),
+                          //                   ),
+                          //                 )
+                          //               : GestureDetector(
+                          //                   onTap: () => goToProfile(
+                          //                       expired, Constants.userRole),
+                          //                   child: CircleAvatar(
+                          //                     radius: 38,
+                          //                     backgroundImage:
+                          //                         NetworkImage(profileUrl),
+                          //                   ),
+                          //                 ),
+                          //         ],
+                          //       ),
+                          //     ),
+                          //   ),
+                        ],
+                      ),
+                      if (profile.userRole == "2")
+                        Wrap(
+                          children: List.generate(
+                            tile1.length,
+                            (index) {
+                              return ListTile(
+                                visualDensity: const VisualDensity(
+                                    horizontal: 0, vertical: -3),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 2, horizontal: 20),
+                                horizontalTitleGap: 2,
+                                onTap: (() {
+                                  if (tile1Text[index] == 'myPoints') {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(builder: (_) {
+                                      return const MyPoints();
+                                    }));
+                                  }
+                                  if (tile1Text[index] == 'healthCondition') {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(builder: (_) {
+                                      return const HealthCondition();
+                                    }));
+                                  }
+                                  if (tile1Text[index] == 'notification') {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(builder: (_) {
+                                      return const Notifications();
+                                    }));
+                                  }
+                                  //  if(tile1Text[index] == 'Payment'){
+                                  //   Navigator.of(context).push(MaterialPageRoute(builder: (_){
+                                  //     return const Payment();
+                                  //   }));
+                                  //  }
+                                  //   if(tile1Text[index] == 'Category'){
+                                  //   Navigator.of(context).push(MaterialPageRoute(builder: (_){
+                                  //     return const AdventureCategory();
+                                  //   }));
+                                  //  }
+                                  //  if(tile1Text[index] == 'Packages'){
+                                  //   Navigator.of(context).push(MaterialPageRoute(builder: (_){
+                                  //     return const ContactUs();
+                                  //   }));
+                                  //  }
+                                  if (tile1Text[index] == 'settings') {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return const Settings();
+                                        },
+                                      ),
+                                    );
+                                  }
+                                  // if (tile1Text[index] == 'changeLanguage') {
+                                  //   Navigator.of(context).push(
+                                  //     MaterialPageRoute(
+                                  //       builder: (_) {
+                                  //         return const Settings();
+                                  //       },
+                                  //     ),
+                                  //   );
+                                  // }
+                                  if (tile1Text[index] == 'addCountry') {
+                                    showPicker();
+                                    // Navigator.of(context).push(Material)
+                                    // pickCountry(context, 'countryLocation'.tr());
+                                  }
+                                  if (tile1Text[index] == 'inviteFriends') {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return const InviteFriends();
+                                        },
+                                      ),
+                                    );
+                                  }
+                                  if (tile1Text[index] == 'aboutUs') {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(builder: (_) {
+                                        return const AboutUs();
+                                      }),
+                                    );
+                                  }
+                                  if (tile1Text[index] == 'contactUs') {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return const ContactUs();
+                                          //const MyServicesAdDetails();
+                                        },
+                                      ),
+                                    );
+                                  }
+                                  if (tile1Text[index] == 'logOut') {
+                                    showConfirmation("logOut", "wantToLogOut");
+                                  }
+                                  if (tile1Text[index] == "deleteAccount") {
+                                    showConfirmation(
+                                        "deleteAccount", "wantToDelete");
+                                  }
+                                }),
+                                leading:
+                                    Stack(clipBehavior: Clip.none, children: [
+                                  Image(
+                                    image: ExactAssetImage(tile1[index]),
+                                    height: tile1Text[index] == 'myPoints'
+                                        ? 35
+                                        : 25,
+                                    width: 35,
+                                    color: greyColor.withOpacity(1),
+                                  ),
+                                  tile1Text[index] == 'notification'
+                                      ? Positioned(
+                                          top: -8,
+                                          right: -3,
+                                          child: CircleAvatar(
+                                            radius: 10,
+                                            backgroundColor: redColor,
+                                            child: MyText(
+                                              text: Constants
+                                                  .totalNotication, //'12',
+                                              color: whiteColor,
+                                              weight: FontWeight.bold,
+                                              size: 9,
+                                            ),
                                           ),
-                                    profileUrl != null
-                                        ? GestureDetector(
-                                            onTap: () => goToProfile(
-                                                expired, profile.userRole),
-                                            child: CircleAvatar(
-                                              radius: 30,
-                                              backgroundImage: NetworkImage(
-                                                  "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
+                                        )
+                                      : const SizedBox()
+                                ]),
+                                title: Text(
+                                  tile1Text[index].tr(),
+                                  style: const TextStyle(
+                                      color: greyColor,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                // MyText(
+                                //   text: tile1Text[index],
+                                //   color: greyColor.withOpacity(1),
+                                //   size: 15,
+                                //   weight: FontWeight.w700,
+                                // ),
+                                trailing: tile1Text[index] ==
+                                        'addCountry' //settings
+                                    ? SizedBox(
+                                        width: Constants.country.length > 11
+                                            ? 140
+                                            : 100,
+                                        //60,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            MyText(
+                                              text: Constants.country, //'OMAN',
+                                              color: greyColor.withOpacity(0.9),
+                                              weight: FontWeight.bold,
+                                            ),
+                                            Image.network(
+                                              "${"${Constants.baseUrl}/public/"}${Constants.countryFlag}",
+                                              height: 15,
+                                              width: 30,
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    : tile1Text[index] ==
+                                            'changeLanguage' //settings
+                                        ? Container(
+                                            width: 90,
+                                            height: 50,
+                                            child: PopupMenuButton<String>(
+                                              child: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                    horizontal: 8.0,
+                                                  ),
+                                                  child: Row(
+                                                    children: [
+                                                      const Icon(Icons
+                                                          .arrow_drop_down),
+                                                      MyText(
+                                                        text: selectedLanguage,
+                                                        color: blackColor,
+                                                      ),
+                                                    ],
+                                                  )
+                                                  // Icon(
+                                                  //   Icons.language_rounded,
+                                                  //   color: whiteColor,
+                                                  //   size: 60,
+                                                  // ),
+                                                  ),
+                                              onSelected: (String item) {
+                                                setState(() {
+                                                  selectedLanguage = item;
+                                                });
+                                                changeLanguage(item);
+                                              },
+                                              itemBuilder:
+                                                  (BuildContext context) =>
+                                                      <PopupMenuEntry<String>>[
+                                                const PopupMenuItem<String>(
+                                                  value: "English",
+                                                  child: Text('English'),
+                                                ),
+                                                const PopupMenuItem<String>(
+                                                  value: "Arabic",
+                                                  child: Text('عربي'),
+                                                ),
+                                              ],
                                             ),
                                           )
-                                        : GestureDetector(
-                                            onTap: () => goToProfile(
-                                                expired, profile.userRole),
-                                            child: CircleAvatar(
-                                              radius: 30,
-                                              backgroundImage:
-                                                  NetworkImage(profileUrl),
-                                            ),
+                                        // IconButton(
+                                        //     onPressed: getPopUp,
+                                        //     icon: const Icon(Icons.arrow_drop_down))
+                                        : const SizedBox(
+                                            width: 0,
                                           ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Card(
-                                elevation: 1,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      for (int i = 0; i < 3; i++)
-                                        Column(
-                                          children: [
-                                            GestureDetector(
-                                              onTap: () {
-                                                if (text[i] == "favorite") {
-                                                  Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                      builder: (_) {
-                                                        return const Favorite();
-                                                      },
-                                                    ),
-                                                  );
-                                                }
-                                                if (text[i] == 'myServices') {
-                                                  Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                      builder: (_) {
-                                                        return const MyServices();
-                                                      },
-                                                    ),
-                                                  );
-                                                }
-                                                if (text[i] ==
-                                                    'clientRequests') {
-                                                  Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                      builder: (_) {
-                                                        return const ClientsRequests();
-                                                      },
-                                                    ),
-                                                  );
-                                                }
-                                              },
-                                              child: Stack(
-                                                clipBehavior: Clip.none,
-                                                children: [
-                                                  Image(
-                                                    image: ExactAssetImage(
-                                                        partnerImages[i]),
-                                                    height: 30,
-                                                    width: 30,
-                                                  ),
-                                                  Constants.resultRequest > 0 &&
-                                                          text[i] ==
-                                                              'clientRequests'
-                                                      ? Positioned(
-                                                          bottom: -5,
-                                                          right: -12,
-                                                          child: CircleAvatar(
-                                                            radius: 10,
-                                                            backgroundColor:
-                                                                redColor,
-                                                            child: MyText(
-                                                              text: Constants
-                                                                  .resultRequest
-                                                                  .toString(), //'12',
-                                                              color: whiteColor,
-                                                              weight: FontWeight
-                                                                  .bold,
-                                                              size: 9,
-                                                            ),
-                                                          ),
-                                                        )
-                                                      : const SizedBox(),
-                                                  Constants.resultService > 0 &&
-                                                          text[i] ==
-                                                              'myServices'
-                                                      ? Positioned(
-                                                          bottom: -5,
-                                                          right: -12,
-                                                          child: CircleAvatar(
-                                                            radius: 10,
-                                                            backgroundColor:
-                                                                redColor,
-                                                            child: MyText(
-                                                              text: Constants
-                                                                  .resultService
-                                                                  .toString(), //'12',
-                                                              color: whiteColor,
-                                                              weight: FontWeight
-                                                                  .bold,
-                                                              size: 9,
-                                                            ),
-                                                          ),
-                                                        )
-                                                      : const SizedBox()
-                                                ],
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 5,
-                                            ),
-                                            MyText(
-                                              text: text[i],
-                                              color: greyColor.withOpacity(1),
-                                              weight: FontWeight.bold,
-                                            )
-                                          ],
-                                        )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                              );
+                            },
+                          ),
                         ),
-                      // if (Constants.profile.bp.packagesId == 0 &&
-                      //     Constants.profile.bp.isApproved == "")
-                      //   GestureDetector(
-                      //     // onTap: getProfile,
-                      //     child: Container(
-                      //       color: transparentColor,
-                      //       padding: const EdgeInsets.symmetric(horizontal: 15),
-                      //       child: Row(
-                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //         children: [
-                      //           loading
-                      //               ? const Text("Loading")
-                      //               : Column(
-                      //                   crossAxisAlignment:
-                      //                       CrossAxisAlignment.start,
-                      //                   children: [
-                      //                     MyText(
-                      //                       text: Constants.profile
-                      //                           .name, //'Kenneth Gutierrez',
-                      //                       color: blackColor,
-                      //                       weight: FontWeight.bold,
-                      //                       size: 22,
-                      //                       fontFamily: "Raleway",
-                      //                     ),
-                      //                     GestureDetector(
-                      //                       onTap: () {
-                      //                         Navigator.of(context).push(
-                      //                             MaterialPageRoute(builder: (_) {
-                      //                           return const BecomePartnerNew();
-                      //                         }));
-                      //                       },
-                      //                       child: Row(
-                      //                         mainAxisAlignment:
-                      //                             MainAxisAlignment.start,
-                      //                         children: [
-                      //                           MyText(
-                      //                             text: 'Become A partner',
-                      //                             size: 16,
-                      //                             //fontFamily: 'Raleway',
-                      //                             weight: FontWeight.w600,
-                      //                             color: greyColor.withOpacity(1),
-                      //                           ),
-                      //                           const Icon(
-                      //                             Icons.arrow_forward_ios,
-                      //                             color: bluishColor,
-                      //                           )
-                      //                         ],
-                      //                       ),
-                      //                     ),
-                      //                   ],
-                      //                 ),
-                      //           profileUrl != null
-                      //               ? GestureDetector(
-                      //                   onTap: () => goToProfile(
-                      //                       expired, Constants.userRole),
-                      //                   child: const CircleAvatar(
-                      //                     radius: 38,
-                      //                     backgroundImage: ExactAssetImage(
-                      //                         'images/avatar2.png'),
-                      //                   ),
-                      //                 )
-                      //               : GestureDetector(
-                      //                   onTap: () => goToProfile(
-                      //                       expired, Constants.userRole),
-                      //                   child: CircleAvatar(
-                      //                     radius: 38,
-                      //                     backgroundImage:
-                      //                         NetworkImage(profileUrl),
-                      //                   ),
-                      //                 ),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //   ),
-                    ],
-                  ),
-                  if (profile.userRole == "2")
-                    Wrap(
-                      children: List.generate(
-                        tile1.length,
-                        (index) {
-                          return ListTile(
-                            visualDensity: const VisualDensity(
-                                horizontal: 0, vertical: -3),
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 2, horizontal: 20),
-                            horizontalTitleGap: 2,
-                            onTap: (() {
-                              if (tile1Text[index] == 'myPoints') {
-                                Navigator.of(context)
-                                    .push(MaterialPageRoute(builder: (_) {
-                                  return const MyPoints();
-                                }));
-                              }
-                              if (tile1Text[index] == 'healthCondition') {
-                                Navigator.of(context)
-                                    .push(MaterialPageRoute(builder: (_) {
-                                  return const HealthCondition();
-                                }));
-                              }
-                              if (tile1Text[index] == 'notification') {
-                                Navigator.of(context)
-                                    .push(MaterialPageRoute(builder: (_) {
-                                  return const Notifications();
-                                }));
-                              }
-                              //  if(tile1Text[index] == 'Payment'){
-                              //   Navigator.of(context).push(MaterialPageRoute(builder: (_){
-                              //     return const Payment();
-                              //   }));
-                              //  }
-                              //   if(tile1Text[index] == 'Category'){
-                              //   Navigator.of(context).push(MaterialPageRoute(builder: (_){
-                              //     return const AdventureCategory();
-                              //   }));
-                              //  }
-                              //  if(tile1Text[index] == 'Packages'){
-                              //   Navigator.of(context).push(MaterialPageRoute(builder: (_){
-                              //     return const ContactUs();
-                              //   }));
-                              //  }
-                              if (tile1Text[index] == 'settings') {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_) {
-                                      return const Settings();
-                                    },
-                                  ),
-                                );
-                              }
-                              // if (tile1Text[index] == 'changeLanguage') {
-                              //   Navigator.of(context).push(
-                              //     MaterialPageRoute(
-                              //       builder: (_) {
-                              //         return const Settings();
-                              //       },
-                              //     ),
-                              //   );
-                              // }
-                              if (tile1Text[index] == 'addCountry') {
-                                showPicker();
-                                // Navigator.of(context).push(Material)
-                                // pickCountry(context, 'countryLocation'.tr());
-                              }
-                              if (tile1Text[index] == 'inviteFriends') {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_) {
-                                      return const InviteFriends();
-                                    },
-                                  ),
-                                );
-                              }
-                              if (tile1Text[index] == 'aboutUs') {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(builder: (_) {
-                                    return const AboutUs();
-                                  }),
-                                );
-                              }
-                              if (tile1Text[index] == 'contactUs') {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_) {
-                                      return const ContactUs();
-                                      //const MyServicesAdDetails();
-                                    },
-                                  ),
-                                );
-                              }
-                              if (tile1Text[index] == 'logOut') {
-                                showConfirmation("logOut", "wantToLogOut");
-                              }
-                              if (tile1Text[index] == "deleteAccount") {
-                                showConfirmation(
-                                    "deleteAccount", "wantToDelete");
-                              }
-                            }),
-                            leading: Stack(clipBehavior: Clip.none, children: [
-                              Image(
-                                image: ExactAssetImage(tile1[index]),
-                                height:
-                                    tile1Text[index] == 'myPoints' ? 35 : 25,
-                                width: 35,
-                                color: greyColor.withOpacity(1),
-                              ),
-                              tile1Text[index] == 'notification'
-                                  ? Positioned(
-                                      top: -8,
-                                      right: -3,
-                                      child: CircleAvatar(
-                                        radius: 10,
-                                        backgroundColor: redColor,
-                                        child: MyText(
-                                          text:
-                                              Constants.totalNotication, //'12',
-                                          color: whiteColor,
-                                          weight: FontWeight.bold,
-                                          size: 9,
-                                        ),
+                      if (profile.userRole == "3")
+                        Wrap(
+                          children: List.generate(
+                            tile1Text.length,
+                            (index) {
+                              return ListTile(
+                                visualDensity: const VisualDensity(
+                                    horizontal: 0, vertical: -3),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 2, horizontal: 20),
+                                horizontalTitleGap: 2,
+                                onTap: (() {
+                                  // if (userListText[index] == 'My Points') {
+                                  //   Navigator.of(context)
+                                  //       .push(MaterialPageRoute(builder: (_) {
+                                  //     return const MyPoints();
+                                  //   }));
+                                  // }
+                                  if (tile1Text[index] == 'healthCondition') {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(builder: (_) {
+                                      return const HealthCondition();
+                                    }));
+                                  }
+                                  if (tile1Text[index] == 'settings') {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return const Settings();
+                                        },
                                       ),
-                                    )
-                                  : const SizedBox()
-                            ]),
-                            title: Text(
-                              tile1Text[index].tr(),
-                              style: const TextStyle(
-                                  color: greyColor,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            // MyText(
-                            //   text: tile1Text[index],
-                            //   color: greyColor.withOpacity(1),
-                            //   size: 15,
-                            //   weight: FontWeight.w700,
-                            // ),
-                            trailing: tile1Text[index] ==
-                                    'addCountry' //settings
-                                ? SizedBox(
-                                    width: Constants.country.length > 11
-                                        ? 140
-                                        : 100,
-                                    //60,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        MyText(
-                                          text: Constants.country, //'OMAN',
-                                          color: greyColor.withOpacity(0.9),
-                                          weight: FontWeight.bold,
-                                        ),
-                                        Image.network(
-                                          "${"${Constants.baseUrl}/public/"}${Constants.countryFlag}",
-                                          height: 15,
-                                          width: 30,
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                : tile1Text[index] ==
-                                        'changeLanguage' //settings
-                                    ? Container(
-                                        width: 90,
-                                        height: 50,
-                                        child: PopupMenuButton<String>(
-                                          child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                horizontal: 8.0,
-                                              ),
-                                              child: Row(
-                                                children: [
-                                                  const Icon(
-                                                      Icons.arrow_drop_down),
-                                                  MyText(
-                                                    text: selectedLanguage,
-                                                    color: blackColor,
-                                                  ),
-                                                ],
-                                              )
-                                              // Icon(
-                                              //   Icons.language_rounded,
-                                              //   color: whiteColor,
-                                              //   size: 60,
-                                              // ),
-                                              ),
-                                          onSelected: (String item) {
-                                            setState(() {
-                                              selectedLanguage = item;
-                                            });
-                                            changeLanguage(item);
-                                          },
-                                          itemBuilder: (BuildContext context) =>
-                                              <PopupMenuEntry<String>>[
-                                            const PopupMenuItem<String>(
-                                              value: "English",
-                                              child: Text('English'),
+                                    );
+                                  }
+                                  if (tile1Text[index] == 'addCountry') {
+                                    showPicker();
+                                  }
+                                  if (tile1Text[index] == 'addCountry') {
+                                    pickCountry(
+                                        context, 'countryLocation'.tr());
+                                  }
+                                  if (tile1Text[index] == 'inviteFriends') {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return const InviteFriends();
+                                        },
+                                      ),
+                                    );
+                                  }
+                                  if (tile1Text[index] == 'aboutUs') {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return const AboutUs();
+                                        },
+                                      ),
+                                    );
+                                  }
+                                  if (tile1Text[index] == 'contactUs') {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return const ContactUs();
+                                          //const MyServicesAdDetails();
+                                        },
+                                      ),
+                                    );
+                                  }
+                                  if (tile1Text[index] == "logOut") {
+                                    showConfirmation("logOut", "wantToLogOut");
+                                  }
+                                }),
+                                leading:
+                                    Stack(clipBehavior: Clip.none, children: [
+                                  Image(
+                                    height: 30,
+                                    width: 30,
+                                    image: ExactAssetImage(userListIcon[index]),
+                                  ),
+                                ]),
+                                title: MyText(
+                                  text: tile1Text[index],
+                                  color: greyColor.withOpacity(1),
+                                  size: 15,
+                                  weight: FontWeight.w700,
+                                ),
+                                trailing: tile1Text[index] ==
+                                        'addCountry' //settings
+                                    ? SizedBox(
+                                        width: Constants.country.length > 11
+                                            ? 140
+                                            : 100,
+                                        //60,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            MyText(
+                                              text: Constants.country, //'OMAN',
+                                              color: greyColor.withOpacity(0.9),
+                                              weight: FontWeight.bold,
                                             ),
-                                            const PopupMenuItem<String>(
-                                              value: "Arabic",
-                                              child: Text('عربي'),
+                                            Image.network(
+                                              "${"${Constants.baseUrl}/public/"}${Constants.countryFlag}",
+                                              height: 15,
+                                              width: 30,
                                             ),
                                           ],
                                         ),
                                       )
-                                    // IconButton(
-                                    //     onPressed: getPopUp,
-                                    //     icon: const Icon(Icons.arrow_drop_down))
-                                    : const SizedBox(
-                                        width: 0,
-                                      ),
-                          );
-                        },
-                      ),
-                    ),
-                  if (profile.userRole == "3")
-                    Wrap(
-                      children: List.generate(
-                        tile1Text.length,
-                        (index) {
-                          return ListTile(
-                            visualDensity: const VisualDensity(
-                                horizontal: 0, vertical: -3),
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 2, horizontal: 20),
-                            horizontalTitleGap: 2,
-                            onTap: (() {
-                              // if (userListText[index] == 'My Points') {
-                              //   Navigator.of(context)
-                              //       .push(MaterialPageRoute(builder: (_) {
-                              //     return const MyPoints();
-                              //   }));
-                              // }
-                              if (tile1Text[index] == 'healthCondition') {
-                                Navigator.of(context)
-                                    .push(MaterialPageRoute(builder: (_) {
-                                  return const HealthCondition();
-                                }));
-                              }
-                              if (tile1Text[index] == 'settings') {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_) {
-                                      return const Settings();
-                                    },
-                                  ),
-                                );
-                              }
-                              if (tile1Text[index] == 'addCountry') {
-                                showPicker();
-                              }
-                              if (tile1Text[index] == 'addCountry') {
-                                pickCountry(context, 'countryLocation'.tr());
-                              }
-                              if (tile1Text[index] == 'inviteFriends') {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_) {
-                                      return const InviteFriends();
-                                    },
-                                  ),
-                                );
-                              }
-                              if (tile1Text[index] == 'aboutUs') {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_) {
-                                      return const AboutUs();
-                                    },
-                                  ),
-                                );
-                              }
-                              if (tile1Text[index] == 'contactUs') {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_) {
-                                      return const ContactUs();
-                                      //const MyServicesAdDetails();
-                                    },
-                                  ),
-                                );
-                              }
-                              if (tile1Text[index] == "logOut") {
-                                showConfirmation("logOut", "wantToLogOut");
-                              }
-                            }),
-                            leading: Stack(clipBehavior: Clip.none, children: [
-                              Image(
-                                height: 30,
-                                width: 30,
-                                image: ExactAssetImage(userListIcon[index]),
-                              ),
-                            ]),
-                            title: MyText(
-                              text: tile1Text[index],
-                              color: greyColor.withOpacity(1),
-                              size: 15,
-                              weight: FontWeight.w700,
-                            ),
-                            trailing: tile1Text[index] ==
-                                    'addCountry' //settings
-                                ? SizedBox(
-                                    width: Constants.country.length > 11
-                                        ? 140
-                                        : 100,
-                                    //60,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        MyText(
-                                          text: Constants.country, //'OMAN',
-                                          color: greyColor.withOpacity(0.9),
-                                          weight: FontWeight.bold,
-                                        ),
-                                        Image.network(
-                                          "${"${Constants.baseUrl}/public/"}${Constants.countryFlag}",
-                                          height: 15,
-                                          width: 30,
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                : tile1Text[index] ==
-                                        'changeLanguage' //settings
-                                    ? Container(
-                                        width: 90,
-                                        height: 50,
-                                        child: PopupMenuButton<String>(
-                                          child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                horizontal: 8.0,
-                                              ),
-                                              child: Row(
-                                                children: [
-                                                  const Icon(
-                                                      Icons.arrow_drop_down),
-                                                  MyText(
-                                                    text: selectedLanguage,
-                                                    color: blackColor,
+                                    : tile1Text[index] ==
+                                            'changeLanguage' //settings
+                                        ? Container(
+                                            width: 90,
+                                            height: 50,
+                                            child: PopupMenuButton<String>(
+                                              child: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                    horizontal: 8.0,
                                                   ),
-                                                ],
-                                              )
-                                              // Icon(
-                                              //   Icons.language_rounded,
-                                              //   color: whiteColor,
-                                              //   size: 60,
-                                              // ),
-                                              ),
-                                          onSelected: (String item) {
-                                            setState(() {
-                                              selectedLanguage = item;
-                                            });
-                                            changeLanguage(item);
-                                          },
-                                          itemBuilder: (BuildContext context) =>
-                                              <PopupMenuEntry<String>>[
-                                            const PopupMenuItem<String>(
-                                              value: "English",
-                                              child: Text('English'),
+                                                  child: Row(
+                                                    children: [
+                                                      const Icon(Icons
+                                                          .arrow_drop_down),
+                                                      MyText(
+                                                        text: selectedLanguage,
+                                                        color: blackColor,
+                                                      ),
+                                                    ],
+                                                  )
+                                                  // Icon(
+                                                  //   Icons.language_rounded,
+                                                  //   color: whiteColor,
+                                                  //   size: 60,
+                                                  // ),
+                                                  ),
+                                              onSelected: (String item) {
+                                                setState(() {
+                                                  selectedLanguage = item;
+                                                });
+                                                changeLanguage(item);
+                                              },
+                                              itemBuilder:
+                                                  (BuildContext context) =>
+                                                      <PopupMenuEntry<String>>[
+                                                const PopupMenuItem<String>(
+                                                  value: "English",
+                                                  child: Text('English'),
+                                                ),
+                                                const PopupMenuItem<String>(
+                                                  value: "Arabic",
+                                                  child: Text('عربي'),
+                                                ),
+                                              ],
                                             ),
-                                            const PopupMenuItem<String>(
-                                              value: "Arabic",
-                                              child: Text('عربي'),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    // IconButton(
-                                    //     onPressed: getPopUp,
-                                    //     icon: const Icon(Icons.arrow_drop_down))
-                                    : const SizedBox(
-                                        width: 0,
-                                      ),
-                          );
-                        },
-                      ),
-                    ),
-                  //pickCountry(context, 'countryLocation'.tr()),
-                  GestureDetector(
-                    //onTap: logout,
-                    child: Center(
-                      child: Container(
-                        height: 40,
-                        width: 140,
-                        decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 20, 69, 22),
-                            borderRadius: BorderRadius.circular(12)),
+                                          )
+                                        // IconButton(
+                                        //     onPressed: getPopUp,
+                                        //     icon: const Icon(Icons.arrow_drop_down))
+                                        : const SizedBox(
+                                            width: 0,
+                                          ),
+                              );
+                            },
+                          ),
+                        ),
+                      //pickCountry(context, 'countryLocation'.tr()),
+                      GestureDetector(
+                        //onTap: logout,
                         child: Center(
-                          child: MyText(
-                            text: "appVersion".tr(),
-                            color: whiteColor,
-                            weight: FontWeight.w600,
+                          child: Container(
+                            height: 40,
+                            width: 140,
+                            decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 20, 69, 22),
+                                borderRadius: BorderRadius.circular(12)),
+                            child: Center(
+                              child: MyText(
+                                text: "appVersion".tr(),
+                                color: whiteColor,
+                                weight: FontWeight.w600,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                      const SizedBox(height: 15),
+                    ],
                   ),
-                  const SizedBox(height: 15),
-                ],
-              ),
       ),
     );
   }

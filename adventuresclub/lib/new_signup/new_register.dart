@@ -52,11 +52,11 @@ class _NewRegisterState extends State<NewRegister> {
   var formattedDate;
   String getCode = '';
   DateTime? pickedDate;
+  String flag = "";
   int countryId = 0;
   int currentLocationId = 0;
   String userCountryId = "";
   int userID = 0;
-  String flag = "";
   String userRole = "";
   double lat = 0.0, lng = 0.0;
   Completer<GoogleMapController> controller = Completer();

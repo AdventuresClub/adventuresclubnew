@@ -82,7 +82,7 @@ class CheckProfileState extends State<CheckProfile> {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (_) {
-          return const NewRegister();
+          return const BottomNavigation();
         },
       ),
       (route) => false,
