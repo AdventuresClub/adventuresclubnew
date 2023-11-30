@@ -403,6 +403,28 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     createService();
   }
 
+  bool checkPlans() {
+    bool result = false;
+    pm.forEach((element) {
+      if (element.title.trim().isEmpty) {
+        result = false;
+      } else if (element.description.trim().isEmpty) {
+        result = false;
+      } else if (element.adventureStartDate.day == 0) {
+        result = false;
+      } else if (element.adventureEndDate.day == 0) {
+        result = false;
+      } else if (element.startDate.day == 0) {
+        result = false;
+      } else if (element.endDate.day == 0) {
+        result = false;
+      } else {
+        result = true;
+      }
+    });
+    return result;
+  }
+
   bool checkOnePlan() {
     bool result = false;
     int i = onePlan.length;
@@ -502,11 +524,20 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         //     pm[0].description.isNotEmpty &&
         //     isTimeAfter == false
         ) {
-      bool check = checkOnePlan();
-      if (!check) {
-        message("Please Fill Empty fields");
-        return;
+      if (sPlan == 1) {
+        bool check = checkOnePlan();
+        if (!check) {
+          message("Please Fill Empty fields");
+          return;
+        }
+      } else {
+        bool check = checkPlans();
+        if (!check) {
+          message("Please Fill Empty Plan Infomation");
+          return;
+        }
       }
+
       if (particularWeekDays) {
         // onePlan.isEmpty;
         // message("Please enter program title");
