@@ -463,6 +463,10 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         message("Please add availaible seats");
         return;
       }
+      // if (availableSeatsController.text == "0") {
+      //   message("Please add availaible seats");
+      //   return;
+      // }
       //if (ConstantsCreateNewServices.selectedRegionId == 0)
       if (regionId == 0) {
         message("Please select region");
