@@ -82,7 +82,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
       filteredServices = countriesList1;
       // });
     }
-    _getCurrentPosition();
+    if (Constants.userId == 0) {
+      _getCurrentPosition();
+    }
   }
 
   Future<void> _getCurrentPosition() async {

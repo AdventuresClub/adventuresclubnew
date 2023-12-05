@@ -12,6 +12,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../models/home_services/services_model.dart';
 import 'package:http/http.dart' as http;
 
+import '../widgets/buttons/button.dart';
+
 class Details extends StatefulWidget {
   final ServicesModel? gm;
   final bool? show;
@@ -80,26 +82,129 @@ class _DetailsState extends State<Details> {
   }
 
   void goToBookTicket() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return BookTicket(widget.gm!);
-        },
-      ),
-    );
+    if (Constants.userId != 0) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) {
+            return BookTicket(widget.gm!);
+          },
+        ),
+      );
+    } else {
+      //Constants.showMessage(context, "Please Login to make any bookings");
+      showError();
+    }
+  }
+
+  void showError() {
+    showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+              contentPadding: const EdgeInsets.all(12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              title: ListTile(
+                tileColor: Colors.transparent,
+                //onTap: showCamera,
+                leading: const Icon(
+                  Icons.notification_important,
+                  size: 42,
+                  color: redColor,
+                ),
+                title: MyText(
+                  text: "You Are Not logged In",
+                  color: Colors.black,
+                  weight: FontWeight.w600,
+                ),
+                trailing: const Icon(Icons.chevron_right_rounded),
+              ),
+              actions: [
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Button(
+                        "login".tr(),
+                        //'Register',
+                        greenishColor,
+                        greenishColor,
+                        whiteColor,
+                        20,
+                        () {},
+                        Icons.add,
+                        whiteColor,
+                        false,
+                        2,
+                        'Raleway',
+                        FontWeight.w600,
+                        18),
+                    Container(
+                      color: transparentColor,
+                      height: 40,
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                    text: "dontHaveAnAccount?".tr(),
+                                    style: const TextStyle(
+                                        color: bluishColor, fontSize: 16)),
+                                // TextSpan(
+                                //   text: "register".tr(),
+                                //   style: const TextStyle(
+                                //       fontWeight: FontWeight.bold, color: whiteColor),
+                                // ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 40),
+                      child: Button(
+                          "register".tr(),
+                          greenishColor,
+                          greenishColor,
+                          whiteColor,
+                          20,
+                          () {},
+                          Icons.add,
+                          whiteColor,
+                          false,
+                          2,
+                          'Raleway',
+                          FontWeight.w600,
+                          20),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    )
+                  ],
+                ),
+              ],
+            ));
   }
 
   void plan() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return BookTicket(
-            widget.gm!,
-            show: true,
-          );
-        },
-      ),
-    );
+    if (Constants.userId != 0) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) {
+            return BookTicket(
+              widget.gm!,
+              show: true,
+            );
+          },
+        ),
+      );
+    } else {
+      //Constants.showMessage(context, "Please Login to make any bookings");
+      showError();
+    }
   }
 
   void addFav() async {
