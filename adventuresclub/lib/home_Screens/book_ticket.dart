@@ -127,7 +127,6 @@ class _BookTicketState extends State<BookTicket> {
   }
 
   void minusAdult() {
-    if (_m == 1) {}
     setState(() {
       if (_m != 1) _m--;
     });
