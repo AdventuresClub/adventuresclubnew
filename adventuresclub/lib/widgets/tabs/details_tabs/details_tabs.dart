@@ -17,6 +17,10 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../../new_signup/new_register.dart';
+import '../../../sign_up/sign_in.dart';
+import '../../buttons/button.dart';
+
 class DetailsTab extends StatefulWidget {
   final ServicesModel gm;
   final bool? show;
@@ -498,6 +502,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                         "${Constants.baseUrl}/receiverlist/${Constants.userId}/${widget.gm.id}",
                         appbar: false,
                       ),
+
                       //AdventureChatDetails(widget.gm.serviceId.toString())
                       // "${Constants.baseUrl}/receiverlist/27/'${widget.serviceId}'"
                     ],

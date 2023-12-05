@@ -67,7 +67,7 @@ class _NewRegisterState extends State<NewRegister> {
   Map mapCountry = {};
   List<GetCountryModel> countriesList = [];
   String mobileNumber = "";
-  String countryCode = "+1";
+  String countryCode = "";
   String selectedLanguage = "";
   List<GetCountryModel> filteredServices = [];
   List<GetCountryModel> countriesList1 = [];
@@ -160,6 +160,14 @@ class _NewRegisterState extends State<NewRegister> {
       }
       if (passController.text.isEmpty) {
         message("Please Enter Password");
+        return;
+      }
+      if (countryCode.isEmpty) {
+        message("Please Enter Country Code");
+        return;
+      }
+      if (countryId <= 0 && selectedCountry.isEmpty) {
+        message("Please Select Country");
         return;
       }
       if (formattedDate != null) {
@@ -358,6 +366,7 @@ class _NewRegisterState extends State<NewRegister> {
       setState(() {
         loading = false;
       });
+      checkCountry();
       return;
     }
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)

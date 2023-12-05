@@ -25,7 +25,7 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
   List<GetCountryModel> countriesList1 = [];
   Map mapCountry = {};
   int userID = 0;
-  String countryCode = "+1";
+  String countryCode = "";
   dynamic ccCode;
   int countryId = 0;
   String flag = "";

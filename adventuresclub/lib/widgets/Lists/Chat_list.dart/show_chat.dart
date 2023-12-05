@@ -5,6 +5,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../../new_signup/new_register.dart';
+import '../../../sign_up/sign_in.dart';
+import '../../buttons/button.dart';
 import '../../my_text.dart';
 
 class ShowChat extends StatefulWidget {
@@ -44,6 +47,115 @@ class _ShowChatState extends State<ShowChat> {
       ..loadRequest(Uri.parse(widget.url));
   }
 
+  void navLogin() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return const SignIn();
+    }));
+  }
+
+  void navRegister() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return const NewRegister();
+    }));
+  }
+
+  void showError() {
+    showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+              contentPadding: const EdgeInsets.all(12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              title: ListTile(
+                tileColor: Colors.transparent,
+                //onTap: showCamera,
+                leading: const Icon(
+                  Icons.notification_important,
+                  size: 42,
+                  color: redColor,
+                ),
+                title: MyText(
+                  text: "You Are Not logged In",
+                  color: Colors.black,
+                  weight: FontWeight.w600,
+                ),
+                trailing: const Icon(Icons.chevron_right_rounded),
+              ),
+              actions: [
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Button(
+                        "login".tr(),
+                        //'Register',
+                        greenishColor,
+                        greenishColor,
+                        whiteColor,
+                        20,
+                        navLogin,
+                        Icons.add,
+                        whiteColor,
+                        false,
+                        2,
+                        'Raleway',
+                        FontWeight.w600,
+                        18),
+                    Container(
+                      color: transparentColor,
+                      height: 40,
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                    text: "dontHaveAnAccount?".tr(),
+                                    style: const TextStyle(
+                                        color: bluishColor, fontSize: 16)),
+                                // TextSpan(
+                                //   text: "register".tr(),
+                                //   style: const TextStyle(
+                                //       fontWeight: FontWeight.bold, color: whiteColor),
+                                // ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 40),
+                      child: Button(
+                          "register".tr(),
+                          greenishColor,
+                          greenishColor,
+                          whiteColor,
+                          20,
+                          navRegister,
+                          Icons.add,
+                          whiteColor,
+                          false,
+                          2,
+                          'Raleway',
+                          FontWeight.w600,
+                          20),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    )
+                  ],
+                ),
+              ],
+            ));
+  }
+
+  void cancel() {
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +177,119 @@ class _ShowChatState extends State<ShowChat> {
               centerTitle: true,
             )
           : null,
-      body: WebViewWidget(controller: controller),
+      body: Constants.userId > 0
+          ? WebViewWidget(controller: controller)
+          : Container(
+              height: MediaQuery.of(context).size.height,
+              color: blackColor,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      children: [
+                        // Row(
+                        //   crossAxisAlignment: CrossAxisAlignment.end,
+                        //   mainAxisAlignment: MainAxisAlignment.end,
+                        //   children: [
+                        //     GestureDetector(
+                        //       onTap: cancel,
+                        //       child: const Icon(
+                        //         Icons.cancel_sharp,
+                        //         color: whiteColor,
+                        //       ),
+                        //     )
+                        //   ],
+                        // ),
+                        ListTile(
+                          tileColor: Colors.transparent,
+                          //onTap: showCamera,
+                          leading: const Icon(
+                            Icons.notification_important,
+                            color: whiteColor,
+                          ),
+                          title: MyText(
+                            text: "You Are Not logged In",
+                            weight: FontWeight.w600,
+                          ),
+                          trailing: const Icon(Icons.chevron_right_rounded),
+                        ),
+                        Button(
+                            "login".tr(),
+                            //'Register',
+                            greenishColor,
+                            greenishColor,
+                            whiteColor,
+                            20,
+                            () {},
+                            Icons.add,
+                            whiteColor,
+                            false,
+                            2,
+                            'Raleway',
+                            FontWeight.w600,
+                            18),
+                        const Divider(),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              color: transparentColor,
+                              height: 40,
+                              child: GestureDetector(
+                                onTap: navRegister,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        TextSpan(
+                                            text: "dontHaveAnAccount?".tr(),
+                                            style: const TextStyle(
+                                                color: whiteColor,
+                                                fontSize: 16)),
+                                        // TextSpan(
+                                        //   text: "register".tr(),
+                                        //   style: const TextStyle(
+                                        //       fontWeight: FontWeight.bold, color: whiteColor),
+                                        // ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 40),
+                              child: Button(
+                                  "register".tr(),
+                                  greenishColor,
+                                  greenishColor,
+                                  whiteColor,
+                                  20,
+                                  navRegister,
+                                  Icons.add,
+                                  whiteColor,
+                                  false,
+                                  2,
+                                  'Raleway',
+                                  FontWeight.w600,
+                                  20),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
     );
   }
 }

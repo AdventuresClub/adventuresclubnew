@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/book_ticket.dart';
 import 'package:adventuresclub/home_Screens/plan%20_for_future.dart';
+import 'package:adventuresclub/new_signup/new_register.dart';
+import 'package:adventuresclub/sign_up/sign_in.dart';
 import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
 import 'package:adventuresclub/widgets/tabs/details_tabs/details_tabs.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
@@ -96,6 +98,18 @@ class _DetailsState extends State<Details> {
     }
   }
 
+  void navLogin() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return const SignIn();
+    }));
+  }
+
+  void navRegister() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return const NewRegister();
+    }));
+  }
+
   void showError() {
     showDialog(
         context: context,
@@ -130,7 +144,7 @@ class _DetailsState extends State<Details> {
                         greenishColor,
                         whiteColor,
                         20,
-                        () {},
+                        navLogin,
                         Icons.add,
                         whiteColor,
                         false,
@@ -171,7 +185,7 @@ class _DetailsState extends State<Details> {
                           greenishColor,
                           whiteColor,
                           20,
-                          () {},
+                          navRegister,
                           Icons.add,
                           whiteColor,
                           false,
