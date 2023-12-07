@@ -1,6 +1,7 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class MultiLineField extends StatefulWidget {
   final String hinttext;
@@ -8,8 +9,13 @@ class MultiLineField extends StatefulWidget {
   final color;
   final TextEditingController? controller;
   final bool? show;
+  final int? maximumLetters;
+  final int? minimumLetters;
   const MultiLineField(this.hinttext, this.lines, this.color, this.controller,
-      {this.show = false, super.key});
+      {this.show = false,
+      this.maximumLetters = 500,
+      this.minimumLetters = 1,
+      super.key});
 
   @override
   State<MultiLineField> createState() => _MultiLineFieldState();
@@ -19,6 +25,8 @@ class _MultiLineFieldState extends State<MultiLineField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      maxLength: widget.maximumLetters,
+      maxLengthEnforcement: MaxLengthEnforcement.enforced,
       autofocus: false,
       controller: widget.controller,
       maxLines: widget.lines,

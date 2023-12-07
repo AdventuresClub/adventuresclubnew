@@ -421,7 +421,18 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       } else {
         result = true;
       }
+      if (element.title.length < 3) {
+        Constants.showMessage(
+            context, "Schdule Title Cannot Be for less than 3 characters");
+        return;
+      }
+      if (element.description.length < 50) {
+        Constants.showMessage(
+            context, "Schdule Title Cannot Be for less than 50 characters");
+        return;
+      }
     });
+
     return result;
   }
 
@@ -435,6 +446,16 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         result = false;
       } else {
         result = true;
+      }
+      if (element.title.length < 3) {
+        Constants.showMessage(
+            context, "Schdule Title Cannot Be for less than 3 characters");
+        return;
+      }
+      if (element.description.length < 50) {
+        Constants.showMessage(
+            context, "Schdule Title Cannot Be for less than 50 characters");
+        return;
       }
     });
     return result;
@@ -455,18 +476,26 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         message("Please enter the adventure name");
         return;
       }
+      if (adventureName.text.trim().length < 3) {
+        message("Adventure Cannot be for less than 3 characters");
+        return;
+      }
       if (infoController.text.trim().isEmpty) {
         message("Please type information");
+        return;
+      }
+      if (infoController.text.trim().length < 50) {
+        message("Information cannot be for less than 50 characters");
         return;
       }
       if (availableSeatsController.text.trim().isEmpty) {
         message("Please add availaible seats");
         return;
       }
-      // if (availableSeatsController.text == "0") {
-      //   message("Please add availaible seats");
-      //   return;
-      // }
+      if (availableSeatsController.text == "0") {
+        message("Available Seats Cannot be less than 1");
+        return;
+      }
       //if (ConstantsCreateNewServices.selectedRegionId == 0)
       if (regionId == 0) {
         message("Please select region");
@@ -557,33 +586,65 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       setState(() {
         count = 3;
       });
-    } else if (count == 3 &&
+    } else if (count == 3
         // ConstantsCreateNewServices.lat > 0 &&
         // ConstantsCreateNewServices.lng >  &&
-        iLiveInController.text.trim().isNotEmpty &&
-        specificAddressController.text.trim().isNotEmpty &&
-        costOne.text.trim().isNotEmpty &&
-        preRequisites.text.trim().isNotEmpty &&
-        minimumRequirement.text.trim().isNotEmpty &&
-        terms.text.trim().isNotEmpty) {
+
+        ) {
+      if (ConstantsCreateNewServices.lat == 0) {
+        message("Please set location Correctly");
+        return;
+      }
+      if (ConstantsCreateNewServices.lng == 0) {
+        message("Please set location Correctly");
+        return;
+      }
+      if (iLiveInController.text.trim().isEmpty) {
+        message("Location Cannot be empty");
+        return;
+      }
+      if (specificAddressController.text.trim().isEmpty) {
+        message("Specific Address Cannot be empty");
+        return;
+      }
+      if (costOne.text.trim().isEmpty) {
+        message("Please set cost one");
+        return;
+      }
+      if (costOne.text.trim() == "0") {
+        message("Cost Cannot be less than 1");
+        return;
+      }
+      if (preRequisites.text.trim().isEmpty) {
+        message("Please Type prerequisites");
+        return;
+      }
+      if (preRequisites.text.trim().length < 3) {
+        message("Prerequisites cannot be for less than 3 characters");
+        return;
+      }
+      if (minimumRequirement.text.trim().isEmpty) {
+        message("Please Type Minimum Requirements");
+        return;
+      }
+      if (minimumRequirement.text.trim().length < 5) {
+        message("Minimum Requirements cannot be for less than 5 characters");
+        return;
+      }
+      if (minimumRequirement.text.trim().isEmpty) {
+        message("Please Type Minimum Requirements");
+        return;
+      }
+      if (terms.text.trim().isEmpty) {
+        message("Please Type Terms");
+        return;
+      }
+      if (terms.text.trim().length < 30) {
+        message("Terms cannot be for less than 30 characters");
+        return;
+      }
       //convertProgramData();
       createService();
-    } else if (ConstantsCreateNewServices.lat == 0) {
-      message("Please set location Correctly");
-    } else if (ConstantsCreateNewServices.lng == 0) {
-      message("Please set location Correctly");
-    } else if (iLiveInController.text.trim().isEmpty) {
-      message("Location Cannot be empty");
-    } else if (specificAddressController.text.trim().isEmpty) {
-      message("Specific Address Cannot be empty");
-    } else if (costOne.text.trim().isEmpty) {
-      message("Please set cost one");
-    } else if (preRequisites.text.trim().isEmpty) {
-      message("Please Type prerequisites");
-    } else if (minimumRequirement.text.trim().isEmpty) {
-      message("Please Type Minimum Requirements");
-    } else if (terms.text.trim().isEmpty) {
-      message("Please Type Terms");
     }
   }
 

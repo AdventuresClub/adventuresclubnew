@@ -1,6 +1,9 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import '../minimum_length_limited.dart';
 
 class TFWithSize extends StatefulWidget {
   final String hintText;
@@ -15,6 +18,9 @@ class TFWithSize extends StatefulWidget {
   final int? hintLines;
   final bool? type;
   final String? label;
+  final int? maximumLetters;
+  final int? minimumLetters;
+  final Function? tapped;
   const TFWithSize(this.hintText, this.controller, this.verticalPadding,
       this.fillColor, this.width,
       {Key? key,
@@ -24,6 +30,9 @@ class TFWithSize extends StatefulWidget {
       this.onEdit,
       this.hintLines = 2,
       this.type = false,
+      this.maximumLetters = 500,
+      this.minimumLetters = 1,
+      this.tapped,
       this.label})
       : super(key: key);
 
@@ -38,9 +47,35 @@ class _TFWithSizeState extends State<TFWithSize> {
     return SizedBox(
       width: MediaQuery.of(context).size.width / widget.width,
       child: TextField(
+        maxLength: widget.maximumLetters,
+        maxLengthEnforcement: MaxLengthEnforcement.enforced,
         onEditingComplete: () => widget.onEdit,
         keyboardType: widget.show,
         controller: widget.controller,
+
+        // onChanged: (text) {
+        //  // widget.tapped;
+        //   // if (text.length < 3) {
+        //   //   widget.controller!.value = TextEditingValue(
+        //   //     text: text,
+        //   //     selection: TextSelection.collapsed(offset: text.length),
+        //   //   );
+        //   // }
+        //   // if (text.length > 50) {
+        //   //   widget.controller!.value = TextEditingValue(
+        //   //     text: text.substring(0, 50),
+        //   //     selection: const TextSelection.collapsed(offset: 50),
+        //   //   );
+        //   // }
+        // },
+
+        // inputFormatters: [
+        //   LengthLimitingTextInputFormatter(widget.maximumLetters),
+        //   MinLengthLimitingTextInputFormatter(widget.minimumLetters!),
+        //   // FilteringTextInputFormatter.digitsOnly,
+        //   // NumericRangeFormatter(
+        //   //     min: widget.minimumLetters!, max: widget.maximumLetters!)
+        // ],
         decoration: InputDecoration(
           labelText: widget.label,
           labelStyle: TextStyle(

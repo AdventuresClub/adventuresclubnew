@@ -309,6 +309,21 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
     );
   }
 
+  void checkText(TextEditingController m, String message) {
+    if (message.length < 3) {
+      m.value = TextEditingValue(
+        text: message,
+        selection: TextSelection.collapsed(offset: message.length),
+      );
+    }
+    if (message.length > 50) {
+      m.value = TextEditingValue(
+        text: message.substring(0, 50),
+        selection: const TextSelection.collapsed(offset: 50),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return loading
@@ -321,31 +336,55 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                TFWithSize('adventureName', widget.adventureName, 12,
-                    lightGreyColor, 1),
-                const SizedBox(height: 10),
+                TFWithSize(
+                  'adventureName',
+                  widget.adventureName,
+                  12,
+                  lightGreyColor,
+                  1,
+                  minimumLetters: 3,
+                  maximumLetters: 50,
+                ),
+                const SizedBox(height: 5),
                 MultiLineField(
-                    'typeInformation', 5, lightGreyColor, widget.info),
+                  'typeInformation',
+                  5,
+                  lightGreyColor,
+                  widget.info,
+                  maximumLetters: 300,
+                ),
                 const SizedBox(height: 10),
                 Row(
                   children: [
                     Expanded(
-                      child: Container(
-                        //width: MediaQuery.of(context).size.width / 2.4,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 15),
-                        decoration: BoxDecoration(
-                          color: lightGreyColor,
-                          border: Border.all(
-                              color: greyColor.withOpacity(0.2), width: 1.5),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: MyText(
-                          text: Constants.country.tr(), //getCountry.toString(),
-                          color: blackTypeColor,
-                          size: 14,
-                          weight: FontWeight.w500,
-                        ),
+                      child: Column(
+                        children: [
+                          Container(
+                            //height: 60,
+                            //width: MediaQuery.of(context).size.width / 2.4,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 15),
+                            decoration: BoxDecoration(
+                              color: lightGreyColor,
+                              border: Border.all(
+                                  color: greyColor.withOpacity(0.2),
+                                  width: 1.5),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Center(
+                              child: MyText(
+                                text: Constants.country
+                                    .tr(), //getCountry.toString(),
+                                color: blackTypeColor,
+                                size: 14,
+                                weight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          )
+                        ],
                       ),
                     ),
                     const SizedBox(
@@ -355,10 +394,11 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                       child: TFWithSize(
                         'Available Seats',
                         widget.available,
-                        16,
+                        14,
                         lightGreyColor,
-                        2.4,
+                        2.6,
                         show: TextInputType.number,
+                        maximumLetters: 8,
                       ),
                     ),
                   ],
