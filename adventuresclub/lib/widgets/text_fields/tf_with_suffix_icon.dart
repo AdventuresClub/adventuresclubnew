@@ -44,7 +44,7 @@ class _TFWithSiffixIconState extends State<TFWithSiffixIcon> {
               fontWeight: FontWeight.w600,
               fontSize: 16,
               fontFamily: 'Raleway'),
-          suffixIcon: widget.showPassword == true
+          suffixIcon: widget.showPassword == false
               ? IconButton(
                   icon: Icon(
                     // Based on passwordVisible state choose the icon

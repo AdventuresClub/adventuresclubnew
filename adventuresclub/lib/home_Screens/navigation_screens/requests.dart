@@ -1,5 +1,6 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/new_signup/new_register.dart';
+import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/sign_up/sign_in.dart';
 import 'package:adventuresclub/widgets/Lists/request_list/req_completed_list.dart';
 import 'package:adventuresclub/widgets/Lists/request_list/requests_lists.dart';
@@ -7,6 +8,7 @@ import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Requests extends StatefulWidget {
   const Requests({super.key});
@@ -27,6 +29,7 @@ class _RequestsState extends State<Requests> {
   }
 
   void navRegister() {
+    Provider.of<ServicesProvider>(context, listen: false).homeIndex = 0;
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       return const NewRegister();
     }));

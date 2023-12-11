@@ -21,6 +21,7 @@ import 'package:adventuresclub/sign_up/sign_in.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -63,9 +64,9 @@ class _AccountState extends State<Account> {
     'images/logout.png',
   ];
   List<String> tile1Text = [
-    'myPoints',
+    // 'myPoints',
     "healthCondition",
-    "notification",
+    //  "notification",
     "changeLanguage",
     "addCountry",
     "aboutUs",
@@ -179,9 +180,17 @@ class _AccountState extends State<Account> {
   @override
   void initState() {
     super.initState();
-    getProfile();
-    //Constants.getProfile();
-    convert();
+    if (SchedulerBinding.instance.schedulerPhase ==
+        SchedulerPhase.persistentCallbacks) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        getProfile();
+        //Constants.getProfile();
+        convert();
+      });
+    }
+    // getProfile();
+    // //Constants.getProfile();
+    // convert();
   }
 
   @override
@@ -216,9 +225,11 @@ class _AccountState extends State<Account> {
     if (loading) {
       return;
     }
-    setState(() {
-      loading = true;
-    });
+    if (mounted) {
+      setState(() {
+        loading = true;
+      });
+    }
     SharedPreferences prefs = await Constants.getPrefs();
     try {
       var response = await http

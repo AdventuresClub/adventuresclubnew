@@ -172,7 +172,7 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
         message(body['message'].toString());
       }
       log(response.statusCode);
-      print(response.body);
+      debugPrint(response.body);
       print(response.headers);
     } catch (e) {
       print(e.toString());

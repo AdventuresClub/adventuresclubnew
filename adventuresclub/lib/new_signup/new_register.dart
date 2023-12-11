@@ -166,7 +166,7 @@ class _NewRegisterState extends State<NewRegister> {
         message("Please Enter Country Code");
         return;
       }
-      if (countryId <= 0 && selectedCountry.isEmpty) {
+      if (countryId == 0) {
         message("Please Select Country");
         return;
       }
@@ -469,7 +469,7 @@ class _NewRegisterState extends State<NewRegister> {
         selectedCountry = country;
         countryId = id;
         flag = countryflag;
-        countryCode = cCode;
+        // countryCode = cCode;
       },
     );
   }
@@ -640,12 +640,12 @@ class _NewRegisterState extends State<NewRegister> {
                                 whiteColor, true),
                             const SizedBox(height: 10),
                             TFWithSiffixIcon('password'.tr(),
-                                Icons.visibility_off, passController, true),
+                                Icons.visibility_off, passController, false),
                             const SizedBox(
                               height: 10,
                             ),
                             SizedBox(
-                                height: 60,
+                                height: 65,
                                 child: PhoneTextField(getData, countryCode)),
                             const SizedBox(
                               height: 10,
