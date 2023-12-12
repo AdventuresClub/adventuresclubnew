@@ -114,7 +114,7 @@ class _ServicesCardState extends State<ServicesCard> {
                               ),
                             )
                           : Container(
-                              width: MediaQuery.of(context).size.width / 2.3,
+                              //width: MediaQuery.of(context).size.width / 2.3,
                               height: 100,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),

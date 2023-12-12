@@ -986,8 +986,8 @@ class _FilterPageState extends State<FilterPage> {
               itemCount: widget.images.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
-                  height: MediaQuery.of(context).size.height / 6,
-                  width: MediaQuery.of(context).size.width / 1.1,
+                  // height: MediaQuery.of(context).size.height / 6,
+                  // width: MediaQuery.of(context).size.width / 1.1,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
                     image: widget.images.isEmpty
