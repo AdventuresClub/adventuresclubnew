@@ -25,10 +25,16 @@
     "favorite": "مفضل",
     "myServices": "خدماتي",
     "loading": "قيد التنزيل",
+    "Loading": "قيد التنزيل",
     "clientRequests": "طلبات العميل",
     "myPoints": "نقاطي",
     "healthCondition": "الحالة الصحية",
     "notification": "الإشعارات",
+    "Notification": "الإشعارات",
+    "Become A partner": "كن شريكا",
+    "My Points": "نقاطي",
+    "App Version : 2.0": "تطبيق الإصدار 2.0",
+    "appVersion": "App Version : 2.0",
     "serviceQuality": "معايير الخدمة والجودة",
     "settings": "الإعدادات",
     "inviteFriends": "ادعو أصدقائك",
@@ -52,7 +58,6 @@
     "deleteAccount": "حذف الحساب",
     "wantToLogOut": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
     "wantToDelete": "هل انت متأكد انك تريد حذف حسابك؟",
-    "appVersion": "إصدار التطبيق : 2.0",
     "login": "تسجيل الدخول",
     "createAccount": "قم بإنشاء حسابك الآن",
     "no": "لا",
@@ -296,5 +301,7 @@
     "bankCard": "بطاقة البنك",
     "payOnArrival": "الدفع عند الوصول",
     "addCountry": "البلد",
-    "bookings": "طلباتي"
+    "bookings": "طلباتي",
+    "": "",
+    "0": "0"
 }

@@ -1,5 +1,6 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/new_signup/new_register.dart';
+import 'package:adventuresclub/provider/navigation_index_provider.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/sign_up/sign_in.dart';
 import 'package:adventuresclub/widgets/Lists/request_list/req_completed_list.dart';
@@ -29,7 +30,7 @@ class _RequestsState extends State<Requests> {
   }
 
   void navRegister() {
-    Provider.of<ServicesProvider>(context, listen: false).homeIndex = 0;
+    Provider.of<NavigationIndexProvider>(context, listen: false).homeIndex = 0;
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       return const NewRegister();
     }));

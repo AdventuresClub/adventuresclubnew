@@ -96,201 +96,197 @@ class _ServicesCardState extends State<ServicesCard> {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             elevation: 2,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 4.0, left: 2, right: 2),
-              child: Column(
-                children: [
-                  Stack(
-                    children: [
-                      widget.gm.images.isEmpty
-                          ? Container(
-                              width: MediaQuery.of(context).size.width / 2.3,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                image: const DecorationImage(
-                                    image: AssetImage("images/logo.png"),
-                                    fit: BoxFit.fill),
-                              ),
-                            )
-                          : Container(
-                              //width: MediaQuery.of(context).size.width / 2.3,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                      "${"${Constants.baseUrl}/public/uploads/"}${widget.gm.images[0].imageUrl}",
-                                    ),
-                                    fit: BoxFit.cover),
-                              ),
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    widget.gm.images.isEmpty
+                        ? Container(
+                            width: MediaQuery.of(context).size.width / 2.3,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              image: const DecorationImage(
+                                  image: AssetImage("images/logo.png"),
+                                  fit: BoxFit.fill),
                             ),
-                      const Positioned(
-                        bottom: 5,
-                        right: 5,
-                        child: CircleAvatar(
-                          radius: 12,
-                          backgroundColor: transparentColor,
-                          child: Image(
-                            image: ExactAssetImage(
-                              'images/heart.png',
+                          )
+                        : Container(
+                            //width: MediaQuery.of(context).size.width / 2.3,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              image: DecorationImage(
+                                  image: NetworkImage(
+                                    "${"${Constants.baseUrl}/public/uploads/"}${widget.gm.images[0].imageUrl}",
+                                  ),
+                                  fit: BoxFit.cover),
                             ),
-                            height: 14,
                           ),
+                    const Positioned(
+                      bottom: 5,
+                      right: 5,
+                      child: CircleAvatar(
+                        radius: 12,
+                        backgroundColor: transparentColor,
+                        child: Image(
+                          image: ExactAssetImage(
+                            'images/heart.png',
+                          ),
+                          height: 14,
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width / 2.3,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          flex: 8,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              MyText(
-                                text: widget.gm.adventureName,
-                                maxLines: 1,
-                                color: blackColor,
-                                size: 12,
-                                weight: FontWeight.bold,
-                                fontFamily: 'Roboto',
-                                height: 1.3,
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 5),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width / 2.3,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 8,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            MyText(
+                              text: widget.gm.adventureName,
+                              maxLines: 1,
+                              color: blackColor,
+                              size: 12,
+                              weight: FontWeight.bold,
+                              fontFamily: 'Roboto',
+                              height: 1.3,
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.pin_drop_sharp,
+                                  size: 14,
+                                  color: greyBackgroundColor.withOpacity(0.6),
+                                ),
+                                // const SizedBox(
+                                //   width: 2,
+                                // ),
+                                Expanded(
+                                  child: MyText(
+                                    text: widget.gm.sAddress.tr(),
+                                    maxLines: 1,
+                                    color: blackColor,
+                                    size: 10,
+                                    weight: FontWeight.w500,
+                                    fontFamily: 'Roboto',
+                                    height: 1.3,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 2,
+                            ),
+                            if (widget.gm.status == "0")
                               Row(
                                 children: [
-                                  Icon(
-                                    Icons.pin_drop_sharp,
-                                    size: 14,
-                                    color: greyBackgroundColor.withOpacity(0.6),
+                                  const Icon(
+                                    Icons.person_add,
+                                    color: redColor,
+                                    size: 12,
+                                  ),
+                                  MyText(
+                                    //text: "testing",
+                                    text: "pendingApproval".tr(),
+                                    //text: 'Advanced',
+                                    weight: FontWeight.w500,
+                                    color: redColor,
+                                    size: 10,
+                                    height: 1.3,
+                                  ),
+                                ],
+                              ),
+                            if (widget.gm.status == "1")
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.person_add,
+                                    color: greenColor1,
+                                    size: 12,
                                   ),
                                   // const SizedBox(
                                   //   width: 2,
                                   // ),
-                                  Expanded(
-                                    child: MyText(
-                                      text: widget.gm.sAddress.tr(),
-                                      maxLines: 1,
-                                      color: blackColor,
-                                      size: 10,
-                                      weight: FontWeight.w500,
-                                      fontFamily: 'Roboto',
-                                      height: 1.3,
-                                    ),
+                                  MyText(
+                                    //text: "testing",
+                                    text: "accepted".tr(),
+                                    //text: 'Advanced',
+                                    weight: FontWeight.w500,
+                                    color: greenColor1,
+                                    size: 10,
+                                    height: 1.3,
                                   ),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 2,
-                              ),
-                              if (widget.gm.status == "0")
-                                Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.person_add,
-                                      color: redColor,
-                                      size: 12,
-                                    ),
-                                    MyText(
-                                      //text: "testing",
-                                      text: "pendingApproval".tr(),
-                                      //text: 'Advanced',
-                                      weight: FontWeight.w500,
-                                      color: redColor,
-                                      size: 10,
-                                      height: 1.3,
-                                    ),
-                                  ],
-                                ),
-                              if (widget.gm.status == "1")
-                                Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.person_add,
-                                      color: greenColor1,
-                                      size: 12,
-                                    ),
-                                    // const SizedBox(
-                                    //   width: 2,
-                                    // ),
-                                    MyText(
-                                      //text: "testing",
-                                      text: "accepted".tr(),
-                                      //text: 'Advanced',
-                                      weight: FontWeight.w500,
-                                      color: greenColor1,
-                                      size: 10,
-                                      height: 1.3,
-                                    ),
-                                  ],
-                                ),
-                            ],
-                          ),
+                          ],
                         ),
-                        widget.gm.sPlan == 1
-                            ? Expanded(
-                                flex: 4,
-                                child: Column(
-                                  children: [
-                                    MyText(
-                                        text: availability,
-                                        color: blackColor,
-                                        size: 10)
-                                  ],
-                                ),
-                              )
-                            : Expanded(
-                                flex: 5,
-                                child: Column(
-                                  children: [
-                                    MyText(
-                                        text: st, color: blackColor, size: 10)
-                                  ],
-                                ),
+                      ),
+                      widget.gm.sPlan == 1
+                          ? Expanded(
+                              flex: 4,
+                              child: Column(
+                                children: [
+                                  MyText(
+                                      text: availability,
+                                      color: blackColor,
+                                      size: 10)
+                                ],
                               ),
-                        // const SizedBox(height: 5),
-                        // Column(
-                        //   crossAxisAlignment: CrossAxisAlignment.end,
-                        //   mainAxisAlignment: MainAxisAlignment.start,
-                        //   children: [
-                        //     const SizedBox(height: 2),
-                        //     Align(
-                        //       alignment: Alignment.centerRight,
-                        //       child: RatingBar.builder(
-                        //         initialRating: convert(widget.gm.stars),
-                        //         itemSize: 10,
-                        //         //minRating: 1,
-                        //         direction: Axis.horizontal,
-                        //         allowHalfRating: true,
-                        //         itemCount: 5,
-                        //         itemPadding:
-                        //             const EdgeInsets.symmetric(horizontal: 1.0),
-                        //         itemBuilder: (context, _) => const Icon(
-                        //           Icons.star,
-                        //           color: Colors.amber,
-                        //           size: 12,
-                        //         ),
-                        //         onRatingUpdate: (rating) {
-                        //           print(rating);
-                        //         },
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                      ],
-                    ),
+                            )
+                          : Expanded(
+                              flex: 5,
+                              child: Column(
+                                children: [
+                                  MyText(text: st, color: blackColor, size: 10)
+                                ],
+                              ),
+                            ),
+                      // const SizedBox(height: 5),
+                      // Column(
+                      //   crossAxisAlignment: CrossAxisAlignment.end,
+                      //   mainAxisAlignment: MainAxisAlignment.start,
+                      //   children: [
+                      //     const SizedBox(height: 2),
+                      //     Align(
+                      //       alignment: Alignment.centerRight,
+                      //       child: RatingBar.builder(
+                      //         initialRating: convert(widget.gm.stars),
+                      //         itemSize: 10,
+                      //         //minRating: 1,
+                      //         direction: Axis.horizontal,
+                      //         allowHalfRating: true,
+                      //         itemCount: 5,
+                      //         itemPadding:
+                      //             const EdgeInsets.symmetric(horizontal: 1.0),
+                      //         itemBuilder: (context, _) => const Icon(
+                      //           Icons.star,
+                      //           color: Colors.amber,
+                      //           size: 12,
+                      //         ),
+                      //         onRatingUpdate: (rating) {
+                      //           print(rating);
+                      //         },
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           )
         : Column(

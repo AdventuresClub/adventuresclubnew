@@ -25,14 +25,19 @@
     "favorite": "Favorite",
     "myServices": "My Services",
     "loading": "Loading",
+    "Loading": "Loading",
     "clientRequests": "Client Requests",
     "myPoints": "My Points",
+    "My Points": "My Points",
     "healthCondition": "Health Condition : ",
     "notification": "Notification",
+    "Notification": "Notification",
+    "Become A partner": "Become A Partner",
     "serviceQuality": "Service & Quality Standards",
     "settings": "Settings",
     "inviteFriends": "Invite Friends",
     "invite": "Invite",
+    "App Version : 2.0": "App Version : 2.0",
     "appVersion": "App Version : 2.0",
     "aboutUs": "About Us",
     "about": "About",
@@ -295,5 +300,7 @@
     "bankCard":"Bank Card",
     "payOnArrival": "Pay On Arrival",
     "addCountry": "Country",
-    "bookings": "Bookings"
+    "bookings": "Bookings",
+    "": "",
+    "0": "0"
 }

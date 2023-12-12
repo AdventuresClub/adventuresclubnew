@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:adventuresclub/camera/camera_access.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/profile/profile_tab.dart';
+import 'package:adventuresclub/provider/navigation_index_provider.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/text_fields.dart';
@@ -87,7 +88,7 @@ class _ProfileState extends State<Profile> {
   }
 
   void changeIndex() {
-    Provider.of<ServicesProvider>(context, listen: false).homeIndex = 0;
+    Provider.of<NavigationIndexProvider>(context, listen: false).homeIndex = 0;
   }
 
   void logout() {

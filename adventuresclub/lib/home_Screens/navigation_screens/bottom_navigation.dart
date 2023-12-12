@@ -7,6 +7,7 @@ import 'package:adventuresclub/home_Screens/navigation_screens/planned.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/visit.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/requests.dart';
 import 'package:adventuresclub/new_signup/new_register.dart';
+import 'package:adventuresclub/provider/navigation_index_provider.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/sign_up/sign_in.dart';
 import 'package:adventuresclub/widgets/loading_widget.dart';
@@ -54,11 +55,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   void initState() {
     super.initState();
-    getCountries();
+    if (Constants.userId == 0) {
+      getCountries();
+    }
 
     // index = context.read<ServicesProvider>().homeIndex;
     getNotificationBadge();
-    Constants.getFilter();
+    // Constants.getFilter();
     getVersion();
   }
 
@@ -516,7 +519,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    int index = Provider.of<ServicesProvider>(context).homeIndex;
+    int index = Provider.of<NavigationIndexProvider>(context).homeIndex;
     return Scaffold(
       body: loading ? const LoadingWidget() : getBody(index),
       bottomNavigationBar: BottomNavigationBar(
@@ -524,7 +527,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
         currentIndex: index,
         onTap: (i) {
           print(i);
-          Provider.of<ServicesProvider>(context, listen: false).setHomeIndex(i);
+          Provider.of<NavigationIndexProvider>(context, listen: false)
+              .setHomeIndex(i);
           // setState(() {
           //   index = i;
           // });

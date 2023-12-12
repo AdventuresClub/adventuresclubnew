@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/get_country.dart';
+import 'package:adventuresclub/provider/navigation_index_provider.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
@@ -249,7 +250,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   }
 
   void changeIndex() {
-    Provider.of<ServicesProvider>(context, listen: false).homeIndex = 0;
+    Provider.of<NavigationIndexProvider>(context, listen: false).homeIndex = 0;
   }
 
   void logout() {

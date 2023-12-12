@@ -6,6 +6,7 @@ import 'package:adventuresclub/home_Screens/accounts/contact_us.dart';
 import 'package:adventuresclub/home_Screens/accounts/settings/provicy_policy.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:adventuresclub/models/get_country.dart';
+import 'package:adventuresclub/provider/navigation_index_provider.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/sign_up/terms_condition.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
@@ -144,7 +145,7 @@ class _SettingsState extends State<Settings> {
 // email:mmm@yopmail.com
 
   void changeIndex() {
-    Provider.of<ServicesProvider>(context, listen: false).homeIndex = 0;
+    Provider.of<NavigationIndexProvider>(context, listen: false).homeIndex = 0;
   }
 
   void homePage() {

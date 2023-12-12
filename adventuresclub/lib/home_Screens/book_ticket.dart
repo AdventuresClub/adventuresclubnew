@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/requests.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
+import 'package:adventuresclub/provider/navigation_index_provider.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
@@ -244,7 +245,8 @@ class _BookTicketState extends State<BookTicket> {
   }
 
   void goToHome() {
-    Provider.of<ServicesProvider>(context, listen: false).setHomeIndex(2);
+    Provider.of<NavigationIndexProvider>(context, listen: false)
+        .setHomeIndex(2);
     Navigator.of(context).popUntil((route) => route.isFirst);
   }
 

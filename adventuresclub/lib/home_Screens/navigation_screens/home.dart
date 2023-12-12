@@ -42,9 +42,9 @@ class _HomeState extends State<Home> {
     if (SchedulerBinding.instance.schedulerPhase ==
         SchedulerPhase.persistentCallbacks) {
       SchedulerBinding.instance.addPostFrameCallback((_) {
-        getBanners();
+        // getBanners();
         getServicesList();
-        getChatNotification();
+        // getChatNotification();
       });
     }
   }

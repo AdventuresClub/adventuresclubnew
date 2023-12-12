@@ -21,7 +21,7 @@ import '../models/services/create_services/availability_plan_model.dart';
 class ServicesProvider with ChangeNotifier {
   ServicesProvider({Key? key});
   bool loadingServices = false;
-  int homeIndex = 0;
+
   List<String> categories = [];
   List<BecomePartner> nBp = [];
   List<BecomePartner> transportBp = [];
@@ -51,10 +51,10 @@ class ServicesProvider with ChangeNotifier {
 
   bool loading = false;
 
-  void setHomeIndex(int i) {
-    homeIndex = i;
-    notifyListeners();
-  }
+  // void setHomeIndex(int i) {
+  //   homeIndex = i;
+  //   notifyListeners();
+  // }
 
   void setSearch(String x) {
     filteredServices.clear();

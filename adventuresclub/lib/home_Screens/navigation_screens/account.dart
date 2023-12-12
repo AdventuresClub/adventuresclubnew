@@ -17,6 +17,7 @@ import 'package:adventuresclub/home_Screens/invite_friends.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:adventuresclub/models/profile_models/profile_become_partner.dart';
 import 'package:adventuresclub/models/user_profile_model.dart';
+import 'package:adventuresclub/provider/navigation_index_provider.dart';
 import 'package:adventuresclub/sign_up/sign_in.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -64,9 +65,9 @@ class _AccountState extends State<Account> {
     'images/logout.png',
   ];
   List<String> tile1Text = [
-    // 'myPoints',
+    "myPoints",
     "healthCondition",
-    //  "notification",
+    "notification",
     "changeLanguage",
     "addCountry",
     "aboutUs",
@@ -74,14 +75,14 @@ class _AccountState extends State<Account> {
     "logOut",
   ];
   List<String> userListText = [
-    'healthCondition',
-    'settings',
+    "healthCondition",
+    "settings",
     "changeLanguage",
     "addCountry",
-    'inviteFriends',
-    'aboutUs',
-    'serviceQuality',
-    'contactUs',
+    "inviteFriends",
+    "aboutUs",
+    "serviceQuality",
+    "contactUs",
     "logOut",
     //'Log out',
   ];
@@ -180,17 +181,8 @@ class _AccountState extends State<Account> {
   @override
   void initState() {
     super.initState();
-    if (SchedulerBinding.instance.schedulerPhase ==
-        SchedulerPhase.persistentCallbacks) {
-      SchedulerBinding.instance.addPostFrameCallback((_) {
-        getProfile();
-        //Constants.getProfile();
-        convert();
-      });
-    }
-    // getProfile();
-    // //Constants.getProfile();
-    // convert();
+    getProfile();
+    //  convert();
   }
 
   @override
@@ -225,11 +217,9 @@ class _AccountState extends State<Account> {
     if (loading) {
       return;
     }
-    if (mounted) {
-      setState(() {
-        loading = true;
-      });
-    }
+    setState(() {
+      loading = true;
+    });
     SharedPreferences prefs = await Constants.getPrefs();
     try {
       var response = await http
@@ -319,53 +309,53 @@ class _AccountState extends State<Account> {
       profile = up;
       Constants.userRole = up.userRole;
       prefs.setString("userRole", up.userRole);
-      setState(() {
-        loading = false;
-      });
+      // setState(() {
+      //   loading = false;
+      // });
       convert();
     } catch (e) {
       print(e.toString());
     }
   }
 
-  void convert() {
-    getCountries();
+  void convert() async {
+    await getCountries();
     if (profile.userRole == "2" && profile.bp.endDate != "null") {
-      setState(() {
-        loading = true;
-      });
+      // setState(() {
+      //   loading = true;
+      // });
       if (profile.bp.endDate.isNotEmpty) {
         DateTime dt = DateTime.parse(profile.bp.endDate);
         if (today.year > dt.year) {
-          setState(() {
-            loading = false;
-            expired = true;
-            Constants.expired = true;
-          });
+          //setState(() {
+          //loading = false;
+          expired = true;
+          Constants.expired = true;
+          // });
         } else if (today.year == dt.year && today.month > dt.month) {
-          setState(() {
-            loading = false;
-            expired = true;
-            Constants.expired = true;
-          });
+          // setState(() {
+          // loading = false;
+          expired = true;
+          Constants.expired = true;
+          //});
         } else if (today.year == dt.year &&
             today.month == dt.month &&
             today.day > dt.day) {
-          setState(() {
-            loading = false;
-            expired = true;
-            Constants.expired = true;
-          });
+          //setState(() {
+          // loading = false;
+          expired = true;
+          Constants.expired = true;
+          // });
         } else {
-          loading = false;
+          //loading = false;
           expired = false;
           Constants.expired = false;
         }
       }
-      setState(() {
-        loading = false;
-      });
     }
+    setState(() {
+      loading = false;
+    });
     print(expired);
     print(Constants.expired);
   }
@@ -436,7 +426,7 @@ class _AccountState extends State<Account> {
   }
 
   void changeIndex() {
-    Provider.of<ServicesProvider>(context, listen: false).homeIndex = 0;
+    Provider.of<NavigationIndexProvider>(context, listen: false).homeIndex = 0;
   }
 
   void logout() async {
@@ -627,11 +617,11 @@ class _AccountState extends State<Account> {
         );
         countriesList1.add(gc);
       });
-      if (mounted) {
-        setState(() {
-          filteredServices = countriesList1;
-        });
-      }
+      // if (mounted) {
+      // setState(() {
+      filteredServices = countriesList1;
+      // });
+      // }
     }
   }
 
@@ -1135,14 +1125,22 @@ class _AccountState extends State<Account> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                MyText(
-                                                  text: profile
-                                                      .name, //'Kenneth Gutierrez',
-                                                  color: blackColor,
-                                                  weight: FontWeight.bold,
-                                                  size: 22,
-                                                  fontFamily: "Raleway",
+                                                Text(
+                                                  profile.name,
+                                                  style: const TextStyle(
+                                                      fontSize: 22,
+                                                      color: blackColor,
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
+                                                // MyText(
+                                                //   text: profile
+                                                //       .name, //'Kenneth Gutierrez',
+                                                //   color: blackColor,
+                                                //   weight: FontWeight.bold,
+                                                //   size: 22,
+                                                //   fontFamily: "Raleway",
+                                                // ),
                                                 GestureDetector(
                                                   onTap: requestSent,
                                                   // () {
@@ -1309,85 +1307,79 @@ class _AccountState extends State<Account> {
                               profile.userRole == "2")
                             Column(
                               children: [
-                                GestureDetector(
-                                  //  onTap: getProfile,
-                                  child: Container(
-                                    color: transparentColor,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        loading
-                                            ? Text("loading".tr())
-                                            : Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  MyText(
-                                                    text: profile
-                                                        .name, //'Kenneth Gutierrez',
-                                                    color: blackColor,
-                                                    weight: FontWeight.bold,
-                                                    size: 22,
-                                                    fontFamily: "Raleway",
-                                                  ),
-                                                  GestureDetector(
-                                                    onTap: () => packagesList1(
-                                                        true), //requestSent,
-                                                    // () {
-                                                    //   Navigator.of(context)
-                                                    //       .push(MaterialPageRoute(builder: (_) {
-                                                    //     return const BecomePartnerNew();
-                                                    //   }));
-                                                    // },
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        MyText(
-                                                          text:
-                                                              'Become A partner',
-                                                          size: 18,
-                                                          //fontFamily: 'Raleway',
-                                                          weight:
-                                                              FontWeight.w600,
-                                                          color: greyColor
-                                                              .withOpacity(1),
-                                                        ),
-                                                        const Icon(
-                                                          Icons
-                                                              .arrow_forward_ios,
-                                                          color: bluishColor,
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                        profileUrl.isEmpty
-                                            ? GestureDetector(
-                                                onTap: () => goToProfile(
-                                                    expired, profile.userRole),
-                                                child: CircleAvatar(
-                                                  radius: 38,
-                                                  backgroundImage: NetworkImage(
-                                                      "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
+                                Container(
+                                  color: transparentColor,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      loading
+                                          ? Text("loading".tr())
+                                          : Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  profile.name,
+                                                  style: const TextStyle(
+                                                      fontSize: 22,
+                                                      color: blackColor,
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
-                                              )
-                                            : GestureDetector(
-                                                onTap: () => goToProfile(
-                                                    expired, profile.userRole),
-                                                child: CircleAvatar(
-                                                  radius: 38,
-                                                  backgroundImage:
-                                                      NetworkImage(profileUrl),
+                                                GestureDetector(
+                                                  onTap: () => packagesList1(
+                                                      true), //requestSent,
+                                                  // () {
+                                                  //   Navigator.of(context)
+                                                  //       .push(MaterialPageRoute(builder: (_) {
+                                                  //     return const BecomePartnerNew();
+                                                  //   }));
+                                                  // },
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      MyText(
+                                                        text:
+                                                            'Become A partner',
+                                                        size: 18,
+                                                        //fontFamily: 'Raleway',
+                                                        weight: FontWeight.w600,
+                                                        color: greyColor
+                                                            .withOpacity(1),
+                                                      ),
+                                                      const Icon(
+                                                        Icons.arrow_forward_ios,
+                                                        color: bluishColor,
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
+                                              ],
+                                            ),
+                                      profileUrl.isEmpty
+                                          ? GestureDetector(
+                                              onTap: () => goToProfile(
+                                                  expired, profile.userRole),
+                                              child: CircleAvatar(
+                                                radius: 38,
+                                                backgroundImage: NetworkImage(
+                                                    "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
                                               ),
-                                      ],
-                                    ),
+                                            )
+                                          : GestureDetector(
+                                              onTap: () => goToProfile(
+                                                  expired, profile.userRole),
+                                              child: CircleAvatar(
+                                                radius: 38,
+                                                backgroundImage:
+                                                    NetworkImage(profileUrl),
+                                              ),
+                                            ),
+                                    ],
                                   ),
                                 ),
                                 Padding(
@@ -1510,97 +1502,91 @@ class _AccountState extends State<Account> {
                                 profile.bp.packagesId > 0)
                               Column(
                                 children: [
-                                  GestureDetector(
-                                    // onTap: getProfile,
-                                    child: Container(
-                                      color: transparentColor,
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          loading
-                                              ? Text("loading".tr())
-                                              : Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    MyText(
-                                                      text: profile
-                                                          .name, //'Kenneth Gutierrez',
-                                                      color: blackColor,
-                                                      weight: FontWeight.bold,
-                                                      size: 22,
-                                                      fontFamily: "Raleway",
-                                                    ),
-                                                    GestureDetector(
-                                                      onTap: ex,
-                                                      // () {
-                                                      //   Navigator.of(context)
-                                                      //       .push(MaterialPageRoute(builder: (_) {
-                                                      //     return const BecomePartnerNew();
-                                                      //   }));
-                                                      // },
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          MyText(
-                                                            text:
-                                                                'Your Subscription expired',
-                                                            size: 18,
-                                                            //fontFamily: 'Raleway',
-                                                            weight:
-                                                                FontWeight.w600,
-                                                            color: greyColor
-                                                                .withOpacity(1),
-                                                          ),
-                                                          const Icon(
-                                                            Icons
-                                                                .arrow_forward_ios,
-                                                            color: bluishColor,
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    const SizedBox(height: 2),
-                                                    MyText(
-                                                      text:
-                                                          "${"Your Plan expired on "}${profile.bp.endDate}",
-                                                      //"${" before "}${profile.bp.endDate}", //'Kenneth Gutierrez',
-                                                      color: redColor,
-                                                      weight: FontWeight.bold,
-                                                      size: 14,
-                                                      fontFamily: "Raleway",
-                                                    ),
-                                                  ],
-                                                ),
-                                          profileUrl != null
-                                              ? GestureDetector(
-                                                  onTap: () => goToProfile(
-                                                      expired,
-                                                      profile.userRole),
-                                                  child: CircleAvatar(
-                                                    radius: 35,
-                                                    backgroundImage: NetworkImage(
-                                                        "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
+                                  Container(
+                                    color: transparentColor,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        loading
+                                            ? Text("loading".tr())
+                                            : Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    profile.name,
+                                                    style: const TextStyle(
+                                                        fontSize: 22,
+                                                        color: blackColor,
+                                                        fontWeight:
+                                                            FontWeight.bold),
                                                   ),
-                                                )
-                                              : GestureDetector(
-                                                  onTap: () => goToProfile(
-                                                      expired,
-                                                      profile.userRole),
-                                                  child: CircleAvatar(
-                                                    radius: 35,
-                                                    backgroundImage:
-                                                        NetworkImage(
-                                                            profileUrl),
+                                                  GestureDetector(
+                                                    onTap: ex,
+                                                    // () {
+                                                    //   Navigator.of(context)
+                                                    //       .push(MaterialPageRoute(builder: (_) {
+                                                    //     return const BecomePartnerNew();
+                                                    //   }));
+                                                    // },
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        MyText(
+                                                          text:
+                                                              'Your Subscription expired',
+                                                          size: 18,
+                                                          //fontFamily: 'Raleway',
+                                                          weight:
+                                                              FontWeight.w600,
+                                                          color: greyColor
+                                                              .withOpacity(1),
+                                                        ),
+                                                        const Icon(
+                                                          Icons
+                                                              .arrow_forward_ios,
+                                                          color: bluishColor,
+                                                        )
+                                                      ],
+                                                    ),
                                                   ),
+                                                  const SizedBox(height: 2),
+                                                  MyText(
+                                                    text:
+                                                        "${"Your Plan expired on "}${profile.bp.endDate}",
+                                                    //"${" before "}${profile.bp.endDate}", //'Kenneth Gutierrez',
+                                                    color: redColor,
+                                                    weight: FontWeight.bold,
+                                                    size: 14,
+                                                    fontFamily: "Raleway",
+                                                  ),
+                                                ],
+                                              ),
+                                        profileUrl != null
+                                            ? GestureDetector(
+                                                onTap: () => goToProfile(
+                                                    expired, profile.userRole),
+                                                child: CircleAvatar(
+                                                  radius: 35,
+                                                  backgroundImage: NetworkImage(
+                                                      "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
                                                 ),
-                                        ],
-                                      ),
+                                              )
+                                            : GestureDetector(
+                                                onTap: () => goToProfile(
+                                                    expired, profile.userRole),
+                                                child: CircleAvatar(
+                                                  radius: 35,
+                                                  backgroundImage:
+                                                      NetworkImage(profileUrl),
+                                                ),
+                                              ),
+                                      ],
                                     ),
                                   ),
                                   Padding(
@@ -1745,94 +1731,88 @@ class _AccountState extends State<Account> {
                               profile.bp.packagesId > 0)
                             Column(
                               children: [
-                                GestureDetector(
-                                  // onTap: getProfile,
-                                  child: Container(
-                                    color: transparentColor,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        loading
-                                            ? Text("loading".tr())
-                                            : Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  MyText(
-                                                    text: Constants.profile
-                                                        .name, //'Kenneth Gutierrez',
-                                                    color: blackColor,
-                                                    weight: FontWeight.bold,
-                                                    size: 20,
-                                                    fontFamily: "Raleway",
-                                                  ),
-                                                  GestureDetector(
-                                                    onTap: packagesList,
-                                                    // () {
-                                                    //   Navigator.of(context)
-                                                    //       .push(MaterialPageRoute(builder: (_) {
-                                                    //     return const BecomePartnerNew();
-                                                    //   }));
-                                                    // },
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        MyText(
-                                                          text: 'alreadyPartner'
-                                                              .tr(),
-                                                          size: 18,
-                                                          //fontFamily: 'Raleway',
-                                                          weight:
-                                                              FontWeight.w600,
-                                                          color: greyColor
-                                                              .withOpacity(1),
-                                                        ),
-                                                        const Icon(
-                                                          Icons
-                                                              .arrow_forward_ios,
-                                                          color: bluishColor,
-                                                          size: 16,
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  const SizedBox(height: 2),
-                                                  MyText(
-                                                    text:
-                                                        "${"renewBefore".tr()}${profile.bp.endDate.substring(0, 11)}${"toAvoidInterruption".tr()}", //'Kenneth Gutierrez',
-                                                    color: redColor,
-                                                    weight: FontWeight.bold,
-                                                    size: 12,
-                                                    fontFamily: "Raleway",
-                                                  ),
-                                                ],
-                                              ),
-                                        profileUrl != null
-                                            ? GestureDetector(
-                                                onTap: () => goToProfile(
-                                                    expired, profile.userRole),
-                                                child: CircleAvatar(
-                                                  radius: 30,
-                                                  backgroundImage: NetworkImage(
-                                                      "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
+                                Container(
+                                  color: transparentColor,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      loading
+                                          ? Text("loading".tr())
+                                          : Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                MyText(
+                                                  text: Constants.profile
+                                                      .name, //'Kenneth Gutierrez',
+                                                  color: blackColor,
+                                                  weight: FontWeight.bold,
+                                                  size: 20,
+                                                  fontFamily: "Raleway",
                                                 ),
-                                              )
-                                            : GestureDetector(
-                                                onTap: () => goToProfile(
-                                                    expired, profile.userRole),
-                                                child: CircleAvatar(
-                                                  radius: 30,
-                                                  backgroundImage:
-                                                      NetworkImage(profileUrl),
+                                                GestureDetector(
+                                                  onTap: packagesList,
+                                                  // () {
+                                                  //   Navigator.of(context)
+                                                  //       .push(MaterialPageRoute(builder: (_) {
+                                                  //     return const BecomePartnerNew();
+                                                  //   }));
+                                                  // },
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      MyText(
+                                                        text: 'alreadyPartner'
+                                                            .tr(),
+                                                        size: 18,
+                                                        //fontFamily: 'Raleway',
+                                                        weight: FontWeight.w600,
+                                                        color: greyColor
+                                                            .withOpacity(1),
+                                                      ),
+                                                      const Icon(
+                                                        Icons.arrow_forward_ios,
+                                                        color: bluishColor,
+                                                        size: 16,
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
+                                                const SizedBox(height: 2),
+                                                MyText(
+                                                  text:
+                                                      "${"renewBefore".tr()}${profile.bp.endDate.substring(0, 11)}${"toAvoidInterruption".tr()}", //'Kenneth Gutierrez',
+                                                  color: redColor,
+                                                  weight: FontWeight.bold,
+                                                  size: 12,
+                                                  fontFamily: "Raleway",
+                                                ),
+                                              ],
+                                            ),
+                                      profileUrl != null
+                                          ? GestureDetector(
+                                              onTap: () => goToProfile(
+                                                  expired, profile.userRole),
+                                              child: CircleAvatar(
+                                                radius: 30,
+                                                backgroundImage: NetworkImage(
+                                                    "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
                                               ),
-                                      ],
-                                    ),
+                                            )
+                                          : GestureDetector(
+                                              onTap: () => goToProfile(
+                                                  expired, profile.userRole),
+                                              child: CircleAvatar(
+                                                radius: 30,
+                                                backgroundImage:
+                                                    NetworkImage(profileUrl),
+                                              ),
+                                            ),
+                                    ],
                                   ),
                                 ),
                                 Padding(

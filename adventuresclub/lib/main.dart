@@ -1,4 +1,5 @@
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/provider/navigation_index_provider.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/splashScreen/splash_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -16,6 +17,9 @@ void main() async {
         providers: [
           ChangeNotifierProvider(
             create: (_) => ServicesProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => NavigationIndexProvider(),
           ),
         ],
         child: EasyLocalization(
