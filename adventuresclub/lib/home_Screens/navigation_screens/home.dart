@@ -42,9 +42,9 @@ class _HomeState extends State<Home> {
     if (SchedulerBinding.instance.schedulerPhase ==
         SchedulerPhase.persistentCallbacks) {
       SchedulerBinding.instance.addPostFrameCallback((_) {
-        // getBanners();
+        //   getBanners();
         getServicesList();
-        // getChatNotification();
+        getChatNotification();
       });
     }
   }
@@ -66,9 +66,9 @@ class _HomeState extends State<Home> {
   }
 
   void getBanners() async {
-    setState(() {
-      loading = true;
-    });
+    // setState(() {
+    //   loading = true;
+    // });
     try {
       var response = await http
           .post(Uri.parse("${Constants.baseUrl}/api/v1/banners"), body: {
@@ -101,9 +101,9 @@ class _HomeState extends State<Home> {
       bannersList.forEach((element) {
         banners.add(element.banner);
       });
-      setState(() {
-        loading = false;
-      });
+      // setState(() {
+      //   loading = false;
+      // });
       print(response.statusCode);
       print(response.body);
       print(response.headers);

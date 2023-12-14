@@ -406,9 +406,14 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   bool checkPlans() {
     bool result = false;
     pm.forEach((element) {
-      if (element.title.trim().isEmpty) {
+      if (element.title.trim().isEmpty || element.title.length < 3) {
+        Constants.showMessage(
+            context, "Schdule Title Cannot Be for less than 3 characters");
         result = false;
-      } else if (element.description.trim().isEmpty) {
+      } else if (element.description.trim().isEmpty ||
+          element.description.length < 50) {
+        Constants.showMessage(
+            context, "Schdule Title Cannot Be for less than 50 characters");
         result = false;
       } else if (element.adventureStartDate.day == 0) {
         result = false;
@@ -421,16 +426,16 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       } else {
         result = true;
       }
-      if (element.title.length < 3) {
-        Constants.showMessage(
-            context, "Schdule Title Cannot Be for less than 3 characters");
-        return;
-      }
-      if (element.description.length < 50) {
-        Constants.showMessage(
-            context, "Schdule Title Cannot Be for less than 50 characters");
-        return;
-      }
+      // if (element.title.length < 3) {
+      //   Constants.showMessage(
+      //       context, "Schdule Title Cannot Be for less than 3 characters");
+      //   return;
+      // }
+      // if () {
+      //   Constants.showMessage(
+      //       context, "Schdule Title Cannot Be for less than 50 characters");
+      //   return;
+      // }
     });
 
     return result;
@@ -440,23 +445,30 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     bool result = false;
     int i = onePlan.length;
     onePlan.forEach((element) {
-      if (element.title.trim().isEmpty) {
+      if (element.title.trim().isEmpty || element.title.length < 3) {
+        Constants.showMessage(
+            context, "Schdule Title Cannot Be for less than 3 characters");
         result = false;
-      } else if (element.description.trim().isEmpty) {
+      } else if (element.description.trim().isEmpty ||
+          element.description.length < 50) {
+        Constants.showMessage(
+            context, "Schdule Body Cannot Be for less than 50 characters");
         result = false;
       } else {
         result = true;
       }
-      if (element.title.length < 3) {
-        Constants.showMessage(
-            context, "Schdule Title Cannot Be for less than 3 characters");
-        return;
-      }
-      if (element.description.length < 50) {
-        Constants.showMessage(
-            context, "Schdule Title Cannot Be for less than 50 characters");
-        return;
-      }
+      // if (element.title.length < 3) {
+      //   Constants.showMessage(
+      //       context, "Schdule Title Cannot Be for less than 3 characters");
+      //   return;
+      // }
+      // if (element.description.length < 50) {
+      //   Constants.showMessage(
+      //       context, "Schdule Title Cannot Be for less than 50 characters");
+      //   return;
+      // } else {
+      //   result = true;
+      // }
     });
     return result;
   }
@@ -1340,7 +1352,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                                 child: ListTile(
                                                   contentPadding:
                                                       const EdgeInsets
-                                                              .symmetric(
+                                                          .symmetric(
                                                           vertical: 0,
                                                           horizontal: 10),
                                                   leading: Text(
@@ -1387,7 +1399,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                                 child: ListTile(
                                                   contentPadding:
                                                       const EdgeInsets
-                                                              .symmetric(
+                                                          .symmetric(
                                                           vertical: 0,
                                                           horizontal: 10),
                                                   leading: Text(

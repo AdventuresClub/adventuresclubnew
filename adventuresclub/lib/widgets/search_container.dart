@@ -55,14 +55,15 @@ class SearchContainerState extends State<SearchContainer> {
               Center(
                 child: SizedBox(
                   width: widget.countryName == true
-                      ? MediaQuery.of(context).size.width / 2.8
+                      ? MediaQuery.of(context).size.width / 2.4
                       : MediaQuery.of(context).size.width / 1.7,
                   child: TextField(
                     controller: widget.controller,
                     decoration: InputDecoration(
+                        // contentPadding: EdgeInsets.only(top: 2),
                         hintText: widget.hinttext.toString(),
                         border: InputBorder.none,
-                        hintStyle: const TextStyle(fontSize: 16)),
+                        hintStyle: const TextStyle(fontSize: 14)),
                   ),
                 ),
               ),

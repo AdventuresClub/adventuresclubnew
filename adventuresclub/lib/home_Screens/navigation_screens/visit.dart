@@ -309,7 +309,7 @@ class _VisitState extends State<Visit> {
               ],
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -331,7 +331,7 @@ class _VisitState extends State<Visit> {
             loading
                 ? MyText(text: "Loading....")
                 : Container(
-                    height: 350,
+                    height: 400,
                     //padding: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),

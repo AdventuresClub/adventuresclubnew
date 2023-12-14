@@ -190,24 +190,24 @@ class _VisitDetailsState extends State<VisitDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: transparentColor,
-        elevation: 1.5,
-        centerTitle: true,
-        leadingWidth: 100,
-        leading: GestureDetector(
-          onTap: () => Navigator.pop(context),
-          child: CircleAvatar(
-            radius: 12,
-            backgroundColor: whiteColor,
-            child: Image.asset(
-              'images/backArrow.png',
-              height: 20,
-            ),
-          ),
-        ),
-      ),
+      // extendBodyBehindAppBar: true,
+      // appBar: AppBar(
+      //   backgroundColor: transparentColor,
+      //   elevation: 1.5,
+      //   centerTitle: true,
+      //   leadingWidth: 100,
+      //   leading: GestureDetector(
+      //     onTap: () => Navigator.pop(context),
+      //     child: CircleAvatar(
+      //       radius: 12,
+      //       backgroundColor: whiteColor,
+      //       child: Image.asset(
+      //         'images/backArrow.png',
+      //         height: 20,
+      //       ),
+      //     ),
+      //   ),
+      // ),
       body: ListView(
         // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -220,6 +220,23 @@ class _VisitDetailsState extends State<VisitDetails> {
               ),
               fit: BoxFit.cover,
             )),
+            child: Stack(children: [
+              Positioned(
+                top: 20,
+                left: 20,
+                child: GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: CircleAvatar(
+                    radius: 24,
+                    backgroundColor: whiteColor,
+                    child: Image.asset(
+                      'images/backArrow.png',
+                      height: 20,
+                    ),
+                  ),
+                ),
+              ),
+            ]),
           ),
           // Image(
           //   image:
@@ -269,9 +286,9 @@ class _VisitDetailsState extends State<VisitDetails> {
                 //   text: 'Open - Closed : 10:30',
                 //   color: greyColor,
                 // ),
-                const SizedBox(
-                  height: 10,
-                ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
                 // Row(
                 //   children: [
                 //     const Image(
@@ -425,26 +442,26 @@ class _VisitDetailsState extends State<VisitDetails> {
                                     const SizedBox(
                                       height: 5,
                                     ),
-                                    Row(
-                                      children: [
-                                        const Image(
-                                          image: ExactAssetImage(
-                                            'images/like.png',
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        MyText(
-                                          text: reviewList[index]
-                                              .review[index]
-                                              .count,
-                                          color: blackTypeColor1,
-                                          weight: FontWeight.w500,
-                                          size: 12,
-                                        ),
-                                      ],
-                                    ),
+                                    // Row(
+                                    //   children: [
+                                    //     const Image(
+                                    //       image: ExactAssetImage(
+                                    //         'images/like.png',
+                                    //       ),
+                                    //     ),
+                                    //     const SizedBox(
+                                    //       width: 5,
+                                    //     ),
+                                    //     MyText(
+                                    //       text: reviewList[index]
+                                    //           .review[index]
+                                    //           .count,
+                                    //       color: blackTypeColor1,
+                                    //       weight: FontWeight.w500,
+                                    //       size: 12,
+                                    //     ),
+                                    //   ],
+                                    // ),
                                   ],
                                 ),
                               );
@@ -561,32 +578,32 @@ class _VisitDetailsState extends State<VisitDetails> {
         ],
       ),
       //),
-      bottomNavigationBar: GestureDetector(
-        onTap: () => selected(context),
-        child: Card(
-          elevation: 5,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MyText(
-                  text:
-                      "${Constants.getDistance(myLat, myLng, locationLat, locationLng).toStringAsFixed(2)} mi",
-                  weight: FontWeight.bold,
-                  color: blackTypeColor1,
-                  size: 18,
-                ),
-                const CircleAvatar(
-                    backgroundColor: whiteColor,
-                    child: Image(
-                      image: ExactAssetImage('images/icon-location-on.png'),
-                    ))
-              ],
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: GestureDetector(
+          onTap: () => selected(context),
+          child: Container(
+            decoration: BoxDecoration(
+                color: greenishColor, borderRadius: BorderRadius.circular(12)),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  MyText(
+                    text:
+                        "${Constants.getDistance(myLat, myLng, locationLat, locationLng).toStringAsFixed(2)} mi",
+                    weight: FontWeight.bold,
+                    color: whiteColor,
+                    size: 18,
+                  ),
+                  const CircleAvatar(
+                      backgroundColor: whiteColor,
+                      child: Image(
+                        image: ExactAssetImage('images/icon-location-on.png'),
+                      ))
+                ],
+              ),
             ),
           ),
         ),

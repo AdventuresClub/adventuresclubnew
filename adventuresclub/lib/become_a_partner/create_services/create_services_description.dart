@@ -69,12 +69,12 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
   List<String> selectedActivites = [];
   List<int> selectedActivitesid = [];
   bool showRegion = false;
-  int selectedRegion = 0;
-  int selectedCategory = 0;
-  int selectedServiceSector = 0;
-  int selectedServiceType = 0;
-  int selectedDuration = 0;
-  int selectedLevel = 0;
+  int selectedRegion = 1;
+  int selectedCategory = 1;
+  int selectedServiceSector = 1;
+  int selectedServiceType = 1;
+  int selectedDuration = 1;
+  int selectedLevel = 1;
   int? currentIndex;
   var getCountry = 'Oman';
   List<WnHModel> weightList = [];
@@ -404,11 +404,9 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                   ],
                 ),
                 ExpansionTile(
-                  title: Text(
-                    regionList[selectedRegion].showCountry == true
-                        ? regionList[selectedRegion].region
-                        : 'Select Region',
-                  ),
+                  title: Text(regionList[selectedRegion].showCountry == false
+                      ? 'Select Region'
+                      : regionList[selectedRegion].region),
                   children: [
                     ListView.builder(
                       shrinkWrap: true,
@@ -478,9 +476,9 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                               categoryFilter[selectedServiceSector]
                                   .showCategoryFilter = value;
                               if (value == true) {
-                                parseData("category", categoryFilter[index].id);
+                                parseData("sector", categoryFilter[index].id);
                               } else {
-                                parseData("category", 0);
+                                parseData("sector", 0);
                               }
 
                               // ConstantsCreateNewServices.selectedSectorId =
@@ -531,9 +529,9 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                               filterSectors[selectedCategory]
                                   .showfilterSectors = value;
                               if (value == true) {
-                                parseData("sector", filterSectors[index].id);
+                                parseData("category", filterSectors[index].id);
                               } else {
-                                parseData("sector", 0);
+                                parseData("category", 0);
                               }
 
                               // ConstantsCreateNewServices.selectedCategoryId =

@@ -318,29 +318,33 @@ class _CostState extends State<Cost> {
               //   ),
               // ),
 
-              // Expanded(
-              //   child: Container(
-              //     height: 50,
-              //     //width: MediaQuery.of(context).size.width / 2.4,
-              //     padding:
-              //         const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              //     decoration: BoxDecoration(
-              //       color: lightGreyColor,
-              //       border: Border.all(
-              //           color: greyColor.withOpacity(0.5), width: 1.5),
-              //       borderRadius: BorderRadius.circular(8),
-              //     ),
-              //     child: Center(
-              //       child: MyText(
-              //         text: "omr", //getCountry.toString(),
-              //         color: blackTypeColor.withOpacity(0.5),
-              //         size: 14,
-              //         weight: FontWeight.w500,
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              //const SizedBox(height: 10),
+              Column(
+                children: [
+                  Container(
+                    height: 55,
+                    width: 120,
+                    //width: MediaQuery.of(context).size.width / 2.4,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 12),
+                    decoration: BoxDecoration(
+                      color: lightGreyColor,
+                      border: Border.all(
+                          color: greyColor.withOpacity(0.5), width: 1.5),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Center(
+                      child: MyText(
+                        text: "omr", //getCountry.toString(),
+                        color: blackTypeColor.withOpacity(0.5),
+                        size: 14,
+                        weight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 22),
+                ],
+              ),
+
               //DdButton(5.5)
             ],
           ),

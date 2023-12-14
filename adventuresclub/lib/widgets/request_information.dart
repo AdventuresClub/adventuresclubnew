@@ -46,7 +46,7 @@ class _RequestInformationState extends State<RequestInformation> {
   }
 
   String calculateAge(String d) {
-    if (d.isEmpty) {
+    if (d.isEmpty || d == "null") {
       d = widget.gRM.bookedOn;
     }
     DateTime birthdate = DateTime.parse(d);

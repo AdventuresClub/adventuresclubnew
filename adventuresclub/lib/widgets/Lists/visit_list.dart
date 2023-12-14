@@ -63,7 +63,7 @@ class _VisitListState extends State<VisitList> {
                     children: [
                       Container(
                         width: MediaQuery.of(context).size.width / 2.1,
-                        height: 80,
+                        height: 100,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8),
                             image: DecorationImage(

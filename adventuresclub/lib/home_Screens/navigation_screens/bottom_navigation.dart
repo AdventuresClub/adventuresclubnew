@@ -61,7 +61,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
     // index = context.read<ServicesProvider>().homeIndex;
     getNotificationBadge();
-    // Constants.getFilter();
+    Constants.getFilter();
     getVersion();
   }
 
