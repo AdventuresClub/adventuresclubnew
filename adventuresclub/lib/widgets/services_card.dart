@@ -292,6 +292,7 @@ class _ServicesCardState extends State<ServicesCard> {
         : Column(
             children: [
               Card(
+                color: whiteColor,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8)),
                 elevation: 2,

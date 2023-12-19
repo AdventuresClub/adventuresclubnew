@@ -1,7 +1,6 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/new_signup/new_register.dart';
 import 'package:adventuresclub/provider/navigation_index_provider.dart';
-import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/sign_up/sign_in.dart';
 import 'package:adventuresclub/widgets/Lists/request_list/req_completed_list.dart';
 import 'package:adventuresclub/widgets/Lists/request_list/requests_lists.dart';

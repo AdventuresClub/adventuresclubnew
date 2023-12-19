@@ -181,7 +181,7 @@ class DescriptionDetailsWidget extends StatelessWidget {
                     ),
                     children: <TextSpan>[
                       TextSpan(
-                          text: text6[1].tr(),
+                          text: text6[0].tr(),
                           style: const TextStyle(
                               fontSize: 13, color: blackColor, height: 1.5)),
                     ],
@@ -228,7 +228,7 @@ class DescriptionDetailsWidget extends StatelessWidget {
                     ),
                     children: <TextSpan>[
                       TextSpan(
-                          text: text6[2].tr(),
+                          text: text6[1].tr(),
                           style: const TextStyle(
                               fontSize: 13, color: blackColor, height: 1.5)),
                     ],

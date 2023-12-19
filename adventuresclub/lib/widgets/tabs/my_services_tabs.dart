@@ -78,10 +78,10 @@ class _MyServicesTabState extends State<MyServicesTab> {
         text4.insert(3, widget.sm.aSeats.toString());
         text4.insert(4, widget.sm.duration.toString());
         text4.insert(5, aPlan);
-        text6.insert(0, widget.sm.reviewdBy);
-        text6.insert(1, widget.sm.serviceSector);
-        text6.insert(2, widget.sm.serviceType);
-        text6.insert(3, widget.sm.serviceLevel);
+        //  text6.insert(0, widget.sm.reviewdBy);
+        text6.insert(0, widget.sm.serviceSector);
+        text6.insert(1, widget.sm.serviceType);
+        text6.insert(2, widget.sm.serviceLevel);
         // text6.insert(4, widget.gm.availability[0].ed);
         // text6.insert(4, widget.gm.availability[0].ed);
       });

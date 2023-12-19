@@ -398,7 +398,7 @@ class _RequestsListState extends State<RequestsList> {
         result['service_type'].toString() ?? "",
         result['service_level'].toString() ?? "",
         result['duration'].toString() ?? "",
-        int.tryParse(result['availability_seats'].toString()) ?? 0,
+        int.tryParse(result['available_seats'].toString()) ?? 0,
         sDate,
         eDate,
         //int.tryParse(services['start_date'].toString()) ?? "",

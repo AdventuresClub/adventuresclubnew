@@ -131,7 +131,6 @@ class _HomeState extends State<Home> {
           return false;
         },
         child: Scaffold(
-          backgroundColor: greyProfileColor,
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 0.0),

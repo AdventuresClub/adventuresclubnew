@@ -787,7 +787,6 @@ class _AccountState extends State<Account> {
         return false;
       },
       child: Scaffold(
-        backgroundColor: Colors.grey.withOpacity(0.1),
         body: Constants.userId == 0
             ? Container(
                 height: MediaQuery.of(context).size.height,
@@ -1039,7 +1038,7 @@ class _AccountState extends State<Account> {
                                                       );
                                                     }
                                                     if (userText[i] ==
-                                                        'myPoints'.tr()) {
+                                                        'myPoints') {
                                                       Navigator.of(context)
                                                           .push(
                                                         MaterialPageRoute(

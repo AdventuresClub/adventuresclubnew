@@ -299,7 +299,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
         result['service_type'].toString() ?? "",
         result['service_level'].toString() ?? "",
         result['duration'] ?? "",
-        int.tryParse(result['availability_seats'].toString()) ?? 0,
+        int.tryParse(result['available_seats'].toString()) ?? 0,
         sDate,
         eDate,
         //int.tryParse(services['start_date'].toString()) ?? "",
