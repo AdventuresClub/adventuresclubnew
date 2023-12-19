@@ -1,3 +1,4 @@
+import 'package:adventuresclub/app_theme.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/provider/navigation_index_provider.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
@@ -43,13 +44,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    bool isDark = false;
     return MaterialApp(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       title: 'Adventures Club',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Raleway'),
+      theme: AppTheme.getCurrentTheme(isDark),
       home: FutureBuilder(
         future: getApp(),
         builder: (context, asppsnapshot) {
