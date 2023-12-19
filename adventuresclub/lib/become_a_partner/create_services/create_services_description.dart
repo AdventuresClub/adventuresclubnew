@@ -445,63 +445,14 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                 //const SizedBox(height: 20),
                 ExpansionTile(
                   title: Text(
-                    categoryFilter[selectedServiceSector].showCategoryFilter ==
+                    // categoryFilter[selectedServiceSector].showCategoryFilter ==
+                    //         true
+                    //     ? categoryFilter[selectedServiceSector].category
+                    //     : 'Service Sector',
+                    filterSectors[selectedServiceSector].showfilterSectors ==
                             true
-                        ? categoryFilter[selectedServiceSector].category
+                        ? filterSectors[selectedServiceSector].sector
                         : 'Service Sector',
-                  ),
-                  children: [
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: const ClampingScrollPhysics(),
-                      itemCount: categoryFilter.length,
-                      itemBuilder: (context, index) {
-                        return CheckboxListTile(
-                          secondary: Image.network(
-                            "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${categoryFilter[index].image}",
-                            height: 36,
-                            width: 26,
-                          ),
-                          dense: true,
-                          visualDensity: VisualDensity.compact,
-                          value: selectedServiceSector == index
-                              ? categoryFilter[index].showCategoryFilter
-                              : false,
-                          checkboxShape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12))),
-                          onChanged: (value) {
-                            setState(() {
-                              selectedServiceSector = index;
-                              categoryFilter[selectedServiceSector]
-                                  .showCategoryFilter = value;
-                              if (value == true) {
-                                parseData("sector", categoryFilter[index].id);
-                              } else {
-                                parseData("sector", 0);
-                              }
-
-                              // ConstantsCreateNewServices.selectedSectorId =
-                              //     categoryFilter[index].id;
-                            });
-                          },
-                          title: Text(categoryFilter[index].category),
-                        );
-                      },
-                    )
-                  ],
-                ),
-                // Expanded(
-                //   child: ServiceCategoryDropDown(categoryFilter),
-                // ),
-                const SizedBox(
-                  width: 5,
-                ),
-                ExpansionTile(
-                  title: Text(
-                    filterSectors[selectedCategory].showfilterSectors == true
-                        ? filterSectors[selectedCategory].sector
-                        : 'Service Category',
                   ),
                   children: [
                     ListView.builder(
@@ -520,18 +471,18 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                           checkboxShape: const RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(12))),
-                          value: selectedCategory == index
+                          value: selectedServiceSector == index
                               ? filterSectors[index].showfilterSectors
                               : false,
                           onChanged: (value) {
                             setState(() {
-                              selectedCategory = index;
-                              filterSectors[selectedCategory]
+                              selectedServiceSector = index;
+                              filterSectors[selectedServiceSector]
                                   .showfilterSectors = value;
                               if (value == true) {
-                                parseData("category", filterSectors[index].id);
+                                parseData("sector", filterSectors[index].id);
                               } else {
-                                parseData("category", 0);
+                                parseData("sector", 0);
                               }
 
                               // ConstantsCreateNewServices.selectedCategoryId =
@@ -544,6 +495,62 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                     )
                   ],
                 ),
+                ExpansionTile(
+                  // categoryFilter[selectedServiceSector].showCategoryFilter ==
+                  //         true
+                  //     ? categoryFilter[selectedServiceSector].category
+                  //     : 'Service Sector',
+                  title: Text(
+                    categoryFilter[selectedCategory].showCategoryFilter == true
+                        ? categoryFilter[selectedCategory].category
+                        : 'Service Category',
+                  ),
+                  children: [
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      itemCount: categoryFilter.length,
+                      itemBuilder: (context, index) {
+                        return CheckboxListTile(
+                          secondary: Image.network(
+                            "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${categoryFilter[index].image}",
+                            height: 36,
+                            width: 26,
+                          ),
+                          dense: true,
+                          visualDensity: VisualDensity.compact,
+                          value: selectedCategory == index
+                              ? categoryFilter[index].showCategoryFilter
+                              : false,
+                          checkboxShape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12))),
+                          onChanged: (value) {
+                            setState(() {
+                              selectedCategory = index;
+                              // selectedServiceSector = index;
+                              categoryFilter[selectedCategory]
+                                  .showCategoryFilter = value;
+                              if (value == true) {
+                                parseData("category", categoryFilter[index].id);
+                              } else {
+                                parseData("category", 0);
+                              }
+
+                              // ConstantsCreateNewServices.selectedSectorId =
+                              //     categoryFilter[index].id;
+                            });
+                          },
+                          title: Text(categoryFilter[index].category),
+                        );
+                      },
+                    )
+                  ],
+                ),
+                // Expanded(
+                //   child: ServiceCategoryDropDown(categoryFilter),
+                // ),
+
                 //       const SizedBox(height: 20),
                 ExpansionTile(
                   title: Text(

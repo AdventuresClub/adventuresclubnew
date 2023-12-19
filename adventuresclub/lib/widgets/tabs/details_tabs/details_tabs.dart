@@ -17,10 +17,6 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../../../new_signup/new_register.dart';
-import '../../../sign_up/sign_in.dart';
-import '../../buttons/button.dart';
-
 class DetailsTab extends StatefulWidget {
   final ServicesModel gm;
   final bool? show;
@@ -113,6 +109,13 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
       });
     }
   }
+
+  List<String> text5 = [
+    'Service Sector',
+    'Service Type',
+    'Level',
+    // 'End Date :',
+  ];
 
   void _handleTabSelection() {
     setState(() {});
@@ -237,12 +240,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
   List<String> text4 = [
     //'Oman', 'Salalah', 'Sea', '70', '36 hours', '25 Jul 2020'
   ];
-  List<String> text5 = [
-    'Service Sector',
-    'Service Type',
-    'Level',
-    // 'End Date :',
-  ];
+
   List<String> text6 = [];
   List<String> aimedFor = ['Ladies,', 'Gents'];
 

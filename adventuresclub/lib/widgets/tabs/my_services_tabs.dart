@@ -88,6 +88,14 @@ class _MyServicesTabState extends State<MyServicesTab> {
     }
   }
 
+  List<String> text5 = [
+    '4.8 (1048 Reviews)',
+    'Service Sector',
+    'Service Type',
+    'Level',
+    // 'End Date :',
+  ];
+
   List<String> text1 = [
     'Country',
     'Region',
@@ -108,13 +116,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
   List<String> text4 = [
     //'Oman', 'Salalah', 'Sea', '70', '36 hours', '25 Jul 2020'
   ];
-  List<String> text5 = [
-    '4.8 (1048 Reviews)',
-    'Service Sector',
-    'Service Type',
-    'Level',
-    // 'End Date :',
-  ];
+
   List<String> text6 = [];
 
   List schedule = [
