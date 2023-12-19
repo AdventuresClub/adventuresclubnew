@@ -171,7 +171,6 @@ class DescriptionDetailsWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                //Spacer(),
                 RichText(
                   text: TextSpan(
                     text: text5[0].tr(),
@@ -182,7 +181,7 @@ class DescriptionDetailsWidget extends StatelessWidget {
                     ),
                     children: <TextSpan>[
                       TextSpan(
-                          text: text6[0].tr(),
+                          text: text6[1].tr(),
                           style: const TextStyle(
                               fontSize: 13, color: blackColor, height: 1.5)),
                     ],
@@ -229,7 +228,7 @@ class DescriptionDetailsWidget extends StatelessWidget {
                     ),
                     children: <TextSpan>[
                       TextSpan(
-                          text: text6[1].tr(),
+                          text: text6[2].tr(),
                           style: const TextStyle(
                               fontSize: 13, color: blackColor, height: 1.5)),
                     ],
@@ -277,7 +276,7 @@ class DescriptionDetailsWidget extends StatelessWidget {
                 if (gm.sPlan == 2)
                   RichText(
                     text: TextSpan(
-                      text: text5[3].tr(),
+                      text: text5[2].tr(),
                       style: const TextStyle(
                         color: greyColor2,
                         fontSize: 14,

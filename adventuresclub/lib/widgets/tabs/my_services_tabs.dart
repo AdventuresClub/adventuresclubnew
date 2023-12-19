@@ -50,7 +50,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
     if (widget.sm.sPlan == 2) {
       setState(() {
         text1.insert(5, "Start Date");
-        text5.insert(4, "End Date");
+        text5.insert(3, "End Date");
         text4.insert(0, widget.sm.country);
         text4.insert(1, widget.sm.region);
         text4.insert(2, widget.sm.serviceCategory);
@@ -89,7 +89,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
   }
 
   List<String> text5 = [
-    '4.8 (1048 Reviews)',
+    // '4.8 (1048 Reviews)',
     'Service Sector',
     'Service Type',
     'Level',

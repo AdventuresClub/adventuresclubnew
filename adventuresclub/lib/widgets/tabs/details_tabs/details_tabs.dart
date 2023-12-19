@@ -418,12 +418,12 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
             child: Column(
               children: <Widget>[
                 SizedBox(
-                  width: MediaQuery.of(context).size.width,
+                  //width: MediaQuery.of(context).size.width,
                   //color: greyTextColor,
                   child: TabBar(
-                    padding: const EdgeInsets.all(0),
+                    //padding: const EdgeInsets.only(right: 12),
                     labelPadding:
-                        const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                        const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                     labelColor: blackColor,
                     labelStyle: const TextStyle(
                       fontSize: 14,
@@ -431,7 +431,8 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                       fontFamily: 'Raleway',
                     ),
                     indicatorColor: greenishColor,
-                    isScrollable: true,
+                    //indicatorPadding: EdgeInsets.all(12),
+                    isScrollable: false,
                     unselectedLabelStyle: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -440,21 +441,21 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                     unselectedLabelColor: greyColor,
                     tabs: [
                       SizedBox(
-                        width: 90.0,
+                        //  width: 80.0,
                         child: Tab(
                           text: 'description'.tr(),
                         ),
                       ),
                       SizedBox(
-                        width: 70.0,
+                        //width: 70.0,
                         child: Tab(text: 'program'.tr()),
                       ),
                       SizedBox(
-                        width: 150.0,
+                        //width: 150.0,
                         child: Tab(text: 'gatheringLocation'.tr()),
                       ),
                       SizedBox(
-                        width: 60.0,
+                        // width: 60.0,
                         child: Tab(text: 'chat'.tr()),
                       ),
                     ],
