@@ -146,6 +146,15 @@ class _NewRegisterState extends State<NewRegister> {
   void register() async {
     SharedPreferences prefs = await Constants.getPrefs();
     try {
+      if (!Constants.regexForEmail.hasMatch(emailController.text)) {
+        message("Email Format is incorrect");
+        return;
+      }
+      if (Constants.regexForEmail.hasMatch(userNameController.text)) {
+        message("User Name Cannot Be An Email");
+        return;
+      }
+
       if (!termsValue) {
         message("Please Agree with terms & Conditions");
         return;
