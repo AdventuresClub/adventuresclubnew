@@ -5,8 +5,10 @@ class AppTheme {
   static String fontName = 'Raleway';
   static ThemeData getCurrentTheme(bool isDark) {
     return ThemeData(
-        useMaterial3: true,
-        fontFamily: fontName,
-        scaffoldBackgroundColor: greyProfileColor);
+      useMaterial3: true,
+      fontFamily: fontName,
+      scaffoldBackgroundColor: greyProfileColor,
+      cardTheme: const CardTheme(surfaceTintColor: Colors.transparent),
+    );
   }
 }
