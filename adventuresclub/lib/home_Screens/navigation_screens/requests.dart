@@ -6,9 +6,9 @@ import 'package:adventuresclub/widgets/Lists/request_list/req_completed_list.dar
 import 'package:adventuresclub/widgets/Lists/request_list/requests_lists.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:adventuresclub/widgets/null_user_container.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class Requests extends StatefulWidget {
   const Requests({super.key});
@@ -21,19 +21,6 @@ class _RequestsState extends State<Requests> {
   abc() {}
   bool value = true;
   bool value1 = false;
-
-  void navLogin() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return const SignIn();
-    }));
-  }
-
-  void navRegister() {
-    Provider.of<NavigationIndexProvider>(context, listen: false).homeIndex = 0;
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return const NewRegister();
-    }));
-  }
 
   void loginPrompt(BuildContext context) async {
     await showModalBottomSheet(
@@ -105,7 +92,7 @@ class _RequestsState extends State<Requests> {
                               color: transparentColor,
                               height: 40,
                               child: GestureDetector(
-                                onTap: navRegister,
+                                onTap: () {},
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: Text.rich(
@@ -135,7 +122,7 @@ class _RequestsState extends State<Requests> {
                                   greenishColor,
                                   whiteColor,
                                   20,
-                                  navRegister,
+                                  () {},
                                   Icons.add,
                                   whiteColor,
                                   false,
@@ -179,117 +166,7 @@ class _RequestsState extends State<Requests> {
         ),
       ),
       body: Constants.userId == 0
-          ? Container(
-              height: MediaQuery.of(context).size.height,
-              color: blackColor,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            GestureDetector(
-                              onTap: cancel,
-                              child: const Icon(
-                                Icons.cancel_sharp,
-                                color: whiteColor,
-                              ),
-                            )
-                          ],
-                        ),
-                        ListTile(
-                          tileColor: Colors.transparent,
-                          //onTap: showCamera,
-                          leading: const Icon(
-                            Icons.notification_important,
-                            color: whiteColor,
-                          ),
-                          title: MyText(
-                            text: "You Are Not logged In",
-                            weight: FontWeight.w600,
-                          ),
-                          trailing: const Icon(Icons.chevron_right_rounded),
-                        ),
-                        Button(
-                            "login".tr(),
-                            //'Register',
-                            greenishColor,
-                            greenishColor,
-                            whiteColor,
-                            20,
-                            () {},
-                            Icons.add,
-                            whiteColor,
-                            false,
-                            2,
-                            'Raleway',
-                            FontWeight.w600,
-                            18),
-                        const Divider(),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              color: transparentColor,
-                              height: 40,
-                              child: GestureDetector(
-                                onTap: navRegister,
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text.rich(
-                                    TextSpan(
-                                      children: [
-                                        TextSpan(
-                                            text: "dontHaveAnAccount?".tr(),
-                                            style: const TextStyle(
-                                                color: whiteColor,
-                                                fontSize: 16)),
-                                        // TextSpan(
-                                        //   text: "register".tr(),
-                                        //   style: const TextStyle(
-                                        //       fontWeight: FontWeight.bold, color: whiteColor),
-                                        // ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 40),
-                              child: Button(
-                                  "register".tr(),
-                                  greenishColor,
-                                  greenishColor,
-                                  whiteColor,
-                                  20,
-                                  navRegister,
-                                  Icons.add,
-                                  whiteColor,
-                                  false,
-                                  2,
-                                  'Raleway',
-                                  FontWeight.w600,
-                                  20),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            )
+          ? const NullUserContainer()
           : SingleChildScrollView(
               child: Column(
                 children: [

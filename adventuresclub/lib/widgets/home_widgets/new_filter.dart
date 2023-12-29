@@ -46,14 +46,11 @@ class _NewFilterPageState extends State<NewFilterPage> {
   final PageController _pageViewController = PageController(initialPage: 0);
   TextEditingController searchController = TextEditingController();
 
-  int _activePage = 0;
   int index = 0;
   int currentPage = 0;
-  late Timer _timer;
   bool value = false;
   Map mapFilter = {};
   dynamic ccCode;
-  int _currentSliderValue = 1;
   Map mapAimedFilter = {};
   List<SectorFilterModel> filterSectors = [];
   List<CategoryFilterModel> categoryFilter = [];
@@ -108,8 +105,8 @@ class _NewFilterPageState extends State<NewFilterPage> {
   @override
   void dispose() {
     super.dispose();
-    _pageViewController.dispose(); // dispose the PageController
-    _timer.cancel();
+    // _pageViewController.dispose(); // dispose the PageController
+    // _timer.cancel();
   }
 
   void goToMessages() {
