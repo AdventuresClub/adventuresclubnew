@@ -114,7 +114,9 @@ class _NullUserContainerState extends State<NullUserContainer> {
                                 TextSpan(
                                     text: "dontHaveAnAccount?".tr(),
                                     style: const TextStyle(
-                                        color: bluishColor, fontSize: 16)),
+                                        color: bluishColor,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600)),
                                 // TextSpan(
                                 //   text: "register".tr(),
                                 //   style: const TextStyle(
