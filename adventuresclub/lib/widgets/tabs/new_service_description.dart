@@ -444,11 +444,86 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                 const SizedBox(
                   height: 10,
                 ),
+                MyText(
+                  text: "prerequisites",
+                  color: blackColor,
+                  size: 18,
+                  weight: FontWeight.bold,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                MyText(
+                  text: widget.gm.preRequisites,
+                  color: blackColor,
+                  weight: FontWeight.w500,
+                  size: 14,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Divider(
+                  thickness: 1,
+                  color: blackColor.withOpacity(0.2),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                MyText(
+                  text: "minimumRequirements",
+                  color: blackColor,
+                  size: 18,
+                  weight: FontWeight.bold,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                MyText(
+                  text: widget.gm.mRequirements,
+                  color: blackColor,
+                  weight: FontWeight.w500,
+                  size: 14,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Divider(
+                  thickness: 1,
+                  color: blackColor.withOpacity(0.2),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                MyText(
+                  text: "termsAndConditions",
+                  color: blackColor,
+                  size: 18,
+                  weight: FontWeight.bold,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                MyText(
+                  text: widget.gm.tnc,
+                  color: blackColor,
+                  weight: FontWeight.w500,
+                  size: 14,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Divider(
+                  thickness: 1,
+                  color: blackColor.withOpacity(0.2),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
               ],
             ),
           ),
 
-          // DescriptionComponents('prerequisites', widget.gm.preRequisites),
+          //   DescriptionComponents('prerequisites', widget.gm.preRequisites),
           // DescriptionComponents('minimumRequirements', widget.gm.mRequirements),
           // DescriptionComponents('termsAndConditions', widget.gm.tnc),
         ],
