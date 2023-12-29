@@ -2,6 +2,7 @@
 
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/details.dart';
+import 'package:adventuresclub/home_Screens/new_details.dart';
 import 'package:adventuresclub/models/home_services/home_services_model.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
@@ -38,7 +39,7 @@ class ServiceListState extends State<ServiceList> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return Details(gm: gm);
+          return NewDetails(gm: gm);
         },
       ),
     );
@@ -102,17 +103,28 @@ class ServiceListState extends State<ServiceList> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    MyText(
-                      text: gAllServices[i].category.tr(),
-                      color: blackColor.withOpacity(0.6),
-                      weight: FontWeight.bold,
-                      size: 18,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 2),
+                      child: MyText(
+                        text: gAllServices[i].category.tr(),
+                        color: blackColor.withOpacity(0.6),
+                        weight: FontWeight.bold,
+                        size: 20,
+                      ),
                     ),
                     const SizedBox(
                       height: 5,
                     ),
+                    // SizedBox(
+                    //   height: 230,
+                    //   child: getList(
+                    //     gAllServices[i].category,
+                    //     gAllServices,
+                    //   ),
+                    // ),
                     SizedBox(
-                      height: 230,
+                      height: 340,
                       child: getList(
                         gAllServices[i].category,
                         gAllServices,

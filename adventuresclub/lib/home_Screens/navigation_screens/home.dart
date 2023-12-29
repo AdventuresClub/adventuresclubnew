@@ -9,6 +9,7 @@ import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/Lists/home_lists/service_List.dart';
 import 'package:adventuresclub/widgets/Lists/home_lists/top_list.dart';
 import 'package:adventuresclub/widgets/home_widgets/filter.dart';
+import 'package:adventuresclub/widgets/home_widgets/new_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:http/http.dart' as http;
@@ -130,25 +131,27 @@ class _HomeState extends State<Home> {
         onWillPop: () async {
           return false;
         },
-        child: Scaffold(
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 0.0),
-              child: Column(
-                children: [
-                  FilterPage(banners),
-                  const SizedBox(
-                    height: 35,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const SizedBox(
-                    height: 130,
-                    child: TopList(),
-                  ),
-                  const ServiceList()
-                ],
+        child: const SafeArea(
+          child: Scaffold(
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 8),
+                child: Column(
+                  children: [
+                    NewFilterPage(),
+                    // SizedBox(
+                    //   height: 35,
+                    // ),
+                    // SizedBox(
+                    //   height: 15,
+                    // ),
+                    // SizedBox(
+                    //   height: 130,
+                    //   child: TopList(),
+                    // ),
+                    ServiceList()
+                  ],
+                ),
               ),
             ),
           ),

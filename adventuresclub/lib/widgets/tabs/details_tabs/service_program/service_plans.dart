@@ -34,12 +34,22 @@ class _ServicesPlansState extends State<ServicesPlans> {
     //print(widget.programmes.length);
     return widget.sPlan == 1
         ? SingleChildScrollView(
-            child: Column(
-              children: [
-                for (int index = 0; index < widget.programmes.length; index++)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 0),
-                    child: Column(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Column(
+                children: [
+                  MyText(
+                    text: "Activity Program",
+                    color: blackColor,
+                    size: 18,
+                    weight: FontWeight.bold,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  for (int index = 0; index < widget.programmes.length; index++)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ListTile(
                           contentPadding: const EdgeInsets.all(4),
@@ -95,8 +105,8 @@ class _ServicesPlansState extends State<ServicesPlans> {
                         )
                       ],
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
           )
         : SingleChildScrollView(
@@ -104,9 +114,19 @@ class _ServicesPlansState extends State<ServicesPlans> {
               children: [
                 for (int index = 0; index < widget.programmes.length; index++)
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 2),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        MyText(
+                          text: "Activity Program",
+                          color: blackColor,
+                          size: 18,
+                          weight: FontWeight.bold,
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: 4.0, horizontal: 6),

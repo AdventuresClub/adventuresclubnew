@@ -65,9 +65,9 @@ class _AccountState extends State<Account> {
     'images/logout.png',
   ];
   List<String> tile1Text = [
-    "myPoints",
+    // "myPoints",
     "healthCondition",
-    "notification",
+    // "notification",
     "changeLanguage",
     "addCountry",
     "aboutUs",
@@ -1038,7 +1038,7 @@ class _AccountState extends State<Account> {
                                                       );
                                                     }
                                                     if (userText[i] ==
-                                                        'myPoints') {
+                                                        'My Points') {
                                                       Navigator.of(context)
                                                           .push(
                                                         MaterialPageRoute(
@@ -2415,25 +2415,25 @@ class _AccountState extends State<Account> {
                           ),
                         ),
                       //pickCountry(context, 'countryLocation'.tr()),
-                      GestureDetector(
-                        //onTap: logout,
-                        child: Center(
-                          child: Container(
-                            height: 40,
-                            width: 140,
-                            decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 20, 69, 22),
-                                borderRadius: BorderRadius.circular(12)),
-                            child: Center(
-                              child: MyText(
-                                text: "appVersion".tr(),
-                                color: whiteColor,
-                                weight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      // GestureDetector(
+                      //   //onTap: logout,
+                      //   child: Center(
+                      //     child: Container(
+                      //       height: 40,
+                      //       width: 140,
+                      //       decoration: BoxDecoration(
+                      //           color: const Color.fromARGB(255, 20, 69, 22),
+                      //           borderRadius: BorderRadius.circular(12)),
+                      //       child: Center(
+                      //         child: MyText(
+                      //           text: "appVersion".tr(),
+                      //           color: whiteColor,
+                      //           weight: FontWeight.w600,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       const SizedBox(height: 15),
                     ],
                   ),

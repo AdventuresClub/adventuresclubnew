@@ -118,14 +118,14 @@ class _TopListState extends State<TopList> {
             ),
           )
         : ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
             shrinkWrap: true,
-            physics: const ClampingScrollPhysics(),
+            //physics: const ClampingScrollPhysics(),
             itemCount: pCM.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -133,7 +133,7 @@ class _TopListState extends State<TopList> {
                       onTap: () => categoryType(pCM[index].category),
                       child: CircleAvatar(
                           backgroundColor: whiteColor,
-                          radius: 28,
+                          radius: 24,
                           child: pCM[index].category == "Category"
                               ? GestureDetector(
                                   //  onTap: () => goToAdCategory(pCM),
