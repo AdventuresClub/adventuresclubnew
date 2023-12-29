@@ -129,7 +129,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     DateTime dt = DateTime(currentDate.year, currentDate.month, currentDate.day,
         time.hour, time.minute);
     formattedDate = 'startDate';
-    endDate = "endDate";
+    endDate = "End Date";
     getData();
     // addProgramData();
   }
@@ -416,12 +416,22 @@ class _CreateNewServicesState extends State<CreateNewServices> {
             context, "Schdule Title Cannot Be for less than 50 characters");
         result = false;
       } else if (element.adventureStartDate.day == 0) {
+        Constants.showMessage(context, "Please Select Start Time");
         result = false;
       } else if (element.adventureEndDate.day == 0) {
+        Constants.showMessage(context, "Please Select End Time");
         result = false;
-      } else if (element.startDate.day == 0) {
+      }
+      // else if (element.startTime.inHours == 0) {
+      //   result = false;
+      // } else if (element.endDate.day == 0) {
+      //   result = false;
+      // }
+      else if (element.startTime.inHours == 0) {
+        Constants.showMessage(context, "Please Select Start Time");
         result = false;
-      } else if (element.endDate.day == 0) {
+      } else if (element.endTime.inHours == 0) {
+        Constants.showMessage(context, "Please Select End Time");
         result = false;
       } else {
         result = true;
@@ -543,6 +553,14 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         message("Please select from the service plan");
         return;
       }
+      if (formattedDate == "startDate") {
+        message("Please select start Date");
+        return;
+      }
+      if (endDate == "End Date") {
+        message("Please select End Date");
+        return;
+      }
       //if (ConstantsCreateNewServices.selectedActivitesId.isEmpty)
       if (activitiesId.isEmpty) {
         message("Please Activities Included");
@@ -578,7 +596,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       } else {
         bool check = checkPlans();
         if (!check) {
-          message("Please Fill Empty Plan Infomation");
+          //message("Please Fill Empty Plan Infomation");
           return;
         }
       }
@@ -1403,7 +1421,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                                           vertical: 0,
                                                           horizontal: 10),
                                                   leading: Text(
-                                                    endDate.toString().tr(),
+                                                    endDate.toString(),
                                                     style: TextStyle(
                                                         color: blackColor
                                                             .withOpacity(0.6)),

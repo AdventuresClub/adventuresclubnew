@@ -32,6 +32,8 @@ class _SpaceTextFieldsState extends State<SpaceTextFields> {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: TextField(
+        enableIMEPersonalizedLearning: true,
+        enableSuggestions: true,
         inputFormatters: [NoSpaceFormatter()],
         keyboardType: widget.show,
         controller: widget.controller,

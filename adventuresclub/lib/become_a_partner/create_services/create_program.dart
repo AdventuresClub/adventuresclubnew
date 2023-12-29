@@ -17,8 +17,10 @@ class CreateProgram extends StatefulWidget {
 class _CreateProgramState extends State<CreateProgram> {
   TextEditingController titleController = TextEditingController();
   TextEditingController scheduleController = TextEditingController();
-  TimeOfDay startTime = TimeOfDay.now();
-  TimeOfDay endTime = TimeOfDay.now();
+  TimeOfDay? startTime;
+  TimeOfDay? endTime;
+  String sTime = "Start Time";
+  String eTime = "End Time";
   TimeOfDay time = TimeOfDay.now();
   DateTime pickedDate = DateTime.now();
   DateTime currentDate = DateTime.now();
@@ -42,26 +44,34 @@ class _CreateProgramState extends State<CreateProgram> {
   }
 
   void sendData() {
-    Duration durationSt =
-        Duration(hours: startTime.hour, minutes: startTime.minute);
-    Duration durationEt =
-        Duration(hours: endTime.hour, minutes: endTime.minute);
+    Duration durationSt = Duration.zero;
+    Duration durationEt = Duration.zero;
+    if (startTime != null) {
+      durationSt = Duration(hours: startTime!.hour, minutes: startTime!.minute);
+    }
+    if (endTime != null) {
+      durationEt = Duration(hours: startTime!.hour, minutes: startTime!.minute);
+    }
     String title = titleController.text;
     String description = scheduleController.text;
-    DateTime sTime = DateTime(
-      pickedDate.year,
-      pickedDate.month,
-      pickedDate.day,
-      startTime.hour,
-      startTime.minute,
-    );
-    DateTime eTime = DateTime(
-      pickedDate.year,
-      pickedDate.month,
-      pickedDate.day,
-      endTime.hour,
-      endTime.minute,
-    );
+    DateTime sTime = startTime != null
+        ? DateTime(
+            pickedDate.year,
+            pickedDate.month,
+            pickedDate.day,
+            startTime!.hour,
+            startTime!.minute,
+          )
+        : DateTime.now();
+    DateTime eTime = endTime != null
+        ? DateTime(
+            pickedDate.year,
+            pickedDate.month,
+            pickedDate.day,
+            endTime!.hour,
+            endTime!.minute,
+          )
+        : DateTime.now();
     CreateServicesProgramModel pm = CreateServicesProgramModel(
       title,
       sTime,
@@ -97,6 +107,7 @@ class _CreateProgramState extends State<CreateProgram> {
     if (newTime == null) return;
     setState(() {
       startTime = newTime;
+      sTime = "${newTime.hour}:${newTime.minute}";
       timeSt = Duration(hours: newTime.hour, minutes: newTime.minute);
     });
     print(startTime);
@@ -109,18 +120,19 @@ class _CreateProgramState extends State<CreateProgram> {
       //  sele
     );
     if (newEndTime == null) return;
-    if (newEndTime.hour < startTime.hour) {
+    if (newEndTime.hour < startTime!.hour) {
       message("End Time Cannot be before Start Time");
       isTimeAfter = true;
       return;
-    } else if (newEndTime.hour == startTime.hour &&
-        newEndTime.minute < startTime.minute) {
+    } else if (newEndTime.hour == startTime!.hour &&
+        newEndTime.minute < startTime!.minute) {
       message("End Time Cannot be before Start Time");
       isTimeAfter = true;
       return;
     } else {
       setState(() {
         endTime = newEndTime;
+        eTime = "${endTime!.hour}:${endTime!.minute}";
         isTimeAfter = false;
         endSt = Duration(hours: newEndTime.hour, minutes: newEndTime.minute);
       });
@@ -229,7 +241,9 @@ class _CreateProgramState extends State<CreateProgram> {
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 0, horizontal: 10),
                       leading: Text(
-                        "${startTime.hour.toString().padLeft(2, "0")} : ${startTime.minute.toString().padLeft(2, '0')}",
+                        sTime,
+                        //startTime.
+                        //"${startTime!.hour.toString().padLeft(2, "0")} : ${startTime!.minute.toString().padLeft(2, '0')}",
                         style: TextStyle(color: blackColor.withOpacity(0.6)),
                       ),
                       trailing: Icon(
@@ -263,7 +277,8 @@ class _CreateProgramState extends State<CreateProgram> {
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 0, horizontal: 10),
                       leading: Text(
-                        "${endTime.hour.toString().padLeft(2, "0")} : ${endTime.minute.toString().padLeft(2, '0')}",
+                        eTime,
+                        //"${endTime.hour.toString().padLeft(2, "0")} : ${endTime.minute.toString().padLeft(2, '0')}",
                       ),
                       trailing: Icon(
                         Icons.lock_clock_sharp,
