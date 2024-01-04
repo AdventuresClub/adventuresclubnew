@@ -271,104 +271,150 @@ class _NewDetailsState extends State<NewDetails> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        // backgroundColor: const Color.fromARGB(255, 236, 233, 233),
-        // extendBodyBehindAppBar: true,
-        // appBar: AppBar(
-        //   backgroundColor: transparentColor,
-        //   elevation: 0,
-        //   iconTheme: const IconThemeData(color: whiteColor),
-        //   centerTitle: true,
-        // ),
-        body: Column(
-          children: [
-            Stack(
-              children: [
-                SizedBox(
-                  height: 300,
-                  child: Stack(
-                    clipBehavior: Clip.none,
+        body: NestedScrollView(
+          physics: BouncingScrollPhysics(),
+          headerSliverBuilder: ((context, innerBoxIsScrolled) {
+            return [
+              SliverAppBar(
+                toolbarHeight: 0,
+                expandedHeight: 300,
+                floating: false,
+                pinned: true,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Stack(
                     children: [
-                      PageView.builder(
-                          // reverse: true,
-                          controller: _pageViewController,
-                          onPageChanged: (index) {
-                            setState(() {
-                              _activePage = index;
-                            });
-                          },
-                          itemCount: widget.gm!.images.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                // borderRadius: const BorderRadius.only(
-                                //     bottomLeft: Radius.circular(50)),
-                                image: DecorationImage(
-                                    colorFilter: ColorFilter.mode(
-                                        Colors.grey.withOpacity(0.2),
-                                        BlendMode.darken),
-                                    image:
-                                        // const ExactAssetImage(
-                                        //     'images/River-rafting.png'),
-                                        // fit: BoxFit.cover,
-                                        NetworkImage(
-                                      "${"${Constants.baseUrl}/public/uploads/"}${widget.gm!.images[index].imageUrl}",
+                      SizedBox(
+                        height: 300,
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            PageView.builder(
+                                // reverse: true,
+                                controller: _pageViewController,
+                                onPageChanged: (index) {
+                                  setState(() {
+                                    _activePage = index;
+                                  });
+                                },
+                                itemCount: widget.gm!.images.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      // borderRadius: const BorderRadius.only(
+                                      //     bottomLeft: Radius.circular(50)),
+                                      image: DecorationImage(
+                                          colorFilter: ColorFilter.mode(
+                                              Colors.grey.withOpacity(0.2),
+                                              BlendMode.darken),
+                                          image:
+                                              // const ExactAssetImage(
+                                              //     'images/River-rafting.png'),
+                                              // fit: BoxFit.cover,
+                                              NetworkImage(
+                                            "${"${Constants.baseUrl}/public/uploads/"}${widget.gm!.images[index].imageUrl}",
+                                          ),
+                                          fit: BoxFit.fill
+                                          // const ExactAssetImage(
+                                          //     'images/River-rafting.png'),
+                                          //fit: BoxFit.cover),
+                                          ),
                                     ),
-                                    fit: BoxFit.fill
-                                    // const ExactAssetImage(
-                                    //     'images/River-rafting.png'),
-                                    //fit: BoxFit.cover),
-                                    ),
+                                  );
+                                }),
+                            Positioned(
+                              top: 20,
+                              right: 15,
+                              child: GestureDetector(
+                                onTap: addFav,
+                                child: favourite
+                                    ? Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                          color: redColor,
+                                          borderRadius:
+                                              BorderRadius.circular(32),
+                                        ),
+                                        child: const Icon(
+                                          Icons.favorite_border,
+                                          size: 30,
+                                          color: redColor,
+                                        ),
+                                      )
+                                    : Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                          color: redColor,
+                                          borderRadius:
+                                              BorderRadius.circular(32),
+                                        ),
+                                        child: const Icon(
+                                          Icons.favorite_border,
+                                          size: 30,
+                                          color: whiteColor,
+                                        ),
+                                      ),
                               ),
-                            );
-                          }),
-                      Positioned(
-                        top: 20,
-                        right: 15,
-                        child: GestureDetector(
-                          onTap: addFav,
-                          child: favourite
-                              ? Container(
+                            ),
+                            Positioned(
+                              top: 20,
+                              left: 15,
+                              child: GestureDetector(
+                                onTap: cancel,
+                                child: Container(
                                   height: 40,
                                   width: 40,
                                   decoration: BoxDecoration(
-                                    color: redColor,
-                                    borderRadius: BorderRadius.circular(32),
-                                  ),
+                                      color: whiteColor,
+                                      borderRadius: BorderRadius.circular(30)),
                                   child: const Icon(
-                                    Icons.favorite_border,
-                                    size: 30,
-                                    color: redColor,
-                                  ),
-                                )
-                              : Container(
-                                  height: 40,
-                                  width: 40,
-                                  decoration: BoxDecoration(
-                                    color: redColor,
-                                    borderRadius: BorderRadius.circular(32),
-                                  ),
-                                  child: const Icon(
-                                    Icons.favorite_border,
-                                    size: 30,
-                                    color: whiteColor,
+                                    Icons.arrow_back_ios_new,
+                                    color: blackColor,
                                   ),
                                 ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Positioned(
-                        top: 20,
-                        left: 15,
-                        child: GestureDetector(
-                          onTap: cancel,
-                          child: Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                                color: whiteColor,
-                                borderRadius: BorderRadius.circular(30)),
-                            child: const Icon(
-                              Icons.arrow_back_ios_new,
-                              color: blackColor,
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        height: 40,
+                        child: SizedBox(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: List<Widget>.generate(
+                              widget.gm!.images.length,
+                              (index) => Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                child: InkWell(
+                                  onTap: () {
+                                    _pageViewController.animateToPage(index,
+                                        duration:
+                                            const Duration(milliseconds: 300),
+                                        curve: Curves.easeIn);
+                                  },
+                                  child: CircleAvatar(
+                                    radius: 6.5,
+                                    backgroundColor: _activePage == index
+                                        ? const Color.fromARGB(255, 202, 122, 2)
+                                        : whiteColor,
+                                    child: CircleAvatar(
+                                        radius:
+                                            _activePage != index ? 4.5 : 5.5,
+                                        // check if a dot is connected to the current page
+                                        // if true, give it a different color
+                                        backgroundColor: _activePage == index
+                                            ? Colors.orange
+                                            : transparentColor
+                                                .withOpacity(0.1)),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -376,47 +422,14 @@ class _NewDetailsState extends State<NewDetails> {
                     ],
                   ),
                 ),
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  height: 40,
-                  child: SizedBox(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List<Widget>.generate(
-                        widget.gm!.images.length,
-                        (index) => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
-                          child: InkWell(
-                            onTap: () {
-                              _pageViewController.animateToPage(index,
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.easeIn);
-                            },
-                            child: CircleAvatar(
-                              radius: 6.5,
-                              backgroundColor: _activePage == index
-                                  ? const Color.fromARGB(255, 202, 122, 2)
-                                  : whiteColor,
-                              child: CircleAvatar(
-                                  radius: _activePage != index ? 4.5 : 5.5,
-                                  // check if a dot is connected to the current page
-                                  // if true, give it a different color
-                                  backgroundColor: _activePage == index
-                                      ? Colors.orange
-                                      : transparentColor.withOpacity(0.1)),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Expanded(child: NewDetailsTab(widget.gm!)),
-          ],
+              ),
+            ];
+          }),
+          body: NewDetailsTab(widget.gm!),
+          // children: [
+
+          //   Expanded(child: NewDetailsTab(widget.gm!)),
+          // ],
         ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(16.0),
