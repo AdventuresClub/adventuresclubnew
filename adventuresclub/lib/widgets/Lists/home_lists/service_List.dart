@@ -105,17 +105,33 @@ class ServiceListState extends State<ServiceList> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 2),
-                      child: MyText(
-                        text: gAllServices[i].category.tr(),
-                        color: blackColor.withOpacity(0.6),
-                        weight: FontWeight.bold,
-                        size: 20,
+                        horizontal: 6.0,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            height: 40,
+                            width: 100,
+                            decoration: BoxDecoration(
+                                color: whiteColor,
+                                borderRadius: BorderRadius.circular(12)),
+                            child: Center(
+                              child: MyText(
+                                text: gAllServices[i].category.tr(),
+                                color:
+                                    bluishColor, //blackColor.withOpacity(0.6),
+                                weight: FontWeight.bold,
+                                size: 20,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
+                    // const SizedBox(
+                    //   height: 5,
+                    // ),
                     // SizedBox(
                     //   height: 230,
                     //   child: getList(
@@ -123,11 +139,14 @@ class ServiceListState extends State<ServiceList> {
                     //     gAllServices,
                     //   ),
                     // ),
-                    SizedBox(
-                      height: 340,
-                      child: getList(
-                        gAllServices[i].category,
-                        gAllServices,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: SizedBox(
+                        height: 340,
+                        child: getList(
+                          gAllServices[i].category,
+                          gAllServices,
+                        ),
                       ),
                     ),
                   ],

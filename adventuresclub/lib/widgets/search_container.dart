@@ -85,6 +85,9 @@ class SearchContainerState extends State<SearchContainer> {
                     fontSize: widget.fontSize,
                   ),
                 ),
+              const SizedBox(
+                width: 5,
+              ),
               if (widget.value == true)
                 Image.network(
                   "${"${Constants.baseUrl}/public/"}${Constants.countryFlag}",
@@ -93,7 +96,7 @@ class SearchContainerState extends State<SearchContainer> {
                 ),
               const SizedBox(
                 width: 5,
-              )
+              ),
             ],
           )
         ],

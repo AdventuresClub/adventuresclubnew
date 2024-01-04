@@ -3,10 +3,12 @@
 import 'dart:convert';
 
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/home_Screens/accounts/new_about.dart';
 import 'package:adventuresclub/models/getParticipants/get_participants_model.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
+import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/tabs/details_tabs/service_description.dart';
 import 'package:adventuresclub/widgets/tabs/details_tabs/service_gathering_location.dart';
 import 'package:adventuresclub/widgets/tabs/details_tabs/service_program/service_plans.dart';
@@ -343,46 +345,131 @@ class _NewDetailsTabState extends State<NewDetailsTab>
         //   )
         // :
         SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          NewServiceDescription(
-              widget.gm,
-              text1,
-              text4,
-              text5,
-              text6,
-              convert(widget.gm.stars.toString()),
-              widget.gm.reviewdBy.toString(),
-              widget.gm.id.toString()),
-          // program tab
-          // 2 nd Tab /////////
-          ServicesPlans(widget.gm.sPlan, widget.gm.programmes),
-          // 3 rd Tab /////////
-          // gathering location
-          ServiceGatheringLocation(
-              widget.gm.writeInformation,
-              widget.gm.sAddress,
-              widget.gm.region,
-              widget.gm.country,
-              widget.gm.geoLocation,
-              widget.gm.lat,
-              widget.gm.lng),
-          // 4th Tab /////////
-          // ${Constants.baseUrl}/newchat/18/126/20
-          // 18: user_id of provider
-          // 126: Service_id
-          // 20: user_id of the client
-          // if (widget.gm.providerId.toString() ==
-          //     Constants.userId.toString())
-          // ShowChat(
-          //   "${Constants.baseUrl}/receiverlist/20/126",
-          //   appbar: false,
-          // ),
-          // ShowChat(
-          //   "${Constants.baseUrl}/receiverlist/${Constants.userId}/${widget.gm.id}",
-          //   appbar: false,
-          // ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            NewServiceDescription(
+                widget.gm,
+                text1,
+                text4,
+                text5,
+                text6,
+                convert(widget.gm.stars.toString()),
+                widget.gm.reviewdBy.toString(),
+                widget.gm.id.toString()),
+            // program tab
+            // 2 nd Tab /////////
+            ServicesPlans(widget.gm.sPlan, widget.gm.programmes),
+            // 3 rd Tab /////////
+            // gathering location
+            ServiceGatheringLocation(
+                widget.gm.writeInformation,
+                widget.gm.sAddress,
+                widget.gm.region,
+                widget.gm.country,
+                widget.gm.geoLocation,
+                widget.gm.lat,
+                widget.gm.lng),
+            const SizedBox(
+              height: 10,
+            ),
+            MyText(
+              text: "prerequisites",
+              color: bluishColor,
+              size: 18,
+              weight: FontWeight.bold,
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            MyText(
+              text: widget.gm.preRequisites,
+              color: blackColor,
+              //weight: FontWeight.w500,
+              size: 14,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Divider(
+              thickness: 1,
+              color: blackColor.withOpacity(0.2),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            MyText(
+              text: "minimumRequirements",
+              color: bluishColor,
+              size: 18,
+              weight: FontWeight.bold,
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            MyText(
+              text: widget.gm.mRequirements,
+              color: blackColor,
+              weight: FontWeight.w500,
+              size: 14,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Divider(
+              thickness: 1,
+              color: blackColor.withOpacity(0.2),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            MyText(
+              text: "termsAndConditions",
+              color: bluishColor,
+              size: 18,
+              weight: FontWeight.bold,
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            MyText(
+              text: widget.gm.tnc,
+              color: blackColor,
+              //weight: FontWeight.w500,
+              size: 14,
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Divider(
+              thickness: 1,
+              color: blackColor.withOpacity(0.2),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            NewAbout(
+                id: widget.gm.providerId.toString(), sId: widget.gm.serviceId),
+
+            // 4th Tab /////////
+            // ${Constants.baseUrl}/newchat/18/126/20
+            // 18: user_id of provider
+            // 126: Service_id
+            // 20: user_id of the client
+            // if (widget.gm.providerId.toString() ==
+            //     Constants.userId.toString())
+            // ShowChat(
+            //   "${Constants.baseUrl}/receiverlist/20/126",
+            //   appbar: false,
+            // ),
+            // ShowChat(
+            //   "${Constants.baseUrl}/receiverlist/${Constants.userId}/${widget.gm.id}",
+            //   appbar: false,
+            // ),
+          ],
+        ),
       ),
     );
   }

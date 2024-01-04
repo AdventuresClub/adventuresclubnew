@@ -360,7 +360,7 @@ class _ServicesCardState extends State<ServicesCard> {
                                       color: blackColor,
                                       size: 16,
                                       weight: FontWeight.bold,
-                                      fontFamily: 'Roboto',
+                                      fontFamily: 'Raleway',
                                       height: 1.3,
                                     ),
                                   ),
@@ -403,7 +403,7 @@ class _ServicesCardState extends State<ServicesCard> {
                                       overFlow: TextOverflow.clip,
                                       maxLines: 1,
                                       //text: 'Dhufar',
-                                      weight: FontWeight.w600,
+                                      // weight: FontWeight.w600,
                                       color: blackTypeColor3,
                                       size: 14,
                                       height: 1.3,
@@ -416,7 +416,7 @@ class _ServicesCardState extends State<ServicesCard> {
                                     //text: 'OMR 20.00',
                                     weight: FontWeight.bold,
                                     color: blackTypeColor3,
-                                    size: 14,
+                                    size: 16,
                                     height: 1.3,
                                   ),
                                   // MyText(
@@ -435,7 +435,7 @@ class _ServicesCardState extends State<ServicesCard> {
                                     text: widget.gm.serviceLevel.tr(),
                                     //text: 'Advanced',
                                     color: blackTypeColor3,
-                                    weight: FontWeight.w500,
+                                    //  weight: FontWeight.w500,
                                     size: 14,
                                     height: 1.3,
                                   ),
@@ -632,7 +632,7 @@ class _ServicesCardState extends State<ServicesCard> {
                                             NetworkImage(widget.gm.pProfile),
                                         backgroundColor: transparentColor,
                                       ),
-                                      const SizedBox(width: 1),
+                                      const SizedBox(width: 2),
                                       //   MyText(text: 'Provided By AdventuresClub',color:blackColor,fontStyle: FontStyle.italic,size: 10,),
                                       Expanded(
                                         child: Text.rich(
@@ -641,17 +641,17 @@ class _ServicesCardState extends State<ServicesCard> {
                                               TextSpan(
                                                   text: "providedBy".tr(),
                                                   style: const TextStyle(
-                                                    color: greyColor3,
-                                                    fontSize: 10,
+                                                    color: bluishColor,
+                                                    fontSize: 14,
                                                   )),
                                               TextSpan(
                                                 text: widget.gm.pName,
                                                 //text: 'AdventuresClub',
                                                 style: const TextStyle(
                                                     fontWeight: FontWeight.bold,
-                                                    color: blackTypeColor4,
-                                                    fontSize: 12,
-                                                    fontFamily: "Roboto"),
+                                                    color: blackColor,
+                                                    fontSize: 14,
+                                                    fontFamily: "Raleway"),
                                               ),
                                             ],
                                           ),

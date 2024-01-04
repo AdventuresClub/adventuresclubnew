@@ -43,7 +43,6 @@ class NewFilterPage extends StatefulWidget {
 }
 
 class _NewFilterPageState extends State<NewFilterPage> {
-  final PageController _pageViewController = PageController(initialPage: 0);
   TextEditingController searchController = TextEditingController();
 
   int index = 0;
@@ -763,10 +762,10 @@ class _NewFilterPageState extends State<NewFilterPage> {
               GestureDetector(
                 // onTap: addActivites,
                 child: Container(
-                  height: 30,
-                  width: 30,
+                  height: 36,
+                  width: 40,
                   decoration: BoxDecoration(
-                    color: greyColor,
+                    color: bluishColor,
                     image: const DecorationImage(
                       image: ExactAssetImage(
                         'images/pathpic.png',
@@ -777,12 +776,12 @@ class _NewFilterPageState extends State<NewFilterPage> {
                 ),
               ),
               const SizedBox(
-                width: 10,
+                width: 5,
               ),
-              SearchContainer('searchAdventure'.tr(), 1.4, 10, searchController,
-                  'images/maskGroup51.png', true, true, Constants.country, 12),
+              SearchContainer('search'.tr(), 1.4, 10, searchController,
+                  'images/maskGroup51.png', true, true, Constants.country, 14),
               const SizedBox(
-                width: 10,
+                width: 5,
               ),
               Stack(
                 children: [
@@ -790,8 +789,8 @@ class _NewFilterPageState extends State<NewFilterPage> {
                     onTap: goToMessages,
                     child: const Icon(
                       Icons.message,
-                      color: whiteColor,
-                      size: 40,
+                      color: bluishColor,
+                      size: 42,
                     ),
                   ),
                   if (Constants.chatCount != "0")

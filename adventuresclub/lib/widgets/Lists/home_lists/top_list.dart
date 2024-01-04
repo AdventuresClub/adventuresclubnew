@@ -151,7 +151,7 @@ class _TopListState extends State<TopList> {
                     MyText(
                       text: pCM[index].category.tr(), //text[index],
                       color: blackColor,
-                      size: 12,
+                      size: 14,
                       weight: FontWeight.w600,
                     )
                   ],

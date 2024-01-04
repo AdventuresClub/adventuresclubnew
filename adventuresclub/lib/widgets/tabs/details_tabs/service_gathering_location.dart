@@ -162,7 +162,8 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
             "key": Constants.googleMapsApi,
           },
         );
-      } else if (await ml.MapLauncher.isMapAvailable(mt.MapType.apple) == true) {
+      } else if (await ml.MapLauncher.isMapAvailable(mt.MapType.apple) ==
+          true) {
         await ml.MapLauncher.showDirections(
           mapType: mt.MapType.apple,
           destination: ml.Coords(lt, ln),
@@ -218,10 +219,22 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(
+              height: 10,
+            ),
+            MyText(
+              text: "Gathering Location",
+              color: bluishColor,
+              size: 18,
+              weight: FontWeight.bold,
+            ),
+            // const SizedBox(
+            //   height: 10,
+            // ),
             // Align(
             //     alignment: Alignment.centerLeft,
             //     child: MyText(
@@ -257,20 +270,78 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
                   )
                 : GestureDetector(
                     onTap: () => selected(context),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Align(
-                            alignment: Alignment.centerLeft,
-                            child: MyText(
-                              text: 'fullAddress'.tr(),
-                              color: blackColor,
-                              weight: FontWeight.w700,
-                              size: 16,
-                            )),
+                        // Align(
+                        //     alignment: Alignment.centerLeft,
+                        //     child: MyText(
+                        //       text: 'fullAddress'.tr(),
+                        //       color: blackColor,
+                        //       weight: FontWeight.w700,
+                        //       size: 16,
+                        //     )),
                       ],
                     ),
                   ),
+
+            const SizedBox(
+              height: 10,
+            ),
+
+            // Container(
+            //   height: 200,
+            //   decoration: const BoxDecoration(
+            //       image: DecorationImage(
+            //           image: ExactAssetImage('images/map.png'))),
+            // ),
+            Container(
+              height: 200,
+              padding: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  width: 2,
+                  color: blackColor,
+                ),
+              ),
+              child: GoogleMap(
+                initialCameraPosition: kGooglePlex,
+                markers: Set.of(markers),
+                mapType: MapType.hybrid,
+                onMapCreated: (GoogleMapController gController) {
+                  controller.complete(gController);
+                  gController.animateCamera(CameraUpdate.newCameraPosition(
+                      CameraPosition(target: LatLng(lt, ln), zoom: 14)));
+                  gController.showMarkerInfoWindow(markers[0].markerId);
+                },
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            RichText(
+              text: TextSpan(
+                text: 'geoLocation'.tr(),
+                style: TextStyle(
+                    color: greyishColor.withOpacity(0.7), fontSize: 14),
+                children: <TextSpan>[
+                  TextSpan(
+                      text:
+                          "${"Lat:"} ${widget.lat.substring(0, 7)} ${","} ${"Lng:"} ${widget.lng.substring(0, 7)}", //widget.geoLocation, //widget.lat.substring(0, 7),
+                      //text: ' 60.25455415, 54.2555125',
+                      style: const TextStyle(fontSize: 14, color: blackColor))
+                  // const TextSpan(
+                  //     text: " , ",
+                  //     //text: ' 60.25455415, 54.2555125',
+                  //     style: TextStyle(fontSize: 14, color: blackColor)),
+                  // TextSpan(
+                  //     text: widget.lng.substring(0, 7),
+                  //     //text: ' 60.25455415, 54.2555125',
+                  //     style: const TextStyle(fontSize: 14, color: blackColor)),
+                ],
+              ),
+            ),
             const SizedBox(
               height: 5,
             ),
@@ -278,12 +349,15 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
               text: TextSpan(
                 text: 'address'.tr(),
                 style: TextStyle(
-                    color: greyishColor.withOpacity(0.7), fontSize: 14),
+                    fontFamily: "Raleway",
+                    color: greyishColor.withOpacity(0.7),
+                    fontSize: 14),
                 children: <TextSpan>[
                   TextSpan(
                       text: widget.sAddress.tr(),
                       style: const TextStyle(
-                          fontWeight: FontWeight.w500,
+                          fontFamily: "Raleway",
+                          // fontWeight: FontWeight.w500,
                           fontSize: 14,
                           color: blackColor)),
                 ],
@@ -321,69 +395,10 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            RichText(
-              text: TextSpan(
-                text: 'geoLocation'.tr(),
-                style: TextStyle(
-                    color: greyishColor.withOpacity(0.7), fontSize: 14),
-                children: <TextSpan>[
-                  TextSpan(
-                      text:
-                          "${"Lat:"} ${widget.lat.substring(0, 7)} ${","} ${"Lng:"} ${widget.lng.substring(0, 7)}", //widget.geoLocation, //widget.lat.substring(0, 7),
-                      //text: ' 60.25455415, 54.2555125',
-                      style: const TextStyle(fontSize: 14, color: blackColor))
-                  // const TextSpan(
-                  //     text: " , ",
-                  //     //text: ' 60.25455415, 54.2555125',
-                  //     style: TextStyle(fontSize: 14, color: blackColor)),
-                  // TextSpan(
-                  //     text: widget.lng.substring(0, 7),
-                  //     //text: ' 60.25455415, 54.2555125',
-                  //     style: const TextStyle(fontSize: 14, color: blackColor)),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            // Container(
-            //   height: 200,
-            //   decoration: const BoxDecoration(
-            //       image: DecorationImage(
-            //           image: ExactAssetImage('images/map.png'))),
-            // ),
-            Container(
-              height: 200,
-              padding: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(
-                  width: 2,
-                  color: blackColor,
-                ),
-              ),
-              child: GoogleMap(
-                initialCameraPosition: kGooglePlex,
-                markers: Set.of(markers),
-                mapType: MapType.hybrid,
-                onMapCreated: (GoogleMapController gController) {
-                  controller.complete(gController);
-                  gController.animateCamera(CameraUpdate.newCameraPosition(
-                      CameraPosition(target: LatLng(lt, ln), zoom: 14)));
-                  gController.showMarkerInfoWindow(markers[0].markerId);
-                },
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
             InkWell(
               onTap: () => selected(context),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   MyText(
                     text: 'getDirection'.tr(),
@@ -410,6 +425,16 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
                   )
                 ],
               ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Divider(
+              thickness: 1,
+              color: blackColor.withOpacity(0.2),
+            ),
+            const SizedBox(
+              height: 5,
             ),
           ],
         ),
