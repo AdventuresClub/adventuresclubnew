@@ -287,7 +287,7 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                   text: TextSpan(
                     text: 'Availability :',
                     style: const TextStyle(
-                        color: blackColor,
+                        color: bluishColor,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Raleway'),
@@ -404,7 +404,7 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                 height: 10,
               ),
               MyText(
-                text: "Aimed For",
+                text: "Audience",
                 color: bluishColor,
                 size: 18,
                 weight: FontWeight.bold,

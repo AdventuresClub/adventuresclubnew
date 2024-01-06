@@ -204,7 +204,7 @@ class _NewAboutState extends State<NewAbout> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             MyText(
-              text: 'about'.tr(),
+              text: "Provided By",
               color: bluishColor,
               size: 18,
               weight: FontWeight.bold,
@@ -213,7 +213,7 @@ class _NewAboutState extends State<NewAbout> {
               height: 10,
             ),
             ListTile(
-              minLeadingWidth: 20,
+              minLeadingWidth: 30,
               //dense: true,
               leading: GestureDetector(
                 onTap: () => goToProvider(
@@ -240,14 +240,10 @@ class _NewAboutState extends State<NewAbout> {
               ),
               trailing: Container(
                 height: MediaQuery.of(context).size.height / 20,
-                width: MediaQuery.of(context).size.width / 4,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: const Color.fromARGB(255, 15, 71, 116),
-                    width: 2.0,
-                  ),
-                  color: const Color.fromARGB(255, 15, 71, 116),
-                  borderRadius: const BorderRadius.all(Radius.circular(28)),
+                width: MediaQuery.of(context).size.width / 5,
+                decoration: const BoxDecoration(
+                  color: bluishColor,
+                  borderRadius: BorderRadius.all(Radius.circular(28)),
                 ),
                 child: Material(
                   color: Colors.transparent,
