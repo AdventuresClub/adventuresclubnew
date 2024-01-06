@@ -343,7 +343,7 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
               MyText(
                 text: widget.gm.writeInformation,
                 color: blackColor,
-                weight: FontWeight.w500,
+                // weight: FontWeight.w500,
                 size: 14,
               ),
               const SizedBox(

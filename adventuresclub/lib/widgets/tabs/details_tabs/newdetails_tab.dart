@@ -412,7 +412,7 @@ class _NewDetailsTabState extends State<NewDetailsTab>
             MyText(
               text: widget.gm.mRequirements,
               color: blackColor,
-              weight: FontWeight.w500,
+              //weight: FontWeight.w500,
               size: 14,
             ),
             const SizedBox(

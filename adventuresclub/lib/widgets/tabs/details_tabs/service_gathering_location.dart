@@ -6,6 +6,7 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_launcher/map_launcher.dart' as ml;
@@ -323,14 +324,21 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
             RichText(
               text: TextSpan(
                 text: 'geoLocation'.tr(),
-                style: TextStyle(
-                    color: greyishColor.withOpacity(0.7), fontSize: 14),
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Raleway",
+                    color: blackColor,
+                    fontSize: 14),
                 children: <TextSpan>[
                   TextSpan(
                       text:
                           "${"Lat:"} ${widget.lat.substring(0, 7)} ${","} ${"Lng:"} ${widget.lng.substring(0, 7)}", //widget.geoLocation, //widget.lat.substring(0, 7),
                       //text: ' 60.25455415, 54.2555125',
-                      style: const TextStyle(fontSize: 14, color: blackColor))
+                      style: const TextStyle(
+                          fontFamily: "Raleway",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: blackColor))
                   // const TextSpan(
                   //     text: " , ",
                   //     //text: ' 60.25455415, 54.2555125',
@@ -348,16 +356,17 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
             RichText(
               text: TextSpan(
                 text: 'address'.tr(),
-                style: TextStyle(
+                style: const TextStyle(
                     fontFamily: "Raleway",
-                    color: greyishColor.withOpacity(0.7),
-                    fontSize: 14),
+                    color: blackColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold),
                 children: <TextSpan>[
                   TextSpan(
                       text: widget.sAddress.tr(),
                       style: const TextStyle(
                           fontFamily: "Raleway",
-                          // fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w400,
                           fontSize: 14,
                           color: blackColor)),
                 ],
@@ -366,35 +375,35 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
             const SizedBox(
               height: 10,
             ),
-            RichText(
-              text: TextSpan(
-                text: 'Region'.tr(),
-                style: TextStyle(
-                    color: greyishColor.withOpacity(0.7), fontSize: 14),
-                children: <TextSpan>[
-                  TextSpan(
-                      text: widget.region.tr(),
-                      //text: ' Omani',
-                      style: const TextStyle(fontSize: 14, color: blackColor)),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            RichText(
-              text: TextSpan(
-                text: 'Country'.tr(),
-                style: TextStyle(
-                    color: greyishColor.withOpacity(0.7), fontSize: 14),
-                children: <TextSpan>[
-                  TextSpan(
-                      text: widget.country.tr(),
-                      //text: ' Oman',
-                      style: const TextStyle(fontSize: 14, color: blackColor)),
-                ],
-              ),
-            ),
+            // RichText(
+            //   text: TextSpan(
+            //     text: 'Region'.tr(),
+            //     style: TextStyle(
+            //         color: greyishColor.withOpacity(0.7), fontSize: 14),
+            //     children: <TextSpan>[
+            //       TextSpan(
+            //           text: widget.region.tr(),
+            //           //text: ' Omani',
+            //           style: const TextStyle(fontSize: 14, color: blackColor)),
+            //     ],
+            //   ),
+            // ),
+            // const SizedBox(
+            //   height: 10,
+            // ),
+            // RichText(
+            //   text: TextSpan(
+            //     text: 'Country'.tr(),
+            //     style: TextStyle(
+            //         color: greyishColor.withOpacity(0.7), fontSize: 14),
+            //     children: <TextSpan>[
+            //       TextSpan(
+            //           text: widget.country.tr(),
+            //           //text: ' Oman',
+            //           style: const TextStyle(fontSize: 14, color: blackColor)),
+            //     ],
+            //   ),
+            // ),
             InkWell(
               onTap: () => selected(context),
               child: Row(
@@ -404,25 +413,34 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
                     text: 'getDirection'.tr(),
                     color: blackColor,
                     weight: FontWeight.w700,
+                    size: 14,
                   ),
-                  Card(
-                    elevation: 1,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(64)),
-                    child: const CircleAvatar(
-                        radius: 14,
-                        backgroundColor: whiteColor,
-                        child: Icon(
-                          Icons.directions,
-                          color: redColor,
-                          size: 24,
-                        )
-                        // Image(
-                        //   image: ExactAssetImage('images/location-arrow.png'),
-                        //   height: 15,
-                        // ),
-                        ),
-                  )
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  const FaIcon(
+                    FontAwesomeIcons.car,
+                    color: redColor,
+                  ),
+
+                  // Card(
+                  //   elevation: 1,
+                  //   shape: RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.circular(64)),
+                  //   child: const CircleAvatar(
+                  //       radius: 14,
+                  //       backgroundColor: whiteColor,
+                  //       child: Icon(
+                  //         Icons.directions,
+                  //         color: redColor,
+                  //         size: 24,
+                  //       )
+                  //       // Image(
+                  //       //   image: ExactAssetImage('images/location-arrow.png'),
+                  //       //   height: 15,
+                  //       // ),
+                  //       ),
+                  // )
                 ],
               ),
             ),

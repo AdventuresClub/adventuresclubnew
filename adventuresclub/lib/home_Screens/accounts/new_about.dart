@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/home_Screens/accounts/about.dart';
 import 'package:adventuresclub/models/home_services/become_partner.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/models/profile_models/profile_become_partner.dart';
@@ -181,6 +182,19 @@ class _NewAboutState extends State<NewAbout> {
   // string ChatUrl = $"{CommonConstantUrl.ChatUrl}newreceiverchat/{Settings.UserId}/{completedDataModel.service_id}/{completedDataModel.provider_id}";
 
   abc() {}
+
+  void goToProvider(
+    String id,
+  ) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return About(id: id);
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -194,10 +208,15 @@ class _NewAboutState extends State<NewAbout> {
               ListTile(
                 minLeadingWidth: 20,
                 //dense: true,
-                leading: CircleAvatar(
-                  radius: 40,
-                  backgroundImage: NetworkImage(
-                    "${'${Constants.baseUrl}/public/'}${profile.profileImage}",
+                leading: GestureDetector(
+                  onTap: () => goToProvider(
+                    widget.id.toString(),
+                  ),
+                  child: CircleAvatar(
+                    radius: 40,
+                    backgroundImage: NetworkImage(
+                      "${'${Constants.baseUrl}/public/'}${profile.profileImage}",
+                    ),
                   ),
                 ),
                 title: Column(
@@ -262,13 +281,13 @@ class _NewAboutState extends State<NewAbout> {
                 children: [
                   MyText(
                     text: 'about'.tr(),
-                    color: greyColor,
+                    color: bluishColor,
                     size: 18,
                     weight: FontWeight.bold,
                   ),
                   MyText(
                     text: profile.bp.companyName, //'Travel Instructor',
-                    weight: FontWeight.w500,
+                    // weight: FontWeight.w500,
                     color: greyTextColor,
                     size: 14,
                   ),
@@ -277,9 +296,9 @@ class _NewAboutState extends State<NewAbout> {
                     text: "${profile.bp.location}"
                         "${","}"
                         "${profile.bp.address}", //'County, City',
-                    weight: FontWeight.w500,
+                    // weight: FontWeight.w500,
                     color: greyTextColor,
-                    size: 12,
+                    size: 14,
                   ),
                 ],
               ),

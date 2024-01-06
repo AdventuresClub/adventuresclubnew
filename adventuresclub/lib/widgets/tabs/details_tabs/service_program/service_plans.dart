@@ -97,12 +97,12 @@ class _ServicesPlansState extends State<ServicesPlans> {
                           size: 14,
                         ),
                       ),
-                      Divider(
-                        // endIndent: 30,
-                        // indent: 70,
-                        thickness: 1,
-                        color: blackColor.withOpacity(0.1),
-                      ),
+                      // Divider(
+                      //   // endIndent: 30,
+                      //   // indent: 70,
+                      //   thickness: 1,
+                      //   color: blackColor.withOpacity(0.1),
+                      // ),
                     ],
                   ),
               ],
