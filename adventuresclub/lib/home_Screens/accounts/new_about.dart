@@ -209,6 +209,9 @@ class _NewAboutState extends State<NewAbout> {
               size: 18,
               weight: FontWeight.bold,
             ),
+            const SizedBox(
+              height: 10,
+            ),
             ListTile(
               minLeadingWidth: 20,
               //dense: true,
@@ -230,7 +233,7 @@ class _NewAboutState extends State<NewAbout> {
                   MyText(
                     text: profile.name, //'Alexander',
                     weight: FontWeight.w600,
-                    color: blackColor,
+                    color: bluishColor,
                     size: 18,
                   ),
                 ],
@@ -260,9 +263,9 @@ class _NewAboutState extends State<NewAbout> {
                               'chat'.tr(),
                               style: const TextStyle(
                                   color: whiteColor,
-                                  fontWeight: FontWeight.w400,
+                                  fontWeight: FontWeight.bold,
                                   letterSpacing: 0.8,
-                                  fontFamily: "Roboto",
+                                  fontFamily: "Raleway",
                                   fontSize: 14),
                             ),
                           ],
