@@ -199,111 +199,108 @@ class _NewAboutState extends State<NewAbout> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ListTile(
-                minLeadingWidth: 20,
-                //dense: true,
-                leading: GestureDetector(
-                  onTap: () => goToProvider(
-                    widget.id.toString(),
-                  ),
-                  child: CircleAvatar(
-                    radius: 40,
-                    backgroundImage: NetworkImage(
-                      "${'${Constants.baseUrl}/public/'}${profile.profileImage}",
-                    ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            MyText(
+              text: 'about'.tr(),
+              color: bluishColor,
+              size: 18,
+              weight: FontWeight.bold,
+            ),
+            ListTile(
+              minLeadingWidth: 20,
+              //dense: true,
+              leading: GestureDetector(
+                onTap: () => goToProvider(
+                  widget.id.toString(),
+                ),
+                child: CircleAvatar(
+                  radius: 40,
+                  backgroundImage: NetworkImage(
+                    "${'${Constants.baseUrl}/public/'}${profile.profileImage}",
                   ),
                 ),
-                title: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    MyText(
-                      text: profile.name, //'Alexander',
-                      weight: FontWeight.w600,
-                      color: blackColor,
-                      size: 18,
-                    ),
-                  ],
-                ),
-                trailing: Container(
-                  height: MediaQuery.of(context).size.height / 20,
-                  width: MediaQuery.of(context).size.width / 4,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: const Color.fromARGB(255, 15, 71, 116),
-                      width: 2.0,
-                    ),
+              ),
+              title: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  MyText(
+                    text: profile.name, //'Alexander',
+                    weight: FontWeight.w600,
+                    color: blackColor,
+                    size: 18,
+                  ),
+                ],
+              ),
+              trailing: Container(
+                height: MediaQuery.of(context).size.height / 20,
+                width: MediaQuery.of(context).size.width / 4,
+                decoration: BoxDecoration(
+                  border: Border.all(
                     color: const Color.fromARGB(255, 15, 71, 116),
-                    borderRadius: const BorderRadius.all(Radius.circular(28)),
+                    width: 2.0,
                   ),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: () => selected(context),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'chat'.tr(),
-                                style: const TextStyle(
-                                    color: whiteColor,
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: 0.8,
-                                    fontFamily: "Roboto",
-                                    fontSize: 14),
-                              ),
-                            ],
-                          ),
+                  color: const Color.fromARGB(255, 15, 71, 116),
+                  borderRadius: const BorderRadius.all(Radius.circular(28)),
+                ),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () => selected(context),
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'chat'.tr(),
+                              style: const TextStyle(
+                                  color: whiteColor,
+                                  fontWeight: FontWeight.w400,
+                                  letterSpacing: 0.8,
+                                  fontFamily: "Roboto",
+                                  fontSize: 14),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ),
                 ),
-                // const Image(
-                //   image: ExactAssetImage('images/forward.png'),
-                // ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  MyText(
-                    text: 'about'.tr(),
-                    color: bluishColor,
-                    size: 18,
-                    weight: FontWeight.bold,
-                  ),
-                  MyText(
-                    text: profile.bp.companyName, //'Travel Instructor',
-                    // weight: FontWeight.w500,
-                    color: greyTextColor,
-                    size: 14,
-                  ),
-                  MyText(
-                    overFlow: TextOverflow.fade,
-                    text: "${profile.bp.location}"
-                        "${","}"
-                        "${profile.bp.address}", //'County, City',
-                    // weight: FontWeight.w500,
-                    color: greyTextColor,
-                    size: 14,
-                  ),
-                ],
-              ),
-            ],
-          ),
+              // const Image(
+              //   image: ExactAssetImage('images/forward.png'),
+              // ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                MyText(
+                  text: profile.bp.companyName, //'Travel Instructor',
+                  // weight: FontWeight.w500,
+                  color: greyTextColor,
+                  size: 14,
+                ),
+                MyText(
+                  overFlow: TextOverflow.fade,
+                  text: "${profile.bp.location}"
+                      "${","}"
+                      "${profile.bp.address}", //'County, City',
+                  // weight: FontWeight.w500,
+                  color: greyTextColor,
+                  size: 14,
+                ),
+              ],
+            ),
+          ],
         ),
       ],
     );
