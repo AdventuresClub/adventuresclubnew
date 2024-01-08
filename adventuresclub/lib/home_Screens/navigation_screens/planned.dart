@@ -425,7 +425,7 @@ class _PlannedState extends State<Planned> {
     allSer = getFilterData(Provider.of<ServicesProvider>(context).allServices);
     return Scaffold(
       backgroundColor: greyProfileColor,
-      body: ListView(
+      body: Column(
         children: [
           SizedBox(
             height: 155,
@@ -559,25 +559,37 @@ class _PlannedState extends State<Planned> {
                       style: TextStyle(
                           fontWeight: FontWeight.bold, color: greyColor)),
                 )
-              : SingleChildScrollView(
-                  child: GridView.count(
-                    physics: const ScrollPhysics(),
-                    shrinkWrap: true,
-                    mainAxisSpacing: 0.4,
-                    childAspectRatio: 1,
-                    crossAxisSpacing: 0.2,
-                    crossAxisCount: 2,
-                    children: List.generate(
-                      allSer.length,
-                      (index) {
+              : Expanded(
+                  child: ListView.builder(
+                      itemCount: allSer.length,
+                      scrollDirection: Axis.vertical,
+                      itemBuilder: (context, index) {
                         return GestureDetector(
-                          onTap: () => goToDetails(allSer[index]),
-                          child: ServicesCard(allSer[index]),
-                        );
-                      },
-                    ),
-                  ),
+                            onTap: () => goToDetails(allSer[index]),
+                            child: SizedBox(
+                                height: 340,
+                                child: ServicesCard(allSer[index])));
+                      }),
                 ),
+          // SingleChildScrollView(
+          //     child: GridView.count(
+          //       physics: const ScrollPhysics(),
+          //       shrinkWrap: true,
+          //       mainAxisSpacing: 0.4,
+          //       childAspectRatio: 1,
+          //       crossAxisSpacing: 0.2,
+          //       crossAxisCount: 2,
+          //       children: List.generate(
+          //         allSer.length,
+          //         (index) {
+          //           return GestureDetector(
+          //             onTap: () => goToDetails(allSer[index]),
+          //             child: ServicesCard(allSer[index]),
+          //           );
+          //         },
+          //       ),
+          //     ),
+          //   ),
         ],
       ),
     );
