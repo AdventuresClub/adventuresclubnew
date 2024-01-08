@@ -8,6 +8,7 @@ import 'package:adventuresclub/home_Screens/accounts/client_requests.dart';
 import 'package:adventuresclub/home_Screens/accounts/my_adventures.dart';
 import 'package:adventuresclub/home_Screens/accounts/my_services.dart';
 import 'package:adventuresclub/home_Screens/details.dart';
+import 'package:adventuresclub/home_Screens/new_details.dart';
 import 'package:adventuresclub/home_Screens/payment_methods/payment_methods.dart';
 import 'package:adventuresclub/models/currency_model.dart';
 import 'package:adventuresclub/models/filter_data_model/programs_model.dart';
@@ -122,7 +123,7 @@ class _RequestsListState extends State<RequestsList> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return Details(gm: gm);
+          return NewDetails(gm: gm);
         },
       ),
     );

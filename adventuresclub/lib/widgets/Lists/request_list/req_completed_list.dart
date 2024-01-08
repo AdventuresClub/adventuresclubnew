@@ -6,6 +6,7 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/my_adventures.dart';
 import 'package:adventuresclub/home_Screens/details.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
+import 'package:adventuresclub/home_Screens/new_details.dart';
 import 'package:adventuresclub/models/filter_data_model/programs_model.dart';
 import 'package:adventuresclub/models/home_services/become_partner.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
@@ -114,7 +115,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return Details(gm: gm);
+          return NewDetails(gm: gm);
         },
       ),
     );
@@ -581,17 +582,19 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                       : Card(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
-                                vertical: 20.0, horizontal: 4),
+                                vertical: 10.0, horizontal: 10),
                             child: Column(
                               children: [
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    MyText(
-                                      text: uRequestList[index]
-                                          .region, //'Location Name',
-                                      color: blackColor,
+                                    CircleAvatar(
+                                      radius: 26,
+                                      backgroundImage:
+                                          //  ExactAssetImage('images/airrides.png'),
+                                          NetworkImage(
+                                              "${'${Constants.baseUrl}/public/uploads/'}${uRequestList[index].sImage[0].thumbnail}"),
                                     ),
                                     Row(
                                       children: [
@@ -671,13 +674,6 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                   thickness: 2,
                                 ),
                                 ListTile(
-                                  leading: CircleAvatar(
-                                    radius: 26,
-                                    backgroundImage:
-                                        //  ExactAssetImage('images/airrides.png'),
-                                        NetworkImage(
-                                            "${'${Constants.baseUrl}/public/uploads/'}${uRequestList[index].sImage[0].thumbnail}"),
-                                  ),
                                   title: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -685,26 +681,56 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                           MainAxisAlignment.start,
                                       //direction: Axis.vertical,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            MyText(
-                                              text: "bookingNumber".tr(),
-                                              color: blackColor,
-                                              weight: FontWeight.w700,
-                                              size: 13,
-                                              height: 1.8,
-                                            ),
-                                            MyText(
-                                              text:
-                                                  uRequestList[index].BookingId,
-                                              color: greyColor,
-                                              weight: FontWeight.w400,
-                                              size: 13,
-                                              height: 1.8,
-                                            ),
-                                          ],
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        RichText(
+                                          text: TextSpan(
+                                            text: "bookingNumber"
+                                                .tr(), //"Activity Name: ",
+                                            style: const TextStyle(
+                                                color: bluishColor,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: 'Raleway'),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: uRequestList[index]
+                                                      .BookingId
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: blackColor,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily: 'Raleway')),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        RichText(
+                                          text: TextSpan(
+                                            text: "Region"
+                                                .tr(), //"Activity Name: ",
+                                            style: const TextStyle(
+                                                color: bluishColor,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: 'Raleway'),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: uRequestList[index]
+                                                      .region, //'Location Name',
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: blackColor,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily: 'Raleway')),
+                                            ],
+                                          ),
                                         ),
                                         const SizedBox(
                                           height: 5,
@@ -714,199 +740,259 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                             text: "activityName"
                                                 .tr(), //"Activity Name: ",
                                             style: const TextStyle(
-                                                color: blackColor,
-                                                fontSize: 13,
+                                                color: bluishColor,
+                                                fontSize: 14,
+                                                fontFamily: 'Raleway',
                                                 fontWeight: FontWeight.bold),
                                             children: <TextSpan>[
                                               TextSpan(
                                                   text: uRequestList[index]
                                                       .adventureName,
                                                   style: const TextStyle(
-                                                      fontSize: 13,
+                                                      fontSize: 14,
                                                       color: blackColor,
                                                       fontWeight:
-                                                          FontWeight.w300,
-                                                      fontFamily: 'Roboto')),
+                                                          FontWeight.w400,
+                                                      fontFamily: 'Raleway')),
+                                            ],
+                                          ),
+                                        ),
+                                        // const SizedBox(
+                                        //   height: 5,
+                                        // ),
+                                        RichText(
+                                          text: TextSpan(
+                                            text: "providerName".tr(),
+                                            style: const TextStyle(
+                                                color: bluishColor,
+                                                fontSize: 14,
+                                                fontFamily: 'Raleway',
+                                                fontWeight: FontWeight.bold),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text:
+                                                      uRequestList[index].pName,
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: blackColor,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily: 'Raleway')),
+                                            ],
+                                          ),
+                                        ),
+                                        // Row(
+                                        //   mainAxisAlignment:
+                                        //       MainAxisAlignment.start,
+                                        //   children: [
+                                        //     MyText(
+                                        //       text: "providerName"
+                                        //           .tr(), //"Provider Name: ",
+                                        //       color: blackColor,
+                                        //       weight: FontWeight.w700,
+                                        //       size: 13,
+                                        //       height: 1.8,
+                                        //     ),
+                                        //     MyText(
+                                        //       text: uRequestList[index].pName,
+                                        //       color: greyColor,
+                                        //       weight: FontWeight.w400,
+                                        //       size: 13,
+                                        //       height: 1.8,
+                                        //     ),
+                                        //   ],
+                                        // ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        RichText(
+                                          text: TextSpan(
+                                            text: "bookingDate".tr(),
+                                            style: const TextStyle(
+                                                color: bluishColor,
+                                                fontSize: 14,
+                                                fontFamily: 'Raleway',
+                                                fontWeight: FontWeight.bold),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text:
+                                                      uRequestList[index].bDate,
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: blackColor,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily: 'Raleway')),
+                                            ],
+                                          ),
+                                        ),
+                                        // Row(
+                                        //   mainAxisAlignment:
+                                        //       MainAxisAlignment.start,
+                                        //   children: [
+                                        //     MyText(
+                                        //       text: "bookingDate"
+                                        //           .tr(), //"Booking Date: ",
+                                        //       color: blackColor,
+                                        //       weight: FontWeight.w700,
+                                        //       size: 13,
+                                        //       height: 1.8,
+                                        //     ),
+                                        //     MyText(
+                                        //       text: uRequestList[index].bDate,
+                                        //       color: greyColor,
+                                        //       weight: FontWeight.w400,
+                                        //       size: 13,
+                                        //       height: 1.8,
+                                        //     ),
+                                        //   ],
+                                        // ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        RichText(
+                                          text: TextSpan(
+                                            text: "activityDate".tr(),
+                                            style: const TextStyle(
+                                                color: bluishColor,
+                                                fontSize: 14,
+                                                fontFamily: 'Raleway',
+                                                fontWeight: FontWeight.bold),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text:
+                                                      uRequestList[index].aDate,
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: blackColor,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily: 'Raleway')),
                                             ],
                                           ),
                                         ),
                                         const SizedBox(
-                                          height: 2,
+                                          height: 5,
                                         ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            MyText(
-                                              text: "providerName"
-                                                  .tr(), //"Provider Name: ",
-                                              color: blackColor,
-                                              weight: FontWeight.w700,
-                                              size: 13,
-                                              height: 1.8,
-                                            ),
-                                            MyText(
-                                              text: uRequestList[index].pName,
-                                              color: greyColor,
-                                              weight: FontWeight.w400,
-                                              size: 13,
-                                              height: 1.8,
-                                            ),
-                                          ],
+                                        RichText(
+                                          text: TextSpan(
+                                            text: "registrations".tr(),
+                                            style: const TextStyle(
+                                                color: bluishColor,
+                                                fontSize: 14,
+                                                fontFamily: 'Raleway',
+                                                fontWeight: FontWeight.bold),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: uRequestList[index]
+                                                      .registration,
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: blackColor,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily: 'Raleway')),
+                                            ],
+                                          ),
                                         ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            MyText(
-                                              text: "bookingDate"
-                                                  .tr(), //"Booking Date: ",
-                                              color: blackColor,
-                                              weight: FontWeight.w700,
-                                              size: 13,
-                                              height: 1.8,
-                                            ),
-                                            MyText(
-                                              text: uRequestList[index].bDate,
-                                              color: greyColor,
-                                              weight: FontWeight.w400,
-                                              size: 13,
-                                              height: 1.8,
-                                            ),
-                                          ],
+                                        const SizedBox(
+                                          height: 5,
                                         ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            MyText(
-                                              text: "activityDate"
-                                                  .tr(), //"Activity Date : ",
-                                              color: blackColor,
-                                              weight: FontWeight.w700,
-                                              size: 13,
-                                              height: 1.8,
-                                            ),
-                                            MyText(
-                                              text: uRequestList[index].aDate,
-                                              color: greyColor,
-                                              weight: FontWeight.w400,
-                                              size: 13,
-                                              height: 1.8,
-                                            ),
-                                          ],
+                                        RichText(
+                                          text: TextSpan(
+                                            text: "unitCost".tr(),
+                                            style: const TextStyle(
+                                                color: bluishColor,
+                                                fontSize: 14,
+                                                fontFamily: 'Raleway',
+                                                fontWeight: FontWeight.bold),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text:
+                                                      "${uRequestList[index].uCost} "
+                                                      " ${uRequestList[index].currency}",
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: blackColor,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily: 'Raleway')),
+                                            ],
+                                          ),
                                         ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            MyText(
-                                              text: "registrations"
-                                                  .tr(), //"Registrations :",
-                                              color: blackColor,
-                                              weight: FontWeight.w700,
-                                              size: 13,
-                                              height: 1.8,
-                                            ),
-                                            MyText(
-                                              text: uRequestList[index]
-                                                  .registration,
-                                              color: greyColor,
-                                              weight: FontWeight.w400,
-                                              size: 13,
-                                              height: 1.8,
-                                            ),
-                                          ],
+                                        const SizedBox(
+                                          height: 5,
                                         ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            MyText(
-                                              text: "unitCost"
-                                                  .tr(), //"Unit Cost : ",
-                                              color: blackColor,
-                                              weight: FontWeight.w700,
-                                              size: 13,
-                                              height: 1.8,
-                                            ),
-                                            MyText(
-                                              text:
-                                                  "${uRequestList[index].uCost} "
-                                                  " ${uRequestList[index].currency}",
-                                              color: greyColor,
-                                              weight: FontWeight.w400,
-                                              size: 13,
-                                              height: 1.8,
-                                            ),
-                                          ],
+                                        RichText(
+                                          text: TextSpan(
+                                            text: "totalCost".tr(),
+                                            style: const TextStyle(
+                                                color: bluishColor,
+                                                fontSize: 14,
+                                                fontFamily: 'Raleway',
+                                                fontWeight: FontWeight.bold),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text:
+                                                      "${uRequestList[index].tCost} "
+                                                      " ${uRequestList[index].currency}",
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: blackColor,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily: 'Raleway')),
+                                            ],
+                                          ),
                                         ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            MyText(
-                                              text: "totalCost"
-                                                  .tr(), //"Total Cost : ",
-                                              color: blackColor,
-                                              weight: FontWeight.w700,
-                                              size: 13,
-                                              height: 1.8,
-                                            ),
-                                            MyText(
-                                              text:
-                                                  "${uRequestList[index].tCost} "
-                                                  " ${uRequestList[index].currency}",
-                                              color: greyColor,
-                                              weight: FontWeight.w400,
-                                              size: 13,
-                                              height: 1.8,
-                                            ),
-                                          ],
+                                        const SizedBox(
+                                          height: 5,
                                         ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            MyText(
-                                              text: "payableCost"
-                                                  .tr(), //"Payable Cost : ",
-                                              color: blackColor,
-                                              weight: FontWeight.w700,
-                                              size: 13,
-                                              height: 1.8,
-                                            ),
-                                            MyText(
-                                              text:
-                                                  "${uRequestList[index].tCost} "
-                                                  " ${uRequestList[index].currency}",
-                                              color: greyColor,
-                                              weight: FontWeight.w400,
-                                              size: 13,
-                                              height: 1.8,
-                                            ),
-                                          ],
+                                        RichText(
+                                          text: TextSpan(
+                                            text: "payableCost".tr(),
+                                            style: const TextStyle(
+                                                color: bluishColor,
+                                                fontSize: 14,
+                                                fontFamily: 'Raleway',
+                                                fontWeight: FontWeight.bold),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text:
+                                                      "${uRequestList[index].tCost} "
+                                                      " ${uRequestList[index].currency}",
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: blackColor,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily: 'Raleway')),
+                                            ],
+                                          ),
                                         ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            MyText(
-                                              text: "paymentChannel"
-                                                  .tr(), //"Payment Channel : ",
-                                              color: blackColor,
-                                              weight: FontWeight.w700,
-                                              size: 13,
-                                              height: 1.8,
-                                            ),
-                                            MyText(
-                                              text: uRequestList[index].pChanel,
-                                              color: greyColor,
-                                              weight: FontWeight.w400,
-                                              size: 13,
-                                              height: 1.8,
-                                            ),
-                                          ],
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        RichText(
+                                          text: TextSpan(
+                                            text: "paymentChannel".tr(),
+                                            style: const TextStyle(
+                                                color: bluishColor,
+                                                fontSize: 14,
+                                                fontFamily: 'Raleway',
+                                                fontWeight: FontWeight.bold),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: uRequestList[index]
+                                                      .pChanel,
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      color: blackColor,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily: 'Raleway')),
+                                            ],
+                                          ),
                                         ),
                                       ]),
                                 ),

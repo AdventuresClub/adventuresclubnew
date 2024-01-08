@@ -455,10 +455,7 @@ class _RequestListViewState extends State<RequestListView> {
       itemCount: uRequestListInv.length,
       scrollDirection: Axis.vertical,
       itemBuilder: (context, index) {
-        return
-            // UpcomingRequestInformation(
-            //     uRequestListInv[index], showConfirmation);
-            Card(
+        return Card(
           key: Key(uRequestListInv[index].BookingId.toString()),
           elevation: 4,
           child: Padding(
