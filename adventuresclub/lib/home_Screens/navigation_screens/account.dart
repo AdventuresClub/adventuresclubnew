@@ -31,7 +31,6 @@ import '../../models/get_country.dart';
 import '../../models/packages_become_partner/packages_become_partner_model.dart';
 import '../../new_signup/new_register.dart';
 import '../../provider/services_provider.dart';
-import '../../widgets/buttons/button.dart';
 import '../become_partner/become_partner_packages.dart';
 
 class Account extends StatefulWidget {
