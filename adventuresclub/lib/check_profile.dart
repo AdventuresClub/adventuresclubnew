@@ -12,7 +12,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'constants.dart';
 import 'home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:http/http.dart' as http;
-import 'new_signup/new_register.dart';
 
 class CheckProfile extends StatefulWidget {
   const CheckProfile({Key? key}) : super(key: key);

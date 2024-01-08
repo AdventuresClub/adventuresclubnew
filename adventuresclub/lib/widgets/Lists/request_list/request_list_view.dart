@@ -382,9 +382,8 @@ class _RequestListViewState extends State<RequestListView> {
         });
         message("Dropped Successfully");
       }
-      print(response.statusCode);
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
     }
   }
 
@@ -450,7 +449,7 @@ class _RequestListViewState extends State<RequestListView> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 00),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 00),
       shrinkWrap: true,
       physics: const ClampingScrollPhysics(),
       itemCount: uRequestListInv.length,
@@ -463,88 +462,83 @@ class _RequestListViewState extends State<RequestListView> {
           key: Key(uRequestListInv[index].BookingId.toString()),
           elevation: 4,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 2),
+            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    MyText(
-                      text:
-                          uRequestListInv[index].region.tr(), //'Location Name',
-                      color: blackColor,
-                      weight: FontWeight.bold,
+                    CircleAvatar(
+                      radius: 26,
+                      backgroundImage:
+                          //ExactAssetImage('images/airrides.png'),
+                          NetworkImage(
+                              "${'${Constants.baseUrl}/public/uploads/'}${uRequestListInv[index].sImage[0].imageUrl}"),
                     ),
-                    Row(
-                      children: [
-                        if (uRequestListInv[index].status == "0")
-                          MyText(
-                            text: "requested".tr(), //'Confirmed',
-                            color: blueColor1,
-                            weight: FontWeight.bold,
-                          ),
-                        if (uRequestListInv[index].status == "1")
-                          MyText(
-                            text: "accepted".tr(), //'Confirmed',
-                            color: orangeColor,
-                            weight: FontWeight.bold,
-                          ),
-                        if (uRequestListInv[index].status == "2")
-                          MyText(
-                            text: "paid".tr(), //'Confirmed',
-                            color: greenColor1,
-                            weight: FontWeight.bold,
-                          ),
-                        if (uRequestListInv[index].status == "3")
-                          MyText(
-                            text: "declined".tr(), //'Confirmed',
-                            color: redColor,
-                            weight: FontWeight.bold,
-                          ),
-                        if (uRequestListInv[index].status == "4")
-                          MyText(
-                            text: "completed".tr(), //'Confirmed',
-                            color: greenColor1,
-                            weight: FontWeight.bold,
-                          ),
-                        if (uRequestListInv[index].status == "5")
-                          MyText(
-                            text: "dropped".tr(), //'Confirmed',
-                            color: redColor,
-                            weight: FontWeight.bold,
-                          ),
-                        if (uRequestListInv[index].status == "6")
-                          MyText(
-                            text: "confirm".tr(), //'Confirmed',
-                            color: greenColor1,
-                            weight: FontWeight.bold,
-                          ),
-                        if (uRequestListInv[index].status == "7")
-                          MyText(
-                            text: "unpaid".tr(), //'Confirmed',
-                            color: greenColor1,
-                            weight: FontWeight.bold,
-                          ),
-                        if (uRequestListInv[index].status == "8")
-                          MyText(
-                            text: "payOnArrival".tr(), //'Confirmed',
-                            color: greenColor1,
-                            weight: FontWeight.bold,
-                          ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        // GestureDetector(
-                        //   onTap: () => showConfirmation(
-                        //       uRequestListInv[index][index].serviceId.toString()),
-                        //   child: const Icon(
-                        //     Icons.delete_forever_outlined,
-                        //     color: redColor,
-                        //     size: 20,
-                        //   ),
-                        // )
-                      ],
-                    )
+                    if (uRequestListInv[index].status == "0")
+                      MyText(
+                        text: "requested".tr(), //'Confirmed',
+                        color: blueColor1,
+                        weight: FontWeight.bold,
+                      ),
+                    if (uRequestListInv[index].status == "1")
+                      MyText(
+                        text: "accepted".tr(), //'Confirmed',
+                        color: orangeColor,
+                        weight: FontWeight.bold,
+                      ),
+                    if (uRequestListInv[index].status == "2")
+                      MyText(
+                        text: "paid".tr(), //'Confirmed',
+                        color: greenColor1,
+                        weight: FontWeight.bold,
+                      ),
+                    if (uRequestListInv[index].status == "3")
+                      MyText(
+                        text: "declined".tr(), //'Confirmed',
+                        color: redColor,
+                        weight: FontWeight.bold,
+                      ),
+                    if (uRequestListInv[index].status == "4")
+                      MyText(
+                        text: "completed".tr(), //'Confirmed',
+                        color: greenColor1,
+                        weight: FontWeight.bold,
+                      ),
+                    if (uRequestListInv[index].status == "5")
+                      MyText(
+                        text: "dropped".tr(), //'Confirmed',
+                        color: redColor,
+                        weight: FontWeight.bold,
+                      ),
+                    if (uRequestListInv[index].status == "6")
+                      MyText(
+                        text: "confirm".tr(), //'Confirmed',
+                        color: greenColor1,
+                        weight: FontWeight.bold,
+                      ),
+                    if (uRequestListInv[index].status == "7")
+                      MyText(
+                        text: "unpaid".tr(), //'Confirmed',
+                        color: greenColor1,
+                        weight: FontWeight.bold,
+                      ),
+                    if (uRequestListInv[index].status == "8")
+                      MyText(
+                        text: "payOnArrival".tr(), //'Confirmed',
+                        color: greenColor1,
+                        weight: FontWeight.bold,
+                      ),
+
+                    // GestureDetector(
+                    //   onTap: () => showConfirmation(
+                    //       uRequestListInv[index][index].serviceId.toString()),
+                    //   child: const Icon(
+                    //     Icons.delete_forever_outlined,
+                    //     color: redColor,
+                    //     size: 20,
+                    //   ),
+                    // )
                   ],
                 ),
                 const Divider(
@@ -552,261 +546,353 @@ class _RequestListViewState extends State<RequestListView> {
                   color: greyColor,
                 ),
                 ListTile(
+                  dense: true,
+                  visualDensity: VisualDensity.compact,
                   // mainAxisAlignment: MainAxisAlignment.start,
                   // crossAxisAlignment: CrossAxisAlignment.start,
                   //children: [
                   //CircleImageAvatar(uRequestList.sImage),
                   //UpcomingRequestImage(rm),
-                  leading: CircleAvatar(
-                    radius: 26,
-                    backgroundImage:
-                        //ExactAssetImage('images/airrides.png'),
-                        NetworkImage(
-                            "${'${Constants.baseUrl}/public/uploads/'}${uRequestListInv[index].sImage[0].imageUrl}"),
-                  ),
-                  title: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12.0, vertical: 5),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            MyText(
-                              text: "bookingNumber".tr(),
-                              color: blackColor,
-                              weight: FontWeight.w500,
-                              size: 13,
-                              height: 1.8,
-                            ),
-                            MyText(
-                              text: uRequestListInv[index].BookingId,
-                              color: greyColor,
-                              weight: FontWeight.w400,
-                              size: 13,
-                              height: 1.8,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 2),
-                        RichText(
-                          text: TextSpan(
-                            text: "activityName".tr(), //"Activity Name: ",
-                            style: const TextStyle(
-                              color: blackColor,
-                              fontSize: 13,
-                            ),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: uRequestListInv[index].adventureName,
-                                  style: const TextStyle(
-                                      fontSize: 13,
-                                      color: greyColor,
-                                      letterSpacing: 1,
-                                      fontWeight: FontWeight.w300,
-                                      fontFamily: 'Roboto')),
-                            ],
+                  //leading: ,
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          MyText(
+                            text: "bookingNumber".tr(),
+                            color: bluishColor,
+                            weight: FontWeight.bold,
+                            size: 14,
+                            // height: 1.8,
                           ),
-                        ),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.start,
-                        //   children: [
-                        //     Expanded(
-                        //       child: MyText(
-                        //         text: "activityName".tr(),
-                        //         color: blackColor,
-                        //         weight: FontWeight.w500,
-                        //         size: 13,
-                        //         height: 1.8,
-                        //       ),
-                        //     ),
-                        //     Expanded(
-                        //       child: MyText(
-                        //         text:
-                        //             uRequestListInv[index].adventureName.tr(),
-                        //         color: greyColor,
-                        //         weight: FontWeight.w400,
-                        //         size: 13,
-                        //         height: 1.8,
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            MyText(
-                              text: "providerName".tr(),
-                              color: blackColor,
-                              weight: FontWeight.w500,
-                              size: 13,
-                              height: 1.8,
-                            ),
-                            MyText(
-                              text: uRequestListInv[index].pName.tr(),
-                              color: greyColor,
-                              weight: FontWeight.w400,
-                              size: 13,
-                              height: 1.8,
-                            ),
+                          MyText(
+                            text: uRequestListInv[index].BookingId,
+                            color: blackColor,
+                            //weight: FontWeight.w400,
+                            size: 14,
+                            // height: 1.8,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 2),
+                      RichText(
+                        text: TextSpan(
+                          text: "activityName".tr(), //"Activity Name: ",
+                          style: const TextStyle(
+                              color: bluishColor,
+                              fontSize: 14,
+                              fontFamily: 'Raleway',
+                              fontWeight: FontWeight.bold),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: uRequestListInv[index].adventureName,
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    color: blackColor,
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.w300,
+                                    fontFamily: 'Raleway')),
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            MyText(
-                              text: "bookingDate".tr(),
-                              color: blackColor,
-                              weight: FontWeight.w500,
-                              size: 13,
-                              height: 1.8,
-                            ),
-                            MyText(
-                              text: uRequestListInv[index].bDate.tr(),
-                              color: greyColor,
-                              weight: FontWeight.w400,
-                              size: 13,
-                              height: 1.8,
-                            ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: "Region".tr(), //"Activity Name: ",
+                          style: const TextStyle(
+                              color: bluishColor,
+                              fontSize: 14,
+                              fontFamily: 'Raleway',
+                              fontWeight: FontWeight.bold),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: uRequestListInv[index].region.tr(),
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    color: blackColor,
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.w300,
+                                    fontFamily: 'Raleway')),
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            MyText(
-                              text: "activityDate".tr(),
-                              color: blackColor,
-                              weight: FontWeight.w500,
-                              size: 13,
-                              height: 1.8,
-                            ),
-                            MyText(
-                              text: uRequestListInv[index].aDate.tr(),
-                              color: greyColor,
-                              weight: FontWeight.w400,
-                              size: 13,
-                              height: 1.8,
-                            ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.start,
+                      //   children: [
+                      //     Expanded(
+                      //       child: MyText(
+                      //         text: "activityName".tr(),
+                      //         color: blackColor,
+                      //         weight: FontWeight.w500,
+                      //         size: 13,
+                      //         height: 1.8,
+                      //       ),
+                      //     ),
+                      //     Expanded(
+                      //       child: MyText(
+                      //         text:
+                      //             uRequestListInv[index].adventureName.tr(),
+                      //         color: greyColor,
+                      //         weight: FontWeight.w400,
+                      //         size: 13,
+                      //         height: 1.8,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      RichText(
+                        text: TextSpan(
+                          text: "providerName".tr(), //"Activity Name: ",
+                          style: const TextStyle(
+                              color: bluishColor,
+                              fontSize: 14,
+                              fontFamily: 'Raleway',
+                              fontWeight: FontWeight.bold),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: uRequestListInv[index].pName.tr(),
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    color: blackColor,
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.w300,
+                                    fontFamily: 'Raleway')),
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            MyText(
-                              text: "registrations".tr(),
-                              color: blackColor,
-                              weight: FontWeight.w400,
-                              size: 13,
-                              height: 1.8,
-                            ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: "bookingDate".tr(),
+                          style: const TextStyle(
+                              color: bluishColor,
+                              fontSize: 14,
+                              fontFamily: 'Raleway',
+                              fontWeight: FontWeight.bold),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: uRequestListInv[index].bDate.tr(),
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    color: blackColor,
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.w300,
+                                    fontFamily: 'Raleway')),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: "activityDate".tr(),
+                          style: const TextStyle(
+                              color: bluishColor,
+                              fontSize: 14,
+                              fontFamily: 'Raleway',
+                              fontWeight: FontWeight.bold),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: uRequestListInv[index].aDate.tr(),
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    color: blackColor,
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.w300,
+                                    fontFamily: 'Raleway')),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: "registrations".tr(),
+                          style: const TextStyle(
+                              color: bluishColor,
+                              fontSize: 14,
+                              fontFamily: 'Raleway',
+                              fontWeight: FontWeight.bold),
+                          children: <TextSpan>[
                             if (uRequestListInv[index].adult != 0)
-                              MyText(
+                              TextSpan(
                                 text: "${uRequestListInv[index].adult} "
                                         " ${"adult"}"
                                     .tr(),
-                                color: greyTextColor,
-                                weight: FontWeight.w400,
-                                size: 12,
-                                height: 1.8,
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    color: blackColor,
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.w300,
+                                    fontFamily: 'Raleway'),
                               ),
                             if (uRequestListInv[index].kids != 0)
-                              MyText(
-                                text: "${uRequestListInv[index].kids} "
-                                        " ${"kids"}"
+                              TextSpan(
+                                text: "${uRequestListInv[index].adult} "
+                                        " ${"adult"}"
                                     .tr(),
-                                color: greyTextColor,
-                                weight: FontWeight.w400,
-                                size: 12,
-                                height: 1.8,
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    color: blackColor,
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.w300,
+                                    fontFamily: 'Raleway'),
                               ),
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            MyText(
-                              text: "unitCost".tr(),
-                              color: blackColor,
-                              weight: FontWeight.w500,
-                              size: 13,
-                              height: 1.8,
-                            ),
-                            MyText(
-                              text: "${uRequestListInv[index].uCost.tr()}"
-                                  " "
-                                  "${uRequestListInv[index].currency}",
-                              color: greyColor,
-                              weight: FontWeight.w400,
-                              size: 13,
-                              height: 1.8,
-                            ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: "unitCost".tr(),
+                          style: const TextStyle(
+                              color: bluishColor,
+                              fontSize: 14,
+                              fontFamily: 'Raleway',
+                              fontWeight: FontWeight.bold),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: "${uRequestListInv[index].uCost.tr()}"
+                                    " "
+                                    "${uRequestListInv[index].currency}",
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    color: blackColor,
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.w300,
+                                    fontFamily: 'Raleway')),
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            MyText(
-                              text: "totalCost".tr(),
-                              color: blackColor,
-                              weight: FontWeight.w500,
-                              size: 13,
-                              height: 1.8,
-                            ),
-                            MyText(
-                              text: "${uRequestListInv[index].tCost.tr()}"
-                                  " "
-                                  "${uRequestListInv[index].currency}",
-                              color: greyColor,
-                              weight: FontWeight.w400,
-                              size: 13,
-                              height: 1.8,
-                            ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: "totalCost".tr(),
+                          style: const TextStyle(
+                              color: bluishColor,
+                              fontSize: 14,
+                              fontFamily: 'Raleway',
+                              fontWeight: FontWeight.bold),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: "${uRequestListInv[index].tCost.tr()}"
+                                    " "
+                                    "${uRequestListInv[index].currency}",
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    color: blackColor,
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.w300,
+                                    fontFamily: 'Raleway')),
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            MyText(
-                              text: "payableCost".tr(),
-                              color: blackColor,
-                              weight: FontWeight.w500,
-                              size: 13,
-                              height: 1.8,
-                            ),
-                            MyText(
-                              text: "${uRequestListInv[index].tCost.tr()}"
-                                  " "
-                                  "${uRequestListInv[index].currency}",
-                              color: greyColor,
-                              weight: FontWeight.w400,
-                              size: 13,
-                              height: 1.8,
-                            ),
+                      ),
+
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: "payableCost".tr(),
+                          style: const TextStyle(
+                              color: bluishColor,
+                              fontSize: 14,
+                              fontFamily: 'Raleway',
+                              fontWeight: FontWeight.bold),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: "${uRequestListInv[index].tCost.tr()}"
+                                    " "
+                                    "${uRequestListInv[index].currency}",
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    color: blackColor,
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.w300,
+                                    fontFamily: 'Raleway')),
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            MyText(
-                              text: "paymentChannel".tr(),
-                              color: blackColor,
-                              weight: FontWeight.w500,
-                              size: 13,
-                              height: 1.8,
-                            ),
-                            MyText(
-                              text: uRequestListInv[index].pChanel.tr(),
-                              color: greyColor,
-                              weight: FontWeight.w400,
-                              size: 13,
-                              height: 1.8,
-                            ),
+                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.start,
+                      //   children: [
+                      //     MyText(
+                      //       text: "payableCost".tr(),
+                      //       color: blackColor,
+                      //       weight: FontWeight.w500,
+                      //       size: 13,
+                      //       height: 1.8,
+                      //     ),
+                      //     MyText(
+                      //       text: "${uRequestListInv[index].tCost.tr()}"
+                      //           " "
+                      //           "${uRequestListInv[index].currency}",
+                      //       color: greyColor,
+                      //       weight: FontWeight.w400,
+                      //       size: 13,
+                      //       height: 1.8,
+                      //     ),
+                      //   ],
+                      // ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: "paymentChannel".tr(),
+                          style: const TextStyle(
+                              color: bluishColor,
+                              fontSize: 14,
+                              fontFamily: 'Raleway',
+                              fontWeight: FontWeight.bold),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: uRequestListInv[index].pChanel.tr(),
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    color: blackColor,
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.w300,
+                                    fontFamily: 'Raleway')),
                           ],
                         ),
-                        const SizedBox(height: 10),
-                      ],
-                    ),
+                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.start,
+                      //   children: [
+                      //     MyText(
+                      //       text: "paymentChannel".tr(),
+                      //       color: blackColor,
+                      //       weight: FontWeight.w500,
+                      //       size: 13,
+                      //       height: 1.8,
+                      //     ),
+                      //     MyText(
+                      //       text: uRequestListInv[index].pChanel.tr(),
+                      //       color: greyColor,
+                      //       weight: FontWeight.w400,
+                      //       size: 13,
+                      //       height: 1.8,
+                      //     ),
+                      //   ],
+                      // ),
+                      const SizedBox(height: 10),
+                    ],
                   ),
                   // ],
                 ),
