@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls, avoid_print
 
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/home_Screens/details.dart';
 import 'package:adventuresclub/home_Screens/new_details.dart';
 import 'package:adventuresclub/models/home_services/home_services_model.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';

@@ -398,256 +398,185 @@ class _AboutState extends State<About> {
   abc() {}
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: whiteColor,
-        elevation: 1.5,
-        centerTitle: true,
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: Image.asset(
-            'images/backArrow.png',
-            height: 20,
-          ),
-        ),
-        title: MyText(
-          text: 'serviceProviderProfile'.tr(),
-          color: bluishColor,
-          weight: FontWeight.bold,
-        ),
-      ),
-      body: loading
-          ? Text("loading".tr())
-          : SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ListTile(
-                          leading: CircleAvatar(
-                            radius: 40,
-                            backgroundImage: NetworkImage(
-                              "${'${Constants.baseUrl}/public/'}${profile.profileImage}",
-                            ),
-                          ),
-                          title: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              MyText(
-                                text: profile.name, //'Alexander',
-                                weight: FontWeight.w600,
-                                color: blackColor,
-                                size: 18,
-                              ),
-                              // MyText(
-                              //   text: profile
-                              //       .bp.companyName, //'Travel Instructor',
-                              //   weight: FontWeight.w500,
-                              //   color: greyTextColor,
-                              //   size: 14,
-                              // ),
-                              // MyText(
-                              //   overFlow: TextOverflow.fade,
-                              //   text: "${profile.bp.location}"
-                              //       "${","}"
-                              //       "${profile.bp.address}", //'County, City',
-                              //   weight: FontWeight.w500,
-                              //   color: greyTextColor,
-                              //   size: 12,
-                              // ),
-                            ],
-                          ),
-                          trailing: Container(
-                            height: MediaQuery.of(context).size.height / 20,
-                            width: MediaQuery.of(context).size.width / 4,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: const Color.fromARGB(255, 15, 71, 116),
-                                width: 2.0,
-                              ),
-                              color: const Color.fromARGB(255, 15, 71, 116),
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(28)),
-                            ),
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: () => selected(context),
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'chat'.tr(),
-                                          style: const TextStyle(
-                                              color: whiteColor,
-                                              fontWeight: FontWeight.w400,
-                                              letterSpacing: 0.8,
-                                              fontFamily: "Roboto",
-                                              fontSize: 14),
+    return SafeArea(
+      child: Scaffold(
+        // appBar: AppBar(
+        //   backgroundColor: whiteColor,
+        //   elevation: 1.5,
+        //   centerTitle: true,
+        //   leading: IconButton(
+        //     onPressed: () => Navigator.pop(context),
+        //     icon: Image.asset(
+        //       'images/backArrow.png',
+        //       height: 20,
+        //     ),
+        //   ),
+        //   title: MyText(
+        //     text: 'serviceProviderProfile'.tr(),
+        //     color: bluishColor,
+        //     weight: FontWeight.bold,
+        //   ),
+        // ),
+        body: loading
+            ? Text("loading".tr())
+            : NestedScrollView(
+                physics: BouncingScrollPhysics(),
+                headerSliverBuilder: (((context, innerBoxIsScrolled) {
+                  return [
+                    SliverAppBar(
+                      toolbarHeight: 50,
+                      expandedHeight: 280,
+                      elevation: 1,
+                      floating: false,
+                      pinned: true,
+                      title: MyText(
+                        text: 'serviceProviderProfile'.tr(),
+                        color: bluishColor,
+                        weight: FontWeight.bold,
+                        size: 22,
+                      ),
+                      flexibleSpace: Padding(
+                        padding: const EdgeInsets.only(top: 30.0),
+                        child: FlexibleSpaceBar(
+                          background: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ListTile(
+                                  dense: true,
+                                  leading: CircleAvatar(
+                                    radius: 40,
+                                    backgroundImage: NetworkImage(
+                                      "${'${Constants.baseUrl}/public/'}${profile.profileImage}",
+                                    ),
+                                  ),
+                                  title: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      MyText(
+                                        text: profile.name, //'Alexander',
+                                        weight: FontWeight.w600,
+                                        color: blackColor,
+                                        size: 18,
+                                      ),
+                                    ],
+                                  ),
+                                  trailing: Container(
+                                    height:
+                                        MediaQuery.of(context).size.height / 20,
+                                    width:
+                                        MediaQuery.of(context).size.width / 4,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: const Color.fromARGB(
+                                            255, 15, 71, 116),
+                                        width: 2.0,
+                                      ),
+                                      color: const Color.fromARGB(
+                                          255, 15, 71, 116),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(28)),
+                                    ),
+                                    child: Material(
+                                      color: Colors.transparent,
+                                      child: InkWell(
+                                        onTap: () => selected(context),
+                                        child: Center(
+                                          child: Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  'chat'.tr(),
+                                                  style: const TextStyle(
+                                                      color: whiteColor,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      letterSpacing: 0.8,
+                                                      fontFamily: "Raleway",
+                                                      fontSize: 14),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
                                         ),
-                                      ],
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    MyText(
+                                      text: 'about'.tr(),
+                                      color: bluishColor,
+                                      size: 18,
+                                      weight: FontWeight.bold,
+                                    ),
+                                    MyText(
+                                      text: profile.bp
+                                          .companyName, //'Travel Instructor',
+                                      //weight: FontWeight.w500,
+                                      color: blackColor,
+                                      size: 14,
+                                    ),
+                                    MyText(
+                                      overFlow: TextOverflow.fade,
+                                      text: "${profile.bp.location}"
+                                          "${","}"
+                                          "${profile.bp.address}", //'County, City',
+                                      //weight: FontWeight.w500,
+                                      color: blackColor,
+                                      size: 14,
+                                    ),
+                                  ],
+                                ),
+                                const Divider(
+                                  color: greyColor,
+                                ),
+                                // const SizedBox(
+                                //   height: 20,
+                                // ),
+                                // Padding(
+                                //   padding: const EdgeInsets.only(left: 20.0),
+                                //   child: Align(
+                                //     alignment: Alignment.centerLeft,
+                                //     child: MyText(
+                                //       text: 'providerAdventure'.tr(),
+                                //       color: greyColor,
+                                //       weight: FontWeight.w600,
+                                //       size: 16,
+                                //     ),
+                                //   ),
+                                // ),
+                              ],
                             ),
                           ),
-                          // const Image(
-                          //   image: ExactAssetImage('images/forward.png'),
-                          // ),
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        // Button(
-                        //     'Chat',
-                        //     const Color.fromARGB(255, 15, 71, 116),
-                        //     const Color.fromARGB(255, 15, 71, 116),
-                        //     whiteColor,
-                        //     14,
-                        //     selected(),
-                        //     Icons.add,
-                        //     whiteColor,
-                        //     false,
-                        //     4,
-                        //     'Roboto',
-                        //     FontWeight.w400,
-                        //     26),
-                        // Container(
-                        //   height: MediaQuery.of(context).size.height / 20,
-                        //   width: MediaQuery.of(context).size.width / 4,
-                        //   decoration: BoxDecoration(
-                        //     border: Border.all(
-                        //       color: const Color.fromARGB(255, 15, 71, 116),
-                        //       width: 2.0,
-                        //     ),
-                        //     color: const Color.fromARGB(255, 15, 71, 116),
-                        //     borderRadius:
-                        //         const BorderRadius.all(Radius.circular(28)),
-                        //   ),
-                        //   child: Material(
-                        //     color: Colors.transparent,
-                        //     child: InkWell(
-                        //       onTap: () => selected(context),
-                        //       child: Center(
-                        //         child: Padding(
-                        //           padding: const EdgeInsets.only(left: 0),
-                        //           child: Row(
-                        //             mainAxisAlignment: MainAxisAlignment.center,
-                        //             children: [
-                        //               Text(
-                        //                 'chat'.tr(),
-                        //                 style: const TextStyle(
-                        //                     color: whiteColor,
-                        //                     fontWeight: FontWeight.w400,
-                        //                     letterSpacing: 0.8,
-                        //                     fontFamily: "Roboto",
-                        //                     fontSize: 14),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            MyText(
-                              text: 'about'.tr(),
-                              color: greyColor,
-                              size: 18,
-                              weight: FontWeight.bold,
-                            ),
-                            MyText(
-                              text:
-                                  profile.bp.companyName, //'Travel Instructor',
-                              weight: FontWeight.w500,
-                              color: greyTextColor,
-                              size: 14,
-                            ),
-                            MyText(
-                              overFlow: TextOverflow.fade,
-                              text: "${profile.bp.location}"
-                                  "${","}"
-                                  "${profile.bp.address}", //'County, City',
-                              weight: FontWeight.w500,
-                              color: greyTextColor,
-                              size: 12,
-                            ),
-                          ],
-                        ),
-                        // const SizedBox(
-                        //   height: 10,
-                        // ),
-
-                        // Align(
-                        //   alignment: Alignment.centerLeft,
-                        //   child: MyText(
-                        //     text: profile.bp
-                        //         .description, //'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu tempus dolor, sit amet laoreet libero. Quisque eleifend, elit placerat condimentum condimentum, nibh lectus mollis eros, at condimentum metus turpis et turpis. Maecenas eu finibus erat. Ut nec gravida nibh. Donec sed nisi volutpat, fermentum felis in, bibendum dolor. ',
-                        //     color: greyColor,
-                        //     size: 14,
-                        //     weight: FontWeight.w500,
-                        //   ),
-                        // ),
-                        // Container(
-                        //     padding: const EdgeInsets.only(bottom: 15),
-                        //     child: Row(
-                        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //       children: [
-                        //         Row(
-                        //           children: [
-                        //             Column(
-                        //               crossAxisAlignment:
-                        //                   CrossAxisAlignment.start,
-                        //               children: [],
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       ],
-                        //     )),
-                        // const SizedBox(
-                        //   height: 5,
-                        // ),
-                      ],
-                    ),
-                  ),
-                  const Divider(
-                    color: greyColor,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: MyText(
-                        text: 'providerAdventure'.tr(),
-                        color: greyColor,
-                        weight: FontWeight.w600,
-                        size: 16,
                       ),
-                    ),
-                  ),
-                  pLoading
-                      ? MyText(text: "loading".tr())
-                      : ProvidedAdventureGrid(allServices)
-                ],
+                    )
+                  ];
+                })),
+                body: Column(
+                  children: [
+                    pLoading
+                        ? MyText(text: "loading".tr())
+                        : Expanded(child: ProvidedAdventureGrid(allServices))
+                  ],
+                ),
               ),
-            ),
+      ),
     );
   }
 }
