@@ -144,203 +144,135 @@ class _FavListState extends State<FavList> {
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Card(
                         child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width / 4,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4),
-                              image: DecorationImage(
-                                  colorFilter: ColorFilter.mode(
-                                      Colors.black.withOpacity(0.2),
-                                      BlendMode.darken),
-                                  image: NetworkImage(
-                                    "${"${Constants.baseUrl}/public/uploads/"}${nm[index].sm[index].thumbnail}",
-                                  ),
-                                  // const ExactAssetImage(
-                                  //   'images/Wadi-Hawar.png',
-                                  // ),
-                                  fit: BoxFit.cover),
-                            ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Container(
+                          width: 80,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
+                            image: DecorationImage(
+                                colorFilter: ColorFilter.mode(
+                                    Colors.black.withOpacity(0.2),
+                                    BlendMode.darken),
+                                image: NetworkImage(
+                                  "${"${Constants.baseUrl}/public/uploads/"}${nm[index].sm[index].thumbnail}",
+                                ),
+                                // const ExactAssetImage(
+                                //   'images/Wadi-Hawar.png',
+                                // ),
+                                fit: BoxFit.cover),
                           ),
                         ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(right: 0.0, top: 5),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  MyText(
-                                      text: nm[index]
-                                          .adventureName, //'Wadi Haver',
-                                      color: blackColor,
-                                      size: 14,
-                                      weight: FontWeight.w500,
-                                      fontFamily: 'Roboto'),
-                                  const SizedBox(width: 20),
-                                  const SizedBox(
-                                    height: 5,
+                        Expanded(
+                          child: ListTile(
+                            title: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                MyText(
+                                    text:
+                                        nm[index].adventureName, //'Wadi Haver',
+                                    color: bluishColor,
+                                    size: 14,
+                                    weight: FontWeight.bold,
+                                    fontFamily: 'Raleway'),
+                                // const SizedBox(width: 10),
+                                // const SizedBox(
+                                //   height: 5,
+                                // ),
+                                if (nm[index].stars != 0)
+                                  RatingBar.builder(
+                                    initialRating: convert(nm[index].stars),
+                                    itemSize: 12,
+                                    minRating: convert(nm[index].stars),
+                                    direction: Axis.horizontal,
+                                    allowHalfRating: true,
+                                    itemCount: 5,
+                                    itemPadding: const EdgeInsets.symmetric(
+                                        horizontal: 1.0),
+                                    itemBuilder: (context, _) => const Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                      size: 12,
+                                    ),
+                                    onRatingUpdate: (rating) {
+                                      print(rating);
+                                    },
                                   ),
-                                  if (nm[index].stars != 0)
-                                    RatingBar.builder(
-                                      initialRating: convert(nm[index].stars),
-                                      itemSize: 12,
-                                      minRating: convert(nm[index].stars),
-                                      direction: Axis.horizontal,
-                                      allowHalfRating: true,
-                                      itemCount: 5,
-                                      itemPadding: const EdgeInsets.symmetric(
-                                          horizontal: 1.0),
-                                      itemBuilder: (context, _) => const Icon(
-                                        Icons.star,
-                                        color: Colors.amber,
-                                        size: 12,
-                                      ),
-                                      onRatingUpdate: (rating) {
-                                        print(rating);
-                                      },
+                                if (nm[index].stars == 0)
+                                  RatingBar.builder(
+                                    initialRating: convertInt(nm[index].stars),
+                                    itemSize: 12,
+                                    minRating: convertInt(nm[index].stars),
+                                    direction: Axis.horizontal,
+                                    allowHalfRating: true,
+                                    itemCount: 5,
+                                    itemPadding: const EdgeInsets.symmetric(
+                                        horizontal: 1.0),
+                                    itemBuilder: (context, _) => const Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                      size: 12,
                                     ),
-                                  if (nm[index].stars == 0)
-                                    RatingBar.builder(
-                                      initialRating:
-                                          convertInt(nm[index].stars),
-                                      itemSize: 12,
-                                      minRating: convertInt(nm[index].stars),
-                                      direction: Axis.horizontal,
-                                      allowHalfRating: true,
-                                      itemCount: 5,
-                                      itemPadding: const EdgeInsets.symmetric(
-                                          horizontal: 1.0),
-                                      itemBuilder: (context, _) => const Icon(
-                                        Icons.star,
-                                        color: Colors.amber,
-                                        size: 12,
-                                      ),
-                                      onRatingUpdate: (rating) {
-                                        print(rating);
-                                      },
-                                    ),
-                                  const SizedBox(height: 5),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    onRatingUpdate: (rating) {
+                                      print(rating);
+                                    },
+                                  ),
+                                const SizedBox(height: 5),
+                                MyText(
+                                    text: "${nm[index].currency} "
+                                        " ${nm[index].costInc}", //'ر.ع 20,000',
+                                    color: bluishColor,
+                                    size: 14,
+                                    weight: FontWeight.bold,
+                                    fontFamily: 'Raleway'),
+                                const SizedBox(
+                                  height: 2,
+                                ),
+                                Image(
+                                  image:
+                                      const ExactAssetImage('images/line.png'),
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.10,
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                GestureDetector(
+                                  onTap: () => goToProvider(
+                                      nm[index].providerId.toString()),
+                                  child: Row(
                                     children: [
+                                      CircleAvatar(
+                                        radius: 14,
+                                        backgroundImage: NetworkImage(
+                                            nm[index].providerProfile),
+                                        // ExactAssetImage(
+                                        //     'images/avatar.png'),
+                                        backgroundColor: transparentColor,
+                                        // child: Image(
+                                        //   image: NetworkImage(
+                                        //       nm[index].providerProfile),
+                                        //   // ExactAssetImage(
+                                        //   //     'images/avatar.png'),
+                                        //   fit: BoxFit.fill,
+                                        // ),
+                                      ),
+                                      const SizedBox(width: 10),
                                       MyText(
-                                          text: "${nm[index].currency} "
-                                              " ${nm[index].costInc}", //'ر.ع 20,000',
-                                          color: greyColor3,
-                                          size: 14,
-                                          weight: FontWeight.w500,
+                                          text: nm[index]
+                                              .providerName, //'Alexander',
+                                          color: blackColor,
+                                          size: 12,
                                           fontFamily: 'Roboto'),
                                     ],
                                   ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Image(
-                                    image: const ExactAssetImage(
-                                        'images/line.png'),
-                                    width: MediaQuery.of(context).size.width /
-                                        2.10,
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () => goToProvider(
-                                            nm[index].providerId.toString()),
-                                        child: Row(
-                                          children: [
-                                            CircleAvatar(
-                                              radius: 14,
-                                              backgroundImage: NetworkImage(
-                                                  nm[index].providerProfile),
-                                              // ExactAssetImage(
-                                              //     'images/avatar.png'),
-                                              backgroundColor: transparentColor,
-                                              // child: Image(
-                                              //   image: NetworkImage(
-                                              //       nm[index].providerProfile),
-                                              //   // ExactAssetImage(
-                                              //   //     'images/avatar.png'),
-                                              //   fit: BoxFit.fill,
-                                              // ),
-                                            ),
-                                            const SizedBox(width: 10),
-                                            MyText(
-                                                text: nm[index]
-                                                    .providerName, //'Alexander',
-                                                color: blackColor,
-                                                size: 12,
-                                                fontFamily: 'Roboto'),
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const SizedBox(
-                                  height: 10,
                                 ),
-
-                                const CircleAvatar(
-                                    radius: 18,
-                                    backgroundColor: Colors.red,
-                                    child: Icon(
-                                      Icons.favorite,
-                                      color: whiteColor,
-                                      size: 18,
-                                    )),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-
-                                // Image(image:  ExactAssetImage('images/line.png'),width: 40,),
-                                GestureDetector(
-                                  onTap: () => selected(
-                                      context,
-                                      nm[index].serviceId,
-                                      nm[index].providerId),
-                                  child: Icon(
-                                    Icons.chat,
-                                    color: blackColor.withOpacity(0.5),
-                                    size: 30,
-                                  ),
-                                ),
-                                // Text(
-                                //   'Chat',
-                                //   style: TextStyle(
-                                //       color: bluishColor, fontFamily: 'Roboto'),
-                                // ),
                               ],
-                            )
-                          ],
+                            ),
+                          ),
                         ),
                       ],
                     )),

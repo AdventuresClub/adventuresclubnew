@@ -399,7 +399,7 @@ class _RequestListViewState extends State<RequestListView> {
     Navigator.of(context).pop();
   }
 
-  void paymentPromt() async {
+  void paymentPromt(UpcomingRequestsModel up) async {
     showDialog(
         context: context,
         builder: (ctx) => SimpleDialog(
@@ -415,12 +415,18 @@ class _RequestListViewState extends State<RequestListView> {
                 const SizedBox(
                   height: 10,
                 ), //Text("data"),
-                //  widget.
-                const Text(
-                  "You can only make payments once the adventure request has been approved.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.w500),
-                ),
+                if (up.status == "0")
+                  const Text(
+                    "You can only make payments once the adventure request has been approved.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                if (up.status == "8")
+                  const Text(
+                    "You Can Pay Cash To Provider on Arrival",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ),
                 // text:
                 //     "After approval you'll be notified and have to buy your subscription package",
                 // size: 18,
@@ -430,18 +436,19 @@ class _RequestListViewState extends State<RequestListView> {
                   height: 10,
                 ),
                 ElevatedButton(
-                    onPressed: cancel,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: bluishColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
+                  onPressed: cancel,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: bluishColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    child: MyText(
-                      text: "Okay, Got it",
-                      weight: FontWeight.bold,
-                      color: whiteColor,
-                    ))
+                  ),
+                  child: MyText(
+                    text: "Okay, Got it",
+                    weight: FontWeight.bold,
+                    color: whiteColor,
+                  ),
+                ),
                 //BottomButton(bgColor: blueButtonColor, onTap: homePage)
               ],
             ));
@@ -978,7 +985,7 @@ class _RequestListViewState extends State<RequestListView> {
                                     uRequestListInv[index].tCost,
                                     uRequestListInv[index])
                                 : uRequestListInv[index].status != "2"
-                                    ? paymentPromt
+                                    ? () => paymentPromt(uRequestListInv[index])
                                     : () {},
                             child: Center(
                               child: Text(
