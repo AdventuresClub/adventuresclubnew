@@ -98,6 +98,10 @@ class _ServicesPlansState extends State<ServicesPlans> {
                         ),
                       ),
                       // Divider(
+                      //   thickness: 1,
+                      //   color: blackColor.withOpacity(0.2),
+                      // ),
+                      // Divider(
                       //   // endIndent: 30,
                       //   // indent: 70,
                       //   thickness: 1,
@@ -170,11 +174,6 @@ class _ServicesPlansState extends State<ServicesPlans> {
                       //     size: 14,
                       //   ),
                       // ),
-                      const Divider(
-                        endIndent: 30,
-                        indent: 30,
-                        thickness: 2,
-                      )
                     ],
                   ),
               ],

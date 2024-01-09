@@ -362,6 +362,10 @@ class _NewDetailsTabState extends State<NewDetailsTab>
             // program tab
             // 2 nd Tab /////////
             ServicesPlans(widget.gm.sPlan, widget.gm.programmes),
+            Divider(
+              thickness: 1,
+              color: blackColor.withOpacity(0.2),
+            ),
             // 3 rd Tab /////////
             // gathering location
             ServiceGatheringLocation(
