@@ -415,6 +415,7 @@ class _RequestListViewState extends State<RequestListView> {
                 const SizedBox(
                   height: 10,
                 ), //Text("data"),
+                //  widget.
                 const Text(
                   "You can only make payments once the adventure request has been approved.",
                   textAlign: TextAlign.center,
