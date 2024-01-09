@@ -1,5 +1,6 @@
 import 'package:adventuresclub/home_Screens/accounts/about.dart';
 import 'package:adventuresclub/home_Screens/details.dart';
+import 'package:adventuresclub/home_Screens/new_details.dart';
 import 'package:adventuresclub/widgets/services_card.dart';
 import 'package:flutter/material.dart';
 import '../../models/home_services/services_model.dart';
@@ -36,7 +37,7 @@ class _ProvidedAdventureGridState extends State<ProvidedAdventureGrid> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return Details(gm: gm);
+          return NewDetails(gm: gm);
         },
       ),
     );
