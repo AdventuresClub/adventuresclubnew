@@ -784,28 +784,28 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                   thickness: 1.5,
                   color: blackColor.withOpacity(0.4),
                 ),
-                MyText(
-                  text: 'registrationClosedBy'.tr(),
-                  color: greyShadeColor,
-                  align: TextAlign.center,
-                  weight: FontWeight.w500,
-                  size: 16,
-                ),
-                Row(
-                  children: [
-                    MyText(
-                      text: 'daysBeforeTheActivityStarts',
-                      color: greyShadeColor,
-                      align: TextAlign.center,
-                      size: 14,
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    TFWithSize('2', widget.daysBeforeActController, 16,
-                        lightGreyColor, 8)
-                  ],
-                ),
+                // MyText(
+                //   text: 'registrationClosedBy'.tr(),
+                //   color: greyShadeColor,
+                //   align: TextAlign.center,
+                //   weight: FontWeight.w500,
+                //   size: 16,
+                // ),
+                // Row(
+                //   children: [
+                //     MyText(
+                //       text: 'daysBeforeTheActivityStarts',
+                //       color: greyShadeColor,
+                //       align: TextAlign.center,
+                //       size: 14,
+                //     ),
+                //     const SizedBox(
+                //       width: 10,
+                //     ),
+                //     TFWithSize('2', widget.daysBeforeActController, 16,
+                //         lightGreyColor, 8)
+                //   ],
+                // ),
               ],
             ),
           );

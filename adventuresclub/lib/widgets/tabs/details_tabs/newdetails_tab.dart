@@ -7,13 +7,10 @@ import 'package:adventuresclub/home_Screens/accounts/new_about.dart';
 import 'package:adventuresclub/models/getParticipants/get_participants_model.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
-import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
-import 'package:adventuresclub/widgets/tabs/details_tabs/service_description.dart';
 import 'package:adventuresclub/widgets/tabs/details_tabs/service_gathering_location.dart';
 import 'package:adventuresclub/widgets/tabs/details_tabs/service_program/service_plans.dart';
 import 'package:adventuresclub/widgets/tabs/new_service_description.dart';
-import 'package:adventuresclub/widgets/tabs/participants.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -350,6 +347,78 @@ class _NewDetailsTabState extends State<NewDetailsTab>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    Image.network(
+                      "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.serviceCategoryImage}",
+                      height: 42,
+                      width: 42,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    MyText(
+                      text: widget.gm.serviceCategory,
+                      color: bluishColor,
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    Image.network(
+                      "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.serviceSectorImage}",
+                      height: 42,
+                      width: 42,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    MyText(
+                      text: widget.gm.serviceSector,
+                      color: bluishColor,
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    Image.network(
+                      "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.serviceTypeImage}",
+                      height: 42,
+                      width: 42,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    MyText(
+                      text: widget.gm.serviceType,
+                      color: bluishColor,
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    Image.network(
+                      "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.serviceLevelImage}",
+                      height: 42,
+                      width: 42,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    MyText(
+                      text: widget.gm.serviceLevel,
+                      color: bluishColor,
+                    )
+                  ],
+                ),
+              ],
+            ),
             NewServiceDescription(
                 widget.gm,
                 text1,
@@ -454,8 +523,10 @@ class _NewDetailsTabState extends State<NewDetailsTab>
             const SizedBox(
               height: 10,
             ),
-            NewAbout(
-                id: widget.gm.providerId.toString(), sId: widget.gm.serviceId),
+            if (widget.show!)
+              NewAbout(
+                  id: widget.gm.providerId.toString(),
+                  sId: widget.gm.serviceId),
 
             // 4th Tab /////////
             // ${Constants.baseUrl}/newchat/18/126/20

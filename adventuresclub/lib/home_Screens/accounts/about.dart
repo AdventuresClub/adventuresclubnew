@@ -346,6 +346,10 @@ class _AboutState extends State<About> {
             int.tryParse(element['service_id'].toString()) ?? 0,
             element['name'] ?? "",
             element['provider_profile'] ?? "",
+            element['service_category_image'] ?? "",
+            element['service_sector_image'] ?? "",
+            element['service_type_image'] ?? "",
+            element['service_level_image'] ?? "",
             element['including_gerea_and_other_taxes'] ?? "",
             element['excluding_gerea_and_other_taxes'] ?? "",
             gIAm,
@@ -572,7 +576,12 @@ class _AboutState extends State<About> {
                   children: [
                     pLoading
                         ? MyText(text: "loading".tr())
-                        : Expanded(child: ProvidedAdventureGrid(allServices))
+                        : Expanded(
+                            child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16.0, vertical: 12),
+                            child: ProvidedAdventureGrid(allServices),
+                          ))
                   ],
                 ),
               ),

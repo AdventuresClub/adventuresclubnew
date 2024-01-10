@@ -50,6 +50,10 @@ class ServicesModel {
   int serviceId; // new addition
   String pName;
   String pProfile;
+  String serviceCategoryImage;
+  String serviceSectorImage;
+  String serviceTypeImage;
+  String serviceLevelImage;
   String iaot; // new
   String eaot; // new
   List<IncludedActivitiesModel> activityIncludes;
@@ -107,6 +111,10 @@ class ServicesModel {
     this.serviceId,
     this.pName,
     this.pProfile,
+    this.serviceCategoryImage,
+    this.serviceSectorImage,
+    this.serviceTypeImage,
+    this.serviceLevelImage,
     this.iaot,
     this.eaot,
     this.activityIncludes,

@@ -318,6 +318,10 @@ class _MyServicesState extends State<MyServices> {
           int.tryParse(element['service_id'].toString()) ?? 0,
           element['provided_name'] ?? "",
           element['provider_profile'] ?? "",
+          element['service_category_image'] ?? "",
+          element['service_sector_image'] ?? "",
+          element['service_type_image'] ?? "",
+          element['service_level_image'] ?? "",
           element['including_gerea_and_other_taxes'] ?? "",
           element['excluding_gerea_and_other_taxes'] ?? "",
           gIAm,
@@ -466,28 +470,41 @@ class _MyServicesState extends State<MyServices> {
         body: RefreshIndicator(
           onRefresh: myServicesApi,
           child: Padding(
-            padding:
-                const EdgeInsets.only(top: 12.0, bottom: 12, left: 5, right: 5),
-            child: GridView.count(
-              physics: const AlwaysScrollableScrollPhysics(),
-              shrinkWrap: true,
-              mainAxisSpacing: 2,
-              childAspectRatio: 1,
-              crossAxisSpacing: 2,
-              crossAxisCount: 2,
-              children: List.generate(
-                filteredServices.length, // widget.profileURL.length,
-                (index) {
+            padding: const EdgeInsets.only(
+                top: 12.0, bottom: 12, left: 16, right: 16),
+            child: ListView.builder(
+                itemCount: filteredServices.length,
+                scrollDirection: Axis.vertical,
+                itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: () => goToDetails(filteredServices[index]),
-                    child: ServicesCard(
-                      filteredServices[index],
-                      show: true,
-                    ),
-                  );
-                },
-              ),
-            ),
+                      onTap: () => goToDetails(filteredServices[index]),
+                      child: SizedBox(
+                          height: 300,
+                          child: ServicesCard(
+                            filteredServices[index],
+                            providerShow: false,
+                          )));
+                }),
+            // GridView.count(
+            //   physics: const AlwaysScrollableScrollPhysics(),
+            //   shrinkWrap: true,
+            //   mainAxisSpacing: 2,
+            //   childAspectRatio: 1,
+            //   crossAxisSpacing: 2,
+            //   crossAxisCount: 2,
+            //   children: List.generate(
+            //     filteredServices.length, // widget.profileURL.length,
+            //     (index) {
+            //       return GestureDetector(
+            //         onTap: () => goToDetails(filteredServices[index]),
+            //         child: ServicesCard(
+            //           filteredServices[index],
+            //           show: true,
+            //         ),
+            //       );
+            //     },
+            //   ),
+            // ),
           ),
         ),
       ),

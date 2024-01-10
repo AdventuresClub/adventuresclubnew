@@ -1053,31 +1053,37 @@ class _DescriptionState extends State<Description> {
                     thickness: 1.5,
                     color: blackColor.withOpacity(0.4),
                   ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: MyText(
-                      text: 'Registration Closed By',
-                      color: greyShadeColor,
-                      align: TextAlign.center,
-                      weight: FontWeight.w500,
-                      size: 16,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      MyText(
-                        text: 'Days before the activity starts',
-                        color: greyShadeColor,
-                        align: TextAlign.center,
-                        size: 14,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      TFWithSize('2', provider.daysBeforeActController, 16,
-                          lightGreyColor, 8)
-                    ],
-                  ),
+                  // Align(
+                  //   alignment: Alignment.centerLeft,
+                  //   child: MyText(
+                  //     text: 'Registration Closed By',
+                  //     color: greyShadeColor,
+                  //     align: TextAlign.center,
+                  //     weight: FontWeight.w500,
+                  //     size: 16,
+                  //   ),
+                  // ),
+                  // Row(
+                  //   children: [
+                  //     MyText(
+                  //       text: 'Days before the activity starts',
+                  //       color: greyShadeColor,
+                  //       align: TextAlign.center,
+                  //       size: 14,
+                  //     ),
+                  //     const SizedBox(
+                  //       width: 10,
+                  //     ),
+                  //     TFWithSize(
+                  //       '2',
+                  //       provider.daysBeforeActController,
+                  //       16,
+                  //       lightGreyColor,
+                  //       8,
+                  //       edit: false,
+                  //     )
+                  //   ],
+                  // ),
                 ],
               ),
             );

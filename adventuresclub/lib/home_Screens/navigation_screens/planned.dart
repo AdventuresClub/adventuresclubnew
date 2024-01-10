@@ -2,6 +2,7 @@
 
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/about.dart';
+import 'package:adventuresclub/home_Screens/new_details.dart';
 import 'package:adventuresclub/models/home_services/home_services_model.dart';
 import 'package:adventuresclub/models/services/create_services/availability_plan_model.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
@@ -376,7 +377,7 @@ class _PlannedState extends State<Planned> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return Details(gm: gm);
+          return NewDetails(gm: gm);
         },
       ),
     );
@@ -567,7 +568,7 @@ class _PlannedState extends State<Planned> {
                         return GestureDetector(
                             onTap: () => goToDetails(allSer[index]),
                             child: SizedBox(
-                                height: 340,
+                                height: 300,
                                 child: ServicesCard(allSer[index])));
                       }),
                 ),

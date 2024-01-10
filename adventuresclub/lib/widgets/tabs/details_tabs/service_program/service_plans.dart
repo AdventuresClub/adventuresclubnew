@@ -48,16 +48,19 @@ class _ServicesPlansState extends State<ServicesPlans> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ListTile(
-                        contentPadding: const EdgeInsets.all(4),
+                        dense: true,
+                        visualDensity: VisualDensity.compact,
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 4),
                         leading: CircleAvatar(
                           backgroundColor: blackColor,
-                          radius: 32,
+                          radius: 26,
                           child: CircleAvatar(
                             backgroundColor: whiteColor,
-                            radius: 27,
+                            radius: 18,
                             child: CircleAvatar(
                               backgroundColor: greenishColor,
-                              radius: 25,
+                              radius: 15,
                               child: MyText(
                                 text: l[index],
                                 weight: FontWeight.bold,
@@ -66,7 +69,7 @@ class _ServicesPlansState extends State<ServicesPlans> {
                           ),
                         ),
                         title: Padding(
-                          padding: const EdgeInsets.only(top: 18.0),
+                          padding: const EdgeInsets.only(top: 4.0),
                           child: Row(
                             children: [
                               // Container(

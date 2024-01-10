@@ -38,7 +38,10 @@ class ServiceListState extends State<ServiceList> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return NewDetails(gm: gm);
+          return NewDetails(
+            gm: gm,
+            show: true,
+          );
         },
       ),
     );

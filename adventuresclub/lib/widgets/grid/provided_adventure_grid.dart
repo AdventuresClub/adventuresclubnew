@@ -1,5 +1,4 @@
 import 'package:adventuresclub/home_Screens/accounts/about.dart';
-import 'package:adventuresclub/home_Screens/details.dart';
 import 'package:adventuresclub/home_Screens/new_details.dart';
 import 'package:adventuresclub/widgets/services_card.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +51,11 @@ class _ProvidedAdventureGridState extends State<ProvidedAdventureGrid> {
           return GestureDetector(
               onTap: () => goToDetails(widget.allSer[index]),
               child: SizedBox(
-                  height: 340, child: ServicesCard(widget.allSer[index])));
+                  height: 300,
+                  child: ServicesCard(
+                    widget.allSer[index],
+                    providerShow: false,
+                  )));
         });
     // GridView.count(
     //   physics: const ScrollPhysics(),

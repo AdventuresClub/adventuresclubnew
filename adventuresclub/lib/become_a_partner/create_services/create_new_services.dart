@@ -553,11 +553,11 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         message("Please select from the service plan");
         return;
       }
-      if (formattedDate == "startDate") {
+      if (sPlan == 2 && formattedDate == "startDate") {
         message("Please select start Date");
         return;
       }
-      if (endDate == "End Date") {
+      if (sPlan == 2 && endDate == "End Date") {
         message("Please select End Date");
         return;
       }
