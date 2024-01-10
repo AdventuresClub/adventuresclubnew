@@ -119,8 +119,8 @@ class FilterProvider with ChangeNotifier {
       List<dynamic> a = result['activities_including'];
       a.forEach((act) {
         int id = int.tryParse(act['id'].toString()) ?? 0;
-        ActivitiesIncludeModel activities =
-            ActivitiesIncludeModel(id, act['activity'].toString());
+        ActivitiesIncludeModel activities = ActivitiesIncludeModel(
+            id, act['activity'].toString(), act['images'] ?? "");
         activitiesFilter.add(activities);
       });
       List<dynamic> r = result['regions'];

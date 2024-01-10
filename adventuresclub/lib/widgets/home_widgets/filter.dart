@@ -288,6 +288,7 @@ class _FilterPageState extends State<FilterPage> {
           element['flag'],
           element['code'],
           element['id'],
+          element['currency'] ?? "",
         );
         countriesList1.add(gc);
       });

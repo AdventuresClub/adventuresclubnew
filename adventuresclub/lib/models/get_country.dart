@@ -4,5 +4,7 @@ class GetCountryModel {
   String flag;
   dynamic code;
   int id;
-  GetCountryModel(this.country, this.shortName, this.flag, this.code, this.id);
+  String currency;
+  GetCountryModel(this.country, this.shortName, this.flag, this.code, this.id,
+      this.currency);
 }

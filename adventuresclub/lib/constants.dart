@@ -78,6 +78,7 @@ class Constants {
   static String password = "";
   static String country = "";
   static String countryFlag = "";
+  static String countryCurrency = "";
   static String phone = "";
   static String chatCount = "";
   static int resultService = 0;
@@ -595,8 +596,8 @@ class Constants {
       List<dynamic> a = result['activities_including'];
       a.forEach((act) {
         int id = int.tryParse(act['id'].toString()) ?? 0;
-        ActivitiesIncludeModel activities =
-            ActivitiesIncludeModel(id, act['activity'].toString());
+        ActivitiesIncludeModel activities = ActivitiesIncludeModel(
+            id, act['activity'].toString(), act['image'] ?? "");
         activitiesFilter.add(activities);
       });
       List<dynamic> r = result['regions'];
@@ -800,8 +801,8 @@ class Constants {
       List<dynamic> a = result['activities_including'];
       a.forEach((act) {
         int id = int.tryParse(act['id'].toString()) ?? 0;
-        ActivitiesIncludeModel activities =
-            ActivitiesIncludeModel(id, act['activity'].toString());
+        ActivitiesIncludeModel activities = ActivitiesIncludeModel(
+            id, act['activity'].toString(), act['image'] ?? "");
         activitiesFilter.add(activities);
       });
       List<dynamic> r = result['regions'];

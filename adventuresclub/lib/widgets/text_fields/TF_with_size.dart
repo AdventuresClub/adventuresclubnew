@@ -78,10 +78,10 @@ class _TFWithSizeState extends State<TFWithSize> {
         // ],
         decoration: InputDecoration(
           labelText: widget.label,
-          labelStyle: TextStyle(
-              color: blackColor.withOpacity(0.5),
-              fontWeight: FontWeight.w500,
-              fontSize: 15,
+          labelStyle: const TextStyle(
+              color: blackColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
               fontFamily: 'Raleway'),
           // contentPadding: EdgeInsets.symmetric(
           //     vertical: widget.verticalPadding, horizontal: 18),

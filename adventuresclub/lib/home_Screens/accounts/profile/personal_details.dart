@@ -365,6 +365,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
           element['flag'],
           element['code'],
           element['id'],
+          element['currency'] ?? "",
         );
         countriesList1.add(gc);
       });

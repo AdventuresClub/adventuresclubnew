@@ -162,6 +162,7 @@ class _SignUpState extends State<SignUp> {
           element['flag'],
           element['code'],
           element['id'],
+          element['currency'] ?? "",
         );
         countriesList1.add(gc);
       });

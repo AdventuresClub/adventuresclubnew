@@ -11,10 +11,12 @@ class MultiLineField extends StatefulWidget {
   final bool? show;
   final int? maximumLetters;
   final int? minimumLetters;
+  final String? label;
   const MultiLineField(this.hinttext, this.lines, this.color, this.controller,
       {this.show = false,
       this.maximumLetters = 500,
       this.minimumLetters = 1,
+      this.label,
       super.key});
 
   @override
@@ -31,6 +33,12 @@ class _MultiLineFieldState extends State<MultiLineField> {
       controller: widget.controller,
       maxLines: widget.lines,
       decoration: InputDecoration(
+          labelText: widget.label,
+          labelStyle: const TextStyle(
+              color: blackColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+              fontFamily: 'Raleway'),
           // contentPadding:
           //     const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
           hintText: widget.hinttext.tr(),

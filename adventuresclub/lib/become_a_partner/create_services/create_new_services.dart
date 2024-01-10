@@ -1450,8 +1450,11 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                           return SizedBox(
                             width: MediaQuery.of(context).size.width,
                             child: CheckboxListTile(
-                              // contentPadding: const EdgeInsets.only(
-                              //     left: 0, top: 0, bottom: 0, right: 25),
+                              secondary: Image.network(
+                                "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${dependencyList[index].name}",
+                                height: 36,
+                                width: 26,
+                              ),
                               side: const BorderSide(color: bluishColor),
                               checkboxShape: const RoundedRectangleBorder(
                                 side: BorderSide(color: bluishColor),

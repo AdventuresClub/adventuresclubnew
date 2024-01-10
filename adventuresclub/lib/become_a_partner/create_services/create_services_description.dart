@@ -212,11 +212,12 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                                   child: Column(
                                     children: [
                                       CheckboxListTile(
-                                        //          secondary: Image.network(
-                                        //   "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${activitiesFilter[i].}",
-                                        //   height: 36,
-                                        //   width: 26,
-                                        // ),
+                                        secondary: Image.network(
+                                          //   "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.serviceCategoryImage}",
+                                          "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${activitiesFilter[i].image}",
+                                          height: 36,
+                                          width: 26,
+                                        ),
                                         side: const BorderSide(
                                             color: bluishColor),
                                         checkboxShape:

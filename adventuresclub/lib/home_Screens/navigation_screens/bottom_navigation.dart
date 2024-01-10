@@ -78,6 +78,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           element['flag'],
           element['code'],
           element['id'],
+          element['currency'] ?? "",
         );
         countriesList1.add(gc);
       });
@@ -168,6 +169,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
         Constants.country = selectedCountry;
         Constants.countryFlag = element.flag;
         Constants.countryId = element.id;
+        Constants.countryCurrency = element.currency;
         //});
       } else {
         if (element.country == "OMAN") {
@@ -178,6 +180,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           Constants.country = selectedCountry;
           Constants.countryFlag = element.flag;
           Constants.countryId = element.id;
+          Constants.countryCurrency = element.currency;
           // });
         }
       }

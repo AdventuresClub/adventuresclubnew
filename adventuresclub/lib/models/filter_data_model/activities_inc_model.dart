@@ -1,5 +1,6 @@
 class ActivitiesIncludeModel {
   int id;
   String activity;
-  ActivitiesIncludeModel(this.id, this.activity);
+  String image;
+  ActivitiesIncludeModel(this.id, this.activity, this.image);
 }

@@ -576,7 +576,8 @@ class _AccountState extends State<Account> {
     }
   }
 
-  void addCountry(String country, int id, String flag) async {
+  void addCountry(
+      String country, int id, String flag, String countryCurrency) async {
     clearAll();
     Navigator.of(context).pop();
     updateCountryId(id);
@@ -588,6 +589,7 @@ class _AccountState extends State<Account> {
       Constants.countryId = id;
       Constants.country = country;
       Constants.countryFlag = flag;
+      Constants.countryCurrency = countryCurrency;
     });
     homePage();
   }
@@ -614,6 +616,7 @@ class _AccountState extends State<Account> {
           element['flag'],
           element['code'],
           element['id'],
+          element['currency'] ?? "",
         );
         countriesList1.add(gc);
       });
@@ -717,10 +720,10 @@ class _AccountState extends State<Account> {
                         title: Text(filteredServices[index].country),
                         onTap: () {
                           addCountry(
-                            filteredServices[index].country,
-                            filteredServices[index].id,
-                            filteredServices[index].flag,
-                          );
+                              filteredServices[index].country,
+                              filteredServices[index].id,
+                              filteredServices[index].flag,
+                              filteredServices[index].currency);
                         },
                       );
                     }),
@@ -2430,10 +2433,10 @@ class _AccountState extends State<Account> {
                                   title: Text(filteredServices[index].country),
                                   onTap: () {
                                     addCountry(
-                                      filteredServices[index].country,
-                                      filteredServices[index].id,
-                                      filteredServices[index].flag,
-                                    );
+                                        filteredServices[index].country,
+                                        filteredServices[index].id,
+                                        filteredServices[index].flag,
+                                        filteredServices[index].currency);
                                   },
                                 );
                               }),

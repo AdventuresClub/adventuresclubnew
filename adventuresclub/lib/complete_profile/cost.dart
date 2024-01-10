@@ -289,88 +289,151 @@ class _CostState extends State<Cost> {
             height: 5,
           ),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                child: TFWithSize(
-                  show: TextInputType.number,
-                  'setCost',
-                  widget.costOne,
-                  16,
-                  lightGreyColor,
-                  3.4,
-                  type: true,
-                  maximumLetters: 10,
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              // Expanded(
-              //   child: TFWithSize(
-              //     show: TextInputType.number,
-              //     'setCost',
-              //     widget.costTwo,
-              //     16,
-              //     lightGreyColor,
-              //     3.4,
-              //     type: true,
-              //   ),
-              // ),
-
               Column(
                 children: [
-                  Container(
-                    height: 55,
-                    width: 120,
-                    //width: MediaQuery.of(context).size.width / 2.4,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 12),
-                    decoration: BoxDecoration(
-                      color: lightGreyColor,
-                      border: Border.all(
-                          color: greyColor.withOpacity(0.5), width: 1.5),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Center(
+                  TFWithSize(
+                    //label: "Set Cost",
+                    show: TextInputType.number,
+                    //'setCost',
+                    "${Constants.countryCurrency} ${"(${Constants.country} Currency)"}",
+
+                    widget.costOne,
+                    16,
+                    lightGreyColor,
+                    2.2,
+                    type: true,
+                    maximumLetters: 10,
+                    label: "Set Cost",
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  SizedBox(
+                    width: 180,
+                    child: Expanded(
                       child: MyText(
-                        text: "omr", //getCountry.toString(),
-                        color: blackTypeColor.withOpacity(0.5),
-                        size: 14,
-                        weight: FontWeight.w500,
+                        text: "includingGears",
+                        color: redColor,
+                        size: 12,
+                        weight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 22),
                 ],
               ),
+              // const SizedBox(
+              //   width: 10,
+              // ),
+              Column(
+                children: [
+                  TFWithSize(
+                    show: TextInputType.number,
+                    "${Constants.countryCurrency} ${"(${Constants.country} Currency)"}",
+                    widget.costTwo,
+                    16,
+                    lightGreyColor,
+                    2.2,
+                    type: true,
+                    maximumLetters: 10,
+                    label: "Set Cost",
+                  ),
+                  SizedBox(
+                    width: 180,
+                    child: Expanded(
+                      child: MyText(
+                        text: "excludingGears",
+                        color: redColor,
+                        size: 12,
+                        weight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              // Column(
+              //   children: [
+              //     Container(
+              //       height: 55,
+              //       width: 120,
+              //       //width: MediaQuery.of(context).size.width / 2.4,
+              //       padding: const EdgeInsets.symmetric(
+              //           horizontal: 20, vertical: 12),
+              //       decoration: BoxDecoration(
+              //         color: lightGreyColor,
+              //         border: Border.all(
+              //             color: greyColor.withOpacity(0.5), width: 1.5),
+              //         borderRadius: BorderRadius.circular(8),
+              //       ),
+              //       child: Center(
+              //         child: MyText(
+              //           text: "omr", //getCountry.toString(),
+              //           color: blackTypeColor.withOpacity(0.5),
+              //           size: 14,
+              //           weight: FontWeight.w500,
+              //         ),
+              //       ),
+              //     ),
+              //     const SizedBox(height: 22),
+              //   ],
+              // ),
 
               //DdButton(5.5)
             ],
           ),
           const SizedBox(height: 2),
-          Row(
-            children: [
-              SizedBox(
-                width: 190,
-                child: MyText(
-                  text: "includingGears",
-                  color: redColor,
-                  size: 12,
-                  weight: FontWeight.bold,
-                ),
-              ),
-              // SizedBox(
-              //   width: 130,
-              //   child: MyText(
-              //     text: "excludingGears",
-              //     color: redColor,
-              //     size: 12,
-              //     weight: FontWeight.bold,
-              //   ),
-              // ),
-            ],
-          ),
+          // Column(
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: [
+          //     Container(
+          //       height: 55,
+          //       width: 120,
+          //       //width: MediaQuery.of(context).size.width / 2.4,
+          //       padding:
+          //           const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          //       decoration: BoxDecoration(
+          //         color: lightGreyColor,
+          //         border:
+          //             Border.all(color: greyColor.withOpacity(0.5), width: 1.5),
+          //         borderRadius: BorderRadius.circular(8),
+          //       ),
+          //       child: Center(
+          //         child: MyText(
+          //           text: "omr", //getCountry.toString(),
+          //           color: blackTypeColor.withOpacity(0.5),
+          //           size: 14,
+          //           weight: FontWeight.w500,
+          //         ),
+          //       ),
+          //     ),
+          //     const SizedBox(height: 22),
+          //   ],
+          // ),
+          // Row(
+          //   children: [
+          //     // SizedBox(
+          //     //   width: 190,
+          //     //   child: MyText(
+          //     //     text: "includingGears",
+          //     //     color: redColor,
+          //     //     size: 12,
+          //     //     weight: FontWeight.bold,
+          //     //   ),
+          //     // ),
+          //     // SizedBox(
+          //     //   width: 130,
+          //     //   child: MyText(
+          //     //     text: "excludingGears",
+          //     //     color: redColor,
+          //     //     size: 12,
+          //     //     weight: FontWeight.bold,
+          //     //   ),
+          //     // ),
+          //   ],
+          // ),
           // Row(
           //         children: [
           //           MyText(
@@ -396,6 +459,7 @@ class _CostState extends State<Cost> {
           //       weight: FontWeight.w500,
           //     )),
           MultiLineField(
+            label: 'prerequisites',
             'prerequisites',
             5,
             lightGreyColor,
@@ -404,6 +468,7 @@ class _CostState extends State<Cost> {
           ),
           const SizedBox(height: 10),
           MultiLineField(
+            label: 'minimumRequirements',
             'minimumRequirements',
             5,
             lightGreyColor,
@@ -412,6 +477,7 @@ class _CostState extends State<Cost> {
           ),
           const SizedBox(height: 10),
           MultiLineField(
+            label: 'termsAndConditions',
             'termsAndConditions',
             4,
             lightGreyColor,
