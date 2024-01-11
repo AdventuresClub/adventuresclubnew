@@ -193,13 +193,13 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
                 child: const Icon(
                   Icons.message,
                   color: bluishColor,
-                  size: 30,
+                  size: 36,
                 ),
               ),
               if (groupChatCount != "0")
                 Positioned(
-                  right: 4,
-                  bottom: 8,
+                  right: 2,
+                  bottom: 4,
                   child: Container(
                     height: 18,
                     width: 15,
@@ -218,7 +218,7 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
                 ),
             ],
           ),
-          const SizedBox(width: 10)
+          const SizedBox(width: 15)
         ],
       ),
       body: Container(
@@ -313,43 +313,43 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
                               weight: FontWeight.bold,
                               fontFamily: "Roboto",
                             ),
-                            // const SizedBox(
-                            //   height: 2,
-                            // ),
-                            // MyText(
-                            //   text: "includingGears".tr(), //'\$ 100.50',
-                            //   color: Colors.red[600],
-                            //   weight: FontWeight.w600,
-                            //   fontFamily: "Roboto",
-                            //   size: 10,
-                            // ),
+                            const SizedBox(
+                              height: 2,
+                            ),
+                            MyText(
+                              text: "includingGears".tr(), //'\$ 100.50',
+                              color: Colors.red[600],
+                              weight: FontWeight.w600,
+                              fontFamily: "Roboto",
+                              size: 10,
+                            ),
                           ],
                         ),
-                        // const SizedBox(
-                        //   width: 10,
-                        // ),
-                        // Column(
-                        //   crossAxisAlignment: CrossAxisAlignment.start,
-                        //   children: [
-                        //     MyText(
-                        //       text: "${widget.sm.currency} "
-                        //           "${widget.sm.costExc}", //'\$ 100.50',
-                        //       color: blackColor,
-                        //       weight: FontWeight.bold,
-                        //       fontFamily: "Roboto",
-                        //     ),
-                        //     const SizedBox(
-                        //       height: 2,
-                        //     ),
-                        //     MyText(
-                        //       text: "excludingGears".tr(), //'\$ 100.50',
-                        //       color: Colors.red[600],
-                        //       weight: FontWeight.w600,
-                        //       fontFamily: "Roboto",
-                        //       size: 10,
-                        //     ),
-                        //   ],
-                        // ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            MyText(
+                              text: "${widget.sm.currency} "
+                                  "${widget.sm.costExc}", //'\$ 100.50',
+                              color: blackColor,
+                              weight: FontWeight.bold,
+                              fontFamily: "Roboto",
+                            ),
+                            const SizedBox(
+                              height: 2,
+                            ),
+                            MyText(
+                              text: "excludingGears".tr(), //'\$ 100.50',
+                              color: Colors.red[600],
+                              weight: FontWeight.w600,
+                              fontFamily: "Roboto",
+                              size: 10,
+                            ),
+                          ],
+                        ),
                         // const SizedBox(
                         //   width: 10,
                         // )

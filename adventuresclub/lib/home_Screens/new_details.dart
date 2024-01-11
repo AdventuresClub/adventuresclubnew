@@ -425,7 +425,10 @@ class _NewDetailsState extends State<NewDetails> {
               ),
             ];
           }),
-          body: NewDetailsTab(widget.gm!),
+          body: NewDetailsTab(
+            widget.gm!,
+            show: true,
+          ),
           // children: [
 
           //   Expanded(child: NewDetailsTab(widget.gm!)),

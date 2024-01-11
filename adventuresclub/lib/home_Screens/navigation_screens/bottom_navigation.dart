@@ -541,31 +541,31 @@ class _BottomNavigationState extends State<BottomNavigation> {
           BottomNavigationBarItem(
             icon: Image.asset(
               'images/home.png',
-              height: 25,
-              width: 25,
+              height: 30,
+              width: 30,
             ),
             label: 'home'.tr(),
             //  ),
             activeIcon: Image.asset(
               'images/home.png',
-              height: 25,
-              width: 25,
+              height: 30,
+              width: 30,
               color: greenishColor,
             ),
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
               'images/calender.png',
-              height: 25,
-              width: 25,
+              height: 30,
+              width: 30,
             ),
 
             label: 'planned'.tr(),
             //  ),
             activeIcon: Image.asset(
               'images/calender.png',
-              height: 25,
-              width: 25,
+              height: 30,
+              width: 30,
               color: greenishColor,
             ),
           ),
@@ -573,8 +573,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
             icon: Stack(clipBehavior: Clip.none, children: [
               Image.asset(
                 'images/compass.png',
-                height: 25,
-                width: 25,
+                height: 30,
+                width: 30,
               ),
               Positioned(
                   top: -5,
@@ -596,8 +596,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
               children: [
                 Image.asset(
                   'images/compass.png',
-                  height: 25,
-                  width: 25,
+                  height: 30,
+                  width: 30,
                   color: greenishColor,
                 ),
                 Constants.resultRequest > 0
@@ -624,15 +624,15 @@ class _BottomNavigationState extends State<BottomNavigation> {
           BottomNavigationBarItem(
             icon: Image.asset(
               'images/worldwide.png',
-              height: 25,
-              width: 25,
+              height: 30,
+              width: 30,
             ),
             label: 'attractions'.tr(),
             //  ),
             activeIcon: Image.asset(
               'images/worldwide.png',
-              height: 25,
-              width: 25,
+              height: 30,
+              width: 30,
               color: greenishColor,
             ),
           ),
@@ -640,8 +640,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
             icon: Stack(clipBehavior: Clip.none, children: [
               Image.asset(
                 'images/account.png',
-                height: 25,
-                width: 25,
+                height: 30,
+                width: 30,
               ),
               Constants.resultAccount > 0
                   ? Positioned(
@@ -668,8 +668,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
             activeIcon: Stack(clipBehavior: Clip.none, children: [
               Image.asset(
                 'images/account.png',
-                height: 25,
-                width: 25,
+                height: 30,
+                width: 30,
                 color: greenishColor,
               ),
               Positioned(

@@ -26,6 +26,7 @@ import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/search_container.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import '../../models/create_adventure/regions_model.dart';
@@ -762,23 +763,33 @@ class _NewFilterPageState extends State<NewFilterPage> {
             children: [
               GestureDetector(
                 // onTap: addActivites,
-                child: Container(
-                  height: 36,
-                  width: 40,
-                  decoration: BoxDecoration(
-                    color: bluishColor,
-                    image: const DecorationImage(
-                      image: ExactAssetImage(
-                        'images/pathpic.png',
-                      ),
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+                // child: const FaIcon(
+                //   FontAwesomeIcons.filter,
+                //   color: bluishColor,
+                //   size: 38,
+                // ),
+                child: const Icon(
+                  Icons.filter_list_outlined,
+                  color: bluishColor,
+                  size: 42,
                 ),
+                // child: Container(
+                //   height: 34,
+                //   width: 32,
+                //   decoration: BoxDecoration(
+                //     color: bluishColor,
+                //     image: const DecorationImage(
+                //       image: ExactAssetImage(
+                //         'images/pathpic.png',
+                //       ),
+                //     ),
+                //     borderRadius: BorderRadius.circular(8),
+                //   ),
+                // ),
               ),
-              const SizedBox(
-                width: 5,
-              ),
+              // const SizedBox(
+              //   width: 2,
+              // ),
               SearchContainer('search'.tr(), 1.4, 10, searchController,
                   'images/maskGroup51.png', true, true, Constants.country, 14),
               const SizedBox(
@@ -791,7 +802,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
                     child: const Icon(
                       Icons.message,
                       color: bluishColor,
-                      size: 42,
+                      size: 38,
                     ),
                   ),
                   if (Constants.chatCount != "0")

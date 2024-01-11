@@ -350,75 +350,7 @@ class _NewDetailsTabState extends State<NewDetailsTab>
             const SizedBox(
               height: 10,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    Image.network(
-                      "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.serviceCategoryImage}",
-                      height: 42,
-                      width: 42,
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    MyText(
-                      text: widget.gm.serviceCategory,
-                      color: bluishColor,
-                    )
-                  ],
-                ),
-                Column(
-                  children: [
-                    Image.network(
-                      "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.serviceSectorImage}",
-                      height: 42,
-                      width: 42,
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    MyText(
-                      text: widget.gm.serviceSector,
-                      color: bluishColor,
-                    )
-                  ],
-                ),
-                Column(
-                  children: [
-                    Image.network(
-                      "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.serviceTypeImage}",
-                      height: 42,
-                      width: 42,
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    MyText(
-                      text: widget.gm.serviceType,
-                      color: bluishColor,
-                    )
-                  ],
-                ),
-                Column(
-                  children: [
-                    Image.network(
-                      "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.serviceLevelImage}",
-                      height: 42,
-                      width: 42,
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    MyText(
-                      text: widget.gm.serviceLevel,
-                      color: bluishColor,
-                    )
-                  ],
-                ),
-              ],
-            ),
+
             NewServiceDescription(
                 widget.gm,
                 text1,

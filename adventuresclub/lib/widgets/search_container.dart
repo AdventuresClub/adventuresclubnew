@@ -29,7 +29,7 @@ class SearchContainerState extends State<SearchContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 8),
+      padding: const EdgeInsets.only(left: 8, bottom: 4),
       width: MediaQuery.of(context).size.width / widget.width,
       height: MediaQuery.of(context).size.width / widget.height,
       decoration: BoxDecoration(

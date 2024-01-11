@@ -7,7 +7,6 @@ import 'package:adventuresclub/models/home_services/become_partner.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/models/profile_models/profile_become_partner.dart';
 import 'package:adventuresclub/models/user_profile_model.dart';
-import 'package:adventuresclub/widgets/grid/provided_adventure_grid.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
