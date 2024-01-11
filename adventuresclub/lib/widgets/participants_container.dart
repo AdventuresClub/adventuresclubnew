@@ -105,13 +105,15 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
           //crossAxisAlignment: WrapCrossAlignment.,
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                MyText(
-                  text: widget.gm.region, //'Location Name',
-                  color: blackColor,
-                  weight: FontWeight.bold,
+                CircleAvatar(
+                  radius: 26,
+                  backgroundImage:
+                      //ExactAssetImage('images/airrides.png'),
+                      NetworkImage(
+                          "${'${Constants.baseUrl}/public/'}${widget.gm.providerProfile}"),
                 ),
                 Row(
                   children: [
@@ -192,13 +194,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
               color: blackColor.withOpacity(0.4),
             ),
             ListTile(
-              leading: CircleAvatar(
-                radius: 26,
-                backgroundImage:
-                    //ExactAssetImage('images/airrides.png'),
-                    NetworkImage(
-                        "${'${Constants.baseUrl}/public/'}${widget.gm.providerProfile}"),
-              ),
+              // leading:
               //     const CircleAvatar(
               //   radius: 28,
               //   backgroundImage:
@@ -212,150 +208,195 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        MyText(
-                          text: widget.gm.adventureName,
-                          color: blackColor,
-                          weight: FontWeight.w700,
-                          size: 14,
-                          height: 1.8,
-                        ),
-                      ],
+                    RichText(
+                      text: TextSpan(
+                        text: 'bookingId'.tr(),
+                        style: const TextStyle(
+                            color: bluishColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Raleway"),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: widget.gm.bookingId.toString(),
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: blackColor,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Raleway"),
+                          ),
+                        ],
+                      ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        MyText(
-                          text: 'bookingId'.tr(),
-                          color: blackColor,
-                          weight: FontWeight.w700,
-                          size: 14,
-                          height: 1.8,
-                        ),
-                        MyText(
-                          text: widget.gm.bookingId,
-                          color: greyTextColor,
-                          weight: FontWeight.w400,
-                          size: 12,
-                          height: 1.8,
-                        ),
-                      ],
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.start,
+                    //   children: [
+                    //     MyText(
+                    //       text: widget.gm.adventureName,
+                    //       color: blackColor,
+                    //       weight: FontWeight.w700,
+                    //       size: 14,
+                    //       height: 1.8,
+                    //     ),
+                    //   ],
+                    // ),
+                    const SizedBox(
+                      height: 5,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        MyText(
-                          text: 'userName'.tr(),
-                          color: blackColor,
-                          weight: FontWeight.w700,
-                          size: 14,
-                          height: 1.8,
-                        ),
-                        MyText(
-                          text: widget.gm.customer,
-                          color: greyTextColor,
-                          weight: FontWeight.w400,
-                          size: 12,
-                          height: 1.8,
-                        ),
-                      ],
+                    RichText(
+                      text: TextSpan(
+                        text: 'Region'.tr(),
+                        style: const TextStyle(
+                            color: bluishColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Raleway"),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: widget.gm.region,
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: blackColor,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Raleway"),
+                          ),
+                        ],
+                      ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        MyText(
-                          text: 'How Old : ',
-                          color: blackColor,
-                          weight: FontWeight.w700,
-                          size: 14,
-                          height: 1.8,
-                        ),
-                        widget.gm.dob.isNotEmpty
-                            ? MyText(
-                                text: calculateAge(widget.gm.dob),
-                                color: greyTextColor,
-                                weight: FontWeight.w400,
-                                size: 12,
-                                height: 1.8,
-                              )
-                            : MyText(
-                                text: "Null",
-                                color: greyTextColor,
-                                weight: FontWeight.w400,
-                                size: 12,
-                                height: 1.8,
-                              ),
-                      ],
+                    // MyText(
+                    //   text: widget.gm.region, //'Location Name',
+                    //   color: blackColor,
+                    //   weight: FontWeight.bold,
+                    // ),
+                    const SizedBox(
+                      height: 5,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        MyText(
-                          text: 'nationality'.tr(),
-                          color: blackColor,
-                          weight: FontWeight.w700,
-                          size: 14,
-                          height: 1.8,
-                        ),
-                        MyText(
-                          text: widget.gm.nationality,
-                          color: greyTextColor,
-                          weight: FontWeight.w400,
-                          size: 12,
-                          height: 1.8,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        MyText(
-                          text: 'bookedOn'.tr(),
-                          color: blackColor,
-                          weight: FontWeight.w700,
-                          size: 14,
-                          height: 1.8,
-                        ),
-                        MyText(
-                          text: widget.gm.bookedOn,
-                          color: greyTextColor,
-                          weight: FontWeight.w400,
-                          size: 12,
-                          height: 1.8,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        MyText(
-                          text: 'serviceDate'.tr(),
-                          color: blackColor,
-                          weight: FontWeight.w700,
-                          size: 14,
-                          height: 1.8,
-                        ),
-                        MyText(
-                          text: widget.gm.serviceDate,
-                          color: greyTextColor,
-                          weight: FontWeight.w400,
-                          size: 12,
-                          height: 1.8,
-                        ),
-                      ],
+                    RichText(
+                      text: TextSpan(
+                        text: 'userName'.tr(),
+                        style: const TextStyle(
+                            color: bluishColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Raleway"),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: widget.gm.customer,
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: blackColor,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Raleway"),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(
-                      height: 4,
+                      height: 5,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        text: 'How Old : ',
+                        style: const TextStyle(
+                            color: bluishColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Raleway"),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: widget.gm.dob.isNotEmpty
+                                ? calculateAge(widget.gm.dob)
+                                : "Null",
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: blackColor,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Raleway"),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        text: 'nationality'.tr(),
+                        style: const TextStyle(
+                            color: bluishColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Raleway"),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: widget.gm.nationality,
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: blackColor,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Raleway"),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        text: 'bookedOn'.tr(),
+                        style: const TextStyle(
+                            color: bluishColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Raleway"),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: widget.gm.bookedOn,
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: blackColor,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Raleway"),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        text: 'serviceDate'.tr(),
+                        style: const TextStyle(
+                            color: bluishColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Raleway"),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: widget.gm.serviceDate,
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: blackColor,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Raleway"),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(
+                      height: 5,
                     ),
                     RichText(
                       text: TextSpan(
                         text: 'registrations'.tr(),
                         style: const TextStyle(
-                            color: blackColor,
+                            color: bluishColor,
                             fontSize: 14,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Raleway"),
                         children: <TextSpan>[
                           TextSpan(
                             text: "${widget.gm.adult} "
@@ -364,94 +405,110 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                                 "${widget.gm.kids} "
                                 " ${"Youngsters "}",
                             style: const TextStyle(
-                              fontSize: 12,
-                              color: greyTextColor,
-                              fontWeight: FontWeight.w400,
-                            ),
+                                fontSize: 14,
+                                color: blackColor,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Raleway"),
                           ),
                         ],
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        MyText(
-                          text: 'unitCost'.tr(),
-                          color: blackColor,
-                          weight: FontWeight.w700,
-                          size: 14,
-                          height: 1.8,
-                        ),
-                        MyText(
-                          overFlow: TextOverflow.ellipsis,
-                          text: "${widget.gm.unitCost} "
-                              "  ${widget.gm.currency}",
-                          color: greyTextColor,
-                          weight: FontWeight.w400,
-                          size: 12,
-                          height: 1.8,
-                        ),
-                      ],
+                    const SizedBox(
+                      height: 5,
                     ),
-                    Row(
-                      // mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        MyText(
-                          text: 'totalCost'.tr(),
-                          color: blackColor,
-                          weight: FontWeight.w700,
-                          size: 14,
-                          height: 1.8,
-                        ),
-                        MyText(
-                          text: "${widget.gm.totalCost} "
-                              "  ${widget.gm.currency}",
-                          color: greyTextColor,
-                          weight: FontWeight.w400,
-                          size: 12,
-                          height: 1.8,
-                        ),
-                      ],
+                    RichText(
+                      text: TextSpan(
+                        text: 'unitCost'.tr(),
+                        style: const TextStyle(
+                            color: bluishColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Raleway"),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: "${widget.gm.unitCost} "
+                                "  ${widget.gm.currency}",
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: blackColor,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Raleway"),
+                          ),
+                        ],
+                      ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        MyText(
-                          text: 'payableCost'.tr(),
-                          color: blackColor,
-                          weight: FontWeight.w700,
-                          size: 14,
-                          height: 1.8,
-                        ),
-                        MyText(
-                          text: "${widget.gm.totalCost} "
-                              "  ${widget.gm.currency}",
-                          color: greyTextColor,
-                          weight: FontWeight.w400,
-                          size: 12,
-                          height: 1.8,
-                        ),
-                      ],
+                    const SizedBox(
+                      height: 5,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        MyText(
-                          text: 'weight'.tr(),
-                          color: blackColor,
-                          weight: FontWeight.w700,
-                          size: 14,
-                          height: 1.8,
-                        ),
-                        MyText(
-                          text: "${widget.gm.weight} ",
-                          color: greyTextColor,
-                          weight: FontWeight.w400,
-                          size: 12,
-                          height: 1.8,
-                        ),
-                      ],
+                    RichText(
+                      text: TextSpan(
+                        text: 'totalCost'.tr(),
+                        style: const TextStyle(
+                            color: bluishColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Raleway"),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: "${widget.gm.totalCost} "
+                                "  ${widget.gm.currency}",
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: blackColor,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Raleway"),
+                          ),
+                        ],
+                      ),
                     ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        text: 'payableCost'.tr(),
+                        style: const TextStyle(
+                            color: bluishColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Raleway"),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: "${widget.gm.totalCost} "
+                                "  ${widget.gm.currency}",
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: blackColor,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Raleway"),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        text: 'weight'.tr(),
+                        style: const TextStyle(
+                            color: bluishColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Raleway"),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: "${widget.gm.weight} ",
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: blackColor,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Raleway"),
+                          ),
+                        ],
+                      ),
+                    ),
+
                     const SizedBox(
                       height: 5,
                     ),
@@ -459,8 +516,8 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                       text: TextSpan(
                         text: 'healthCondition'.tr(),
                         style: const TextStyle(
-                            color: blackColor,
-                            fontSize: 15,
+                            color: bluishColor,
+                            fontSize: 14,
                             fontFamily: 'Raleway',
                             fontWeight: FontWeight.bold),
                         children: <TextSpan>[
@@ -469,40 +526,40 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                                 ? "${widget.gm.healthConditions} "
                                 : "",
                             style: const TextStyle(
-                              fontSize: 13,
+                              fontSize: 14,
                               wordSpacing: 1,
                               fontFamily: 'Raleway',
-                              color: greyTextColor,
+                              color: blackColor,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    // const SizedBox(
-                    //   height: 5,
-                    // ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        MyText(
-                          text: 'height'.tr(),
-                          color: blackColor,
-                          weight: FontWeight.w700,
-                          size: 14,
-                          height: 1.8,
-                        ),
-                        MyText(
-                          overFlow: TextOverflow.clip,
-                          text: widget.gm.height.isNotEmpty
-                              ? "${widget.gm.height} "
-                              : "",
-                          color: greyTextColor,
-                          weight: FontWeight.w400,
-                          size: 12,
-                          height: 1.5,
-                        ),
-                      ],
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        text: 'height'.tr(),
+                        style: const TextStyle(
+                            color: bluishColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Raleway"),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: widget.gm.height.isNotEmpty
+                                ? "${widget.gm.height} "
+                                : "",
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: blackColor,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Raleway"),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 5,
@@ -511,21 +568,23 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                       text: TextSpan(
                         text: 'clientMessage'.tr(),
                         style: const TextStyle(
-                            color: blackColor,
+                            color: bluishColor,
                             fontSize: 14,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Raleway"),
                         children: <TextSpan>[
                           TextSpan(
                             text: "${widget.gm.message} ",
                             style: const TextStyle(
-                              fontSize: 12,
-                              color: greyTextColor,
-                              fontWeight: FontWeight.w400,
-                            ),
+                                fontSize: 14,
+                                color: blackColor,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Raleway"),
                           ),
                         ],
                       ),
                     ),
+
                     //   ],
                     // ),
                   ],

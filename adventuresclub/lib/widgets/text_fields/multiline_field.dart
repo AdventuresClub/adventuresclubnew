@@ -16,7 +16,7 @@ class MultiLineField extends StatefulWidget {
       {this.show = false,
       this.maximumLetters = 500,
       this.minimumLetters = 1,
-      this.label,
+      this.label = "",
       super.key});
 
   @override
@@ -33,7 +33,7 @@ class _MultiLineFieldState extends State<MultiLineField> {
       controller: widget.controller,
       maxLines: widget.lines,
       decoration: InputDecoration(
-          labelText: widget.label,
+          labelText: widget.label!.tr(),
           labelStyle: const TextStyle(
               color: blackColor,
               fontWeight: FontWeight.bold,
