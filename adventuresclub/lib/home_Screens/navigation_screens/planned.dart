@@ -551,9 +551,9 @@ class _PlannedState extends State<Planned> {
                     color: greyColor,
                     weight: FontWeight.bold,
                   )),
-          const SizedBox(
-            height: 5,
-          ),
+          // const SizedBox(
+          //   height: 5,
+          // ),
           allSer.isEmpty
               ? const Center(
                   child: Text("No Adventure At this date",
@@ -568,7 +568,7 @@ class _PlannedState extends State<Planned> {
                         return GestureDetector(
                             onTap: () => goToDetails(allSer[index]),
                             child: SizedBox(
-                                height: 300,
+                                height: 320,
                                 child: ServicesCard(allSer[index])));
                       }),
                 ),
