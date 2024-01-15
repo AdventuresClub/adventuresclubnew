@@ -1,14 +1,6 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/reviews.dart';
-import 'package:adventuresclub/widgets/info_tile.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
-import 'package:adventuresclub/widgets/tabs/details_tabs/description_activities_widget.dart';
-import 'package:adventuresclub/widgets/tabs/details_tabs/description_aimedFor_widget.dart';
-import 'package:adventuresclub/widgets/tabs/details_tabs/description_components.dart';
-import 'package:adventuresclub/widgets/tabs/details_tabs/description_description.dart';
-import 'package:adventuresclub/widgets/tabs/details_tabs/description_details_widget.dart';
-import 'package:adventuresclub/widgets/tabs/details_tabs/description_information_widget.dart';
-import 'package:adventuresclub/widgets/tabs/details_tabs/service_schedule_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -24,8 +16,9 @@ class NewServiceDescription extends StatefulWidget {
   final String reviewedBy;
   final String id;
   final bool? show;
+  final Function parseData;
   const NewServiceDescription(this.gm, this.text1, this.text4, this.text5,
-      this.text6, this.stars, this.reviewedBy, this.id,
+      this.text6, this.stars, this.reviewedBy, this.id, this.parseData,
       {this.show = false, super.key});
 
   @override
@@ -68,20 +61,28 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
     );
   }
 
-  void setStatus(String type) {
-    if (type == "inc") {
-      costInc = !costInc;
-    } else {
-      costExl = !costExl;
-    }
-    setState(() {});
-  }
-
   void getSteps() {
     for (var element in widget.gm.availabilityPlan) {
       adventuresPlan.add(element.day.tr());
     }
     aPlan = adventuresPlan.join(", ");
+  }
+
+  void setStatus(String selectedType) {
+    switch (selectedType) {
+      case 'inc':
+        costInc = true;
+        costExl = false;
+        break;
+      case 'exl':
+        costInc = false;
+        costExl = true;
+        break;
+      default:
+        break;
+    }
+    setState(() {});
+    widget.parseData(costInc);
   }
 
   @override

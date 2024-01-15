@@ -19,7 +19,8 @@ import 'package:permission_handler/permission_handler.dart';
 class NewDetailsTab extends StatefulWidget {
   final ServicesModel gm;
   final bool? show;
-  const NewDetailsTab(this.gm, {this.show = false, super.key});
+  final Function sendData;
+  const NewDetailsTab(this.gm, this.sendData, {this.show = false, super.key});
 
   @override
   State<NewDetailsTab> createState() => _NewDetailsTabState();
@@ -39,6 +40,8 @@ class _NewDetailsTabState extends State<NewDetailsTab>
   DateTime endDate = DateTime.now();
   String st = "";
   String ed = "";
+  bool costInc = false;
+  bool costExl = false;
 
   @override
   void initState() {
@@ -274,6 +277,10 @@ class _NewDetailsTabState extends State<NewDetailsTab>
     }
   }
 
+  void getStatus(bool inc) {
+    widget.sendData(inc);
+  }
+
   @override
   Widget build(BuildContext context) {
     return //widget.show!
@@ -359,7 +366,8 @@ class _NewDetailsTabState extends State<NewDetailsTab>
                 text6,
                 convert(widget.gm.stars.toString()),
                 widget.gm.reviewdBy.toString(),
-                widget.gm.id.toString()),
+                widget.gm.id.toString(),
+                getStatus),
             // program tab
             // 2 nd Tab /////////
             ServicesPlans(widget.gm.sPlan, widget.gm.programmes),

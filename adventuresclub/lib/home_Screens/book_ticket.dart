@@ -17,7 +17,9 @@ import 'package:provider/provider.dart';
 class BookTicket extends StatefulWidget {
   final ServicesModel gm;
   final bool? show;
-  const BookTicket(this.gm, {this.show = false, super.key});
+  final bool costInc;
+  const BookTicket(this.gm,
+      {this.show = false, this.costInc = false, super.key});
 
   @override
   State<BookTicket> createState() => _BookTicketState();
@@ -70,9 +72,19 @@ class _BookTicketState extends State<BookTicket> {
     super.initState();
     formattedDate = 'desiredDate'.tr();
     addPerson();
-    convert(widget.gm.costInc);
+    if (widget.costInc) {
+      convert(widget.gm.costInc);
+    } else {
+      convert(widget.gm.costExc);
+    }
+
     setState(() {
-      text2.insert(0, widget.gm.costInc);
+      if (widget.costInc) {
+        text2.insert(0, widget.gm.costInc);
+      } else {
+        text2.insert(0, widget.gm.costExc);
+      }
+
       //text2.insert(0, tPerson());
 
       //  userId = Constants.userID;
@@ -109,11 +121,17 @@ class _BookTicketState extends State<BookTicket> {
   }
 
   void totalValue() {
-    costInc = widget.gm.costInc;
-    costIncNum = double.tryParse(costInc) ?? -1;
-    setState(() {
+    if (widget.costInc) {
+      costInc = widget.gm.costInc;
+      costIncNum = double.tryParse(costInc) ?? -1;
       totalCost = totalPerson * costIncNum;
-    });
+    } else {
+      costInc = widget.gm.costExc;
+      costIncNum = double.tryParse(costInc) ?? -1;
+      totalCost = totalPerson * costIncNum;
+    }
+
+    setState(() {});
     print(totalCost);
   }
 

@@ -786,7 +786,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         // it is for particular week or calender
         "service_plan": sPlan.toString(), //"1", //"",
         "cost_inc": costOne.text, //setCost1.text, //"",
-        "cost_exc": costOne.text, //costTwo.text, //setCost2.text, //"",
+        "cost_exc": costTwo.text, //costTwo.text, //setCost2.text, //"",
         "currency": "1", //  %%% this is hardcoded
         "pre_requisites":
             preRequisites.text, //"", //preReqController.text, //"",

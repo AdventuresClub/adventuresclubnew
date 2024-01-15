@@ -6,7 +6,6 @@ import 'package:adventuresclub/home_Screens/plan%20_for_future.dart';
 import 'package:adventuresclub/new_signup/new_register.dart';
 import 'package:adventuresclub/sign_up/sign_in.dart';
 import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
-import 'package:adventuresclub/widgets/tabs/details_tabs/details_tabs.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/tabs/details_tabs/newdetails_tab.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -33,6 +32,8 @@ class _NewDetailsState extends State<NewDetails> {
   int _activePage = 0;
   int index = 0;
   bool future = false;
+  bool costInc = false;
+
   @override
   void dispose() {
     super.dispose();
@@ -90,7 +91,10 @@ class _NewDetailsState extends State<NewDetails> {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) {
-            return BookTicket(widget.gm!);
+            return BookTicket(
+              widget.gm!,
+              costInc: costInc,
+            );
           },
         ),
       );
@@ -213,6 +217,7 @@ class _NewDetailsState extends State<NewDetails> {
             return BookTicket(
               widget.gm!,
               show: true,
+              costInc: costInc,
             );
           },
         ),
@@ -265,6 +270,15 @@ class _NewDetailsState extends State<NewDetails> {
     } else {
       throw 'Could not launch $url';
     }
+  }
+
+  void getPrice(bool type) {
+    if (type) {
+      costInc = true;
+    } else {
+      costInc = false;
+    }
+    setState(() {});
   }
 
   @override
@@ -427,6 +441,7 @@ class _NewDetailsState extends State<NewDetails> {
           }),
           body: NewDetailsTab(
             widget.gm!,
+            getPrice,
             show: true,
           ),
           // children: [
@@ -435,44 +450,41 @@ class _NewDetailsState extends State<NewDetails> {
           // ],
         ),
         bottomNavigationBar: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: widget.gm!.sPlan == 2
-              ? future
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        ButtonIconLess('planFuture'.tr(), greenishColor,
-                            whiteColor, 2, 17, 12, plan),
-                      ],
-                    )
-                  : ButtonIconLess('bookNow'.tr(), greenishColor, whiteColor, 2,
-                      17, 12, goToBookTicket)
-              : GestureDetector(
-                  onTap: plan,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(26),
-                      color: bluishColor,
-                    ),
-                    height: 50,
-                    width: MediaQuery.of(context).size.width / 2,
-                    child: Center(
-                      child: MyText(
-                        text: 'planFuture'.tr(),
-                        size: 16,
-                        weight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
-          // Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-          //     children: [
-          //       ButtonIconLess('Plan For Future', greenishColor, whiteColor,
-          //           1.2, 17, 12, goToBookTicket),
-          //     ],
-          //   ),
-        ),
+            padding: const EdgeInsets.all(16.0),
+            child: widget.gm!.sPlan == 2
+                ? future
+                    ? ButtonIconLess('planFuture'.tr(), greenishColor,
+                        whiteColor, 2, 17, 16, plan)
+                    : ButtonIconLess('bookNow'.tr(), greenishColor, whiteColor,
+                        2, 17, 12, goToBookTicket)
+                : ButtonIconLess('planFuture'.tr(), greenishColor, whiteColor,
+                    2, 17, 16, plan)
+            // GestureDetector(
+            //     onTap: plan,
+            //     child: Container(
+            //       decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.circular(26),
+            //         color: bluishColor,
+            //       ),
+            //       height: 50,
+            //       width: MediaQuery.of(context).size.width / 2,
+            //       child: Center(
+            //         child: MyText(
+            //           text: 'planFuture'.tr(),
+            //           size: 16,
+            //           weight: FontWeight.w600,
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //     children: [
+            //       ButtonIconLess('Plan For Future', greenishColor, whiteColor,
+            //           1.2, 17, 12, goToBookTicket),
+            //     ],
+            //   ),
+            ),
       ),
     );
   }
