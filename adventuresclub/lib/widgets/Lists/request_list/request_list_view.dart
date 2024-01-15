@@ -737,7 +737,7 @@ class _RequestListViewState extends State<RequestListView> {
                             if (uRequestListInv[index].adult != 0)
                               TextSpan(
                                 text: "${uRequestListInv[index].adult} "
-                                        " ${"adult"}"
+                                        " ${"adult, "}"
                                     .tr(),
                                 style: const TextStyle(
                                     fontSize: 14,
@@ -748,8 +748,8 @@ class _RequestListViewState extends State<RequestListView> {
                               ),
                             if (uRequestListInv[index].kids != 0)
                               TextSpan(
-                                text: "${uRequestListInv[index].adult} "
-                                        " ${"adult"}"
+                                text: "${uRequestListInv[index].kids} "
+                                        "${"Kids"}"
                                     .tr(),
                                 style: const TextStyle(
                                     fontSize: 14,

@@ -88,403 +88,455 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                children: [
-                  Image.network(
-                    "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.serviceCategoryImage}",
-                    height: 42,
-                    width: 42,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  MyText(
-                    text: widget.gm.serviceCategory,
-                    color: bluishColor,
-                  )
-                ],
-              ),
-              Column(
-                children: [
-                  Image.network(
-                    "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.serviceSectorImage}",
-                    height: 42,
-                    width: 42,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  MyText(
-                    text: widget.gm.serviceSector,
-                    color: bluishColor,
-                  )
-                ],
-              ),
-              Column(
-                children: [
-                  Image.network(
-                    "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.serviceTypeImage}",
-                    height: 42,
-                    width: 42,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  MyText(
-                    text: widget.gm.serviceType,
-                    color: bluishColor,
-                  )
-                ],
-              ),
-              Column(
-                children: [
-                  Image.network(
-                    "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.serviceLevelImage}",
-                    height: 42,
-                    width: 42,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  MyText(
-                    text: widget.gm.serviceLevel,
-                    color: bluishColor,
-                  )
-                ],
-              ),
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              MyText(
-                text: widget.gm.adventureName,
-                //'River Rafting',
-                weight: FontWeight.bold,
-                color: bluishColor,
-                size: 22,
-              ),
-              const SizedBox(height: 5),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  MyText(
-                    text: "${widget.gm.country}, ${widget.gm.region}",
-                    //'River Rafting',
-                    // weight: FontWeight.bold,
-                    color: blackColor,
-                    size: 14,
-                  ),
-                  MyText(
-                    text:
-                        "${widget.gm.aSeats} Seats (${widget.gm.remainingSeats} left)",
-                    //'River Rafting',
-                    // weight: FontWeight.w600,
-                    color: blackColor,
-                    size: 14,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 2,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GestureDetector(
-                        onTap: () => goToReviews(context, widget.id),
-                        child: Align(
-                          alignment: Alignment.bottomLeft,
-                          child: RatingBar.builder(
-                            initialRating: widget.stars,
-                            ignoreGestures: true,
-                            itemSize: 14,
-                            minRating: 0,
-                            direction: Axis.horizontal,
-                            allowHalfRating: true,
-                            itemCount: 5,
-                            itemPadding:
-                                const EdgeInsets.symmetric(horizontal: 1.0),
-                            itemBuilder: (context, _) => const Icon(
-                              Icons.star,
-                              color: Color.fromARGB(255, 202, 122, 2),
-                              size: 13,
-                            ),
-                            onRatingUpdate: (rating) {
-                              // print(rating);
-                            },
-                          ),
-                        ),
-                      ),
-                      MyText(
-                        text: "(${widget.reviewedBy})",
-                        color: const Color.fromARGB(255, 202, 122, 2),
-                        size: 14,
-                      ),
-                      const SizedBox(
-                        width: 2,
-                      ),
-                      MyText(
-                        text: "Reviews",
-                        color: const Color.fromARGB(255, 202, 122, 2),
-                        //weight: FontWeight.bold,
-                        size: 14,
-                      ),
-                    ],
-                  ),
-                  // const SizedBox(
-                  //   width: 15,
-                  // ),
-                  MyText(
-                    text: "${widget.gm.duration} Activity",
-                    //'River Rafting',
-                    // weight: FontWeight.w600,
-                    color: blackColor,
-                    size: 14,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          Checkbox(
-                            visualDensity: VisualDensity.compact,
-                            shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30.0))),
-                            value: costInc,
-                            onChanged: (value) => setStatus("inc"),
-                          ),
-                          MyText(
-                            text: "${widget.gm.currency}  ${widget.gm.costInc}",
-                            //'River Rafting',
-                            weight: FontWeight.bold,
-                            color: bluishColor,
-                            size: 18,
-                          ),
-                        ],
-                      ),
-                      MyText(
-                        text: "Including gears & taxes",
-                        //'River Rafting',
-                        //weight: FontWeight.w700,
-                        color: redColor,
-                        size: 14,
-                      ),
-                    ],
-                  ),
-                  Container(
-                    color: blackColor,
-                    width: 0.5,
-                    height: 55,
-                  ),
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          Checkbox(
-                            visualDensity: VisualDensity.compact,
-                            shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30.0))),
-                            value: costExl,
-                            onChanged: (value) => setStatus("exl"),
-                          ),
-                          MyText(
-                            text: "${widget.gm.currency}  ${widget.gm.costExc}",
-                            //'River Rafting',
-                            weight: FontWeight.bold,
-                            color: bluishColor,
-                            size: 18,
-                          ),
-                        ],
-                      ),
-                      MyText(
-                        text: "Excluding gears & taxes",
-                        //'River Rafting',
-                        //  weight: FontWeight.w700,
-                        color: redColor,
-                        size: 14,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              if (widget.gm.sPlan == 2)
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    Image.network(
+                      "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.serviceCategoryImage}",
+                      height: 42,
+                      width: 42,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    MyText(
+                      text: widget.gm.serviceCategory,
+                      color: bluishColor,
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    Image.network(
+                      "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.serviceSectorImage}",
+                      height: 42,
+                      width: 42,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    MyText(
+                      text: widget.gm.serviceSector,
+                      color: bluishColor,
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    Image.network(
+                      "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.serviceTypeImage}",
+                      height: 42,
+                      width: 42,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    MyText(
+                      text: widget.gm.serviceType,
+                      color: bluishColor,
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    Image.network(
+                      "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.serviceLevelImage}",
+                      height: 42,
+                      width: 42,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    MyText(
+                      text: widget.gm.serviceLevel,
+                      color: bluishColor,
+                    )
+                  ],
+                ),
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                MyText(
+                  text: widget.gm.adventureName,
+                  //'River Rafting',
+                  weight: FontWeight.bold,
+                  color: bluishColor,
+                  size: 22,
+                ),
+                const SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     MyText(
-                      text: "${"Start Date : "} $st",
+                      text: "${widget.gm.country}, ${widget.gm.region}",
                       //'River Rafting',
-                      //weight: FontWeight.w700,
+                      // weight: FontWeight.bold,
                       color: blackColor,
                       size: 14,
                     ),
                     MyText(
-                      text: "${"End Date : "} $ed",
+                      text:
+                          "${widget.gm.aSeats} Seats (${widget.gm.remainingSeats} left)",
                       //'River Rafting',
-                      //weight: FontWeight.w700,
+                      // weight: FontWeight.w600,
                       color: blackColor,
                       size: 14,
                     ),
                   ],
                 ),
-              if (widget.gm.sPlan == 1)
-                RichText(
-                  text: TextSpan(
-                    text: 'Availability :',
-                    style: const TextStyle(
-                        color: bluishColor,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Raleway'),
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: aPlan,
-                          style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: blackColor,
-                              fontFamily: 'Raleway')),
+                const SizedBox(
+                  height: 2,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () => goToReviews(context, widget.id),
+                          child: Align(
+                            alignment: Alignment.bottomLeft,
+                            child: RatingBar.builder(
+                              initialRating: widget.stars,
+                              ignoreGestures: true,
+                              itemSize: 14,
+                              minRating: 0,
+                              direction: Axis.horizontal,
+                              allowHalfRating: true,
+                              itemCount: 5,
+                              itemPadding:
+                                  const EdgeInsets.symmetric(horizontal: 1.0),
+                              itemBuilder: (context, _) => const Icon(
+                                Icons.star,
+                                color: Color.fromARGB(255, 202, 122, 2),
+                                size: 13,
+                              ),
+                              onRatingUpdate: (rating) {
+                                // print(rating);
+                              },
+                            ),
+                          ),
+                        ),
+                        MyText(
+                          text: "(${widget.reviewedBy})",
+                          color: const Color.fromARGB(255, 202, 122, 2),
+                          size: 14,
+                        ),
+                        const SizedBox(
+                          width: 2,
+                        ),
+                        MyText(
+                          text: "Reviews",
+                          color: const Color.fromARGB(255, 202, 122, 2),
+                          //weight: FontWeight.bold,
+                          size: 14,
+                        ),
+                      ],
+                    ),
+                    // const SizedBox(
+                    //   width: 15,
+                    // ),
+                    MyText(
+                      text: "${widget.gm.duration} Activity",
+                      //'River Rafting',
+                      // weight: FontWeight.w600,
+                      color: blackColor,
+                      size: 14,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      children: [
+                        Row(
+                          children: [
+                            Checkbox(
+                              visualDensity: VisualDensity.compact,
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30.0))),
+                              value: costInc,
+                              onChanged: (value) => setStatus("inc"),
+                            ),
+                            MyText(
+                              text:
+                                  "${widget.gm.currency}  ${widget.gm.costInc}",
+                              //'River Rafting',
+                              weight: FontWeight.bold,
+                              color: bluishColor,
+                              size: 18,
+                            ),
+                          ],
+                        ),
+                        MyText(
+                          text: "Including gears & taxes",
+                          //'River Rafting',
+                          //weight: FontWeight.w700,
+                          color: redColor,
+                          size: 14,
+                        ),
+                      ],
+                    ),
+                    Container(
+                      color: blackColor,
+                      width: 0.5,
+                      height: 55,
+                    ),
+                    Column(
+                      children: [
+                        Row(
+                          children: [
+                            Checkbox(
+                              visualDensity: VisualDensity.compact,
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30.0))),
+                              value: costExl,
+                              onChanged: (value) => setStatus("exl"),
+                            ),
+                            MyText(
+                              text:
+                                  "${widget.gm.currency}  ${widget.gm.costExc}",
+                              //'River Rafting',
+                              weight: FontWeight.bold,
+                              color: bluishColor,
+                              size: 18,
+                            ),
+                          ],
+                        ),
+                        MyText(
+                          text: "Excluding gears & taxes",
+                          //'River Rafting',
+                          //  weight: FontWeight.w700,
+                          color: redColor,
+                          size: 14,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                if (widget.gm.sPlan == 2)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      MyText(
+                        text: "${"Start Date : "} $st",
+                        //'River Rafting',
+                        //weight: FontWeight.w700,
+                        color: blackColor,
+                        size: 14,
+                      ),
+                      MyText(
+                        text: "${"End Date : "} $ed",
+                        //'River Rafting',
+                        //weight: FontWeight.w700,
+                        color: blackColor,
+                        size: 14,
+                      ),
                     ],
                   ),
-                ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     MyText(
-              //       text: "${"Availability : "} $aPlan",
-              //       //'River Rafting',
-              //       weight: FontWeight.w700,
-              //       color: blackColor,
-              //       size: 14,
-              //     ),
-              //     // MyText(
-              //     //   text: aPlan,
-              //     //   //'River Rafting',
-              //     //   //weight: FontWeight.w700,
-              //     //   color: blackColor,
-              //     //   size: 14,
-              //     // ),
-              //   ],
-              // ),
-              const SizedBox(
-                height: 5,
-              ),
-              Divider(
-                thickness: 1,
-                color: blackColor.withOpacity(0.2),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              MyText(
-                text: "Description",
-                color: bluishColor,
-                size: 18,
-                weight: FontWeight.bold,
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              MyText(
-                text: widget.gm.writeInformation,
-                color: blackColor,
-                // weight: FontWeight.w500,
-                size: 14,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Divider(
-                thickness: 1,
-                color: blackColor.withOpacity(0.2),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              MyText(
-                text: "Activities Included",
-                color: bluishColor,
-                size: 18,
-                weight: FontWeight.bold,
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Wrap(
-                children: [
-                  for (int i = 0; i < widget.gm.activityIncludes.length; i++)
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        // mainAxisAlignment: MainAxisAlignment.center,
-                        // crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Image.network(
-                            "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.activityIncludes[i].image}",
-                            height: 42,
-                            width: 42,
-                          ),
-                          const SizedBox(width: 5),
-                          MyText(
-                            text: widget.gm.activityIncludes[i].activity.tr(),
-                            color: blackColor, //greyTextColor,
-                            // weight: FontWeight.w600,
-                            fontFamily: 'Roboto',
-                            size: 14,
-                          ),
-                        ],
-                      ),
+                if (widget.gm.sPlan == 1)
+                  RichText(
+                    text: TextSpan(
+                      text: 'Availability :',
+                      style: const TextStyle(
+                          color: bluishColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Raleway'),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: aPlan,
+                            style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: blackColor,
+                                fontFamily: 'Raleway')),
+                      ],
                     ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Divider(
-                thickness: 1,
-                color: blackColor.withOpacity(0.2),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              MyText(
-                text: "Audience",
-                color: bluishColor,
-                size: 18,
-                weight: FontWeight.bold,
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Wrap(
-                children: [
-                  for (int i = 0; i < widget.gm.am.length; i++)
+                  ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     MyText(
+                //       text: "${"Availability : "} $aPlan",
+                //       //'River Rafting',
+                //       weight: FontWeight.w700,
+                //       color: blackColor,
+                //       size: 14,
+                //     ),
+                //     // MyText(
+                //     //   text: aPlan,
+                //     //   //'River Rafting',
+                //     //   //weight: FontWeight.w700,
+                //     //   color: blackColor,
+                //     //   size: 14,
+                //     // ),
+                //   ],
+                // ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Divider(
+                  thickness: 1,
+                  color: blackColor.withOpacity(0.2),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                MyText(
+                  text: "Description",
+                  color: bluishColor,
+                  size: 18,
+                  weight: FontWeight.bold,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                MyText(
+                  text: widget.gm.writeInformation,
+                  color: blackColor,
+                  // weight: FontWeight.w500,
+                  size: 14,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Divider(
+                  thickness: 1,
+                  color: blackColor.withOpacity(0.2),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                MyText(
+                  text: "Activities Included",
+                  color: bluishColor,
+                  size: 18,
+                  weight: FontWeight.bold,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Wrap(
+                  children: [
+                    for (int i = 0; i < widget.gm.activityIncludes.length; i++)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          // mainAxisAlignment: MainAxisAlignment.center,
+                          // crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.network(
+                              "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.activityIncludes[i].image}",
+                              height: 42,
+                              width: 42,
+                            ),
+                            const SizedBox(width: 5),
+                            MyText(
+                              text: widget.gm.activityIncludes[i].activity.tr(),
+                              color: blackColor, //greyTextColor,
+                              // weight: FontWeight.w600,
+                              fontFamily: 'Roboto',
+                              size: 14,
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Divider(
+                  thickness: 1,
+                  color: blackColor.withOpacity(0.2),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                MyText(
+                  text: "Audience",
+                  color: bluishColor,
+                  size: 18,
+                  weight: FontWeight.bold,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Wrap(
+                  children: [
+                    for (int i = 0; i < widget.gm.am.length; i++)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 4.0, horizontal: 6),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.network(
+                              "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.am[i].image}",
+                              height: 42,
+                              width: 42,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            MyText(
+                              text: widget.gm.am[i].aimedName,
+                              //text: aimedFor[index],
+                              color: blackColor,
+                              // weight: FontWeight.w700,
+                              fontFamily: 'Roboto',
+                              size: 14,
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Divider(
+                  thickness: 1,
+                  color: blackColor.withOpacity(0.2),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                MyText(
+                  text: "Dependency",
+                  color: bluishColor,
+                  size: 18,
+                  weight: FontWeight.bold,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Wrap(children: [
+                  for (int i = 0; i < widget.gm.dependency.length; i++)
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 4.0, horizontal: 6),
@@ -492,7 +544,7 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Image.network(
-                            "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.am[i].image}",
+                            "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.dependency[i].name}",
                             height: 42,
                             width: 42,
                           ),
@@ -500,79 +552,32 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                             width: 5,
                           ),
                           MyText(
-                            text: widget.gm.am[i].aimedName,
+                            text: widget.gm.dependency[i].dName.tr(),
                             //text: aimedFor[index],
                             color: blackColor,
-                            // weight: FontWeight.w700,
+                            //weight: FontWeight.w700,
                             fontFamily: 'Roboto',
                             size: 14,
                           ),
                         ],
                       ),
                     ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Divider(
-                thickness: 1,
-                color: blackColor.withOpacity(0.2),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              MyText(
-                text: "Dependency",
-                color: bluishColor,
-                size: 18,
-                weight: FontWeight.bold,
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Wrap(children: [
-                for (int i = 0; i < widget.gm.dependency.length; i++)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 4.0, horizontal: 6),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.network(
-                          "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.dependency[i].name}",
-                          height: 42,
-                          width: 42,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        MyText(
-                          text: widget.gm.dependency[i].dName.tr(),
-                          //text: aimedFor[index],
-                          color: blackColor,
-                          //weight: FontWeight.w700,
-                          fontFamily: 'Roboto',
-                          size: 14,
-                        ),
-                      ],
-                    ),
-                  ),
-              ]),
-              const SizedBox(
-                height: 10,
-              ),
-              Divider(
-                thickness: 1,
-                color: blackColor.withOpacity(0.2),
-              ),
-            ],
-          ),
+                ]),
+                const SizedBox(
+                  height: 10,
+                ),
+                Divider(
+                  thickness: 1,
+                  color: blackColor.withOpacity(0.2),
+                ),
+              ],
+            ),
 
-          //   DescriptionComponents('prerequisites', widget.gm.preRequisites),
-          // DescriptionComponents('minimumRequirements', widget.gm.mRequirements),
-          // DescriptionComponents('termsAndConditions', widget.gm.tnc),
-        ],
+            //   DescriptionComponents('prerequisites', widget.gm.preRequisites),
+            // DescriptionComponents('minimumRequirements', widget.gm.mRequirements),
+            // DescriptionComponents('termsAndConditions', widget.gm.tnc),
+          ],
+        ),
       ),
     );
   }

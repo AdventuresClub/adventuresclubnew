@@ -188,6 +188,7 @@ class _NewRegisterState extends State<NewRegister> {
           "password": passController.text,
           "mobile": mobileNumber, //widget.mobileNumber,
           "country_id": countryId.toString(),
+          "mobile_code": countryCode,
         });
         var decodedResponse =
             jsonDecode(utf8.decode(response.bodyBytes)) as Map;
@@ -256,6 +257,7 @@ class _NewRegisterState extends State<NewRegister> {
       Constants.country = countryCode;
       Constants.countryFlag = countryFlag;
       Constants.phone = phoneNum;
+      //   Constants.
     });
   }
 

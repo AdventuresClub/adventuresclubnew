@@ -44,6 +44,7 @@ class _BookTicketState extends State<BookTicket> {
   String userId = "";
   var endDate;
   double pPerson = 0;
+  String amount = "";
   List text = [
     'Per Person',
     'Total Person    x1',
@@ -74,8 +75,10 @@ class _BookTicketState extends State<BookTicket> {
     addPerson();
     if (widget.costInc) {
       convert(widget.gm.costInc);
+      amount = widget.gm.costInc;
     } else {
       convert(widget.gm.costExc);
+      amount = widget.gm.costExc;
     }
 
     setState(() {
@@ -224,7 +227,7 @@ class _BookTicketState extends State<BookTicket> {
           "coupon_applied": "0",
           "provider_id": widget.gm.providerId
               .toString(), //widget.gm.providerId.toString(),
-          "amount": totalCost.toString(),
+          "amount": amount, //totalCost.toString(),
           "promo_code": "", //"PER2Y2Etr",
           "discount_amount": "0",
           "final_amount": totalCost.toString(),
