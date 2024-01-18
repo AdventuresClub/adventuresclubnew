@@ -1,9 +1,8 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 
 import 'dart:convert';
-
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/home_Screens/details.dart';
+import 'package:adventuresclub/home_Screens/new_details.dart';
 import 'package:adventuresclub/models/filter_data_model/programs_model.dart';
 import 'package:adventuresclub/models/home_services/become_partner.dart';
 import 'package:adventuresclub/models/home_services/home_services_model.dart';
@@ -45,7 +44,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return Details(gm: gm);
+          return NewDetails(gm: gm);
         },
       ),
     );
@@ -241,42 +240,52 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: whiteColor,
-        elevation: 0,
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: blackColor),
-        title: MyText(
-          text: "View Details",
-          weight: FontWeight.bold,
-          color: blackColor,
+        appBar: AppBar(
+          backgroundColor: whiteColor,
+          elevation: 0,
+          centerTitle: true,
+          iconTheme: const IconThemeData(color: blackColor),
+          title: MyText(
+            text: "View Details",
+            weight: FontWeight.bold,
+            color: blackColor,
+          ),
         ),
-      ),
-      body: loading
-          ? const Center(
-              child: Column(
-                children: [CircularProgressIndicator(), Text("Loading...")],
-              ),
-            )
-          : SingleChildScrollView(
-              child: GridView.count(
-                physics: const ScrollPhysics(),
-                shrinkWrap: true,
-                mainAxisSpacing: 0.2,
-                childAspectRatio: 0.88,
-                crossAxisSpacing: 0.2,
-                crossAxisCount: 2,
-                children: List.generate(
-                  gAllServices.length,
-                  (index) {
-                    return GestureDetector(
-                      onTap: () => goToDetails(gAllServices[index].sm[index]),
-                      child: ServicesCard(gAllServices[index].sm[index]),
-                    );
-                  },
+        body: loading
+            ? const Center(
+                child: Column(
+                  children: [CircularProgressIndicator(), Text("Loading...")],
                 ),
-              ),
-            ),
-    );
+              )
+            : ListView.builder(
+                itemCount: gAllServices.length,
+                scrollDirection: Axis.vertical,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () => goToDetails(gAllServices[index].sm[index]),
+                    child: SizedBox(
+                        height: 340,
+                        child: ServicesCard(gAllServices[index].sm[index])),
+                  );
+                })
+        // GridView.count(
+        //   physics: const ScrollPhysics(),
+        //   shrinkWrap: true,
+        //   mainAxisSpacing: 0.2,
+        //   childAspectRatio: 0.88,
+        //   crossAxisSpacing: 0.2,
+        //   crossAxisCount: 2,
+        //   children: List.generate(
+        //     gAllServices.length,
+        //     (index) {
+        //       return GestureDetector(
+        //         onTap: () => goToDetails(gAllServices[index].sm[index]),
+        //         child: ServicesCard(gAllServices[index].sm[index]),
+        //       );
+        //     },
+        //   ),
+        // ),
+
+        );
   }
 }

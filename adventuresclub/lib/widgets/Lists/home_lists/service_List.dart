@@ -114,7 +114,7 @@ class ServiceListState extends State<ServiceList> {
                         children: [
                           Container(
                             height: 40,
-                            width: 100,
+                            width: 140,
                             decoration: BoxDecoration(
                                 color: whiteColor,
                                 borderRadius: BorderRadius.circular(12)),

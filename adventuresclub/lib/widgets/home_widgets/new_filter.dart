@@ -833,7 +833,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
             height: 20,
           ),
           const SizedBox(
-            height: 90,
+            height: 100,
             child: TopList(),
           ),
           Divider(

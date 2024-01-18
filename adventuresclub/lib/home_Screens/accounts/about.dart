@@ -424,20 +424,22 @@ class _AboutState extends State<About> {
         body: loading
             ? Text("loading".tr())
             : NestedScrollView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 headerSliverBuilder: (((context, innerBoxIsScrolled) {
                   return [
                     SliverAppBar(
                       toolbarHeight: 50,
-                      expandedHeight: 280,
-                      elevation: 1,
+                      expandedHeight: 200,
+                      elevation: 4,
                       floating: false,
                       pinned: true,
+                      centerTitle: true,
+                      iconTheme: const IconThemeData(color: bluishColor),
                       title: MyText(
                         text: 'serviceProviderProfile'.tr(),
                         color: bluishColor,
                         weight: FontWeight.bold,
-                        size: 22,
+                        size: 18,
                       ),
                       flexibleSpace: Padding(
                         padding: const EdgeInsets.only(top: 30.0),
@@ -448,73 +450,137 @@ class _AboutState extends State<About> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                ListTile(
-                                  dense: true,
-                                  leading: CircleAvatar(
-                                    radius: 40,
-                                    backgroundImage: NetworkImage(
-                                      "${'${Constants.baseUrl}/public/'}${profile.profileImage}",
-                                    ),
-                                  ),
-                                  title: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      MyText(
-                                        text: profile.name, //'Alexander',
-                                        weight: FontWeight.w600,
-                                        color: blackColor,
-                                        size: 18,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 28,
+                                      backgroundImage: NetworkImage(
+                                        "${'${Constants.baseUrl}/public/'}${profile.profileImage}",
                                       ),
-                                    ],
-                                  ),
-                                  trailing: Container(
-                                    height:
-                                        MediaQuery.of(context).size.height / 20,
-                                    width:
-                                        MediaQuery.of(context).size.width / 4,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
+                                    ),
+                                    MyText(
+                                      text: profile.name, //'Alexander',
+                                      weight: FontWeight.w600,
+                                      color: blackColor,
+                                      size: 18,
+                                    ),
+                                    Container(
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              22,
+                                      width:
+                                          MediaQuery.of(context).size.width / 4,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: const Color.fromARGB(
+                                              255, 15, 71, 116),
+                                          width: 2.0,
+                                        ),
                                         color: const Color.fromARGB(
                                             255, 15, 71, 116),
-                                        width: 2.0,
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(28)),
                                       ),
-                                      color: const Color.fromARGB(
-                                          255, 15, 71, 116),
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(28)),
-                                    ),
-                                    child: Material(
-                                      color: Colors.transparent,
-                                      child: InkWell(
-                                        onTap: () => selected(context),
-                                        child: Center(
-                                          child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(left: 0),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  'chat'.tr(),
-                                                  style: const TextStyle(
-                                                      color: whiteColor,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      letterSpacing: 0.8,
-                                                      fontFamily: "Raleway",
-                                                      fontSize: 14),
-                                                ),
-                                              ],
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        child: InkWell(
+                                          onTap: () => selected(context),
+                                          child: Center(
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    'chat'.tr(),
+                                                    style: const TextStyle(
+                                                        color: whiteColor,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        letterSpacing: 0.8,
+                                                        fontFamily: "Raleway",
+                                                        fontSize: 14),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
+                                  ],
                                 ),
+                                // ListTile(
+                                //   dense: true,
+                                //   leading: CircleAvatar(
+                                //     radius: 40,
+                                //     backgroundImage: NetworkImage(
+                                //       "${'${Constants.baseUrl}/public/'}${profile.profileImage}",
+                                //     ),
+                                //   ),
+                                //   title: Column(
+                                //     mainAxisAlignment: MainAxisAlignment.start,
+                                //     crossAxisAlignment:
+                                //         CrossAxisAlignment.start,
+                                //     children: [
+                                //       MyText(
+                                //         text: profile.name, //'Alexander',
+                                //         weight: FontWeight.w600,
+                                //         color: blackColor,
+                                //         size: 18,
+                                //       ),
+                                //     ],
+                                //   ),
+                                //   trailing: Container(
+                                //     height:
+                                //         MediaQuery.of(context).size.height / 22,
+                                //     width:
+                                //         MediaQuery.of(context).size.width / 4,
+                                //     decoration: BoxDecoration(
+                                //       border: Border.all(
+                                //         color: const Color.fromARGB(
+                                //             255, 15, 71, 116),
+                                //         width: 2.0,
+                                //       ),
+                                //       color: const Color.fromARGB(
+                                //           255, 15, 71, 116),
+                                //       borderRadius: const BorderRadius.all(
+                                //           Radius.circular(28)),
+                                //     ),
+                                //     child: Material(
+                                //       color: Colors.transparent,
+                                //       child: InkWell(
+                                //         onTap: () => selected(context),
+                                //         child: Center(
+                                //           child: Padding(
+                                //             padding:
+                                //                 const EdgeInsets.only(left: 0),
+                                //             child: Row(
+                                //               mainAxisAlignment:
+                                //                   MainAxisAlignment.center,
+                                //               children: [
+                                //                 Text(
+                                //                   'chat'.tr(),
+                                //                   style: const TextStyle(
+                                //                       color: whiteColor,
+                                //                       fontWeight:
+                                //                           FontWeight.bold,
+                                //                       letterSpacing: 0.8,
+                                //                       fontFamily: "Raleway",
+                                //                       fontSize: 14),
+                                //                 ),
+                                //               ],
+                                //             ),
+                                //           ),
+                                //         ),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
                                 const SizedBox(
                                   height: 10,
                                 ),
@@ -546,9 +612,9 @@ class _AboutState extends State<About> {
                                     ),
                                   ],
                                 ),
-                                const Divider(
-                                  color: greyColor,
-                                ),
+                                // const Divider(
+                                //   color: greyColor,
+                                // ),
                                 // const SizedBox(
                                 //   height: 20,
                                 // ),

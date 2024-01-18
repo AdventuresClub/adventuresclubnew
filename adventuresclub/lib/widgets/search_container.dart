@@ -50,21 +50,20 @@ class SearchContainerState extends State<SearchContainer> {
                 size: 20,
               ),
               const SizedBox(
-                width: 10,
+                width: 5,
               ),
-              Center(
-                child: SizedBox(
-                  width: widget.countryName == true
-                      ? MediaQuery.of(context).size.width / 2.4
-                      : MediaQuery.of(context).size.width / 1.7,
-                  child: TextField(
-                    controller: widget.controller,
-                    decoration: InputDecoration(
-                        // contentPadding: EdgeInsets.only(top: 2),
-                        hintText: widget.hinttext.toString(),
-                        border: InputBorder.none,
-                        hintStyle: const TextStyle(fontSize: 14)),
-                  ),
+              SizedBox(
+                width: widget.countryName == true
+                    ? MediaQuery.of(context).size.width / 2.6
+                    : MediaQuery.of(context).size.width / 1.7,
+                child: TextField(
+                  controller: widget.controller,
+                  decoration: InputDecoration(
+                      labelText: widget.hinttext,
+                      //contentPadding: const EdgeInsets.only(top: 1),
+                      //hintText: widget.hinttext.toString(),
+                      border: InputBorder.none,
+                      hintStyle: const TextStyle(fontSize: 14)),
                 ),
               ),
               // Text(
@@ -85,18 +84,27 @@ class SearchContainerState extends State<SearchContainer> {
                     fontSize: widget.fontSize,
                   ),
                 ),
-              const SizedBox(
-                width: 5,
-              ),
+              // const SizedBox(
+              //   width: 1,
+              // ),
               if (widget.value == true)
-                Image.network(
-                  "${"${Constants.baseUrl}/public/"}${Constants.countryFlag}",
-                  height: 15,
-                  width: 15,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(32),
+                  child: SizedBox(
+                    height: 18,
+                    width: 18,
+                    child: Image.network(
+                      "${"${Constants.baseUrl}/public/"}"
+                      "${Constants.countryFlag}",
+                      fit: BoxFit.fill,
+                      // height: 15,
+                      // width: 15,
+                    ),
+                  ),
                 ),
-              const SizedBox(
-                width: 5,
-              ),
+              // const SizedBox(
+              //   width: 3,
+              // ),
             ],
           )
         ],

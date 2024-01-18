@@ -6,7 +6,6 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/requests.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/provider/navigation_index_provider.dart';
-import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -227,9 +226,11 @@ class _BookTicketState extends State<BookTicket> {
           "coupon_applied": "0",
           "provider_id": widget.gm.providerId
               .toString(), //widget.gm.providerId.toString(),
-          "amount": amount, //totalCost.toString(),
+          "unit_amount": amount, //totalCost.toString(),
+          "total_amount": totalCost.toString(),
+          "discounted_amount": "50",
           "promo_code": "", //"PER2Y2Etr",
-          "discount_amount": "0",
+          //"discount_amount": "0",
           "final_amount": totalCost.toString(),
         });
         if (response.statusCode == 200) {
