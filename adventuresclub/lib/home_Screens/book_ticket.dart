@@ -16,9 +16,13 @@ import 'package:provider/provider.dart';
 class BookTicket extends StatefulWidget {
   final ServicesModel gm;
   final bool? show;
-  final bool costInc;
+  final bool? costInc;
+  final String selectedPrice;
   const BookTicket(this.gm,
-      {this.show = false, this.costInc = false, super.key});
+      {this.show = false,
+      required this.selectedPrice,
+      this.costInc = false,
+      super.key});
 
   @override
   State<BookTicket> createState() => _BookTicketState();
@@ -72,7 +76,7 @@ class _BookTicketState extends State<BookTicket> {
     super.initState();
     formattedDate = 'desiredDate'.tr();
     addPerson();
-    if (widget.costInc) {
+    if (widget.costInc!) {
       convert(widget.gm.costInc);
       amount = widget.gm.costInc;
     } else {
@@ -81,7 +85,7 @@ class _BookTicketState extends State<BookTicket> {
     }
 
     setState(() {
-      if (widget.costInc) {
+      if (widget.costInc!) {
         text2.insert(0, widget.gm.costInc);
       } else {
         text2.insert(0, widget.gm.costExc);
@@ -123,7 +127,7 @@ class _BookTicketState extends State<BookTicket> {
   }
 
   void totalValue() {
-    if (widget.costInc) {
+    if (widget.costInc!) {
       costInc = widget.gm.costInc;
       costIncNum = double.tryParse(costInc) ?? -1;
       totalCost = totalPerson * costIncNum;

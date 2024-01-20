@@ -33,6 +33,7 @@ class _NewDetailsState extends State<NewDetails> {
   int index = 0;
   bool future = false;
   bool costInc = false;
+  String sPrice = "";
 
   @override
   void dispose() {
@@ -88,16 +89,21 @@ class _NewDetailsState extends State<NewDetails> {
 
   void goToBookTicket() {
     if (Constants.userId != 0) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) {
-            return BookTicket(
-              widget.gm!,
-              costInc: costInc,
-            );
-          },
-        ),
-      );
+      if (sPrice != "") {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) {
+              return BookTicket(
+                widget.gm!,
+                costInc: costInc,
+                selectedPrice: sPrice,
+              );
+            },
+          ),
+        );
+      } else {
+        Constants.showMessage(context, "Please Choose Cost");
+      }
     } else {
       //Constants.showMessage(context, "Please Login to make any bookings");
       showError();
@@ -211,17 +217,22 @@ class _NewDetailsState extends State<NewDetails> {
 
   void plan() {
     if (Constants.userId != 0) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) {
-            return BookTicket(
-              widget.gm!,
-              show: true,
-              costInc: costInc,
-            );
-          },
-        ),
-      );
+      if (sPrice != "") {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) {
+              return BookTicket(
+                widget.gm!,
+                show: true,
+                costInc: costInc,
+                selectedPrice: sPrice,
+              );
+            },
+          ),
+        );
+      } else {
+        Constants.showMessage(context, "Please Choose Cost");
+      }
     } else {
       //Constants.showMessage(context, "Please Login to make any bookings");
       showError();
@@ -272,13 +283,15 @@ class _NewDetailsState extends State<NewDetails> {
     }
   }
 
-  void getPrice(bool type) {
+  void getPrice(bool type, String selectedPrice) {
     if (type) {
       costInc = true;
     } else {
       costInc = false;
     }
-    setState(() {});
+    setState(() {
+      sPrice = selectedPrice;
+    });
   }
 
   @override
@@ -456,7 +469,7 @@ class _NewDetailsState extends State<NewDetails> {
                     ? ButtonIconLess('planFuture'.tr(), greenishColor,
                         whiteColor, 2, 17, 16, plan)
                     : ButtonIconLess('bookNow'.tr(), greenishColor, whiteColor,
-                        2, 17, 12, goToBookTicket)
+                        2, 17, 16, goToBookTicket)
                 : ButtonIconLess('planFuture'.tr(), greenishColor, whiteColor,
                     2, 17, 16, plan)
             // GestureDetector(

@@ -277,8 +277,8 @@ class _NewDetailsTabState extends State<NewDetailsTab>
     }
   }
 
-  void getStatus(bool inc) {
-    widget.sendData(inc);
+  void getStatus(bool inc, String price) {
+    widget.sendData(inc, price);
   }
 
   @override

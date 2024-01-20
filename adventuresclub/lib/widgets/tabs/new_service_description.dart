@@ -34,6 +34,7 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
   String ed = "";
   String aPlan = "";
   List<String> adventuresPlan = [""];
+  String selectedPrice = '';
 
   @override
   void initState() {
@@ -73,16 +74,18 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
       case 'inc':
         costInc = true;
         costExl = false;
+        selectedPrice = widget.gm.costInc;
         break;
       case 'exl':
         costInc = false;
         costExl = true;
+        selectedPrice = widget.gm.costExc;
         break;
       default:
         break;
     }
     setState(() {});
-    widget.parseData(costInc);
+    widget.parseData(costInc, selectedPrice);
   }
 
   @override

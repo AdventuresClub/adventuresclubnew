@@ -175,15 +175,26 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
           onPressed: () => Navigator.pop(context),
           icon: Image.asset(
             'images/backArrow.png',
-            height: 20,
+            height: 18,
           ),
         ),
-        title: MyText(
-          text: widget.sm.adventureName, //'Hill Climbing',
-          color: bluishColor,
-          weight: FontWeight.w800,
-        ),
+        // title:
+        // MyText(
+        //   text: widget.sm.adventureName, //'Hill Climbing',
+        //   color: bluishColor,
+        //   weight: FontWeight.w800,
+        //   size: 18,
+        // ),
         actions: [
+          GestureDetector(
+            onTap: () => showConfirmation(widget.sm.serviceId.toString()),
+            child: const Image(
+              image: ExactAssetImage('images/bin.png'),
+              height: 30,
+              width: 30,
+            ),
+          ),
+          const SizedBox(width: 15),
           Stack(
             alignment: AlignmentDirectional.center,
             children: [
@@ -232,133 +243,133 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
             //GestureDetector(
             //  onTap: () => goToReviews(widget.sm.serviceId.toString()),
             //child:
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 0),
-              child: Card(
-                  child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        MyText(
-                          text: widget.sm.adventureName, //'Hill Climbing',
-                          color: greyBackgroundColor,
-                          size: 16,
-                          weight: FontWeight.w600,
-                          fontFamily: "Roboto",
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            // GestureDetector(
-                            //   onTap: () {},
-                            //   //=> editService(widget.sm.id.toString(),
-                            //   //  widget.sm.providerId.toString()),
-                            //   child: const Image(
-                            //     image: ExactAssetImage('images/edit.png'),
-                            //     height: 20,
-                            //     width: 20,
-                            //   ),
-                            // ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            GestureDetector(
-                              onTap: () => showConfirmation(
-                                  widget.sm.serviceId.toString()),
-                              child: const Image(
-                                image: ExactAssetImage('images/bin.png'),
-                                height: 20,
-                                width: 20,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      children: [
-                        const Image(
-                          image: ExactAssetImage('images/location-on.png'),
-                          color: greyColor,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        MyText(
-                          text: widget.sm.sAddress.tr(), //'Muscat Oman',
-                          color: greyColor,
-                          weight: FontWeight.w500,
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            MyText(
-                              text: "${widget.sm.currency} "
-                                  "${widget.sm.costInc}", //'\$ 100.50',
-                              color: blackColor,
-                              weight: FontWeight.bold,
-                              fontFamily: "Roboto",
-                            ),
-                            const SizedBox(
-                              height: 2,
-                            ),
-                            MyText(
-                              text: "includingGears".tr(), //'\$ 100.50',
-                              color: Colors.red[600],
-                              weight: FontWeight.w600,
-                              fontFamily: "Roboto",
-                              size: 10,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            MyText(
-                              text: "${widget.sm.currency} "
-                                  "${widget.sm.costExc}", //'\$ 100.50',
-                              color: blackColor,
-                              weight: FontWeight.bold,
-                              fontFamily: "Roboto",
-                            ),
-                            const SizedBox(
-                              height: 2,
-                            ),
-                            MyText(
-                              text: "excludingGears".tr(), //'\$ 100.50',
-                              color: Colors.red[600],
-                              weight: FontWeight.w600,
-                              fontFamily: "Roboto",
-                              size: 10,
-                            ),
-                          ],
-                        ),
-                        // const SizedBox(
-                        //   width: 10,
-                        // )
-                      ],
-                    ),
-                  ],
-                ),
-              )),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 0),
+            //   child: Card(
+            //       child: Padding(
+            //     padding: const EdgeInsets.all(12.0),
+            //     child: Column(
+            //       children: [
+            //         Row(
+            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //           children: [
+            //             MyText(
+            //               text: widget.sm.adventureName, //'Hill Climbing',
+            //               color: greyBackgroundColor,
+            //               size: 16,
+            //               weight: FontWeight.w600,
+            //               fontFamily: "Roboto",
+            //             ),
+            //             Row(
+            //               mainAxisAlignment: MainAxisAlignment.end,
+            //               children: [
+            //                 // GestureDetector(
+            //                 //   onTap: () {},
+            //                 //   //=> editService(widget.sm.id.toString(),
+            //                 //   //  widget.sm.providerId.toString()),
+            //                 //   child: const Image(
+            //                 //     image: ExactAssetImage('images/edit.png'),
+            //                 //     height: 20,
+            //                 //     width: 20,
+            //                 //   ),
+            //                 // ),
+            //                 const SizedBox(
+            //                   width: 20,
+            //                 ),
+            //                 GestureDetector(
+            //                   onTap: () => showConfirmation(
+            //                       widget.sm.serviceId.toString()),
+            //                   child: const Image(
+            //                     image: ExactAssetImage('images/bin.png'),
+            //                     height: 20,
+            //                     width: 20,
+            //                   ),
+            //                 ),
+            //               ],
+            //             ),
+            //           ],
+            //         ),
+            //         const SizedBox(
+            //           height: 5,
+            //         ),
+            //         Row(
+            //           children: [
+            //             const Image(
+            //               image: ExactAssetImage('images/location-on.png'),
+            //               color: greyColor,
+            //             ),
+            //             const SizedBox(
+            //               width: 5,
+            //             ),
+            //             MyText(
+            //               text: widget.sm.sAddress.tr(), //'Muscat Oman',
+            //               color: greyColor,
+            //               weight: FontWeight.w500,
+            //             )
+            //           ],
+            //         ),
+            //         const SizedBox(
+            //           height: 10,
+            //         ),
+            //         Row(
+            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //           children: [
+            //             Column(
+            //               crossAxisAlignment: CrossAxisAlignment.start,
+            //               children: [
+            //                 MyText(
+            //                   text: "${widget.sm.currency} "
+            //                       "${widget.sm.costInc}", //'\$ 100.50',
+            //                   color: blackColor,
+            //                   weight: FontWeight.bold,
+            //                   fontFamily: "Roboto",
+            //                 ),
+            //                 const SizedBox(
+            //                   height: 2,
+            //                 ),
+            //                 MyText(
+            //                   text: "includingGears".tr(), //'\$ 100.50',
+            //                   color: Colors.red[600],
+            //                   weight: FontWeight.w600,
+            //                   fontFamily: "Roboto",
+            //                   size: 10,
+            //                 ),
+            //               ],
+            //             ),
+            //             const SizedBox(
+            //               width: 10,
+            //             ),
+            //             Column(
+            //               crossAxisAlignment: CrossAxisAlignment.start,
+            //               children: [
+            //                 MyText(
+            //                   text: "${widget.sm.currency} "
+            //                       "${widget.sm.costExc}", //'\$ 100.50',
+            //                   color: blackColor,
+            //                   weight: FontWeight.bold,
+            //                   fontFamily: "Roboto",
+            //                 ),
+            //                 const SizedBox(
+            //                   height: 2,
+            //                 ),
+            //                 MyText(
+            //                   text: "excludingGears".tr(), //'\$ 100.50',
+            //                   color: Colors.red[600],
+            //                   weight: FontWeight.w600,
+            //                   fontFamily: "Roboto",
+            //                   size: 10,
+            //                 ),
+            //               ],
+            //             ),
+            //             // const SizedBox(
+            //             //   width: 10,
+            //             // )
+            //           ],
+            //         ),
+            //       ],
+            //     ),
+            //   )),
+            // ),
             // ),
             Expanded(
               child:

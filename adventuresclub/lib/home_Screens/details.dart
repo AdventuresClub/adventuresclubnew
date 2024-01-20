@@ -88,7 +88,10 @@ class _DetailsState extends State<Details> {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) {
-            return BookTicket(widget.gm!);
+            return BookTicket(
+              widget.gm!,
+              selectedPrice: "",
+            );
           },
         ),
       );
@@ -211,6 +214,7 @@ class _DetailsState extends State<Details> {
             return BookTicket(
               widget.gm!,
               show: true,
+              selectedPrice: "",
             );
           },
         ),

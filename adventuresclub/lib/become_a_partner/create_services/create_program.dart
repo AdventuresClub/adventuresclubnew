@@ -107,7 +107,8 @@ class _CreateProgramState extends State<CreateProgram> {
     if (newTime == null) return;
     setState(() {
       startTime = newTime;
-      sTime = "${newTime.hour}:${newTime.minute}";
+      //sTime = "${newTime.hour}:${newTime.minute}";
+      sTime = "${newTime.hour}:${newTime.minute.toString().padLeft(2, '0')}";
       timeSt = Duration(hours: newTime.hour, minutes: newTime.minute);
     });
     print(startTime);
@@ -132,7 +133,8 @@ class _CreateProgramState extends State<CreateProgram> {
     } else {
       setState(() {
         endTime = newEndTime;
-        eTime = "${endTime!.hour}:${endTime!.minute}";
+        eTime =
+            "${endTime!.hour}:${endTime!.minute.toString().padLeft(2, '0')}";
         isTimeAfter = false;
         endSt = Duration(hours: newEndTime.hour, minutes: newEndTime.minute);
       });
@@ -242,9 +244,11 @@ class _CreateProgramState extends State<CreateProgram> {
                           vertical: 0, horizontal: 10),
                       leading: Text(
                         sTime,
+
                         //startTime.
                         //"${startTime!.hour.toString().padLeft(2, "0")} : ${startTime!.minute.toString().padLeft(2, '0')}",
-                        style: TextStyle(color: blackColor.withOpacity(0.6)),
+                        style: TextStyle(
+                            fontSize: 14, color: blackColor.withOpacity(0.5)),
                       ),
                       trailing: Icon(
                         Icons.punch_clock_sharp,
@@ -278,6 +282,9 @@ class _CreateProgramState extends State<CreateProgram> {
                           vertical: 0, horizontal: 10),
                       leading: Text(
                         eTime,
+                        style: TextStyle(
+                            fontSize: 14, color: blackColor.withOpacity(0.5)),
+
                         //"${endTime.hour.toString().padLeft(2, "0")} : ${endTime.minute.toString().padLeft(2, '0')}",
                       ),
                       trailing: Icon(
