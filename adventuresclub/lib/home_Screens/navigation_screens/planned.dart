@@ -562,13 +562,14 @@ class _PlannedState extends State<Planned> {
                 )
               : Expanded(
                   child: ListView.builder(
+                      shrinkWrap: true,
                       itemCount: allSer.length,
                       scrollDirection: Axis.vertical,
                       itemBuilder: (context, index) {
                         return GestureDetector(
                             onTap: () => goToDetails(allSer[index]),
                             child: SizedBox(
-                                height: 320,
+                                height: 330,
                                 child: ServicesCard(allSer[index])));
                       }),
                 ),

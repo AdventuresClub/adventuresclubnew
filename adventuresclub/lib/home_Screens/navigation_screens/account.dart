@@ -23,6 +23,7 @@ import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/null_user_container.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -829,7 +830,7 @@ class _AccountState extends State<Account> {
                                                 MyText(
                                                   text: profile
                                                       .name, //'Kenneth Gutierrez',
-                                                  color: blackColor,
+                                                  color: bluishColor,
                                                   weight: FontWeight.bold,
                                                   size: 22,
                                                   fontFamily: "Raleway",
@@ -878,9 +879,13 @@ class _AccountState extends State<Account> {
                                               onTap: () => goToProfile(
                                                   expired, profile.userRole),
                                               child: CircleAvatar(
-                                                radius: 38,
-                                                backgroundImage:
-                                                    NetworkImage(profileUrl),
+                                                radius: 42,
+                                                backgroundColor: greenColor1,
+                                                child: CircleAvatar(
+                                                  radius: 38,
+                                                  backgroundImage:
+                                                      NetworkImage(profileUrl),
+                                                ),
                                               ),
                                             ),
                                     ],
@@ -1020,7 +1025,7 @@ class _AccountState extends State<Account> {
                                                   profile.name,
                                                   style: const TextStyle(
                                                       fontSize: 22,
-                                                      color: blackColor,
+                                                      color: bluishColor,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
@@ -1076,9 +1081,13 @@ class _AccountState extends State<Account> {
                                               onTap: () => goToProfile(
                                                   expired, profile.userRole),
                                               child: CircleAvatar(
-                                                radius: 38,
-                                                backgroundImage:
-                                                    NetworkImage(profileUrl),
+                                                radius: 42,
+                                                backgroundColor: greenColor1,
+                                                child: CircleAvatar(
+                                                  radius: 38,
+                                                  backgroundImage:
+                                                      NetworkImage(profileUrl),
+                                                ),
                                               ),
                                             ),
                                     ],
@@ -1181,7 +1190,7 @@ class _AccountState extends State<Account> {
                                                 MyText(
                                                   text: userText[i].tr(),
                                                   color:
-                                                      greyColor.withOpacity(1),
+                                                      bluishColor, //greyColor.withOpacity(1),
                                                   weight: FontWeight.bold,
                                                 )
                                               ],
@@ -1216,7 +1225,7 @@ class _AccountState extends State<Account> {
                                                   profile.name,
                                                   style: const TextStyle(
                                                       fontSize: 22,
-                                                      color: blackColor,
+                                                      color: bluishColor,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
@@ -1265,9 +1274,13 @@ class _AccountState extends State<Account> {
                                               onTap: () => goToProfile(
                                                   expired, profile.userRole),
                                               child: CircleAvatar(
-                                                radius: 38,
-                                                backgroundImage:
-                                                    NetworkImage(profileUrl),
+                                                radius: 42,
+                                                backgroundColor: greenColor1,
+                                                child: CircleAvatar(
+                                                  radius: 38,
+                                                  backgroundImage:
+                                                      NetworkImage(profileUrl),
+                                                ),
                                               ),
                                             ),
                                     ],
@@ -1368,8 +1381,7 @@ class _AccountState extends State<Account> {
                                                 ),
                                                 MyText(
                                                   text: userText[i].tr(),
-                                                  color:
-                                                      greyColor.withOpacity(1),
+                                                  color: bluishColor,
                                                   weight: FontWeight.bold,
                                                 )
                                               ],
@@ -1411,7 +1423,7 @@ class _AccountState extends State<Account> {
                                                     profile.name,
                                                     style: const TextStyle(
                                                         fontSize: 22,
-                                                        color: blackColor,
+                                                        color: bluishColor,
                                                         fontWeight:
                                                             FontWeight.bold),
                                                   ),
@@ -1472,9 +1484,14 @@ class _AccountState extends State<Account> {
                                                 onTap: () => goToProfile(
                                                     expired, profile.userRole),
                                                 child: CircleAvatar(
-                                                  radius: 35,
-                                                  backgroundImage:
-                                                      NetworkImage(profileUrl),
+                                                  radius: 42,
+                                                  backgroundColor: greenColor1,
+                                                  child: CircleAvatar(
+                                                    radius: 35,
+                                                    backgroundImage:
+                                                        NetworkImage(
+                                                            profileUrl),
+                                                  ),
                                                 ),
                                               ),
                                       ],
@@ -1603,8 +1620,7 @@ class _AccountState extends State<Account> {
                                                   ),
                                                   MyText(
                                                     text: text[i],
-                                                    color: greyColor
-                                                        .withOpacity(1),
+                                                    color: bluishColor,
                                                     weight: FontWeight.bold,
                                                   )
                                                 ],
@@ -1639,7 +1655,7 @@ class _AccountState extends State<Account> {
                                                 MyText(
                                                   text: Constants.profile
                                                       .name, //'Kenneth Gutierrez',
-                                                  color: blackColor,
+                                                  color: bluishColor,
                                                   weight: FontWeight.bold,
                                                   size: 20,
                                                   fontFamily: "Raleway",
@@ -1698,9 +1714,13 @@ class _AccountState extends State<Account> {
                                               onTap: () => goToProfile(
                                                   expired, profile.userRole),
                                               child: CircleAvatar(
-                                                radius: 30,
-                                                backgroundImage:
-                                                    NetworkImage(profileUrl),
+                                                radius: 42,
+                                                backgroundColor: greenColor1,
+                                                child: CircleAvatar(
+                                                  radius: 30,
+                                                  backgroundImage:
+                                                      NetworkImage(profileUrl),
+                                                ),
                                               ),
                                             ),
                                     ],
@@ -1826,8 +1846,7 @@ class _AccountState extends State<Account> {
                                                 ),
                                                 MyText(
                                                   text: text[i],
-                                                  color:
-                                                      greyColor.withOpacity(1),
+                                                  color: bluishColor,
                                                   weight: FontWeight.bold,
                                                 )
                                               ],
@@ -2025,7 +2044,7 @@ class _AccountState extends State<Account> {
                                         ? 35
                                         : 25,
                                     width: 35,
-                                    color: greyColor.withOpacity(1),
+                                    color: bluishColor,
                                   ),
                                   tile1Text[index] == 'notification'
                                       ? Positioned(
@@ -2048,7 +2067,7 @@ class _AccountState extends State<Account> {
                                 title: Text(
                                   tile1Text[index].tr(),
                                   style: const TextStyle(
-                                      color: greyColor,
+                                      color: bluishColor,
                                       fontSize: 15,
                                       fontWeight: FontWeight.w700),
                                 ),
@@ -2061,8 +2080,8 @@ class _AccountState extends State<Account> {
                                 trailing: tile1Text[index] ==
                                         'addCountry' //settings
                                     ? SizedBox(
-                                        width: Constants.country.length > 11
-                                            ? 140
+                                        width: Constants.country.length > 7
+                                            ? 145
                                             : 100,
                                         //60,
                                         child: Row(
@@ -2071,12 +2090,13 @@ class _AccountState extends State<Account> {
                                           children: [
                                             MyText(
                                               text: Constants.country, //'OMAN',
-                                              color: greyColor.withOpacity(0.9),
-                                              weight: FontWeight.bold,
+                                              color: blackColor,
+                                              //weight: FontWeight.bold,
+                                              size: 14,
                                             ),
                                             Image.network(
                                               "${"${Constants.baseUrl}/public/"}${Constants.countryFlag}",
-                                              height: 15,
+                                              height: 20,
                                               width: 30,
                                             ),
                                           ],
@@ -2084,8 +2104,8 @@ class _AccountState extends State<Account> {
                                       )
                                     : tile1Text[index] ==
                                             'changeLanguage' //settings
-                                        ? Container(
-                                            width: 90,
+                                        ? SizedBox(
+                                            width: 120,
                                             height: 50,
                                             child: PopupMenuButton<String>(
                                               child: Padding(
@@ -2100,6 +2120,7 @@ class _AccountState extends State<Account> {
                                                       MyText(
                                                         text: selectedLanguage,
                                                         color: blackColor,
+                                                        size: 14,
                                                       ),
                                                     ],
                                                   )
@@ -2240,6 +2261,7 @@ class _AccountState extends State<Account> {
                                               text: Constants.country, //'OMAN',
                                               color: greyColor.withOpacity(0.9),
                                               weight: FontWeight.bold,
+                                              size: 14,
                                             ),
                                             Image.network(
                                               "${"${Constants.baseUrl}/public/"}${Constants.countryFlag}",

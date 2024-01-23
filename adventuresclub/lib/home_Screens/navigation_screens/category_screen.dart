@@ -44,7 +44,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return NewDetails(gm: gm);
+          return NewDetails(
+            gm: gm,
+            show: true,
+          );
         },
       ),
     );

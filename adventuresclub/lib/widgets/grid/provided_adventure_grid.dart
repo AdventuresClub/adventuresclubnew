@@ -36,7 +36,10 @@ class _ProvidedAdventureGridState extends State<ProvidedAdventureGrid> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return NewDetails(gm: gm);
+          return NewDetails(
+            gm: gm,
+            show: false,
+          );
         },
       ),
     );

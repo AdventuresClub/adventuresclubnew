@@ -56,20 +56,38 @@ class _InfoTileState extends State<InfoTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      dense: true,
+      visualDensity: VisualDensity.compact,
       contentPadding: const EdgeInsets.all(0),
       leading: widget.show!
           ? CircleAvatar(
-              backgroundColor: blueColor,
-              radius: 28,
+              backgroundColor: blackColor,
+              radius: 26,
               child: CircleAvatar(
-                backgroundColor: greenishColor,
-                radius: 25,
-                child: MyText(
-                  text: number,
-                  weight: FontWeight.bold,
+                backgroundColor: whiteColor,
+                radius: 18,
+                child: CircleAvatar(
+                  backgroundColor: greenishColor,
+                  radius: 15,
+                  child: MyText(
+                    text: number,
+                    weight: FontWeight.bold,
+                  ),
                 ),
               ),
             )
+          // CircleAvatar(
+          //     backgroundColor: blueColor,
+          //     radius: 28,
+          //     child: CircleAvatar(
+          //       backgroundColor: greenishColor,
+          //       radius: 25,
+          //       child: MyText(
+          //         text: number,
+          //         weight: FontWeight.bold,
+          //       ),
+          //     ),
+          //   )
           : null,
       title: MyText(
         text: "${widget.title} "

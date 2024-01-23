@@ -7,16 +7,17 @@ import 'package:adventuresclub/models/home_services/become_partner.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/models/profile_models/profile_become_partner.dart';
 import 'package:adventuresclub/models/user_profile_model.dart';
+import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../../widgets/Lists/Chat_list.dart/show_chat.dart';
 
 class NewAbout extends StatefulWidget {
+  final ServicesModel gm;
   final String? id;
   final int? sId;
-  const NewAbout({this.id, this.sId, super.key});
+  const NewAbout({this.id, this.sId, required this.gm, super.key});
 
   @override
   State<NewAbout> createState() => _NewAboutState();
@@ -170,8 +171,8 @@ class _NewAboutState extends State<NewAbout> {
       MaterialPageRoute(
         builder: (_) {
           return ShowChat(
-            "${Constants.baseUrl}/newreceiverchat/${Constants.userId}/${widget.sId}/${profile.id}",
-          );
+              //"${Constants.baseUrl}/newreceiverchat/${Constants.userId}/${widget.sId}/${profile.id}",
+              "${Constants.baseUrl}/receiverlist/${Constants.userId}/${widget.gm.id}");
         },
       ),
     );
@@ -211,69 +212,128 @@ class _NewAboutState extends State<NewAbout> {
             const SizedBox(
               height: 10,
             ),
-            ListTile(
-              minLeadingWidth: 30,
-              //dense: true,
-              leading: GestureDetector(
-                onTap: () => goToProvider(
-                  widget.id.toString(),
-                ),
-                child: CircleAvatar(
-                  radius: 40,
-                  backgroundImage: NetworkImage(
-                    "${'${Constants.baseUrl}/public/'}${profile.profileImage}",
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: () => goToProvider(
+                    widget.gm.providerId.toString(),
                   ),
-                ),
-              ),
-              title: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  MyText(
-                    text: profile.name, //'Alexander',
-                    weight: FontWeight.w600,
-                    color: bluishColor,
-                    size: 18,
-                  ),
-                ],
-              ),
-              trailing: Container(
-                height: MediaQuery.of(context).size.height / 20,
-                width: MediaQuery.of(context).size.width / 5,
-                decoration: const BoxDecoration(
-                  color: bluishColor,
-                  borderRadius: BorderRadius.all(Radius.circular(28)),
-                ),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () => selected(context),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'chat'.tr(),
-                              style: const TextStyle(
-                                  color: whiteColor,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 0.8,
-                                  fontFamily: "Raleway",
-                                  fontSize: 14),
-                            ),
-                          ],
-                        ),
+                  child: CircleAvatar(
+                    radius: 30,
+                    backgroundColor: greenColor1,
+                    child: CircleAvatar(
+                      radius: 28,
+                      backgroundImage: NetworkImage(
+                        "${'${Constants.baseUrl}/public/'}${profile.profileImage}",
                       ),
                     ),
                   ),
                 ),
-              ),
-              // const Image(
-              //   image: ExactAssetImage('images/forward.png'),
-              // ),
+                MyText(
+                  text: profile.name, //'Alexander',
+                  weight: FontWeight.w600,
+                  color: bluishColor,
+                  size: 18,
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height / 20,
+                  width: MediaQuery.of(context).size.width / 5,
+                  decoration: const BoxDecoration(
+                    color: bluishColor,
+                    borderRadius: BorderRadius.all(Radius.circular(28)),
+                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () => selected(context),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'chat'.tr(),
+                                style: const TextStyle(
+                                    color: whiteColor,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 0.8,
+                                    fontFamily: "Raleway",
+                                    fontSize: 14),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              ],
             ),
+            // ListTile(
+            //   minLeadingWidth: 30,
+            //   //dense: true,
+            //   leading: GestureDetector(
+            //     onTap: () => goToProvider(
+            //       widget.id.toString(),
+            //     ),
+            //     child: CircleAvatar(
+            //       radius: 40,
+            //       backgroundImage: NetworkImage(
+            //         "${'${Constants.baseUrl}/public/'}${profile.profileImage}",
+            //       ),
+            //     ),
+            //   ),
+            //   title: Column(
+            //     mainAxisAlignment: MainAxisAlignment.start,
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       MyText(
+            //         text: profile.name, //'Alexander',
+            //         weight: FontWeight.w600,
+            //         color: bluishColor,
+            //         size: 18,
+            //       ),
+            //     ],
+            //   ),
+            //   trailing: Container(
+            //     height: MediaQuery.of(context).size.height / 20,
+            //     width: MediaQuery.of(context).size.width / 5,
+            //     decoration: const BoxDecoration(
+            //       color: bluishColor,
+            //       borderRadius: BorderRadius.all(Radius.circular(28)),
+            //     ),
+            //     child: Material(
+            //       color: Colors.transparent,
+            //       child: InkWell(
+            //         onTap: () => selected(context),
+            //         child: Center(
+            //           child: Padding(
+            //             padding: const EdgeInsets.only(left: 0),
+            //             child: Row(
+            //               mainAxisAlignment: MainAxisAlignment.center,
+            //               children: [
+            //                 Text(
+            //                   'chat'.tr(),
+            //                   style: const TextStyle(
+            //                       color: whiteColor,
+            //                       fontWeight: FontWeight.bold,
+            //                       letterSpacing: 0.8,
+            //                       fontFamily: "Raleway",
+            //                       fontSize: 14),
+            //                 ),
+            //               ],
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            //   // const Image(
+            //   //   image: ExactAssetImage('images/forward.png'),
+            //   // ),
+            // ),
             const SizedBox(
               height: 10,
             ),

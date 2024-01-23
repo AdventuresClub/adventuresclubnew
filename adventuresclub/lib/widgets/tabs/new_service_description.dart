@@ -1,6 +1,8 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/reviews.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:adventuresclub/widgets/tabs/details_tabs/service_gathering_location.dart';
+import 'package:adventuresclub/widgets/tabs/details_tabs/service_program/service_plans.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -572,6 +574,99 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                 Divider(
                   thickness: 1,
                   color: blackColor.withOpacity(0.2),
+                ),
+                ServicesPlans(widget.gm.sPlan, widget.gm.programmes),
+                Divider(
+                  thickness: 1,
+                  color: blackColor.withOpacity(0.2),
+                ),
+                // 3 rd Tab /////////
+                // gathering location
+                ServiceGatheringLocation(
+                    widget.gm.writeInformation,
+                    widget.gm.sAddress,
+                    widget.gm.region,
+                    widget.gm.country,
+                    widget.gm.geoLocation,
+                    widget.gm.lat,
+                    widget.gm.lng),
+                const SizedBox(
+                  height: 10,
+                ),
+                MyText(
+                  text: "prerequisites",
+                  color: bluishColor,
+                  size: 18,
+                  weight: FontWeight.bold,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                MyText(
+                  text: widget.gm.preRequisites,
+                  color: blackColor,
+                  //weight: FontWeight.w500,
+                  size: 14,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Divider(
+                  thickness: 1,
+                  color: blackColor.withOpacity(0.2),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                MyText(
+                  text: "minimumRequirements",
+                  color: bluishColor,
+                  size: 18,
+                  weight: FontWeight.bold,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                MyText(
+                  text: widget.gm.mRequirements,
+                  color: blackColor,
+                  //weight: FontWeight.w500,
+                  size: 14,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Divider(
+                  thickness: 1,
+                  color: blackColor.withOpacity(0.2),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                MyText(
+                  text: "termsAndConditions",
+                  color: bluishColor,
+                  size: 18,
+                  weight: FontWeight.bold,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                MyText(
+                  text: widget.gm.tnc,
+                  color: blackColor,
+                  //weight: FontWeight.w500,
+                  size: 14,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Divider(
+                  thickness: 1,
+                  color: blackColor.withOpacity(0.2),
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
               ],
             ),

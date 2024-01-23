@@ -20,7 +20,7 @@ import '../widgets/buttons/button.dart';
 class NewDetails extends StatefulWidget {
   final ServicesModel? gm;
   final bool? show;
-  const NewDetails({this.gm, this.show, super.key});
+  const NewDetails({this.gm, this.show = true, super.key});
 
   @override
   State<NewDetails> createState() => _NewDetailsState();
@@ -299,7 +299,7 @@ class _NewDetailsState extends State<NewDetails> {
     return SafeArea(
       child: Scaffold(
         body: NestedScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           headerSliverBuilder: ((context, innerBoxIsScrolled) {
             return [
               SliverAppBar(
@@ -455,7 +455,7 @@ class _NewDetailsState extends State<NewDetails> {
           body: NewDetailsTab(
             widget.gm!,
             getPrice,
-            show: true,
+            show: widget.show,
           ),
           // children: [
 

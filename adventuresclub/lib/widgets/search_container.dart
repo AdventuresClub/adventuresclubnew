@@ -59,11 +59,15 @@ class SearchContainerState extends State<SearchContainer> {
                 child: TextField(
                   controller: widget.controller,
                   decoration: InputDecoration(
-                      labelText: widget.hinttext,
+                      //labelText: widget.hinttext,
+                      labelStyle:
+                          TextStyle(color: bluishColor.withOpacity(0.4)),
+                      hintText: widget.hinttext,
                       //contentPadding: const EdgeInsets.only(top: 1),
                       //hintText: widget.hinttext.toString(),
                       border: InputBorder.none,
-                      hintStyle: const TextStyle(fontSize: 14)),
+                      hintStyle: TextStyle(
+                          fontSize: 14, color: bluishColor.withOpacity(0.4))),
                 ),
               ),
               // Text(

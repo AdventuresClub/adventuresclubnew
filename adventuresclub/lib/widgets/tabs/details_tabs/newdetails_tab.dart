@@ -7,9 +7,6 @@ import 'package:adventuresclub/home_Screens/accounts/new_about.dart';
 import 'package:adventuresclub/models/getParticipants/get_participants_model.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
-import 'package:adventuresclub/widgets/my_text.dart';
-import 'package:adventuresclub/widgets/tabs/details_tabs/service_gathering_location.dart';
-import 'package:adventuresclub/widgets/tabs/details_tabs/service_program/service_plans.dart';
 import 'package:adventuresclub/widgets/tabs/new_service_description.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -370,101 +367,10 @@ class _NewDetailsTabState extends State<NewDetailsTab>
                 getStatus),
             // program tab
             // 2 nd Tab /////////
-            ServicesPlans(widget.gm.sPlan, widget.gm.programmes),
-            Divider(
-              thickness: 1,
-              color: blackColor.withOpacity(0.2),
-            ),
-            // 3 rd Tab /////////
-            // gathering location
-            ServiceGatheringLocation(
-                widget.gm.writeInformation,
-                widget.gm.sAddress,
-                widget.gm.region,
-                widget.gm.country,
-                widget.gm.geoLocation,
-                widget.gm.lat,
-                widget.gm.lng),
-            const SizedBox(
-              height: 10,
-            ),
-            MyText(
-              text: "prerequisites",
-              color: bluishColor,
-              size: 18,
-              weight: FontWeight.bold,
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            MyText(
-              text: widget.gm.preRequisites,
-              color: blackColor,
-              //weight: FontWeight.w500,
-              size: 14,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Divider(
-              thickness: 1,
-              color: blackColor.withOpacity(0.2),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            MyText(
-              text: "minimumRequirements",
-              color: bluishColor,
-              size: 18,
-              weight: FontWeight.bold,
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            MyText(
-              text: widget.gm.mRequirements,
-              color: blackColor,
-              //weight: FontWeight.w500,
-              size: 14,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Divider(
-              thickness: 1,
-              color: blackColor.withOpacity(0.2),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            MyText(
-              text: "termsAndConditions",
-              color: bluishColor,
-              size: 18,
-              weight: FontWeight.bold,
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            MyText(
-              text: widget.gm.tnc,
-              color: blackColor,
-              //weight: FontWeight.w500,
-              size: 14,
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Divider(
-              thickness: 1,
-              color: blackColor.withOpacity(0.2),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
+
             if (widget.show!)
               NewAbout(
+                  gm: widget.gm,
                   id: widget.gm.providerId.toString(),
                   sId: widget.gm.serviceId),
 

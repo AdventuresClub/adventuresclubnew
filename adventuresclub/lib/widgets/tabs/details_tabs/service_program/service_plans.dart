@@ -117,20 +117,22 @@ class _ServicesPlansState extends State<ServicesPlans> {
           )
         : SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                MyText(
+                  text: "Activity Program",
+                  color: bluishColor,
+                  size: 18,
+                  weight: FontWeight.bold,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
                 for (int index = 0; index < widget.programmes.length; index++)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      MyText(
-                        text: "Activity Program",
-                        color: blackColor,
-                        size: 18,
-                        weight: FontWeight.bold,
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 4.0, horizontal: 6),
