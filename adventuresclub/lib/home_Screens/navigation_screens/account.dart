@@ -879,7 +879,7 @@ class _AccountState extends State<Account> {
                                               onTap: () => goToProfile(
                                                   expired, profile.userRole),
                                               child: CircleAvatar(
-                                                radius: 42,
+                                                radius: 40,
                                                 backgroundColor: greenColor1,
                                                 child: CircleAvatar(
                                                   radius: 38,
@@ -989,8 +989,7 @@ class _AccountState extends State<Account> {
                                                 ),
                                                 MyText(
                                                   text: userText[i],
-                                                  color:
-                                                      greyColor.withOpacity(1),
+                                                  color: bluishColor,
                                                   weight: FontWeight.bold,
                                                 )
                                               ],
@@ -1081,7 +1080,7 @@ class _AccountState extends State<Account> {
                                               onTap: () => goToProfile(
                                                   expired, profile.userRole),
                                               child: CircleAvatar(
-                                                radius: 42,
+                                                radius: 40,
                                                 backgroundColor: greenColor1,
                                                 child: CircleAvatar(
                                                   radius: 38,
@@ -1274,7 +1273,7 @@ class _AccountState extends State<Account> {
                                               onTap: () => goToProfile(
                                                   expired, profile.userRole),
                                               child: CircleAvatar(
-                                                radius: 42,
+                                                radius: 40,
                                                 backgroundColor: greenColor1,
                                                 child: CircleAvatar(
                                                   radius: 38,
@@ -1484,7 +1483,7 @@ class _AccountState extends State<Account> {
                                                 onTap: () => goToProfile(
                                                     expired, profile.userRole),
                                                 child: CircleAvatar(
-                                                  radius: 42,
+                                                  radius: 40,
                                                   backgroundColor: greenColor1,
                                                   child: CircleAvatar(
                                                     radius: 35,
@@ -1714,7 +1713,7 @@ class _AccountState extends State<Account> {
                                               onTap: () => goToProfile(
                                                   expired, profile.userRole),
                                               child: CircleAvatar(
-                                                radius: 42,
+                                                radius: 40,
                                                 backgroundColor: greenColor1,
                                                 child: CircleAvatar(
                                                   radius: 30,
@@ -2081,8 +2080,8 @@ class _AccountState extends State<Account> {
                                         'addCountry' //settings
                                     ? SizedBox(
                                         width: Constants.country.length > 7
-                                            ? 145
-                                            : 100,
+                                            ? 155
+                                            : 110,
                                         //60,
                                         child: Row(
                                           mainAxisAlignment:
@@ -2232,6 +2231,7 @@ class _AccountState extends State<Account> {
                                     showConfirmation("logOut", "wantToLogOut");
                                   }
                                 }),
+                                minLeadingWidth: 40,
                                 leading:
                                     Stack(clipBehavior: Clip.none, children: [
                                   Image(
@@ -2242,16 +2242,17 @@ class _AccountState extends State<Account> {
                                 ]),
                                 title: MyText(
                                   text: tile1Text[index],
-                                  color: greyColor.withOpacity(1),
-                                  size: 15,
+                                  color:
+                                      bluishColor, //greyColor.withOpacity(1),
+                                  size: 14,
                                   weight: FontWeight.w700,
                                 ),
                                 trailing: tile1Text[index] ==
                                         'addCountry' //settings
                                     ? SizedBox(
                                         width: Constants.country.length > 11
-                                            ? 140
-                                            : 100,
+                                            ? 150
+                                            : 110,
                                         //60,
                                         child: Row(
                                           mainAxisAlignment:

@@ -250,7 +250,7 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.all(0),
+          //   height: 70,
           decoration: BoxDecoration(
               color: whiteColor, borderRadius: BorderRadius.circular(8)),
           child: ListTile(
@@ -259,7 +259,7 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
             contentPadding: const EdgeInsets.symmetric(horizontal: 5),
             leading: Container(
               height: 42,
-              width: 72,
+              width: 80,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 color: whiteColor,
@@ -474,10 +474,10 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
                 ),
                 decoration: InputDecoration(
                   alignLabelWithHint: true,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 0,
-                    vertical: 12,
-                  ),
+                  // contentPadding: const EdgeInsets.symmetric(
+                  //   horizontal: 0,
+                  //   vertical: 0,
+                  // ),
                   filled: true,
                   fillColor: whiteColor,
                   hintText: "enterPhoneNumber".tr(), //'Enter Phone Number',

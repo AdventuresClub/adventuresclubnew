@@ -189,7 +189,10 @@ class _NewAboutState extends State<NewAbout> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return About(id: id);
+          return About(
+            id: id,
+            sId: widget.sId,
+          );
         },
       ),
     );

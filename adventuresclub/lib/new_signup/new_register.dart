@@ -657,7 +657,7 @@ class _NewRegisterState extends State<NewRegister> {
                               height: 10,
                             ),
                             SizedBox(
-                                height: 65,
+                                height: 70,
                                 child: PhoneTextField(getData, countryCode)),
                             const SizedBox(
                               height: 10,
