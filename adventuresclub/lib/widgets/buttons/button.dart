@@ -57,28 +57,25 @@ class _ButtonState extends State<Button> {
         child: InkWell(
           onTap: widget.function,
           child: Center(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    widget.name.tr(),
-                    style: TextStyle(
-                        color: widget.textColor,
-                        fontWeight: widget.fontWeight,
-                        letterSpacing: 0.8,
-                        fontFamily: widget.fontFamily,
-                        fontSize: widget.fontSize),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  widget.name.tr(),
+                  style: TextStyle(
+                      color: widget.textColor,
+                      fontWeight: widget.fontWeight,
+                      letterSpacing: 0.8,
+                      fontFamily: widget.fontFamily,
+                      fontSize: widget.fontSize),
+                ),
+                const SizedBox(width: 3),
+                if (widget.showIcon == true)
+                  Icon(
+                    widget.icn,
+                    color: widget.iconColor,
                   ),
-                  const SizedBox(width: 3),
-                  if (widget.showIcon == true)
-                    Icon(
-                      widget.icn,
-                      color: widget.iconColor,
-                    ),
-                ],
-              ),
+              ],
             ),
           ),
         ),

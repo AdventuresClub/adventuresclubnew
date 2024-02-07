@@ -460,11 +460,19 @@ class _AboutState extends State<About> {
                                         "${'${Constants.baseUrl}/public/'}${profile.profileImage}",
                                       ),
                                     ),
-                                    MyText(
-                                      text: profile.name, //'Alexander',
-                                      weight: FontWeight.w600,
-                                      color: blackColor,
-                                      size: 18,
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Expanded(
+                                      child: MyText(
+                                        text: profile.name, //'Alexander',
+                                        weight: FontWeight.w600,
+                                        color: blackColor,
+                                        size: 18,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
                                     ),
                                     Container(
                                       height:

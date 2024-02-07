@@ -65,9 +65,9 @@ class _AccountState extends State<Account> {
     'images/logout.png',
   ];
   List<String> tile1Text = [
-    // "myPoints",
+    "myPoints",
     "healthCondition",
-    //"notification",
+    "notification",
     "changeLanguage",
     "addCountry",
     "aboutUs",
@@ -1945,24 +1945,24 @@ class _AccountState extends State<Account> {
                                     vertical: 2, horizontal: 20),
                                 horizontalTitleGap: 2,
                                 onTap: (() {
-                                  // if (tile1Text[index] == 'myPoints') {
-                                  //   Navigator.of(context)
-                                  //       .push(MaterialPageRoute(builder: (_) {
-                                  //     return const MyPoints();
-                                  //   }));
-                                  // }
+                                  if (tile1Text[index] == 'myPoints') {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(builder: (_) {
+                                      return const MyPoints();
+                                    }));
+                                  }
                                   if (tile1Text[index] == 'healthCondition') {
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(builder: (_) {
                                       return const HealthCondition();
                                     }));
                                   }
-                                  // if (tile1Text[index] == 'notification') {
-                                  //   Navigator.of(context)
-                                  //       .push(MaterialPageRoute(builder: (_) {
-                                  //     return const Notifications();
-                                  //   }));
-                                  // }
+                                  if (tile1Text[index] == 'notification') {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(builder: (_) {
+                                      return const Notifications();
+                                    }));
+                                  }
                                   //  if(tile1Text[index] == 'Payment'){
                                   //   Navigator.of(context).push(MaterialPageRoute(builder: (_){
                                   //     return const Payment();
