@@ -192,7 +192,7 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                     ),
                     MyText(
                       text:
-                          "${widget.gm.aSeats} Seats (${widget.gm.remainingSeats} left)",
+                          "${widget.gm.aSeats} ${"seats".tr()} (${widget.gm.remainingSeats} ${"left".tr()})",
                       //'River Rafting',
                       // weight: FontWeight.w600,
                       color: blackColor,
