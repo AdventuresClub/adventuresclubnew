@@ -392,7 +392,7 @@ class _AddLocationState extends State<AddLocation> {
                               (ServiceTypeFilterModel value) {
                         return DropdownMenuItem<String>(
                           value: value.type,
-                          child: Text(value.type),
+                          child: Text(value.type.tr()),
                         );
                       }).toList(),
                     ),
@@ -408,7 +408,7 @@ class _AddLocationState extends State<AddLocation> {
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 8, horizontal: 8),
-                      hintText: 'Enter: Geolocation',
+                      hintText: 'enterGeolocation'.tr(),
                       filled: true,
                       fillColor: lightGreyColor,
                       suffixIcon: InkWell(
@@ -464,7 +464,7 @@ class _AddLocationState extends State<AddLocation> {
                   height: 20,
                 ),
                 ButtonIconLess(
-                    'Submit', bluishColor, whiteColor, 1.5, 17, 16, addLocation)
+                    'submit', bluishColor, whiteColor, 1.5, 17, 16, addLocation)
               ],
             ),
           ),
