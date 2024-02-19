@@ -7,6 +7,7 @@ import 'package:adventuresclub/models/requests/upcoming_Requests_Model.dart';
 import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/multiline_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
@@ -84,14 +85,16 @@ class _MyAdventuresState extends State<MyAdventures> {
             ),
           ),
           title: MyText(
-            text: 'Review Adventures',
+            text: 'reviewAdventure'.tr(),
             color: bluishColor,
             weight: FontWeight.bold,
           ),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 12),
-          child: ListView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               ListTile(
                 leading: CircleAvatar(
@@ -115,7 +118,8 @@ class _MyAdventuresState extends State<MyAdventures> {
                     Expanded(
                       flex: 4,
                       child: MyText(
-                        text: "${widget.gm.aDate} " " ${widget.gm.bDate}",
+                        text: "${widget.gm.aDate.tr()} "
+                            " ${widget.gm.bDate.tr()}",
                         weight: FontWeight.w500,
                         color: blackColor,
                         size: 12,
@@ -137,15 +141,14 @@ class _MyAdventuresState extends State<MyAdventures> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: MyText(
-                        text: 'How was your experience there',
-                        color: blackColor,
-                        size: 16,
-                        weight: FontWeight.bold,
-                      ),
+                    MyText(
+                      text: 'How was your experience there'.tr(),
+                      color: blackColor,
+                      size: 16,
+                      weight: FontWeight.bold,
                     ),
                     const SizedBox(
                       height: 20,
@@ -193,11 +196,11 @@ class _MyAdventuresState extends State<MyAdventures> {
                     const SizedBox(
                       height: 50,
                     ),
-                    ButtonIconLess('Submit', bluishColor, whiteColor, 1.8, 16,
-                        18, addReview),
                   ],
                 ),
               ),
+              ButtonIconLess(
+                  'submit', bluishColor, whiteColor, 1.8, 16, 18, addReview),
             ],
           ),
         ),

@@ -47,7 +47,7 @@ class _ButtonIconLessState extends State<ButtonIconLess> {
                     style: TextStyle(
                         color: widget.textColor,
                         fontSize: widget.fontSize,
-                        fontFamily: 'Roboto',
+                        fontFamily: 'Raleway',
                         fontWeight: FontWeight.w500),
                   ),
                 ],

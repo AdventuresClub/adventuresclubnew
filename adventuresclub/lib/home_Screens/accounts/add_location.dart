@@ -12,6 +12,7 @@ import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
 import 'package:adventuresclub/widgets/text_fields/multiline_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -261,7 +262,7 @@ class _AddLocationState extends State<AddLocation> {
             ),
           ),
           title: MyText(
-            text: 'Add Your Location',
+            text: 'addYourLocation'.tr(),
             color: bluishColor,
           ),
         ),
@@ -294,7 +295,7 @@ class _AddLocationState extends State<AddLocation> {
                                 height: 20,
                               ),
                               MyText(
-                                text: 'Tap to browse',
+                                text: 'tapToBrowse'.tr(),
                                 color: greyColor,
                               ),
                               const SizedBox(
@@ -302,7 +303,7 @@ class _AddLocationState extends State<AddLocation> {
                               ),
                               MyText(
                                 text:
-                                    'Add banner(image) to effectively adventure',
+                                    'addBannerImageToEffectivelyAdventure'.tr(),
                                 color: greyColor,
                                 align: TextAlign.center,
                               ),
@@ -355,7 +356,7 @@ class _AddLocationState extends State<AddLocation> {
                 const SizedBox(
                   height: 20,
                 ),
-                TFWithSize('Enter Destination Name', nameController, 14,
+                TFWithSize('enterDestinationName', nameController, 14,
                     lightGreyColor, 1),
                 const SizedBox(
                   height: 20,

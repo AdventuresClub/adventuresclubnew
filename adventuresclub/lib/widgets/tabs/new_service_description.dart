@@ -184,7 +184,9 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     MyText(
-                      text: "${widget.gm.country}, ${widget.gm.region}",
+                      text:
+                          "${widget.gm.country.tr()}, ${widget.gm.region.tr()}"
+                              .tr(),
                       //'River Rafting',
                       // weight: FontWeight.bold,
                       color: blackColor,
@@ -254,7 +256,7 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                     //   width: 15,
                     // ),
                     MyText(
-                      text: "${widget.gm.duration} Activity",
+                      text: "${widget.gm.duration.tr()} ${"Activity".tr()}",
                       //'River Rafting',
                       // weight: FontWeight.w600,
                       color: blackColor,
@@ -292,7 +294,7 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                           ],
                         ),
                         MyText(
-                          text: "Including gears & taxes",
+                          text: "includingGears".tr(),
                           //'River Rafting',
                           //weight: FontWeight.w700,
                           color: redColor,
@@ -328,7 +330,7 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                           ],
                         ),
                         MyText(
-                          text: "Excluding gears & taxes",
+                          text: "excludingGears".tr(),
                           //'River Rafting',
                           //  weight: FontWeight.w700,
                           color: redColor,

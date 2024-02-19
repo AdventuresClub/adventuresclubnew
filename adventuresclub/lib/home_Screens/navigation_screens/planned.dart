@@ -492,16 +492,16 @@ class _PlannedState extends State<Planned> {
                 startingDayOfWeek: StartingDayOfWeek.monday,
                 calendarBuilders: CalendarBuilders(
                   dowBuilder: (context, day) {
-                    if (day.weekday == DateTime.sunday) {
-                      final text = DateFormat.E().format(day);
-                      return Center(
-                        child: Text(
-                          text.tr(),
-                          style: const TextStyle(
-                              color: greyColor, fontWeight: FontWeight.w500),
-                        ),
-                      );
-                    }
+                    // if (day.weekday == DateTime.sunday) {
+                    final text = DateFormat.E().format(day);
+                    return Center(
+                      child: Text(
+                        text.tr(),
+                        style: const TextStyle(
+                            color: greyColor, fontWeight: FontWeight.w500),
+                      ),
+                    );
+                    // }
                   },
                   selectedBuilder: (context, datetime, focusedDay) {
                     return Container(

@@ -122,7 +122,7 @@ class _ServicesPlansState extends State<ServicesPlans> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 MyText(
-                  text: "Activity Program",
+                  text: "activityProgram".tr(),
                   color: bluishColor,
                   size: 18,
                   weight: FontWeight.bold,

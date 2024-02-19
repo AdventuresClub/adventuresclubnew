@@ -158,7 +158,7 @@ class _ServicesCardState extends State<ServicesCard> {
                               color: blackColor,
                               size: 12,
                               weight: FontWeight.bold,
-                              fontFamily: 'Roboto',
+                              fontFamily: 'Raleway',
                               height: 1.3,
                             ),
                             const SizedBox(
@@ -181,7 +181,7 @@ class _ServicesCardState extends State<ServicesCard> {
                                     color: blackColor,
                                     size: 10,
                                     weight: FontWeight.w500,
-                                    fontFamily: 'Roboto',
+                                    fontFamily: 'Raleway',
                                     height: 1.3,
                                   ),
                                 ),
@@ -411,9 +411,9 @@ class _ServicesCardState extends State<ServicesCard> {
                                     ),
                                   ),
                                   MyText(
-                                    text: "${widget.gm.costInc} "
+                                    text: "${widget.gm.costInc.tr()} "
                                         " "
-                                        "${widget.gm.currency}",
+                                        "${widget.gm.currency.tr()}",
                                     //text: 'OMR 20.00',
                                     weight: FontWeight.bold,
                                     color: blackTypeColor3,

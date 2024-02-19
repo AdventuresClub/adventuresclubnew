@@ -80,7 +80,7 @@ class _ReviewAdState extends State<ReviewAd> {
           ),
         ),
         title: MyText(
-          text: 'Review Adventures',
+          text: 'reviewAdventure',
           color: bluishColor,
         ),
       ),
