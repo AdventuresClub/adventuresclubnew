@@ -364,7 +364,7 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                 if (widget.gm.sPlan == 1)
                   RichText(
                     text: TextSpan(
-                      text: 'Availability :',
+                      text: 'Availability'.tr(),
                       style: const TextStyle(
                           color: bluishColor,
                           fontSize: 14,
@@ -411,7 +411,7 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                   height: 10,
                 ),
                 MyText(
-                  text: "Description",
+                  text: "description".tr(),
                   color: bluishColor,
                   size: 18,
                   weight: FontWeight.bold,
@@ -436,7 +436,7 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                   height: 10,
                 ),
                 MyText(
-                  text: "Activities Included",
+                  text: "activitiesIncludes".tr(),
                   color: bluishColor,
                   size: 18,
                   weight: FontWeight.bold,
@@ -483,7 +483,7 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                   height: 10,
                 ),
                 MyText(
-                  text: "Audience",
+                  text: "audience".tr(),
                   color: bluishColor,
                   size: 18,
                   weight: FontWeight.bold,
@@ -532,7 +532,7 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                   height: 10,
                 ),
                 MyText(
-                  text: "Dependency",
+                  text: "dependency".tr(),
                   color: bluishColor,
                   size: 18,
                   weight: FontWeight.bold,

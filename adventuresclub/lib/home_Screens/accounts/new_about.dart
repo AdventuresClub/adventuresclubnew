@@ -207,7 +207,7 @@ class _NewAboutState extends State<NewAbout> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             MyText(
-              text: "Provided By",
+              text: "providedBy",
               color: bluishColor,
               size: 18,
               weight: FontWeight.bold,

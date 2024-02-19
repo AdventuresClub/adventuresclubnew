@@ -228,7 +228,7 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
               height: 10,
             ),
             MyText(
-              text: "Gathering Location",
+              text: "gatheringLocation".tr(),
               color: bluishColor,
               size: 18,
               weight: FontWeight.bold,

@@ -4,6 +4,7 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/filter_data_model/programs_model.dart';
 import 'package:adventuresclub/widgets/info_tile.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ServicesPlans extends StatefulWidget {
@@ -38,7 +39,7 @@ class _ServicesPlansState extends State<ServicesPlans> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 MyText(
-                  text: "Activity Program",
+                  text: "activityProgram".tr(),
                   color: bluishColor,
                   size: 18,
                   weight: FontWeight.bold,
