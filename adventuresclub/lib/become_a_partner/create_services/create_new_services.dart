@@ -129,7 +129,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     DateTime dt = DateTime(currentDate.year, currentDate.month, currentDate.day,
         time.hour, time.minute);
     formattedDate = 'startDate';
-    endDate = "End Date";
+    endDate = "endDate".tr();
     getData();
     // addProgramData();
   }

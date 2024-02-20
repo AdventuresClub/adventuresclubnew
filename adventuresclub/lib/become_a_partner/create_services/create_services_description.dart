@@ -393,7 +393,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                     ),
                     Expanded(
                       child: TFWithSize(
-                        'Available Seats',
+                        'availableSeats',
                         widget.available,
                         14,
                         lightGreyColor,
@@ -406,8 +406,8 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                 ),
                 ExpansionTile(
                   title: Text(regionList[selectedRegion].showCountry == false
-                      ? 'Select Region'
-                      : regionList[selectedRegion].region),
+                      ? 'selectRegion'.tr()
+                      : regionList[selectedRegion].region.tr()),
                   children: [
                     ListView.builder(
                       shrinkWrap: true,
@@ -437,7 +437,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                               //     regionList[index].regionId;
                             });
                           },
-                          title: Text(regionList[index].region),
+                          title: Text(regionList[index].region.tr()),
                         );
                       },
                     )
@@ -452,8 +452,8 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                     //     : 'Service Sector',
                     filterSectors[selectedServiceSector].showfilterSectors ==
                             true
-                        ? filterSectors[selectedServiceSector].sector
-                        : 'Service Sector',
+                        ? filterSectors[selectedServiceSector].sector.tr()
+                        : 'Service Sector'.tr(),
                   ),
                   children: [
                     ListView.builder(
@@ -490,7 +490,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                               //     filterSectors[index].id;
                             });
                           },
-                          title: Text(filterSectors[index].sector),
+                          title: Text(filterSectors[index].sector.tr()),
                         );
                       },
                     )
@@ -503,8 +503,8 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                   //     : 'Service Sector',
                   title: Text(
                     categoryFilter[selectedCategory].showCategoryFilter == true
-                        ? categoryFilter[selectedCategory].category
-                        : 'Service Category',
+                        ? categoryFilter[selectedCategory].category.tr()
+                        : 'Service Category'.tr(),
                   ),
                   children: [
                     ListView.builder(
@@ -542,7 +542,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                               //     categoryFilter[index].id;
                             });
                           },
-                          title: Text(categoryFilter[index].category),
+                          title: Text(categoryFilter[index].category.tr()),
                         );
                       },
                     )
@@ -556,8 +556,8 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                 ExpansionTile(
                   title: Text(
                     serviceFilter[selectedServiceType].showServiceFilter == true
-                        ? serviceFilter[selectedServiceType].type
-                        : 'Service Type',
+                        ? serviceFilter[selectedServiceType].type.tr()
+                        : 'Service Type'.tr(),
                   ),
                   children: [
                     ListView.builder(
@@ -594,7 +594,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                               //     serviceFilter[index].id;
                             });
                           },
-                          title: Text(serviceFilter[index].type),
+                          title: Text(serviceFilter[index].type.tr()),
                         );
                       },
                     )
@@ -610,7 +610,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                   title: Text(
                     durationFilter[selectedDuration].showDuration == true
                         ? durationFilter[selectedDuration].duration
-                        : 'Duration',
+                        : 'Duration'.tr(),
                   ),
                   children: [
                     ListView.builder(
@@ -642,7 +642,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                               //     durationFilter[index].id;
                             });
                           },
-                          title: Text(durationFilter[index].duration),
+                          title: Text(durationFilter[index].duration.tr()),
                         );
                       },
                     )
@@ -652,7 +652,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                   title: Text(
                     levelFilter[selectedLevel].showLevel == true
                         ? levelFilter[selectedLevel].level
-                        : 'Select Level',
+                        : 'selectLevel'.tr(),
                   ),
                   children: [
                     ListView.builder(
@@ -688,7 +688,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                               //     levelFilter[index].id;
                             });
                           },
-                          title: Text(levelFilter[index].level),
+                          title: Text(levelFilter[index].level.tr()),
                         );
                       },
                     )

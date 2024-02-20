@@ -62,7 +62,7 @@ class UpdatePage extends StatelessWidget {
             ElevatedButton(
                 onPressed: launchURL,
                 style: ElevatedButton.styleFrom(
-                  primary: greenishColor, // Background color
+                  backgroundColor: greenishColor, // Background color
                 ),
                 child: MyText(text: "update".tr()))
           ]),

@@ -168,7 +168,7 @@ class _RequestInformationState extends State<RequestInformation> {
                         fontWeight: FontWeight.bold),
                     children: <TextSpan>[
                       TextSpan(
-                          text: widget.gRM.region,
+                          text: widget.gRM.region.tr(),
                           style: const TextStyle(
                             fontSize: 14,
                             color: blackColor,
@@ -191,7 +191,7 @@ class _RequestInformationState extends State<RequestInformation> {
                         fontWeight: FontWeight.bold),
                     children: <TextSpan>[
                       TextSpan(
-                          text: widget.gRM.nationality,
+                          text: widget.gRM.nationality.tr(),
                           style: const TextStyle(
                             fontSize: 14,
                             color: blackColor,
@@ -207,7 +207,7 @@ class _RequestInformationState extends State<RequestInformation> {
                 ),
                 RichText(
                   text: TextSpan(
-                    text: 'How Old: ',
+                    text: 'HowOld'.tr(),
                     style: const TextStyle(
                         color: bluishColor,
                         fontSize: 14,
@@ -224,7 +224,7 @@ class _RequestInformationState extends State<RequestInformation> {
                                 fontFamily: "Raleway",
                               ))
                           : const TextSpan(
-                              text: "Null",
+                              text: " Null ",
                               style: TextStyle(
                                 fontSize: 14,
                                 color: blackColor,

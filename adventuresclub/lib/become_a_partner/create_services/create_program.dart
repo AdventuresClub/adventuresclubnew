@@ -2,6 +2,7 @@
 
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/services/create_services/create_services_program%20_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class CreateProgram extends StatefulWidget {
@@ -19,8 +20,8 @@ class _CreateProgramState extends State<CreateProgram> {
   TextEditingController scheduleController = TextEditingController();
   TimeOfDay? startTime;
   TimeOfDay? endTime;
-  String sTime = "Start Time";
-  String eTime = "End Time";
+  String sTime = "startTime";
+  String eTime = "endTime";
   TimeOfDay time = TimeOfDay.now();
   DateTime pickedDate = DateTime.now();
   DateTime currentDate = DateTime.now();
@@ -28,7 +29,7 @@ class _CreateProgramState extends State<CreateProgram> {
   Duration timeSt = const Duration();
   Duration endSt = const Duration();
   bool isTimeAfter = false;
-  String formattedDate = "";
+  String formattedDate = "Select A Date";
   bool loading = false;
 
   @override
@@ -175,7 +176,7 @@ class _CreateProgramState extends State<CreateProgram> {
                 },
                 keyboardType: TextInputType.multiline,
                 controller: titleController,
-                decoration: Constants.getInputDecoration("Schedule Title")),
+                decoration: Constants.getInputDecoration("scheduleTitle".tr())),
           ),
           // TFWithSize(
           //   "Schedule Title",
@@ -243,7 +244,7 @@ class _CreateProgramState extends State<CreateProgram> {
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 0, horizontal: 10),
                       leading: Text(
-                        sTime,
+                        sTime.tr(),
 
                         //startTime.
                         //"${startTime!.hour.toString().padLeft(2, "0")} : ${startTime!.minute.toString().padLeft(2, '0')}",
@@ -281,7 +282,7 @@ class _CreateProgramState extends State<CreateProgram> {
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 0, horizontal: 10),
                       leading: Text(
-                        eTime,
+                        eTime.tr(),
                         style: TextStyle(
                             fontSize: 14, color: blackColor.withOpacity(0.5)),
 
@@ -315,7 +316,7 @@ class _CreateProgramState extends State<CreateProgram> {
                 keyboardType: TextInputType.multiline,
                 controller: scheduleController,
                 decoration:
-                    Constants.getInputDecoration("Schedule Description")),
+                    Constants.getInputDecoration("scheduleDescription".tr())),
           ),
         ],
       ),

@@ -9,6 +9,7 @@ import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
 import 'package:adventuresclub/widgets/text_fields/multiline_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 
@@ -245,7 +246,7 @@ class _CostState extends State<Cost> {
               decoration: InputDecoration(
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                hintText: 'enterGeolocation',
+                hintText: 'enterGeolocation'.tr(),
                 filled: true,
                 fillColor: lightGreyColor,
                 suffixIcon: GestureDetector(
@@ -306,7 +307,7 @@ class _CostState extends State<Cost> {
                     2.2,
                     type: true,
                     maximumLetters: 10,
-                    label: "Set Cost",
+                    label: "setCost".tr(),
                   ),
                   const SizedBox(
                     width: 10,
@@ -338,7 +339,7 @@ class _CostState extends State<Cost> {
                     2.2,
                     type: true,
                     maximumLetters: 10,
-                    label: "Set Cost",
+                    label: "setCost".tr(),
                   ),
                   SizedBox(
                     width: 180,
