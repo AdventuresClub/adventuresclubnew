@@ -207,10 +207,10 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                 const SizedBox(
                   height: 10,
                 ),
-                const Text(
-                  "Adventure Details has been Submitted",
+                Text(
+                  "adventureDetailsHasBeenSubmitted".tr(),
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontWeight: FontWeight.w500,
                       color: blackColor,
                       fontSize: 18),
@@ -219,10 +219,10 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                   height: 10,
                 ),
                 //Text("data"),
-                const Text(
-                  "User will be able to enroll as soon as it confirm",
+                Text(
+                  "userWillBeAbleToEnrol".tr(),
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.w500),
+                  style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
                 // text:
                 //     "After approval you'll be notified and have to buy your subscription package",
@@ -241,7 +241,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                       ),
                     ),
                     child: MyText(
-                      text: "Okay, Got it",
+                      text: "okGotIt".tr(),
                       weight: FontWeight.bold,
                       color: whiteColor,
                     ))

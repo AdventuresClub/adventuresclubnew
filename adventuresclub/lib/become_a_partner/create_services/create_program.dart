@@ -29,7 +29,7 @@ class _CreateProgramState extends State<CreateProgram> {
   Duration timeSt = const Duration();
   Duration endSt = const Duration();
   bool isTimeAfter = false;
-  String formattedDate = "Select A Date";
+  String formattedDate = "selectDate";
   bool loading = false;
 
   @override
@@ -208,7 +208,7 @@ class _CreateProgramState extends State<CreateProgram> {
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                 title: Text(
-                  formattedDate,
+                  formattedDate.tr(),
                   style: TextStyle(color: blackColor.withOpacity(0.6)),
                 ),
                 trailing: Icon(
