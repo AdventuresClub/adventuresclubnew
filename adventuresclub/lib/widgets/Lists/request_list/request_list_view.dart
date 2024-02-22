@@ -420,16 +420,17 @@ class _RequestListViewState extends State<RequestListView> {
                   height: 10,
                 ), //Text("data"),
                 if (up.status == "0")
-                  const Text(
-                    "You can only make payments once the adventure request has been approved.",
+                  Text(
+                    "youcanaycashtoprovideronarrival".tr(),
                     textAlign: TextAlign.center,
                     style: TextStyle(fontWeight: FontWeight.w500),
                   ),
                 if (up.status == "8")
-                  const Text(
-                    "You Can Pay Cash To Provider on Arrival",
+                  Text(
+                    "Youcanmakepaymentonlyoncetheadventurerequesthasbeenapproved"
+                        .tr(),
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.w500),
+                    style: const TextStyle(fontWeight: FontWeight.w500),
                   ),
                 // text:
                 //     "After approval you'll be notified and have to buy your subscription package",
@@ -448,7 +449,7 @@ class _RequestListViewState extends State<RequestListView> {
                     ),
                   ),
                   child: MyText(
-                    text: "Okay, Got it",
+                    text: "okGotIt",
                     weight: FontWeight.bold,
                     color: whiteColor,
                   ),
