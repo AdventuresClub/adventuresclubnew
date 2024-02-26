@@ -93,6 +93,14 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
     return '$age years old';
   }
 
+  String separateWords(String input) {
+    List<String> words = input.split(',');
+
+    words = words.map((word) => word.tr()).toList();
+
+    return words.join(', ');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -253,7 +261,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                             fontFamily: "Raleway"),
                         children: <TextSpan>[
                           TextSpan(
-                            text: widget.gm.region,
+                            text: widget.gm.region.tr(),
                             style: const TextStyle(
                                 fontSize: 14,
                                 color: blackColor,
@@ -296,7 +304,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                     ),
                     RichText(
                       text: TextSpan(
-                        text: 'How Old : ',
+                        text: 'HowOld'.tr(),
                         style: const TextStyle(
                             color: bluishColor,
                             fontSize: 14,
@@ -329,7 +337,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                             fontFamily: "Raleway"),
                         children: <TextSpan>[
                           TextSpan(
-                            text: widget.gm.nationality,
+                            text: widget.gm.nationality.tr(),
                             style: const TextStyle(
                                 fontSize: 14,
                                 color: blackColor,
@@ -400,10 +408,10 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                         children: <TextSpan>[
                           TextSpan(
                             text: "${widget.gm.adult} "
-                                " ${"Adult"}"
+                                " ${"Adults".tr()}"
                                 ",  "
                                 "${widget.gm.kids} "
-                                " ${"Youngsters "}",
+                                " ${"Youngsters".tr()}",
                             style: const TextStyle(
                                 fontSize: 14,
                                 color: blackColor,
@@ -485,6 +493,37 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                         ],
                       ),
                     ),
+
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        text: 'healthCondition'.tr(),
+                        style: const TextStyle(
+                            color: bluishColor,
+                            fontSize: 14,
+                            fontFamily: 'Raleway',
+                            fontWeight: FontWeight.bold),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: widget.gm.healthConditions.isNotEmpty
+                                ? "${separateWords(widget.gm.healthConditions.tr())} "
+                                : "",
+                            style: const TextStyle(
+                              fontSize: 14,
+                              wordSpacing: 1,
+                              fontFamily: 'Raleway',
+                              color: blackColor,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     const SizedBox(
                       height: 5,
                     ),
@@ -507,37 +546,6 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                           ),
                         ],
                       ),
-                    ),
-
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        text: 'healthCondition'.tr(),
-                        style: const TextStyle(
-                            color: bluishColor,
-                            fontSize: 14,
-                            fontFamily: 'Raleway',
-                            fontWeight: FontWeight.bold),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: widget.gm.healthConditions.isNotEmpty
-                                ? "${widget.gm.healthConditions} "
-                                : "",
-                            style: const TextStyle(
-                              fontSize: 14,
-                              wordSpacing: 1,
-                              fontFamily: 'Raleway',
-                              color: blackColor,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
                     ),
                     RichText(
                       text: TextSpan(

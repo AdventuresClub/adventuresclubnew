@@ -6,7 +6,6 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/getParticipants/get_participants_model.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
-import 'package:adventuresclub/widgets/tabs/details_tabs/service_description.dart';
 import 'package:adventuresclub/widgets/tabs/new_service_description.dart';
 import 'package:adventuresclub/widgets/tabs/participants.dart';
 import 'package:easy_localization/easy_localization.dart';
