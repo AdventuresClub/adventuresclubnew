@@ -481,6 +481,7 @@ class _MyServicesState extends State<MyServices> {
                       child: SizedBox(
                           height: 300,
                           child: ServicesCard(
+                            show: true,
                             filteredServices[index],
                             providerShow: false,
                           )));

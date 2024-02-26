@@ -102,8 +102,8 @@ class _ServicesCardState extends State<ServicesCard> {
                   children: [
                     widget.gm.images.isEmpty
                         ? Container(
-                            width: MediaQuery.of(context).size.width / 2.3,
-                            height: 100,
+                            width: MediaQuery.of(context).size.width / 1.2,
+                            height: 180,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               image: const DecorationImage(
@@ -113,7 +113,7 @@ class _ServicesCardState extends State<ServicesCard> {
                           )
                         : Container(
                             //width: MediaQuery.of(context).size.width / 2.3,
-                            height: 100,
+                            height: 200,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               image: DecorationImage(
@@ -141,13 +141,13 @@ class _ServicesCardState extends State<ServicesCard> {
                 ),
                 const SizedBox(height: 5),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width / 2.3,
+                  width: MediaQuery.of(context).size.width / 1.2,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
-                        flex: 8,
+                        flex: 5,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -156,7 +156,7 @@ class _ServicesCardState extends State<ServicesCard> {
                               text: widget.gm.adventureName,
                               maxLines: 1,
                               color: blackColor,
-                              size: 12,
+                              size: 16,
                               weight: FontWeight.bold,
                               fontFamily: 'Raleway',
                               height: 1.3,
@@ -168,18 +168,18 @@ class _ServicesCardState extends State<ServicesCard> {
                               children: [
                                 Icon(
                                   Icons.pin_drop_sharp,
-                                  size: 14,
+                                  size: 18,
                                   color: greyBackgroundColor.withOpacity(0.6),
                                 ),
-                                // const SizedBox(
-                                //   width: 2,
-                                // ),
+                                const SizedBox(
+                                  width: 2,
+                                ),
                                 Expanded(
                                   child: MyText(
                                     text: widget.gm.sAddress.tr(),
                                     maxLines: 1,
                                     color: blackColor,
-                                    size: 10,
+                                    size: 14,
                                     weight: FontWeight.w500,
                                     fontFamily: 'Raleway',
                                     height: 1.3,
@@ -196,7 +196,10 @@ class _ServicesCardState extends State<ServicesCard> {
                                   const Icon(
                                     Icons.person_add,
                                     color: redColor,
-                                    size: 12,
+                                    size: 18,
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
                                   ),
                                   MyText(
                                     //text: "testing",
@@ -204,7 +207,7 @@ class _ServicesCardState extends State<ServicesCard> {
                                     //text: 'Advanced',
                                     weight: FontWeight.w500,
                                     color: redColor,
-                                    size: 10,
+                                    size: 14,
                                     height: 1.3,
                                   ),
                                 ],
@@ -215,18 +218,18 @@ class _ServicesCardState extends State<ServicesCard> {
                                   const Icon(
                                     Icons.person_add,
                                     color: greenColor1,
-                                    size: 12,
+                                    size: 18,
                                   ),
-                                  // const SizedBox(
-                                  //   width: 2,
-                                  // ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
                                   MyText(
                                     //text: "testing",
                                     text: "accepted".tr(),
                                     //text: 'Advanced',
                                     weight: FontWeight.w500,
                                     color: greenColor1,
-                                    size: 10,
+                                    size: 14,
                                     height: 1.3,
                                   ),
                                 ],
@@ -236,21 +239,21 @@ class _ServicesCardState extends State<ServicesCard> {
                       ),
                       widget.gm.sPlan == 1
                           ? Expanded(
-                              flex: 4,
+                              flex: 2,
                               child: Column(
                                 children: [
                                   MyText(
                                       text: availability,
                                       color: blackColor,
-                                      size: 10)
+                                      size: 14)
                                 ],
                               ),
                             )
                           : Expanded(
-                              flex: 5,
+                              flex: 3,
                               child: Column(
                                 children: [
-                                  MyText(text: st, color: blackColor, size: 10)
+                                  MyText(text: st, color: blackColor, size: 14)
                                 ],
                               ),
                             ),
