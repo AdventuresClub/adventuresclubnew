@@ -435,7 +435,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                         children: <TextSpan>[
                           TextSpan(
                             text: "${widget.gm.unitCost} "
-                                "  ${widget.gm.currency}",
+                                "  ${widget.gm.currency.tr()}",
                             style: const TextStyle(
                                 fontSize: 14,
                                 color: blackColor,
@@ -459,7 +459,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                         children: <TextSpan>[
                           TextSpan(
                             text: "${widget.gm.totalCost} "
-                                "  ${widget.gm.currency}",
+                                "  ${widget.gm.currency.tr()}",
                             style: const TextStyle(
                                 fontSize: 14,
                                 color: blackColor,
@@ -483,7 +483,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                         children: <TextSpan>[
                           TextSpan(
                             text: "${widget.gm.totalCost} "
-                                "  ${widget.gm.currency}",
+                                "  ${widget.gm.currency.tr()}",
                             style: const TextStyle(
                                 fontSize: 14,
                                 color: blackColor,
@@ -537,7 +537,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                             fontFamily: "Raleway"),
                         children: <TextSpan>[
                           TextSpan(
-                            text: "${widget.gm.weight} ",
+                            text: "${widget.gm.weight.tr()} ",
                             style: const TextStyle(
                                 fontSize: 14,
                                 color: blackColor,
