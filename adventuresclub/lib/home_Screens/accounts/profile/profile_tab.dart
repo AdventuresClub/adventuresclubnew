@@ -2,6 +2,7 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/profile/official_details.dart';
 import 'package:adventuresclub/home_Screens/accounts/profile/payment_details.dart';
 import 'package:adventuresclub/home_Screens/accounts/profile/personal_details.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ProfileTab extends StatelessWidget {
@@ -19,17 +20,17 @@ class ProfileTab extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   //color: greyTextColor,
-                  child: const TabBar(
-                    padding: EdgeInsets.all(0),
-                    labelPadding: EdgeInsets.symmetric(horizontal: 4),
+                  child: TabBar(
+                    padding: const EdgeInsets.all(0),
+                    labelPadding: const EdgeInsets.symmetric(horizontal: 4),
                     labelColor: blackColor,
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
                     indicatorColor: greenishColor,
                     isScrollable: true,
-                    unselectedLabelStyle: TextStyle(
+                    unselectedLabelStyle: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         fontFamily: "Roboto"),
@@ -39,16 +40,16 @@ class ProfileTab extends StatelessWidget {
                       SizedBox(
                         width: 120.0,
                         child: Tab(
-                          text: 'Personal Details',
+                          text: 'personalDetails'.tr(),
                         ),
                       ),
                       SizedBox(
                         width: 120.0,
-                        child: Tab(text: 'Official Details'),
+                        child: Tab(text: 'officialDetails'.tr()),
                       ),
                       SizedBox(
                         width: 120.0,
-                        child: Tab(text: 'Payment Details'),
+                        child: Tab(text: 'paymentChannels'.tr()),
                       ),
                     ],
                   ),

@@ -8,6 +8,7 @@ import 'package:adventuresclub/temp_google_map.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -432,7 +433,7 @@ class _OfficialDetailsState extends State<OfficialDetails> {
             Align(
               alignment: Alignment.centerLeft,
               child: MyText(
-                text: 'Are you having License?',
+                text: "areyoulicensed?".tr(),
                 color: blackTypeColor1,
                 align: TextAlign.center,
               ),
@@ -454,7 +455,7 @@ class _OfficialDetailsState extends State<OfficialDetails> {
                       print(license);
                     }),
                 MyText(
-                  text: 'I’m not licensed yet, will sooner get license',
+                  text: 'imNotLicensedyet'.tr(),
                   color: blackTypeColor,
                   align: TextAlign.center,
                 ),
@@ -477,7 +478,7 @@ class _OfficialDetailsState extends State<OfficialDetails> {
                       print(license);
                     }),
                 MyText(
-                  text: 'Yes! I am lincensed',
+                  text: "areyoulicensed?".tr(),
                   color: blackTypeColor,
                   align: TextAlign.center,
                 ),
@@ -560,7 +561,7 @@ class _OfficialDetailsState extends State<OfficialDetails> {
               height: 20,
             ),
             Button(
-                'Save',
+                'save'.tr(),
                 greenishColor,
                 greenishColor,
                 whiteColor,

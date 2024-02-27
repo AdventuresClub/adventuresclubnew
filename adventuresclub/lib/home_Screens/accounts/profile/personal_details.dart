@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/get_country.dart';
 import 'package:adventuresclub/provider/navigation_index_provider.dart';
-import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/text_fields.dart';
@@ -492,7 +491,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                   height: 30,
                 ),
                 Button(
-                    'Save',
+                    'save'.tr(),
                     greenishColor,
                     greenishColor,
                     whiteColor,
@@ -807,7 +806,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
           child: SizedBox(
             height: 40,
             child: MyText(
-              text: 'Send OTP',
+              text: 'sendOtp'.tr(),
               weight: FontWeight.bold,
               color: bluishColor,
               size: 14,

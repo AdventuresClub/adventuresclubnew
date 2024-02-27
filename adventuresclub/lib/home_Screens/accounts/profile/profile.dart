@@ -355,7 +355,7 @@ class _ProfileState extends State<Profile> {
             ),
           ),
           title: MyText(
-            text: 'Profile',
+            text: 'profile'.tr(),
             color: bluishColor,
             weight: FontWeight.bold,
           ),
