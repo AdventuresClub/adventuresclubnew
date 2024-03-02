@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/widgets/null_user_container.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -159,137 +160,26 @@ class _ShowChatState extends State<ShowChat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: widget.appbar == true
-          ? AppBar(
-              backgroundColor: whiteColor,
-              iconTheme: const IconThemeData(color: blackColor),
-              title: widget.show!
-                  ? MyText(
-                      text: 'Bank Infomation',
-                      color: blackColor,
-                      weight: FontWeight.bold,
-                    )
-                  : MyText(
-                      text: 'chat'.tr(),
-                      color: blackColor,
-                      weight: FontWeight.bold,
-                    ),
-              centerTitle: true,
-            )
-          : null,
-      body: Constants.userId > 0
-          ? WebViewWidget(controller: controller)
-          : Container(
-              height: MediaQuery.of(context).size.height,
-              color: blackColor,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      children: [
-                        // Row(
-                        //   crossAxisAlignment: CrossAxisAlignment.end,
-                        //   mainAxisAlignment: MainAxisAlignment.end,
-                        //   children: [
-                        //     GestureDetector(
-                        //       onTap: cancel,
-                        //       child: const Icon(
-                        //         Icons.cancel_sharp,
-                        //         color: whiteColor,
-                        //       ),
-                        //     )
-                        //   ],
-                        // ),
-                        ListTile(
-                          tileColor: Colors.transparent,
-                          //onTap: showCamera,
-                          leading: const Icon(
-                            Icons.notification_important,
-                            color: whiteColor,
-                          ),
-                          title: MyText(
-                            text: "You Are Not logged In",
-                            weight: FontWeight.w600,
-                          ),
-                          trailing: const Icon(Icons.chevron_right_rounded),
-                        ),
-                        Button(
-                            "login".tr(),
-                            //'Register',
-                            greenishColor,
-                            greenishColor,
-                            whiteColor,
-                            20,
-                            () {},
-                            Icons.add,
-                            whiteColor,
-                            false,
-                            2,
-                            'Raleway',
-                            FontWeight.w600,
-                            18),
-                        const Divider(),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              color: transparentColor,
-                              height: 40,
-                              child: GestureDetector(
-                                onTap: navRegister,
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text.rich(
-                                    TextSpan(
-                                      children: [
-                                        TextSpan(
-                                            text: "dontHaveAnAccount?".tr(),
-                                            style: const TextStyle(
-                                                color: whiteColor,
-                                                fontSize: 16)),
-                                        // TextSpan(
-                                        //   text: "register".tr(),
-                                        //   style: const TextStyle(
-                                        //       fontWeight: FontWeight.bold, color: whiteColor),
-                                        // ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 40),
-                              child: Button(
-                                  "register".tr(),
-                                  greenishColor,
-                                  greenishColor,
-                                  whiteColor,
-                                  20,
-                                  navRegister,
-                                  Icons.add,
-                                  whiteColor,
-                                  false,
-                                  2,
-                                  'Raleway',
-                                  FontWeight.w600,
-                                  20),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-    );
+        appBar: widget.appbar == true
+            ? AppBar(
+                backgroundColor: whiteColor,
+                iconTheme: const IconThemeData(color: blackColor),
+                title: widget.show!
+                    ? MyText(
+                        text: 'Bank Infomation',
+                        color: blackColor,
+                        weight: FontWeight.bold,
+                      )
+                    : MyText(
+                        text: 'chat'.tr(),
+                        color: blackColor,
+                        weight: FontWeight.bold,
+                      ),
+                centerTitle: true,
+              )
+            : null,
+        body: Constants.userId > 0
+            ? WebViewWidget(controller: controller)
+            : const NullUserContainer());
   }
 }

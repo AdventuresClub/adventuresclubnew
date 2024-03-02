@@ -318,10 +318,10 @@ class _MyServicesState extends State<MyServices> {
           int.tryParse(element['service_id'].toString()) ?? 0,
           element['provided_name'] ?? "",
           element['provider_profile'] ?? "",
-          element['service_category_image'] ?? "",
-          element['service_sector_image'] ?? "",
-          element['service_type_image'] ?? "",
-          element['service_level_image'] ?? "",
+          serviceCategoryImage: element['service_category_image'] ?? "",
+          serviceSectorImage: element['service_sector_image'] ?? "",
+          serviceTypeImage: element['service_type_image'] ?? "",
+          serviceLevelImage: element['service_level_image'] ?? "",
           element['including_gerea_and_other_taxes'] ?? "",
           element['excluding_gerea_and_other_taxes'] ?? "",
           gIAm,
@@ -479,7 +479,7 @@ class _MyServicesState extends State<MyServices> {
                   return GestureDetector(
                       onTap: () => goToDetails(filteredServices[index]),
                       child: SizedBox(
-                          height: 300,
+                          height: 310,
                           child: ServicesCard(
                             show: true,
                             filteredServices[index],

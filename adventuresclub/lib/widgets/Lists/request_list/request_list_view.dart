@@ -91,10 +91,6 @@ class _RequestListViewState extends State<RequestListView> {
       "",
       "",
       "",
-      "",
-      "",
-      "",
-      "",
       ia,
       dm,
       bp,
@@ -106,7 +102,11 @@ class _RequestListViewState extends State<RequestListView> {
       images,
       "",
       "",
-      0);
+      0,
+      serviceCategoryImage: "",
+      serviceLevelImage: "",
+      serviceSectorImage: "",
+      serviceTypeImage: "");
   Map mapCountry = {};
   double packagePrice = 0;
   Map mapDetails = {};

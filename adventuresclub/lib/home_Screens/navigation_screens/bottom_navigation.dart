@@ -8,7 +8,6 @@ import 'package:adventuresclub/home_Screens/navigation_screens/visit.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/requests.dart';
 import 'package:adventuresclub/new_signup/new_register.dart';
 import 'package:adventuresclub/provider/navigation_index_provider.dart';
-import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/sign_up/sign_in.dart';
 import 'package:adventuresclub/widgets/loading_widget.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
@@ -19,7 +18,6 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
-
 import '../../models/get_country.dart';
 import '../../widgets/buttons/button.dart';
 

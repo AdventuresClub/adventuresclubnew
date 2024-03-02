@@ -82,10 +82,6 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
       "",
       "",
       "",
-      "",
-      "",
-      "",
-      "",
       ia,
       dm,
       bp,
@@ -97,7 +93,11 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
       images,
       "",
       "",
-      0);
+      0,
+      serviceCategoryImage: "",
+      serviceLevelImage: "",
+      serviceTypeImage: "",
+      serviceSectorImage: "");
   List<BecomePartner> nBp = [];
   static List<AvailabilityModel> ab = [];
   static List<AvailabilityPlanModel> ap = [];
@@ -339,10 +339,10 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
         result['provider_profile'].toString() ?? "",
         result['including_gerea_and_other_taxes'].toString() ?? "",
         result['excluding_gerea_and_other_taxes'].toString() ?? "",
-        result['service_category_image'] ?? "",
-        result['service_sector_image'] ?? "",
-        result['service_type_image'] ?? "",
-        result['service_level_image'] ?? "",
+        serviceCategoryImage: result['service_category_image'].toString() ?? "",
+        serviceSectorImage: result['service_sector_image'].toString() ?? "",
+        serviceTypeImage: result['service_type_image'].toString() ?? "",
+        serviceLevelImage: result['service_level_image'].toString() ?? "",
         gIAm,
         gdM,
         nBp,
@@ -463,12 +463,14 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                       onPressed: homePage,
                       child: MyText(
                         text: "No",
+                        color: blackColor,
                       ),
                     ),
                     ElevatedButton(
                       onPressed: () => delete(id, index),
                       child: MyText(
                         text: "Yes",
+                        color: blackColor,
                       ),
                     ),
                   ],

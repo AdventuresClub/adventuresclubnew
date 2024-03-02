@@ -7,8 +7,6 @@ import 'package:adventuresclub/models/home_services/home_services_model.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/Lists/home_lists/service_List.dart';
-import 'package:adventuresclub/widgets/Lists/home_lists/top_list.dart';
-import 'package:adventuresclub/widgets/home_widgets/filter.dart';
 import 'package:adventuresclub/widgets/home_widgets/new_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';

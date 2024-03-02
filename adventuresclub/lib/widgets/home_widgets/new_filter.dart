@@ -26,7 +26,6 @@ import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/search_container.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import '../../models/create_adventure/regions_model.dart';
