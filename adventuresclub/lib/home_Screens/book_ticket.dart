@@ -604,8 +604,8 @@ class _BookTicketState extends State<BookTicket> {
                                         height: 2,
                                         fontFamily: 'Roboto'),
                                     MyText(
-                                        text:
-                                            "$totalCost ${widget.gm.currency}", //'ر.ع 19,350',
+                                        text: "$totalCost ${widget.gm.currency}"
+                                            .tr(), //'ر.ع 19,350',
                                         color: bluishColor,
                                         weight: FontWeight.bold,
                                         size: 16,

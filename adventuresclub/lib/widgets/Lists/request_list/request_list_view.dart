@@ -224,7 +224,7 @@ class _RequestListViewState extends State<RequestListView> {
   void getPaymentMode(String pay, String amount, String bId, String cur,
       String tCost, UpcomingRequestsModel rm) async {
     if (pay == "1") {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      await Navigator.of(context).push(MaterialPageRoute(builder: (_) {
         return PaymentMethods(
           rm,
           amount,
@@ -419,13 +419,13 @@ class _RequestListViewState extends State<RequestListView> {
                 const SizedBox(
                   height: 10,
                 ), //Text("data"),
-                if (up.status == "0")
+                if (up.status == "8")
                   Text(
                     "youcanaycashtoprovideronarrival".tr(),
                     textAlign: TextAlign.center,
                     style: const TextStyle(fontWeight: FontWeight.w500),
                   ),
-                if (up.status == "8")
+                if (up.status == "0")
                   Text(
                     "Youcanmakepaymentonlyoncetheadventurerequesthasbeenapproved"
                         .tr(),
