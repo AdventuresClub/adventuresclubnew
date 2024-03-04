@@ -200,20 +200,20 @@ class _ProfileState extends State<Profile> {
                       child: Column(
                         children: [
                           MyText(
-                              text: 'Change Password',
+                              text: 'changePassword'.tr(),
                               weight: FontWeight.bold,
                               color: blackColor,
                               size: 20,
                               fontFamily: 'Roboto'),
                           const SizedBox(height: 20),
-                          TextFields('Old Password', oldPassword, 15,
-                              whiteColor, true),
+                          TextFields(
+                              'oldPassword', oldPassword, 15, whiteColor, true),
                           const SizedBox(height: 10),
-                          TextFields('New Password', newPassword, 15,
-                              whiteColor, true),
+                          TextFields(
+                              'newPassword', newPassword, 15, whiteColor, true),
                           const SizedBox(height: 10),
-                          TextFields('Confirm New Password', confirmPassword,
-                              15, whiteColor, true),
+                          TextFields('confirmNewPassword', confirmPassword, 15,
+                              whiteColor, true),
                           const SizedBox(height: 10),
                           const SizedBox(height: 30),
                         ],
@@ -221,7 +221,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     Center(
                         child: Button(
-                            'Save',
+                            'save'.tr(),
                             greenishColor,
                             greyColorShade400,
                             whiteColor,

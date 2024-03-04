@@ -141,127 +141,167 @@ class _PaymentDetailsState extends State<PaymentDetails> {
             // const SizedBox(
             //   height: 10,
             // ),
-            MyText(
-              text: "paymentMethodsFromClient",
-              align: TextAlign.left,
-              color: blackColor,
-              size: 16,
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    MyText(
+                      text: "paymentMethodsFromClient",
+                      //align: TextAlign.left,
+                      color: blackColor,
+                      size: 16,
+                      weight: FontWeight.bold,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    CheckboxListTile(
+                      contentPadding: const EdgeInsets.only(
+                          left: 0, top: 0, bottom: 0, right: 0),
+                      side: const BorderSide(color: bluishColor),
+                      checkboxShape: const RoundedRectangleBorder(
+                        side: BorderSide(color: bluishColor),
+                      ),
+                      visualDensity:
+                          const VisualDensity(horizontal: 0, vertical: -4),
+                      activeColor: greyProfileColor,
+                      checkColor: bluishColor,
+                      value: bankCard,
+                      onChanged: ((bool? value2) {
+                        setState(() {
+                          //bankCard = bankCard;
+                        });
+                        //updateStatus(bankCard, debit_card);
+                        //print(debit_card);
+                      }),
+                      title: MyText(
+                        text: "bankCard".tr(), //text[index],
+                        color: blackTypeColor,
+                        fontFamily: 'Raleway',
+                        weight: FontWeight.bold,
+                        size: 14,
+                      ),
+                    ),
+                    // const SizedBox(
+                    //   height: 2,
+                    // ),
+                    MyText(
+                      text: "willBeDeductedFromYourTransactions".tr(),
+                      align: TextAlign.left,
+                      color: redColor,
+                      size: 14,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    CheckboxListTile(
+                      contentPadding: const EdgeInsets.only(
+                          left: 0, top: 0, bottom: 0, right: 0),
+                      side: const BorderSide(color: bluishColor),
+                      checkboxShape: const RoundedRectangleBorder(
+                        side: BorderSide(color: bluishColor),
+                      ),
+                      visualDensity:
+                          const VisualDensity(horizontal: 0, vertical: -4),
+                      activeColor: greyProfileColor,
+                      checkColor: bluishColor,
+                      value: payArrival,
+                      onChanged: ((bool? value2) {
+                        setState(() {
+                          payArrival = !payArrival;
+                        });
+                        updateStatus(payArrival, payArrivalClicked);
+                        print(payArrivalClicked);
+                      }),
+                      title: MyText(
+                        text: "payOnArrival".tr(), //text[index],
+                        color: blackTypeColor,
+                        fontFamily: 'Raleway',
+                        weight: FontWeight.bold,
+                        size: 14,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    MyText(
+                      text: "paymentMethodfromAdventuresClub".tr(),
+                      weight: FontWeight.bold,
+                      color: blackColor,
+                      size: 16,
+                    ),
+                    CheckboxListTile(
+                      contentPadding: const EdgeInsets.only(
+                        bottom: 0,
+                      ),
+                      side: const BorderSide(color: bluishColor),
+                      checkboxShape: const RoundedRectangleBorder(
+                        side: BorderSide(color: bluishColor),
+                      ),
+                      visualDensity:
+                          const VisualDensity(horizontal: 0, vertical: 4),
+                      activeColor: greyProfileColor,
+                      checkColor: bluishColor,
+                      value: wireTransferValue,
+                      onChanged: ((bool? value2) {
+                        setState(() {
+                          wireTransferValue = wireTransferValue;
+                          // updateStatus(wireTransferValue, isWireTrasfer);
+                          // print(isWireTrasfer);
+                        });
+                      }),
+                      title: MyText(
+                        text: 'wireTransfer'.tr(),
+                        color: blackTypeColor,
+                        fontFamily: 'Raleway',
+                        size: 14,
+                        weight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    TFWithSize(
+                      bankName,
+                      bankNameController,
+                      12,
+                      lightGreyColor,
+                      1,
+                      label: "bankName".tr(),
+                    ),
+                    const SizedBox(height: 20),
+                    TFWithSize(
+                      bankAccountName,
+                      accountNameController,
+                      12,
+                      lightGreyColor,
+                      1,
+                      label: "holderName".tr(),
+                      maximumLetters: 20,
+                    ),
+                    const SizedBox(height: 20),
+                    TFWithSize(bankAccountNumber, accountNumberController, 12,
+                        lightGreyColor, 1,
+                        label: "accountNumber".tr()),
+                    const SizedBox(height: 20),
+                  ],
+                ),
+              ),
             ),
             const SizedBox(
               height: 10,
             ),
-            CheckboxListTile(
-              contentPadding:
-                  const EdgeInsets.only(left: 0, top: 0, bottom: 0, right: 0),
-              side: const BorderSide(color: bluishColor),
-              checkboxShape: const RoundedRectangleBorder(
-                side: BorderSide(color: bluishColor),
-              ),
-              visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-              activeColor: greyProfileColor,
-              checkColor: bluishColor,
-              value: bankCard,
-              onChanged: ((bool? value2) {
-                setState(() {
-                  //bankCard = bankCard;
-                });
-                //updateStatus(bankCard, debit_card);
-                //print(debit_card);
-              }),
-              title: MyText(
-                text: "bankCard".tr(), //text[index],
-                color: blackTypeColor,
-                fontFamily: 'Raleway',
-                weight: FontWeight.bold,
-                size: 14,
-              ),
-            ),
-            // const SizedBox(
-            //   height: 2,
-            // ),
-            MyText(
-              text: "willBeDeductedFromYourTransactions".tr(),
-              align: TextAlign.left,
-              color: redColor,
-              size: 14,
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            CheckboxListTile(
-              contentPadding:
-                  const EdgeInsets.only(left: 0, top: 0, bottom: 0, right: 0),
-              side: const BorderSide(color: bluishColor),
-              checkboxShape: const RoundedRectangleBorder(
-                side: BorderSide(color: bluishColor),
-              ),
-              visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
-              activeColor: greyProfileColor,
-              checkColor: bluishColor,
-              value: payArrival,
-              onChanged: ((bool? value2) {
-                setState(() {
-                  payArrival = !payArrival;
-                });
-                updateStatus(payArrival, payArrivalClicked);
-                print(payArrivalClicked);
-              }),
-              title: MyText(
-                text: "payOnArrival".tr(), //text[index],
-                color: blackTypeColor,
-                fontFamily: 'Raleway',
-                weight: FontWeight.bold,
-                size: 14,
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: MyText(
-                text: "paymentMethodfromAdventuresClub".tr(),
-                align: TextAlign.center,
-                color: blackColor,
-                size: 16,
-              ),
-            ),
-            CheckboxListTile(
-              contentPadding: const EdgeInsets.only(
-                bottom: 0,
-              ),
-              side: const BorderSide(color: bluishColor),
-              checkboxShape: const RoundedRectangleBorder(
-                side: BorderSide(color: bluishColor),
-              ),
-              visualDensity: const VisualDensity(horizontal: 0, vertical: 4),
-              activeColor: greyProfileColor,
-              checkColor: bluishColor,
-              value: wireTransferValue,
-              onChanged: ((bool? value2) {
-                setState(() {
-                  wireTransferValue = wireTransferValue;
-                  // updateStatus(wireTransferValue, isWireTrasfer);
-                  // print(isWireTrasfer);
-                });
-              }),
-              title: MyText(
-                text: 'wireTransfer'.tr(),
-                color: blackTypeColor,
-                fontFamily: 'Raleway',
-                size: 14,
-                weight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 10),
-            TFWithSize(bankName, bankNameController, 12, lightGreyColor, 1),
-            const SizedBox(height: 20),
-            TFWithSize(
-                bankAccountName, accountNameController, 12, lightGreyColor, 1),
-            const SizedBox(height: 20),
-            TFWithSize(bankAccountNumber, accountNumberController, 12,
-                lightGreyColor, 1),
-            const SizedBox(height: 20),
             Button(
                 'save'.tr(),
                 greenishColor,

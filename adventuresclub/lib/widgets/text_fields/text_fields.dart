@@ -1,5 +1,6 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/text_fields/no_space.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class TextFields extends StatefulWidget {
@@ -53,7 +54,7 @@ class _TextFieldsState extends State<TextFields> {
         decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(
                 vertical: widget.verticalPadding, horizontal: 15),
-            hintText: widget.hintText,
+            hintText: widget.hintText.tr(),
             hintStyle: TextStyle(
                 color: blackColor.withOpacity(
                   0.6,

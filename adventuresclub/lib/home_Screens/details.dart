@@ -237,7 +237,7 @@ class _DetailsState extends State<Details> {
       });
       if (response.statusCode == 200) {
         cancel();
-        message("Adventure has been added to your favourites");
+        message("adventureHasBeenAddedToYourFavourites".tr());
       }
       print(response.statusCode);
       print(response.body);

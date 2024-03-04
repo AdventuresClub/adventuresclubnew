@@ -5,6 +5,7 @@ import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/tabs/profile_tabs.dart';
 import 'package:adventuresclub/widgets/text_fields/text_fields.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -88,23 +89,21 @@ class _CustomerProfileState extends State<CustomerProfile> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15.0, vertical: 10),
                       child: MyText(
-                          text: 'Change Password',
+                          text: 'changePassword'.tr(),
                           weight: FontWeight.w400,
                           color: blackColor,
                           size: 20,
                           fontFamily: 'Roboto'),
                     ),
                     const SizedBox(height: 20),
+                    TextFields('oldPassword', controller, 15, whiteColor, true),
+                    TextFields('newPassword', controller, 15, whiteColor, true),
                     TextFields(
-                        'Old Password', controller, 15, whiteColor, true),
-                    TextFields(
-                        'New Password', controller, 15, whiteColor, true),
-                    TextFields('Confirm New Password', controller, 15,
-                        whiteColor, true),
+                        'confirmNewPassword', controller, 15, whiteColor, true),
                     const SizedBox(height: 30),
                     Center(
                         child: Button(
-                            'Save',
+                            'save'.tr(),
                             greenishColor,
                             greyColorShade400,
                             whiteColor,

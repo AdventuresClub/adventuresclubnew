@@ -102,7 +102,7 @@ class _NewDetailsState extends State<NewDetails> {
           ),
         );
       } else {
-        Constants.showMessage(context, "Please Choose Cost");
+        Constants.showMessage(context, "pleaseChooseCost".tr());
       }
     } else {
       //Constants.showMessage(context, "Please Login to make any bookings");
@@ -231,7 +231,7 @@ class _NewDetailsState extends State<NewDetails> {
           ),
         );
       } else {
-        Constants.showMessage(context, "Please Choose Cost");
+        Constants.showMessage(context, "pleaseChooseCost".tr());
       }
     } else {
       //Constants.showMessage(context, "Please Login to make any bookings");
@@ -251,7 +251,7 @@ class _NewDetailsState extends State<NewDetails> {
       });
       if (response.statusCode == 200) {
         cancel();
-        message("Adventure has been added to your favourites");
+        message("adventureHasBeenAddedToYourFavourites".tr());
       }
       print(response.statusCode);
       print(response.body);
