@@ -17,15 +17,19 @@ import 'package:adventuresclub/models/services/included_activities_model.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
 import 'package:adventuresclub/models/user_profile_model.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
+import 'package:adventuresclub/widgets/loading_widget.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class RequestListView extends StatefulWidget {
-  final List<UpcomingRequestsModel> uRequestList;
+  //final List<UpcomingRequestsModel> uRequestList;
   final Function getDetails;
-  const RequestListView(this.uRequestList, this.getDetails, {super.key});
+  const RequestListView(
+      //this.uRequestList,
+      this.getDetails,
+      {super.key});
 
   @override
   State<RequestListView> createState() => _RequestListViewState();
@@ -34,14 +38,14 @@ class RequestListView extends StatefulWidget {
 class _RequestListViewState extends State<RequestListView> {
   List<UpcomingRequestsModel> uRequestListInv = [];
   bool loading = false;
-  static List<AvailabilityModel> ab = [];
-  static List<AvailabilityPlanModel> ap = [];
-  static List<IncludedActivitiesModel> ia = [];
-  static List<DependenciesModel> dm = [];
-  static List<BecomePartner> bp = [];
-  static List<AimedForModel> am = []; // new
-  static List<ProgrammesModel> programmes = [];
-  static List<ServiceImageModel> images = [];
+  // static List<AvailabilityModel> ab = [];
+  // static List<AvailabilityPlanModel> ap = [];
+  // static List<IncludedActivitiesModel> ia = [];
+  // static List<DependenciesModel> dm = [];
+  // static List<BecomePartner> bp = [];
+  // static List<AimedForModel> am = []; // new
+  // static List<ProgrammesModel> programmes = [];
+  // static List<ServiceImageModel> images = [];
   List<BecomePartner> nBp = [];
   String payOnArrival = "";
   ProfileBecomePartner pbp = ProfileBecomePartner(0, 0, "", "", "", "", "", "",
@@ -108,18 +112,102 @@ class _RequestListViewState extends State<RequestListView> {
       serviceTypeImage: "",
       serviceSectorImage: "");
   Map mapCountry = {};
+  Map uList = {};
   double packagePrice = 0;
   Map mapDetails = {};
   double selectedcountryPrice = 0;
   String transactionId = "";
   String orderId = "";
   int count = 8;
+  List text2 = [
+    '112',
+    'Mr adventure',
+    'John Doe',
+    '30 Sep, 2020',
+    '05 Oct, 2020',
+    '2 Adults, 3 Youngsters',
+    '\$ 400.50',
+    '\$ 1500.50',
+    '\$ 1500.50',
+    'Debit/Credit Card'
+  ];
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   uRequestListInv = widget.uRequestList;
+  //   // text2.insert(0, widget.rm[index].bookingId)
+  // }
 
   @override
-  void initState() {
+  initState() {
     super.initState();
-    uRequestListInv = widget.uRequestList;
-    // text2.insert(0, widget.rm[index].bookingId)
+    getList();
+  }
+
+  void getList() async {
+    var response = await http.get(Uri.parse(
+        "${Constants.baseUrl}/api/v1/get_requests?user_id=${Constants.userId}&type=0"));
+    setState(() {
+      loading = true;
+    });
+    try {
+      List<UpcomingRequestsModel> uRequestList = [];
+      if (response.statusCode == 200) {
+        uList = json.decode(response.body);
+        List<dynamic> result = uList['data'];
+        result.forEach((element) {
+          List<ServiceImageModel> gSim = [];
+          List<dynamic> image = element['images'];
+          image.forEach((i) {
+            ServiceImageModel sm = ServiceImageModel(
+              int.tryParse(i['id'].toString()) ?? 0,
+              int.tryParse(i['service_id'].toString()) ?? 0,
+              int.tryParse(i['is_default'].toString()) ?? 0,
+              i['image_url'].toString(),
+              i['thumbnail'].toString(),
+            );
+            gSim.add(sm);
+          });
+          String bookingN = element["booking_id"].toString();
+          text2[0] = bookingN;
+          UpcomingRequestsModel up = UpcomingRequestsModel(
+              int.tryParse(bookingN) ?? 0,
+              int.tryParse(element["service_id"].toString()) ?? 0,
+              int.tryParse(element["provider_id"].toString()) ?? 0,
+              int.tryParse(element["service_plan"].toString()) ?? 0,
+              element["country"] ?? "",
+              element["currency"] ?? "",
+              element["region"] ?? "",
+              element["adventure_name"] ?? "",
+              element["provider_name"] ?? "",
+              element["height"] ?? "",
+              element["weight"] ?? "",
+              element["health_conditions"] ?? "",
+              element["booking_date"] ?? "",
+              element["activity_date"] ?? "",
+              int.tryParse(element["adult"].toString()) ?? 0,
+              int.tryParse(element["kids"].toString()) ?? 0,
+              element["unit_cost"] ?? "",
+              element["total_cost"] ?? "",
+              element["discounted_amount"] ?? "",
+              element["payment_channel"] ?? "",
+              element["status"] ?? "",
+              element["payment_status"] ?? "",
+              int.tryParse(element["points"].toString()) ?? 0,
+              element["description"] ?? "",
+              element["registrations"] ?? "",
+              gSim);
+          uRequestList.add(up);
+        });
+      }
+      setState(() {
+        uRequestListInv = uRequestList.reversed.toList();
+        loading = false;
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   void getProfile(String providerId, String amount, String bId, String cur,
@@ -224,18 +312,23 @@ class _RequestListViewState extends State<RequestListView> {
   void getPaymentMode(String pay, String amount, String bId, String cur,
       String tCost, UpcomingRequestsModel rm) async {
     if (pay == "1") {
-      await Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-        return PaymentMethods(
-          rm,
-          amount,
-          bId,
-          cur,
-          tCost,
-        );
-      }));
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) {
+            return PaymentMethods(
+              rm,
+              amount,
+              bId,
+              cur,
+              tCost,
+            );
+          },
+        ),
+      );
     } else {
       fetchCurrency(amount, bId, cur, tCost, rm);
     }
+    getList();
   }
 
   Future<List<CurrencyModel>> fetchCurrency(String value, String bookingId,
@@ -265,12 +358,12 @@ class _RequestListViewState extends State<RequestListView> {
   }
 
   void selected(
-      BuildContext context, String bookingId, UpcomingRequestsModel rm) {
+      BuildContext context, String bookingId, UpcomingRequestsModel rm) async {
     generateRandomString(10);
     String price = packagePrice.toString();
     // transaction id is random uniuq generated number
     // currency has to be omr
-    Navigator.of(context).push(
+    await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
           return ShowChat(
@@ -280,6 +373,7 @@ class _RequestListViewState extends State<RequestListView> {
         },
       ),
     );
+    getList();
     // update(price, rm);
     // print(object);
   }
@@ -461,558 +555,576 @@ class _RequestListViewState extends State<RequestListView> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 00),
-      shrinkWrap: true,
-      physics: const ClampingScrollPhysics(),
-      itemCount: uRequestListInv.length,
-      scrollDirection: Axis.vertical,
-      itemBuilder: (context, index) {
-        return Card(
-          key: Key(uRequestListInv[index].BookingId.toString()),
-          elevation: 4,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CircleAvatar(
-                      radius: 26,
-                      backgroundImage:
-                          //ExactAssetImage('images/airrides.png'),
-                          NetworkImage(
-                              "${'${Constants.baseUrl}/public/uploads/'}${uRequestListInv[index].sImage[0].imageUrl}"),
-                    ),
-                    if (uRequestListInv[index].status == "0")
-                      MyText(
-                        text: "requested".tr(), //'Confirmed',
-                        color: blueColor1,
-                        weight: FontWeight.bold,
-                      ),
-                    if (uRequestListInv[index].status == "1")
-                      MyText(
-                        text: "accepted".tr(), //'Confirmed',
-                        color: orangeColor,
-                        weight: FontWeight.bold,
-                      ),
-                    if (uRequestListInv[index].status == "2")
-                      MyText(
-                        text: "paid".tr(), //'Confirmed',
-                        color: greenColor1,
-                        weight: FontWeight.bold,
-                      ),
-                    if (uRequestListInv[index].status == "3")
-                      MyText(
-                        text: "declined".tr(), //'Confirmed',
-                        color: redColor,
-                        weight: FontWeight.bold,
-                      ),
-                    if (uRequestListInv[index].status == "4")
-                      MyText(
-                        text: "completed".tr(), //'Confirmed',
-                        color: greenColor1,
-                        weight: FontWeight.bold,
-                      ),
-                    if (uRequestListInv[index].status == "5")
-                      MyText(
-                        text: "dropped".tr(), //'Confirmed',
-                        color: redColor,
-                        weight: FontWeight.bold,
-                      ),
-                    if (uRequestListInv[index].status == "6")
-                      MyText(
-                        text: "confirm".tr(), //'Confirmed',
-                        color: greenColor1,
-                        weight: FontWeight.bold,
-                      ),
-                    if (uRequestListInv[index].status == "7")
-                      MyText(
-                        text: "unpaid".tr(), //'Confirmed',
-                        color: greenColor1,
-                        weight: FontWeight.bold,
-                      ),
-                    if (uRequestListInv[index].status == "8")
-                      MyText(
-                        text: "payOnArrival".tr(), //'Confirmed',
-                        color: greenColor1,
-                        weight: FontWeight.bold,
-                      ),
-
-                    // GestureDetector(
-                    //   onTap: () => showConfirmation(
-                    //       uRequestListInv[index][index].serviceId.toString()),
-                    //   child: const Icon(
-                    //     Icons.delete_forever_outlined,
-                    //     color: redColor,
-                    //     size: 20,
-                    //   ),
-                    // )
-                  ],
-                ),
-                const Divider(
-                  thickness: 1,
-                  color: greyColor,
-                ),
-                ListTile(
-                  dense: true,
-                  visualDensity: VisualDensity.compact,
-                  // mainAxisAlignment: MainAxisAlignment.start,
-                  // crossAxisAlignment: CrossAxisAlignment.start,
-                  //children: [
-                  //CircleImageAvatar(uRequestList.sImage),
-                  //UpcomingRequestImage(rm),
-                  //leading: ,
-                  title: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    return loading
+        ? const LoadingWidget()
+        : ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 00),
+            shrinkWrap: true,
+            physics: const ClampingScrollPhysics(),
+            itemCount: uRequestListInv.length,
+            scrollDirection: Axis.vertical,
+            itemBuilder: (context, index) {
+              return Card(
+                key: Key(uRequestListInv[index].BookingId.toString()),
+                elevation: 4,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 10),
+                  child: Column(
                     children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          MyText(
-                            text: "bookingNumber".tr(),
-                            color: bluishColor,
-                            weight: FontWeight.bold,
-                            size: 14,
-                            // height: 1.8,
+                          CircleAvatar(
+                            radius: 26,
+                            backgroundImage:
+                                //ExactAssetImage('images/airrides.png'),
+                                NetworkImage(
+                                    "${'${Constants.baseUrl}/public/uploads/'}${uRequestListInv[index].sImage[0].imageUrl}"),
                           ),
-                          MyText(
-                            text: uRequestListInv[index].BookingId,
-                            color: blackColor,
-                            //weight: FontWeight.w400,
-                            size: 14,
-                            // height: 1.8,
-                          ),
+                          if (uRequestListInv[index].status == "0")
+                            MyText(
+                              text: "requested".tr(), //'Confirmed',
+                              color: blueColor1,
+                              weight: FontWeight.bold,
+                            ),
+                          if (uRequestListInv[index].status == "1")
+                            MyText(
+                              text: "accepted".tr(), //'Confirmed',
+                              color: orangeColor,
+                              weight: FontWeight.bold,
+                            ),
+                          if (uRequestListInv[index].status == "2")
+                            MyText(
+                              text: "paid".tr(), //'Confirmed',
+                              color: greenColor1,
+                              weight: FontWeight.bold,
+                            ),
+                          if (uRequestListInv[index].status == "3")
+                            MyText(
+                              text: "declined".tr(), //'Confirmed',
+                              color: redColor,
+                              weight: FontWeight.bold,
+                            ),
+                          if (uRequestListInv[index].status == "4")
+                            MyText(
+                              text: "completed".tr(), //'Confirmed',
+                              color: greenColor1,
+                              weight: FontWeight.bold,
+                            ),
+                          if (uRequestListInv[index].status == "5")
+                            MyText(
+                              text: "dropped".tr(), //'Confirmed',
+                              color: redColor,
+                              weight: FontWeight.bold,
+                            ),
+                          if (uRequestListInv[index].status == "6")
+                            MyText(
+                              text: "confirm".tr(), //'Confirmed',
+                              color: greenColor1,
+                              weight: FontWeight.bold,
+                            ),
+                          if (uRequestListInv[index].status == "7")
+                            MyText(
+                              text: "unpaid".tr(), //'Confirmed',
+                              color: greenColor1,
+                              weight: FontWeight.bold,
+                            ),
+                          if (uRequestListInv[index].status == "8")
+                            MyText(
+                              text: "payOnArrival".tr(), //'Confirmed',
+                              color: greenColor1,
+                              weight: FontWeight.bold,
+                            ),
+
+                          // GestureDetector(
+                          //   onTap: () => showConfirmation(
+                          //       uRequestListInv[index][index].serviceId.toString()),
+                          //   child: const Icon(
+                          //     Icons.delete_forever_outlined,
+                          //     color: redColor,
+                          //     size: 20,
+                          //   ),
+                          // )
                         ],
                       ),
-                      const SizedBox(height: 2),
-                      RichText(
-                        text: TextSpan(
-                          text: "activityName".tr(), //"Activity Name: ",
-                          style: const TextStyle(
-                              color: bluishColor,
-                              fontSize: 14,
-                              fontFamily: 'Raleway',
-                              fontWeight: FontWeight.bold),
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: uRequestListInv[index].adventureName,
+                      const Divider(
+                        thickness: 1,
+                        color: greyColor,
+                      ),
+                      ListTile(
+                        dense: true,
+                        visualDensity: VisualDensity.compact,
+                        // mainAxisAlignment: MainAxisAlignment.start,
+                        // crossAxisAlignment: CrossAxisAlignment.start,
+                        //children: [
+                        //CircleImageAvatar(uRequestList.sImage),
+                        //UpcomingRequestImage(rm),
+                        //leading: ,
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                MyText(
+                                  text: "bookingNumber".tr(),
+                                  color: bluishColor,
+                                  weight: FontWeight.bold,
+                                  size: 14,
+                                  // height: 1.8,
+                                ),
+                                MyText(
+                                  text: uRequestListInv[index].BookingId,
+                                  color: blackColor,
+                                  //weight: FontWeight.w400,
+                                  size: 14,
+                                  // height: 1.8,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 2),
+                            RichText(
+                              text: TextSpan(
+                                text: "activityName".tr(), //"Activity Name: ",
                                 style: const TextStyle(
+                                    color: bluishColor,
                                     fontSize: 14,
-                                    color: blackColor,
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.w300,
-                                    fontFamily: 'Raleway')),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          text: "Region".tr(), //"Activity Name: ",
-                          style: const TextStyle(
-                              color: bluishColor,
-                              fontSize: 14,
-                              fontFamily: 'Raleway',
-                              fontWeight: FontWeight.bold),
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: uRequestListInv[index].region.tr(),
-                                style: const TextStyle(
-                                    fontSize: 14,
-                                    color: blackColor,
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.w300,
-                                    fontFamily: 'Raleway')),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.start,
-                      //   children: [
-                      //     Expanded(
-                      //       child: MyText(
-                      //         text: "activityName".tr(),
-                      //         color: blackColor,
-                      //         weight: FontWeight.w500,
-                      //         size: 13,
-                      //         height: 1.8,
-                      //       ),
-                      //     ),
-                      //     Expanded(
-                      //       child: MyText(
-                      //         text:
-                      //             uRequestListInv[index].adventureName.tr(),
-                      //         color: greyColor,
-                      //         weight: FontWeight.w400,
-                      //         size: 13,
-                      //         height: 1.8,
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                      RichText(
-                        text: TextSpan(
-                          text: "providerName".tr(), //"Activity Name: ",
-                          style: const TextStyle(
-                              color: bluishColor,
-                              fontSize: 14,
-                              fontFamily: 'Raleway',
-                              fontWeight: FontWeight.bold),
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: uRequestListInv[index].pName.tr(),
-                                style: const TextStyle(
-                                    fontSize: 14,
-                                    color: blackColor,
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.w300,
-                                    fontFamily: 'Raleway')),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          text: "bookingDate".tr(),
-                          style: const TextStyle(
-                              color: bluishColor,
-                              fontSize: 14,
-                              fontFamily: 'Raleway',
-                              fontWeight: FontWeight.bold),
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: uRequestListInv[index].bDate.tr(),
-                                style: const TextStyle(
-                                    fontSize: 14,
-                                    color: blackColor,
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.w300,
-                                    fontFamily: 'Raleway')),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          text: "activityDate".tr(),
-                          style: const TextStyle(
-                              color: bluishColor,
-                              fontSize: 14,
-                              fontFamily: 'Raleway',
-                              fontWeight: FontWeight.bold),
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: uRequestListInv[index].aDate.tr(),
-                                style: const TextStyle(
-                                    fontSize: 14,
-                                    color: blackColor,
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.w300,
-                                    fontFamily: 'Raleway')),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          text: "registrations".tr(),
-                          style: const TextStyle(
-                              color: bluishColor,
-                              fontSize: 14,
-                              fontFamily: 'Raleway',
-                              fontWeight: FontWeight.bold),
-                          children: <TextSpan>[
-                            if (uRequestListInv[index].adult != 0)
-                              TextSpan(
-                                text: "${uRequestListInv[index].adult} "
-                                        " ${"adult, "}"
-                                    .tr(),
-                                style: const TextStyle(
-                                    fontSize: 14,
-                                    color: blackColor,
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.w300,
-                                    fontFamily: 'Raleway'),
-                              ),
-                            if (uRequestListInv[index].kids != 0)
-                              TextSpan(
-                                text: "${uRequestListInv[index].kids} "
-                                        "${"Kids"}"
-                                    .tr(),
-                                style: const TextStyle(
-                                    fontSize: 14,
-                                    color: blackColor,
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.w300,
-                                    fontFamily: 'Raleway'),
-                              ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          text: "unitCost".tr(),
-                          style: const TextStyle(
-                              color: bluishColor,
-                              fontSize: 14,
-                              fontFamily: 'Raleway',
-                              fontWeight: FontWeight.bold),
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: "${uRequestListInv[index].uCost.tr()}"
-                                    " "
-                                    "${uRequestListInv[index].currency}",
-                                style: const TextStyle(
-                                    fontSize: 14,
-                                    color: blackColor,
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.w300,
-                                    fontFamily: 'Raleway')),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          text: "totalCost".tr(),
-                          style: const TextStyle(
-                              color: bluishColor,
-                              fontSize: 14,
-                              fontFamily: 'Raleway',
-                              fontWeight: FontWeight.bold),
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: "${uRequestListInv[index].tCost.tr()}"
-                                    " "
-                                    "${uRequestListInv[index].currency}",
-                                style: const TextStyle(
-                                    fontSize: 14,
-                                    color: blackColor,
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.w300,
-                                    fontFamily: 'Raleway')),
-                          ],
-                        ),
-                      ),
-
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          text: "payableCost".tr(),
-                          style: const TextStyle(
-                              color: bluishColor,
-                              fontSize: 14,
-                              fontFamily: 'Raleway',
-                              fontWeight: FontWeight.bold),
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: "${uRequestListInv[index].tCost.tr()}"
-                                    " "
-                                    "${uRequestListInv[index].currency}",
-                                style: const TextStyle(
-                                    fontSize: 14,
-                                    color: blackColor,
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.w300,
-                                    fontFamily: 'Raleway')),
-                          ],
-                        ),
-                      ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.start,
-                      //   children: [
-                      //     MyText(
-                      //       text: "payableCost".tr(),
-                      //       color: blackColor,
-                      //       weight: FontWeight.w500,
-                      //       size: 13,
-                      //       height: 1.8,
-                      //     ),
-                      //     MyText(
-                      //       text: "${uRequestListInv[index].tCost.tr()}"
-                      //           " "
-                      //           "${uRequestListInv[index].currency}",
-                      //       color: greyColor,
-                      //       weight: FontWeight.w400,
-                      //       size: 13,
-                      //       height: 1.8,
-                      //     ),
-                      //   ],
-                      // ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          text: "paymentChannel".tr(),
-                          style: const TextStyle(
-                              color: bluishColor,
-                              fontSize: 14,
-                              fontFamily: 'Raleway',
-                              fontWeight: FontWeight.bold),
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: uRequestListInv[index].pChanel.tr(),
-                                style: const TextStyle(
-                                    fontSize: 14,
-                                    color: blackColor,
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.w300,
-                                    fontFamily: 'Raleway')),
-                          ],
-                        ),
-                      ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.start,
-                      //   children: [
-                      //     MyText(
-                      //       text: "paymentChannel".tr(),
-                      //       color: blackColor,
-                      //       weight: FontWeight.w500,
-                      //       size: 13,
-                      //       height: 1.8,
-                      //     ),
-                      //     MyText(
-                      //       text: uRequestListInv[index].pChanel.tr(),
-                      //       color: greyColor,
-                      //       weight: FontWeight.w400,
-                      //       size: 13,
-                      //       height: 1.8,
-                      //     ),
-                      //   ],
-                      // ),
-                      const SizedBox(height: 10),
-                    ],
-                  ),
-                  // ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        height: 45,
-                        width: MediaQuery.of(context).size.width / 3.6,
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(12)),
-                            color: bluishColor),
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: () => widget.getDetails(
-                                uRequestListInv[index].serviceId.toString(),
-                                uRequestListInv[index].providerId.toString()),
-                            child: Center(
-                              child: Text(
-                                "viewDetails".tr(),
-                                style: const TextStyle(
-                                    color: whiteColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700),
+                                    fontFamily: 'Raleway',
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text:
+                                          uRequestListInv[index].adventureName,
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          color: blackColor,
+                                          letterSpacing: 1,
+                                          fontWeight: FontWeight.w300,
+                                          fontFamily: 'Raleway')),
+                                ],
                               ),
                             ),
-                          ),
-                        ),
-                        // color: bluishColor,
-                      ),
-                      Container(
-                        height: 45,
-                        width: MediaQuery.of(context).size.width / 3.6,
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(12)),
-                            color: redColor),
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: // () {},
-                                () => showConfirmation(
-                                    uRequestListInv[index].BookingId.toString(),
-                                    index), //     () => showConfirmation(
-                            //   widget.uRequestListInv[index].BookingId.toString(),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                text: "Region".tr(), //"Activity Name: ",
+                                style: const TextStyle(
+                                    color: bluishColor,
+                                    fontSize: 14,
+                                    fontFamily: 'Raleway',
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: uRequestListInv[index].region.tr(),
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          color: blackColor,
+                                          letterSpacing: 1,
+                                          fontWeight: FontWeight.w300,
+                                          fontFamily: 'Raleway')),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.start,
+                            //   children: [
+                            //     Expanded(
+                            //       child: MyText(
+                            //         text: "activityName".tr(),
+                            //         color: blackColor,
+                            //         weight: FontWeight.w500,
+                            //         size: 13,
+                            //         height: 1.8,
+                            //       ),
+                            //     ),
+                            //     Expanded(
+                            //       child: MyText(
+                            //         text:
+                            //             uRequestListInv[index].adventureName.tr(),
+                            //         color: greyColor,
+                            //         weight: FontWeight.w400,
+                            //         size: 13,
+                            //         height: 1.8,
+                            //       ),
+                            //     ),
+                            //   ],
                             // ),
-                            child: Center(
-                              child: Text(
-                                'cancelRequest'.tr(),
+                            RichText(
+                              text: TextSpan(
+                                text: "providerName".tr(), //"Activity Name: ",
                                 style: const TextStyle(
-                                    color: whiteColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700),
+                                    color: bluishColor,
+                                    fontSize: 14,
+                                    fontFamily: 'Raleway',
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: uRequestListInv[index].pName.tr(),
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          color: blackColor,
+                                          letterSpacing: 1,
+                                          fontWeight: FontWeight.w300,
+                                          fontFamily: 'Raleway')),
+                                ],
                               ),
                             ),
-                          ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                text: "bookingDate".tr(),
+                                style: const TextStyle(
+                                    color: bluishColor,
+                                    fontSize: 14,
+                                    fontFamily: 'Raleway',
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: uRequestListInv[index].bDate.tr(),
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          color: blackColor,
+                                          letterSpacing: 1,
+                                          fontWeight: FontWeight.w300,
+                                          fontFamily: 'Raleway')),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                text: "activityDate".tr(),
+                                style: const TextStyle(
+                                    color: bluishColor,
+                                    fontSize: 14,
+                                    fontFamily: 'Raleway',
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: uRequestListInv[index].aDate.tr(),
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          color: blackColor,
+                                          letterSpacing: 1,
+                                          fontWeight: FontWeight.w300,
+                                          fontFamily: 'Raleway')),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                text: "registrations".tr(),
+                                style: const TextStyle(
+                                    color: bluishColor,
+                                    fontSize: 14,
+                                    fontFamily: 'Raleway',
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  if (uRequestListInv[index].adult != 0)
+                                    TextSpan(
+                                      text: "${uRequestListInv[index].adult} "
+                                              " ${"adult, "}"
+                                          .tr(),
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          color: blackColor,
+                                          letterSpacing: 1,
+                                          fontWeight: FontWeight.w300,
+                                          fontFamily: 'Raleway'),
+                                    ),
+                                  if (uRequestListInv[index].kids != 0)
+                                    TextSpan(
+                                      text: "${uRequestListInv[index].kids} "
+                                              "${"Kids"}"
+                                          .tr(),
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          color: blackColor,
+                                          letterSpacing: 1,
+                                          fontWeight: FontWeight.w300,
+                                          fontFamily: 'Raleway'),
+                                    ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                text: "unitCost".tr(),
+                                style: const TextStyle(
+                                    color: bluishColor,
+                                    fontSize: 14,
+                                    fontFamily: 'Raleway',
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text:
+                                          "${uRequestListInv[index].uCost.tr()}"
+                                          " "
+                                          "${uRequestListInv[index].currency}",
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          color: blackColor,
+                                          letterSpacing: 1,
+                                          fontWeight: FontWeight.w300,
+                                          fontFamily: 'Raleway')),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                text: "totalCost".tr(),
+                                style: const TextStyle(
+                                    color: bluishColor,
+                                    fontSize: 14,
+                                    fontFamily: 'Raleway',
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text:
+                                          "${uRequestListInv[index].tCost.tr()}"
+                                          " "
+                                          "${uRequestListInv[index].currency}",
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          color: blackColor,
+                                          letterSpacing: 1,
+                                          fontWeight: FontWeight.w300,
+                                          fontFamily: 'Raleway')),
+                                ],
+                              ),
+                            ),
+
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                text: "payableCost".tr(),
+                                style: const TextStyle(
+                                    color: bluishColor,
+                                    fontSize: 14,
+                                    fontFamily: 'Raleway',
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text:
+                                          "${uRequestListInv[index].tCost.tr()}"
+                                          " "
+                                          "${uRequestListInv[index].currency}",
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          color: blackColor,
+                                          letterSpacing: 1,
+                                          fontWeight: FontWeight.w300,
+                                          fontFamily: 'Raleway')),
+                                ],
+                              ),
+                            ),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.start,
+                            //   children: [
+                            //     MyText(
+                            //       text: "payableCost".tr(),
+                            //       color: blackColor,
+                            //       weight: FontWeight.w500,
+                            //       size: 13,
+                            //       height: 1.8,
+                            //     ),
+                            //     MyText(
+                            //       text: "${uRequestListInv[index].tCost.tr()}"
+                            //           " "
+                            //           "${uRequestListInv[index].currency}",
+                            //       color: greyColor,
+                            //       weight: FontWeight.w400,
+                            //       size: 13,
+                            //       height: 1.8,
+                            //     ),
+                            //   ],
+                            // ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                text: "paymentChannel".tr(),
+                                style: const TextStyle(
+                                    color: bluishColor,
+                                    fontSize: 14,
+                                    fontFamily: 'Raleway',
+                                    fontWeight: FontWeight.bold),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: uRequestListInv[index].pChanel.tr(),
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          color: blackColor,
+                                          letterSpacing: 1,
+                                          fontWeight: FontWeight.w300,
+                                          fontFamily: 'Raleway')),
+                                ],
+                              ),
+                            ),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.start,
+                            //   children: [
+                            //     MyText(
+                            //       text: "paymentChannel".tr(),
+                            //       color: blackColor,
+                            //       weight: FontWeight.w500,
+                            //       size: 13,
+                            //       height: 1.8,
+                            //     ),
+                            //     MyText(
+                            //       text: uRequestListInv[index].pChanel.tr(),
+                            //       color: greyColor,
+                            //       weight: FontWeight.w400,
+                            //       size: 13,
+                            //       height: 1.8,
+                            //     ),
+                            //   ],
+                            // ),
+                            const SizedBox(height: 10),
+                          ],
                         ),
-                        // color: bluishColor,
+                        // ],
                       ),
-                      Container(
-                        height: 45,
-                        width: MediaQuery.of(context).size.width / 3.6,
-                        decoration: uRequestListInv[index].status == "1"
-                            ? const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(12)),
-                                color: greenColor1)
-                            : const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(12)),
-                                color: Color.fromARGB(255, 137, 176, 92)),
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: uRequestListInv[index].status == "1"
-                                ? () => getProfile(
-                                    uRequestListInv[index]
-                                        .providerId
-                                        .toString(),
-                                    uRequestListInv[index].tCost,
-                                    uRequestListInv[index].BookingId.toString(),
-                                    uRequestListInv[index].currency,
-                                    uRequestListInv[index].tCost,
-                                    uRequestListInv[index])
-                                : uRequestListInv[index].status != "2"
-                                    ? () => paymentPromt(uRequestListInv[index])
-                                    : () {},
-                            child: Center(
-                              child: Text(
-                                'makePayment'.tr(),
-                                style: const TextStyle(
-                                    color: whiteColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              height: 45,
+                              width: MediaQuery.of(context).size.width / 3.6,
+                              decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)),
+                                  color: bluishColor),
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () => widget.getDetails(
+                                      uRequestListInv[index]
+                                          .serviceId
+                                          .toString(),
+                                      uRequestListInv[index]
+                                          .providerId
+                                          .toString()),
+                                  child: Center(
+                                    child: Text(
+                                      "viewDetails".tr(),
+                                      style: const TextStyle(
+                                          color: whiteColor,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ),
+                                ),
                               ),
+                              // color: bluishColor,
                             ),
-                          ),
+                            Container(
+                              height: 45,
+                              width: MediaQuery.of(context).size.width / 3.6,
+                              decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)),
+                                  color: redColor),
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: // () {},
+                                      () => showConfirmation(
+                                          uRequestListInv[index]
+                                              .BookingId
+                                              .toString(),
+                                          index), //     () => showConfirmation(
+                                  //   widget.uRequestListInv[index].BookingId.toString(),
+                                  // ),
+                                  child: Center(
+                                    child: Text(
+                                      'cancelRequest'.tr(),
+                                      style: const TextStyle(
+                                          color: whiteColor,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              // color: bluishColor,
+                            ),
+                            Container(
+                              height: 45,
+                              width: MediaQuery.of(context).size.width / 3.6,
+                              decoration: uRequestListInv[index].status == "1"
+                                  ? const BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(12)),
+                                      color: greenColor1)
+                                  : const BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(12)),
+                                      color: Color.fromARGB(255, 137, 176, 92)),
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: uRequestListInv[index].status == "1"
+                                      ? () => getProfile(
+                                          uRequestListInv[index]
+                                              .providerId
+                                              .toString(),
+                                          uRequestListInv[index].tCost,
+                                          uRequestListInv[index]
+                                              .BookingId
+                                              .toString(),
+                                          uRequestListInv[index].currency,
+                                          uRequestListInv[index].tCost,
+                                          uRequestListInv[index])
+                                      : uRequestListInv[index].status != "2"
+                                          ? () => paymentPromt(
+                                              uRequestListInv[index])
+                                          : () {},
+                                  child: Center(
+                                    child: Text(
+                                      'makePayment'.tr(),
+                                      style: const TextStyle(
+                                          color: whiteColor,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              // color: bluishColor,
+                            ),
+                          ],
                         ),
-                        // color: bluishColor,
                       ),
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
+              );
+            },
+          );
   }
 }

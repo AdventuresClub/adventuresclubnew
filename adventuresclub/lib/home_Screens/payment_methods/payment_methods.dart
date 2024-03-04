@@ -138,7 +138,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
         },
       ),
     );
-    // print(object);
+    // print(object);v
   }
 
   String generateRandomString(int lengthOfString) {
@@ -204,7 +204,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
   }
 
   void cancel() {
-    Navigator.of(context).pop();
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
   void update() async {

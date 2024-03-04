@@ -100,13 +100,13 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
       serviceSectorImage: "");
   List<BecomePartner> nBp = [];
   static List<AvailabilityModel> ab = [];
-  static List<AvailabilityPlanModel> ap = [];
-  static List<IncludedActivitiesModel> ia = [];
-  static List<DependenciesModel> dm = [];
-  static List<BecomePartner> bp = [];
-  static List<AimedForModel> am = []; // new
-  static List<ProgrammesModel> programmes = [];
-  static List<ServiceImageModel> images = [];
+  // static List<AvailabilityPlanModel> ap = [];
+  // static List<IncludedActivitiesModel> ia = [];
+  // static List<DependenciesModel> dm = [];
+  // static List<BecomePartner> bp = [];
+  // static List<AimedForModel> am = []; // new
+  // static List<ProgrammesModel> programmes = [];
+  // static List<ServiceImageModel> images = [];
 
   @override
   initState() {

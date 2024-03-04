@@ -39,7 +39,7 @@ class RequestsList extends StatefulWidget {
 
 class _RequestsListState extends State<RequestsList> {
   Map uList = {};
-  List<UpcomingRequestsModel> uRequestListInv = [];
+  // List<UpcomingRequestsModel> uRequestListInv = [];
   List<UpcomingRequestsModel> customList = [];
   bool loading = false;
   String payOnArrival = "";
@@ -50,14 +50,14 @@ class _RequestsListState extends State<RequestsList> {
   String transactionId = "";
   String orderId = "";
   int count = 8;
-  static List<AvailabilityModel> ab = [];
-  static List<AvailabilityPlanModel> ap = [];
-  static List<IncludedActivitiesModel> ia = [];
-  static List<DependenciesModel> dm = [];
-  static List<BecomePartner> bp = [];
-  static List<AimedForModel> am = []; // new
-  static List<ProgrammesModel> programmes = [];
-  static List<ServiceImageModel> images = [];
+  // static List<AvailabilityModel> ab = [];
+  // static List<AvailabilityPlanModel> ap = [];
+  // static List<IncludedActivitiesModel> ia = [];
+  // static List<DependenciesModel> dm = [];
+  // static List<BecomePartner> bp = [];
+  // static List<AimedForModel> am = []; // new
+  // static List<ProgrammesModel> programmes = [];
+  // static List<ServiceImageModel> images = [];
   List<BecomePartner> nBp = [];
   ProfileBecomePartner pbp = ProfileBecomePartner(0, 0, "", "", "", "", "", "",
       "", "", 0, 0, "", "", "", "", "", "", "", 0, "", "", "", "", "", "");
@@ -133,73 +133,6 @@ class _RequestsListState extends State<RequestsList> {
     );
   }
 
-  @override
-  initState() {
-    super.initState();
-    getList();
-  }
-
-  Future getList() async {
-    var response = await http.get(Uri.parse(
-        "${Constants.baseUrl}/api/v1/get_requests?user_id=${Constants.userId}&type=0"));
-    try {
-      List<UpcomingRequestsModel> uRequestList = [];
-      if (response.statusCode == 200) {
-        uList = json.decode(response.body);
-        List<dynamic> result = uList['data'];
-        result.forEach((element) {
-          List<ServiceImageModel> gSim = [];
-          List<dynamic> image = element['images'];
-          image.forEach((i) {
-            ServiceImageModel sm = ServiceImageModel(
-              int.tryParse(i['id'].toString()) ?? 0,
-              int.tryParse(i['service_id'].toString()) ?? 0,
-              int.tryParse(i['is_default'].toString()) ?? 0,
-              i['image_url'].toString(),
-              i['thumbnail'].toString(),
-            );
-            gSim.add(sm);
-          });
-          String bookingN = element["booking_id"].toString();
-          text2[0] = bookingN;
-          UpcomingRequestsModel up = UpcomingRequestsModel(
-              int.tryParse(bookingN) ?? 0,
-              int.tryParse(element["service_id"].toString()) ?? 0,
-              int.tryParse(element["provider_id"].toString()) ?? 0,
-              int.tryParse(element["service_plan"].toString()) ?? 0,
-              element["country"] ?? "",
-              element["currency"] ?? "",
-              element["region"] ?? "",
-              element["adventure_name"] ?? "",
-              element["provider_name"] ?? "",
-              element["height"] ?? "",
-              element["weight"] ?? "",
-              element["health_conditions"] ?? "",
-              element["booking_date"] ?? "",
-              element["activity_date"] ?? "",
-              int.tryParse(element["adult"].toString()) ?? 0,
-              int.tryParse(element["kids"].toString()) ?? 0,
-              element["unit_cost"] ?? "",
-              element["total_cost"] ?? "",
-              element["discounted_amount"] ?? "",
-              element["payment_channel"] ?? "",
-              element["status"] ?? "",
-              element["payment_status"] ?? "",
-              int.tryParse(element["points"].toString()) ?? 0,
-              element["description"] ?? "",
-              element["registrations"] ?? "",
-              gSim);
-          uRequestList.add(up);
-        });
-      }
-      setState(() {
-        uRequestListInv = uRequestList.reversed.toList();
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
-
   void goTo() {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       return const ClientsRequests();
@@ -224,18 +157,6 @@ class _RequestsListState extends State<RequestsList> {
     'Payable Cost',
     'Payment Channel :'
   ];
-  List text2 = [
-    '112',
-    'Mr adventure',
-    'John Doe',
-    '30 Sep, 2020',
-    '05 Oct, 2020',
-    '2 Adults, 3 Youngsters',
-    '\$ 400.50',
-    '\$ 1500.50',
-    '\$ 1500.50',
-    'Debit/Credit Card'
-  ];
 
   // void selected(BuildContext context, int serviceId, int providerId) {
   //   Navigator.of(context).push(
@@ -258,30 +179,30 @@ class _RequestsListState extends State<RequestsList> {
     );
   }
 
-  void dropped(String bookingId, int index) async {
-    Navigator.of(context).pop();
-    UpcomingRequestsModel gR = uRequestListInv.elementAt(index);
-    setState(() {
-      uRequestListInv.removeAt(index);
-    });
-    try {
-      var response = await http
-          .post(Uri.parse("${Constants.baseUrl}/api/v1/booking_accept"), body: {
-        'booking_id': bookingId,
-        'user_id': Constants.userId.toString(),
-        'status': "5",
-      });
-      if (response.statusCode == 200) {
-        setState(() {
-          uRequestListInv.insert(index, gR);
-        });
-        message("Dropped Successfully");
-      }
-      print(response.statusCode);
-    } catch (e) {
-      print(e.toString());
-    }
-  }
+  // void dropped(String bookingId, int index) async {
+  //   Navigator.of(context).pop();
+  //   UpcomingRequestsModel gR = uRequestListInv.elementAt(index);
+  //   setState(() {
+  //     uRequestListInv.removeAt(index);
+  //   });
+  //   try {
+  //     var response = await http
+  //         .post(Uri.parse("${Constants.baseUrl}/api/v1/booking_accept"), body: {
+  //       'booking_id': bookingId,
+  //       'user_id': Constants.userId.toString(),
+  //       'status': "5",
+  //     });
+  //     if (response.statusCode == 200) {
+  //       setState(() {
+  //         uRequestListInv.insert(index, gR);
+  //       });
+  //       message("Dropped Successfully");
+  //     }
+  //     print(response.statusCode);
+  //   } catch (e) {
+  //     print(e.toString());
+  //   }
+  // }
 
   void message(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -500,7 +421,7 @@ class _RequestsListState extends State<RequestsList> {
                       ),
                     ),
                     MaterialButton(
-                      onPressed: () => dropped(bookingId, index),
+                      onPressed: () => {}, //dropped(bookingId, index),
                       child: MyText(
                         text: "Yes",
                         color: blackColor,
@@ -708,13 +629,16 @@ class _RequestsListState extends State<RequestsList> {
 
   @override
   Widget build(BuildContext context) {
-    return uRequestListInv.isEmpty
-        ? Center(
-            child: Column(
-              children: [Text("thereIsNoUpcomingAdventureYet".tr())],
-            ),
-          )
-        : RequestListView(uRequestListInv, getDetails);
+    return
+        // uRequestListInv.isEmpty
+        //     ?
+        // Center(
+        //     child: Column(
+        //       children: [Text("thereIsNoUpcomingAdventureYet".tr())],
+        //     ),
+        //   )
+        // :
+        RequestListView(getDetails);
     // ListView.builder(
     //     padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 00),
     //     shrinkWrap: true,
