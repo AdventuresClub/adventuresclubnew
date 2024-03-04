@@ -105,7 +105,7 @@
     "includingGears":"Including gears & taxes",
     "excludingGears":"Excluding gears & taxes",
     "Country": "Country",
-    "Region": "Region",
+    "Region": "Region: ",
     "loadingProfile": "Loading Profile...",
     "loadingLocation":"Loading Location...",
     "loadingInformation": "Loading Information...",

@@ -148,10 +148,11 @@ class _RequestListViewState extends State<RequestListView> {
   void getList() async {
     var response = await http.get(Uri.parse(
         "${Constants.baseUrl}/api/v1/get_requests?user_id=${Constants.userId}&type=0"));
-    setState(() {
-      loading = true;
-    });
+
     try {
+      setState(() {
+        loading = true;
+      });
       List<UpcomingRequestsModel> uRequestList = [];
       if (response.statusCode == 200) {
         uList = json.decode(response.body);
@@ -325,10 +326,10 @@ class _RequestListViewState extends State<RequestListView> {
           },
         ),
       );
+      getList();
     } else {
       fetchCurrency(amount, bId, cur, tCost, rm);
     }
-    getList();
   }
 
   Future<List<CurrencyModel>> fetchCurrency(String value, String bookingId,
