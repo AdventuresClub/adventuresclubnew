@@ -387,6 +387,7 @@ class _VisitDetailsState extends State<VisitDetails> {
                                 padding: const EdgeInsets.only(
                                     bottom: 8.0, left: 8, top: 10),
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
                                       children: [
@@ -429,15 +430,12 @@ class _VisitDetailsState extends State<VisitDetails> {
                                     const SizedBox(
                                       height: 5,
                                     ),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: MyText(
-                                        text: reviewList[index]
-                                            .review[index]
-                                            .ratingDescription,
-                                        color: blackColor,
-                                        weight: FontWeight.w500,
-                                      ),
+                                    MyText(
+                                      text: reviewList[index]
+                                          .review[index]
+                                          .ratingDescription,
+                                      color: blackColor,
+                                      weight: FontWeight.w500,
                                     ),
                                     const SizedBox(
                                       height: 5,

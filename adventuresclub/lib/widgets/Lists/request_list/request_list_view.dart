@@ -591,7 +591,7 @@ class _RequestListViewState extends State<RequestListView> {
                             ),
                           if (uRequestListInv[index].status == "1")
                             MyText(
-                              text: "accepted".tr(), //'Confirmed',
+                              text: "ACCEPTED".tr(), //'Confirmed',
                               color: orangeColor,
                               weight: FontWeight.bold,
                             ),

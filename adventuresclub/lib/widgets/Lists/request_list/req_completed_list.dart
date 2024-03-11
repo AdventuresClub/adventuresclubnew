@@ -618,7 +618,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                         if (uRequestList[index].status == "1")
                                           MyText(
                                             text:
-                                                "accepted".tr(), //'Confirmed',
+                                                "ACCEPTED".tr(), //'Confirmed',
                                             color: orangeColor,
                                             weight: FontWeight.bold,
                                           ),

@@ -437,13 +437,13 @@ class _SignInState extends State<SignIn> {
                     height: 200,
                     width: 320,
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   SpaceTextFields(
                       "userName".tr(), emailController, 17, whiteColor, true),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 5),
                   TFWithSiffixIcon("password".tr(), Icons.visibility_off,
                       passController, true),
-                  const SizedBox(height: 20),
+                  //const SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),
                     child: Button(
