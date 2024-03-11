@@ -305,7 +305,7 @@ class _NewDetailsState extends State<NewDetails> {
               SliverAppBar(
                 toolbarHeight: 0,
                 expandedHeight: 300,
-                floating: false,
+                floating: true,
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Stack(
