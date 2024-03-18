@@ -68,6 +68,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
     var response =
         await http.get(Uri.parse("${Constants.baseUrl}/api/v1/get_countries"));
     if (response.statusCode == 200) {
+      setState(() {
+        loading = true;
+      });
       mapCountry = json.decode(response.body);
       List<dynamic> result = mapCountry['data'];
       result.forEach((element) {
@@ -91,10 +94,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
     }
   }
 
-  void addCountry(
-      String country, int id, String flag, String countryCurrency) async {
+  void addCountry(String country, int id, String flag, String countryCurrency,
+      context) async {
     // clearAll();
-    // Navigator.of(context).pop();
+    Navigator.of(context).pop();
     // updateCountryId(id);
     SharedPreferences prefs = await Constants.getPrefs();
     prefs.setInt("countryId", id);
@@ -103,9 +106,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
     setState(() {
       Constants.countryId = id;
       Constants.country = country;
+      userCountry = country;
       Constants.countryFlag = flag;
       Constants.countryCurrency = countryCurrency;
     });
+    checkCountry();
     // homePage();
   }
 
@@ -118,9 +123,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12)),
               title: const Icon(
-                Icons.check_circle,
+                Icons.notifications,
                 size: 80,
-                color: greenColor1,
+                color: bluishColor,
               ),
               children: [
                 const SizedBox(
@@ -156,7 +161,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
                           filteredServices[index].country,
                           filteredServices[index].id,
                           filteredServices[index].flag,
-                          filteredServices[index].currency);
+                          filteredServices[index].currency,
+                          ctx);
                     },
                   ),
                 //}),
@@ -240,7 +246,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   }
 
   void checkCountry() {
-    filteredServices.forEach((element) {
+    countriesList1.forEach((element) {
       if (element.country == userCountry) {
         getC(element.country, element.id, element.flag, element.code, false);
         //setState(() {
@@ -252,7 +258,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
         Constants.countryCurrency = element.currency;
         //});
       } else {
-        if (element.country == "OMAN") {
+        if (userCountry == "OMAN") {
           getC(element.country, element.id, element.flag, element.code, false);
           //setState(() {
           selectedCountry == element.country;
@@ -263,6 +269,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           Constants.countryCurrency = element.currency;
           // });
         }
+        // Navigator.of(context).pop();
       }
     });
     setState(() {
@@ -277,7 +284,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
     }
     setState(
       () {
-        selectedCountry = country;
+        //selectedCountry
+        userCountry = country;
         countryId = id;
         flag = countryflag;
         countryCode = cCode;
@@ -400,131 +408,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       return const NewRegister();
     }));
-  }
-
-  void loginPrompt() async {
-    await showModalBottomSheet(
-      showDragHandle: false,
-      isScrollControlled: true,
-      context: context,
-      builder: (BuildContext context) {
-        return BottomSheet(
-          onClosing: () {},
-          builder: (BuildContext context) {
-            return Container(
-              color: blackColor,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            GestureDetector(
-                              onTap: cancel,
-                              child: const Icon(
-                                Icons.cancel_sharp,
-                                color: whiteColor,
-                              ),
-                            )
-                          ],
-                        ),
-                        ListTile(
-                          tileColor: Colors.transparent,
-                          //onTap: showCamera,
-                          leading: const Icon(
-                            Icons.notification_important,
-                            color: whiteColor,
-                          ),
-                          title: MyText(
-                            text: "You Are Not logged In",
-                            weight: FontWeight.w600,
-                          ),
-                          trailing: const Icon(Icons.chevron_right_rounded),
-                        ),
-                        Button(
-                            "login".tr(),
-                            //'Register',
-                            greenishColor,
-                            greenishColor,
-                            whiteColor,
-                            20,
-                            () {},
-                            Icons.add,
-                            whiteColor,
-                            false,
-                            2,
-                            'Raleway',
-                            FontWeight.w600,
-                            18),
-                        const Divider(),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              color: transparentColor,
-                              height: 40,
-                              child: GestureDetector(
-                                onTap: navRegister,
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text.rich(
-                                    TextSpan(
-                                      children: [
-                                        TextSpan(
-                                            text: "dontHaveAnAccount?".tr(),
-                                            style: const TextStyle(
-                                                color: whiteColor,
-                                                fontSize: 16)),
-                                        // TextSpan(
-                                        //   text: "register".tr(),
-                                        //   style: const TextStyle(
-                                        //       fontWeight: FontWeight.bold, color: whiteColor),
-                                        // ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 40),
-                              child: Button(
-                                  "register".tr(),
-                                  greenishColor,
-                                  greenishColor,
-                                  whiteColor,
-                                  20,
-                                  navRegister,
-                                  Icons.add,
-                                  whiteColor,
-                                  false,
-                                  2,
-                                  'Raleway',
-                                  FontWeight.w600,
-                                  20),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
-    );
   }
 
   @override
