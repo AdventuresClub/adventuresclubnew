@@ -341,6 +341,17 @@ class _SignInState extends State<SignIn> {
     );
   }
 
+  void home() {
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (_) {
+          return const BottomNavigation();
+        },
+      ),
+      (route) => false,
+    );
+  }
+
   void changeLanguage(String lang) {
     if (lang == "en") {
       context.setLocale(const Locale('en', 'US'));
@@ -444,6 +455,19 @@ class _SignInState extends State<SignIn> {
                   TFWithSiffixIcon("password".tr(), Icons.visibility_off,
                       passController, true),
                   //const SizedBox(height: 20),
+                  const SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: home,
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: MyText(
+                          text: "Continue As Guest".tr(),
+                          weight: FontWeight.w500,
+                          color: whiteColor,
+                          size: 16,
+                        )),
+                  ),
+
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),
                     child: Button(

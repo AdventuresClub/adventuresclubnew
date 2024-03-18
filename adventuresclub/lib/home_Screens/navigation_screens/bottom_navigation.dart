@@ -18,6 +18,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/get_country.dart';
 import '../../widgets/buttons/button.dart';
 
@@ -85,8 +86,89 @@ class _BottomNavigationState extends State<BottomNavigation> {
       // });
     }
     if (Constants.userId == 0) {
-      _getCurrentPosition();
+      showConfirmation();
+      //   _getCurrentPosition();
     }
+  }
+
+  void addCountry(
+      String country, int id, String flag, String countryCurrency) async {
+    // clearAll();
+    // Navigator.of(context).pop();
+    // updateCountryId(id);
+    SharedPreferences prefs = await Constants.getPrefs();
+    prefs.setInt("countryId", id);
+    prefs.setString("country", country);
+    prefs.setString("countryFlag", flag);
+    setState(() {
+      Constants.countryId = id;
+      Constants.country = country;
+      Constants.countryFlag = flag;
+      Constants.countryCurrency = countryCurrency;
+    });
+    // homePage();
+  }
+
+  void showConfirmation() async {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (ctx) => SimpleDialog(
+              contentPadding: const EdgeInsets.all(12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              title: const Icon(
+                Icons.check_circle,
+                size: 80,
+                color: greenColor1,
+              ),
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: MyText(
+                    text: "Select Your Country",
+                    size: 18,
+                    weight: FontWeight.bold,
+                    color: blackColor,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                //ListView.builder(
+                //itemCount: filteredServices.length,
+                //itemBuilder: ((context, index) {
+                //return
+
+                for (int index = 0; index < countriesList1.length; index++)
+                  ListTile(
+                    leading: Image.network(
+                      "${"${Constants.baseUrl}/public/"}${countriesList1[index].flag}",
+                      height: 25,
+                      width: 40,
+                    ),
+                    title: Text(countriesList1[index].country),
+                    onTap: () {
+                      addCountry(
+                          filteredServices[index].country,
+                          filteredServices[index].id,
+                          filteredServices[index].flag,
+                          filteredServices[index].currency);
+                    },
+                  ),
+                //}),
+                //),
+                // ElevatedButton(
+                //     onPressed: homePage,
+                //     child: MyText(
+                //       text: "Continue",
+                //     ),),
+                //BottomButton(bgColor: blueButtonColor, onTap: homePage)
+              ],
+            ));
   }
 
   Future<void> _getCurrentPosition() async {
@@ -433,79 +515,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
                             )
                           ],
                         ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
-
-  void showPicker() async {
-    await showModalBottomSheet(
-      showDragHandle: false,
-      isScrollControlled: true,
-      context: context,
-      builder: (BuildContext context) {
-        return BottomSheet(
-          onClosing: () {},
-          builder: (BuildContext context) {
-            return Container(
-              color: blackColor,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            GestureDetector(
-                              onTap: cancel,
-                              child: const Icon(
-                                Icons.cancel_sharp,
-                                color: whiteColor,
-                              ),
-                            )
-                          ],
-                        ),
-                        ListTile(
-                          tileColor: Colors.transparent,
-                          //onTap: showCamera,
-                          leading: const Icon(
-                            Icons.notification_important,
-                            color: whiteColor,
-                          ),
-                          title: MyText(
-                            text: "Update Available",
-                            weight: FontWeight.w600,
-                          ),
-                          trailing: const Icon(Icons.chevron_right_rounded),
-                        ),
-                        Button(
-                            "update".tr(),
-                            //'Register',
-                            greenishColor,
-                            greenishColor,
-                            whiteColor,
-                            20,
-                            () {},
-                            Icons.add,
-                            whiteColor,
-                            false,
-                            2,
-                            'Raleway',
-                            FontWeight.w600,
-                            18),
-                        const Divider()
                       ],
                     ),
                   ),
