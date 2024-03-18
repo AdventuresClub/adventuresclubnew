@@ -246,32 +246,47 @@ class _BottomNavigationState extends State<BottomNavigation> {
   }
 
   void checkCountry() {
-    countriesList1.forEach((element) {
-      if (element.country == userCountry) {
-        getC(element.country, element.id, element.flag, element.code, false);
+    //countriesList1.forEach((element) {
+    for (int i = 0; i < countriesList1.length; i++) {
+      if (countriesList1[i].country == userCountry) {
+        getC(countriesList1[i].country, countriesList1[i].id,
+            countriesList1[i].flag, countriesList1[i].code, false);
         //setState(() {
-        selectedCountry == element.country;
-        countryCode == element.code;
+        selectedCountry == countriesList1[i].country;
+        countryCode == countriesList1[i].code;
         Constants.country = selectedCountry;
-        Constants.countryFlag = element.flag;
-        Constants.countryId = element.id;
-        Constants.countryCurrency = element.currency;
-        //});
-      } else {
-        if (userCountry == "OMAN") {
-          getC(element.country, element.id, element.flag, element.code, false);
-          //setState(() {
-          selectedCountry == element.country;
-          countryCode == element.code;
-          Constants.country = selectedCountry;
-          Constants.countryFlag = element.flag;
-          Constants.countryId = element.id;
-          Constants.countryCurrency = element.currency;
-          // });
-        }
-        // Navigator.of(context).pop();
+        Constants.countryFlag = countriesList1[i].flag;
+        Constants.countryId = countriesList1[i].id;
+        Constants.countryCurrency = countriesList1[i].currency;
       }
-    });
+      // else {
+      //   countriesList1[i].country == "OMAN";
+      //   getC(countriesList1[i].country, countriesList1[i].id,
+      //       countriesList1[i].flag, countriesList1[i].code, false);
+      //   //setState(() {
+      //   selectedCountry == countriesList1[i].country;
+      //   countryCode == countriesList1[i].code;
+      //   Constants.country = selectedCountry;
+      //   Constants.countryFlag = countriesList1[i].flag;
+      //   Constants.countryId = countriesList1[i].id;
+      //   Constants.countryCurrency = countriesList1[i].currency;
+      // }
+    }
+    // for (GetCountryModel country in countriesList1) {
+    //   if (country.country == userCountry) {
+
+    //     return; // Break the loop once the country is found
+    //   } else {
+    //     if (country.country != userCountry) {
+    //       if (country.country == "OMAN") {
+
+    //       }
+    //       // });
+    //     }
+    //     // Navigator.of(context).pop();
+    //   }
+    // }
+    // Navigator.of(context).pop();
     setState(() {
       loading = false;
     });
