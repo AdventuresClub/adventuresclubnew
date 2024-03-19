@@ -53,8 +53,7 @@ class _BannerPageState extends State<BannerPage> {
     setState(() {
       loading = true;
     });
-    final XFile? photo = await picker.pickImage(
-        source: ImageSource.gallery, maxWidth: 300, maxHeight: 300);
+    final XFile? photo = await picker.pickImage(source: ImageSource.gallery);
     if (photo != null) {
       pickedMedia = File(photo.path);
       imageList.add(pickedMedia);
@@ -96,7 +95,8 @@ class _BannerPageState extends State<BannerPage> {
       loading = true;
     });
     final XFile? photo = await picker.pickImage(
-        source: ImageSource.gallery, maxWidth: 300, maxHeight: 300);
+      source: ImageSource.gallery,
+    );
     if (photo != null) {
       pickedMedia = File(photo.path);
 
