@@ -63,6 +63,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                       onPressed: homePage,
                       child: MyText(
                         text: "No",
+                        color: redColor,
                       ),
                     ),
                     ElevatedButton(
@@ -70,6 +71,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                           widget.delete(bookingId, bookingUser, index),
                       child: MyText(
                         text: "Yes",
+                        color: blackColor,
                       ),
                     ),
                   ],

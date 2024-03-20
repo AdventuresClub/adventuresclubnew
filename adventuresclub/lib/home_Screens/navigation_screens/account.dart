@@ -475,14 +475,15 @@ class _AccountState extends State<Account> {
     //packagesList(Constants.gBp);
   }
 
-  void packagesList() {
-    Navigator.of(context).push(
+  void packagesList() async {
+    await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
           return const BecomePartnerPackages();
         },
       ),
     );
+    getProfile();
   }
 
   void ex() async {

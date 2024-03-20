@@ -114,6 +114,7 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                     onPressed: homePage,
                     child: MyText(
                       text: "Continue",
+                      color: blackColor,
                     ))
                 //BottomButton(bgColor: blueButtonColor, onTap: homePage)
               ],

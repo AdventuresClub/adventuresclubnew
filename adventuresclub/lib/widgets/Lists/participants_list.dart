@@ -123,16 +123,23 @@ class _ParticipantsListState extends State<ParticipantsList> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    ElevatedButton(
+                    MaterialButton(
                       onPressed: homePage,
-                      child: MyText(
-                        text: "No",
-                      ),
+                      child: Text("No"),
                     ),
+
+                    // ElevatedButton(
+                    //   onPressed: homePage,
+                    //   child: MyText(
+                    //     text: "No",
+                    //     color: redColor,
+                    //   ),
+                    // ),
                     ElevatedButton(
                       onPressed: () => delete(bookingId, bookingUser, index),
                       child: MyText(
                         text: "Yes",
+                        color: kPrimaryColor,
                       ),
                     ),
                   ],
