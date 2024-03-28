@@ -207,9 +207,11 @@ class _BookTicketState extends State<BookTicket> {
   }
 
   void bookAdventure(var date) async {
-    if (currentDate.day.isNaN) {
-      message("Please Select from Desired Date");
-      return;
+    if (widget.gm.sPlan == 1) {
+      if (currentDate.day.isNaN) {
+        message("Please Select from Desired Date");
+        return;
+      }
     }
     if (messageController.text.isEmpty) {
       message("Please Enter Message");
@@ -276,6 +278,13 @@ class _BookTicketState extends State<BookTicket> {
     Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
+  String extractDate(DateTime dateTime) {
+    String date =
+        '${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}';
+
+    return date;
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -326,42 +335,99 @@ class _BookTicketState extends State<BookTicket> {
                                 // const SizedBox(
                                 //   height: 10,
                                 // ),
-                                GestureDetector(
-                                    onTap: () => _selectDate(context),
-                                    child: Container(
-                                      padding: const EdgeInsets.all(12),
-                                      decoration: BoxDecoration(
-                                          color: whiteColor,
-                                          borderRadius: const BorderRadius.all(
-                                            Radius.circular(10.0),
+                                widget.gm.sPlan == 2
+                                    ? Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(12)),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            RichText(
+                                              text: TextSpan(
+                                                text: 'From : ',
+                                                style: const TextStyle(
+                                                    color: bluishColor,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontFamily: "Raleway"),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                    text: extractDate(
+                                                        widget.gm.endDate),
+                                                    style: const TextStyle(
+                                                        fontSize: 14,
+                                                        color: blackColor,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontFamily: "Raleway"),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            RichText(
+                                              text: TextSpan(
+                                                text: 'To :  '.tr(),
+                                                style: const TextStyle(
+                                                    color: bluishColor,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontFamily: "Raleway"),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                    text: extractDate(
+                                                        widget.gm.startDate),
+                                                    style: const TextStyle(
+                                                        fontSize: 14,
+                                                        color: blackColor,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontFamily: "Raleway"),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    : GestureDetector(
+                                        onTap: () => _selectDate(context),
+                                        child: Container(
+                                          padding: const EdgeInsets.all(12),
+                                          decoration: BoxDecoration(
+                                              color: whiteColor,
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                Radius.circular(10.0),
+                                              ),
+                                              border: Border.all(
+                                                  color: greyColorShade400)),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              formattedDate != null
+                                                  ? MyText(
+                                                      text: formattedDate,
+                                                      color: blackColor,
+                                                      weight: FontWeight.w500,
+                                                    )
+                                                  : MyText(
+                                                      text: 'selectDesiredDate'
+                                                          .tr(),
+                                                      weight: FontWeight.w600,
+                                                      color: greyTextColor,
+                                                      size: 16,
+                                                    ),
+                                              const Icon(
+                                                Icons.calendar_month_sharp,
+                                                color: greyColor,
+                                                size: 30,
+                                              )
+                                            ],
                                           ),
-                                          border: Border.all(
-                                              color: greyColorShade400)),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          formattedDate != null
-                                              ? MyText(
-                                                  text: formattedDate,
-                                                  color: blackColor,
-                                                  weight: FontWeight.w500,
-                                                )
-                                              : MyText(
-                                                  text:
-                                                      'selectDesiredDate'.tr(),
-                                                  weight: FontWeight.w600,
-                                                  color: greyTextColor,
-                                                  size: 16,
-                                                ),
-                                          const Icon(
-                                            Icons.calendar_month_sharp,
-                                            color: greyColor,
-                                            size: 30,
-                                          )
-                                        ],
-                                      ),
-                                    )),
+                                        )),
                                 const SizedBox(
                                   height: 10,
                                 ),
