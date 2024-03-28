@@ -450,23 +450,23 @@ class _SignInState extends State<SignIn> {
                   ),
                   const SizedBox(height: 10),
                   SpaceTextFields(
-                      "userName".tr(), emailController, 17, whiteColor, true),
+                      "username".tr(), emailController, 17, whiteColor, true),
                   const SizedBox(height: 5),
                   TFWithSiffixIcon("password".tr(), Icons.visibility_off,
                       passController, true),
                   //const SizedBox(height: 20),
-                  const SizedBox(height: 20),
-                  GestureDetector(
-                    onTap: home,
-                    child: Align(
-                        alignment: Alignment.center,
-                        child: MyText(
-                          text: "Continue As Guest".tr(),
-                          weight: FontWeight.w500,
-                          color: whiteColor,
-                          size: 16,
-                        )),
-                  ),
+                  // const SizedBox(height: 5),
+                  // GestureDetector(
+                  //   onTap: home,
+                  //   child: Align(
+                  //       alignment: Alignment.center,
+                  //       child: MyText(
+                  //         text: "Continue As Guest".tr(),
+                  //         weight: FontWeight.w500,
+                  //         color: whiteColor,
+                  //         size: 16,
+                  //       )),
+                  // ),
 
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),

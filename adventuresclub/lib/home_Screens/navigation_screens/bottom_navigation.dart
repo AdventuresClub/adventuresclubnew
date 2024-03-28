@@ -32,10 +32,7 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigationState extends State<BottomNavigation> {
   //int index = 0;
   String userId = "";
-  String totalNotication = "";
-  String resultAccount = "";
-  String resultService = "";
-  String resultRequest = "";
+
   Map mapVersion = {};
   bool loading = false;
   String? _currentAddress;
@@ -59,9 +56,14 @@ class _BottomNavigationState extends State<BottomNavigation> {
     }
 
     // index = context.read<ServicesProvider>().homeIndex;
-    getNotificationBadge();
+    getNotificatioNumber();
     Constants.getFilter();
     getVersion();
+  }
+
+  void getNotificatioNumber() {
+    Provider.of<NavigationIndexProvider>(context, listen: false)
+        .getNotificationBadge();
   }
 
   Future getCountries() async {
@@ -355,43 +357,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
     }
   }
 
-  void getNotificationBadge() async {
-    try {
-      var response = await http.post(
-          Uri.parse("${Constants.baseUrl}/api/v1/get_notification_list_budge"),
-          body: {
-            'user_id': Constants.userId.toString(), //"27",
-          });
-      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-      List<dynamic> result = decodedResponse['data'];
-      result.forEach((element) {
-        setState(() {
-          totalNotication = element['total_notification'] ?? "";
-          resultAccount = element['resultAccount'] ?? "";
-          resultService = element['resultService'] ?? "";
-          resultRequest = element['resultRequest'] ?? "";
-        });
-      });
-      notificationNumber(
-        convertToInt(totalNotication),
-        convertToInt(resultAccount),
-        convertToInt(resultService),
-        convertToInt(resultRequest),
-      );
-
-      print(response.statusCode);
-      print(response.body);
-      print(response.headers);
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
-  int convertToInt(String s) {
-    int t = int.tryParse(s) ?? 0;
-    return t;
-  }
-
   double convert(String rating) {
     double result = double.parse(rating);
     return result;
@@ -488,7 +453,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                       radius: 10,
                       backgroundColor: redColor,
                       child: MyText(
-                        text: resultRequest,
+                        text: Constants.resultRequest,
                         color: whiteColor,
                         weight: FontWeight.bold,
                         size: 9,
@@ -513,7 +478,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                           radius: 10,
                           backgroundColor: redColor,
                           child: MyText(
-                            text: resultRequest.toString(),
+                            text: Constants.resultRequest,
                             color: whiteColor,
                             size: 10,
                           ),
@@ -556,7 +521,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                         radius: 10,
                         backgroundColor: redColor,
                         child: MyText(
-                          text: resultAccount.toString(), //'12',
+                          text: Constants.resultAccount, //'12',
                           color: whiteColor,
                           weight: FontWeight.bold,
                           size: 9,
@@ -584,7 +549,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                       radius: 10,
                       backgroundColor: redColor,
                       child: MyText(
-                        text: resultAccount, //'12',
+                        text: Constants.resultAccount, //'12',
                         color: whiteColor,
                         weight: FontWeight.bold,
                         size: 9,

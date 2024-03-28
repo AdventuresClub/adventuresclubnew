@@ -181,6 +181,7 @@ class _AccountState extends State<Account> {
   void initState() {
     super.initState();
     getProfile();
+    getNotificatioNumber();
     //  convert();
   }
 
@@ -188,6 +189,11 @@ class _AccountState extends State<Account> {
   void dispose() {
     searchController.dispose();
     super.dispose();
+  }
+
+  void getNotificatioNumber() {
+    Provider.of<NavigationIndexProvider>(context, listen: false)
+        .getNotificationBadge();
   }
 
   void requestSent() async {
@@ -783,8 +789,45 @@ class _AccountState extends State<Account> {
     }));
   }
 
+  void navNotification() async {
+    //Constants.resultService == 0;
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return const Notifications();
+        },
+      ),
+    );
+    getNotificatioNumber();
+  }
+
+  void navClientRequest() async {
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return const ClientsRequests();
+        },
+      ),
+    );
+    getNotificatioNumber();
+  }
+
+  void navMyServices() async {
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return const MyServices();
+        },
+      ),
+    );
+    getNotificatioNumber();
+  }
+
   @override
   Widget build(BuildContext context) {
+    int notifications =
+        Provider.of<NavigationIndexProvider>(context).notifications;
+    int cRequest = Provider.of<NavigationIndexProvider>(context).clientRequests;
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -925,14 +968,15 @@ class _AccountState extends State<Account> {
                                                     }
                                                     if (userText[i] ==
                                                         'Notification') {
-                                                      Navigator.of(context)
-                                                          .push(
-                                                        MaterialPageRoute(
-                                                          builder: (_) {
-                                                            return const Notifications();
-                                                          },
-                                                        ),
-                                                      );
+                                                      navNotification();
+                                                      // Navigator.of(context)
+                                                      //     .push(
+                                                      //   MaterialPageRoute(
+                                                      //     builder: (_) {
+                                                      //       return const Notifications();
+                                                      //     },
+                                                      //   ),
+                                                      // );
                                                     }
                                                     if (userText[i] ==
                                                         'My Points') {
@@ -968,9 +1012,11 @@ class _AccountState extends State<Account> {
                                                                 backgroundColor:
                                                                     redColor,
                                                                 child: MyText(
-                                                                  text: Constants
-                                                                      .resultService
-                                                                      .toString(), //'12',
+                                                                  text:
+                                                                      notifications,
+                                                                  // Constants
+                                                                  //     .resultService
+                                                                  //     .toString(), //'12',
                                                                   color:
                                                                       whiteColor,
                                                                   weight:
@@ -1123,14 +1169,15 @@ class _AccountState extends State<Account> {
                                                     }
                                                     if (userText[i] ==
                                                         'notification'.tr()) {
-                                                      Navigator.of(context)
-                                                          .push(
-                                                        MaterialPageRoute(
-                                                          builder: (_) {
-                                                            return const Notifications();
-                                                          },
-                                                        ),
-                                                      );
+                                                      navNotification();
+                                                      // Navigator.of(context)
+                                                      //     .push(
+                                                      //   MaterialPageRoute(
+                                                      //     builder: (_) {
+                                                      //       return const Notifications();
+                                                      //     },
+                                                      //   ),
+                                                      // );
                                                     }
                                                     if (userText[i] ==
                                                         'myPoints'.tr()) {
@@ -1167,9 +1214,11 @@ class _AccountState extends State<Account> {
                                                                 backgroundColor:
                                                                     redColor,
                                                                 child: MyText(
-                                                                  text: Constants
-                                                                      .resultService
-                                                                      .toString(), //'12',
+                                                                  text:
+                                                                      notifications,
+                                                                  // Constants
+                                                                  //     .resultService
+                                                                  //     .toString(), //'12',
                                                                   color:
                                                                       whiteColor,
                                                                   weight:
@@ -1316,14 +1365,15 @@ class _AccountState extends State<Account> {
                                                     }
                                                     if (userText[i] ==
                                                         'notification') {
-                                                      Navigator.of(context)
-                                                          .push(
-                                                        MaterialPageRoute(
-                                                          builder: (_) {
-                                                            return const Notifications();
-                                                          },
-                                                        ),
-                                                      );
+                                                      navNotification();
+                                                      // Navigator.of(context)
+                                                      //     .push(
+                                                      //   MaterialPageRoute(
+                                                      //     builder: (_) {
+                                                      //       return const Notifications();
+                                                      //     },
+                                                      //   ),
+                                                      // );
                                                     }
                                                     if (userText[i] ==
                                                         'myPoints') {
@@ -1359,9 +1409,11 @@ class _AccountState extends State<Account> {
                                                                 backgroundColor:
                                                                     redColor,
                                                                 child: MyText(
-                                                                  text: Constants
-                                                                      .resultService
-                                                                      .toString(), //'12',
+                                                                  text:
+                                                                      notifications,
+                                                                  // Constants
+                                                                  //     .resultService
+                                                                  //     .toString(), //'12',
                                                                   color:
                                                                       whiteColor,
                                                                   weight:
@@ -1527,25 +1579,11 @@ class _AccountState extends State<Account> {
                                                       }
                                                       if (text[i] ==
                                                           'myServices') {
-                                                        Navigator.of(context)
-                                                            .push(
-                                                          MaterialPageRoute(
-                                                            builder: (_) {
-                                                              return const MyServices();
-                                                            },
-                                                          ),
-                                                        );
+                                                        navMyServices();
                                                       }
                                                       if (text[i] ==
                                                           'clientRequests') {
-                                                        Navigator.of(context)
-                                                            .push(
-                                                          MaterialPageRoute(
-                                                            builder: (_) {
-                                                              return const ClientsRequests();
-                                                            },
-                                                          ),
-                                                        );
+                                                        navClientRequest();
                                                       }
                                                     },
                                                     child: Stack(
@@ -1559,8 +1597,7 @@ class _AccountState extends State<Account> {
                                                           height: 30,
                                                           width: 30,
                                                         ),
-                                                        Constants.resultRequest >
-                                                                    0 &&
+                                                        cRequest > 0 &&
                                                                 text[i] ==
                                                                     'clientRequests'
                                                             ? Positioned(
@@ -1572,9 +1609,8 @@ class _AccountState extends State<Account> {
                                                                   backgroundColor:
                                                                       redColor,
                                                                   child: MyText(
-                                                                    text: Constants
-                                                                        .resultRequest
-                                                                        .toString(), //'12',
+                                                                    text:
+                                                                        cRequest, //'12',
                                                                     color:
                                                                         whiteColor,
                                                                     weight:
@@ -1585,8 +1621,7 @@ class _AccountState extends State<Account> {
                                                                 ),
                                                               )
                                                             : const SizedBox(),
-                                                        Constants.resultService >
-                                                                    0 &&
+                                                        cRequest > 0 &&
                                                                 text[i] ==
                                                                     'myServices'
                                                             ? Positioned(
@@ -1598,9 +1633,11 @@ class _AccountState extends State<Account> {
                                                                   backgroundColor:
                                                                       redColor,
                                                                   child: MyText(
-                                                                    text: Constants
-                                                                        .resultService
-                                                                        .toString(), //'12',
+                                                                    text:
+                                                                        cRequest,
+                                                                    // Constants
+                                                                    //     .resultService
+                                                                    //     .toString(), //'12',
                                                                     color:
                                                                         whiteColor,
                                                                     weight:
@@ -1755,25 +1792,11 @@ class _AccountState extends State<Account> {
                                                     }
                                                     if (text[i] ==
                                                         'myServices') {
-                                                      Navigator.of(context)
-                                                          .push(
-                                                        MaterialPageRoute(
-                                                          builder: (_) {
-                                                            return const MyServices();
-                                                          },
-                                                        ),
-                                                      );
+                                                      navMyServices();
                                                     }
                                                     if (text[i] ==
                                                         'clientRequests') {
-                                                      Navigator.of(context)
-                                                          .push(
-                                                        MaterialPageRoute(
-                                                          builder: (_) {
-                                                            return const ClientsRequests();
-                                                          },
-                                                        ),
-                                                      );
+                                                      navClientRequest();
                                                     }
                                                   },
                                                   child: Stack(
@@ -1785,8 +1808,7 @@ class _AccountState extends State<Account> {
                                                         height: 30,
                                                         width: 30,
                                                       ),
-                                                      Constants.resultRequest >
-                                                                  0 &&
+                                                      cRequest > 0 &&
                                                               text[i] ==
                                                                   'clientRequests'
                                                           ? Positioned(
@@ -1798,9 +1820,11 @@ class _AccountState extends State<Account> {
                                                                 backgroundColor:
                                                                     redColor,
                                                                 child: MyText(
-                                                                  text: Constants
-                                                                      .resultRequest
-                                                                      .toString(), //'12',
+                                                                  text:
+                                                                      cRequest,
+                                                                  // Constants
+                                                                  //     .resultRequest
+                                                                  //     .toString(), //'12',
                                                                   color:
                                                                       whiteColor,
                                                                   weight:
@@ -1811,8 +1835,8 @@ class _AccountState extends State<Account> {
                                                               ),
                                                             )
                                                           : const SizedBox(),
-                                                      Constants.resultService >
-                                                                  0 &&
+                                                      // Constants.resultService
+                                                      cRequest > 0 &&
                                                               text[i] ==
                                                                   'myServices'
                                                           ? Positioned(
@@ -1824,9 +1848,11 @@ class _AccountState extends State<Account> {
                                                                 backgroundColor:
                                                                     redColor,
                                                                 child: MyText(
-                                                                  text: Constants
-                                                                      .resultService
-                                                                      .toString(), //'12',
+                                                                  text:
+                                                                      cRequest,
+                                                                  // Constants
+                                                                  //     .resultService
+                                                                  //     .toString(), //'12',
                                                                   color:
                                                                       whiteColor,
                                                                   weight:
@@ -1958,10 +1984,11 @@ class _AccountState extends State<Account> {
                                     }));
                                   }
                                   if (tile1Text[index] == 'notification') {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(builder: (_) {
-                                      return const Notifications();
-                                    }));
+                                    navNotification();
+                                    // Navigator.of(context)
+                                    //     .push(MaterialPageRoute(builder: (_) {
+                                    //   return const Notifications();
+                                    // }));
                                   }
                                   //  if(tile1Text[index] == 'Payment'){
                                   //   Navigator.of(context).push(MaterialPageRoute(builder: (_){
