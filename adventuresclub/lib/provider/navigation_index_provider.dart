@@ -35,12 +35,6 @@ class NavigationIndexProvider with ChangeNotifier {
         //  });
       }
       notifications = Constants.resultAccount;
-      // notificationNumber(
-      //   convertToInt(totalNotication),
-      //   convertToInt(resultAccount),
-      //   convertToInt(resultService),
-      //   convertToInt(resultRequest),
-      // );
       notifyListeners();
     } catch (e) {
       debugPrint(e.toString());
