@@ -52,7 +52,11 @@ class _AccountState extends State<Account> {
     'images/newrequest.png'
   ];
   List<String> text = ["favorite", 'myServices', 'clientRequests'];
-  List<String> userText = ["favorite", 'Notification', 'My Points'];
+  List<String> userText = [
+    // "favorite",
+    // //'Notification',
+    // 'My Points'
+  ];
   List<String> tile1 = [
     'images/points.png',
     'images/healthCondition.png',
@@ -64,6 +68,18 @@ class _AccountState extends State<Account> {
     'images/logout.png',
   ];
   List<String> tile1Text = [
+    "myPoints",
+    "healthCondition",
+    "notification",
+    "changeLanguage",
+    "addCountry",
+    "aboutUs",
+    "contactUs",
+    "logOut",
+  ];
+
+  List<String> userTitle = [
+    "favorite",
     "myPoints",
     "healthCondition",
     "notification",
@@ -937,114 +953,115 @@ class _AccountState extends State<Account> {
                                 // const SizedBox(
                                 //   height: 10,
                                 // ),
-                                Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Card(
-                                    elevation: 1,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          for (int i = 0; i < 3; i++)
-                                            Column(
-                                              children: [
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    if (userText[i] ==
-                                                        "favorite") {
-                                                      Navigator.of(context)
-                                                          .push(
-                                                        MaterialPageRoute(
-                                                          builder: (_) {
-                                                            return const Favorite();
-                                                          },
-                                                        ),
-                                                      );
-                                                    }
-                                                    if (userText[i] ==
-                                                        'Notification') {
-                                                      navNotification();
-                                                      // Navigator.of(context)
-                                                      //     .push(
-                                                      //   MaterialPageRoute(
-                                                      //     builder: (_) {
-                                                      //       return const Notifications();
-                                                      //     },
-                                                      //   ),
-                                                      // );
-                                                    }
-                                                    if (userText[i] ==
-                                                        'My Points') {
-                                                      Navigator.of(context)
-                                                          .push(
-                                                        MaterialPageRoute(
-                                                          builder: (_) {
-                                                            return const MyPoints();
-                                                          },
-                                                        ),
-                                                      );
-                                                    }
-                                                  },
-                                                  child: Stack(
-                                                    clipBehavior: Clip.none,
-                                                    children: [
-                                                      Image(
-                                                        image: ExactAssetImage(
-                                                            images[i]),
-                                                        height: 30,
-                                                        width: 30,
-                                                      ),
-                                                      Constants.totalNotication >
-                                                                  0 &&
-                                                              text[i] ==
-                                                                  'Notifications'
-                                                          ? Positioned(
-                                                              bottom: -5,
-                                                              right: -12,
-                                                              child:
-                                                                  CircleAvatar(
-                                                                radius: 10,
-                                                                backgroundColor:
-                                                                    redColor,
-                                                                child: MyText(
-                                                                  text:
-                                                                      notifications,
-                                                                  // Constants
-                                                                  //     .resultService
-                                                                  //     .toString(), //'12',
-                                                                  color:
-                                                                      whiteColor,
-                                                                  weight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  size: 9,
-                                                                ),
-                                                              ),
-                                                            )
-                                                          : const SizedBox()
-                                                    ],
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  height: 5,
-                                                ),
-                                                MyText(
-                                                  text: userText[i],
-                                                  color: bluishColor,
-                                                  weight: FontWeight.bold,
-                                                )
-                                              ],
-                                            )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                // Padding(
+                                //   padding: const EdgeInsets.all(12.0),
+                                //   child: Card(
+                                //     elevation: 1,
+                                //     shape: RoundedRectangleBorder(
+                                //         borderRadius:
+                                //             BorderRadius.circular(12)),
+                                //     child: Padding(
+                                //       padding: const EdgeInsets.all(12.0),
+                                //       child: Row(
+                                //         mainAxisAlignment:
+                                //             MainAxisAlignment.spaceEvenly,
+                                //         children: [
+                                //           for (int i = 0;
+                                //               i < userText.length;
+                                //               i++)
+                                //             Column(
+                                //               children: [
+                                //                 GestureDetector(
+                                //                   onTap: () {
+                                //                     if (userText[i] ==
+                                //                         "favorite") {
+                                //                       Navigator.of(context)
+                                //                           .push(
+                                //                         MaterialPageRoute(
+                                //                           builder: (_) {
+                                //                             return const Favorite();
+                                //                           },
+                                //                         ),
+                                //                       );
+                                //                     }
+                                //                     if (userText[i] ==
+                                //                         'Notification') {
+                                //                       navNotification();
+                                //                       // Navigator.of(context)
+                                //                       //     .push(
+                                //                       //   MaterialPageRoute(
+                                //                       //     builder: (_) {
+                                //                       //       return const Notifications();
+                                //                       //     },
+                                //                       //   ),
+                                //                       // );
+                                //                     }
+                                //                     if (userText[i] ==
+                                //                         'My Points') {
+                                //                       Navigator.of(context)
+                                //                           .push(
+                                //                         MaterialPageRoute(
+                                //                           builder: (_) {
+                                //                             return const MyPoints();
+                                //                           },
+                                //                         ),
+                                //                       );
+                                //                     }
+                                //                   },
+                                //                   child: Stack(
+                                //                     clipBehavior: Clip.none,
+                                //                     children: [
+                                //                       Image(
+                                //                         image: ExactAssetImage(
+                                //                             images[i]),
+                                //                         height: 30,
+                                //                         width: 30,
+                                //                       ),
+                                //                       notifications > 0 &&
+                                //                               userText[i] ==
+                                //                                   'Notification'
+                                //                           ? Positioned(
+                                //                               bottom: -5,
+                                //                               right: -12,
+                                //                               child:
+                                //                                   CircleAvatar(
+                                //                                 radius: 10,
+                                //                                 backgroundColor:
+                                //                                     redColor,
+                                //                                 child: MyText(
+                                //                                   text:
+                                //                                       notifications,
+                                //                                   // Constants
+                                //                                   //     .resultService
+                                //                                   //     .toString(), //'12',
+                                //                                   color:
+                                //                                       whiteColor,
+                                //                                   weight:
+                                //                                       FontWeight
+                                //                                           .bold,
+                                //                                   size: 9,
+                                //                                 ),
+                                //                               ),
+                                //                             )
+                                //                           : const SizedBox()
+                                //                     ],
+                                //                   ),
+                                //                 ),
+                                //                 const SizedBox(
+                                //                   height: 5,
+                                //                 ),
+                                //                 MyText(
+                                //                   text: userText[i],
+                                //                   color: bluishColor,
+                                //                   weight: FontWeight.bold,
+                                //                 )
+                                //               ],
+                                //             )
+                                //         ],
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
                               ],
                             ),
                           if (profile.bp.packagesId == 0 &&
@@ -1200,10 +1217,9 @@ class _AccountState extends State<Account> {
                                                         height: 30,
                                                         width: 30,
                                                       ),
-                                                      Constants.totalNotication >
-                                                                  0 &&
+                                                      notifications > 0 &&
                                                               text[i] ==
-                                                                  'notifications'
+                                                                  'Notification'
                                                                       .tr()
                                                           ? Positioned(
                                                               bottom: -5,
@@ -1376,7 +1392,7 @@ class _AccountState extends State<Account> {
                                                       // );
                                                     }
                                                     if (userText[i] ==
-                                                        'myPoints') {
+                                                        'myPoints'.tr()) {
                                                       Navigator.of(context)
                                                           .push(
                                                         MaterialPageRoute(
@@ -1396,10 +1412,9 @@ class _AccountState extends State<Account> {
                                                         height: 30,
                                                         width: 30,
                                                       ),
-                                                      Constants.totalNotication >
-                                                                  0 &&
+                                                      notifications > 0 &&
                                                               text[i] ==
-                                                                  'notifications'
+                                                                  'notification'
                                                           ? Positioned(
                                                               bottom: -5,
                                                               right: -12,
@@ -2080,8 +2095,7 @@ class _AccountState extends State<Account> {
                                             radius: 10,
                                             backgroundColor: redColor,
                                             child: MyText(
-                                              text: Constants
-                                                  .totalNotication, //'12',
+                                              text: notifications, //'12',
                                               color: whiteColor,
                                               weight: FontWeight.bold,
                                               size: 9,
@@ -2189,7 +2203,7 @@ class _AccountState extends State<Account> {
                       if (profile.userRole == "3")
                         Wrap(
                           children: List.generate(
-                            tile1Text.length,
+                            userTitle.length,
                             (index) {
                               return ListTile(
                                 visualDensity: const VisualDensity(
@@ -2204,13 +2218,13 @@ class _AccountState extends State<Account> {
                                   //     return const MyPoints();
                                   //   }));
                                   // }
-                                  if (tile1Text[index] == 'healthCondition') {
+                                  if (userTitle[index] == 'healthCondition') {
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(builder: (_) {
                                       return const HealthCondition();
                                     }));
                                   }
-                                  if (tile1Text[index] == 'settings') {
+                                  if (userTitle[index] == 'settings') {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (_) {
@@ -2219,14 +2233,32 @@ class _AccountState extends State<Account> {
                                       ),
                                     );
                                   }
-                                  if (tile1Text[index] == 'addCountry') {
+                                  if (userTitle[index] == 'favorite') {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return const Favorite();
+                                        },
+                                      ),
+                                    );
+                                  }
+                                  if (userTitle[index] == 'myPoints') {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return const MyPoints();
+                                        },
+                                      ),
+                                    );
+                                  }
+                                  if (userTitle[index] == 'addCountry') {
                                     showPicker();
                                   }
-                                  if (tile1Text[index] == 'addCountry') {
+                                  if (userTitle[index] == 'addCountry') {
                                     pickCountry(
                                         context, 'countryLocation'.tr());
                                   }
-                                  if (tile1Text[index] == 'inviteFriends') {
+                                  if (userTitle[index] == 'inviteFriends') {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (_) {
@@ -2235,7 +2267,7 @@ class _AccountState extends State<Account> {
                                       ),
                                     );
                                   }
-                                  if (tile1Text[index] == 'aboutUs') {
+                                  if (userTitle[index] == 'aboutUs') {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (_) {
@@ -2244,7 +2276,16 @@ class _AccountState extends State<Account> {
                                       ),
                                     );
                                   }
-                                  if (tile1Text[index] == 'contactUs') {
+                                  if (userTitle[index] == 'notification') {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return const Notifications();
+                                        },
+                                      ),
+                                    );
+                                  }
+                                  if (userTitle[index] == 'contactUs') {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (_) {
@@ -2254,7 +2295,7 @@ class _AccountState extends State<Account> {
                                       ),
                                     );
                                   }
-                                  if (tile1Text[index] == "logOut") {
+                                  if (userTitle[index] == "logOut") {
                                     showConfirmation("logOut", "wantToLogOut");
                                   }
                                 }),
@@ -2268,13 +2309,13 @@ class _AccountState extends State<Account> {
                                   ),
                                 ]),
                                 title: MyText(
-                                  text: tile1Text[index],
+                                  text: userTitle[index],
                                   color:
                                       bluishColor, //greyColor.withOpacity(1),
                                   size: 14,
                                   weight: FontWeight.w700,
                                 ),
-                                trailing: tile1Text[index] ==
+                                trailing: userTitle[index] ==
                                         'addCountry' //settings
                                     ? SizedBox(
                                         width: Constants.country.length > 11
@@ -2299,7 +2340,7 @@ class _AccountState extends State<Account> {
                                           ],
                                         ),
                                       )
-                                    : tile1Text[index] ==
+                                    : userTitle[index] ==
                                             'changeLanguage' //settings
                                         ? Container(
                                             width: 90,

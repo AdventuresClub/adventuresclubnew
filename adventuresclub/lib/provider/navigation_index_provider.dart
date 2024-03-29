@@ -24,7 +24,7 @@ class NavigationIndexProvider with ChangeNotifier {
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       List<dynamic> result = decodedResponse['data'];
-      result.forEach((element) {
+      for (var element in result) {
         //setState(() {
         Constants.totalNotication =
             convertToInt(element['total_notification'] ?? "");
@@ -33,7 +33,7 @@ class NavigationIndexProvider with ChangeNotifier {
         Constants.resultRequest = convertToInt(element['resultRequest'] ?? "");
         clientRequests = convertToInt(element['client_request'] ?? "");
         //  });
-      });
+      }
       notifications = Constants.resultAccount;
       // notificationNumber(
       //   convertToInt(totalNotication),
