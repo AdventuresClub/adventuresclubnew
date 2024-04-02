@@ -761,7 +761,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
-                // onTap: addActivites,
+                onTap: addActivites,
                 // child: const FaIcon(
                 //   FontAwesomeIcons.filter,
                 //   color: bluishColor,

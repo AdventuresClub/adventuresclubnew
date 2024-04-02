@@ -5,13 +5,14 @@ import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/reviews.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
+import 'package:adventuresclub/provider/navigation_index_provider.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/Lists/my_services_list.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/tabs/my_services_tabs.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class MyServicesAdDetails extends StatefulWidget {
   final ServicesModel sm;
@@ -39,6 +40,12 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
   void initState() {
     super.initState();
     getChatNotification();
+    getData();
+  }
+
+  void getData() {
+    Provider.of<NavigationIndexProvider>(context, listen: false)
+        .getUnreadCount(widget.sm.serviceId.toString());
   }
 
   void goToReviews(String id) {
@@ -166,6 +173,9 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
 
   @override
   Widget build(BuildContext context) {
+    int serviceCount =
+        Provider.of<NavigationIndexProvider>(context, listen: true)
+            .serviceCount;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: whiteColor,
@@ -207,26 +217,26 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
                   size: 36,
                 ),
               ),
-              if (groupChatCount != "0")
-                Positioned(
-                  right: 2,
-                  bottom: 4,
-                  child: Container(
-                    height: 18,
-                    width: 15,
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 187, 39, 28),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Center(
-                      child: MyText(
-                        text: groupChatCount,
-                        color: whiteColor,
-                        weight: FontWeight.bold,
-                      ),
+              // if (groupChatCount != "0")
+              Positioned(
+                right: 1,
+                bottom: 2,
+                child: Container(
+                  height: 20,
+                  width: 17,
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 187, 39, 28),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Center(
+                    child: MyText(
+                      text: serviceCount,
+                      color: whiteColor,
+                      weight: FontWeight.bold,
                     ),
                   ),
                 ),
+              ),
             ],
           ),
           const SizedBox(width: 15)

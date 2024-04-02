@@ -393,6 +393,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     int index = Provider.of<NavigationIndexProvider>(context).homeIndex;
+    int totalBooking =
+        Provider.of<NavigationIndexProvider>(context, listen: true)
+            .totalBookings;
     return Scaffold(
       body: loading ? const LoadingWidget() : getBody(index),
       bottomNavigationBar: BottomNavigationBar(
@@ -453,7 +456,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                       radius: 10,
                       backgroundColor: redColor,
                       child: MyText(
-                        text: Constants.resultRequest,
+                        text: totalBooking,
                         color: whiteColor,
                         weight: FontWeight.bold,
                         size: 9,
@@ -470,7 +473,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                   width: 30,
                   color: greenishColor,
                 ),
-                Constants.resultRequest > 0
+                totalBooking > 0
                     ? Positioned(
                         top: -5,
                         right: -12,
@@ -478,7 +481,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                           radius: 10,
                           backgroundColor: redColor,
                           child: MyText(
-                            text: Constants.resultRequest,
+                            text: totalBooking.toString(),
                             color: whiteColor,
                             size: 10,
                           ),

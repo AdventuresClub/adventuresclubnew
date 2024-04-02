@@ -9,10 +9,31 @@ class NavigationIndexProvider with ChangeNotifier {
   int notifications = 0;
   int clientRequests = 0;
   int myservice = 0;
+  int totalBookings = 0;
+  int unreadCount = 0;
+  int serviceCount = 0;
 
   void setHomeIndex(int i) {
     homeIndex = i;
     notifyListeners();
+  }
+
+  void getUnreadCount(String serviceId) async {
+    try {
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/groupchatcount"), body: {
+        'service_id': serviceId, //"27",
+      });
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      List<dynamic> result = decodedResponse['data'];
+      for (var element in result) {
+        serviceCount = convertToInt(element['totalUnReadChat'].toString());
+      }
+
+      notifyListeners();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   void getNotificationBadge() async {
@@ -32,6 +53,7 @@ class NavigationIndexProvider with ChangeNotifier {
         Constants.resultService = convertToInt(element['resultService'] ?? "");
         Constants.resultRequest = convertToInt(element['resultRequest'] ?? "");
         clientRequests = convertToInt(element['client_request'] ?? "");
+        totalBookings = convertToInt(element['totalbooking'] ?? "");
         //  });
       }
       notifications = Constants.resultAccount;
