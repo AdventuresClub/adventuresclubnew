@@ -36,6 +36,25 @@ class NavigationIndexProvider with ChangeNotifier {
     }
   }
 
+  void getCounterChat(String userId) async {
+    try {
+      var response = await http.post(
+          Uri.parse("${Constants.baseUrl}/api/v1/countrecievechatcount"),
+          body: {
+            'reciver_id': userId, //"27",
+          });
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      List<dynamic> result = decodedResponse['data'];
+      for (var element in result) {
+        unreadCount = convertToInt(element['countrecievechatcount'].toString());
+      }
+
+      notifyListeners();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
   void getNotificationBadge() async {
     try {
       var response = await http.post(

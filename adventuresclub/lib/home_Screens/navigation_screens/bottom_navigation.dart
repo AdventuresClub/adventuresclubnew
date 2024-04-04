@@ -64,6 +64,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
   void getNotificatioNumber() {
     Provider.of<NavigationIndexProvider>(context, listen: false)
         .getNotificationBadge();
+    Provider.of<NavigationIndexProvider>(context, listen: false)
+        .getCounterChat(Constants.userId.toString());
   }
 
   Future getCountries() async {

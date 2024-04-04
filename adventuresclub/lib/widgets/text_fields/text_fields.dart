@@ -10,6 +10,7 @@ class TextFields extends StatefulWidget {
   final TextInputType? show;
   final double verticalPadding;
   final bool trim;
+  final bool? editBorder;
   // ignore: prefer_typing_uninitialized_variables
   final fillColor;
   const TextFields(
@@ -20,6 +21,7 @@ class TextFields extends StatefulWidget {
     this.trim, {
     Key? key,
     this.edit = true,
+    this.editBorder = false,
     this.show = TextInputType.text,
   }) : super(key: key);
 
@@ -68,15 +70,24 @@ class _TextFieldsState extends State<TextFields> {
             fillColor: widget.fillColor,
             border: OutlineInputBorder(
               borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              borderSide: BorderSide(color: blackColor.withOpacity(0.0)),
+              borderSide: BorderSide(
+                  color: widget.editBorder!
+                      ? blackColor.withOpacity(0.2)
+                      : blackColor.withOpacity(0.0)),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-              borderSide: BorderSide(color: blackColor.withOpacity(0.0)),
+              borderSide: BorderSide(
+                  color: widget.editBorder!
+                      ? blackColor.withOpacity(0.2)
+                      : blackColor.withOpacity(0.0)),
             ),
             focusedBorder: OutlineInputBorder(
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
-                borderSide: BorderSide(color: blackColor.withOpacity(0.0)))),
+                borderSide: BorderSide(
+                    color: widget.editBorder!
+                        ? blackColor.withOpacity(0.2)
+                        : blackColor.withOpacity(0.0)))),
       ),
     );
   }

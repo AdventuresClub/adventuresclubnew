@@ -660,6 +660,13 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                             color: greenColor1,
                                             weight: FontWeight.bold,
                                           ),
+                                        if (uRequestList[index].status == "8")
+                                          MyText(
+                                            text: "payOnArrival"
+                                                .tr(), //'Confirmed',
+                                            color: greenColor1,
+                                            weight: FontWeight.bold,
+                                          ),
                                         const SizedBox(
                                           width: 5,
                                         ),
@@ -672,7 +679,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                           child: const Icon(
                                             Icons.delete_forever_outlined,
                                             color: redColor,
-                                            size: 20,
+                                            size: 24,
                                           ),
                                         )
                                       ],

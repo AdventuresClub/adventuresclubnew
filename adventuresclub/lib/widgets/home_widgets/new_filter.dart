@@ -14,6 +14,7 @@ import 'package:adventuresclub/models/filter_data_model/region_model.dart';
 import 'package:adventuresclub/models/filter_data_model/sector_filter_model.dart';
 import 'package:adventuresclub/models/filter_data_model/service_types_filter.dart';
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
+import 'package:adventuresclub/provider/navigation_index_provider.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/Lists/home_lists/top_list.dart';
 import 'package:adventuresclub/widgets/dropdowns/duration_drop_down.dart';
@@ -108,14 +109,20 @@ class _NewFilterPageState extends State<NewFilterPage> {
     // _timer.cancel();
   }
 
-  void goToMessages() {
-    Navigator.of(context).push(
+  void goToMessages() async {
+    await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
           return const Chat();
         },
       ),
     );
+    getDataCount();
+  }
+
+  void getDataCount() {
+    Provider.of<NavigationIndexProvider>(context, listen: false)
+        .getCounterChat(Constants.userId.toString());
   }
 
   abc() {}
@@ -753,6 +760,8 @@ class _NewFilterPageState extends State<NewFilterPage> {
 
   @override
   Widget build(BuildContext context) {
+    int unreadCount =
+        Provider.of<NavigationIndexProvider>(context, listen: true).unreadCount;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: Column(
@@ -804,12 +813,12 @@ class _NewFilterPageState extends State<NewFilterPage> {
                       size: 38,
                     ),
                   ),
-                  if (Constants.chatCount != "0")
+                  if (unreadCount != "0")
                     Positioned(
                       right: 4,
                       bottom: -1,
                       child: Container(
-                        height: 18,
+                        height: 20,
                         width: 15,
                         decoration: BoxDecoration(
                           color: const Color.fromARGB(255, 187, 39, 28),
@@ -817,7 +826,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
                         ),
                         child: Center(
                           child: MyText(
-                            text: Constants.chatCount,
+                            text: unreadCount,
                             color: whiteColor,
                             weight: FontWeight.bold,
                           ),

@@ -8,6 +8,7 @@ import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/text_fields.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -32,11 +33,17 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   String email = "";
   String phone = "";
   String phoneNumber = "";
+  String selectedCountry = "Nationality";
+  List genderText = ['Male', 'Female', 'Other'];
   List<GetCountryModel> filteredServices = [];
   List<GetCountryModel> countriesList1 = [];
   dynamic ccCode;
+  DateTime? pickedDate;
+  var getGender = 'Male';
   Map mapCountry = {};
   bool cont = false;
+  var formattedDate;
+  int nationalityId = 0;
   @override
   void initState() {
     super.initState();
@@ -74,6 +81,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                   'mobile_code': phoneController.text
                       .trim(), //Constants.profile.mobileCode,
                   'email': emailController.text.trim(),
+                  "dob": formattedDate.toString(),
+                  "nationality_id": nationalityId.toString(),
+                  "gender": "Female",
                 });
             if (response.statusCode == 200) {
               SharedPreferences prefs = await Constants.getPrefs();
@@ -386,6 +396,34 @@ class _PersonalDetailsState extends State<PersonalDetails> {
     );
   }
 
+  Future<void> _selectDate(BuildContext context) async {
+    DateTime currentDate = DateTime.now();
+    final DateTime tenYearsAgo =
+        currentDate.subtract(const Duration(days: 365 * 10));
+    pickedDate = await showDatePicker(
+        context: context,
+        initialDate: tenYearsAgo,
+        firstDate: DateTime(DateTime.now().day - 1),
+        lastDate: tenYearsAgo);
+    if (pickedDate != null && pickedDate != currentDate) {
+      setState(() {
+        var date = DateTime.parse(pickedDate.toString());
+        String m = date.month < 10 ? "0${date.month}" : "${date.month}";
+        String d = date.day < 10 ? "0${date.day}" : "${date.day}";
+        formattedDate = "${date.year}-$m-$d";
+        currentDate = pickedDate!;
+      });
+    }
+  }
+
+  void addCountry(String country, int id) {
+    Navigator.of(context).pop();
+    setState(() {
+      selectedCountry = country;
+      nationalityId = id;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -401,11 +439,15 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                   15,
                   greyProfileColor,
                   true,
+                  editBorder: true,
                 ),
-                Divider(
-                  indent: 4,
-                  endIndent: 4,
-                  color: greyColor.withOpacity(0.5),
+                // Divider(
+                //   indent: 4,
+                //   endIndent: 4,
+                //   color: greyColor.withOpacity(0.5),
+                // ),
+                const SizedBox(
+                  height: 10,
                 ),
                 phoneNumberField(context),
                 // TextField(
@@ -465,17 +507,71 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                 //     ),
                 //   ),
                 // ),
-                Divider(
-                  indent: 4,
-                  endIndent: 4,
-                  color: greyColor.withOpacity(0.5),
+                // Divider(
+                //   indent: 4,
+                //   endIndent: 4,
+                //   color: greyColor.withOpacity(0.5),
+                // ),
+                const SizedBox(
+                  height: 10,
                 ),
-                TextFields(email, emailController, 15, greyProfileColor, true),
-                Divider(
-                  indent: 4,
-                  endIndent: 4,
-                  color: greyColor.withOpacity(0.5),
+                TextFields(
+                  email,
+                  emailController,
+                  15,
+                  greyProfileColor,
+                  true,
+                  editBorder: true,
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
+                GestureDetector(
+                  onTap: () => _selectDate(context),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 0),
+                    width: MediaQuery.of(context).size.width / 1,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: kPrimaryColor,
+                      border: Border.all(
+                        color: blackColor.withOpacity(0.2),
+                      ),
+                    ),
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 0, horizontal: 10),
+                      leading: Text(
+                        formattedDate.toString(),
+                        style: TextStyle(
+                            color: blackColor.withOpacity(0.6), fontSize: 14),
+                      ),
+                      trailing: Icon(
+                        Icons.calendar_today,
+                        color: blackColor.withOpacity(0.6),
+                        size: 20,
+                      ),
+                    ),
+                  ),
+                ),
+                // Divider(
+                //   indent: 4,
+                //   endIndent: 4,
+                //   color: greyColor.withOpacity(0.5),
+                // ),
+                const SizedBox(
+                  height: 10,
+                ),
+                pickCountry(context, selectedCountry, false),
+                // Divider(
+                //   indent: 4,
+                //   endIndent: 4,
+                //   color: greyColor.withOpacity(0.5),
+                // ),
+                const SizedBox(
+                  height: 10,
+                ),
+                pickGender(context, 'Gender'),
                 // ListTile(
                 //   leading: const Icon(
                 //     Icons.delete_forever,
@@ -574,18 +670,20 @@ class _PersonalDetailsState extends State<PersonalDetails> {
 
   Widget phoneNumberField(context) {
     return Container(
-      padding: const EdgeInsets.all(0),
       decoration: BoxDecoration(
-          color: greyProfileColor, borderRadius: BorderRadius.circular(8)),
+          color: greyProfileColor,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: blackColor.withOpacity(0.2))),
       child: ListTile(
+        dense: true,
+        visualDensity: VisualDensity.compact,
         tileColor: greyProfileColor,
         selectedTileColor: greyProfileColor,
         contentPadding: const EdgeInsets.symmetric(horizontal: 5),
         leading: Container(
-          height: 42,
+          height: 37,
           width: 72,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
+          decoration: const BoxDecoration(
             color: greyProfileColor,
           ),
           child: Column(
@@ -599,7 +697,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         builder: (context) {
                           return StatefulBuilder(builder: (context, setState) {
                             return Padding(
-                              padding: const EdgeInsets.all(12.0),
+                              padding: const EdgeInsets.all(0.0),
                               child: Column(
                                 children: [
                                   const Row(children: [
@@ -727,21 +825,17 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       );
                     },
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 6.0, vertical: 4.0),
                       margin: const EdgeInsets.symmetric(horizontal: 12.0),
                       decoration: const BoxDecoration(
                         color: greyProfileColor,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(5.0),
-                        ),
                       ),
                       child: ccCode != null
                           ? Text(ccCode,
                               style: const TextStyle(color: Colors.black))
                           : const Text(
                               "+1",
-                              style: TextStyle(color: Colors.black),
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 14),
                             ),
                     ),
                   ),
@@ -749,62 +843,59 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                     color: blackColor.withOpacity(0.6),
                     height: 37,
                     width: 1,
-                  )
+                  ),
                 ],
               ),
             ],
           ),
         ),
-        title: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: TextFormField(
-            controller: phoneController,
-            cursorColor: kSecondaryColor,
-            keyboardType: TextInputType.phone,
-            onChanged: (phone) {
-              setState(() {
-                phone.length > 9 ? cont = true : cont = false;
-                phoneNumber = phone;
-              });
-            },
-            style: const TextStyle(
+        title: TextFormField(
+          controller: phoneController,
+          cursorColor: kSecondaryColor,
+          keyboardType: TextInputType.phone,
+          onChanged: (phone) {
+            setState(() {
+              phone.length > 9 ? cont = true : cont = false;
+              phoneNumber = phone;
+            });
+          },
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            //color: const Color(0xffABAEB9).withOpacity(0.40),
+          ),
+          decoration: InputDecoration(
+            alignLabelWithHint: true,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 0,
+              vertical: 15,
+            ),
+            filled: true,
+            fillColor: greyProfileColor,
+            hintText: 'Phone Number',
+            hintStyle: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
-              //color: const Color(0xffABAEB9).withOpacity(0.40),
+              color: blackColor.withOpacity(0.6),
             ),
-            decoration: InputDecoration(
-              alignLabelWithHint: true,
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 0,
-                vertical: 15,
-              ),
-              filled: true,
-              fillColor: greyProfileColor,
-              hintText: 'Phone Number',
-              hintStyle: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: blackColor.withOpacity(0.6),
-              ),
-              // suffixIcon: Column(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Image.asset(
-              //       mobileIcon,
-              //       height: 24,
-              //     ),
-              //   ],
-              // ),
-              border: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              focusedBorder: InputBorder.none,
-            ),
+            // suffixIcon: Column(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Image.asset(
+            //       mobileIcon,
+            //       height: 24,
+            //     ),
+            //   ],
+            // ),
+            border: InputBorder.none,
+            enabledBorder: InputBorder.none,
+            focusedBorder: InputBorder.none,
           ),
         ),
         trailing: GestureDetector(
           onTap: getOtp,
           child: SizedBox(
-            height: 40,
+            height: 20,
             child: MyText(
               text: 'sendOtp'.tr(),
               weight: FontWeight.bold,
@@ -814,6 +905,277 @@ class _PersonalDetailsState extends State<PersonalDetails> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget pickCountry(context, String countryName, bool show) {
+    return Container(
+      decoration: BoxDecoration(
+          color: kPrimaryColor,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: blackColor.withOpacity(0.2))),
+      child: ListTile(
+        onTap: () => showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return StatefulBuilder(builder: (context, setState) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      const Row(children: [
+                        Text(
+                          "Select Your Nationality",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              fontFamily: 'Raleway-Black'),
+                        )
+                      ]),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: kPrimaryColor,
+                          ),
+                        ),
+                        child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 0.0),
+                            child: TextField(
+                              onChanged: (value) {
+                                if (value.isNotEmpty) {
+                                  filteredServices = countriesList1
+                                      .where((element) => element.shortName
+                                          .toLowerCase()
+                                          .contains(value))
+                                      .toList();
+                                  //log(filteredServices.length.toString());
+                                } else {
+                                  filteredServices = countriesList1;
+                                }
+                                setState(() {});
+                              },
+                              controller: searchController,
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 8),
+                                hintText: 'Country',
+                                filled: true,
+                                fillColor: kPrimaryColor,
+                                suffixIcon: GestureDetector(
+                                  //onTap: openMap,
+                                  child: const Icon(Icons.search),
+                                ),
+                                border: const OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                  borderSide: BorderSide(color: kPrimaryColor),
+                                ),
+                                enabledBorder: const OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                  borderSide: BorderSide(color: kPrimaryColor),
+                                ),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                  borderSide: BorderSide(color: kPrimaryColor),
+                                ),
+                              ),
+                            )),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: filteredServices.length,
+                          itemBuilder: ((context, index) {
+                            return ListTile(
+                              leading: searchController.text.isEmpty
+                                  ? Image.network(
+                                      "${"${Constants.baseUrl}/public/"}${filteredServices[index].flag}",
+                                      height: 25,
+                                      width: 40,
+                                    )
+                                  : null,
+                              title: Text(filteredServices[index].shortName),
+                              onTap: () {
+                                addCountry(
+                                  filteredServices[index].country,
+                                  filteredServices[index].id,
+                                );
+                              },
+                            );
+                          }),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              });
+            }),
+        tileColor: kPrimaryColor,
+        selectedTileColor: kPrimaryColor,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 15),
+        title: MyText(
+          text: selectedCountry,
+          color: blackColor.withOpacity(0.6),
+          size: 14,
+          weight: FontWeight.w500,
+        ),
+        trailing: const Image(
+          image: ExactAssetImage('images/ic_drop_down.png'),
+          height: 16,
+          width: 16,
+        ),
+      ),
+    );
+  }
+
+  Widget pickGender(context, String genderName) {
+    return Container(
+      padding: const EdgeInsets.all(0),
+      decoration: BoxDecoration(
+          color: kPrimaryColor,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: blackColor.withOpacity(0.2))),
+      child: ListTile(
+          onTap: () => showDialog(
+              context: context,
+              builder: (context) {
+                return Dialog(
+                    backgroundColor: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(22)),
+                    child: Container(
+                      height: 300,
+                      color: whiteColor,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16.0),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: MyText(
+                                  text: 'Gender',
+                                  weight: FontWeight.bold,
+                                  color: blackColor,
+                                  size: 20,
+                                  fontFamily: 'Raleway'),
+                            ),
+                          ),
+                          Container(
+                            height: 200,
+                            color: whiteColor,
+                            child: Row(
+                              children: [
+                                Stack(
+                                  children: [
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width /
+                                          1.3,
+                                      child: CupertinoPicker(
+                                        itemExtent: 82.0,
+                                        diameterRatio: 22,
+                                        backgroundColor: whiteColor,
+                                        onSelectedItemChanged: (int index) {
+                                          print(index + 1);
+                                          getGender = genderText[index];
+                                          getGender == null
+                                              ? cont = false
+                                              : cont = true;
+                                          setState(() {
+                                            // ft = (index + 1);
+                                            // heightController.text =
+                                            //     "$ft' $inches\"";
+                                          });
+                                        },
+                                        selectionOverlay:
+                                            const CupertinoPickerDefaultSelectionOverlay(
+                                          background: transparentColor,
+                                        ),
+                                        children: List.generate(3, (index) {
+                                          return Center(
+                                            child: MyText(
+                                                text: genderText[index],
+                                                size: 14,
+                                                color: blackTypeColor4),
+                                          );
+                                        }),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: 70,
+                                      child: Container(
+                                        height: 60,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                1.2,
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 16),
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                                top: BorderSide(
+                                                    color: blackColor
+                                                        .withOpacity(0.7),
+                                                    width: 1.5),
+                                                bottom: BorderSide(
+                                                    color: blackColor
+                                                        .withOpacity(0.7),
+                                                    width: 1.5))),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              TextButton(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  child: MyText(
+                                    text: 'Cancel',
+                                    color: bluishColor,
+                                  )),
+                              TextButton(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  child: MyText(
+                                    text: 'Ok',
+                                    color: bluishColor,
+                                  )),
+                            ],
+                          )
+                        ],
+                      ),
+                    ));
+              }),
+          tileColor: kPrimaryColor,
+          selectedTileColor: kPrimaryColor,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 15),
+          title: MyText(
+            text: getGender.toString(),
+            color: blackColor.withOpacity(0.6),
+            size: 14,
+            weight: FontWeight.w500,
+          ),
+          trailing: const Image(
+            image: ExactAssetImage('images/ic_drop_down.png'),
+            height: 16,
+            width: 16,
+          )),
     );
   }
 }
