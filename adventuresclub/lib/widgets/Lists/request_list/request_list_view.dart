@@ -151,10 +151,10 @@ class _RequestListViewState extends State<RequestListView> {
       if (response.statusCode == 200) {
         uList = json.decode(response.body);
         List<dynamic> result = uList['data'];
-        result.forEach((element) {
+        for (var element in result) {
           List<ServiceImageModel> gSim = [];
           List<dynamic> image = element['images'];
-          image.forEach((i) {
+          for (var i in image) {
             ServiceImageModel sm = ServiceImageModel(
               int.tryParse(i['id'].toString()) ?? 0,
               int.tryParse(i['service_id'].toString()) ?? 0,
@@ -163,7 +163,7 @@ class _RequestListViewState extends State<RequestListView> {
               i['thumbnail'].toString(),
             );
             gSim.add(sm);
-          });
+          }
           String bookingN = element["booking_id"].toString();
           text2[0] = bookingN;
           UpcomingRequestsModel up = UpcomingRequestsModel(
@@ -194,7 +194,7 @@ class _RequestListViewState extends State<RequestListView> {
               element["registrations"] ?? "",
               gSim);
           uRequestList.add(up);
-        });
+        }
       }
       setState(() {
         uRequestListInv = uRequestList.reversed.toList();
