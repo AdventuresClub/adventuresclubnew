@@ -406,7 +406,7 @@ class _RequestListViewState extends State<RequestListView> {
     });
   }
 
-  void showConfirmation(String bookingId, int index) async {
+  void showConfirmation(String bookingId, int index, String serviceId) async {
     showDialog(
         context: context,
         builder: (ctx) => SimpleDialog(
@@ -442,7 +442,7 @@ class _RequestListViewState extends State<RequestListView> {
                       ),
                     ),
                     MaterialButton(
-                      onPressed: () => dropped(bookingId, index),
+                      onPressed: () => dropped(bookingId, index, serviceId),
                       child: MyText(
                         text: "yes",
                         color: blackColor,
@@ -456,8 +456,9 @@ class _RequestListViewState extends State<RequestListView> {
             ));
   }
 
-  void dropped(String bookingId, int index) async {
+  void dropped(String bookingId, int index, String serviceId) async {
     Navigator.of(context).pop();
+    leaveGroup(serviceId);
     UpcomingRequestsModel gR = uRequestListInv.elementAt(index);
     setState(() {
       uRequestListInv.removeAt(index);
@@ -477,6 +478,22 @@ class _RequestListViewState extends State<RequestListView> {
       }
     } catch (e) {
       debugPrint(e.toString());
+    }
+  }
+
+  void leaveGroup(String serviceId) async {
+    try {
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/groupleave"), body: {
+        "user_id": Constants.userId.toString(),
+        "service_id": serviceId,
+      });
+      if (response.statusCode == 200) {
+        message("Updated Successfly");
+      }
+      //cancel();
+    } catch (e) {
+      message(e.toString());
     }
   }
 
@@ -1052,7 +1069,10 @@ class _RequestListViewState extends State<RequestListView> {
                                           uRequestListInv[index]
                                               .BookingId
                                               .toString(),
-                                          index), //     () => showConfirmation(
+                                          index,
+                                          uRequestListInv[index]
+                                              .serviceId
+                                              .toString()), //     () => showConfirmation(
                                   //   widget.uRequestListInv[index].BookingId.toString(),
                                   // ),
                                   child: Center(

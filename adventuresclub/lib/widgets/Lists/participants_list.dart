@@ -87,7 +87,8 @@ class _ParticipantsListState extends State<ParticipantsList> {
 
   //// ${Constants.baseUrl}/newchat/3/2/6 //provider = 3 , service = 2 , member/userId = 6
 
-  void showConfirmation(String bookingId, String bookingUser, int index) async {
+  void showConfirmation(
+      String bookingId, String bookingUser, int index, String serviceId) async {
     showDialog(
         context: context,
         builder: (ctx) => SimpleDialog(
@@ -125,7 +126,7 @@ class _ParticipantsListState extends State<ParticipantsList> {
                   children: [
                     MaterialButton(
                       onPressed: homePage,
-                      child: Text("No"),
+                      child: const Text("No"),
                     ),
 
                     // ElevatedButton(
@@ -136,7 +137,8 @@ class _ParticipantsListState extends State<ParticipantsList> {
                     //   ),
                     // ),
                     ElevatedButton(
-                      onPressed: () => delete(bookingId, bookingUser, index),
+                      onPressed: () =>
+                          delete(bookingId, bookingUser, index, serviceId),
                       child: MyText(
                         text: "Yes",
                         color: kPrimaryColor,
@@ -199,7 +201,25 @@ class _ParticipantsListState extends State<ParticipantsList> {
 
   //${Constants.baseUrl}/api/v1/booking_accept
 
-  void delete(String bookingId, String bookingUser, int index) async {
+  void leaveGroup(String serviceId) async {
+    try {
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/groupleave"), body: {
+        "user_id": Constants.userId.toString(),
+        "service_id": serviceId,
+      });
+      if (response.statusCode == 200) {
+        message("Updated Successfly");
+      }
+      //cancel();
+    } catch (e) {
+      message(e.toString());
+    }
+  }
+
+  void delete(
+      String bookingId, String bookingUser, int index, String serviceId) async {
+    leaveGroup(serviceId);
     Navigator.of(context).pop();
     try {
       GetParticipantsModel pm = gm.elementAt(index);

@@ -423,7 +423,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
     );
   }
 
-  void showConfirmation(String id, int index) async {
+  void showConfirmation(String id, int index, String serviceId) async {
     showDialog(
         context: context,
         builder: (ctx) => SimpleDialog(
@@ -467,7 +467,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () => delete(id, index),
+                      onPressed: () => delete(id, index, serviceId),
                       child: MyText(
                         text: "Yes",
                         color: blackColor,
@@ -480,7 +480,8 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
             ));
   }
 
-  void delete(String id, int index) async {
+  void delete(String id, int index, String serviceId) async {
+    leaveGroup(serviceId);
     Navigator.of(context).pop();
     UpcomingRequestsModel uR = uRequestList.elementAt(index);
     setState(() {
@@ -503,6 +504,22 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
       print(response.statusCode);
     } catch (e) {
       print(e.toString());
+    }
+  }
+
+  void leaveGroup(String serviceId) async {
+    try {
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/groupleave"), body: {
+        "user_id": Constants.userId.toString(),
+        "service_id": serviceId,
+      });
+      if (response.statusCode == 200) {
+        message("Updated Successfly");
+      }
+      //cancel();
+    } catch (e) {
+      message(e.toString());
     }
   }
 
@@ -675,7 +692,10 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                               uRequestList[index]
                                                   .BookingId
                                                   .toString(),
-                                              index),
+                                              index,
+                                              uRequestList[index]
+                                                  .serviceId
+                                                  .toString()),
                                           child: const Icon(
                                             Icons.delete_forever_outlined,
                                             color: redColor,

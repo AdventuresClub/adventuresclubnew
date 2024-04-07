@@ -23,7 +23,8 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
     Navigator.of(context).pop();
   }
 
-  void showConfirmation(String bookingId, String bookingUser, int index) async {
+  void showConfirmation(
+      String bookingId, String bookingUser, int index, String serviceId) async {
     showDialog(
         context: context,
         builder: (ctx) => SimpleDialog(
@@ -67,8 +68,8 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () =>
-                          widget.delete(bookingId, bookingUser, index),
+                      onPressed: () => widget.delete(
+                          bookingId, bookingUser, index, serviceId),
                       child: MyText(
                         text: "Yes",
                         color: blackColor,
@@ -188,11 +189,12 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                       onTap: () => showConfirmation(
                           widget.gm.bookingId.toString(),
                           widget.gm.bookingUser.toString(),
-                          widget.index),
+                          widget.index,
+                          widget.gm.serviceId.toString()),
                       child: const Icon(
                         Icons.delete_forever_outlined,
                         color: redColor,
-                        size: 20,
+                        size: 24,
                       ),
                     )
                   ],
@@ -526,9 +528,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                     const SizedBox(
                       height: 5,
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
+
                     RichText(
                       text: TextSpan(
                         text: 'weight'.tr(),
