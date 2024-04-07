@@ -73,6 +73,9 @@ class Constants {
   static bool expired = false;
   static int countryId = 0;
   static String userRole = "3";
+  static String dob = "";
+  static String gender = "";
+  static String nationalityId = "";
   static int userId = 0;
   static String emailId = "";
   static String password = "";

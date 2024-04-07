@@ -245,6 +245,23 @@ class _PaymentMethodsState extends State<PaymentMethods> {
     );
   }
 
+  void addGroup() async {
+    try {
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/groupjoin"), body: {
+        "user_id": Constants.userId.toString(),
+        "service_id": widget.uRequestList.serviceId.toString(),
+      });
+      if (response.statusCode == 200) {
+        showConfirmation();
+        message("Updated Successfly");
+      }
+      cancel();
+    } catch (e) {
+      message(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -308,7 +325,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
                         //       },
                         //     ),
                         //   )
-                        : showConfirmation();
+                        : addGroup();
                   },
                   leading: CircleAvatar(
                     backgroundColor: Colors.transparent,

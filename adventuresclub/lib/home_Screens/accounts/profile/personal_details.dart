@@ -32,6 +32,8 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   String name = "";
   String email = "";
   String phone = "";
+  String gender = "";
+  //String nationalityId = "";
   String phoneNumber = "";
   String selectedCountry = "Nationality";
   List genderText = ['Male', 'Female', 'Other'];
@@ -59,6 +61,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
       name = Constants.profile.name;
       phone = Constants.profile.mobile;
       email = Constants.profile.email;
+      formattedDate = Constants.dob;
     });
   }
 
@@ -378,9 +381,11 @@ class _PersonalDetailsState extends State<PersonalDetails> {
         );
         countriesList1.add(gc);
       });
-      setState(() {
-        filteredServices = countriesList1;
-      });
+      if (mounted) {
+        setState(() {
+          filteredServices = countriesList1;
+        });
+      }
     }
   }
 

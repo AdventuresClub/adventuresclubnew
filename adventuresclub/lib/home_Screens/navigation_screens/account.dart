@@ -329,6 +329,9 @@ class _AccountState extends State<Account> {
 
       profile = up;
       Constants.userRole = up.userRole;
+      Constants.dob = up.dob;
+      Constants.gender = up.gender;
+      Constants.nationalityId = up.nationalityId;
       prefs.setString("userRole", up.userRole);
       // setState(() {
       //   loading = false;
