@@ -932,7 +932,7 @@ class _AccountState extends State<Account> {
                                               onTap: () => goToProfile(
                                                   expired, profile.userRole),
                                               child: CircleAvatar(
-                                                radius: 38,
+                                                radius: 36,
                                                 backgroundImage: NetworkImage(
                                                     "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
                                               ),
@@ -941,10 +941,10 @@ class _AccountState extends State<Account> {
                                               onTap: () => goToProfile(
                                                   expired, profile.userRole),
                                               child: CircleAvatar(
-                                                radius: 40,
+                                                radius: 36,
                                                 backgroundColor: greenColor1,
                                                 child: CircleAvatar(
-                                                  radius: 38,
+                                                  radius: 36,
                                                   backgroundImage:
                                                       NetworkImage(profileUrl),
                                                 ),
@@ -1137,7 +1137,7 @@ class _AccountState extends State<Account> {
                                               onTap: () => goToProfile(
                                                   expired, profile.userRole),
                                               child: CircleAvatar(
-                                                radius: 38,
+                                                radius: 36,
                                                 backgroundImage: NetworkImage(
                                                     "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
                                               ),
@@ -1146,10 +1146,10 @@ class _AccountState extends State<Account> {
                                               onTap: () => goToProfile(
                                                   expired, profile.userRole),
                                               child: CircleAvatar(
-                                                radius: 40,
+                                                radius: 36,
                                                 backgroundColor: greenColor1,
                                                 child: CircleAvatar(
-                                                  radius: 38,
+                                                  radius: 36,
                                                   backgroundImage:
                                                       NetworkImage(profileUrl),
                                                 ),
@@ -1332,7 +1332,7 @@ class _AccountState extends State<Account> {
                                               onTap: () => goToProfile(
                                                   expired, profile.userRole),
                                               child: CircleAvatar(
-                                                radius: 38,
+                                                radius: 36,
                                                 backgroundImage: NetworkImage(
                                                     "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
                                               ),
@@ -1341,10 +1341,10 @@ class _AccountState extends State<Account> {
                                               onTap: () => goToProfile(
                                                   expired, profile.userRole),
                                               child: CircleAvatar(
-                                                radius: 40,
+                                                radius: 36,
                                                 backgroundColor: greenColor1,
                                                 child: CircleAvatar(
-                                                  radius: 38,
+                                                  radius: 36,
                                                   backgroundImage:
                                                       NetworkImage(profileUrl),
                                                 ),
@@ -1544,7 +1544,7 @@ class _AccountState extends State<Account> {
                                                 onTap: () => goToProfile(
                                                     expired, profile.userRole),
                                                 child: CircleAvatar(
-                                                  radius: 35,
+                                                  radius: 36,
                                                   backgroundImage: NetworkImage(
                                                       "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
                                                 ),
@@ -1553,10 +1553,10 @@ class _AccountState extends State<Account> {
                                                 onTap: () => goToProfile(
                                                     expired, profile.userRole),
                                                 child: CircleAvatar(
-                                                  radius: 40,
+                                                  radius: 36,
                                                   backgroundColor: greenColor1,
                                                   child: CircleAvatar(
-                                                    radius: 35,
+                                                    radius: 36,
                                                     backgroundImage:
                                                         NetworkImage(
                                                             profileUrl),
@@ -1759,7 +1759,7 @@ class _AccountState extends State<Account> {
                                               onTap: () => goToProfile(
                                                   expired, profile.userRole),
                                               child: CircleAvatar(
-                                                radius: 30,
+                                                radius: 36,
                                                 backgroundImage: NetworkImage(
                                                     "${'${Constants.baseUrl}/public/'}${profile.profileImage}"),
                                               ),
@@ -1768,10 +1768,10 @@ class _AccountState extends State<Account> {
                                               onTap: () => goToProfile(
                                                   expired, profile.userRole),
                                               child: CircleAvatar(
-                                                radius: 40,
+                                                radius: 36,
                                                 backgroundColor: greenColor1,
                                                 child: CircleAvatar(
-                                                  radius: 30,
+                                                  radius: 36,
                                                   backgroundImage:
                                                       NetworkImage(profileUrl),
                                                 ),
