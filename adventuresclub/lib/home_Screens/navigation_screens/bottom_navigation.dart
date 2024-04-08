@@ -53,10 +53,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
     super.initState();
     if (Constants.userId == 0) {
       getCountries();
+    } else {
+      getNotificatioNumber();
     }
 
     // index = context.read<ServicesProvider>().homeIndex;
-    getNotificatioNumber();
     Constants.getFilter();
     getVersion();
   }

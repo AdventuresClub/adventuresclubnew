@@ -208,6 +208,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
   }
 
   void update() async {
+    addGroup();
     DateTime now = DateTime.now();
     try {
       var response = await http.post(
@@ -296,16 +297,16 @@ class _PaymentMethodsState extends State<PaymentMethods> {
                         color: blackColor,
                         size: 19,
                       )),
-                  const SizedBox(height: 20),
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: MyText(
-                        text:
-                            'afterYouFirstPaymentWeWillSaveYourDetailsForFutureUse',
-                        weight: FontWeight.w400,
-                        color: greyColor,
-                        size: 14,
-                      )),
+                  // const SizedBox(height: 20),
+                  // Align(
+                  //     alignment: Alignment.centerLeft,
+                  //     child: MyText(
+                  //       text:
+                  //           'afterYouFirstPaymentWeWillSaveYourDetailsForFutureUse',
+                  //       weight: FontWeight.w400,
+                  //       color: greyColor,
+                  //       size: 14,
+                  //     ),),
                 ],
               ),
             ),
@@ -325,7 +326,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
                         //       },
                         //     ),
                         //   )
-                        : addGroup();
+                        : showConfirmation();
                   },
                   leading: CircleAvatar(
                     backgroundColor: Colors.transparent,

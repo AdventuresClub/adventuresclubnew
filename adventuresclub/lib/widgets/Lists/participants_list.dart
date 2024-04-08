@@ -201,11 +201,11 @@ class _ParticipantsListState extends State<ParticipantsList> {
 
   //${Constants.baseUrl}/api/v1/booking_accept
 
-  void leaveGroup(String serviceId) async {
+  void leaveGroup(String bookingUser, String serviceId) async {
     try {
       var response = await http
           .post(Uri.parse("${Constants.baseUrl}/api/v1/groupleave"), body: {
-        "user_id": Constants.userId.toString(),
+        "user_id": bookingUser,
         "service_id": serviceId,
       });
       if (response.statusCode == 200) {
@@ -219,7 +219,7 @@ class _ParticipantsListState extends State<ParticipantsList> {
 
   void delete(
       String bookingId, String bookingUser, int index, String serviceId) async {
-    leaveGroup(serviceId);
+    leaveGroup(bookingUser, serviceId);
     Navigator.of(context).pop();
     try {
       GetParticipantsModel pm = gm.elementAt(index);
