@@ -85,7 +85,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       .trim(), //Constants.profile.mobileCode,
                   'email': emailController.text.trim(),
                   "dob": formattedDate.toString(),
-                  "nationality_id": nationalityId.toString(),
+                  "nationality": nationalityId.toString(),
                   "gender": "Female",
                 });
             if (response.statusCode == 200) {
