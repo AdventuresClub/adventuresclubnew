@@ -7,6 +7,7 @@ import 'package:adventuresclub/home_Screens/navigation_screens/requests.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/provider/navigation_index_provider.dart';
 import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
+import 'package:adventuresclub/widgets/loading_widget.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,7 @@ class BookTicket extends StatefulWidget {
 class _BookTicketState extends State<BookTicket> {
   TextEditingController messageController = TextEditingController();
   TextEditingController pointsController = TextEditingController();
+  bool loading = false;
   int _n = 0;
   int _m = 1;
   int totalPerson = 0;
@@ -101,18 +103,25 @@ class _BookTicketState extends State<BookTicket> {
   }
 
   void checkIfExpired() {
+    setState(() {
+      loading = true;
+    });
     DateTime currentDate = DateTime.now();
     DateTime now = DateTime.now();
-    DateTime yesterday = now.subtract(Duration(days: 1));
-    if (yesterday.isBefore(currentDate)) {
-      setState(() {
-        expired = true;
-      });
+    DateTime yesterday = now.add(const Duration(days: 1));
+    if (widget.gm.startDate.isBefore(currentDate)) {
+      //setState(() {
+      expired = true;
+
+      //});
     } else {
-      setState(() {
-        expired = false;
-      });
+      // setState(() {
+      expired = false;
+      //  });
     }
+    setState(() {
+      loading = false;
+    });
   }
 
   // int tPerson() {
@@ -215,11 +224,21 @@ class _BookTicketState extends State<BookTicket> {
     if (widget.show!) {
       bookAdventure(formattedDate);
     } else {
-      var date = DateTime.parse(widget.gm.startDate.toString());
-      String m = date.month < 10 ? "0${date.month}" : "${date.month}";
-      String d = date.day < 10 ? "0${date.day}" : "${date.day}";
-      endDate = "${date.year}-$m-$d";
-      bookAdventure(endDate);
+      DateTime now = DateTime.now();
+
+      if (expired) {
+        var date = DateTime.parse(widget.gm.startDate.toString());
+        String m = date.month < 10 ? "0${date.month}" : "${date.month}";
+        String d = date.day < 10 ? "0${date.day}" : "${date.day}";
+        endDate = "${date.year}-$m-$d";
+        bookAdventure(endDate);
+      } else {
+        var date = DateTime.parse(now.toString());
+        String m = date.month < 10 ? "0${date.month}" : "${date.month}";
+        String d = date.day < 10 ? "0${date.day}" : "${date.day}";
+        endDate = "${date.year}-$m-$d";
+        bookAdventure(endDate);
+      }
     }
   }
 
@@ -322,720 +341,746 @@ class _BookTicketState extends State<BookTicket> {
           iconTheme: const IconThemeData(color: greenishColor),
           backgroundColor: whiteColor,
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Card(
-                    elevation: 4,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 20),
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          if (widget.show!)
-                            Column(
+        body: loading
+            ? const LoadingWidget()
+            : SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Card(
+                          elevation: 4,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0, vertical: 20),
+                            child: Column(
                               children: [
-                                // Align(
-                                //   alignment: Alignment.centerLeft,
-                                //   child: MyText(
-                                //     text: 'startDate'.tr(),
-                                //     weight: FontWeight.bold,
-                                //     color: blackTypeColor4,
-                                //     size: 22,
-                                //   ),
-                                // ),
-                                // const SizedBox(
-                                //   height: 10,
-                                // ),
-                                if (widget.gm.sPlan == 2 && expired)
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(12)),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        RichText(
-                                          text: TextSpan(
-                                            text: 'From : ',
-                                            style: const TextStyle(
-                                                color: bluishColor,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold,
-                                                fontFamily: "Raleway"),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                text: extractDate(
-                                                    widget.gm.endDate),
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    color: blackColor,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontFamily: "Raleway"),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        RichText(
-                                          text: TextSpan(
-                                            text: 'To :  '.tr(),
-                                            style: const TextStyle(
-                                                color: bluishColor,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold,
-                                                fontFamily: "Raleway"),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                text: extractDate(
-                                                    widget.gm.startDate),
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    color: blackColor,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontFamily: "Raleway"),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                if (widget.gm.sPlan == 1 || !expired)
-                                  GestureDetector(
-                                      onTap: () => _selectDate(context),
-                                      child: Container(
-                                        padding: const EdgeInsets.all(12),
-                                        decoration: BoxDecoration(
-                                            color: whiteColor,
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                              Radius.circular(10.0),
-                                            ),
-                                            border: Border.all(
-                                                color: greyColorShade400)),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            formattedDate != null
-                                                ? MyText(
-                                                    text: formattedDate,
-                                                    color: blackColor,
-                                                    weight: FontWeight.w500,
-                                                  )
-                                                : MyText(
-                                                    text: 'selectDesiredDate'
-                                                        .tr(),
-                                                    weight: FontWeight.w600,
-                                                    color: greyTextColor,
-                                                    size: 16,
-                                                  ),
-                                            const Icon(
-                                              Icons.calendar_month_sharp,
-                                              color: greyColor,
-                                              size: 30,
-                                            )
-                                          ],
-                                        ),
-                                      )),
                                 const SizedBox(
                                   height: 10,
                                 ),
-                              ],
-                            ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          widget.show!
-                              ? Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: MyText(
-                                    text: 'planningFor'.tr(),
-                                    weight: FontWeight.bold,
-                                    color: blackTypeColor4,
-                                    size: 22,
-                                  ))
-                              : Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: MyText(
-                                    text: 'bookingFor'.tr(),
-                                    weight: FontWeight.bold,
-                                    color: blackTypeColor4,
-                                    size: 22,
-                                  ),
-                                ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          //adult
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              MyText(
-                                text: 'adult'.tr(),
-                                color: blackColor,
-                              ),
-                              Container(
-                                height: 28,
-                                padding: const EdgeInsets.all(0),
-                                color: greyColorShade400,
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      GestureDetector(
-                                        onTap: minusAdult,
-                                        child: Container(
-                                            width: 27,
-                                            height: 27,
-                                            decoration: BoxDecoration(
-                                                color: whiteColor,
-                                                border: Border.all(
-                                                    color: greyColorShade400)),
-                                            padding: const EdgeInsets.all(6),
-                                            child: const Image(
-                                              image: ExactAssetImage(
-                                                  'images/feather-minus.png'),
+                                if (widget.show!)
+                                  Column(
+                                    children: [
+                                      // Align(
+                                      //   alignment: Alignment.centerLeft,
+                                      //   child: MyText(
+                                      //     text: 'startDate'.tr(),
+                                      //     weight: FontWeight.bold,
+                                      //     color: blackTypeColor4,
+                                      //     size: 22,
+                                      //   ),
+                                      // ),
+                                      // const SizedBox(
+                                      //   height: 10,
+                                      // ),
+                                      if (widget.gm.sPlan == 2 && !expired)
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12)),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              RichText(
+                                                text: TextSpan(
+                                                  text: 'From : ',
+                                                  style: const TextStyle(
+                                                      color: bluishColor,
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontFamily: "Raleway"),
+                                                  children: <TextSpan>[
+                                                    TextSpan(
+                                                      text: extractDate(
+                                                          widget.gm.endDate),
+                                                      style: const TextStyle(
+                                                          fontSize: 14,
+                                                          color: blackColor,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          fontFamily:
+                                                              "Raleway"),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              RichText(
+                                                text: TextSpan(
+                                                  text: 'To :  '.tr(),
+                                                  style: const TextStyle(
+                                                      color: bluishColor,
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontFamily: "Raleway"),
+                                                  children: <TextSpan>[
+                                                    TextSpan(
+                                                      text: extractDate(
+                                                          widget.gm.startDate),
+                                                      style: const TextStyle(
+                                                          fontSize: 14,
+                                                          color: blackColor,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          fontFamily:
+                                                              "Raleway"),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      if (widget.gm.sPlan == 1 || expired)
+                                        GestureDetector(
+                                            onTap: () => _selectDate(context),
+                                            child: Container(
+                                              padding: const EdgeInsets.all(12),
+                                              decoration: BoxDecoration(
+                                                  color: whiteColor,
+                                                  borderRadius:
+                                                      const BorderRadius.all(
+                                                    Radius.circular(10.0),
+                                                  ),
+                                                  border: Border.all(
+                                                      color:
+                                                          greyColorShade400)),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  formattedDate != null
+                                                      ? MyText(
+                                                          text: formattedDate,
+                                                          color: blackColor,
+                                                          weight:
+                                                              FontWeight.w500,
+                                                        )
+                                                      : MyText(
+                                                          text:
+                                                              'selectDesiredDate'
+                                                                  .tr(),
+                                                          weight:
+                                                              FontWeight.w600,
+                                                          color: greyTextColor,
+                                                          size: 16,
+                                                        ),
+                                                  const Icon(
+                                                    Icons.calendar_month_sharp,
+                                                    color: greyColor,
+                                                    size: 30,
+                                                  )
+                                                ],
+                                              ),
                                             )),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8.0),
-                                        child: Text('$_m',
-                                            style: const TextStyle(
-                                                fontSize: 16.0)),
-                                      ),
-                                      GestureDetector(
-                                        onTap: addAdult,
-                                        child: Container(
-                                            width: 27,
-                                            height: 27,
-                                            decoration: BoxDecoration(
-                                                color: whiteColor,
-                                                border: Border.all(
-                                                    color: greyColorShade400)),
-                                            child: const Icon(Icons.add,
-                                                color: bluishColor)),
+                                      const SizedBox(
+                                        height: 10,
                                       ),
                                     ],
                                   ),
+                                const SizedBox(
+                                  height: 20,
                                 ),
-                              ),
-                              MyText(
-                                text: 'child'.tr(),
-                                color: blackColor,
-                              ),
-                              Container(
-                                height: 28,
-                                padding: const EdgeInsets.all(0),
-                                color: greyColorShade400,
-                                child: Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      GestureDetector(
-                                        onTap: minus,
-                                        child: Container(
-                                            width: 27,
-                                            height: 27,
-                                            decoration: BoxDecoration(
-                                                color: whiteColor,
-                                                border: Border.all(
-                                                    color: greyColorShade400)),
-                                            padding: const EdgeInsets.all(6),
-                                            child: const Image(
-                                                image: ExactAssetImage(
-                                                    'images/feather-minus.png'))),
+                                widget.show!
+                                    ? Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: MyText(
+                                          text: 'planningFor'.tr(),
+                                          weight: FontWeight.bold,
+                                          color: blackTypeColor4,
+                                          size: 22,
+                                        ))
+                                    : Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: MyText(
+                                          text: 'bookingFor'.tr(),
+                                          weight: FontWeight.bold,
+                                          color: blackTypeColor4,
+                                          size: 22,
+                                        ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8.0),
-                                        child: Text('$_n',
-                                            style: const TextStyle(
-                                                fontSize: 16.0)),
-                                      ),
-                                      GestureDetector(
-                                        onTap: add,
-                                        child: Container(
-                                            width: 27,
-                                            height: 27,
-                                            decoration: BoxDecoration(
-                                                color: whiteColor,
-                                                border: Border.all(
-                                                    color: greyColorShade400)),
-                                            child: const Icon(
-                                              Icons.add,
-                                              color: bluishColor,
-                                            )),
-                                      ),
-                                    ],
-                                  ),
+                                const SizedBox(
+                                  height: 20,
                                 ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 20),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15.0, vertical: 15),
-                            child: Column(
-                              children: [
-                                // Wrap(
-                                //   children: List.generate(
-                                //     text.length,
-                                //     (index) {
-                                //       return
+                                //adult
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceAround,
                                   children: [
                                     MyText(
-                                        text: "perPerson".tr(),
-                                        color: blackTypeColor3,
-                                        weight: FontWeight.bold,
-                                        fontFamily: 'Roboto'),
+                                      text: 'adult'.tr(),
+                                      color: blackColor,
+                                    ),
+                                    Container(
+                                      height: 28,
+                                      padding: const EdgeInsets.all(0),
+                                      color: greyColorShade400,
+                                      child: Center(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: <Widget>[
+                                            GestureDetector(
+                                              onTap: minusAdult,
+                                              child: Container(
+                                                  width: 27,
+                                                  height: 27,
+                                                  decoration: BoxDecoration(
+                                                      color: whiteColor,
+                                                      border: Border.all(
+                                                          color:
+                                                              greyColorShade400)),
+                                                  padding:
+                                                      const EdgeInsets.all(6),
+                                                  child: const Image(
+                                                    image: ExactAssetImage(
+                                                        'images/feather-minus.png'),
+                                                  )),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8.0),
+                                              child: Text('$_m',
+                                                  style: const TextStyle(
+                                                      fontSize: 16.0)),
+                                            ),
+                                            GestureDetector(
+                                              onTap: addAdult,
+                                              child: Container(
+                                                  width: 27,
+                                                  height: 27,
+                                                  decoration: BoxDecoration(
+                                                      color: whiteColor,
+                                                      border: Border.all(
+                                                          color:
+                                                              greyColorShade400)),
+                                                  child: const Icon(Icons.add,
+                                                      color: bluishColor)),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                     MyText(
-                                        // text: widget.gm.costInc,
-                                        text:
-                                            "${pPerson.toStringAsFixed(0)}${" OMR"}",
-                                        color: greyColor,
-                                        weight: FontWeight.bold,
-                                        fontFamily: 'Roboto'),
+                                      text: 'child'.tr(),
+                                      color: blackColor,
+                                    ),
+                                    Container(
+                                      height: 28,
+                                      padding: const EdgeInsets.all(0),
+                                      color: greyColorShade400,
+                                      child: Center(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: <Widget>[
+                                            GestureDetector(
+                                              onTap: minus,
+                                              child: Container(
+                                                  width: 27,
+                                                  height: 27,
+                                                  decoration: BoxDecoration(
+                                                      color: whiteColor,
+                                                      border: Border.all(
+                                                          color:
+                                                              greyColorShade400)),
+                                                  padding:
+                                                      const EdgeInsets.all(6),
+                                                  child: const Image(
+                                                      image: ExactAssetImage(
+                                                          'images/feather-minus.png'))),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8.0),
+                                              child: Text('$_n',
+                                                  style: const TextStyle(
+                                                      fontSize: 16.0)),
+                                            ),
+                                            GestureDetector(
+                                              onTap: add,
+                                              child: Container(
+                                                  width: 27,
+                                                  height: 27,
+                                                  decoration: BoxDecoration(
+                                                      color: whiteColor,
+                                                      border: Border.all(
+                                                          color:
+                                                              greyColorShade400)),
+                                                  child: const Icon(
+                                                    Icons.add,
+                                                    color: bluishColor,
+                                                  )),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
-                                const SizedBox(
-                                  height: 2,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    MyText(
-                                        text:
-                                            "${'totalPerson'.tr()} ${"  "} ${"x"} $totalPerson",
-                                        color: blackTypeColor3,
-                                        weight: FontWeight.bold,
-                                        fontFamily: 'Roboto'),
-                                    MyText(
-                                        // text: widget.gm.costInc,
-                                        text:
-                                            "${totalCost.toStringAsFixed(0)}${" OMR"}",
-                                        color: greyColor,
-                                        weight: FontWeight.bold,
-                                        fontFamily: 'Roboto'),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 2,
-                                ),
-                                // Row(
-                                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                //   children: [
-                                //     MyText(
-                                //         text: 'promoCode'.tr(),
-                                //         color: blueTextColor,
-                                //         weight: FontWeight.bold,
-                                //         fontFamily: 'Roboto'),
-                                //     MyText(
-                                //         // text: widget.gm.costInc,
-                                //         text: "-0 OMR",
-                                //         color: blueTextColor,
-                                //         weight: FontWeight.bold,
-                                //         fontFamily: 'Roboto'),
-                                //   ],
-                                // ),
-                                // const SizedBox(
-                                //   height: 2,
-                                // ),
-                                // Row(
-                                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                //   children: [
-                                //     MyText(
-                                //         text: 'points'.tr(),
-                                //         color: blueTextColor,
-                                //         weight: FontWeight.bold,
-                                //         fontFamily: 'Roboto'),
-                                //     MyText(
-                                //         // text: widget.gm.costInc,
-                                //         text: "-0 OMR",
-                                //         color: blueTextColor,
-                                //         weight: FontWeight.bold,
-                                //         fontFamily: 'Roboto'),
-                                //   ],
-                                // ),
-                                //     },
-                                //   ),
-                                // ),
-                                const SizedBox(height: 5),
-                                const Divider(thickness: 3),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    MyText(
-                                        text: 'totalAmount'.tr(),
-                                        color: blackTypeColor3,
-                                        weight: FontWeight.bold,
-                                        size: 18,
+                                const SizedBox(height: 20),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15.0, vertical: 15),
+                                  child: Column(
+                                    children: [
+                                      // Wrap(
+                                      //   children: List.generate(
+                                      //     text.length,
+                                      //     (index) {
+                                      //       return
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          MyText(
+                                              text: "perPerson".tr(),
+                                              color: blackTypeColor3,
+                                              weight: FontWeight.bold,
+                                              fontFamily: 'Roboto'),
+                                          MyText(
+                                              // text: widget.gm.costInc,
+                                              text:
+                                                  "${pPerson.toStringAsFixed(0)}${" OMR"}",
+                                              color: greyColor,
+                                              weight: FontWeight.bold,
+                                              fontFamily: 'Roboto'),
+                                        ],
+                                      ),
+                                      const SizedBox(
                                         height: 2,
-                                        fontFamily: 'Roboto'),
-                                    MyText(
-                                        text: "$totalCost ${widget.gm.currency}"
-                                            .tr(), //'ر.ع 19,350',
-                                        color: bluishColor,
-                                        weight: FontWeight.bold,
-                                        size: 16,
-                                        height: 1.5,
-                                        fontFamily: 'Roboto'),
-                                  ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          MyText(
+                                              text:
+                                                  "${'totalPerson'.tr()} ${"  "} ${"x"} $totalPerson",
+                                              color: blackTypeColor3,
+                                              weight: FontWeight.bold,
+                                              fontFamily: 'Roboto'),
+                                          MyText(
+                                              // text: widget.gm.costInc,
+                                              text:
+                                                  "${totalCost.toStringAsFixed(0)}${" OMR"}",
+                                              color: greyColor,
+                                              weight: FontWeight.bold,
+                                              fontFamily: 'Roboto'),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 2,
+                                      ),
+                                      // Row(
+                                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      //   children: [
+                                      //     MyText(
+                                      //         text: 'promoCode'.tr(),
+                                      //         color: blueTextColor,
+                                      //         weight: FontWeight.bold,
+                                      //         fontFamily: 'Roboto'),
+                                      //     MyText(
+                                      //         // text: widget.gm.costInc,
+                                      //         text: "-0 OMR",
+                                      //         color: blueTextColor,
+                                      //         weight: FontWeight.bold,
+                                      //         fontFamily: 'Roboto'),
+                                      //   ],
+                                      // ),
+                                      // const SizedBox(
+                                      //   height: 2,
+                                      // ),
+                                      // Row(
+                                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      //   children: [
+                                      //     MyText(
+                                      //         text: 'points'.tr(),
+                                      //         color: blueTextColor,
+                                      //         weight: FontWeight.bold,
+                                      //         fontFamily: 'Roboto'),
+                                      //     MyText(
+                                      //         // text: widget.gm.costInc,
+                                      //         text: "-0 OMR",
+                                      //         color: blueTextColor,
+                                      //         weight: FontWeight.bold,
+                                      //         fontFamily: 'Roboto'),
+                                      //   ],
+                                      // ),
+                                      //     },
+                                      //   ),
+                                      // ),
+                                      const SizedBox(height: 5),
+                                      const Divider(thickness: 3),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          MyText(
+                                              text: 'totalAmount'.tr(),
+                                              color: blackTypeColor3,
+                                              weight: FontWeight.bold,
+                                              size: 18,
+                                              height: 2,
+                                              fontFamily: 'Roboto'),
+                                          MyText(
+                                              text:
+                                                  "$totalCost ${widget.gm.currency}"
+                                                      .tr(), //'ر.ع 19,350',
+                                              color: bluishColor,
+                                              weight: FontWeight.bold,
+                                              size: 16,
+                                              height: 1.5,
+                                              fontFamily: 'Roboto'),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
+                          )),
+                      // used earned points
+                      // Card(
+                      //   elevation: 4,
+                      //   child: Column(
+                      //     children: [
+                      //       CheckboxListTile(
+                      //           value: value,
+                      //           title: MyText(
+                      //               text: 'useEarnedPoints'.tr(),
+                      //               weight: FontWeight.bold,
+                      //               size: 18,
+                      //               color: blackTypeColor1,
+                      //               fontFamily: 'Roboto'),
+                      //           onChanged: (bool? value1) {
+                      //             setState(() {
+                      //               value = value1!;
+                      //             });
+                      //           }),
+                      //       Padding(
+                      //         padding: const EdgeInsets.symmetric(
+                      //             horizontal: 12, vertical: 12),
+                      //         child: Row(
+                      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //           children: [
+                      //             RichText(
+                      //               text: TextSpan(
+                      //                 text: 'availablePoints'.tr(),
+                      //                 style: const TextStyle(
+                      //                     color: blueTextColor,
+                      //                     fontSize: 12,
+                      //                     fontWeight: FontWeight.bold),
+                      //                 children: const <TextSpan>[
+                      //                   TextSpan(
+                      //                       text: ' 0',
+                      //                       style: TextStyle(
+                      //                           fontSize: 24,
+                      //                           color: blueTextColor,
+                      //                           fontFamily: 'Roboto')),
+                      //                 ],
+                      //               ),
+                      //             ),
+                      //             const SizedBox(
+                      //               width: 70,
+                      //             ),
+                      //             Row(
+                      //               mainAxisAlignment: MainAxisAlignment.end,
+                      //               children: [
+                      //                 MyText(
+                      //                   text: 'optToUse'.tr(),
+                      //                   color: blueTextColor,
+                      //                   size: 12,
+                      //                   weight: FontWeight.bold,
+                      //                 ),
+                      //               ],
+                      //             ),
+                      //             SizedBox(
+                      //               width: 35,
+                      //               height: 35,
+                      //               child: TextField(
+                      //                 controller: pointsController,
+                      //                 textAlign: TextAlign.center,
+                      //                 style: const TextStyle(fontSize: 16),
+                      //                 decoration: InputDecoration(
+                      //                   hintText: "0",
+                      //                   hintStyle: const TextStyle(
+                      //                       color: blackColor, fontSize: 16),
+                      //                   suffixText: "apply".tr(),
+                      //                   contentPadding: const EdgeInsets.symmetric(
+                      //                     horizontal: 2,
+                      //                   ),
+                      //                   isDense: true,
+                      //                   filled: true,
+                      //                   fillColor: whiteColor,
+                      //                   border: OutlineInputBorder(
+                      //                     borderRadius: const BorderRadius.all(
+                      //                       Radius.circular(10.0),
+                      //                     ),
+                      //                     borderSide: BorderSide(
+                      //                       color: blackColor.withOpacity(0.4),
+                      //                     ),
+                      //                   ),
+                      //                   enabledBorder: OutlineInputBorder(
+                      //                     borderRadius: const BorderRadius.all(
+                      //                       Radius.circular(10.0),
+                      //                     ),
+                      //                     borderSide: BorderSide(
+                      //                       color: blackColor.withOpacity(0.2),
+                      //                     ),
+                      //                   ),
+                      //                   focusedBorder: OutlineInputBorder(
+                      //                     borderRadius: const BorderRadius.all(
+                      //                         Radius.circular(10)),
+                      //                     borderSide: BorderSide(
+                      //                       color: blackColor.withOpacity(0.4),
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // apply promo code
+                      // Card(
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.only(
+                      //         right: 12.0, left: 12, top: 12, bottom: 8),
+                      //     child: Column(
+                      //       children: [
+                      //         Align(
+                      //             alignment: Alignment.centerLeft,
+                      //             child: MyText(
+                      //                 text: 'applyPromoCode'.tr(),
+                      //                 weight: FontWeight.bold,
+                      //                 color: blackTypeColor4,
+                      //                 size: 22,
+                      //                 fontFamily: 'Roboto')),
+                      //         const SizedBox(
+                      //           height: 10,
+                      //         ),
+                      //         TextField(
+                      //           decoration: InputDecoration(
+                      //             hintText: "apply".tr(),
+                      //             hintStyle: const TextStyle(
+                      //                 fontWeight: FontWeight.w400,
+                      //                 fontSize: 14,
+                      //                 fontFamily: 'Raleway'),
+                      //             suffixStyle: const TextStyle(
+                      //                 color: bluishColor, fontFamily: 'Roboto'),
+                      //             suffixText: 'apply'.tr(),
+                      //             border: OutlineInputBorder(
+                      //               borderRadius: const BorderRadius.all(
+                      //                 Radius.circular(10.0),
+                      //               ),
+                      //               borderSide: BorderSide(
+                      //                 color: blackColor.withOpacity(0.2),
+                      //               ),
+                      //             ),
+                      //             enabledBorder: OutlineInputBorder(
+                      //               borderRadius: const BorderRadius.all(
+                      //                 Radius.circular(10.0),
+                      //               ),
+                      //               borderSide: BorderSide(
+                      //                 color: blackColor.withOpacity(0.2),
+                      //               ),
+                      //             ),
+                      //             focusedBorder: OutlineInputBorder(
+                      //               borderRadius:
+                      //                   const BorderRadius.all(Radius.circular(10)),
+                      //               borderSide: BorderSide(
+                      //                 color: blackColor.withOpacity(0.2),
+                      //               ),
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
+                      // Card(
+                      //   shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(12)),
+                      //   elevation: 7,
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.symmetric(
+                      //         horizontal: 15.0, vertical: 15),
+                      //     child: Column(
+                      //       children: [
+                      //         // Wrap(
+                      //         //   children: List.generate(
+                      //         //     text.length,
+                      //         //     (index) {
+                      //         //       return
+                      //         Row(
+                      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //           children: [
+                      //             MyText(
+                      //                 text: "perPerson".tr(),
+                      //                 color: blackTypeColor3,
+                      //                 weight: FontWeight.bold,
+                      //                 fontFamily: 'Roboto'),
+                      //             MyText(
+                      //                 // text: widget.gm.costInc,
+                      //                 text: "${pPerson.toStringAsFixed(0)}${" OMR"}",
+                      //                 color: greyColor,
+                      //                 weight: FontWeight.bold,
+                      //                 fontFamily: 'Roboto'),
+                      //           ],
+                      //         ),
+                      //         const SizedBox(
+                      //           height: 2,
+                      //         ),
+                      //         Row(
+                      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //           children: [
+                      //             MyText(
+                      //                 text:
+                      //                     "${'totalPerson'.tr()} ${"  "} ${"x"} $totalPerson",
+                      //                 color: blackTypeColor3,
+                      //                 weight: FontWeight.bold,
+                      //                 fontFamily: 'Roboto'),
+                      //             MyText(
+                      //                 // text: widget.gm.costInc,
+                      //                 text:
+                      //                     "${totalCost.toStringAsFixed(0)}${" OMR"}",
+                      //                 color: greyColor,
+                      //                 weight: FontWeight.bold,
+                      //                 fontFamily: 'Roboto'),
+                      //           ],
+                      //         ),
+                      //         const SizedBox(
+                      //           height: 2,
+                      //         ),
+                      //         // Row(
+                      //         //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //         //   children: [
+                      //         //     MyText(
+                      //         //         text: 'promoCode'.tr(),
+                      //         //         color: blueTextColor,
+                      //         //         weight: FontWeight.bold,
+                      //         //         fontFamily: 'Roboto'),
+                      //         //     MyText(
+                      //         //         // text: widget.gm.costInc,
+                      //         //         text: "-0 OMR",
+                      //         //         color: blueTextColor,
+                      //         //         weight: FontWeight.bold,
+                      //         //         fontFamily: 'Roboto'),
+                      //         //   ],
+                      //         // ),
+                      //         // const SizedBox(
+                      //         //   height: 2,
+                      //         // ),
+                      //         // Row(
+                      //         //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //         //   children: [
+                      //         //     MyText(
+                      //         //         text: 'points'.tr(),
+                      //         //         color: blueTextColor,
+                      //         //         weight: FontWeight.bold,
+                      //         //         fontFamily: 'Roboto'),
+                      //         //     MyText(
+                      //         //         // text: widget.gm.costInc,
+                      //         //         text: "-0 OMR",
+                      //         //         color: blueTextColor,
+                      //         //         weight: FontWeight.bold,
+                      //         //         fontFamily: 'Roboto'),
+                      //         //   ],
+                      //         // ),
+                      //         //     },
+                      //         //   ),
+                      //         // ),
+                      //         const SizedBox(height: 5),
+                      //         const Divider(thickness: 3),
+                      //         Row(
+                      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //           children: [
+                      //             MyText(
+                      //                 text: 'totalAmount'.tr(),
+                      //                 color: blackTypeColor3,
+                      //                 weight: FontWeight.bold,
+                      //                 size: 18,
+                      //                 height: 2,
+                      //                 fontFamily: 'Roboto'),
+                      //             MyText(
+                      //                 text:
+                      //                     "$totalCost ${widget.gm.currency}", //'ر.ع 19,350',
+                      //                 color: bluishColor,
+                      //                 weight: FontWeight.bold,
+                      //                 size: 16,
+                      //                 height: 1.5,
+                      //                 fontFamily: 'Roboto'),
+                      //           ],
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TextField(
+                        controller: messageController,
+                        maxLines: 7,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 15),
+                          hintText:
+                              'typeMessageHere...Name, Ages or Health Conditions'
+                                  .tr(),
+                          hintStyle: const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14,
+                              fontFamily: 'Raleway'),
+                          hintMaxLines: 3,
+                          isDense: true,
+                          filled: true,
+                          fillColor: whiteColor,
+                          border: OutlineInputBorder(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(10.0),
+                            ),
+                            borderSide: BorderSide(
+                              color: blackColor.withOpacity(0.2),
+                            ),
                           ),
-                        ],
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(10.0),
+                            ),
+                            borderSide: BorderSide(
+                              color: blackColor.withOpacity(0.2),
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
+                            borderSide: BorderSide(
+                              color: blackColor.withOpacity(0.2),
+                            ),
+                          ),
+                        ),
                       ),
-                    )),
-                // used earned points
-                // Card(
-                //   elevation: 4,
-                //   child: Column(
-                //     children: [
-                //       CheckboxListTile(
-                //           value: value,
-                //           title: MyText(
-                //               text: 'useEarnedPoints'.tr(),
-                //               weight: FontWeight.bold,
-                //               size: 18,
-                //               color: blackTypeColor1,
-                //               fontFamily: 'Roboto'),
-                //           onChanged: (bool? value1) {
-                //             setState(() {
-                //               value = value1!;
-                //             });
-                //           }),
-                //       Padding(
-                //         padding: const EdgeInsets.symmetric(
-                //             horizontal: 12, vertical: 12),
-                //         child: Row(
-                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //           children: [
-                //             RichText(
-                //               text: TextSpan(
-                //                 text: 'availablePoints'.tr(),
-                //                 style: const TextStyle(
-                //                     color: blueTextColor,
-                //                     fontSize: 12,
-                //                     fontWeight: FontWeight.bold),
-                //                 children: const <TextSpan>[
-                //                   TextSpan(
-                //                       text: ' 0',
-                //                       style: TextStyle(
-                //                           fontSize: 24,
-                //                           color: blueTextColor,
-                //                           fontFamily: 'Roboto')),
-                //                 ],
-                //               ),
-                //             ),
-                //             const SizedBox(
-                //               width: 70,
-                //             ),
-                //             Row(
-                //               mainAxisAlignment: MainAxisAlignment.end,
-                //               children: [
-                //                 MyText(
-                //                   text: 'optToUse'.tr(),
-                //                   color: blueTextColor,
-                //                   size: 12,
-                //                   weight: FontWeight.bold,
-                //                 ),
-                //               ],
-                //             ),
-                //             SizedBox(
-                //               width: 35,
-                //               height: 35,
-                //               child: TextField(
-                //                 controller: pointsController,
-                //                 textAlign: TextAlign.center,
-                //                 style: const TextStyle(fontSize: 16),
-                //                 decoration: InputDecoration(
-                //                   hintText: "0",
-                //                   hintStyle: const TextStyle(
-                //                       color: blackColor, fontSize: 16),
-                //                   suffixText: "apply".tr(),
-                //                   contentPadding: const EdgeInsets.symmetric(
-                //                     horizontal: 2,
-                //                   ),
-                //                   isDense: true,
-                //                   filled: true,
-                //                   fillColor: whiteColor,
-                //                   border: OutlineInputBorder(
-                //                     borderRadius: const BorderRadius.all(
-                //                       Radius.circular(10.0),
-                //                     ),
-                //                     borderSide: BorderSide(
-                //                       color: blackColor.withOpacity(0.4),
-                //                     ),
-                //                   ),
-                //                   enabledBorder: OutlineInputBorder(
-                //                     borderRadius: const BorderRadius.all(
-                //                       Radius.circular(10.0),
-                //                     ),
-                //                     borderSide: BorderSide(
-                //                       color: blackColor.withOpacity(0.2),
-                //                     ),
-                //                   ),
-                //                   focusedBorder: OutlineInputBorder(
-                //                     borderRadius: const BorderRadius.all(
-                //                         Radius.circular(10)),
-                //                     borderSide: BorderSide(
-                //                       color: blackColor.withOpacity(0.4),
-                //                     ),
-                //                   ),
-                //                 ),
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                // apply promo code
-                // Card(
-                //   child: Padding(
-                //     padding: const EdgeInsets.only(
-                //         right: 12.0, left: 12, top: 12, bottom: 8),
-                //     child: Column(
-                //       children: [
-                //         Align(
-                //             alignment: Alignment.centerLeft,
-                //             child: MyText(
-                //                 text: 'applyPromoCode'.tr(),
-                //                 weight: FontWeight.bold,
-                //                 color: blackTypeColor4,
-                //                 size: 22,
-                //                 fontFamily: 'Roboto')),
-                //         const SizedBox(
-                //           height: 10,
-                //         ),
-                //         TextField(
-                //           decoration: InputDecoration(
-                //             hintText: "apply".tr(),
-                //             hintStyle: const TextStyle(
-                //                 fontWeight: FontWeight.w400,
-                //                 fontSize: 14,
-                //                 fontFamily: 'Raleway'),
-                //             suffixStyle: const TextStyle(
-                //                 color: bluishColor, fontFamily: 'Roboto'),
-                //             suffixText: 'apply'.tr(),
-                //             border: OutlineInputBorder(
-                //               borderRadius: const BorderRadius.all(
-                //                 Radius.circular(10.0),
-                //               ),
-                //               borderSide: BorderSide(
-                //                 color: blackColor.withOpacity(0.2),
-                //               ),
-                //             ),
-                //             enabledBorder: OutlineInputBorder(
-                //               borderRadius: const BorderRadius.all(
-                //                 Radius.circular(10.0),
-                //               ),
-                //               borderSide: BorderSide(
-                //                 color: blackColor.withOpacity(0.2),
-                //               ),
-                //             ),
-                //             focusedBorder: OutlineInputBorder(
-                //               borderRadius:
-                //                   const BorderRadius.all(Radius.circular(10)),
-                //               borderSide: BorderSide(
-                //                 color: blackColor.withOpacity(0.2),
-                //               ),
-                //             ),
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
-                // Card(
-                //   shape: RoundedRectangleBorder(
-                //       borderRadius: BorderRadius.circular(12)),
-                //   elevation: 7,
-                //   child: Padding(
-                //     padding: const EdgeInsets.symmetric(
-                //         horizontal: 15.0, vertical: 15),
-                //     child: Column(
-                //       children: [
-                //         // Wrap(
-                //         //   children: List.generate(
-                //         //     text.length,
-                //         //     (index) {
-                //         //       return
-                //         Row(
-                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //           children: [
-                //             MyText(
-                //                 text: "perPerson".tr(),
-                //                 color: blackTypeColor3,
-                //                 weight: FontWeight.bold,
-                //                 fontFamily: 'Roboto'),
-                //             MyText(
-                //                 // text: widget.gm.costInc,
-                //                 text: "${pPerson.toStringAsFixed(0)}${" OMR"}",
-                //                 color: greyColor,
-                //                 weight: FontWeight.bold,
-                //                 fontFamily: 'Roboto'),
-                //           ],
-                //         ),
-                //         const SizedBox(
-                //           height: 2,
-                //         ),
-                //         Row(
-                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //           children: [
-                //             MyText(
-                //                 text:
-                //                     "${'totalPerson'.tr()} ${"  "} ${"x"} $totalPerson",
-                //                 color: blackTypeColor3,
-                //                 weight: FontWeight.bold,
-                //                 fontFamily: 'Roboto'),
-                //             MyText(
-                //                 // text: widget.gm.costInc,
-                //                 text:
-                //                     "${totalCost.toStringAsFixed(0)}${" OMR"}",
-                //                 color: greyColor,
-                //                 weight: FontWeight.bold,
-                //                 fontFamily: 'Roboto'),
-                //           ],
-                //         ),
-                //         const SizedBox(
-                //           height: 2,
-                //         ),
-                //         // Row(
-                //         //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //         //   children: [
-                //         //     MyText(
-                //         //         text: 'promoCode'.tr(),
-                //         //         color: blueTextColor,
-                //         //         weight: FontWeight.bold,
-                //         //         fontFamily: 'Roboto'),
-                //         //     MyText(
-                //         //         // text: widget.gm.costInc,
-                //         //         text: "-0 OMR",
-                //         //         color: blueTextColor,
-                //         //         weight: FontWeight.bold,
-                //         //         fontFamily: 'Roboto'),
-                //         //   ],
-                //         // ),
-                //         // const SizedBox(
-                //         //   height: 2,
-                //         // ),
-                //         // Row(
-                //         //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //         //   children: [
-                //         //     MyText(
-                //         //         text: 'points'.tr(),
-                //         //         color: blueTextColor,
-                //         //         weight: FontWeight.bold,
-                //         //         fontFamily: 'Roboto'),
-                //         //     MyText(
-                //         //         // text: widget.gm.costInc,
-                //         //         text: "-0 OMR",
-                //         //         color: blueTextColor,
-                //         //         weight: FontWeight.bold,
-                //         //         fontFamily: 'Roboto'),
-                //         //   ],
-                //         // ),
-                //         //     },
-                //         //   ),
-                //         // ),
-                //         const SizedBox(height: 5),
-                //         const Divider(thickness: 3),
-                //         Row(
-                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //           children: [
-                //             MyText(
-                //                 text: 'totalAmount'.tr(),
-                //                 color: blackTypeColor3,
-                //                 weight: FontWeight.bold,
-                //                 size: 18,
-                //                 height: 2,
-                //                 fontFamily: 'Roboto'),
-                //             MyText(
-                //                 text:
-                //                     "$totalCost ${widget.gm.currency}", //'ر.ع 19,350',
-                //                 color: bluishColor,
-                //                 weight: FontWeight.bold,
-                //                 size: 16,
-                //                 height: 1.5,
-                //                 fontFamily: 'Roboto'),
-                //           ],
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextField(
-                  controller: messageController,
-                  maxLines: 7,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 15, horizontal: 15),
-                    hintText:
-                        'typeMessageHere...Name, Ages or Health Conditions'
-                            .tr(),
-                    hintStyle: const TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,
-                        fontFamily: 'Raleway'),
-                    hintMaxLines: 3,
-                    isDense: true,
-                    filled: true,
-                    fillColor: whiteColor,
-                    border: OutlineInputBorder(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(10.0),
-                      ),
-                      borderSide: BorderSide(
-                        color: blackColor.withOpacity(0.2),
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(10.0),
-                      ),
-                      borderSide: BorderSide(
-                        color: blackColor.withOpacity(0.2),
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      borderSide: BorderSide(
-                        color: blackColor.withOpacity(0.2),
-                      ),
-                    ),
+                      // const SizedBox(
+                      //   height: 40,
+                      // ),
+
+                      // const SizedBox(
+                      //   height: 20,
+                      // ),
+                    ],
                   ),
                 ),
-                // const SizedBox(
-                //   height: 40,
-                // ),
-
-                // const SizedBox(
-                //   height: 20,
-                // ),
-              ],
-            ),
-          ),
-        ),
+              ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 42.0, vertical: 12),
           child: ButtonIconLess(

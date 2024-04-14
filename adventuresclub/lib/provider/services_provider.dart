@@ -386,7 +386,7 @@ class ServicesProvider with ChangeNotifier {
         List<ServicesModel> all_Services = [];
         acc = element['category'] ?? "";
         categories.add(acc);
-        List<dynamic> s = element['services'];
+        List<dynamic> s = element['services'] ?? [];
         s.forEach((services) {
           List<AvailabilityPlanModel> gAccomodationPlanModel = [];
           List<dynamic> availablePlan = services['availability'];
