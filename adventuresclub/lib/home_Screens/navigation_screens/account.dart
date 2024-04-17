@@ -53,9 +53,9 @@ class _AccountState extends State<Account> {
   ];
   List<String> text = ["favorite", 'myServices', 'clientRequests'];
   List<String> userText = [
-    // "favorite",
-    // //'Notification',
-    // 'My Points'
+    "favorite",
+    'Notification',
+    'My Points',
   ];
   List<String> tile1 = [
     'images/points.png',
@@ -1158,115 +1158,115 @@ class _AccountState extends State<Account> {
                                     ],
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Card(
-                                    elevation: 1,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          for (int i = 0; i < 3; i++)
-                                            Column(
-                                              children: [
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    if (userText[i] ==
-                                                        "favorite".tr()) {
-                                                      Navigator.of(context)
-                                                          .push(
-                                                        MaterialPageRoute(
-                                                          builder: (_) {
-                                                            return const Favorite();
-                                                          },
-                                                        ),
-                                                      );
-                                                    }
-                                                    if (userText[i] ==
-                                                        'notification'.tr()) {
-                                                      navNotification();
-                                                      // Navigator.of(context)
-                                                      //     .push(
-                                                      //   MaterialPageRoute(
-                                                      //     builder: (_) {
-                                                      //       return const Notifications();
-                                                      //     },
-                                                      //   ),
-                                                      // );
-                                                    }
-                                                    if (userText[i] ==
-                                                        'myPoints'.tr()) {
-                                                      Navigator.of(context)
-                                                          .push(
-                                                        MaterialPageRoute(
-                                                          builder: (_) {
-                                                            return const MyPoints();
-                                                          },
-                                                        ),
-                                                      );
-                                                    }
-                                                  },
-                                                  child: Stack(
-                                                    clipBehavior: Clip.none,
-                                                    children: [
-                                                      Image(
-                                                        image: ExactAssetImage(
-                                                            images[i]),
-                                                        height: 30,
-                                                        width: 30,
-                                                      ),
-                                                      notifications > 0 &&
-                                                              text[i] ==
-                                                                  'Notification'
-                                                                      .tr()
-                                                          ? Positioned(
-                                                              bottom: -5,
-                                                              right: -12,
-                                                              child:
-                                                                  CircleAvatar(
-                                                                radius: 10,
-                                                                backgroundColor:
-                                                                    redColor,
-                                                                child: MyText(
-                                                                  text:
-                                                                      notifications,
-                                                                  // Constants
-                                                                  //     .resultService
-                                                                  //     .toString(), //'12',
-                                                                  color:
-                                                                      whiteColor,
-                                                                  weight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  size: 9,
-                                                                ),
-                                                              ),
-                                                            )
-                                                          : const SizedBox()
-                                                    ],
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  height: 5,
-                                                ),
-                                                MyText(
-                                                  text: userText[i].tr(),
-                                                  color:
-                                                      bluishColor, //greyColor.withOpacity(1),
-                                                  weight: FontWeight.bold,
-                                                )
-                                              ],
-                                            )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                // Padding(
+                                //   padding: const EdgeInsets.all(12.0),
+                                //   child: Card(
+                                //     elevation: 1,
+                                //     shape: RoundedRectangleBorder(
+                                //         borderRadius:
+                                //             BorderRadius.circular(12)),
+                                //     child: Padding(
+                                //       padding: const EdgeInsets.all(12.0),
+                                //       child: Row(
+                                //         mainAxisAlignment:
+                                //             MainAxisAlignment.spaceEvenly,
+                                //         children: [
+                                //           for (int i = 0; i < 3; i++)
+                                //             Column(
+                                //               children: [
+                                //                 GestureDetector(
+                                //                   onTap: () {
+                                //                     if (userText[i] ==
+                                //                         "favorite".tr()) {
+                                //                       Navigator.of(context)
+                                //                           .push(
+                                //                         MaterialPageRoute(
+                                //                           builder: (_) {
+                                //                             return const Favorite();
+                                //                           },
+                                //                         ),
+                                //                       );
+                                //                     }
+                                //                     if (userText[i] ==
+                                //                         'notification'.tr()) {
+                                //                       navNotification();
+                                //                       // Navigator.of(context)
+                                //                       //     .push(
+                                //                       //   MaterialPageRoute(
+                                //                       //     builder: (_) {
+                                //                       //       return const Notifications();
+                                //                       //     },
+                                //                       //   ),
+                                //                       // );
+                                //                     }
+                                //                     if (userText[i] ==
+                                //                         'myPoints'.tr()) {
+                                //                       Navigator.of(context)
+                                //                           .push(
+                                //                         MaterialPageRoute(
+                                //                           builder: (_) {
+                                //                             return const MyPoints();
+                                //                           },
+                                //                         ),
+                                //                       );
+                                //                     }
+                                //                   },
+                                //                   child: Stack(
+                                //                     clipBehavior: Clip.none,
+                                //                     children: [
+                                //                       Image(
+                                //                         image: ExactAssetImage(
+                                //                             images[i]),
+                                //                         height: 30,
+                                //                         width: 30,
+                                //                       ),
+                                //                       notifications > 0 &&
+                                //                               text[i] ==
+                                //                                   'Notification'
+                                //                                       .tr()
+                                //                           ? Positioned(
+                                //                               bottom: -5,
+                                //                               right: -12,
+                                //                               child:
+                                //                                   CircleAvatar(
+                                //                                 radius: 10,
+                                //                                 backgroundColor:
+                                //                                     redColor,
+                                //                                 child: MyText(
+                                //                                   text:
+                                //                                       notifications,
+                                //                                   // Constants
+                                //                                   //     .resultService
+                                //                                   //     .toString(), //'12',
+                                //                                   color:
+                                //                                       whiteColor,
+                                //                                   weight:
+                                //                                       FontWeight
+                                //                                           .bold,
+                                //                                   size: 9,
+                                //                                 ),
+                                //                               ),
+                                //                             )
+                                //                           : const SizedBox()
+                                //                     ],
+                                //                   ),
+                                //                 ),
+                                //                 const SizedBox(
+                                //                   height: 5,
+                                //                 ),
+                                //                 MyText(
+                                //                   text: userText[i].tr(),
+                                //                   color:
+                                //                       bluishColor, //greyColor.withOpacity(1),
+                                //                   weight: FontWeight.bold,
+                                //                 )
+                                //               ],
+                                //             )
+                                //         ],
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
                               ],
                             ),
                           if (profile.bp.packagesId == 0 &&
@@ -1744,14 +1744,15 @@ class _AccountState extends State<Account> {
                                                   ),
                                                 ),
                                                 const SizedBox(height: 2),
-                                                MyText(
-                                                  text:
-                                                      "${"renewBefore".tr()}${profile.bp.endDate.substring(0, 11)}${"toAvoidInterruption".tr()}", //'Kenneth Gutierrez',
-                                                  color: redColor,
-                                                  weight: FontWeight.bold,
-                                                  size: 12,
-                                                  fontFamily: "Raleway",
-                                                ),
+                                                if (profile.bp.endDate != null)
+                                                  MyText(
+                                                    text:
+                                                        "${"renewBefore".tr()}${profile.bp.endDate.substring(0, 11)}${"toAvoidInterruption".tr()}", //'Kenneth Gutierrez',
+                                                    color: redColor,
+                                                    weight: FontWeight.bold,
+                                                    size: 12,
+                                                    fontFamily: "Raleway",
+                                                  ),
                                               ],
                                             ),
                                       profileUrl != null

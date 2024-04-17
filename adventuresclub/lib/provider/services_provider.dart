@@ -391,8 +391,9 @@ class ServicesProvider with ChangeNotifier {
           List<AvailabilityPlanModel> gAccomodationPlanModel = [];
           List<dynamic> availablePlan = services['availability'];
           availablePlan.forEach((ap) {
-            AvailabilityPlanModel amPlan =
-                AvailabilityPlanModel(ap['id'] ?? "", ap['day'] ?? "");
+            AvailabilityPlanModel amPlan = AvailabilityPlanModel(
+                int.tryParse(ap['id'].toString()) ?? 0,
+                ap['day'].toString() ?? "");
             gAccomodationPlanModel.add(amPlan);
           });
           List<AvailabilityModel> gAccomodoationAvaiModel = [];
