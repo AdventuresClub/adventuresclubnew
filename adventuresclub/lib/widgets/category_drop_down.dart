@@ -36,7 +36,7 @@ class _CategoryDropDownState extends State<CategoryDropDown> {
     setState(() {
       selected = s;
       isSelected = true;
-      ConstantsFilter.sectorId = s.id.toString();
+      ConstantsFilter.categoryId = s.id.toString();
     });
   }
 
