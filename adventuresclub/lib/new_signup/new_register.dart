@@ -645,7 +645,7 @@ class _NewRegisterState extends State<NewRegister> {
                               width: 320,
                             ),
                             const SizedBox(height: 10),
-                            TextFields("userName".tr(), userNameController, 17,
+                            TextFields("username".tr(), userNameController, 17,
                                 whiteColor, true),
                             const SizedBox(height: 10),
                             TextFields('email'.tr(), emailController, 17,
@@ -657,7 +657,7 @@ class _NewRegisterState extends State<NewRegister> {
                               height: 10,
                             ),
                             SizedBox(
-                                height: 70,
+                                height: 55,
                                 child: PhoneTextField(getData, countryCode)),
                             const SizedBox(
                               height: 10,

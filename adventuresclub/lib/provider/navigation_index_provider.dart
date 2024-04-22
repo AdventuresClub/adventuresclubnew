@@ -10,6 +10,7 @@ class NavigationIndexProvider with ChangeNotifier {
   int clientRequests = 0;
   int myservice = 0;
   int totalBookings = 0;
+  int totalAccount = 0;
   int unreadCount = 0;
   int serviceCount = 0;
 
@@ -68,7 +69,7 @@ class NavigationIndexProvider with ChangeNotifier {
         //setState(() {
         Constants.totalNotication =
             convertToInt(element['total_notification'] ?? "");
-        Constants.resultAccount = convertToInt(element['resultAccount'] ?? "");
+        totalAccount = convertToInt(element['resultAccount'] ?? "");
         Constants.resultService = convertToInt(element['resultService'] ?? "");
         Constants.resultRequest = convertToInt(element['resultRequest'] ?? "");
         clientRequests = convertToInt(element['client_request'] ?? "");

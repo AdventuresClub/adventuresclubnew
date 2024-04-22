@@ -533,6 +533,8 @@ class _NewFilterPageState extends State<NewFilterPage> {
                           ),
                         ),
                         ListTile(
+                          dense: true,
+                          visualDensity: VisualDensity.compact,
                           title: MyText(
                             text: "Level".tr(),
                             color: blackColor,

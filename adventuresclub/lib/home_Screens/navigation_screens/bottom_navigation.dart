@@ -399,6 +399,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
     int totalBooking =
         Provider.of<NavigationIndexProvider>(context, listen: true)
             .totalBookings;
+    int account = Provider.of<NavigationIndexProvider>(context, listen: true)
+        .totalAccount;
     return Scaffold(
       body: loading ? const LoadingWidget() : getBody(index),
       bottomNavigationBar: BottomNavigationBar(
@@ -519,7 +521,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 height: 30,
                 width: 30,
               ),
-              Constants.resultAccount > 0
+              account > 0
                   ? Positioned(
                       top: -5,
                       right: -6,
@@ -527,7 +529,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                         radius: 10,
                         backgroundColor: redColor,
                         child: MyText(
-                          text: Constants.resultAccount, //'12',
+                          text: account, //'12',
                           color: whiteColor,
                           weight: FontWeight.bold,
                           size: 9,
@@ -555,7 +557,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                       radius: 10,
                       backgroundColor: redColor,
                       child: MyText(
-                        text: Constants.resultAccount, //'12',
+                        text: account, //'12',
                         color: whiteColor,
                         weight: FontWeight.bold,
                         size: 9,

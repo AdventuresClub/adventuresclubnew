@@ -54,7 +54,7 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
     if (response.statusCode == 200) {
       mapCountry = json.decode(response.body);
       List<dynamic> result = mapCountry['data'];
-      result.forEach((element) {
+      for (var element in result) {
         GetCountryModel gc = GetCountryModel(
           element['country'],
           element['short_name'],
@@ -64,7 +64,7 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
           element['currency'] ?? "",
         );
         countriesList1.add(gc);
-      });
+      }
       setState(() {
         filteredServices = countriesList1;
       });
@@ -174,9 +174,8 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
       }
       log(response.statusCode);
       debugPrint(response.body);
-      print(response.headers);
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
     }
     otpController.clear();
   }
@@ -204,7 +203,6 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
 
   void sendData() {
     widget.parseData(numController.text, ccCode);
-    print(ccCode);
   }
 
   void getOtp() async {
@@ -228,10 +226,10 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
       setState(() {
         userID = decodedResponse['data']['user_id'];
       });
-      print(response.statusCode);
-      print(userID);
+      debugPrint(response.statusCode.toString());
+      debugPrint(userID.toString());
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
     }
   }
 
@@ -247,271 +245,226 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          //   height: 70,
-          decoration: BoxDecoration(
-              color: whiteColor, borderRadius: BorderRadius.circular(8)),
-          child: ListTile(
-            tileColor: whiteColor,
-            selectedTileColor: whiteColor,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-            leading: Container(
-              height: 42,
-              width: 80,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: whiteColor,
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () async {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (context) {
-                              return StatefulBuilder(
-                                  builder: (context, setState) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Column(
-                                    children: [
-                                      const Row(children: [
-                                        Text(
-                                          "Select your active phone country code",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                              fontFamily: 'Raleway-Black'),
-                                        )
-                                      ]),
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-                                      Container(
-                                        height: 50,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          border: Border.all(
-                                            color: blackColor.withOpacity(0.5),
-                                          ),
-                                        ),
-                                        child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 0.0),
-                                            child: TextField(
-                                              onChanged: (value) {
-                                                if (value.isNotEmpty) {
-                                                  filteredServices =
-                                                      countriesList1
-                                                          .where((element) =>
-                                                              element
-                                                                  .country
-                                                                  .toLowerCase()
-                                                                  .contains(
-                                                                      value))
-                                                          .toList();
-                                                  //log(filteredServices.length.toString());
-                                                } else {
-                                                  filteredServices =
-                                                      countriesList1;
-                                                }
-                                                setState(() {});
-                                              },
-                                              controller: searchController,
-                                              decoration: InputDecoration(
-                                                contentPadding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 8,
-                                                        horizontal: 8),
-                                                hintText: 'Country',
-                                                filled: true,
-                                                fillColor: lightGreyColor,
-                                                suffixIcon: GestureDetector(
-                                                  //onTap: openMap,
-                                                  child:
-                                                      const Icon(Icons.search),
-                                                ),
-                                                border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                          Radius.circular(
-                                                              10.0)),
-                                                  borderSide: BorderSide(
-                                                      color: greyColor
-                                                          .withOpacity(0.2)),
-                                                ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                          Radius.circular(
-                                                              10.0)),
-                                                  borderSide: BorderSide(
-                                                      color: greyColor
-                                                          .withOpacity(0.2)),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                          Radius.circular(
-                                                              10.0)),
-                                                  borderSide: BorderSide(
-                                                      color: greyColor
-                                                          .withOpacity(0.2)),
-                                                ),
-                                              ),
-                                            )),
-                                      ),
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-                                      Expanded(
-                                        child: ListView.builder(
-                                          itemCount: filteredServices.length,
-                                          itemBuilder: ((context, index) {
-                                            return ListTile(
-                                              leading:
-                                                  searchController.text.isEmpty
-                                                      ? Image.network(
-                                                          "${"${Constants.baseUrl}/public/"}${countriesList1[index].flag}",
-                                                          height: 25,
-                                                          width: 40,
-                                                        )
-                                                      : null,
-                                              title: Text(
-                                                filteredServices[index].country,
-                                                style: const TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    color: blackColor,
-                                                    fontFamily: 'Raleway'),
-                                              ),
-                                              trailing: Text(
-                                                filteredServices[index].code,
-                                                style: const TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    color: blackColor,
-                                                    fontFamily: 'Raleway'),
-                                              ),
-                                              onTap: () {
-                                                getC(
-                                                    filteredServices[index]
-                                                        .country,
-                                                    filteredServices[index]
-                                                        .code,
-                                                    filteredServices[index].id,
-                                                    filteredServices[index]
-                                                        .flag);
-                                              },
-                                            );
-                                          }),
-                                        ),
-                                      ),
-                                    ],
+    return Container(
+      height: 50,
+      decoration: BoxDecoration(
+          color: whiteColor, borderRadius: BorderRadius.circular(8)),
+      child: //ListTile(
+          // tileColor: whiteColor,
+          // selectedTileColor: whiteColor,
+          // contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+          //leading:
+          Row(
+        children: [
+          GestureDetector(
+            onTap: () async {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return StatefulBuilder(builder: (context, setState) {
+                    return Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        children: [
+                          const Row(children: [
+                            Text(
+                              "Select your active phone country code",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  fontFamily: 'Raleway-Black'),
+                            )
+                          ]),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: blackColor.withOpacity(0.5),
+                              ),
+                            ),
+                            child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 0.0),
+                                child: TextField(
+                                  onChanged: (value) {
+                                    if (value.isNotEmpty) {
+                                      filteredServices = countriesList1
+                                          .where((element) => element.country
+                                              .toLowerCase()
+                                              .contains(value))
+                                          .toList();
+                                      //log(filteredServices.length.toString());
+                                    } else {
+                                      filteredServices = countriesList1;
+                                    }
+                                    setState(() {});
+                                  },
+                                  controller: searchController,
+                                  decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 8, horizontal: 8),
+                                    hintText: 'Country',
+                                    filled: true,
+                                    fillColor: lightGreyColor,
+                                    suffixIcon: GestureDetector(
+                                      //onTap: openMap,
+                                      child: const Icon(Icons.search),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                      borderSide: BorderSide(
+                                          color: greyColor.withOpacity(0.2)),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                      borderSide: BorderSide(
+                                          color: greyColor.withOpacity(0.2)),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                      borderSide: BorderSide(
+                                          color: greyColor.withOpacity(0.2)),
+                                    ),
                                   ),
+                                )),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: filteredServices.length,
+                              itemBuilder: ((context, index) {
+                                return ListTile(
+                                  leading: searchController.text.isEmpty
+                                      ? Image.network(
+                                          "${"${Constants.baseUrl}/public/"}${countriesList1[index].flag}",
+                                          height: 25,
+                                          width: 40,
+                                        )
+                                      : null,
+                                  title: Text(
+                                    filteredServices[index].country,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        color: blackColor,
+                                        fontFamily: 'Raleway'),
+                                  ),
+                                  trailing: Text(
+                                    filteredServices[index].code,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        color: blackColor,
+                                        fontFamily: 'Raleway'),
+                                  ),
+                                  onTap: () {
+                                    getC(
+                                        filteredServices[index].country,
+                                        filteredServices[index].code,
+                                        filteredServices[index].id,
+                                        filteredServices[index].flag);
+                                  },
                                 );
-                              });
-                            },
-                          );
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 4.0, vertical: 0.0),
-                          margin: const EdgeInsets.symmetric(horizontal: 12.0),
-                          decoration: const BoxDecoration(
-                            color: whiteColor,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5.0),
+                              }),
                             ),
                           ),
-                          child: ccCode != null
-                              ? Text(ccCode,
-                                  style: const TextStyle(
-                                      color: Colors.black, fontSize: 16))
-                              : Text(
-                                  widget.countryCode,
-                                  style: const TextStyle(
-                                      color: Colors.black, fontSize: 16),
-                                ),
-                        ),
+                        ],
                       ),
-                      Container(
-                        color: blackColor.withOpacity(0.6),
-                        height: 37,
-                        width: 1,
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            title: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: TextFormField(
-                controller: numController,
-                cursorColor: kSecondaryColor,
-                keyboardType: TextInputType.phone,
-                onChanged: (phone) {
-                  setState(() {
-                    phone.length > 9 ? cont = true : cont = false;
-                    phoneNumber = phone;
+                    );
                   });
-                  sendData();
                 },
-                onEditingComplete: () {
-                  FocusScope.of(context).unfocus();
-                  sendData();
-                },
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  //color: const Color(0xffABAEB9).withOpacity(0.40),
-                ),
-                decoration: InputDecoration(
-                  alignLabelWithHint: true,
-                  // contentPadding: const EdgeInsets.symmetric(
-                  //   horizontal: 0,
-                  //   vertical: 0,
-                  // ),
-                  filled: true,
-                  fillColor: whiteColor,
-                  hintText: "enterPhoneNumber".tr(), //'Enter Phone Number',
-                  hintStyle: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: blackColor.withOpacity(0.6),
+              );
+            },
+            child: Row(
+              children: [
+                Container(
+                  height: 42,
+                  width: 80,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: whiteColor,
                   ),
-                  border: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
+                  child: Center(
+                      child: Text(
+                    "Code",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: blackColor.withOpacity(0.6)),
+                  )),
                 ),
-              ),
+                Container(
+                  color: blackColor.withOpacity(0.6),
+                  height: 37,
+                  width: 1,
+                ),
+                SizedBox(
+                  width: 250,
+                  child: TextFormField(
+                    controller: numController,
+                    cursorColor: kSecondaryColor,
+                    keyboardType: TextInputType.phone,
+                    onChanged: (phone) {
+                      setState(() {
+                        phone.length > 9 ? cont = true : cont = false;
+                        phoneNumber = phone;
+                      });
+                      sendData();
+                    },
+                    onEditingComplete: () {
+                      FocusScope.of(context).unfocus();
+                      sendData();
+                    },
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      //color: const Color(0xffABAEB9).withOpacity(0.40),
+                    ),
+                    decoration: InputDecoration(
+                      alignLabelWithHint: true,
+                      // contentPadding: const EdgeInsets.symmetric(
+                      //   horizontal: 0,
+                      //   vertical: 0,
+                      // ),
+                      filled: true,
+                      fillColor: whiteColor,
+                      hintText: "enterPhoneNumber".tr(), //'Enter Phone Number',
+                      hintStyle: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: blackColor.withOpacity(0.6),
+                      ),
+                      border: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                    ),
+                  ),
+                ),
+              ],
             ),
-            // trailing: GestureDetector(
-            //   onTap: getOtp,
-            //   child: SizedBox(
-            //     height: 40,
-            //     child: MyText(
-            //       text: 'Send OTP',
-            //       weight: FontWeight.bold,
-            //       color: bluishColor,
-            //       size: 14,
-            //     ),
-            //   ),
-            // ),
           ),
-        ),
-        // const SizedBox(
-        //   height: 20,
-        // ),
-        // Button('Send OTP', greenishColor, greenishColor, whiteColor, 18, getOtp,
-        //     Icons.add, whiteColor, false, 2, 'Raleway', FontWeight.w600, 16),
-      ],
+        ],
+      ),
+      // title:
+      // trailing: GestureDetector(
+      //   onTap: getOtp,
+      //   child: SizedBox(
+      //     height: 40,
+      //     child: MyText(
+      //       text: 'Send OTP',
+      //       weight: FontWeight.bold,
+      //       color: bluishColor,
+      //       size: 14,
+      //     ),
+      //   ),
+      // ),
     );
   }
 }
