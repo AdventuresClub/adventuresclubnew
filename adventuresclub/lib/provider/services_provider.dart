@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls, unused_local_variable, avoid_print
 
 import 'dart:convert';
+import 'package:adventuresclub/constants_filter.dart';
 import 'package:adventuresclub/models/filter_data_model/category_filter_model.dart';
 import 'package:adventuresclub/models/filter_data_model/programs_model.dart';
 import 'package:adventuresclub/models/home_services/home_services_model.dart';
@@ -347,6 +348,7 @@ class ServicesProvider with ChangeNotifier {
     String serviceLevel,
     String duration,
     String region,
+    String aimedFor,
   ) async {
     filteredServices.clear();
     allServices.clear();
@@ -375,7 +377,7 @@ class ServicesProvider with ChangeNotifier {
       'service_type': serviceType,
       'duration': duration,
       'service_level': serviceLevel,
-      'aimed_for': "",
+      'aimed_for': aimedFor,
       'provider_name': "",
     });
     if (response.statusCode == 200) {
@@ -556,11 +558,21 @@ class ServicesProvider with ChangeNotifier {
       });
       filteredServices = [...gAllServices];
       notifyListeners();
+      clearData();
       // allServices.forEach((element) {
       //     gAllServices.add(element.serviceCategory, element);
       //   });
     }
     loading = false;
+  }
+
+  void clearData() {
+    ConstantsFilter.sectorId = "0";
+    ConstantsFilter.categoryId = "0";
+    ConstantsFilter.typeId = "0";
+    ConstantsFilter.levelId = "0";
+    ConstantsFilter.durationId = "0";
+    ConstantsFilter.regionId = "0";
   }
 
   Future<void> g() async {

@@ -153,9 +153,13 @@ class _NewFilterPageState extends State<NewFilterPage> {
     'Cimbing',
     'Swimming',
   ];
-  List aimedText = [
+  List<String> aimedText = [
     'Gents',
     'Ladies',
+  ];
+  List<bool> aimedTextBool = [
+    false,
+    false,
   ];
   List<IconData> aimedIconList = [
     Icons.person,
@@ -644,10 +648,11 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                   weight: FontWeight.w700,
                                   size: 15,
                                 ),
-                                value: value,
+                                value: aimedTextBool[index],
                                 onChanged: ((bool? value) {
                                   setState(() {
-                                    value = value!;
+                                    aimedTextBool[index] =
+                                        !aimedTextBool[index];
                                   });
                                 }),
                               );
@@ -715,6 +720,12 @@ class _NewFilterPageState extends State<NewFilterPage> {
   }
 
   void searchFilter() {
+    String aimedFor = "";
+    if (aimedTextBool[0]) {
+      aimedFor = "Gents";
+    } else {
+      aimedFor = "Ladies";
+    }
     Provider.of<ServicesProvider>(context, listen: false).getFilterList(
         ccCode,
         values.start.toStringAsFixed(0),
@@ -724,7 +735,8 @@ class _NewFilterPageState extends State<NewFilterPage> {
         ConstantsFilter.typeId,
         ConstantsFilter.levelId,
         ConstantsFilter.durationId,
-        ConstantsFilter.regionId);
+        ConstantsFilter.regionId,
+        aimedFor);
     Provider.of<ServicesProvider>(context, listen: false).searchFilter;
     Navigator.of(context).pop();
   }
