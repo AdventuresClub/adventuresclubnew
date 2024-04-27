@@ -970,7 +970,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               GestureDetector(
-                                onTap: changeStatus,
+                                onTap: clearFilter,
                                 child: Container(
                                     width: 130,
                                     padding: const EdgeInsets.symmetric(
@@ -1042,6 +1042,17 @@ class _NewFilterPageState extends State<NewFilterPage> {
         selectedRegion.toString(),
         aimedFor);
     Provider.of<ServicesProvider>(context, listen: false).searchFilter;
+    Navigator.of(context).pop();
+  }
+
+  void clearFilter() {
+    ccCode = 0;
+    selectedServiceSectorId = "";
+    selectedCategoryId = "";
+    selectedServiceTypeId = "";
+    selectedLevelId = "";
+    selectedDurationId = "";
+    selectedRegion = 0;
     Navigator.of(context).pop();
   }
 
