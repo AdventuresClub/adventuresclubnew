@@ -76,6 +76,7 @@ class Constants {
   static String dob = "";
   static String gender = "";
   static String nationalityId = "";
+  static String currencyId = "";
   static int userId = 0;
   static String emailId = "";
   static String password = "";

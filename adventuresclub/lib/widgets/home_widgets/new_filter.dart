@@ -46,7 +46,7 @@ class NewFilterPage extends StatefulWidget {
 class _NewFilterPageState extends State<NewFilterPage> {
   TextEditingController searchController = TextEditingController();
 
-  int index = 0;
+  //int index = 0;
   int currentPage = 0;
   bool value = false;
   Map mapFilter = {};
@@ -66,6 +66,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
   String selectedCatergoryFilter = "Training";
   List<String> images = [];
   List<DurationsModel> durationFilter = [];
+  List<AimedForModel> aimedForModel = [];
   List<ActivitiesIncludeModel> activitiesFilter = [];
   List<RegionFilterModel> regionFilter = [];
   List<FilterDataModel> fDM = [];
@@ -76,6 +77,20 @@ class _NewFilterPageState extends State<NewFilterPage> {
   SectorFilterModel sectorList = SectorFilterModel(0, "", "", 0, "", "", "");
   List<bool> activityValue = [];
   List<ActivitiesIncludeModel> activityIds = [];
+  int selectedRegion = 1;
+  int selectedCategory = 1;
+  int selectedServiceSector = 1;
+  int selectedServiceType = 1;
+  int selectedDuration = 1;
+  int selectedLevel = 1;
+  int selectedAimedFor = 1;
+  String selectedRegionId = "";
+  String selectedCategoryId = "";
+  String selectedServiceSectorId = "";
+  String selectedServiceTypeId = "";
+  String selectedDurationId = "";
+  String selectedLevelId = "";
+  String currency = "";
 
   @override
   void initState() {
@@ -100,6 +115,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
     regionFilter = Constants.regionFilter;
     levelFilter = Constants.levelFilter;
     activitiesFilter = Constants.activitiesFilter;
+    aimedForModel = Constants.am;
   }
 
   @override
@@ -205,11 +221,11 @@ class _NewFilterPageState extends State<NewFilterPage> {
     ),
   ];
 
-  void selectedCategory(String cf) {
-    setState(() {
-      selectedCatergoryFilter = cf;
-    });
-  }
+  // void selectedCategory(String cf) {
+  //   setState(() {
+  //     selectedCatergoryFilter = cf;
+  //   });
+  // }
 
   void clearAll() {
     filterSectors.clear();
@@ -288,10 +304,12 @@ class _NewFilterPageState extends State<NewFilterPage> {
     }
   }
 
-  void getC(String country, dynamic code, int id, String countryflag) {
+  void getC(String country, dynamic code, int id, String countryflag,
+      String currencyP) {
     Navigator.of(context).pop();
     setState(
       () {
+        currency = currencyP;
         // countryCode = country;
         ccCode = id.toString();
         // countryId = id;
@@ -423,7 +441,9 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                               const SizedBox(
                                                 height: 10,
                                               ),
-                                              Text("\$${values.start.toInt()}"),
+                                              //Text("\$${values.start.toInt()}"),
+                                              Text(
+                                                  "$currency ${values.start.toInt()}"),
                                             ],
                                           ),
                                         ),
@@ -462,112 +482,353 @@ class _NewFilterPageState extends State<NewFilterPage> {
                             ),
                           ],
                         ),
-                        Divider(
-                          indent: 18,
-                          endIndent: 18,
-                          color: blackColor.withOpacity(0.5),
+                        // Divider(
+                        //   indent: 18,
+                        //   endIndent: 18,
+                        //   color: blackColor.withOpacity(0.5),
+                        // ),
+                        // ListTile(
+                        //   title: MyText(
+                        //     text: "Region".tr(),
+                        //     color: blackColor,
+                        //     weight: FontWeight.bold,
+                        //     size: 14,
+                        //   ),
+                        //   trailing: SizedBox(
+                        //     width: 170,
+                        //     child: Row(
+                        //       children: [
+                        //         Icon(
+                        //           dDIconList[index],
+                        //           color: blackColor,
+                        //         ),
+                        //         RegionFilterDropDown(
+                        //           regionList,
+                        //           show: true,
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
+                        // if (regionList.isNotEmpty)
+                        ExpansionTile(
+                          title: Text(
+                              regionList[selectedRegion].showCountry == false
+                                  ? 'selectRegion'.tr()
+                                  : regionList[selectedRegion].region.tr()),
+                          children: [
+                            for (int i = 0; i < regionList.length; i++)
+                              CheckboxListTile(
+                                dense: true,
+                                visualDensity: VisualDensity.compact,
+                                value: selectedRegion == i
+                                    ? regionList[i].showCountry
+                                    : false,
+                                checkboxShape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12))),
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedRegion = i;
+                                    selectedRegionId =
+                                        regionList[i].regionId.toString();
+                                    regionList[selectedRegion].showCountry =
+                                        value;
+                                    if (value == true) {
+                                    } else {}
+                                  });
+                                },
+                                title: Text(regionList[i].region.tr()),
+                              ),
+                            //   },
+                            // )
+                          ],
                         ),
-                        ListTile(
-                          title: MyText(
-                            text: "Region".tr(),
-                            color: blackColor,
-                            weight: FontWeight.bold,
-                            size: 14,
+                        ExpansionTile(
+                          title: Text(
+                            filterSectors[selectedServiceSector]
+                                        .showfilterSectors ==
+                                    true
+                                ? filterSectors[selectedServiceSector]
+                                    .sector
+                                    .tr()
+                                : 'Service Sector'.tr(),
                           ),
-                          trailing: SizedBox(
-                            width: 170,
-                            child: Row(
-                              children: [
-                                Icon(
-                                  dDIconList[index],
-                                  color: blackColor,
+                          children: [
+                            for (int a = 0; a < filterSectors.length; a++)
+                              CheckboxListTile(
+                                secondary: Image.network(
+                                  "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${filterSectors[a].image}",
+                                  height: 36,
+                                  width: 26,
                                 ),
-                                RegionFilterDropDown(
-                                  regionList,
-                                  show: true,
+                                dense: true,
+                                visualDensity: VisualDensity.compact,
+                                checkboxShape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12))),
+                                value: selectedServiceSector == a
+                                    ? filterSectors[a].showfilterSectors
+                                    : false,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedServiceSector = a;
+                                    selectedServiceSectorId =
+                                        filterSectors[a].id.toString();
+                                    filterSectors[selectedServiceSector]
+                                        .showfilterSectors = value;
+                                    filterSectors[a].id;
+                                  });
+                                },
+                                title: Text(filterSectors[a].sector.tr()),
+                              ),
+                            //   },
+                            // )
+                          ],
+                        ),
+
+                        // ListTile(
+                        //   title: MyText(
+                        //     text: "Sector".tr(),
+                        //     color: blackColor,
+                        //     weight: FontWeight.bold,
+                        //     size: 14,
+                        //   ),
+                        //   trailing: SizedBox(
+                        //     width: 180,
+                        //     child: ServiceSectorDropDown(
+                        //       filterSectors,
+                        //       title: "",
+                        //       show: true,
+                        //     ),
+                        //   ),
+                        // ),
+                        // ListTile(
+                        //   title: MyText(
+                        //     text: "Category".tr(),
+                        //     color: blackColor,
+                        //     weight: FontWeight.bold,
+                        //     size: 14,
+                        //   ),
+                        //   trailing: SizedBox(
+                        //     width: 180,
+                        //     child: ServiceCategoryDropDown(
+                        //       categoryFilter,
+                        //       show: true,
+                        //     ),
+                        //   ),
+                        // ),
+                        ExpansionTile(
+                          title: Text(
+                            categoryFilter[selectedCategory]
+                                        .showCategoryFilter ==
+                                    true
+                                ? categoryFilter[selectedCategory].category.tr()
+                                : 'Service Category'.tr(),
+                          ),
+                          children: [
+                            for (int i = 0; i < categoryFilter.length; i++)
+                              CheckboxListTile(
+                                secondary: Image.network(
+                                  "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${categoryFilter[i].image}",
+                                  height: 36,
+                                  width: 26,
                                 ),
-                              ],
-                            ),
-                          ),
+                                dense: true,
+                                visualDensity: VisualDensity.compact,
+                                value: selectedCategory == i
+                                    ? categoryFilter[i].showCategoryFilter
+                                    : false,
+                                checkboxShape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12))),
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedCategory = i;
+                                    selectedCategoryId =
+                                        categoryFilter[i].id.toString();
+                                    categoryFilter[selectedCategory]
+                                        .showCategoryFilter = value;
+                                  });
+                                },
+                                title: Text(categoryFilter[i].category.tr()),
+                              ),
+                          ],
                         ),
-                        ListTile(
-                          title: MyText(
-                            text: "Sector".tr(),
-                            color: blackColor,
-                            weight: FontWeight.bold,
-                            size: 14,
+                        ExpansionTile(
+                          title: Text(
+                            serviceFilter[selectedServiceType]
+                                        .showServiceFilter ==
+                                    true
+                                ? serviceFilter[selectedServiceType].type.tr()
+                                : 'Service Type'.tr(),
                           ),
-                          trailing: SizedBox(
-                            width: 180,
-                            child: ServiceSectorDropDown(
-                              filterSectors,
-                              title: "",
-                              show: true,
-                            ),
-                          ),
+                          children: [
+                            for (int b = 0; b < serviceFilter.length; b++)
+                              // ListView.builder(
+                              //   shrinkWrap: true,
+                              //   physics: const ClampingScrollPhysics(),
+                              //   itemCount: serviceFilter.length,
+                              //   itemBuilder: (context, index) {
+                              //     return
+                              CheckboxListTile(
+                                secondary: Image.network(
+                                  "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${serviceFilter[b].image}",
+                                  height: 36,
+                                  width: 26,
+                                ),
+                                dense: true,
+                                visualDensity: VisualDensity.compact,
+                                checkboxShape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12))),
+                                value: selectedServiceType == b
+                                    ? serviceFilter[b].showServiceFilter
+                                    : false,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedServiceType = b;
+                                    selectedServiceTypeId =
+                                        serviceFilter[b].id.toString();
+                                    serviceFilter[selectedServiceType]
+                                        .showServiceFilter = value;
+                                  });
+                                },
+                                title: Text(serviceFilter[b].type.tr()),
+                              ),
+                            //   },
+                            // )
+                          ],
                         ),
-                        ListTile(
-                          title: MyText(
-                            text: "Category".tr(),
-                            color: blackColor,
-                            weight: FontWeight.bold,
-                            size: 14,
+                        // ListTile(
+                        //   title: MyText(
+                        //     text: "Type".tr(),
+                        //     color: blackColor,
+                        //     weight: FontWeight.bold,
+                        //     size: 14,
+                        //   ),
+                        //   trailing: SizedBox(
+                        //     width: 180,
+                        //     child: ServiceTypeDropDown(
+                        //       serviceFilter,
+                        //       show: true,
+                        //     ),
+                        //   ),
+                        // ),
+                        // ListTile(
+                        //   dense: true,
+                        //   visualDensity: VisualDensity.compact,
+                        //   title: MyText(
+                        //     text: "Level".tr(),
+                        //     color: blackColor,
+                        //     weight: FontWeight.bold,
+                        //     size: 14,
+                        //   ),
+                        //   trailing: SizedBox(
+                        //     width: 180,
+                        //     child: LevelDropDown(
+                        //       levelFilter,
+                        //       show: true,
+                        //     ),
+                        //   ),
+                        // ),
+                        ExpansionTile(
+                          title: Text(
+                            levelFilter[selectedLevel].showLevel == true
+                                ? levelFilter[selectedLevel].level
+                                : 'selectLevel'.tr(),
                           ),
-                          trailing: SizedBox(
-                            width: 180,
-                            child: ServiceCategoryDropDown(
-                              categoryFilter,
-                              show: true,
-                            ),
-                          ),
+                          children: [
+                            // ListView.builder(
+                            //   shrinkWrap: true,
+                            //   physics: const ClampingScrollPhysics(),
+                            //   itemCount: levelFilter.length,
+                            //   itemBuilder: (context, index) {
+                            //     return
+                            for (int c = 0; c < levelFilter.length; c++)
+                              CheckboxListTile(
+                                secondary: Image.network(
+                                  "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${levelFilter[c].image}",
+                                  height: 36,
+                                  width: 26,
+                                ),
+                                dense: true,
+                                visualDensity: VisualDensity.compact,
+                                checkboxShape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12))),
+                                value: selectedLevel == c
+                                    ? levelFilter[c].showLevel
+                                    : false,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedLevel = c;
+                                    selectedLevelId =
+                                        levelFilter[0].id.toString();
+                                    levelFilter[selectedLevel].showLevel =
+                                        value;
+
+                                    // ConstantsCreateNewServices.selectedlevelId =
+                                    //     levelFilter[c].id;
+                                  });
+                                },
+                                title: Text(levelFilter[c].level.tr()),
+                              ),
+                          ],
                         ),
-                        ListTile(
-                          title: MyText(
-                            text: "Type".tr(),
-                            color: blackColor,
-                            weight: FontWeight.bold,
-                            size: 14,
+                        ExpansionTile(
+                          title: Text(
+                            durationFilter[selectedDuration].showDuration ==
+                                    true
+                                ? durationFilter[selectedDuration].duration
+                                : 'Duration'.tr(),
                           ),
-                          trailing: SizedBox(
-                            width: 180,
-                            child: ServiceTypeDropDown(
-                              serviceFilter,
-                              show: true,
-                            ),
-                          ),
+                          children: [
+                            for (int d = 0; d < durationFilter.length; d++)
+                              CheckboxListTile(
+                                //  secondary: Image.network(
+                                //   "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${durationFilter[d].}",
+                                //   height: 36,
+                                //   width: 26,
+                                // ),
+                                dense: true,
+                                visualDensity: VisualDensity.compact,
+                                value: selectedDuration == d
+                                    ? durationFilter[d].showDuration
+                                    : false,
+                                checkboxShape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12))),
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedDuration = d;
+                                    selectedDurationId =
+                                        durationFilter[d].id.toString();
+                                    durationFilter[selectedDuration]
+                                        .showDuration = value;
+                                  });
+                                },
+                                title: Text(durationFilter[d].duration.tr()),
+                              ),
+                            //   },
+                            // )
+                          ],
                         ),
-                        ListTile(
-                          dense: true,
-                          visualDensity: VisualDensity.compact,
-                          title: MyText(
-                            text: "Level".tr(),
-                            color: blackColor,
-                            weight: FontWeight.bold,
-                            size: 14,
-                          ),
-                          trailing: SizedBox(
-                            width: 180,
-                            child: LevelDropDown(
-                              levelFilter,
-                              show: true,
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          title: MyText(
-                            text: "Duration".tr(),
-                            color: blackColor,
-                            weight: FontWeight.bold,
-                            size: 14,
-                          ),
-                          trailing: SizedBox(
-                            width: 180,
-                            child: DurationDropDown(
-                              durationFilter,
-                              show: true,
-                            ),
-                          ),
-                        ),
+                        // ListTile(
+                        //   title: MyText(
+                        //     text: "Duration".tr(),
+                        //     color: blackColor,
+                        //     weight: FontWeight.bold,
+                        //     size: 14,
+                        //   ),
+                        //   trailing: SizedBox(
+                        //     width: 180,
+                        //     child: DurationDropDown(
+                        //       durationFilter,
+                        //       show: true,
+                        //     ),
+                        //   ),
+                        // ),
                         // const SizedBox(
                         //   height: 30,
                         // ),
@@ -617,49 +878,92 @@ class _NewFilterPageState extends State<NewFilterPage> {
                         //         },
                         //       );
                         //     }),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 12.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: MyText(
-                                text: 'aimedFor'.tr(),
-                                weight: FontWeight.w800,
-                                color: blackColor,
-                                size: 18,
-                                fontFamily: 'Raleway'),
+                        // const SizedBox(
+                        //   height: 10,
+                        // ),
+                        ExpansionTile(
+                          title: Text(
+                            aimedForModel[selectedAimedFor].showAimedFor == true
+                                ? aimedForModel[selectedAimedFor].aimedName
+                                : 'aimedFor'.tr(),
                           ),
-                        ),
-                        ListView.builder(
-                            itemCount: aimedText.length,
-                            shrinkWrap: true,
-                            physics: const ClampingScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return CheckboxListTile(
-                                secondary: Icon(
-                                  aimedIconList[index],
-                                  color: blackColor,
+                          children: [
+                            // ListView.builder(
+                            //   shrinkWrap: true,
+                            //   physics: const ClampingScrollPhysics(),
+                            //   itemCount: durationFilter.length,
+                            //   itemBuilder: (context, index) {
+                            //     return
+                            for (int d = 0; d < aimedForModel.length; d++)
+                              CheckboxListTile(
+                                secondary: Image.network(
+                                  "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${aimedForModel[d].image}",
+                                  height: 36,
+                                  width: 26,
                                 ),
-                                title: MyText(
-                                  text: aimedText[index],
-                                  color: blackColor.withOpacity(0.6),
-                                  weight: FontWeight.w700,
-                                  size: 15,
-                                ),
-                                value: aimedTextBool[index],
-                                onChanged: ((bool? value) {
+                                dense: true,
+                                visualDensity: VisualDensity.compact,
+                                value: selectedAimedFor == d
+                                    ? aimedForModel[d].showAimedFor
+                                    : false,
+                                checkboxShape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12))),
+                                onChanged: (value) {
                                   setState(() {
-                                    aimedTextBool[index] =
-                                        !aimedTextBool[index];
+                                    selectedAimedFor = d;
+                                    // selectedDurationId =
+                                    //     durationFilter[d].id.toString();
+                                    // durationFilter[selectedDuration]
+                                    //     .showDuration = value;
                                   });
-                                }),
-                              );
-                            }),
-                        const SizedBox(
-                          height: 3,
+                                },
+                                title: Text(aimedForModel[d].aimedName.tr()),
+                              ),
+                            //   },
+                            // )
+                          ],
                         ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(left: 12.0),
+                        //   child: Align(
+                        //     alignment: Alignment.centerLeft,
+                        //     child: MyText(
+                        //         text: 'aimedFor'.tr(),
+                        //         weight: FontWeight.w800,
+                        //         color: blackColor,
+                        //         size: 18,
+                        //         fontFamily: 'Raleway'),
+                        //   ),
+                        // ),
+                        // ListView.builder(
+                        //     itemCount: aimedText.length,
+                        //     shrinkWrap: true,
+                        //     physics: const ClampingScrollPhysics(),
+                        //     itemBuilder: (context, index) {
+                        //       return CheckboxListTile(
+                        //         secondary: Icon(
+                        //           aimedIconList[index],
+                        //           color: blackColor,
+                        //         ),
+                        //         title: MyText(
+                        //           text: aimedText[index],
+                        //           color: blackColor.withOpacity(0.6),
+                        //           weight: FontWeight.w700,
+                        //           size: 15,
+                        //         ),
+                        //         value: aimedTextBool[index],
+                        //         onChanged: ((bool? value) {
+                        //           setState(() {
+                        //             aimedTextBool[index] =
+                        //                 !aimedTextBool[index];
+                        //           });
+                        //         }),
+                        //       );
+                        //     }),
+                        // const SizedBox(
+                        //   height: 3,
+                        // ),
                         Padding(
                           padding: const EdgeInsets.all(12.0),
                           child: Row(
@@ -730,12 +1034,12 @@ class _NewFilterPageState extends State<NewFilterPage> {
         ccCode,
         values.start.toStringAsFixed(0),
         values.end.toStringAsFixed(0),
-        ConstantsFilter.sectorId,
-        ConstantsFilter.categoryId,
-        ConstantsFilter.typeId,
-        ConstantsFilter.levelId,
-        ConstantsFilter.durationId,
-        ConstantsFilter.regionId,
+        selectedServiceSectorId,
+        selectedCategoryId,
+        selectedServiceTypeId,
+        selectedLevelId,
+        selectedDurationId,
+        selectedRegion.toString(),
         aimedFor);
     Provider.of<ServicesProvider>(context, listen: false).searchFilter;
     Navigator.of(context).pop();
@@ -964,7 +1268,8 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                   filteredServices[index].country,
                                   filteredServices[index].code,
                                   filteredServices[index].id,
-                                  filteredServices[index].flag);
+                                  filteredServices[index].flag,
+                                  filteredServices[index].currency);
                             },
                           );
                         }),

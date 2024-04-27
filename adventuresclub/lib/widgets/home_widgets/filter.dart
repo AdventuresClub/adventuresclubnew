@@ -727,18 +727,18 @@ class _FilterPageState extends State<FilterPage> {
   }
 
   void searchFilter() {
-    Provider.of<ServicesProvider>(context, listen: false).getFilterList(
-        ccCode,
-        values.start.toStringAsFixed(0),
-        values.end.toStringAsFixed(0),
-        ConstantsFilter.sectorId,
-        ConstantsFilter.categoryId,
-        ConstantsFilter.typeId,
-        ConstantsFilter.levelId,
-        ConstantsFilter.durationId,
-        ConstantsFilter.regionId);
-    Provider.of<ServicesProvider>(context, listen: false).searchFilter;
-    Navigator.of(context).pop();
+    // Provider.of<ServicesProvider>(context, listen: false).getFilterList(
+    //     ccCode,
+    //     values.start.toStringAsFixed(0),
+    //     values.end.toStringAsFixed(0),
+    //     ConstantsFilter.sectorId,
+    //     ConstantsFilter.categoryId,
+    //     ConstantsFilter.typeId,
+    //     ConstantsFilter.levelId,
+    //     ConstantsFilter.durationId,
+    //     ConstantsFilter.regionId);
+    // Provider.of<ServicesProvider>(context, listen: false).searchFilter;
+    // Navigator.of(context).pop();
   }
 
   void changeStatus() {
