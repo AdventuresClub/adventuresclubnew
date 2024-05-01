@@ -115,6 +115,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       Constants.countryFlag = flag;
       Constants.countryCurrency = countryCurrency;
     });
+    Constants.getFilter();
     checkCountry();
     // homePage();
   }

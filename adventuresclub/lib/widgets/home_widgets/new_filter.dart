@@ -287,6 +287,8 @@ class _NewFilterPageState extends State<NewFilterPage> {
     if (response.statusCode == 200) {
       mapCountry = json.decode(response.body);
       List<dynamic> result = mapCountry['data'];
+      filteredServices.clear();
+      countriesList1.clear();
       result.forEach((element) {
         GetCountryModel gc = GetCountryModel(
           element['country'],
@@ -552,7 +554,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                 ? filterSectors[selectedServiceSector]
                                     .sector
                                     .tr()
-                                : 'Service Sector'.tr(),
+                                : 'serviceSector'.tr(),
                           ),
                           children: [
                             for (int a = 0; a < filterSectors.length; a++)
@@ -624,7 +626,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                         .showCategoryFilter ==
                                     true
                                 ? categoryFilter[selectedCategory].category.tr()
-                                : 'Service Category'.tr(),
+                                : 'serviceCategory'.tr(),
                           ),
                           children: [
                             for (int i = 0; i < categoryFilter.length; i++)
@@ -661,7 +663,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                         .showServiceFilter ==
                                     true
                                 ? serviceFilter[selectedServiceType].type.tr()
-                                : 'Service Type'.tr(),
+                                : 'serviceType'.tr(),
                           ),
                           children: [
                             for (int b = 0; b < serviceFilter.length; b++)
@@ -781,7 +783,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
                             durationFilter[selectedDuration].showDuration ==
                                     true
                                 ? durationFilter[selectedDuration].duration
-                                : 'Duration'.tr(),
+                                : 'duration'.tr(),
                           ),
                           children: [
                             for (int d = 0; d < durationFilter.length; d++)
