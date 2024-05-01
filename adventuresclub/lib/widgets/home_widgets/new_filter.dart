@@ -77,24 +77,26 @@ class _NewFilterPageState extends State<NewFilterPage> {
   SectorFilterModel sectorList = SectorFilterModel(0, "", "", 0, "", "", "");
   List<bool> activityValue = [];
   List<ActivitiesIncludeModel> activityIds = [];
-  int selectedRegion = 1;
-  int selectedCategory = 1;
-  int selectedServiceSector = 1;
-  int selectedServiceType = 1;
-  int selectedDuration = 1;
-  int selectedLevel = 1;
-  int selectedAimedFor = 1;
+  int selectedRegion = 0;
+  int selectedCategory = 0;
+  int selectedServiceSector = 0;
+  int selectedServiceType = 0;
+  int selectedDuration = 0;
+  int selectedLevel = 0;
+  int selectedAimedFor = 0;
   String selectedRegionId = "";
   String selectedCategoryId = "";
   String selectedServiceSectorId = "";
   String selectedServiceTypeId = "";
   String selectedDurationId = "";
+  String selectedAimedForId = "";
   String selectedLevelId = "";
   String currency = "";
 
   @override
   void initState() {
     super.initState();
+    getCountries();
     getData();
     aimedFor();
     ccCode = Constants.countryId.toString();
@@ -300,9 +302,11 @@ class _NewFilterPageState extends State<NewFilterPage> {
         );
         countriesList1.add(gc);
       });
-      setState(() {
-        filteredServices = countriesList1;
-      });
+      if (mounted) {
+        setState(() {
+          filteredServices = countriesList1;
+        });
+      }
     }
   }
 
@@ -312,6 +316,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
     setState(
       () {
         currency = currencyP;
+        Constants.countryId = id;
         // countryCode = country;
         ccCode = id.toString();
         // countryId = id;
@@ -337,7 +342,8 @@ class _NewFilterPageState extends State<NewFilterPage> {
       barrierLabel: MaterialLocalizations.of(context).dialogLabel,
       barrierColor: Colors.black.withOpacity(0.5),
       pageBuilder: (context, _, __) {
-        return StatefulBuilder(builder: (context, setState) {
+        return StatefulBuilder(builder: (ctx, setState) {
+          String c = currency;
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.only(
@@ -380,7 +386,207 @@ class _NewFilterPageState extends State<NewFilterPage> {
                             const SizedBox(width: 40),
                           ],
                         ),
-                        pickCountry(context, 'Country Location'),
+                        ListTile(
+                          onTap: () => showModalBottomSheet(
+                              context: ctx,
+                              builder: (context) {
+                                return StatefulBuilder(
+                                    builder: (ctx, setState) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Column(
+                                      children: [
+                                        Row(children: [
+                                          Text(
+                                            "selectYourCountry".tr(),
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                                fontFamily: 'Raleway-Black'),
+                                          )
+                                        ]),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        Container(
+                                          height: 50,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            border: Border.all(
+                                              color:
+                                                  blackColor.withOpacity(0.5),
+                                            ),
+                                          ),
+                                          child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 0.0),
+                                              child: TextField(
+                                                onChanged: (value) {
+                                                  if (value.isNotEmpty) {
+                                                    filteredServices =
+                                                        countriesList1
+                                                            .where((element) =>
+                                                                element.country
+                                                                    .toLowerCase()
+                                                                    .contains(
+                                                                        value))
+                                                            .toList();
+                                                    //log(filteredServices.length.toString());
+                                                  } else {
+                                                    filteredServices =
+                                                        countriesList1;
+                                                  }
+                                                  setState(() {});
+                                                },
+                                                controller: searchController,
+                                                decoration: InputDecoration(
+                                                  contentPadding:
+                                                      const EdgeInsets
+                                                          .symmetric(
+                                                          vertical: 8,
+                                                          horizontal: 8),
+                                                  hintText: 'Country'.tr(),
+                                                  filled: true,
+                                                  fillColor: lightGreyColor,
+                                                  suffixIcon: GestureDetector(
+                                                    //onTap: openMap,
+                                                    child: const Icon(
+                                                        Icons.search),
+                                                  ),
+                                                  border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        const BorderRadius.all(
+                                                            Radius.circular(
+                                                                10.0)),
+                                                    borderSide: BorderSide(
+                                                        color: greyColor
+                                                            .withOpacity(0.2)),
+                                                  ),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderRadius:
+                                                        const BorderRadius.all(
+                                                            Radius.circular(
+                                                                10.0)),
+                                                    borderSide: BorderSide(
+                                                        color: greyColor
+                                                            .withOpacity(0.2)),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderRadius:
+                                                        const BorderRadius.all(
+                                                            Radius.circular(
+                                                                10.0)),
+                                                    borderSide: BorderSide(
+                                                        color: greyColor
+                                                            .withOpacity(0.2)),
+                                                  ),
+                                                ),
+                                              )),
+                                        ),
+                                        Expanded(
+                                          child: ListView.builder(
+                                            itemCount: filteredServices.length,
+                                            itemBuilder: ((context, index) {
+                                              return ListTile(
+                                                leading: searchController
+                                                        .text.isEmpty
+                                                    ? Image.network(
+                                                        "${"${Constants.baseUrl}/public/"}${countriesList1[index].flag}",
+                                                        height: 25,
+                                                        width: 40,
+                                                      )
+                                                    : null,
+                                                title: Text(
+                                                    filteredServices[index]
+                                                        .country
+                                                        .tr()),
+                                                onTap: () {
+                                                  setState(() {
+                                                    Constants.countryId =
+                                                        filteredServices[index]
+                                                            .id;
+                                                    Constants.countryFlag =
+                                                        filteredServices[index]
+                                                            .flag;
+                                                    c = filteredServices[index]
+                                                        .currency;
+                                                  });
+                                                  getC(
+                                                      filteredServices[index]
+                                                          .country,
+                                                      filteredServices[index]
+                                                          .code,
+                                                      filteredServices[index]
+                                                          .id,
+                                                      filteredServices[index]
+                                                          .flag,
+                                                      filteredServices[index]
+                                                          .currency);
+                                                },
+                                              );
+                                            }),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                });
+                              }),
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 15),
+                          title: MyText(
+                            text: "Country".tr(),
+                            color: blackColor,
+                            size: 16,
+                            weight: FontWeight.w800,
+                          ),
+                          trailing: SizedBox(
+                            width: 100,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                MyText(
+                                  text: "Country".tr(),
+                                  color: blackColor.withOpacity(0.6),
+                                  size: 12,
+                                  weight: FontWeight.w600,
+                                ),
+                                const SizedBox(
+                                  height: 1,
+                                ),
+                                Row(
+                                  children: [
+                                    Image.network(
+                                      "${"${Constants.baseUrl}/public/"}${Constants.countryFlag}",
+                                      height: 15,
+                                      width: 15,
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      Constants.country.tr(),
+                                      style: const TextStyle(
+                                          color: blackColor,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 12),
+                                    ),
+                                    const Icon(
+                                      Icons.keyboard_arrow_down,
+                                      color: blackColor,
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        //pickCountry(context, 'Country Location'),
                         Divider(
                           indent: 18,
                           endIndent: 18,
@@ -445,7 +651,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                               ),
                                               //Text("\$${values.start.toInt()}"),
                                               Text(
-                                                  "$currency ${values.start.toInt()}"),
+                                                  "$c ${values.start.toInt()}"),
                                             ],
                                           ),
                                         ),
@@ -469,7 +675,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                                 height: 10,
                                               ),
                                               Text(
-                                                  "\$${values.end.toInt().toString()}"),
+                                                  "$c ${values.end.toInt().toString()}"),
                                             ],
                                           ),
                                         ),
@@ -766,7 +972,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                   setState(() {
                                     selectedLevel = c;
                                     selectedLevelId =
-                                        levelFilter[0].id.toString();
+                                        levelFilter[c].id.toString();
                                     levelFilter[selectedLevel].showLevel =
                                         value;
 
@@ -914,6 +1120,11 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                 onChanged: (value) {
                                   setState(() {
                                     selectedAimedFor = d;
+
+                                    selectedAimedForId =
+                                        aimedForModel[d].id.toString();
+                                    aimedForModel[selectedAimedFor]
+                                        .showAimedFor = value;
                                     // selectedDurationId =
                                     //     durationFilter[d].id.toString();
                                     // durationFilter[selectedDuration]
@@ -972,7 +1183,20 @@ class _NewFilterPageState extends State<NewFilterPage> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               GestureDetector(
-                                onTap: clearFilter,
+                                onTap: () {
+                                  setState(() {
+                                    ccCode = 0;
+                                    selectedServiceSectorId = "";
+                                    selectedCategoryId = "";
+                                    selectedServiceTypeId = "";
+                                    selectedLevelId = "";
+                                    selectedDurationId = "";
+                                    selectedRegion = 0;
+                                  });
+
+                                  //setState(() {});
+                                  // Navigator.of(context).pop();
+                                },
                                 child: Container(
                                     width: 130,
                                     padding: const EdgeInsets.symmetric(
@@ -1055,7 +1279,8 @@ class _NewFilterPageState extends State<NewFilterPage> {
     selectedLevelId = "";
     selectedDurationId = "";
     selectedRegion = 0;
-    Navigator.of(context).pop();
+    setState(() {});
+    // Navigator.of(context).pop();
   }
 
   void changeStatus() {
@@ -1185,162 +1410,6 @@ class _NewFilterPageState extends State<NewFilterPage> {
   }
 
   Widget pickCountry(context, String countryName) {
-    getCountries();
-    return ListTile(
-      onTap: () => showModalBottomSheet(
-          context: context,
-          builder: (context) {
-            return StatefulBuilder(builder: (context, setState) {
-              return Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  children: [
-                    Row(children: [
-                      Text(
-                        "selectYourCountry".tr(),
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            fontFamily: 'Raleway-Black'),
-                      )
-                    ]),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: blackColor.withOpacity(0.5),
-                        ),
-                      ),
-                      child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                          child: TextField(
-                            onChanged: (value) {
-                              if (value.isNotEmpty) {
-                                filteredServices = countriesList1
-                                    .where((element) => element.country
-                                        .toLowerCase()
-                                        .contains(value))
-                                    .toList();
-                                //log(filteredServices.length.toString());
-                              } else {
-                                filteredServices = countriesList1;
-                              }
-                              setState(() {});
-                            },
-                            controller: searchController,
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 8),
-                              hintText: 'Country'.tr(),
-                              filled: true,
-                              fillColor: lightGreyColor,
-                              suffixIcon: GestureDetector(
-                                //onTap: openMap,
-                                child: const Icon(Icons.search),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(10.0)),
-                                borderSide: BorderSide(
-                                    color: greyColor.withOpacity(0.2)),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(10.0)),
-                                borderSide: BorderSide(
-                                    color: greyColor.withOpacity(0.2)),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(10.0)),
-                                borderSide: BorderSide(
-                                    color: greyColor.withOpacity(0.2)),
-                              ),
-                            ),
-                          )),
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: filteredServices.length,
-                        itemBuilder: ((context, index) {
-                          return ListTile(
-                            leading: searchController.text.isEmpty
-                                ? Image.network(
-                                    "${"${Constants.baseUrl}/public/"}${countriesList1[index].flag}",
-                                    height: 25,
-                                    width: 40,
-                                  )
-                                : null,
-                            title: Text(filteredServices[index].country.tr()),
-                            onTap: () {
-                              getC(
-                                  filteredServices[index].country,
-                                  filteredServices[index].code,
-                                  filteredServices[index].id,
-                                  filteredServices[index].flag,
-                                  filteredServices[index].currency);
-                            },
-                          );
-                        }),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            });
-          }),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 15),
-      title: MyText(
-        text: "Country".tr(),
-        color: blackColor,
-        size: 16,
-        weight: FontWeight.w800,
-      ),
-      trailing: SizedBox(
-        width: 100,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            MyText(
-              text: "Country".tr(),
-              color: blackColor.withOpacity(0.6),
-              size: 10,
-              weight: FontWeight.w500,
-            ),
-            const SizedBox(
-              height: 1,
-            ),
-            Row(
-              children: [
-                Image.network(
-                  "${"${Constants.baseUrl}/public/"}${Constants.countryFlag}",
-                  height: 15,
-                  width: 15,
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  Constants.country.tr(),
-                  style: const TextStyle(
-                      color: blackColor,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 12),
-                ),
-                const Icon(
-                  Icons.keyboard_arrow_down,
-                  color: blackColor,
-                )
-              ],
-            )
-          ],
-        ),
-      ),
-    );
+    return Container();
   }
 }
