@@ -91,7 +91,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
   String selectedDurationId = "";
   String selectedAimedForId = "";
   String selectedLevelId = "";
-  String currency = "";
+  String c = "";
 
   @override
   void initState() {
@@ -315,7 +315,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
     Navigator.of(context).pop();
     setState(
       () {
-        currency = currencyP;
+        c = currencyP;
         Constants.countryId = id;
         // countryCode = country;
         ccCode = id.toString();
@@ -343,7 +343,6 @@ class _NewFilterPageState extends State<NewFilterPage> {
       barrierColor: Colors.black.withOpacity(0.5),
       pageBuilder: (context, _, __) {
         return StatefulBuilder(builder: (ctx, setState) {
-          String c = currency;
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.only(
@@ -391,7 +390,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
                               context: ctx,
                               builder: (context) {
                                 return StatefulBuilder(
-                                    builder: (ctx, setState) {
+                                    builder: (ctx, setState1) {
                                   return Padding(
                                     padding: const EdgeInsets.all(12.0),
                                     child: Column(
