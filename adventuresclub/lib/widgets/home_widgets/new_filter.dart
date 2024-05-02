@@ -1334,7 +1334,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
       aimedFor = "Ladies";
     }
     Provider.of<ServicesProvider>(context, listen: false).getFilterList(
-        ccCode,
+        ccCode.toString(),
         values.start.toStringAsFixed(0),
         values.end.toStringAsFixed(0),
         selectedServiceSectorId,
@@ -1342,7 +1342,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
         selectedServiceTypeId,
         selectedLevelId,
         selectedDurationId,
-        selectedRegion.toString(),
+        selectedRegionId.toString(),
         aimedFor);
     Provider.of<ServicesProvider>(context, listen: false).searchFilter;
     Navigator.of(context).pop();
