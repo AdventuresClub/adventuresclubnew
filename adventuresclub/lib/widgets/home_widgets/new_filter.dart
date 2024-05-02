@@ -1184,13 +1184,18 @@ class _NewFilterPageState extends State<NewFilterPage> {
                               GestureDetector(
                                 onTap: () {
                                   setState(() {
+                                    filterSectors[selectedServiceSector]
+                                        .showfilterSectors = false;
                                     ccCode = 0;
+                                    selectedServiceSector = 0;
+                                    selectedRegion = 0;
+
                                     selectedServiceSectorId = "";
                                     selectedCategoryId = "";
                                     selectedServiceTypeId = "";
                                     selectedLevelId = "";
                                     selectedDurationId = "";
-                                    selectedRegion = 0;
+                                    selectedRegionId = "";
                                   });
 
                                   //setState(() {});
