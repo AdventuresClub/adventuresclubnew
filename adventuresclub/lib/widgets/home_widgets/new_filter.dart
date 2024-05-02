@@ -12,9 +12,11 @@ import 'package:adventuresclub/models/filter_data_model/region_model.dart';
 import 'package:adventuresclub/models/filter_data_model/sector_filter_model.dart';
 import 'package:adventuresclub/models/filter_data_model/service_types_filter.dart';
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
+import 'package:adventuresclub/models/services/dependencies_model.dart';
 import 'package:adventuresclub/provider/navigation_index_provider.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/Lists/home_lists/top_list.dart';
+import 'package:adventuresclub/widgets/loading_widget.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/search_container.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -60,7 +62,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
   List<DurationsModel> durationFilter = [];
   List<AimedForModel> aimedForModel = [];
   List<ActivitiesIncludeModel> activitiesFilter = [];
-  List<RegionFilterModel> regionFilter = [];
+  //List<RegionFilterModel> regionFilter = [];
   List<FilterDataModel> fDM = [];
   Map mapCountry = {};
   List<GetCountryModel> countriesList1 = [];
@@ -84,33 +86,204 @@ class _NewFilterPageState extends State<NewFilterPage> {
   String selectedAimedForId = "";
   String selectedLevelId = "";
   String c = "";
+  String flag = "";
+  String selectedCountry = "";
+  bool loading = false;
 
   @override
   void initState() {
     super.initState();
     getCountries();
-    getData();
+    //getData();
+    getFilter();
     aimedFor();
     ccCode = Constants.countryId.toString();
+    getRegions();
   }
 
-  // void getSector() {
-  //   Constants.filterSectors.forEach((element) {
-  //     sectors
-  //   })
+  Future<void> getFilter() async {
+    categoryFilter.clear();
+    filterSectors.clear();
+    serviceFilter.clear();
+    durationFilter.clear();
+    // regionFilter.clear();
+    levelFilter.clear();
+    activitiesFilter.clear();
+    aimedForModel.clear();
+    getRegions();
+    // setState(() {
+    //   loading = true;
+    // });
+    var response = await http
+        .get(Uri.parse("${Constants.baseUrl}/api/v1/filter_modal_data"));
+    if (response.statusCode == 200) {
+      mapFilter = json.decode(response.body);
+      dynamic result = mapFilter['data'];
+      List<dynamic> sectorData = result['sectors'];
+      sectorData.forEach((data) {
+        SectorFilterModel sm = SectorFilterModel(
+          int.tryParse(data['id'].toString()) ?? 0,
+          data['sector'],
+          data['image'],
+          int.tryParse(data['status'].toString()) ?? 0,
+          data['created_at'],
+          data['updated_at'],
+          data['deleted_at'] ?? "",
+        );
+        filterSectors.add(sm);
+      });
+      List<dynamic> cat = result['categories'];
+      cat.forEach((cateGory) {
+        int c = int.tryParse(cateGory['id'].toString()) ?? 0;
+        CategoryFilterModel cm = CategoryFilterModel(
+          c,
+          cateGory['category'],
+          cateGory['image'],
+          cateGory['status'],
+          cateGory['created_at'],
+          cateGory['updated_at'],
+          cateGory['deleted_at'] ?? "",
+        );
+        categoryFilter.add(cm);
+      });
+      List<dynamic> serv = result['service_types'];
+      serv.forEach((type) {
+        ServiceTypeFilterModel st = ServiceTypeFilterModel(
+          int.tryParse(type['id'].toString()) ?? 0,
+          type['type'],
+          type['image'],
+          int.tryParse(type['status'].toString()) ?? 0,
+          type['created_at'],
+          type['updated_at'],
+          type['deleted_at'] ?? "",
+        );
+        serviceFilter.add(st);
+      });
+      //List<dynamic> aimedF = result['aimed_for'];
+      List<dynamic> count = result['countries'];
+      count.forEach((country) {
+        int cb = int.tryParse(country['created_by'].toString()) ?? 0;
+        CountriesFilterModel cf = CountriesFilterModel(
+          int.tryParse(country['id'].toString()) ?? 0,
+          country['country'],
+          country['short_name'],
+          country['code'],
+          country['currency'],
+          country['description'] ?? "",
+          country['flag'],
+          country['status'],
+          cb,
+          country['created_at'],
+          country['updated_at'],
+          country['deleted_at'] ?? "",
+        );
+        countriesFilter.add(cf);
+      });
+      List<dynamic> lev = result['levels'];
+      lev.forEach((level) {
+        LevelFilterModel lm = LevelFilterModel(
+          int.tryParse(level['id'].toString()) ?? 0,
+          level['level'],
+          level['image'],
+          level['status'],
+          level['created_at'],
+          level['updated_at'],
+          level['deleted_at'] ?? "",
+        );
+        levelFilter.add(lm);
+      });
+      List<dynamic> d = result['durations'];
+      d.forEach((dur) {
+        int id = int.tryParse(dur['id'].toString()) ?? 0;
+        DurationsModel dm = DurationsModel(id, dur['duration'].toString());
+        durationFilter.add(dm);
+      });
+      List<dynamic> a = result['activities_including'];
+      a.forEach((act) {
+        int id = int.tryParse(act['id'].toString()) ?? 0;
+        ActivitiesIncludeModel activities = ActivitiesIncludeModel(
+            id, act['activity'].toString(), act['image'] ?? "");
+        activitiesFilter.add(activities);
+      });
+      List<dynamic> r = result['regions'];
+      r.forEach((reg) {
+        int id = int.tryParse(reg['id'].toString()) ?? 0;
+        RegionFilterModel rm = RegionFilterModel(id, reg['region']);
+        // regionFilter.add(rm);
+      });
+    }
+  }
+
+  void getRegions() async {
+    regionList.clear();
+    // aimedFor();
+    setState(() {
+      loading = true;
+    });
+    try {
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/get_regions"), body: {
+        'country_id': ccCode.toString(),
+      });
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      List<dynamic> rm = decodedResponse['data'];
+      rm.forEach((element) {
+        int cId = int.tryParse(element['country_id'].toString()) ?? 0;
+        int rId = int.tryParse(element['region_id'].toString()) ?? 0;
+        RegionsModel r = RegionsModel(
+          cId,
+          element['country'] ?? "",
+          rId,
+          element['region'] ?? "",
+        );
+        regionList.add(r);
+      });
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    setState(() {
+      loading = false;
+    });
+  }
+
+  void aimedFor() async {
+    am.clear();
+    var response =
+        await http.get(Uri.parse("${Constants.baseUrl}/api/v1/getServiceFor"));
+    if (response.statusCode == 200) {
+      mapAimedFilter = json.decode(response.body);
+      List<dynamic> result = mapAimedFilter['message'];
+      result.forEach((element) {
+        int id = int.tryParse(element['id'].toString()) ?? 0;
+        AimedForModel amf = AimedForModel(
+          id,
+          element['AimedName'] ?? "",
+          element['image'] ?? "",
+          element['created_at'] ?? "",
+          element['updated_at'] ?? "",
+          element['deleted_at'] ?? "",
+          0,
+          //  selected: false,
+        );
+        am.add(amf);
+      });
+    }
+    setState(() {
+      loading = false;
+    });
+  }
+
+  // void getData() {
+  //   regionList = Constants.regionList;
+  //   categoryFilter = Constants.categoryFilter;
+  //   filterSectors = Constants.filterSectors;
+  //   serviceFilter = Constants.serviceFilter;
+  //   durationFilter = Constants.durationFilter;
+  //   regionFilter = Constants.regionFilter;
+  //   levelFilter = Constants.levelFilter;
+  //   activitiesFilter = Constants.activitiesFilter;
+  //   aimedForModel = Constants.am;
   // }
-
-  void getData() {
-    regionList = Constants.regionList;
-    categoryFilter = Constants.categoryFilter;
-    filterSectors = Constants.filterSectors;
-    serviceFilter = Constants.serviceFilter;
-    durationFilter = Constants.durationFilter;
-    regionFilter = Constants.regionFilter;
-    levelFilter = Constants.levelFilter;
-    activitiesFilter = Constants.activitiesFilter;
-    aimedForModel = Constants.am;
-  }
 
   @override
   void dispose() {
@@ -136,33 +309,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
   }
 
   abc() {}
-  List<String> dropDownTileTextList = [
-    'Sector',
-    'Category',
-    'Type',
-    'Level',
-    'Duration',
-  ];
-  List<String> dropDownList = [
-    'Oman',
-    'Drinks',
-    'Snacks',
-    'Bike Riding',
-    'Sand Smashing',
-    'Sand Skiing',
-    'Cimbing',
-    'Swimming',
-  ];
-  List<String> activitiesList = [
-    'Transportant from gathering area',
-    'Drinks',
-    'Snacks',
-    'Bike Riding',
-    'Sand Smashing',
-    'Sand Skiing',
-    'Cimbing',
-    'Swimming',
-  ];
+
   List<String> aimedText = [
     'Gents',
     'Ladies',
@@ -174,24 +321,6 @@ class _NewFilterPageState extends State<NewFilterPage> {
   List<IconData> aimedIconList = [
     Icons.person,
     Icons.person_2,
-  ];
-
-  List<IconData> iconList = [
-    Icons.place_rounded,
-    Icons.no_drinks,
-    Icons.food_bank,
-    Icons.bike_scooter,
-    Icons.get_app,
-    Icons.skateboarding,
-    Icons.upcoming,
-    Icons.swipe
-  ];
-  List<IconData> dDIconList = [
-    Icons.place_rounded,
-    Icons.category,
-    Icons.merge_type,
-    Icons.density_large,
-    Icons.timelapse,
   ];
 
   List<Widget> pages = [
@@ -215,12 +344,6 @@ class _NewFilterPageState extends State<NewFilterPage> {
     ),
   ];
 
-  // void selectedCategory(String cf) {
-  //   setState(() {
-  //     selectedCatergoryFilter = cf;
-  //   });
-  // }
-
   void clearAll() {
     filterSectors.clear();
     categoryFilter.clear();
@@ -229,51 +352,50 @@ class _NewFilterPageState extends State<NewFilterPage> {
     levelFilter.clear();
     durationFilter.clear();
     activitiesFilter.clear();
-    regionFilter.clear();
+    //  regionFilter.clear();
     dummyAm.clear();
     fDM.clear();
   }
 
-  void getFilters() {
-    setState(() {
-      Constants.getFilter1(
-        mapFilter,
-        filterSectors,
-        categoryFilter,
-        serviceFilter,
-        countriesFilter,
-        levelFilter,
-        durationFilter,
-        activitiesFilter,
-        regionFilter,
-        dummyAm,
-        fDM,
-      );
-    });
-  }
+  // void getFilters() {
+  //   setState(() {
+  //     Constants.getFilter1(
+  //       mapFilter,
+  //       filterSectors,
+  //       categoryFilter,
+  //       serviceFilter,
+  //       countriesFilter,
+  //       levelFilter,
+  //       durationFilter,
+  //       activitiesFilter,
+  //       regionFilter,
+  //       dummyAm,
+  //       fDM,
+  //     );
+  //   });
+  // }
 
-  void aimedFor() async {
-    var response =
-        await http.get(Uri.parse("${Constants.baseUrl}/api/v1/getServiceFor"));
-    if (response.statusCode == 200) {
-      mapAimedFilter = json.decode(response.body);
-      List<dynamic> result = mapAimedFilter['message'];
-      result.forEach((element) {
-        int id = int.tryParse(element['id'].toString()) ?? 0;
-        AimedForModel amf = AimedForModel(
-          id,
-          element['AimedName'].toString() ?? "",
-          element['image'].toString() ?? "",
-          element['created_at'].toString() ?? "",
-          element['updated_at'].toString() ?? "",
-          element['deleted_at'].toString() ?? "",
-          0,
-          //  selected: false,
-        );
-        am.add(amf);
-      });
-    }
-  }
+  // void aimedFor() async {
+  //   var response =
+  //       await http.get(Uri.parse("${Constants.baseUrl}/api/v1/getServiceFor"));
+  //   if (response.statusCode == 200) {
+  //     mapAimedFilter = json.decode(response.body);
+  //     List<dynamic> result = mapAimedFilter['message'];
+  //     result.forEach((element) {
+  //       int id = int.tryParse(element['id'].toString()) ?? 0;
+  //       AimedForModel amf = AimedForModel(
+  //         id,
+  //         element['AimedName'].toString() ?? "",
+  //         element['image'].toString() ?? "",
+  //         element['created_at'].toString() ?? "",
+  //         element['updated_at'].toString() ?? "",
+  //         element['deleted_at'].toString() ?? "",
+  //         0,
+  //       );
+  //       am.add(amf);
+  //     });
+  //   }
+  // }
 
   Future getCountries() async {
     var response =
@@ -308,14 +430,15 @@ class _NewFilterPageState extends State<NewFilterPage> {
     setState(
       () {
         c = currencyP;
-        Constants.countryId = id;
+        // Constants.countryId = id;
+        // Constants.countryFlag = countryflag;
         // countryCode = country;
         ccCode = id.toString();
         // countryId = id;
         // flag = countryflag;
       },
     );
-    print(ccCode);
+    Constants.getFilter();
   }
 
   void getActivitiesList() {
@@ -497,26 +620,35 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                                         .tr()),
                                                 onTap: () {
                                                   setState(() {
-                                                    Constants.countryId =
+                                                    ccCode =
                                                         filteredServices[index]
                                                             .id;
-                                                    Constants.countryFlag =
+                                                    flag =
                                                         filteredServices[index]
                                                             .flag;
+                                                    selectedCountry =
+                                                        filteredServices[index]
+                                                            .country;
                                                     c = filteredServices[index]
                                                         .currency;
+                                                    // ccCode =
+                                                    //     filteredServices[index]
+                                                    //         .id;
                                                   });
-                                                  getC(
-                                                      filteredServices[index]
-                                                          .country,
-                                                      filteredServices[index]
-                                                          .code,
-                                                      filteredServices[index]
-                                                          .id,
-                                                      filteredServices[index]
-                                                          .flag,
-                                                      filteredServices[index]
-                                                          .currency);
+                                                  // Navigator.of(context)
+                                                  //     .pop();
+                                                  getRegions();
+                                                  // getC(
+                                                  //     filteredServices[index]
+                                                  //         .country,
+                                                  //     filteredServices[index]
+                                                  //         .code,
+                                                  //     filteredServices[index]
+                                                  //         .id,
+                                                  //     filteredServices[index]
+                                                  //         .flag,
+                                                  //     filteredServices[index]
+                                                  //         .currency);
                                                 },
                                               );
                                             }),
@@ -536,7 +668,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
                             weight: FontWeight.w800,
                           ),
                           trailing: SizedBox(
-                            width: 100,
+                            width: 140,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -553,7 +685,9 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                 Row(
                                   children: [
                                     Image.network(
-                                      "${"${Constants.baseUrl}/public/"}${Constants.countryFlag}",
+                                      flag.isEmpty
+                                          ? "${"${Constants.baseUrl}/public/"}${Constants.countryFlag}"
+                                          : "${"${Constants.baseUrl}/public/"}$flag",
                                       height: 15,
                                       width: 15,
                                     ),
@@ -561,7 +695,9 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                       width: 5,
                                     ),
                                     Text(
-                                      Constants.country.tr(),
+                                      selectedCountry.isEmpty
+                                          ? Constants.country
+                                          : selectedCountry.tr(),
                                       style: const TextStyle(
                                           color: blackColor,
                                           fontWeight: FontWeight.w700,
@@ -719,14 +855,13 @@ class _NewFilterPageState extends State<NewFilterPage> {
                               CheckboxListTile(
                                 dense: true,
                                 visualDensity: VisualDensity.compact,
-                                value:
-                                    selectedRegion == regionFilter[i].regions,
+                                value: selectedRegion == regionList[i].region,
                                 checkboxShape: const RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(12))),
                                 onChanged: (value) {
                                   setState(() {
-                                    selectedRegion = regionFilter[i].regions;
+                                    selectedRegion = regionList[i].region;
                                     selectedRegionId =
                                         regionList[i].regionId.toString();
 

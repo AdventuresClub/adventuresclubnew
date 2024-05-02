@@ -108,6 +108,7 @@ class Constants {
   static List<RegionFilterModel> regionFilter = [];
   static List<FilterDataModel> fDM = [];
   static List<RegionsModel> regionList = [];
+  static List<RegionsModel> regionListForFilter = [];
   static List<PackagesBecomePartnerModel> freegBp = [];
   static List<PackagesBecomePartnerModel> gBp = [];
   static Map getPackages = {};
