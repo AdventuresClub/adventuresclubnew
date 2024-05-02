@@ -69,13 +69,13 @@ class _NewFilterPageState extends State<NewFilterPage> {
   SectorFilterModel sectorList = SectorFilterModel(0, "", "", 0, "", "", "");
   List<bool> activityValue = [];
   List<ActivitiesIncludeModel> activityIds = [];
-  int selectedRegion = 0;
-  int selectedCategory = 0;
-  int selectedServiceSector = 0;
-  int selectedServiceType = 0;
+  String selectedRegion = "";
+  String selectedCategory = "";
+  String selectedServiceSector = "";
+  String selectedServiceType = "";
   String selectedDuration = "";
-  int selectedLevel = 0;
-  int selectedAimedFor = 0;
+  String selectedLevel = "";
+  String selectedAimedFor = "";
   String selectedRegionId = "";
   String selectedCategoryId = "";
   String selectedServiceSectorId = "";
@@ -711,28 +711,25 @@ class _NewFilterPageState extends State<NewFilterPage> {
                         // ),
                         // if (regionList.isNotEmpty)
                         ExpansionTile(
-                          title: Text(
-                              regionList[selectedRegion].showCountry == false
-                                  ? 'selectRegion'.tr()
-                                  : regionList[selectedRegion].region.tr()),
+                          title: Text(selectedRegion.isNotEmpty
+                              ? selectedRegion
+                              : 'selectRegion'.tr()),
                           children: [
                             for (int i = 0; i < regionList.length; i++)
                               CheckboxListTile(
                                 dense: true,
                                 visualDensity: VisualDensity.compact,
-                                value: selectedRegion == i
-                                    ? regionList[i].showCountry
-                                    : false,
+                                value:
+                                    selectedRegion == regionFilter[i].regions,
                                 checkboxShape: const RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(12))),
                                 onChanged: (value) {
                                   setState(() {
-                                    selectedRegion = i;
+                                    selectedRegion = regionFilter[i].regions;
                                     selectedRegionId =
                                         regionList[i].regionId.toString();
-                                    regionList[selectedRegion].showCountry =
-                                        value;
+
                                     if (value == true) {
                                     } else {}
                                   });
@@ -745,12 +742,8 @@ class _NewFilterPageState extends State<NewFilterPage> {
                         ),
                         ExpansionTile(
                           title: Text(
-                            filterSectors[selectedServiceSector]
-                                        .showfilterSectors ==
-                                    true
-                                ? filterSectors[selectedServiceSector]
-                                    .sector
-                                    .tr()
+                            selectedServiceSector.isNotEmpty
+                                ? selectedServiceSector
                                 : 'serviceSector'.tr(),
                           ),
                           children: [
@@ -766,17 +759,14 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                 checkboxShape: const RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(12))),
-                                value: selectedServiceSector == a
-                                    ? filterSectors[a].showfilterSectors
-                                    : false,
+                                value: selectedServiceSector ==
+                                    filterSectors[a].sector,
                                 onChanged: (value) {
                                   setState(() {
-                                    selectedServiceSector = a;
+                                    selectedServiceSector =
+                                        filterSectors[a].sector;
                                     selectedServiceSectorId =
                                         filterSectors[a].id.toString();
-                                    filterSectors[selectedServiceSector]
-                                        .showfilterSectors = value;
-                                    filterSectors[a].id;
                                   });
                                 },
                                 title: Text(filterSectors[a].sector.tr()),
@@ -819,10 +809,8 @@ class _NewFilterPageState extends State<NewFilterPage> {
                         // ),
                         ExpansionTile(
                           title: Text(
-                            categoryFilter[selectedCategory]
-                                        .showCategoryFilter ==
-                                    true
-                                ? categoryFilter[selectedCategory].category.tr()
+                            selectedCategory.isNotEmpty
+                                ? selectedCategory
                                 : 'serviceCategory'.tr(),
                           ),
                           children: [
@@ -835,19 +823,17 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                 ),
                                 dense: true,
                                 visualDensity: VisualDensity.compact,
-                                value: selectedCategory == i
-                                    ? categoryFilter[i].showCategoryFilter
-                                    : false,
+                                value: selectedCategory ==
+                                    categoryFilter[i].category,
                                 checkboxShape: const RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(12))),
                                 onChanged: (value) {
                                   setState(() {
-                                    selectedCategory = i;
+                                    selectedCategory =
+                                        categoryFilter[i].category;
                                     selectedCategoryId =
                                         categoryFilter[i].id.toString();
-                                    categoryFilter[selectedCategory]
-                                        .showCategoryFilter = value;
                                   });
                                 },
                                 title: Text(categoryFilter[i].category.tr()),
@@ -856,20 +842,12 @@ class _NewFilterPageState extends State<NewFilterPage> {
                         ),
                         ExpansionTile(
                           title: Text(
-                            serviceFilter[selectedServiceType]
-                                        .showServiceFilter ==
-                                    true
-                                ? serviceFilter[selectedServiceType].type.tr()
+                            selectedServiceType.isNotEmpty
+                                ? selectedServiceType
                                 : 'serviceType'.tr(),
                           ),
                           children: [
                             for (int b = 0; b < serviceFilter.length; b++)
-                              // ListView.builder(
-                              //   shrinkWrap: true,
-                              //   physics: const ClampingScrollPhysics(),
-                              //   itemCount: serviceFilter.length,
-                              //   itemBuilder: (context, index) {
-                              //     return
                               CheckboxListTile(
                                 secondary: Image.network(
                                   "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${serviceFilter[b].image}",
@@ -881,16 +859,13 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                 checkboxShape: const RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(12))),
-                                value: selectedServiceType == b
-                                    ? serviceFilter[b].showServiceFilter
-                                    : false,
+                                value: selectedServiceType ==
+                                    serviceFilter[b].type,
                                 onChanged: (value) {
                                   setState(() {
-                                    selectedServiceType = b;
+                                    selectedServiceType = serviceFilter[b].type;
                                     selectedServiceTypeId =
                                         serviceFilter[b].id.toString();
-                                    serviceFilter[selectedServiceType]
-                                        .showServiceFilter = value;
                                   });
                                 },
                                 title: Text(serviceFilter[b].type.tr()),
@@ -933,17 +908,11 @@ class _NewFilterPageState extends State<NewFilterPage> {
                         // ),
                         ExpansionTile(
                           title: Text(
-                            levelFilter[selectedLevel].showLevel == true
-                                ? levelFilter[selectedLevel].level
+                            selectedLevel.isNotEmpty
+                                ? selectedLevel
                                 : 'selectLevel'.tr(),
                           ),
                           children: [
-                            // ListView.builder(
-                            //   shrinkWrap: true,
-                            //   physics: const ClampingScrollPhysics(),
-                            //   itemCount: levelFilter.length,
-                            //   itemBuilder: (context, index) {
-                            //     return
                             for (int c = 0; c < levelFilter.length; c++)
                               CheckboxListTile(
                                 secondary: Image.network(
@@ -956,19 +925,12 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                 checkboxShape: const RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(12))),
-                                value: selectedLevel == c
-                                    ? levelFilter[c].showLevel
-                                    : false,
+                                value: selectedLevel == levelFilter[c].level,
                                 onChanged: (value) {
                                   setState(() {
-                                    selectedLevel = c;
+                                    selectedLevel = levelFilter[c].level;
                                     selectedLevelId =
                                         levelFilter[c].id.toString();
-                                    levelFilter[selectedLevel].showLevel =
-                                        value;
-
-                                    // ConstantsCreateNewServices.selectedlevelId =
-                                    //     levelFilter[c].id;
                                   });
                                 },
                                 title: Text(levelFilter[c].level.tr()),
@@ -979,9 +941,6 @@ class _NewFilterPageState extends State<NewFilterPage> {
                           title: Text(
                             selectedDuration.isNotEmpty
                                 ? selectedDuration
-                                // durationFilter[selectedDuration].showDuration ==
-                                //         true
-                                //     ? durationFilter[selectedDuration].duration
                                 : 'duration'.tr(),
                           ),
                           children: [
@@ -1000,8 +959,6 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                         durationFilter[d].duration;
                                     selectedDurationId =
                                         durationFilter[d].id.toString();
-                                    // durationFilter[selectedDuration]
-                                    //     .showDuration = value;
                                   });
                                 },
                                 title: Text(durationFilter[d].duration.tr()),
@@ -1079,8 +1036,8 @@ class _NewFilterPageState extends State<NewFilterPage> {
                         // ),
                         ExpansionTile(
                           title: Text(
-                            aimedForModel[selectedAimedFor].showAimedFor == true
-                                ? aimedForModel[selectedAimedFor].aimedName
+                            selectedAimedFor.isNotEmpty
+                                ? selectedAimedFor
                                 : 'aimedFor'.tr(),
                           ),
                           children: [
@@ -1093,23 +1050,17 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                 ),
                                 dense: true,
                                 visualDensity: VisualDensity.compact,
-                                value: selectedAimedFor == d
-                                    ? aimedForModel[d].showAimedFor
-                                    : false,
+                                value: selectedAimedFor ==
+                                    aimedForModel[d].aimedName,
                                 checkboxShape: const RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(12))),
                                 onChanged: (value) {
                                   setState(() {
-                                    selectedAimedFor = d;
+                                    selectedAimedFor =
+                                        aimedForModel[d].aimedName;
                                     selectedAimedForId =
                                         aimedForModel[d].id.toString();
-                                    aimedForModel[selectedAimedFor]
-                                        .showAimedFor = value;
-                                    // selectedDurationId =
-                                    //     durationFilter[d].id.toString();
-                                    // durationFilter[selectedDuration]
-                                    //     .showDuration = value;
                                   });
                                 },
                                 title: Text(aimedForModel[d].aimedName.tr()),
@@ -1169,16 +1120,20 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                     // filterSectors[selectedServiceSector]
                                     //     .showfilterSectors = false;
                                     ccCode = 0;
-                                    selectedServiceSector = 0;
-                                    selectedRegion = 0;
-
+                                    selectedRegion = "";
+                                    selectedRegionId = "";
                                     selectedServiceSectorId = "";
-                                    selectedCategoryId = "";
-                                    selectedServiceTypeId = "";
+                                    selectedServiceSector = "";
                                     selectedLevelId = "";
+                                    selectedLevel = "";
                                     selectedDurationId = "";
                                     selectedDuration = "";
-                                    selectedRegionId = "";
+                                    selectedCategory = "";
+                                    selectedCategoryId = "";
+                                    selectedAimedFor = "";
+                                    selectedAimedForId = "";
+                                    selectedServiceType = "";
+                                    selectedServiceTypeId = "";
                                   });
 
                                   //setState(() {});
@@ -1265,7 +1220,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
     selectedServiceTypeId = "";
     selectedLevelId = "";
     selectedDurationId = "";
-    selectedRegion = 0;
+    selectedRegion = "";
     setState(() {});
     // Navigator.of(context).pop();
   }
