@@ -2,9 +2,7 @@
 
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/constants_filter.dart';
 import 'package:adventuresclub/home_Screens/Chat/chat.dart';
 import 'package:adventuresclub/models/filter_data_model/activities_inc_model.dart';
 import 'package:adventuresclub/models/filter_data_model/category_filter_model.dart';
@@ -17,12 +15,6 @@ import 'package:adventuresclub/models/services/aimed_for_model.dart';
 import 'package:adventuresclub/provider/navigation_index_provider.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/Lists/home_lists/top_list.dart';
-import 'package:adventuresclub/widgets/dropdowns/duration_drop_down.dart';
-import 'package:adventuresclub/widgets/dropdowns/level_drop_down.dart';
-import 'package:adventuresclub/widgets/dropdowns/regionFilter_dropdown.dart';
-import 'package:adventuresclub/widgets/dropdowns/service_category.dart';
-import 'package:adventuresclub/widgets/dropdowns/service_sector_drop_down.dart';
-import 'package:adventuresclub/widgets/dropdowns/service_type_drop_down.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/search_container.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -81,7 +73,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
   int selectedCategory = 0;
   int selectedServiceSector = 0;
   int selectedServiceType = 0;
-  int selectedDuration = 0;
+  String selectedDuration = "";
   int selectedLevel = 0;
   int selectedAimedFor = 0;
   String selectedRegionId = "";
@@ -985,34 +977,31 @@ class _NewFilterPageState extends State<NewFilterPage> {
                         ),
                         ExpansionTile(
                           title: Text(
-                            durationFilter[selectedDuration].showDuration ==
-                                    true
-                                ? durationFilter[selectedDuration].duration
+                            selectedDuration.isNotEmpty
+                                ? selectedDuration
+                                // durationFilter[selectedDuration].showDuration ==
+                                //         true
+                                //     ? durationFilter[selectedDuration].duration
                                 : 'duration'.tr(),
                           ),
                           children: [
                             for (int d = 0; d < durationFilter.length; d++)
                               CheckboxListTile(
-                                //  secondary: Image.network(
-                                //   "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${durationFilter[d].}",
-                                //   height: 36,
-                                //   width: 26,
-                                // ),
                                 dense: true,
                                 visualDensity: VisualDensity.compact,
-                                value: selectedDuration == d
-                                    ? durationFilter[d].showDuration
-                                    : false,
+                                value: selectedDuration ==
+                                    durationFilter[d].duration,
                                 checkboxShape: const RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(12))),
                                 onChanged: (value) {
                                   setState(() {
-                                    selectedDuration = d;
+                                    selectedDuration =
+                                        durationFilter[d].duration;
                                     selectedDurationId =
                                         durationFilter[d].id.toString();
-                                    durationFilter[selectedDuration]
-                                        .showDuration = value;
+                                    // durationFilter[selectedDuration]
+                                    //     .showDuration = value;
                                   });
                                 },
                                 title: Text(durationFilter[d].duration.tr()),
@@ -1095,12 +1084,6 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                 : 'aimedFor'.tr(),
                           ),
                           children: [
-                            // ListView.builder(
-                            //   shrinkWrap: true,
-                            //   physics: const ClampingScrollPhysics(),
-                            //   itemCount: durationFilter.length,
-                            //   itemBuilder: (context, index) {
-                            //     return
                             for (int d = 0; d < aimedForModel.length; d++)
                               CheckboxListTile(
                                 secondary: Image.network(
@@ -1119,7 +1102,6 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                 onChanged: (value) {
                                   setState(() {
                                     selectedAimedFor = d;
-
                                     selectedAimedForId =
                                         aimedForModel[d].id.toString();
                                     aimedForModel[selectedAimedFor]
@@ -1184,8 +1166,8 @@ class _NewFilterPageState extends State<NewFilterPage> {
                               GestureDetector(
                                 onTap: () {
                                   setState(() {
-                                    filterSectors[selectedServiceSector]
-                                        .showfilterSectors = false;
+                                    // filterSectors[selectedServiceSector]
+                                    //     .showfilterSectors = false;
                                     ccCode = 0;
                                     selectedServiceSector = 0;
                                     selectedRegion = 0;
@@ -1195,6 +1177,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                     selectedServiceTypeId = "";
                                     selectedLevelId = "";
                                     selectedDurationId = "";
+                                    selectedDuration = "";
                                     selectedRegionId = "";
                                   });
 
