@@ -51,9 +51,9 @@ class _NewFilterPageState extends State<NewFilterPage> {
   List<ServiceTypeFilterModel> serviceFilter = [];
   List<CountriesFilterModel> countriesFilter = [];
   List<LevelFilterModel> levelFilter = [];
-  List<AimedForModel> dummyAm = [];
+  //List<AimedForModel> dummyAm = [];
   List<RegionsModel> regionList = [];
-  List<AimedForModel> am = [];
+  //List<AimedForModel> am = [];
   List<String> sectorsList = [];
   String categoryDropDown = 'One';
   List<String> list = <String>['One', 'Two', 'Three', 'Four'];
@@ -67,7 +67,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
   Map mapCountry = {};
   List<GetCountryModel> countriesList1 = [];
   List<GetCountryModel> filteredServices = [];
-  RangeValues values = const RangeValues(0, 1000);
+  RangeValues values = const RangeValues(1, 1000);
   SectorFilterModel sectorList = SectorFilterModel(0, "", "", 0, "", "", "");
   List<bool> activityValue = [];
   List<ActivitiesIncludeModel> activityIds = [];
@@ -86,8 +86,8 @@ class _NewFilterPageState extends State<NewFilterPage> {
   String selectedAimedForId = "";
   String selectedLevelId = "";
   String c = "";
-  String flag = "";
-  String selectedCountry = "";
+  // String flag = "";
+  // String selectedCountry = "";
   bool loading = false;
 
   @override
@@ -216,7 +216,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
 
   void getRegions() async {
     regionList.clear();
-    // aimedFor();
+    aimedFor();
     setState(() {
       loading = true;
     });
@@ -247,7 +247,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
   }
 
   void aimedFor() async {
-    am.clear();
+    aimedForModel.clear();
     var response =
         await http.get(Uri.parse("${Constants.baseUrl}/api/v1/getServiceFor"));
     if (response.statusCode == 200) {
@@ -265,7 +265,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
           0,
           //  selected: false,
         );
-        am.add(amf);
+        aimedForModel.add(amf);
       });
     }
     setState(() {
@@ -353,7 +353,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
     durationFilter.clear();
     activitiesFilter.clear();
     //  regionFilter.clear();
-    dummyAm.clear();
+    aimedForModel.clear();
     fDM.clear();
   }
 
@@ -503,7 +503,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
                         ListTile(
                           onTap: () => showModalBottomSheet(
                               context: ctx,
-                              builder: (context) {
+                              builder: (ctx) {
                                 return StatefulBuilder(
                                     builder: (ctx, setState1) {
                                   return Padding(
@@ -623,10 +623,10 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                                     ccCode =
                                                         filteredServices[index]
                                                             .id;
-                                                    flag =
+                                                    Constants.countryFlag =
                                                         filteredServices[index]
                                                             .flag;
-                                                    selectedCountry =
+                                                    Constants.country =
                                                         filteredServices[index]
                                                             .country;
                                                     c = filteredServices[index]
@@ -635,8 +635,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                                     //     filteredServices[index]
                                                     //         .id;
                                                   });
-                                                  // Navigator.of(context)
-                                                  //     .pop();
+                                                  Navigator.of(ctx).pop();
                                                   getRegions();
                                                   // getC(
                                                   //     filteredServices[index]
@@ -685,9 +684,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                 Row(
                                   children: [
                                     Image.network(
-                                      flag.isEmpty
-                                          ? "${"${Constants.baseUrl}/public/"}${Constants.countryFlag}"
-                                          : "${"${Constants.baseUrl}/public/"}$flag",
+                                      "${"${Constants.baseUrl}/public/"}${Constants.countryFlag}",
                                       height: 15,
                                       width: 15,
                                     ),
@@ -695,9 +692,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                       width: 5,
                                     ),
                                     Text(
-                                      selectedCountry.isEmpty
-                                          ? Constants.country
-                                          : selectedCountry.tr(),
+                                      Constants.country,
                                       style: const TextStyle(
                                           color: blackColor,
                                           fontWeight: FontWeight.w700,
@@ -742,7 +737,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                   RangeSlider(
                                       activeColor: greyColor,
                                       inactiveColor: greyColor.withOpacity(0.3),
-                                      min: 0,
+                                      min: 1,
                                       max: 1000,
                                       values: values,
                                       onChanged: (value) {
