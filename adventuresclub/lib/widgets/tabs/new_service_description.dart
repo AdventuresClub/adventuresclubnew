@@ -11,7 +11,7 @@ import '../../../models/home_services/services_model.dart';
 class NewServiceDescription extends StatefulWidget {
   final ServicesModel gm;
   final List<String> text1;
-  final List<String> text4;
+  //final List<String> text4;
   final List<String> text5;
   final List<String> text6;
   final double stars;
@@ -19,9 +19,18 @@ class NewServiceDescription extends StatefulWidget {
   final String id;
   final bool? show;
   final Function parseData;
-  const NewServiceDescription(this.gm, this.text1, this.text4, this.text5,
-      this.text6, this.stars, this.reviewedBy, this.id, this.parseData,
-      {this.show = false, super.key});
+  const NewServiceDescription(
+      this.gm,
+      this.text1,
+      //this.text4,
+      this.text5,
+      this.text6,
+      this.stars,
+      this.reviewedBy,
+      this.id,
+      this.parseData,
+      {this.show = false,
+      super.key});
 
   @override
   State<NewServiceDescription> createState() => _NewServiceDescriptionState();

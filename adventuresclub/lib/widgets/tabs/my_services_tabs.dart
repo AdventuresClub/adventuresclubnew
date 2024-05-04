@@ -58,14 +58,14 @@ class _MyServicesTabState extends State<MyServicesTab> {
         text4.insert(4, widget.sm.duration.toString());
         widget.sm.availability.isEmpty
             ? text4.insert(5, "Start Date")
-            : text4.insert(5, st.substring(0, 11));
+            : text4.insert(5, st.substring(0, 9));
         text6.insert(0, widget.sm.reviewdBy);
         text6.insert(1, widget.sm.serviceSector);
         text6.insert(2, widget.sm.serviceType);
         text6.insert(3, widget.sm.serviceLevel);
         widget.sm.availability.isEmpty
             ? text6.insert(4, "End Date")
-            : text6.insert(4, ed.substring(0, 11));
+            : text6.insert(4, ed);
       });
     }
     if (widget.sm.sPlan == 1) {
@@ -284,7 +284,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
                   child: NewServiceDescription(
                     widget.sm,
                     text1,
-                    text4,
+                    //text4,
                     text5,
                     text6,
                     convert(widget.sm.stars.toString()),
