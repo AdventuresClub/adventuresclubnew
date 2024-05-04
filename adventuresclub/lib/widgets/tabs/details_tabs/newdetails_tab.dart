@@ -358,7 +358,7 @@ class _NewDetailsTabState extends State<NewDetailsTab>
             NewServiceDescription(
                 widget.gm,
                 text1,
-                text4,
+                //text4,
                 text5,
                 text6,
                 convert(widget.gm.stars.toString()),
