@@ -393,7 +393,7 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
                   ),
                   child: Center(
                       child: Text(
-                    "Code",
+                    ccCode.toString().isNotEmpty ? ccCode : "Code",
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,

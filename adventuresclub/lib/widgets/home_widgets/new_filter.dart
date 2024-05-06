@@ -241,9 +241,11 @@ class _NewFilterPageState extends State<NewFilterPage> {
     } catch (e) {
       debugPrint(e.toString());
     }
-    setState(() {
-      loading = false;
-    });
+    if (mounted) {
+      setState(() {
+        loading = false;
+      });
+    }
   }
 
   void aimedFor() async {
@@ -268,9 +270,11 @@ class _NewFilterPageState extends State<NewFilterPage> {
         aimedForModel.add(amf);
       });
     }
-    setState(() {
-      loading = false;
-    });
+    if (mounted) {
+      setState(() {
+        loading = false;
+      });
+    }
   }
 
   // void getData() {
