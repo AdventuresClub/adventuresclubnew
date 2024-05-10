@@ -244,7 +244,45 @@ class _ContactUsState extends State<ContactUs> {
                 const SizedBox(
                   height: 15,
                 ),
-                purposeListWidget(context, "Select Purpose"),
+
+                Card(
+                  color: lightGreyColor,
+                  child: ExpansionTile(
+                    title: Text(selectedPurpose.isNotEmpty
+                        ? selectedPurpose
+                        : 'selectPurpose'.tr()),
+                    children: [
+                      for (int i = 0; i < purposeList.length; i++)
+                        CheckboxListTile(
+                          secondary: Image.network(
+                            "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${purposeList[i].image}",
+                            height: 36,
+                            width: 26,
+                          ),
+                          dense: true,
+                          visualDensity: VisualDensity.compact,
+                          value:
+                              selectedPurpose == purposeList[i].contactPurpose,
+                          checkboxShape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12))),
+                          onChanged: (value) {
+                            setState(() {
+                              selectedPurpose = purposeList[i].contactPurpose;
+                              selectedPurposeId = purposeList[i].id;
+
+                              if (value == true) {
+                              } else {}
+                            });
+                          },
+                          title: Text(purposeList[i].contactPurpose.tr()),
+                        ),
+                      //   },
+                      // )
+                    ],
+                  ),
+                ),
+                // purposeListWidget(context, "Select Purpose"),
                 // Padding(
                 //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 //   child: Container(
