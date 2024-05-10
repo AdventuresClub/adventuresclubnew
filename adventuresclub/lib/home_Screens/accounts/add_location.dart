@@ -392,7 +392,19 @@ class _AddLocationState extends State<AddLocation> {
                               (ServiceTypeFilterModel value) {
                         return DropdownMenuItem<String>(
                           value: value.type,
-                          child: Text(value.type.tr()),
+                          child: Row(
+                            children: [
+                              Image.network(
+                                "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${value.image}",
+                                height: 36,
+                                width: 26,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(value.type.tr()),
+                            ],
+                          ),
                         );
                       }).toList(),
                     ),
