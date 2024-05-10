@@ -55,7 +55,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
 
   void getData() {
     nameController.text = Constants.profile.name;
-    phoneController.text = Constants.profile.mobile;
+    phoneController.text = Constants.profile.mobileCode;
     emailController.text = Constants.profile.email;
     setState(() {
       name = Constants.profile.name;
