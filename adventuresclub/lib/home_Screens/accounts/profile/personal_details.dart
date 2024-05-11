@@ -37,7 +37,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   String phoneNumber = "";
   String selectedCountry = "Nationality";
   String selectedNationality = "";
-  List genderText = ['Male', 'Female', 'Other'];
+  List<String> genderText = ['Male', 'Female'];
   List<GetCountryModel> filteredServices = [];
   List<GetCountryModel> countriesList1 = [];
   dynamic ccCode;
