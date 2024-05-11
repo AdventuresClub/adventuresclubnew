@@ -312,6 +312,7 @@ class _AccountState extends State<Account> {
           userData['gender'].toString() ?? "",
           languageId,
           userData['nationality_id'].toString() ?? "",
+          nationality: userData['nationality'].toString() ?? "",
           currencyId,
           userData['app_notification'].toString() ?? "",
           userData['points'].toString() ?? "",
@@ -331,6 +332,9 @@ class _AccountState extends State<Account> {
       Constants.userRole = up.userRole;
       Constants.dob = up.dob;
       Constants.gender = up.gender;
+      if (up.nationality != null) {
+        Constants.nationality = up.nationality!;
+      }
       Constants.nationalityId = up.nationalityId;
       prefs.setString("userRole", up.userRole);
       // setState(() {

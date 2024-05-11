@@ -36,6 +36,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   //String nationalityId = "";
   String phoneNumber = "";
   String selectedCountry = "Nationality";
+  String selectedNationality = "";
   List genderText = ['Male', 'Female', 'Other'];
   List<GetCountryModel> filteredServices = [];
   List<GetCountryModel> countriesList1 = [];
@@ -58,6 +59,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
     phoneController.text = Constants.profile.mobileCode;
     emailController.text = Constants.profile.email;
     setState(() {
+      ccCode = Constants.profile.mobile;
       name = Constants.profile.name;
       phone = Constants.profile.mobile;
       email = Constants.profile.email;
@@ -83,6 +85,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                   'name': nameController.text.trim(),
                   'mobile_code': phoneController.text
                       .trim(), //Constants.profile.mobileCode,
+                  "mobile": ccCode,
                   'email': emailController.text.trim(),
                   "dob": formattedDate.toString(),
                   "nationality": nationalityId.toString(),
@@ -421,11 +424,12 @@ class _PersonalDetailsState extends State<PersonalDetails> {
     }
   }
 
-  void addCountry(String country, int id) {
+  void addCountry(String country, int id, String nationality) {
     Navigator.of(context).pop();
     setState(() {
-      selectedCountry = country;
+      // selectedCountry = country;
       nationalityId = id;
+      selectedNationality = nationality;
     });
   }
 
@@ -567,7 +571,26 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                 const SizedBox(
                   height: 10,
                 ),
-                pickCountry(context, selectedCountry, false),
+                Row(
+                  children: [
+                    if (Constants.nationality.isNotEmpty)
+                      Expanded(
+                          child: Container(
+                              height: 57,
+                              decoration: BoxDecoration(
+                                  //color: whiteColor,
+                                  border: Border.all(
+                                      color: blackColor.withOpacity(0.2)),
+                                  borderRadius: BorderRadius.circular(12)),
+                              child:
+                                  Center(child: Text(Constants.nationality)))),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Expanded(
+                        child: pickCountry(context, selectedCountry, false)),
+                  ],
+                ),
                 // Divider(
                 //   indent: 4,
                 //   endIndent: 4,
@@ -836,7 +859,8 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       ),
                       child: ccCode != null
                           ? Text(ccCode,
-                              style: const TextStyle(color: Colors.black))
+                              style: const TextStyle(
+                                  color: Colors.black, fontSize: 14))
                           : const Text(
                               "+1",
                               style:
@@ -1015,9 +1039,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                               title: Text(filteredServices[index].shortName),
                               onTap: () {
                                 addCountry(
-                                  filteredServices[index].country,
-                                  filteredServices[index].id,
-                                );
+                                    filteredServices[index].country,
+                                    filteredServices[index].id,
+                                    filteredServices[index].shortName);
                               },
                             );
                           }),

@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/purpose_list_model.dart';
 import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
+import 'package:adventuresclub/widgets/loading_widget.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
 import 'package:adventuresclub/widgets/text_fields/multiline_field.dart';
@@ -34,6 +35,7 @@ class _ContactUsState extends State<ContactUs> {
   List<PurposeListModel> purposeList = [];
   String selectedPurpose = "Select Purpose";
   int selectedPurposeId = 0;
+  bool loading = false;
 
   @override
   void initState() {
@@ -57,6 +59,9 @@ class _ContactUsState extends State<ContactUs> {
   }
 
   void getPurposeList() async {
+    setState(() {
+      loading = true;
+    });
     var response = await http
         .get(Uri.parse("${Constants.baseUrl}/api/v1/get_contact_us_pupose"));
     if (response.statusCode == 200) {
@@ -73,6 +78,9 @@ class _ContactUsState extends State<ContactUs> {
         purposeList.add(pl);
       });
     }
+    setState(() {
+      loading = false;
+    });
   }
 
   void close() {
@@ -224,171 +232,177 @@ class _ContactUsState extends State<ContactUs> {
           ),
           centerTitle: true,
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                TFContainer(
-                    'AdventuresClub', nameController, 16, lightGreyColor, 1),
-                const SizedBox(
-                  height: 15,
-                ),
-                TFContainer('96123588', numController, 16, lightGreyColor, 1),
-                const SizedBox(
-                  height: 15,
-                ),
-                TFContainer('info@adventureclub.net', emailController, 16,
-                    lightGreyColor, 1),
-                const SizedBox(
-                  height: 15,
-                ),
-
-                Card(
-                  color: lightGreyColor,
-                  child: ExpansionTile(
-                    title: Text(selectedPurpose.isNotEmpty
-                        ? selectedPurpose
-                        : 'selectPurpose'.tr()),
+        body: loading
+            ? const LoadingWidget()
+            : SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 14.0, vertical: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      for (int i = 0; i < purposeList.length; i++)
-                        CheckboxListTile(
-                          secondary: Image.network(
-                            "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${purposeList[i].image}",
-                            height: 36,
-                            width: 26,
-                          ),
-                          dense: true,
-                          visualDensity: VisualDensity.compact,
-                          value:
-                              selectedPurpose == purposeList[i].contactPurpose,
-                          checkboxShape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12))),
-                          onChanged: (value) {
-                            setState(() {
-                              selectedPurpose = purposeList[i].contactPurpose;
-                              selectedPurposeId = purposeList[i].id;
+                      TFContainer('AdventuresClub', nameController, 16,
+                          lightGreyColor, 1),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TFContainer(
+                          '96123588', numController, 16, lightGreyColor, 1),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TFContainer('info@adventureclub.net', emailController, 16,
+                          lightGreyColor, 1),
+                      const SizedBox(
+                        height: 15,
+                      ),
 
-                              if (value == true) {
-                              } else {}
-                            });
-                          },
-                          title: Text(purposeList[i].contactPurpose.tr()),
+                      Card(
+                        color: lightGreyColor,
+                        child: ExpansionTile(
+                          title: Text(selectedPurpose.isNotEmpty
+                              ? selectedPurpose
+                              : 'selectPurpose'.tr()),
+                          children: [
+                            for (int i = 0; i < purposeList.length; i++)
+                              CheckboxListTile(
+                                secondary: Image.network(
+                                  "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${purposeList[i].image}",
+                                  height: 36,
+                                  width: 26,
+                                ),
+                                dense: true,
+                                visualDensity: VisualDensity.compact,
+                                value: selectedPurpose ==
+                                    purposeList[i].contactPurpose,
+                                checkboxShape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12))),
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedPurpose =
+                                        purposeList[i].contactPurpose;
+                                    selectedPurposeId = purposeList[i].id;
+
+                                    if (value == true) {
+                                    } else {}
+                                  });
+                                },
+                                title: Text(purposeList[i].contactPurpose.tr()),
+                              ),
+                            //   },
+                            // )
+                          ],
                         ),
-                      //   },
-                      // )
+                      ),
+                      // purposeListWidget(context, "Select Purpose"),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      //   child: Container(
+                      //     padding:
+                      //         const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                      //     decoration: BoxDecoration(
+                      //         color: lightGreyColor,
+                      //         borderRadius: BorderRadius.circular(12),
+                      //         border: Border.all(
+                      //           color: greyColor.withOpacity(0.2),
+                      //         )),
+                      //     child: DropdownButtonHideUnderline(
+                      //       child: DropdownButton<String>(
+                      //         isExpanded: true,
+                      //         value: dropdownValue,
+                      //         icon: const Icon(Icons.arrow_drop_down),
+                      //         elevation: 16,
+                      //         style: const TextStyle(color: blackTypeColor),
+                      //         onChanged: (String? value) {
+                      //           // This is called when the user selects an item.
+                      //           setState(() {
+                      //             value = value!;
+                      //           });
+                      //         },
+                      //         items:
+                      //             list.map<DropdownMenuItem<String>>((String value) {
+                      //           return DropdownMenuItem<String>(
+                      //             value: value,
+                      //             child: Text(value),
+                      //           );
+                      //         }).toList(),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TFWithSize(
+                          'Subject', subjectController, 16, lightGreyColor, 1),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      MultiLineField('Start writing here', 7, lightGreyColor,
+                          messageController),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //   children: [
+                      //     GestureDetector(
+                      //       onTap: showConfirmation,
+                      //       child: const CircleAvatar(
+                      //         backgroundColor: bluishColor,
+                      //         child: Image(
+                      //             image: ExactAssetImage('images/phonepic.png')),
+                      //       ),
+                      //     ),
+                      //     GestureDetector(
+                      //       onTap: () => launchURL("ins"),
+                      //       child: const CircleAvatar(
+                      //         radius: 20,
+                      //         backgroundColor: bluishColor,
+                      //         child:
+                      //             Image(image: ExactAssetImage('images/insta.png')),
+                      //       ),
+                      //     ),
+                      //     GestureDetector(
+                      //       onTap: () => launchURL("whatsapp"),
+                      //       child: const CircleAvatar(
+                      //         backgroundColor: bluishColor,
+                      //         child: Image(
+                      //             image:
+                      //                 ExactAssetImage('images/feather-mail.png')),
+                      //       ),
+                      //     ),
+                      //     GestureDetector(
+                      //       onTap: () => launchURL("skype"),
+                      //       child: const CircleAvatar(
+                      //         backgroundColor: bluishColor,
+                      //         child:
+                      //             Image(image: ExactAssetImage('images/skype.png')),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      // const SizedBox(
+                      //   height: 20,
+                      // ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //   children: [
+                      //     const Image(
+                      //       image: ExactAssetImage('images/icon-location-on.png'),
+                      //       height: 25,
+                      //     ),
+                      //     MyText(
+                      //       text: Constants.profile.l,
+                      //       color: greyColor,
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   ),
                 ),
-                // purposeListWidget(context, "Select Purpose"),
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                //   child: Container(
-                //     padding:
-                //         const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                //     decoration: BoxDecoration(
-                //         color: lightGreyColor,
-                //         borderRadius: BorderRadius.circular(12),
-                //         border: Border.all(
-                //           color: greyColor.withOpacity(0.2),
-                //         )),
-                //     child: DropdownButtonHideUnderline(
-                //       child: DropdownButton<String>(
-                //         isExpanded: true,
-                //         value: dropdownValue,
-                //         icon: const Icon(Icons.arrow_drop_down),
-                //         elevation: 16,
-                //         style: const TextStyle(color: blackTypeColor),
-                //         onChanged: (String? value) {
-                //           // This is called when the user selects an item.
-                //           setState(() {
-                //             value = value!;
-                //           });
-                //         },
-                //         items:
-                //             list.map<DropdownMenuItem<String>>((String value) {
-                //           return DropdownMenuItem<String>(
-                //             value: value,
-                //             child: Text(value),
-                //           );
-                //         }).toList(),
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                const SizedBox(
-                  height: 15,
-                ),
-                TFWithSize('Subject', subjectController, 16, lightGreyColor, 1),
-                const SizedBox(
-                  height: 15,
-                ),
-                MultiLineField(
-                    'Start writing here', 7, lightGreyColor, messageController),
-                const SizedBox(
-                  height: 40,
-                ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //   children: [
-                //     GestureDetector(
-                //       onTap: showConfirmation,
-                //       child: const CircleAvatar(
-                //         backgroundColor: bluishColor,
-                //         child: Image(
-                //             image: ExactAssetImage('images/phonepic.png')),
-                //       ),
-                //     ),
-                //     GestureDetector(
-                //       onTap: () => launchURL("ins"),
-                //       child: const CircleAvatar(
-                //         radius: 20,
-                //         backgroundColor: bluishColor,
-                //         child:
-                //             Image(image: ExactAssetImage('images/insta.png')),
-                //       ),
-                //     ),
-                //     GestureDetector(
-                //       onTap: () => launchURL("whatsapp"),
-                //       child: const CircleAvatar(
-                //         backgroundColor: bluishColor,
-                //         child: Image(
-                //             image:
-                //                 ExactAssetImage('images/feather-mail.png')),
-                //       ),
-                //     ),
-                //     GestureDetector(
-                //       onTap: () => launchURL("skype"),
-                //       child: const CircleAvatar(
-                //         backgroundColor: bluishColor,
-                //         child:
-                //             Image(image: ExactAssetImage('images/skype.png')),
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                // const SizedBox(
-                //   height: 20,
-                // ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //   children: [
-                //     const Image(
-                //       image: ExactAssetImage('images/icon-location-on.png'),
-                //       height: 25,
-                //     ),
-                //     MyText(
-                //       text: Constants.profile.l,
-                //       color: greyColor,
-                //     ),
-                //   ],
-                // ),
-              ],
-            ),
-          ),
-        ),
+              ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 42.0, vertical: 12),
           child: ButtonIconLess(
