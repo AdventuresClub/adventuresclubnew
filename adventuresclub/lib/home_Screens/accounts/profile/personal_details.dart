@@ -38,6 +38,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   String selectedCountry = "Nationality";
   String selectedNationality = "";
   List<String> genderText = ['Male', 'Female'];
+  String selectedGender = "";
   List<GetCountryModel> filteredServices = [];
   List<GetCountryModel> countriesList1 = [];
   dynamic ccCode;
@@ -89,7 +90,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                   'email': emailController.text.trim(),
                   "dob": formattedDate.toString(),
                   "nationality": nationalityId.toString(),
-                  "gender": "Female",
+                  "gender": selectedGender,
                 });
             if (response.statusCode == 200) {
               SharedPreferences prefs = await Constants.getPrefs();
@@ -599,7 +600,63 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                 const SizedBox(
                   height: 10,
                 ),
-                pickGender(context, 'Gender'),
+                Row(
+                  children: [
+                    //pickGender(context, 'Gender'),
+                    if (Constants.gender.isNotEmpty)
+                      Expanded(
+                          child: Container(
+                              height: 57,
+                              decoration: BoxDecoration(
+                                  //color: whiteColor,
+                                  border: Border.all(
+                                      color: blackColor.withOpacity(0.2)),
+                                  borderRadius: BorderRadius.circular(12)),
+                              child: Center(child: Text(Constants.gender)))),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            //color: whiteColor,
+                            border:
+                                Border.all(color: blackColor.withOpacity(0.2)),
+                            borderRadius: BorderRadius.circular(12)),
+                        child: ExpansionTile(
+                          title: Text(selectedGender.isNotEmpty
+                              ? selectedGender
+                              : 'gender'.tr()),
+                          children: [
+                            for (int i = 0; i < genderText.length; i++)
+                              CheckboxListTile(
+                                dense: true,
+                                visualDensity: VisualDensity.compact,
+                                value: selectedGender == genderText[i],
+                                checkboxShape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12))),
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedGender = genderText[i];
+
+                                    if (value == true) {
+                                    } else {}
+                                  });
+                                },
+                                title: Text(
+                                  genderText[i].tr(),
+                                  style: const TextStyle(fontSize: 14),
+                                ),
+                              ),
+                            //   },
+                            // )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 // ListTile(
                 //   leading: const Icon(
                 //     Icons.delete_forever,
