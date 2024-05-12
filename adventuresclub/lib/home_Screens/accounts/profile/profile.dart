@@ -17,8 +17,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-
-import '../../../provider/services_provider.dart';
 import '../../../sign_up/sign_in.dart';
 
 class Profile extends StatefulWidget {

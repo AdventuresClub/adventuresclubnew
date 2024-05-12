@@ -638,7 +638,7 @@ class _AccountState extends State<Account> {
     if (response.statusCode == 200) {
       mapCountry = json.decode(response.body);
       List<dynamic> result = mapCountry['data'];
-      result.forEach((element) {
+      for (var element in result) {
         GetCountryModel gc = GetCountryModel(
           element['country'],
           element['short_name'],
@@ -648,7 +648,7 @@ class _AccountState extends State<Account> {
           element['currency'] ?? "",
         );
         countriesList1.add(gc);
-      });
+      }
       // if (mounted) {
       // setState(() {
       filteredServices = countriesList1;

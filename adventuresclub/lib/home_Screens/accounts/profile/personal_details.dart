@@ -57,12 +57,12 @@ class _PersonalDetailsState extends State<PersonalDetails> {
 
   void getData() {
     nameController.text = Constants.profile.name;
-    phoneController.text = Constants.profile.mobileCode;
+    phoneController.text = Constants.profile.mobile;
     emailController.text = Constants.profile.email;
     setState(() {
-      ccCode = Constants.profile.mobile;
+      ccCode = Constants.profile.mobileCode;
       name = Constants.profile.name;
-      phone = Constants.profile.mobile;
+      phone = Constants.profile.mobileCode;
       email = Constants.profile.email;
       formattedDate = Constants.dob;
     });
@@ -574,7 +574,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                 ),
                 Row(
                   children: [
-                    if (Constants.nationality.isNotEmpty)
+                    if (Constants.nationality != "null")
                       Expanded(
                           child: Container(
                               height: 57,
@@ -603,7 +603,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                 Row(
                   children: [
                     //pickGender(context, 'Gender'),
-                    if (Constants.gender.isNotEmpty)
+                    if (Constants.gender != "null")
                       Expanded(
                           child: Container(
                               height: 57,
