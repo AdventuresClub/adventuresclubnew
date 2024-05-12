@@ -44,7 +44,7 @@ class _ContactUsState extends State<ContactUs> {
     setState(() {
       nameController.text = Constants.name;
       emailController.text = Constants.emailId;
-      numController.text = Constants.profile.mobile;
+      numController.text = Constants.profile.mobileCode;
     });
   }
 
