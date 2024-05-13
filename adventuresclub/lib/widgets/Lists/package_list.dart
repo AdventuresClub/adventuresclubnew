@@ -70,9 +70,9 @@ class _PackageListState extends State<PackageList> {
             "packages_id": id,
             "order_id": orderId,
             // if payment type is bank muscat then pass 1 else 0
-            "payment_type": "0",
-            "payment_status": "Free",
-            "payment_amount": "0",
+            // "payment_type": "0",
+            "payment_status": "1",
+            "payment_amount": price,
           });
       if (response.statusCode == 200) {
         packagesList();
@@ -121,7 +121,13 @@ class _PackageListState extends State<PackageList> {
     return randomString; // return the generated string
   }
 
-  void transactionApi(String price, String id) async {
+  void transactionApi(String price, String id, String packageName) async {
+    String method = "";
+    if (price == "") {
+      method = "free";
+    } else {
+      method = packageName;
+    }
     generateRandomString(8);
     try {
       var response = await http
@@ -135,7 +141,7 @@ class _PackageListState extends State<PackageList> {
         "transaction_type": "subscription",
         // in case of paid
         //WireTransfer
-        "method": "WireTransfer",
+        "method": method,
         "status": "success",
         "price": price, //price, //"0",
         // 1 in case of subscription && 0 in case of booking
@@ -222,9 +228,10 @@ class _PackageListState extends State<PackageList> {
     //     "${'https://adventuresclub.net/admin1/dataFrom.htm?amount=$packagePrice&merchant_id=${67}&order_id=$orderId&tid=$transactionId&billing_name=${Constants.profile.name}&billing_address=${Constants.profile.bp.address}&billing_city=${Constants.profile.bp.address}&billing_zip=${Constants.profile.bp.address}&billing_country=${Constants.profile.bp.address}&billing_tel=${Constants.profile.bp.address}&billing_email=${Constants.profile.email}'}${'&merchant_param1=${"subscription"}&merchant_param2=$packageId&merchant_param3=${Constants.userId}&merchant_param4={_paymentAndSubscreptionRequestModel.ActivityName}&merchant_param5={_paymentAndSubscreptionRequestModel.NoOfPerson'}");
   }
 
-  void checkPayment(String cost, String packageId, String duration) {
+  void checkPayment(
+      String cost, String packageId, String duration, String packageName) {
     if (cost == "0.00") {
-      transactionApi(cost, packageId);
+      transactionApi(cost, packageId, packageName);
     } else {
       fetchCurrency(cost, packageId, duration);
     }
@@ -272,8 +279,8 @@ class _PackageListState extends State<PackageList> {
             bottom: 20,
             right: 30,
             child: GestureDetector(
-              onTap: () => checkPayment(
-                  widget.bp.cost, widget.bp.id.toString(), widget.bp.duration),
+              onTap: () => checkPayment(widget.bp.cost, widget.bp.id.toString(),
+                  widget.bp.duration, widget.bp.title),
               // onTap: () => transactionApi(widget.bp.cost, widget.bp.id),
               child: Container(
                 height: MediaQuery.of(context).size.height / 16,

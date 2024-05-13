@@ -84,9 +84,8 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                 body: {
                   'user_id': Constants.userId.toString(), //ccCode.toString(),
                   'name': nameController.text.trim(),
-                  'mobile_code': phoneController.text
-                      .trim(), //Constants.profile.mobileCode,
-                  "mobile": ccCode,
+                  'mobile_code': ccCode, //Constants.profile.mobileCode,
+                  "mobile": phoneController.text.trim(),
                   'email': emailController.text.trim(),
                   "dob": formattedDate.toString(),
                   "nationality": nationalityId.toString(),
@@ -428,7 +427,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   void addCountry(String country, int id, String nationality) {
     Navigator.of(context).pop();
     setState(() {
-      // selectedCountry = country;
+      selectedCountry = nationality;
       nationalityId = id;
       selectedNationality = nationality;
     });
@@ -767,7 +766,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
         contentPadding: const EdgeInsets.symmetric(horizontal: 5),
         leading: Container(
           height: 37,
-          width: 72,
+          width: 80,
           decoration: const BoxDecoration(
             color: greyProfileColor,
           ),
@@ -782,7 +781,8 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                         builder: (context) {
                           return StatefulBuilder(builder: (context, setState) {
                             return Padding(
-                              padding: const EdgeInsets.all(0.0),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 24.0, horizontal: 10),
                               child: Column(
                                 children: [
                                   const Row(children: [
@@ -813,7 +813,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                             if (value.isNotEmpty) {
                                               filteredServices = countriesList1
                                                   .where((element) => element
-                                                      .shortName
+                                                      .country
                                                       .toLowerCase()
                                                       .contains(value))
                                                   .toList();
@@ -878,7 +878,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                                                 )
                                               : null,
                                           title: Text(
-                                            filteredServices[index].shortName,
+                                            filteredServices[index].country,
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 color: blackColor,
@@ -914,12 +914,12 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       decoration: const BoxDecoration(
                         color: greyProfileColor,
                       ),
-                      child: ccCode != null
+                      child: ccCode != ""
                           ? Text(ccCode,
                               style: const TextStyle(
                                   color: Colors.black, fontSize: 14))
                           : const Text(
-                              "+1",
+                              "code",
                               style:
                                   TextStyle(color: Colors.black, fontSize: 14),
                             ),
