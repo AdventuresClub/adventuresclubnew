@@ -1182,70 +1182,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                   index: count,
                   children: [
                     BannerPage(getImages),
-                    particularWeekDays
-                        ? ListView(
-                            children: [
-                              for (int y = 0; y < onePlan.length; y++)
-                                CreatePlanOne(getProgramOneData, y),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              GestureDetector(
-                                onTap: addProgramOneData,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    const Image(
-                                        image: ExactAssetImage(
-                                            'images/add-circle.png'),
-                                        height: 20),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    MyText(
-                                      text: 'addMoreSchedule'.tr(),
-                                      color: bluishColor,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          )
-                        : SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                // for (int z = 0; z < pm.length; z++)
-                                CreateProgram(
-                                  // key: ValueKey(z.toString()),
-                                  getProgramData,
-                                  //z,
-                                  //pm[z],
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                // GestureDetector(
-                                //   onTap: addProgramData,
-                                //   child: Row(
-                                //     mainAxisAlignment: MainAxisAlignment.end,
-                                //     children: [
-                                //       const Image(
-                                //           image: ExactAssetImage(
-                                //               'images/add-circle.png'),
-                                //           height: 20),
-                                //       const SizedBox(
-                                //         width: 5,
-                                //       ),
-                                //       MyText(
-                                //         text: 'addMoreSchedule',
-                                //         color: bluishColor,
-                                //       ),
-                                //     ],
-                                //   ),
-                                // ),
-                              ],
-                            ),
-                          ),
+
                     CreateServicesDescription(
                       getActivityIds: getActivityId,
                       tapped: getIds,
@@ -1546,7 +1483,70 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                         }),
                       ),
                     ),
-
+                    particularWeekDays
+                        ? ListView(
+                            children: [
+                              for (int y = 0; y < onePlan.length; y++)
+                                CreatePlanOne(getProgramOneData, y),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              GestureDetector(
+                                onTap: addProgramOneData,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    const Image(
+                                        image: ExactAssetImage(
+                                            'images/add-circle.png'),
+                                        height: 20),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    MyText(
+                                      text: 'addMoreSchedule'.tr(),
+                                      color: bluishColor,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )
+                        : SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                // for (int z = 0; z < pm.length; z++)
+                                CreateProgram(
+                                  // key: ValueKey(z.toString()),
+                                  getProgramData,
+                                  //z,
+                                  //pm[z],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                // GestureDetector(
+                                //   onTap: addProgramData,
+                                //   child: Row(
+                                //     mainAxisAlignment: MainAxisAlignment.end,
+                                //     children: [
+                                //       const Image(
+                                //           image: ExactAssetImage(
+                                //               'images/add-circle.png'),
+                                //           height: 20),
+                                //       const SizedBox(
+                                //         width: 5,
+                                //       ),
+                                //       MyText(
+                                //         text: 'addMoreSchedule',
+                                //         color: bluishColor,
+                                //       ),
+                                //     ],
+                                //   ),
+                                // ),
+                              ],
+                            ),
+                          ),
                     Cost(
                       iLiveInController,
                       lat,
