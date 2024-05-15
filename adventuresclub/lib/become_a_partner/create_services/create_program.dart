@@ -1,15 +1,19 @@
 // ignore_for_file: avoid_print
 
+import 'package:adventuresclub/become_a_partner/create_program_main_page.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/services/create_services/create_services_program%20_model.dart';
+import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class CreateProgram extends StatefulWidget {
   final Function parseData;
-  final int index;
-  final CreateServicesProgramModel pm;
-  const CreateProgram(this.parseData, this.index, this.pm, {super.key});
+  // final int index;
+  //final CreateServicesProgramModel pm;
+  const CreateProgram(this.parseData, // this.index,
+      //this.pm,
+      {super.key});
 
   @override
   State<CreateProgram> createState() => _CreateProgramState();
@@ -31,6 +35,12 @@ class _CreateProgramState extends State<CreateProgram> {
   bool isTimeAfter = false;
   String formattedDate = "selectDate";
   bool loading = false;
+  List<CreateServicesProgramModel> pm = [
+    CreateServicesProgramModel("", DateTime.now(), DateTime.now(),
+        const Duration(), const Duration(), "", DateTime.now(), DateTime.now())
+  ];
+  DateTime startDate = DateTime.now();
+  //DateTime eDate = DateTime.now();
 
   @override
   void initState() {
@@ -44,7 +54,7 @@ class _CreateProgramState extends State<CreateProgram> {
     });
   }
 
-  void sendData() {
+  void sendData(int i) {
     Duration durationSt = Duration.zero;
     Duration durationEt = Duration.zero;
     if (startTime != null) {
@@ -74,24 +84,27 @@ class _CreateProgramState extends State<CreateProgram> {
           )
         : DateTime.now();
     CreateServicesProgramModel pm = CreateServicesProgramModel(
-      title,
-      sTime,
-      eTime,
-      durationSt,
-      durationEt,
-      description,
-      widget.pm.adventureStartDate,
-      widget.pm.adventureEndDate,
-    );
-    widget.parseData(pm, widget.index, isTimeAfter);
+        title,
+        sTime,
+        eTime,
+        durationSt,
+        durationEt,
+        description,
+        DateTime.now(),
+        //widget.pm.adventureStartDate,
+        DateTime.now()
+        //widget.pm.adventureEndDate,
+        );
+    widget.parseData(pm, i, isTimeAfter);
   }
 
-  Future<void> _selectDate(BuildContext context) async {
+  Future<void> _selectDate(BuildContext context, int i) async {
     DateTime? tDate = (await showDatePicker(
-        context: context,
-        initialDate: widget.pm.adventureStartDate,
-        firstDate: widget.pm.adventureStartDate,
-        lastDate: widget.pm.adventureEndDate));
+      context: context,
+      // initialDate: DateTime.now(), //widget.pm.adventureStartDate,
+      firstDate: DateTime.now(), //widget.pm.adventureStartDate,
+      lastDate: DateTime.now(),
+    )); //widget.pm.adventureEndDate));
     if (tDate != null) {
       pickedDate = tDate;
       setState(() {
@@ -99,11 +112,11 @@ class _CreateProgramState extends State<CreateProgram> {
         formattedDate =
             "${pickedDate.day}-${pickedDate.month}-${pickedDate.year}";
       });
-      sendData();
+      sendData(i);
     }
   }
 
-  Future pickTime(BuildContext context) async {
+  Future pickTime(BuildContext context, int i) async {
     final newTime = await showTimePicker(context: context, initialTime: time);
     if (newTime == null) return;
     setState(() {
@@ -113,10 +126,10 @@ class _CreateProgramState extends State<CreateProgram> {
       timeSt = Duration(hours: newTime.hour, minutes: newTime.minute);
     });
     print(startTime);
-    sendData();
+    sendData(i);
   }
 
-  Future pickEndTime(BuildContext context) async {
+  Future pickEndTime(BuildContext context, int i) async {
     final newEndTime = await showTimePicker(
       context: context, initialTime: time,
       //  sele
@@ -141,11 +154,11 @@ class _CreateProgramState extends State<CreateProgram> {
       });
       print(endTime);
     }
-    sendData();
+    sendData(i);
   }
 
-  void editComplete() {
-    sendData();
+  void editComplete(int i) {
+    sendData(i);
   }
 
   void pStartTime(BuildContext context) {}
@@ -158,26 +171,332 @@ class _CreateProgramState extends State<CreateProgram> {
     );
   }
 
+  void addProgramData() {
+    setState(() {
+      pm.add(CreateServicesProgramModel("", startDate, currentDate,
+          const Duration(), const Duration(), "", startDate, currentDate));
+    });
+  }
+
+  void navMainPage() async {
+    CreateServicesProgramModel? p =
+        await Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return const CreateProgramMainPage();
+    }));
+    if (p != null) {
+      pm.add(p);
+    }
+    setState(() {});
+  }
+
+  void deleteRow(int i) {
+    pm.removeAt(i);
+    setState(() {});
+  }
+
+  String extractDate(DateTime dateTime) {
+    String date =
+        '${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}';
+
+    return date;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 24.0),
       child: Column(
         children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: TextField(
-                onChanged: (value) {
-                  sendData();
-                },
-                onEditingComplete: () {
-                  FocusScope.of(context).unfocus();
-                  sendData();
-                },
-                keyboardType: TextInputType.multiline,
-                controller: titleController,
-                decoration: Constants.getInputDecoration("scheduleTitle".tr())),
-          ),
+          for (int z = 0; z < pm.length; z++)
+            Column(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: lightGreyColor,
+                    // border: Border.all(
+                    //   width: 1,
+                    //   color: greyColor.withOpacity(0.2),
+                    // ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                              color: bluishColor.withOpacity(0.8),
+                              borderRadius: BorderRadius.circular(12)),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 0.0, horizontal: 12),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                // const Icon(
+                                //   Icons.numbers,
+                                //   color: whiteColor,
+                                // ),
+                                // const SizedBox(
+                                //   width: 5,
+                                // ),
+                                Text(
+                                  "${"Program"} ${z + 1}",
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: whiteColor),
+                                ),
+                                IconButton(
+                                    onPressed: () => deleteRow(z),
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      color: whiteColor,
+                                      size: 24,
+                                    )),
+                              ],
+                            ),
+                          ),
+                        ),
+                        // const Divider(
+                        //   endIndent: 10,
+                        //   indent: 10,
+                        // ),
+                        // const Icon(
+                        //   Icons.schedule,
+                        //   color: bluishColor,
+                        // ),
+                        ListTile(
+                          // leading: const Icon(Icons.notification_important_sharp),
+                          title: RichText(
+                            text: TextSpan(
+                              text: 'Schedule Title : ',
+                              style: const TextStyle(
+                                  color: bluishColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: "Raleway"),
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: pm[z].title,
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      color: blackColor,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: "Raleway"),
+                                ),
+                              ],
+                            ),
+                          ),
+                          //Text(pm[z].title, ),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                  text: 'Start Time : ',
+                                  style: const TextStyle(
+                                      color: bluishColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Raleway"),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: extractDate(pm[z].startDate),
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          color: blackColor,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "Raleway"),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              // Text(pm[z].startTime.toString()),
+                              // Text(pm[z].endTime.toString()),
+                              //Text(pm[z].description)
+                              RichText(
+                                text: TextSpan(
+                                  text: 'Description : ',
+                                  style: const TextStyle(
+                                      color: bluishColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Raleway"),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: pm[z].description,
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          color: blackColor,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "Raleway"),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          //trailing: ,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                // SizedBox(
+                //   width: MediaQuery.of(context).size.width,
+                //   child: TextField(
+                //       onChanged: (value) {
+                //         sendData(z);
+                //       },
+                //       onEditingComplete: () {
+                //         FocusScope.of(context).unfocus();
+                //         sendData(z);
+                //       },
+                //       keyboardType: TextInputType.multiline,
+                //       controller: pm[z].title.to,
+                //       decoration:
+                //           Constants.getInputDecoration("scheduleTitle".tr())),
+                // ),
+                const SizedBox(
+                  height: 10,
+                ),
+                // GestureDetector(
+                //   onTap: () => _selectDate(context, z),
+                //   child: Container(
+                //     height: 50,
+                //     padding: const EdgeInsets.symmetric(vertical: 0),
+                //     //width: MediaQuery.of(context).size.width / 1,
+                //     decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(10),
+                //       color: lightGreyColor,
+                //       border: Border.all(
+                //         width: 1,
+                //         color: greyColor.withOpacity(0.2),
+                //       ),
+                //     ),
+                //     child: ListTile(
+                //       // key: ValueKey("${widget.index}num"),
+                //       contentPadding: const EdgeInsets.symmetric(
+                //           vertical: 0, horizontal: 10),
+                //       title: Text(
+                //         formattedDate.tr(),
+                //         style: TextStyle(color: blackColor.withOpacity(0.6)),
+                //       ),
+                //       trailing: Icon(
+                //         Icons.calendar_today,
+                //         color: blackColor.withOpacity(0.6),
+                //         size: 20,
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //   children: [
+                //     Expanded(
+                //       child: GestureDetector(
+                //         onTap: () => pickTime(context, z),
+                //         child: Container(
+                //           height: 50,
+                //           padding: const EdgeInsets.symmetric(vertical: 0),
+                //           //width: MediaQuery.of(context).size.width / 1,
+                //           decoration: BoxDecoration(
+                //             borderRadius: BorderRadius.circular(10),
+                //             color: lightGreyColor,
+                //             border: Border.all(
+                //               width: 1,
+                //               color: greyColor.withOpacity(0.2),
+                //             ),
+                //           ),
+                //           child: ListTile(
+                //             contentPadding: const EdgeInsets.symmetric(
+                //                 vertical: 0, horizontal: 10),
+                //             leading: Text(
+                //               sTime.tr(),
+
+                //               //startTime.
+                //               //"${startTime!.hour.toString().padLeft(2, "0")} : ${startTime!.minute.toString().padLeft(2, '0')}",
+                //               style: TextStyle(
+                //                   fontSize: 14,
+                //                   color: blackColor.withOpacity(0.5)),
+                //             ),
+                //             trailing: Icon(
+                //               Icons.punch_clock_sharp,
+                //               color: blackColor.withOpacity(0.6),
+                //               size: 20,
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //     const SizedBox(
+                //       width: 10,
+                //     ),
+                //     Expanded(
+                //       child: GestureDetector(
+                //         onTap: () => pickEndTime(context, z),
+                //         child: Container(
+                //           height: 50,
+                //           padding: const EdgeInsets.symmetric(vertical: 0),
+                //           //width: MediaQuery.of(context).size.width / 1,
+                //           decoration: BoxDecoration(
+                //             borderRadius: BorderRadius.circular(10),
+                //             color: lightGreyColor,
+                //             border: Border.all(
+                //               width: 1,
+                //               color: greyColor.withOpacity(0.2),
+                //             ),
+                //           ),
+                //           child: ListTile(
+                //             contentPadding: const EdgeInsets.symmetric(
+                //                 vertical: 0, horizontal: 10),
+                //             leading: Text(
+                //               eTime.tr(),
+                //               style: TextStyle(
+                //                   fontSize: 14,
+                //                   color: blackColor.withOpacity(0.5)),
+
+                //               //"${endTime.hour.toString().padLeft(2, "0")} : ${endTime.minute.toString().padLeft(2, '0')}",
+                //             ),
+                //             trailing: Icon(
+                //               Icons.lock_clock_sharp,
+                //               color: blackColor.withOpacity(0.6),
+                //               size: 20,
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
+                // SizedBox(
+                //   width: MediaQuery.of(context).size.width,
+                //   child: TextField(
+                //       maxLines: 5,
+                //       onChanged: (value) {
+                //         sendData(z);
+                //       },
+                //       onEditingComplete: () {
+                //         FocusScope.of(context).unfocus();
+                //         sendData(z);
+                //       },
+                //       keyboardType: TextInputType.multiline,
+                //       controller: scheduleController,
+                //       decoration: Constants.getInputDecoration(
+                //           "scheduleDescription".tr())),
+                // ),
+              ],
+            ),
           // TFWithSize(
           //   "Schedule Title",
           //   titleController,
@@ -186,137 +505,23 @@ class _CreateProgramState extends State<CreateProgram> {
           //   1,
           //   onEdit: editComplete,
           // ),
-          const SizedBox(
-            height: 10,
-          ),
           GestureDetector(
-            onTap: () => _selectDate(context),
-            child: Container(
-              height: 50,
-              padding: const EdgeInsets.symmetric(vertical: 0),
-              //width: MediaQuery.of(context).size.width / 1,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: lightGreyColor,
-                border: Border.all(
-                  width: 1,
-                  color: greyColor.withOpacity(0.2),
+            onTap: navMainPage, //addProgramData,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const Image(
+                    image: ExactAssetImage('images/add-circle.png'),
+                    height: 20),
+                const SizedBox(
+                  width: 5,
                 ),
-              ),
-              child: ListTile(
-                key: ValueKey("${widget.index}num"),
-                contentPadding:
-                    const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                title: Text(
-                  formattedDate.tr(),
-                  style: TextStyle(color: blackColor.withOpacity(0.6)),
+                MyText(
+                  text: 'addMoreSchedule',
+                  color: bluishColor,
                 ),
-                trailing: Icon(
-                  Icons.calendar_today,
-                  color: blackColor.withOpacity(0.6),
-                  size: 20,
-                ),
-              ),
+              ],
             ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Expanded(
-                child: GestureDetector(
-                  onTap: () => pickTime(context),
-                  child: Container(
-                    height: 50,
-                    padding: const EdgeInsets.symmetric(vertical: 0),
-                    //width: MediaQuery.of(context).size.width / 1,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: lightGreyColor,
-                      border: Border.all(
-                        width: 1,
-                        color: greyColor.withOpacity(0.2),
-                      ),
-                    ),
-                    child: ListTile(
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 0, horizontal: 10),
-                      leading: Text(
-                        sTime.tr(),
-
-                        //startTime.
-                        //"${startTime!.hour.toString().padLeft(2, "0")} : ${startTime!.minute.toString().padLeft(2, '0')}",
-                        style: TextStyle(
-                            fontSize: 14, color: blackColor.withOpacity(0.5)),
-                      ),
-                      trailing: Icon(
-                        Icons.punch_clock_sharp,
-                        color: blackColor.withOpacity(0.6),
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                child: GestureDetector(
-                  onTap: () => pickEndTime(context),
-                  child: Container(
-                    height: 50,
-                    padding: const EdgeInsets.symmetric(vertical: 0),
-                    //width: MediaQuery.of(context).size.width / 1,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: lightGreyColor,
-                      border: Border.all(
-                        width: 1,
-                        color: greyColor.withOpacity(0.2),
-                      ),
-                    ),
-                    child: ListTile(
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 0, horizontal: 10),
-                      leading: Text(
-                        eTime.tr(),
-                        style: TextStyle(
-                            fontSize: 14, color: blackColor.withOpacity(0.5)),
-
-                        //"${endTime.hour.toString().padLeft(2, "0")} : ${endTime.minute.toString().padLeft(2, '0')}",
-                      ),
-                      trailing: Icon(
-                        Icons.lock_clock_sharp,
-                        color: blackColor.withOpacity(0.6),
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: TextField(
-                maxLines: 5,
-                onChanged: (value) {
-                  sendData();
-                },
-                onEditingComplete: () {
-                  FocusScope.of(context).unfocus();
-                  sendData();
-                },
-                keyboardType: TextInputType.multiline,
-                controller: scheduleController,
-                decoration:
-                    Constants.getInputDecoration("scheduleDescription".tr())),
           ),
         ],
       ),

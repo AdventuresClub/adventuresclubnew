@@ -1063,125 +1063,189 @@ class _CreateNewServicesState extends State<CreateNewServices> {
             weight: FontWeight.bold,
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: MyText(
-                  text: 'justFollowSimpleFourStepsToListUpYourAdventure'.tr(),
-                  size: 12,
-                  weight: FontWeight.w600,
-                  color: greyColor,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              StepProgressIndicator(
-                padding: 0,
-                totalSteps: text1.length,
-                currentStep: count + 1,
-                size: 85,
-                selectedColor: bluishColor,
-                unselectedColor: greyColor,
-                customStep: (index, color, _) => color == bluishColor
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 12),
-                                decoration: BoxDecoration(
-                                    color: bluishColor,
-                                    borderRadius: BorderRadius.circular(65)),
-                                child: Center(
-                                    child: MyText(
-                                  text: text1[index],
-                                  color: whiteColor,
-                                  weight: FontWeight.w700,
-                                  fontFamily: 'Roboto',
-                                  size: 12,
-                                )),
-                              ),
-                              const Expanded(
-                                child: Divider(
-                                  color: bluishColor,
-                                  thickness: 7,
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: MyText(
+                    text: 'justFollowSimpleFourStepsToListUpYourAdventure'.tr(),
+                    size: 12,
+                    weight: FontWeight.w600,
+                    color: greyColor,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                StepProgressIndicator(
+                  padding: 0,
+                  totalSteps: text1.length,
+                  currentStep: count + 1,
+                  size: 85,
+                  selectedColor: bluishColor,
+                  unselectedColor: greyColor,
+                  customStep: (index, color, _) => color == bluishColor
+                      ? Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 12),
+                                  decoration: BoxDecoration(
+                                      color: bluishColor,
+                                      borderRadius: BorderRadius.circular(65)),
+                                  child: Center(
+                                      child: MyText(
+                                    text: text1[index],
+                                    color: whiteColor,
+                                    weight: FontWeight.w700,
+                                    fontFamily: 'Roboto',
+                                    size: 12,
+                                  )),
                                 ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              MyText(
-                                text: stepTitle[index],
-                                color: bluishColor,
-                                weight: FontWeight.w700,
-                                fontFamily: 'Roboto',
-                                size: 12,
-                              ),
-                            ],
-                          ),
-                        ],
-                      )
-                    : Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 12),
-                                decoration: BoxDecoration(
-                                    color: greyColor3,
-                                    borderRadius: BorderRadius.circular(65)),
-                                child: Center(
-                                    child: MyText(
-                                  text: text1[index],
-                                  color: whiteColor,
-                                  weight: FontWeight.w700,
-                                  fontFamily: 'Roboto',
-                                  size: 12,
-                                )),
-                              ),
-                              if (index != 3)
                                 const Expanded(
                                   child: Divider(
-                                    color: greyColor,
+                                    color: bluishColor,
                                     thickness: 7,
                                   ),
                                 ),
-                            ],
-                          ),
-                          MyText(
-                            text: stepTitle[index],
-                            color: greyColor,
-                            weight: FontWeight.w700,
-                            fontFamily: 'Roboto',
-                            size: 12,
-                          ),
-                        ],
-                      ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              //Text((selectedActivitesId.join(""))),
-              Expanded(
-                child: IndexedStack(
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                MyText(
+                                  text: stepTitle[index],
+                                  color: bluishColor,
+                                  weight: FontWeight.w700,
+                                  fontFamily: 'Roboto',
+                                  size: 12,
+                                ),
+                              ],
+                            ),
+                          ],
+                        )
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 12),
+                                  decoration: BoxDecoration(
+                                      color: greyColor3,
+                                      borderRadius: BorderRadius.circular(65)),
+                                  child: Center(
+                                      child: MyText(
+                                    text: text1[index],
+                                    color: whiteColor,
+                                    weight: FontWeight.w700,
+                                    fontFamily: 'Roboto',
+                                    size: 12,
+                                  )),
+                                ),
+                                if (index != 3)
+                                  const Expanded(
+                                    child: Divider(
+                                      color: greyColor,
+                                      thickness: 7,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                            MyText(
+                              text: stepTitle[index],
+                              color: greyColor,
+                              weight: FontWeight.w700,
+                              fontFamily: 'Roboto',
+                              size: 12,
+                            ),
+                          ],
+                        ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                //Text((selectedActivitesId.join(""))),
+                IndexedStack(
                   index: count,
                   children: [
                     BannerPage(getImages),
+                    particularWeekDays
+                        ? ListView(
+                            children: [
+                              for (int y = 0; y < onePlan.length; y++)
+                                CreatePlanOne(getProgramOneData, y),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              GestureDetector(
+                                onTap: addProgramOneData,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    const Image(
+                                        image: ExactAssetImage(
+                                            'images/add-circle.png'),
+                                        height: 20),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    MyText(
+                                      text: 'addMoreSchedule'.tr(),
+                                      color: bluishColor,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )
+                        : SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                // for (int z = 0; z < pm.length; z++)
+                                CreateProgram(
+                                  // key: ValueKey(z.toString()),
+                                  getProgramData,
+                                  //z,
+                                  //pm[z],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                // GestureDetector(
+                                //   onTap: addProgramData,
+                                //   child: Row(
+                                //     mainAxisAlignment: MainAxisAlignment.end,
+                                //     children: [
+                                //       const Image(
+                                //           image: ExactAssetImage(
+                                //               'images/add-circle.png'),
+                                //           height: 20),
+                                //       const SizedBox(
+                                //         width: 5,
+                                //       ),
+                                //       MyText(
+                                //         text: 'addMoreSchedule',
+                                //         color: bluishColor,
+                                //       ),
+                                //     ],
+                                //   ),
+                                // ),
+                              ],
+                            ),
+                          ),
                     CreateServicesDescription(
                       getActivityIds: getActivityId,
                       tapped: getIds,
@@ -1482,67 +1546,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                         }),
                       ),
                     ),
-                    particularWeekDays
-                        ? ListView(
-                            children: [
-                              for (int y = 0; y < onePlan.length; y++)
-                                CreatePlanOne(getProgramOneData, y),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              GestureDetector(
-                                onTap: addProgramOneData,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    const Image(
-                                        image: ExactAssetImage(
-                                            'images/add-circle.png'),
-                                        height: 20),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    MyText(
-                                      text: 'addMoreSchedule'.tr(),
-                                      color: bluishColor,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          )
-                        : ListView(
-                            children: [
-                              for (int z = 0; z < pm.length; z++)
-                                CreateProgram(
-                                    key: ValueKey(z.toString()),
-                                    getProgramData,
-                                    z,
-                                    pm[z]),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              GestureDetector(
-                                onTap: addProgramData,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    const Image(
-                                        image: ExactAssetImage(
-                                            'images/add-circle.png'),
-                                        height: 20),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    MyText(
-                                      text: 'addMoreSchedule',
-                                      color: bluishColor,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
+
                     Cost(
                       iLiveInController,
                       lat,
@@ -1554,10 +1558,11 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                       minimumRequirement,
                       terms,
                     ),
+                    // Container(child: Text("testting"))
                   ],
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
         bottomNavigationBar: BottomButton(bgColor: whiteColor, onTap: next),

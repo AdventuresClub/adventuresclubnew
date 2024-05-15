@@ -233,69 +233,70 @@ class _CostState extends State<Cost> {
   abc() {}
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16.0),
-        child: Column(children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: TextField(
-              onTap: openGoogle,
-              readOnly: true,
-              controller: widget.iliveController,
-              decoration: InputDecoration(
-                contentPadding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                hintText: 'enterGeolocation'.tr(),
-                filled: true,
-                fillColor: lightGreyColor,
-                suffixIcon: GestureDetector(
-                  onTap: openGoogle,
-                  child: const Image(
-                    image: ExactAssetImage('images/map-symbol.png'),
-                    height: 15,
-                    width: 20,
-                  ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      child: Column(children: [
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: TextField(
+            onTap: openGoogle,
+            readOnly: true,
+            controller: widget.iliveController,
+            decoration: InputDecoration(
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+              hintText: 'enterGeolocation'.tr(),
+              filled: true,
+              fillColor: lightGreyColor,
+              suffixIcon: GestureDetector(
+                onTap: openGoogle,
+                child: const Image(
+                  image: ExactAssetImage('images/map-symbol.png'),
+                  height: 15,
+                  width: 20,
                 ),
-                border: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                  borderSide:
-                      BorderSide(color: greyColor.withOpacity(0.5), width: 1.5),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                  borderSide:
-                      BorderSide(color: greyColor.withOpacity(0.5), width: 1.5),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                  borderSide:
-                      BorderSide(color: greyColor.withOpacity(0.5), width: 1.5),
-                ),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                borderSide:
+                    BorderSide(color: greyColor.withOpacity(0.5), width: 1.5),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                borderSide:
+                    BorderSide(color: greyColor.withOpacity(0.5), width: 1.5),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                borderSide:
+                    BorderSide(color: greyColor.withOpacity(0.5), width: 1.5),
               ),
             ),
           ),
-          const SizedBox(
-            height: 10,
-          ),
-          TFWithSize(
-            'typeSpecificAddress/Location',
-            widget.specificAddress,
-            15,
-            lightGreyColor,
-            1,
-            type: true,
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                children: [
-                  TFWithSize(
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        TFWithSize(
+          'typeSpecificAddress/Location',
+          widget.specificAddress,
+          15,
+          lightGreyColor,
+          1,
+          type: true,
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width / 2.2,
+                  child: TFWithSize(
                     //label: "Set Cost",
                     show: TextInputType.number,
                     //'setCost',
@@ -309,184 +310,180 @@ class _CostState extends State<Cost> {
                     maximumLetters: 10,
                     label: "setCost".tr(),
                   ),
-                  const SizedBox(
-                    width: 10,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width / 2.2,
+                  child: MyText(
+                    text: "includingGears",
+                    color: redColor,
+                    size: 12,
+                    weight: FontWeight.bold,
                   ),
-                  SizedBox(
-                    width: 180,
-                    child: Expanded(
-                      child: MyText(
-                        text: "includingGears",
-                        color: redColor,
-                        size: 12,
-                        weight: FontWeight.bold,
-                      ),
-                    ),
+                ),
+              ],
+            ),
+            // const SizedBox(
+            //   width: 10,
+            // ),
+            Column(
+              children: [
+                TFWithSize(
+                  show: TextInputType.number,
+                  "${Constants.countryCurrency} ${"(${Constants.country} Currency)"}",
+                  widget.costTwo,
+                  16,
+                  lightGreyColor,
+                  2.2,
+                  type: true,
+                  maximumLetters: 10,
+                  label: "setCost".tr(),
+                ),
+                SizedBox(
+                  width: 180,
+                  child: MyText(
+                    text: "excludingGears",
+                    color: redColor,
+                    size: 12,
+                    weight: FontWeight.bold,
                   ),
-                ],
-              ),
-              // const SizedBox(
-              //   width: 10,
-              // ),
-              Column(
-                children: [
-                  TFWithSize(
-                    show: TextInputType.number,
-                    "${Constants.countryCurrency} ${"(${Constants.country} Currency)"}",
-                    widget.costTwo,
-                    16,
-                    lightGreyColor,
-                    2.2,
-                    type: true,
-                    maximumLetters: 10,
-                    label: "setCost".tr(),
-                  ),
-                  SizedBox(
-                    width: 180,
-                    child: Expanded(
-                      child: MyText(
-                        text: "excludingGears",
-                        color: redColor,
-                        size: 12,
-                        weight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
+            ),
 
-              // Column(
-              //   children: [
-              //     Container(
-              //       height: 55,
-              //       width: 120,
-              //       //width: MediaQuery.of(context).size.width / 2.4,
-              //       padding: const EdgeInsets.symmetric(
-              //           horizontal: 20, vertical: 12),
-              //       decoration: BoxDecoration(
-              //         color: lightGreyColor,
-              //         border: Border.all(
-              //             color: greyColor.withOpacity(0.5), width: 1.5),
-              //         borderRadius: BorderRadius.circular(8),
-              //       ),
-              //       child: Center(
-              //         child: MyText(
-              //           text: "omr", //getCountry.toString(),
-              //           color: blackTypeColor.withOpacity(0.5),
-              //           size: 14,
-              //           weight: FontWeight.w500,
-              //         ),
-              //       ),
-              //     ),
-              //     const SizedBox(height: 22),
-              //   ],
-              // ),
+            // Column(
+            //   children: [
+            //     Container(
+            //       height: 55,
+            //       width: 120,
+            //       //width: MediaQuery.of(context).size.width / 2.4,
+            //       padding: const EdgeInsets.symmetric(
+            //           horizontal: 20, vertical: 12),
+            //       decoration: BoxDecoration(
+            //         color: lightGreyColor,
+            //         border: Border.all(
+            //             color: greyColor.withOpacity(0.5), width: 1.5),
+            //         borderRadius: BorderRadius.circular(8),
+            //       ),
+            //       child: Center(
+            //         child: MyText(
+            //           text: "omr", //getCountry.toString(),
+            //           color: blackTypeColor.withOpacity(0.5),
+            //           size: 14,
+            //           weight: FontWeight.w500,
+            //         ),
+            //       ),
+            //     ),
+            //     const SizedBox(height: 22),
+            //   ],
+            // ),
 
-              //DdButton(5.5)
-            ],
-          ),
-          const SizedBox(height: 2),
-          // Column(
-          //   crossAxisAlignment: CrossAxisAlignment.start,
-          //   children: [
-          //     Container(
-          //       height: 55,
-          //       width: 120,
-          //       //width: MediaQuery.of(context).size.width / 2.4,
-          //       padding:
-          //           const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          //       decoration: BoxDecoration(
-          //         color: lightGreyColor,
-          //         border:
-          //             Border.all(color: greyColor.withOpacity(0.5), width: 1.5),
-          //         borderRadius: BorderRadius.circular(8),
-          //       ),
-          //       child: Center(
-          //         child: MyText(
-          //           text: "omr", //getCountry.toString(),
-          //           color: blackTypeColor.withOpacity(0.5),
-          //           size: 14,
-          //           weight: FontWeight.w500,
-          //         ),
-          //       ),
-          //     ),
-          //     const SizedBox(height: 22),
-          //   ],
-          // ),
-          // Row(
-          //   children: [
-          //     // SizedBox(
-          //     //   width: 190,
-          //     //   child: MyText(
-          //     //     text: "includingGears",
-          //     //     color: redColor,
-          //     //     size: 12,
-          //     //     weight: FontWeight.bold,
-          //     //   ),
-          //     // ),
-          //     // SizedBox(
-          //     //   width: 130,
-          //     //   child: MyText(
-          //     //     text: "excludingGears",
-          //     //     color: redColor,
-          //     //     size: 12,
-          //     //     weight: FontWeight.bold,
-          //     //   ),
-          //     // ),
-          //   ],
-          // ),
-          // Row(
-          //         children: [
-          //           MyText(
-          //             text: "Including Gears & Other Taxes",
-          //             color: redColor,
-          //             size: 12,
-          //             weight: FontWeight.bold,
-          //           ),
-          //           MyText(
-          //             text: "Excluding Gears & Other Taxes",
-          //             color: redColor,
-          //             size: 12,
-          //             weight: FontWeight.bold,
-          //           )
-          //         ],
-          //       ),
-          const SizedBox(height: 10),
-          // Align(
-          //     alignment: Alignment.centerLeft,
-          //     child: MyText(
-          //       text: 'Terms and conditions',
-          //       color: blackTypeColor,
-          //       weight: FontWeight.w500,
-          //     )),
-          MultiLineField(
-            label: 'prerequisites',
-            'prerequisites',
-            5,
-            lightGreyColor,
-            widget.preRequisites,
-            show: true,
-          ),
-          const SizedBox(height: 10),
-          MultiLineField(
-            label: 'minimumRequirements',
-            'minimumRequirements',
-            5,
-            lightGreyColor,
-            widget.minimumRequirement,
-            show: true,
-          ),
-          const SizedBox(height: 10),
-          MultiLineField(
-            label: 'termsAndConditions',
-            'termsAndConditions',
-            4,
-            lightGreyColor,
-            widget.terms,
-            show: true,
-          ),
-        ]),
-      ),
+            //DdButton(5.5)
+          ],
+        ),
+        const SizedBox(height: 2),
+        // Column(
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     Container(
+        //       height: 55,
+        //       width: 120,
+        //       //width: MediaQuery.of(context).size.width / 2.4,
+        //       padding:
+        //           const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        //       decoration: BoxDecoration(
+        //         color: lightGreyColor,
+        //         border:
+        //             Border.all(color: greyColor.withOpacity(0.5), width: 1.5),
+        //         borderRadius: BorderRadius.circular(8),
+        //       ),
+        //       child: Center(
+        //         child: MyText(
+        //           text: "omr", //getCountry.toString(),
+        //           color: blackTypeColor.withOpacity(0.5),
+        //           size: 14,
+        //           weight: FontWeight.w500,
+        //         ),
+        //       ),
+        //     ),
+        //     const SizedBox(height: 22),
+        //   ],
+        // ),
+        // Row(
+        //   children: [
+        //     // SizedBox(
+        //     //   width: 190,
+        //     //   child: MyText(
+        //     //     text: "includingGears",
+        //     //     color: redColor,
+        //     //     size: 12,
+        //     //     weight: FontWeight.bold,
+        //     //   ),
+        //     // ),
+        //     // SizedBox(
+        //     //   width: 130,
+        //     //   child: MyText(
+        //     //     text: "excludingGears",
+        //     //     color: redColor,
+        //     //     size: 12,
+        //     //     weight: FontWeight.bold,
+        //     //   ),
+        //     // ),
+        //   ],
+        // ),
+        // Row(
+        //         children: [
+        //           MyText(
+        //             text: "Including Gears & Other Taxes",
+        //             color: redColor,
+        //             size: 12,
+        //             weight: FontWeight.bold,
+        //           ),
+        //           MyText(
+        //             text: "Excluding Gears & Other Taxes",
+        //             color: redColor,
+        //             size: 12,
+        //             weight: FontWeight.bold,
+        //           )
+        //         ],
+        //       ),
+        const SizedBox(height: 10),
+        // Align(
+        //     alignment: Alignment.centerLeft,
+        //     child: MyText(
+        //       text: 'Terms and conditions',
+        //       color: blackTypeColor,
+        //       weight: FontWeight.w500,
+        //     )),
+        MultiLineField(
+          label: 'prerequisites',
+          'prerequisites',
+          5,
+          lightGreyColor,
+          widget.preRequisites,
+          show: true,
+        ),
+        const SizedBox(height: 10),
+        MultiLineField(
+          label: 'minimumRequirements',
+          'minimumRequirements',
+          5,
+          lightGreyColor,
+          widget.minimumRequirement,
+          show: true,
+        ),
+        const SizedBox(height: 10),
+        MultiLineField(
+          label: 'termsAndConditions',
+          'termsAndConditions',
+          4,
+          lightGreyColor,
+          widget.terms,
+          show: true,
+        ),
+      ]),
     );
   }
 }
