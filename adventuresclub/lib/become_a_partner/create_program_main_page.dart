@@ -4,7 +4,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class CreateProgramMainPage extends StatefulWidget {
-  const CreateProgramMainPage({super.key});
+  final DateTime startTime;
+  final DateTime endTime;
+  const CreateProgramMainPage(
+      {required this.startTime, required this.endTime, super.key});
 
   @override
   State<CreateProgramMainPage> createState() => _CreateProgramMainPageState();
@@ -31,8 +34,11 @@ class _CreateProgramMainPageState extends State<CreateProgramMainPage> {
     DateTime? tDate = (await showDatePicker(
       context: context,
       // initialDate: DateTime.now(), //widget.pm.adventureStartDate,
+      //firstDate: DateTime.now(), //widget.pm.adventureStartDate,
+      //lastDate: DateTime.now(),
+      initialDate: widget.startTime, //widget.pm.adventureStartDate,
       firstDate: DateTime.now(), //widget.pm.adventureStartDate,
-      lastDate: DateTime.now(),
+      lastDate: widget.endTime,
     )); //widget.pm.adventureEndDate));
     if (tDate != null) {
       pickedDate = tDate;

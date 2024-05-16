@@ -134,8 +134,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     // addProgramData();
   }
 
-  void getProgramData(CreateServicesProgramModel data, int index, bool time) {
-    pm[index] = CreateServicesProgramModel(
+  void getProgramData(CreateServicesProgramModel data) {
+    pm.add(CreateServicesProgramModel(
         data.title,
         data.startDate,
         data.endDate,
@@ -143,10 +143,15 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         data.endTime,
         data.description,
         data.adventureStartDate,
-        data.adventureEndDate);
-    isTimeAfter = time;
+        data.adventureEndDate));
+    //isTimeAfter = time;
     setState(() {});
     //  pm.add(data);
+  }
+
+  void deleteProgramData(int i) {
+    pm.removeAt(i);
+    setState(() {});
   }
 
   void getProgramOneData(CreateServicesPlanOneModel data, int index) {
@@ -1517,11 +1522,14 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                               children: [
                                 // for (int z = 0; z < pm.length; z++)
                                 CreateProgram(
-                                  // key: ValueKey(z.toString()),
-                                  getProgramData,
-                                  //z,
-                                  //pm[z],
-                                ),
+                                    // key: ValueKey(z.toString()),
+                                    getProgramData,
+                                    deleteProgramData,
+                                    startDate,
+                                    currentDate
+                                    //z,
+                                    //pm[z],
+                                    ),
                                 const SizedBox(
                                   height: 10,
                                 ),
