@@ -190,8 +190,9 @@ class _CreateProgramState extends State<CreateProgram> {
     }));
     if (p != null) {
       pm.add(p);
+      widget.parseData(p);
     }
-    widget.parseData(p);
+
     setState(() {});
   }
 
