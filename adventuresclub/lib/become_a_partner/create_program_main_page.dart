@@ -107,7 +107,7 @@ class _CreateProgramMainPageState extends State<CreateProgramMainPage> {
       durationSt = Duration(hours: startTime!.hour, minutes: startTime!.minute);
     }
     if (endTime != null) {
-      durationEt = Duration(hours: startTime!.hour, minutes: startTime!.minute);
+      durationEt = Duration(hours: endTime!.hour, minutes: endTime!.minute);
     }
     DateTime sTime = startTime != null
         ? DateTime(

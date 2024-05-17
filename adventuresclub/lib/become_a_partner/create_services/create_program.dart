@@ -4,7 +4,6 @@ import 'package:adventuresclub/become_a_partner/create_program_main_page.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/services/create_services/create_services_program%20_model.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class CreateProgram extends StatefulWidget {
@@ -377,7 +376,7 @@ class _CreateProgramState extends State<CreateProgram> {
                                     //Text(formatDuration(pm[z].startTime)),
                                     RichText(
                                       text: TextSpan(
-                                        text: 'Start Time : ',
+                                        text: 'End Time : ',
                                         style: const TextStyle(
                                             color: bluishColor,
                                             fontSize: 16,
