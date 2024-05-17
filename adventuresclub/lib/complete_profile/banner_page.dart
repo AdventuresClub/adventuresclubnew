@@ -163,264 +163,261 @@ class _BannerPageState extends State<BannerPage> {
   Widget build(BuildContext context) {
     return loading
         ? Text("loading".tr())
-        : SingleChildScrollView(
-            child: Column(
-              children: [
-                GestureDetector(
-                  onTap: addImageWidget,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      const Image(
-                          image: ExactAssetImage('images/add-circle.png'),
-                          height: 20),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      MyText(
-                        text: 'addMore'.tr(),
-                        color: bluishColor,
-                      )
-                    ],
-                  ),
+        : Column(
+            children: [
+              GestureDetector(
+                onTap: addImageWidget,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    const Image(
+                        image: ExactAssetImage('images/add-circle.png'),
+                        height: 20),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    MyText(
+                      text: 'addMore'.tr(),
+                      color: bluishColor,
+                    )
+                  ],
                 ),
-                Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      children: [
-                        for (int y = 0; y < imageBanners.length; y++)
-                          //ImageContainer(imageBanners[y], addMedia, y),
-                          imageBanners[y].path.isEmpty
-                              ? Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    padding: const EdgeInsets.all(20),
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: blackTypeColor
-                                                .withOpacity(0.2)),
-                                        borderRadius: BorderRadius.circular(12),
-                                        color: lightGreyColor),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        const SizedBox(height: 20),
-                                        GestureDetector(
-                                          onTap: () => pickMedia(y),
-                                          child: const Center(
-                                            child: Image(
-                                              image: ExactAssetImage(
-                                                  'images/upload.png'),
-                                              height: 45,
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 20,
-                                        ),
-                                        MyText(
-                                          text: 'tapToBrowse'.tr(),
-                                          color: greyColor,
-                                        ),
-                                        const SizedBox(
-                                          height: 20,
-                                        ),
-                                        MyText(
-                                          text:
-                                              'addBannerImageToEffectivelyAdventure'
-                                                  .tr(),
-                                          color: greyColor,
-                                          align: TextAlign.center,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              : Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Stack(
+              ),
+              Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    children: [
+                      for (int y = 0; y < imageBanners.length; y++)
+                        //ImageContainer(imageBanners[y], addMedia, y),
+                        imageBanners[y].path.isEmpty
+                            ? Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  padding: const EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color:
+                                              blackTypeColor.withOpacity(0.2)),
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: lightGreyColor),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Container(
-                                        padding: const EdgeInsets.all(20),
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: blackTypeColor
-                                                    .withOpacity(0.2)),
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            color: lightGreyColor),
-                                        child: Center(
-                                          child: Image.file(
-                                            imageBanners[y],
-                                            fit: BoxFit.fill,
-                                            height: 150,
-                                            width: 300,
+                                      const SizedBox(height: 20),
+                                      GestureDetector(
+                                        onTap: () => pickMedia(y),
+                                        child: const Center(
+                                          child: Image(
+                                            image: ExactAssetImage(
+                                                'images/upload.png'),
+                                            height: 45,
                                           ),
                                         ),
                                       ),
-                                      Positioned(
-                                        right: 5,
-                                        top: 10,
-                                        child: GestureDetector(
-                                          onTap: () => editPickMedia(y),
-                                          child: Container(
-                                            height: 40,
-                                            width: 40,
-                                            decoration: BoxDecoration(
-                                              color: blackColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(32),
-                                            ),
-                                            child: const Icon(
-                                              Icons.edit,
-                                              color: whiteColor,
-                                            ),
-                                          ),
-                                        ),
+                                      const SizedBox(
+                                        height: 20,
                                       ),
-                                      Positioned(
-                                        right: 5,
-                                        top: 60,
-                                        child: GestureDetector(
-                                          onTap: () => deleteImage(y),
-                                          child: Container(
-                                            height: 40,
-                                            width: 40,
-                                            decoration: BoxDecoration(
-                                              color: blackColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(32),
-                                            ),
-                                            child: const Icon(
-                                              Icons.delete,
-                                              color: redColor,
-                                            ),
-                                          ),
-                                        ),
-                                      )
+                                      MyText(
+                                        text: 'tapToBrowse'.tr(),
+                                        color: greyColor,
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      MyText(
+                                        text:
+                                            'addBannerImageToEffectivelyAdventure'
+                                                .tr(),
+                                        color: greyColor,
+                                        align: TextAlign.center,
+                                      ),
                                     ],
                                   ),
                                 ),
-                        // pickedMedia.path.isEmpty
-                        //     ? Container(
-                        //         padding: const EdgeInsets.all(20),
-                        //         decoration: BoxDecoration(
-                        //             border: Border.all(
-                        //                 color: blackTypeColor.withOpacity(0.2)),
-                        //             borderRadius: BorderRadius.circular(12),
-                        //             color: lightGreyColor),
-                        //         child: Column(
-                        //           mainAxisAlignment: MainAxisAlignment.center,
-                        //           children: [
-                        //             const SizedBox(height: 20),
-                        //             GestureDetector(
-                        //               onTap: addMedia,
-                        //               child: const Center(
-                        //                 child: Image(
-                        //                   image: ExactAssetImage(
-                        //                       'images/upload.png'),
-                        //                   height: 45,
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //             const SizedBox(
-                        //               height: 20,
-                        //             ),
-                        //             MyText(
-                        //               text: 'Tap to browse',
-                        //               color: greyColor,
-                        //             ),
-                        //             const SizedBox(
-                        //               height: 20,
-                        //             ),
-                        //             MyText(
-                        //               text:
-                        //                   'Add banner(image) to effectively adventure',
-                        //               color: greyColor,
-                        //               align: TextAlign.center,
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       )
-                        //     : Container(
-                        //         padding: const EdgeInsets.all(20),
-                        //         decoration: BoxDecoration(
-                        //             border: Border.all(
-                        //                 color: blackTypeColor.withOpacity(0.2)),
-                        //             borderRadius: BorderRadius.circular(12),
-                        //             color: lightGreyColor),
-                        //         child: Center(
-                        //           child: Image.file(
-                        //             pickedMedia,
-                        //             fit: BoxFit.fill,
-                        //             height: 150,
-                        //             width: 300,
-                        //           ),
-                        //         ),
-                        //       ),
-                        // const SizedBox(height: 20),
-                        // pickedMediaSecond.path.isEmpty
-                        //     ? Container(
-                        //         padding: const EdgeInsets.all(20),
-                        //         decoration: BoxDecoration(
-                        //             border: Border.all(
-                        //                 color: blackTypeColor.withOpacity(0.2)),
-                        //             borderRadius: BorderRadius.circular(12),
-                        //             color: lightGreyColor),
-                        //         child: Column(
-                        //           mainAxisAlignment: MainAxisAlignment.center,
-                        //           children: [
-                        //             const SizedBox(height: 20),
-                        //             GestureDetector(
-                        //               onTap: addMedia,
-                        //               child: const Center(
-                        //                 child: Image(
-                        //                   image: ExactAssetImage(
-                        //                       'images/upload.png'),
-                        //                   height: 45,
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //             const SizedBox(
-                        //               height: 20,
-                        //             ),
-                        //             MyText(
-                        //               text: 'Tap to browse',
-                        //               color: greyColor,
-                        //             ),
-                        //             const SizedBox(
-                        //               height: 20,
-                        //             ),
-                        //             MyText(
-                        //               text:
-                        //                   'Add banner(image) to effectively adventure',
-                        //               color: greyColor,
-                        //               align: TextAlign.center,
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       )
-                        //     : Container(
-                        //         padding: const EdgeInsets.all(20),
-                        //         decoration: BoxDecoration(
-                        //             border: Border.all(
-                        //                 color: blackTypeColor.withOpacity(0.2)),
-                        //             borderRadius: BorderRadius.circular(12),
-                        //             color: lightGreyColor),
-                        //         child: Center(
-                        //           child: Image.file(
-                        //             pickedMediaSecond,
-                        //             fit: BoxFit.fill,
-                        //             height: 150,
-                        //             width: 300,
-                        //           ),
-                        //         ),
-                        //       ),
-                      ],
-                    ))
-              ],
-            ),
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(20),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: blackTypeColor
+                                                  .withOpacity(0.2)),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          color: lightGreyColor),
+                                      child: Center(
+                                        child: Image.file(
+                                          imageBanners[y],
+                                          fit: BoxFit.fill,
+                                          height: 150,
+                                          width: 300,
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      right: 5,
+                                      top: 10,
+                                      child: GestureDetector(
+                                        onTap: () => editPickMedia(y),
+                                        child: Container(
+                                          height: 40,
+                                          width: 40,
+                                          decoration: BoxDecoration(
+                                            color: blackColor,
+                                            borderRadius:
+                                                BorderRadius.circular(32),
+                                          ),
+                                          child: const Icon(
+                                            Icons.edit,
+                                            color: whiteColor,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      right: 5,
+                                      top: 60,
+                                      child: GestureDetector(
+                                        onTap: () => deleteImage(y),
+                                        child: Container(
+                                          height: 40,
+                                          width: 40,
+                                          decoration: BoxDecoration(
+                                            color: blackColor,
+                                            borderRadius:
+                                                BorderRadius.circular(32),
+                                          ),
+                                          child: const Icon(
+                                            Icons.delete,
+                                            color: redColor,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                      // pickedMedia.path.isEmpty
+                      //     ? Container(
+                      //         padding: const EdgeInsets.all(20),
+                      //         decoration: BoxDecoration(
+                      //             border: Border.all(
+                      //                 color: blackTypeColor.withOpacity(0.2)),
+                      //             borderRadius: BorderRadius.circular(12),
+                      //             color: lightGreyColor),
+                      //         child: Column(
+                      //           mainAxisAlignment: MainAxisAlignment.center,
+                      //           children: [
+                      //             const SizedBox(height: 20),
+                      //             GestureDetector(
+                      //               onTap: addMedia,
+                      //               child: const Center(
+                      //                 child: Image(
+                      //                   image: ExactAssetImage(
+                      //                       'images/upload.png'),
+                      //                   height: 45,
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //             const SizedBox(
+                      //               height: 20,
+                      //             ),
+                      //             MyText(
+                      //               text: 'Tap to browse',
+                      //               color: greyColor,
+                      //             ),
+                      //             const SizedBox(
+                      //               height: 20,
+                      //             ),
+                      //             MyText(
+                      //               text:
+                      //                   'Add banner(image) to effectively adventure',
+                      //               color: greyColor,
+                      //               align: TextAlign.center,
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       )
+                      //     : Container(
+                      //         padding: const EdgeInsets.all(20),
+                      //         decoration: BoxDecoration(
+                      //             border: Border.all(
+                      //                 color: blackTypeColor.withOpacity(0.2)),
+                      //             borderRadius: BorderRadius.circular(12),
+                      //             color: lightGreyColor),
+                      //         child: Center(
+                      //           child: Image.file(
+                      //             pickedMedia,
+                      //             fit: BoxFit.fill,
+                      //             height: 150,
+                      //             width: 300,
+                      //           ),
+                      //         ),
+                      //       ),
+                      // const SizedBox(height: 20),
+                      // pickedMediaSecond.path.isEmpty
+                      //     ? Container(
+                      //         padding: const EdgeInsets.all(20),
+                      //         decoration: BoxDecoration(
+                      //             border: Border.all(
+                      //                 color: blackTypeColor.withOpacity(0.2)),
+                      //             borderRadius: BorderRadius.circular(12),
+                      //             color: lightGreyColor),
+                      //         child: Column(
+                      //           mainAxisAlignment: MainAxisAlignment.center,
+                      //           children: [
+                      //             const SizedBox(height: 20),
+                      //             GestureDetector(
+                      //               onTap: addMedia,
+                      //               child: const Center(
+                      //                 child: Image(
+                      //                   image: ExactAssetImage(
+                      //                       'images/upload.png'),
+                      //                   height: 45,
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //             const SizedBox(
+                      //               height: 20,
+                      //             ),
+                      //             MyText(
+                      //               text: 'Tap to browse',
+                      //               color: greyColor,
+                      //             ),
+                      //             const SizedBox(
+                      //               height: 20,
+                      //             ),
+                      //             MyText(
+                      //               text:
+                      //                   'Add banner(image) to effectively adventure',
+                      //               color: greyColor,
+                      //               align: TextAlign.center,
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       )
+                      //     : Container(
+                      //         padding: const EdgeInsets.all(20),
+                      //         decoration: BoxDecoration(
+                      //             border: Border.all(
+                      //                 color: blackTypeColor.withOpacity(0.2)),
+                      //             borderRadius: BorderRadius.circular(12),
+                      //             color: lightGreyColor),
+                      //         child: Center(
+                      //           child: Image.file(
+                      //             pickedMediaSecond,
+                      //             fit: BoxFit.fill,
+                      //             height: 150,
+                      //             width: 300,
+                      //           ),
+                      //         ),
+                      //       ),
+                    ],
+                  ))
+            ],
           );
   }
 }

@@ -28,6 +28,7 @@ class CreateNewServices extends StatefulWidget {
 }
 
 class _CreateNewServicesState extends State<CreateNewServices> {
+  ScrollController heightController = ScrollController();
   TextEditingController adventureName = TextEditingController();
   TextEditingController availableSeatsController = TextEditingController();
   TextEditingController infoController = TextEditingController();
@@ -186,6 +187,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     minimumRequirement.dispose();
     terms.dispose();
     daysExpiry.dispose();
+    heightController.dispose();
     super.dispose();
   }
 
@@ -586,6 +588,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       setState(() {
         count = 2;
       });
+      heightController.animateTo(heightController.position.minScrollExtent,
+          duration: const Duration(milliseconds: 500), curve: Curves.bounceIn);
     } else if (count == 2
         // &&
         //     pm[0].title.isNotEmpty &&
@@ -966,18 +970,19 @@ class _CreateNewServicesState extends State<CreateNewServices> {
 
   void setId() {
     if (particularWeekDays) {
-      setState(() {
-        sPlan = 1;
-      });
+      //setState(() {
+      sPlan = 1;
+      // });
     } else if (particularDay) {
-      setState(() {
-        sPlan = 2;
-      });
+      // setState(() {
+      sPlan = 2;
+      // });
     } else {
-      setState(() {
-        sPlan = 0;
-      });
+      //setState(() {
+      sPlan = 0;
+      //});
     }
+    setState(() {});
   }
 
   void servicePlanfilter() {
@@ -994,6 +999,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       ConstantsCreateNewServices.particularWeekDays =
           !ConstantsCreateNewServices.particularWeekDays;
       particularWeekDays = !particularWeekDays;
+      //particularDay = !particularDay;
       // planChecked = !planChecked;
     });
     print(planChecked);
@@ -1069,6 +1075,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
           ),
         ),
         body: SingleChildScrollView(
+          controller: heightController,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
             child: Column(
@@ -1242,90 +1249,100 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                       servicePlan: Column(
                         children: [
                           particularWeek == false
-                              ? Column(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: MyText(
-                                        text: 'servicePlan'.tr(),
-                                        color: blackTypeColor1,
-                                        align: TextAlign.center,
-                                        weight: FontWeight.bold,
+                              ? SizedBox(
+                                  height: 140,
+                                  child: Column(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: MyText(
+                                          text: 'servicePlan'.tr(),
+                                          color: blackTypeColor1,
+                                          align: TextAlign.center,
+                                          weight: FontWeight.bold,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 120,
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Checkbox(
-                                                  activeColor: bluishColor,
-                                                  checkColor: whiteColor,
-                                                  side: const BorderSide(
-                                                      color: bluishColor,
-                                                      width: 2),
-                                                  value: particularWeekDays,
-                                                  onChanged: (bool? value) {
-                                                    addServicePlan();
-                                                  }),
-                                              MyText(
-                                                text: 'everyParticularWeekDays'
-                                                    .tr(),
-                                                color: blackTypeColor,
-                                                align: TextAlign.center,
-                                                weight: FontWeight.w600,
-                                              ),
-                                            ],
-                                          ),
-                                          Wrap(
-                                            direction: Axis.horizontal,
-                                            children: List.generate(
-                                              days.length,
-                                              (index) {
-                                                return Column(
-                                                  children: [
-                                                    MyText(
-                                                      text: days[index],
-                                                      color: blackTypeColor,
-                                                      align: TextAlign.center,
-                                                      size: 14,
-                                                      weight: FontWeight.w500,
-                                                    ),
-                                                    Checkbox(
-                                                      activeColor: bluishColor,
-                                                      checkColor: whiteColor,
-                                                      value: daysValue[index],
-                                                      onChanged: (bool? value) {
-                                                        if (particularWeekDays) {
-                                                          setState(
-                                                            () {
-                                                              daysValue[index] =
-                                                                  value!;
-                                                            },
-                                                          );
-                                                        }
-                                                        if (particularWeekDays ==
-                                                            false) {
-                                                          setState(() {
-                                                            daysValue[index] =
-                                                                false;
-                                                          });
-                                                        }
-                                                      },
-                                                    ),
-                                                  ],
-                                                );
-                                              },
+                                      SizedBox(
+                                        height: 120,
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Checkbox(
+                                                    activeColor: bluishColor,
+                                                    checkColor: whiteColor,
+                                                    side: const BorderSide(
+                                                        color: bluishColor,
+                                                        width: 2),
+                                                    value: particularWeekDays,
+                                                    onChanged: (bool? value) {
+                                                      addServicePlan();
+                                                    }),
+                                                MyText(
+                                                  text:
+                                                      'everyParticularWeekDays'
+                                                          .tr(),
+                                                  color: blackTypeColor,
+                                                  align: TextAlign.center,
+                                                  weight: FontWeight.w600,
+                                                ),
+                                              ],
                                             ),
-                                          ),
-                                        ],
+                                            Wrap(
+                                              direction: Axis.horizontal,
+                                              children: List.generate(
+                                                days.length,
+                                                (index) {
+                                                  return Column(
+                                                    children: [
+                                                      MyText(
+                                                        text: days[index],
+                                                        color: blackTypeColor,
+                                                        align: TextAlign.center,
+                                                        size: 14,
+                                                        weight: FontWeight.w500,
+                                                      ),
+                                                      Checkbox(
+                                                        activeColor:
+                                                            bluishColor,
+                                                        checkColor: whiteColor,
+                                                        value: daysValue[index],
+                                                        onChanged:
+                                                            (bool? value) {
+                                                          if (particularWeekDays) {
+                                                            setState(
+                                                              () {
+                                                                daysValue[
+                                                                        index] =
+                                                                    value!;
+                                                              },
+                                                            );
+                                                          }
+                                                          if (particularWeekDays ==
+                                                              false) {
+                                                            setState(() {
+                                                              daysValue[index] =
+                                                                  false;
+                                                            });
+                                                          }
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 )
-                              : Container(),
-                          //const SizedBox(height: 20),
+                              : const SizedBox(
+                                  height: 1,
+                                  width: 1,
+                                ),
+                          const SizedBox(height: 20),
                           particularWeekDays == false
                               ? SizedBox(
                                   height: 110,
@@ -1447,7 +1464,10 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                     ],
                                   ),
                                 )
-                              : Container(),
+                              : Container(
+                                  height: 1,
+                                  width: 1,
+                                ),
                         ],
                       ),
                       dependency: Wrap(
@@ -1489,33 +1509,35 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                       ),
                     ),
                     particularWeekDays
-                        ? ListView(
-                            children: [
-                              for (int y = 0; y < onePlan.length; y++)
-                                CreatePlanOne(getProgramOneData, y),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              GestureDetector(
-                                onTap: addProgramOneData,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    const Image(
-                                        image: ExactAssetImage(
-                                            'images/add-circle.png'),
-                                        height: 20),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    MyText(
-                                      text: 'addMoreSchedule'.tr(),
-                                      color: bluishColor,
-                                    ),
-                                  ],
+                        ? SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                for (int y = 0; y < onePlan.length; y++)
+                                  CreatePlanOne(getProgramOneData, y),
+                                const SizedBox(
+                                  height: 10,
                                 ),
-                              ),
-                            ],
+                                GestureDetector(
+                                  onTap: addProgramOneData,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      const Image(
+                                          image: ExactAssetImage(
+                                              'images/add-circle.png'),
+                                          height: 20),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      MyText(
+                                        text: 'addMoreSchedule'.tr(),
+                                        color: bluishColor,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           )
                         : SingleChildScrollView(
                             child: Column(
