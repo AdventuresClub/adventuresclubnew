@@ -1262,78 +1262,71 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                           weight: FontWeight.bold,
                                         ),
                                       ),
-                                      SizedBox(
-                                        height: 120,
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Checkbox(
-                                                    activeColor: bluishColor,
-                                                    checkColor: whiteColor,
-                                                    side: const BorderSide(
-                                                        color: bluishColor,
-                                                        width: 2),
-                                                    value: particularWeekDays,
-                                                    onChanged: (bool? value) {
-                                                      addServicePlan();
-                                                    }),
-                                                MyText(
-                                                  text:
-                                                      'everyParticularWeekDays'
-                                                          .tr(),
-                                                  color: blackTypeColor,
-                                                  align: TextAlign.center,
-                                                  weight: FontWeight.w600,
-                                                ),
-                                              ],
-                                            ),
-                                            Wrap(
-                                              direction: Axis.horizontal,
-                                              children: List.generate(
-                                                days.length,
-                                                (index) {
-                                                  return Column(
-                                                    children: [
-                                                      MyText(
-                                                        text: days[index],
-                                                        color: blackTypeColor,
-                                                        align: TextAlign.center,
-                                                        size: 14,
-                                                        weight: FontWeight.w500,
-                                                      ),
-                                                      Checkbox(
-                                                        activeColor:
-                                                            bluishColor,
-                                                        checkColor: whiteColor,
-                                                        value: daysValue[index],
-                                                        onChanged:
-                                                            (bool? value) {
-                                                          if (particularWeekDays) {
-                                                            setState(
-                                                              () {
-                                                                daysValue[
-                                                                        index] =
-                                                                    value!;
-                                                              },
-                                                            );
-                                                          }
-                                                          if (particularWeekDays ==
-                                                              false) {
-                                                            setState(() {
-                                                              daysValue[index] =
-                                                                  false;
-                                                            });
-                                                          }
-                                                        },
-                                                      ),
-                                                    ],
-                                                  );
-                                                },
+                                      Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Checkbox(
+                                                  activeColor: bluishColor,
+                                                  checkColor: whiteColor,
+                                                  side: const BorderSide(
+                                                      color: bluishColor,
+                                                      width: 2),
+                                                  value: particularWeekDays,
+                                                  onChanged: (bool? value) {
+                                                    addServicePlan();
+                                                  }),
+                                              MyText(
+                                                text: 'everyParticularWeekDays'
+                                                    .tr(),
+                                                color: blackTypeColor,
+                                                align: TextAlign.center,
+                                                weight: FontWeight.w600,
                                               ),
+                                            ],
+                                          ),
+                                          Wrap(
+                                            direction: Axis.horizontal,
+                                            children: List.generate(
+                                              days.length,
+                                              (index) {
+                                                return Column(
+                                                  children: [
+                                                    MyText(
+                                                      text: days[index],
+                                                      color: blackTypeColor,
+                                                      align: TextAlign.center,
+                                                      size: 14,
+                                                      weight: FontWeight.w500,
+                                                    ),
+                                                    Checkbox(
+                                                      activeColor: bluishColor,
+                                                      checkColor: whiteColor,
+                                                      value: daysValue[index],
+                                                      onChanged: (bool? value) {
+                                                        if (particularWeekDays) {
+                                                          setState(
+                                                            () {
+                                                              daysValue[index] =
+                                                                  value!;
+                                                            },
+                                                          );
+                                                        }
+                                                        if (particularWeekDays ==
+                                                            false) {
+                                                          setState(() {
+                                                            daysValue[index] =
+                                                                false;
+                                                          });
+                                                        }
+                                                      },
+                                                    ),
+                                                  ],
+                                                );
+                                              },
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
@@ -1402,7 +1395,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                                         .tr(),
                                                     style: TextStyle(
                                                         color: blackColor
-                                                            .withOpacity(0.6)),
+                                                            .withOpacity(0.6),
+                                                        fontSize: 14),
                                                   ),
                                                   trailing: Icon(
                                                     Icons.calendar_today,
@@ -1447,7 +1441,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                                     endDate.toString(),
                                                     style: TextStyle(
                                                         color: blackColor
-                                                            .withOpacity(0.6)),
+                                                            .withOpacity(0.6),
+                                                        fontSize: 14),
                                                   ),
                                                   trailing: Icon(
                                                     Icons.calendar_today,
