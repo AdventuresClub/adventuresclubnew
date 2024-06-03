@@ -91,8 +91,15 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   TimeOfDay time = TimeOfDay.now();
   bool planChecked = false;
   List<CreateServicesProgramModel> pm = [
-    CreateServicesProgramModel("", DateTime.now(), DateTime.now(),
-        const Duration(), const Duration(), "", DateTime.now(), DateTime.now())
+    CreateServicesProgramModel(
+        "title 1 ",
+        DateTime.now(),
+        DateTime.now(),
+        Duration(),
+        Duration(),
+        "Description 1 ",
+        DateTime.now(),
+        DateTime.now())
   ];
   List<CreateServicesPlanOneModel> onePlan = [
     CreateServicesPlanOneModel("", "")
@@ -581,10 +588,10 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         message("Please select Dependency");
         return;
       }
-      pm[0].startDate = startDate;
-      pm[0].endDate = currentDate;
-      pm[0].adventureStartDate = startDate;
-      pm[0].adventureEndDate = currentDate;
+      // pm[0].startDate = startDate;
+      // pm[0].endDate = currentDate;
+      // pm[0].adventureStartDate = startDate;
+      // pm[0].adventureEndDate = currentDate;
       setState(() {
         count = 2;
       });
@@ -630,18 +637,18 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         // ConstantsCreateNewServices.lng >  &&
 
         ) {
-      if (ConstantsCreateNewServices.lat == 0) {
-        message("Please set location Correctly");
-        return;
-      }
-      if (ConstantsCreateNewServices.lng == 0) {
-        message("Please set location Correctly");
-        return;
-      }
-      if (iLiveInController.text.trim().isEmpty) {
-        message("Location Cannot be empty");
-        return;
-      }
+      // if (ConstantsCreateNewServices.lat == 0) {
+      //   message("Please set location Correctly");
+      //   return;
+      // }
+      // if (ConstantsCreateNewServices.lng == 0) {
+      //   message("Please set location Correctly");
+      //   return;
+      // }
+      // if (iLiveInController.text.trim().isEmpty) {
+      //   message("Location Cannot be empty");
+      //   return;
+      // }
       if (specificAddressController.text.trim().isEmpty) {
         message("Specific Address Cannot be empty");
         return;
@@ -725,7 +732,10 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       });
       // programSchedule = descriptionList.join(",");
       pm.forEach((element) {
-        d.add(element.startDate.toString());
+        String c =
+            "${element.startDate.year}-${element.startDate.month}-${element.startDate.day}";
+        // d.add(element.startDate.toString());
+        d.add(c);
       });
       // programSelecteDate1 = d.join(",");
       pm.forEach((element) {
@@ -840,9 +850,9 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         // we need file name,
         // after bytes array when adding into parameter. send the name of file.
         //
-        "latitude":
+        "latitude": //"27.0546", //
             ConstantsCreateNewServices.lat.toString(), //lat.toString(), //"",
-        "longitude":
+        "longitude": //"57.05650"
             ConstantsCreateNewServices.lng.toString(), //lng.toString(), //"",
         // 'mobile_code': ccCode,
         // "gathering_start_time[]": "13:0:0",
@@ -850,8 +860,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       };
       String space = "";
       st.forEach((element) {
-        log(element);
-        programData["gathering_start_time[]"] = element;
+        //log(element);
+        programData["gathering_start_time[]$space"] = element;
         space += " ";
       });
       // String programDataString = jsonEncode(programData);
@@ -866,8 +876,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       //log(first);
       space = "";
       et.forEach((element1) {
-        log(element1);
-        programData["gathering_end_time[]"] = element1;
+        // log(element1);
+        programData["gathering_end_time[]$space"] = element1;
         space += " ";
       });
       space = "";
@@ -886,10 +896,11 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         space += " ";
       });
       request.fields.addAll(programData);
+      // debugPrint(programData);
       final response = await request.send();
 
       log(response.toString());
-      print(response.statusCode);
+      debugPrint(response.statusCode.toString());
       // print(response.body);
       print(response.headers);
       clearAll();
@@ -936,6 +947,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
           formattedDate = "${date.year}-$m-$d";
           startDate = pickedDate!;
           pm[0].startDate = startDate;
+          //  pm.insert(0, CreateServicesProgramModel(title, startDate, endDate, Duration(), Duration(), "description", DateTime.now, adventureEndDate))
         });
       } else if (givenDate == endDate) {
         DateTime eDate = DateTime(
