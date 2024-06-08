@@ -4,10 +4,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class CreateProgramMainPage extends StatefulWidget {
+  final CreateServicesProgramModel? program;
   final DateTime startTime;
   final DateTime endTime;
   const CreateProgramMainPage(
-      {required this.startTime, required this.endTime, super.key});
+      {this.program,
+      required this.startTime,
+      required this.endTime,
+      super.key});
 
   @override
   State<CreateProgramMainPage> createState() => _CreateProgramMainPageState();
@@ -21,14 +25,43 @@ class _CreateProgramMainPageState extends State<CreateProgramMainPage> {
   String sTime = "startTime";
   String eTime = "endTime";
   TimeOfDay time = TimeOfDay.now();
-  DateTime pickedDate = DateTime.now();
-  DateTime currentDate = DateTime.now();
+  DateTime? pickedDate;
+  DateTime? currentDate;
   DateTime eDate = DateTime.now();
   Duration timeSt = const Duration();
   Duration endSt = const Duration();
   bool isTimeAfter = false;
   String formattedDate = "selectDate";
   bool loading = false;
+  DateTime? programStartTime;
+  DateTime? programEndTime;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.program != null) {
+      titleController.text = widget.program!.title;
+      scheduleController.text = widget.program!.description;
+      sTime = formatDuration(widget.program!.startTime);
+      eTime = formatDuration(widget.program!.endTime);
+      formattedDate = extractDate(widget.program!.startDate);
+    }
+  }
+
+  String extractDate(DateTime dateTime) {
+    String date =
+        '${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}';
+
+    return date;
+  }
+
+  String formatDuration(Duration duration) {
+    int hours = duration.inHours;
+    int minutes = duration.inMinutes.remainder(60);
+    int seconds = duration.inSeconds.remainder(60);
+
+    return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+  }
 
   Future<void> _selectDate(BuildContext context) async {
     DateTime? tDate = (await showDatePicker(
@@ -44,8 +77,10 @@ class _CreateProgramMainPageState extends State<CreateProgramMainPage> {
       pickedDate = tDate;
       setState(() {
         //var date = DateTime.parse(pickedDate.toString());
-        formattedDate =
-            "${pickedDate.day}-${pickedDate.month}-${pickedDate.year}";
+        if (pickedDate != null) {
+          formattedDate =
+              "${pickedDate!.day}-${pickedDate!.month}-${pickedDate!.year}";
+        }
       });
       // sendData(i);
     }
@@ -100,6 +135,35 @@ class _CreateProgramMainPageState extends State<CreateProgramMainPage> {
     );
   }
 
+  bool checkCredentials() {
+    bool result = false;
+    if (titleController.text.trim().isEmpty) {
+      Constants.showMessage(context, "Title Cannot Be Empty");
+      result = false;
+    } else if (titleController.text.length < 3) {
+      Constants.showMessage(
+          context, "Schdule Title Cannot Be for less than 3 characters");
+      result = false;
+    } else if (currentDate!.day == 0) {
+      Constants.showMessage(context, "Please Select Start Date");
+      result = false;
+    } else if (programStartTime!.day == 0) {
+      Constants.showMessage(context, "Please Select Start Time");
+      result = false;
+    } else if (programEndTime!.day == 0) {
+      Constants.showMessage(context, "Please Select End Time");
+      result = false;
+    } else if (scheduleController.text.trim().isEmpty ||
+        scheduleController.text.length < 50) {
+      Constants.showMessage(
+          context, "Schdule Title Cannot Be for less than 50 characters");
+      result = false;
+    } else {
+      result = true;
+    }
+    return result;
+  }
+
   void saveData() {
     Duration durationSt = Duration.zero;
     Duration durationEt = Duration.zero;
@@ -109,34 +173,37 @@ class _CreateProgramMainPageState extends State<CreateProgramMainPage> {
     if (endTime != null) {
       durationEt = Duration(hours: endTime!.hour, minutes: endTime!.minute);
     }
-    DateTime sTime = startTime != null
+    programStartTime = startTime != null
         ? DateTime(
-            pickedDate.year,
-            pickedDate.month,
-            pickedDate.day,
+            pickedDate!.year,
+            pickedDate!.month,
+            pickedDate!.day,
             startTime!.hour,
             startTime!.minute,
           )
         : DateTime.now();
-    DateTime eTime = endTime != null
+    programEndTime = endTime != null
         ? DateTime(
-            pickedDate.year,
-            pickedDate.month,
-            pickedDate.day,
+            pickedDate!.year,
+            pickedDate!.month,
+            pickedDate!.day,
             endTime!.hour,
             endTime!.minute,
           )
         : DateTime.now();
     CreateServicesProgramModel pm = CreateServicesProgramModel(
         titleController.text.trim(),
-        sTime,
-        eTime,
+        programStartTime!,
+        programEndTime!,
         durationSt,
         durationEt,
         scheduleController.text.trim(),
-        currentDate,
-        currentDate);
-    Navigator.of(context).pop(pm);
+        currentDate!,
+        currentDate!);
+    bool check = checkCredentials();
+    if (check) {
+      Navigator.of(context).pop(pm);
+    }
   }
 
   @override
