@@ -43,9 +43,24 @@ class _CreateProgramMainPageState extends State<CreateProgramMainPage> {
       titleController.text = widget.program!.title;
       scheduleController.text = widget.program!.description;
       sTime = formatDuration(widget.program!.startTime);
+      startTime = durationToTimeOfDay(widget.program!.startTime);
+      endTime = durationToTimeOfDay(widget.program!.endTime);
       eTime = formatDuration(widget.program!.endTime);
       formattedDate = extractDate(widget.program!.startDate);
+      pickedDate = widget.program!.startDate;
     }
+  }
+
+  TimeOfDay durationToTimeOfDay(Duration duration) {
+    // Ensure the duration is within a single day
+    int totalMinutes = duration.inMinutes % (24 * 60);
+
+    // Calculate hours and minutes
+    int hours = totalMinutes ~/ 60;
+    int minutes = totalMinutes % 60;
+
+    // Return TimeOfDay object
+    return TimeOfDay(hour: hours, minute: minutes);
   }
 
   String extractDate(DateTime dateTime) {
@@ -144,19 +159,19 @@ class _CreateProgramMainPageState extends State<CreateProgramMainPage> {
       Constants.showMessage(
           context, "Schdule Title Cannot Be for less than 3 characters");
       result = false;
-    } else if (currentDate != null && currentDate!.day == 0) {
+    } else if (pickedDate == null) {
       Constants.showMessage(context, "Please Select Start Date");
       result = false;
-    } else if (programStartTime!.day == 0) {
+    } else if (startTime == null) {
       Constants.showMessage(context, "Please Select Start Time");
       result = false;
-    } else if (programEndTime!.day == 0) {
+    } else if (endTime == null) {
       Constants.showMessage(context, "Please Select End Time");
       result = false;
     } else if (scheduleController.text.trim().isEmpty ||
         scheduleController.text.length < 50) {
       Constants.showMessage(
-          context, "Schdule Title Cannot Be for less than 50 characters");
+          context, "Schdule Description Cannot Be for less than 50 characters");
       result = false;
     } else {
       result = true;
@@ -200,8 +215,8 @@ class _CreateProgramMainPageState extends State<CreateProgramMainPage> {
           durationSt,
           durationEt,
           scheduleController.text.trim(),
-          currentDate!,
-          currentDate!);
+          pickedDate!,
+          pickedDate!);
       Navigator.of(context).pop(pm);
     }
   }
@@ -357,6 +372,7 @@ class _CreateProgramMainPageState extends State<CreateProgramMainPage> {
                     width: MediaQuery.of(context).size.width,
                     child: TextField(
                         maxLines: 5,
+                        maxLength: 500,
                         onChanged: (value) {
                           //sendData(z);
                         },

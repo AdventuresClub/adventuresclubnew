@@ -142,16 +142,17 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     // addProgramData();
   }
 
-  void getProgramData(CreateServicesProgramModel data) {
-    pm.add(CreateServicesProgramModel(
-        data.title,
-        data.startDate,
-        data.endDate,
-        data.startTime,
-        data.endTime,
-        data.description,
-        data.adventureStartDate,
-        data.adventureEndDate));
+  void getProgramData(List<CreateServicesProgramModel> data) {
+    pm = data;
+    // .add(CreateServicesProgramModel(
+    //     data.title,
+    //     data.startDate,
+    //     data.endDate,
+    //     data.startTime,
+    //     data.endTime,
+    //     data.description,
+    //     data.adventureStartDate,
+    //     data.adventureEndDate));
     //isTimeAfter = time;
     setState(() {});
     //  pm.add(data);

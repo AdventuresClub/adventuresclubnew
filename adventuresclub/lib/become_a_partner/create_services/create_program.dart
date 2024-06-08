@@ -189,7 +189,24 @@ class _CreateProgramState extends State<CreateProgram> {
     }));
     if (p != null) {
       pm.add(p);
-      widget.parseData(p);
+      widget.parseData(pm);
+    }
+
+    setState(() {});
+  }
+
+  void navEditProgram(CreateServicesProgramModel cm, int i) async {
+    CreateServicesProgramModel? p =
+        await Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return CreateProgramMainPage(
+        program: cm,
+        startTime: widget.startDate,
+        endTime: widget.endDate,
+      );
+    }));
+    if (p != null) {
+      pm[i] = p;
+      widget.parseData(pm);
     }
 
     setState(() {});
@@ -287,13 +304,30 @@ class _CreateProgramState extends State<CreateProgram> {
                                             fontWeight: FontWeight.bold,
                                             color: whiteColor),
                                       ),
-                                      IconButton(
-                                          onPressed: () => deleteRow(z),
-                                          icon: const Icon(
-                                            Icons.delete,
-                                            color: whiteColor,
-                                            size: 24,
-                                          )),
+                                      Row(
+                                        children: [
+                                          IconButton(
+                                            onPressed: () => deleteRow(z),
+                                            icon: const Icon(
+                                              Icons.delete,
+                                              color: whiteColor,
+                                              size: 24,
+                                            ),
+                                          ),
+                                          // const SizedBox(
+                                          //   width: 2,
+                                          // ),
+                                          IconButton(
+                                            onPressed: () =>
+                                                navEditProgram(pm[z], z),
+                                            icon: const Icon(
+                                              Icons.edit,
+                                              color: whiteColor,
+                                              size: 24,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 ),
