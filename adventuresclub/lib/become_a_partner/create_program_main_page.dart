@@ -144,7 +144,7 @@ class _CreateProgramMainPageState extends State<CreateProgramMainPage> {
       Constants.showMessage(
           context, "Schdule Title Cannot Be for less than 3 characters");
       result = false;
-    } else if (currentDate!.day == 0) {
+    } else if (currentDate != null && currentDate!.day == 0) {
       Constants.showMessage(context, "Please Select Start Date");
       result = false;
     } else if (programStartTime!.day == 0) {
@@ -191,17 +191,17 @@ class _CreateProgramMainPageState extends State<CreateProgramMainPage> {
             endTime!.minute,
           )
         : DateTime.now();
-    CreateServicesProgramModel pm = CreateServicesProgramModel(
-        titleController.text.trim(),
-        programStartTime!,
-        programEndTime!,
-        durationSt,
-        durationEt,
-        scheduleController.text.trim(),
-        currentDate!,
-        currentDate!);
     bool check = checkCredentials();
     if (check) {
+      CreateServicesProgramModel pm = CreateServicesProgramModel(
+          titleController.text.trim(),
+          programStartTime!,
+          programEndTime!,
+          durationSt,
+          durationEt,
+          scheduleController.text.trim(),
+          currentDate!,
+          currentDate!);
       Navigator.of(context).pop(pm);
     }
   }
