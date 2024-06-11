@@ -84,8 +84,10 @@ class _CreateProgramMainPageState extends State<CreateProgramMainPage> {
       // initialDate: DateTime.now(), //widget.pm.adventureStartDate,
       //firstDate: DateTime.now(), //widget.pm.adventureStartDate,
       //lastDate: DateTime.now(),
-      initialDate: widget.startTime, //widget.pm.adventureStartDate,
-      firstDate: DateTime.now(), //widget.pm.adventureStartDate,
+      initialDate:
+          widget.startTime, //DateTime.now(), //widget.pm.adventureStartDate,
+      firstDate:
+          widget.startTime, //DateTime.now(), //widget.pm.adventureStartDate,
       lastDate: widget.endTime,
     )); //widget.pm.adventureEndDate));
     if (tDate != null) {
