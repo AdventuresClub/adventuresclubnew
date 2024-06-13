@@ -362,21 +362,53 @@ class _HealthConditionState extends State<HealthCondition> {
                           ],
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          SizedBox(
-                              width: MediaQuery.of(context).size.width / 2.2,
-                              child: pickingWeight(
-                                  context, getWeight, true, weightList)),
-                          //TFWithSuffixText('60', kGcontroller,'KG'),
-
-                          SizedBox(
-                              width: MediaQuery.of(context).size.width / 2.2,
-                              child: pickingWeight(
-                                  context, getheight, false, heightList))
-                        ],
+                      const SizedBox(
+                        height: 5,
                       ),
+                      Card(
+                        child: ExpansionTile(
+                          title: Text(getheight.isNotEmpty
+                              ? getheight
+                              : "Height in CM"),
+                          children: [
+                            for (int i = 0; i < heightList.length; i++)
+                              CheckboxListTile(
+                                dense: true,
+                                visualDensity: VisualDensity.compact,
+                                value: getheight == heightList[i].heightName,
+                                checkboxShape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12))),
+                                onChanged: (value) {
+                                  setState(() {
+                                    getheight = heightList[i].heightName;
+
+                                    if (value == true) {
+                                    } else {}
+                                  });
+                                },
+                                title: Text(heightList[i].heightName.tr()),
+                              ),
+                            //   },
+                            // )
+                          ],
+                        ),
+                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //   children: [
+                      //     SizedBox(
+                      //         width: MediaQuery.of(context).size.width / 2.2,
+                      //         child: pickingWeight(
+                      //             context, getWeight, true, weightList)),
+                      //     //TFWithSuffixText('60', kGcontroller,'KG'),
+
+                      //     SizedBox(
+                      //         width: MediaQuery.of(context).size.width / 2.2,
+                      //         child: pickingWeight(
+                      //             context, getheight, false, heightList))
+                      //   ],
+                      // ),
                       const SizedBox(height: 20),
                       Button(
                           'Update',
