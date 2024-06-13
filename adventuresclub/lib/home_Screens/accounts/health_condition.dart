@@ -7,6 +7,7 @@ import 'package:adventuresclub/models/health_condition_model.dart';
 import 'package:adventuresclub/models/weightnheight_model.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -143,9 +144,9 @@ class _HealthConditionState extends State<HealthCondition> {
       //for (int i = 0; i <)
       healthValue.add(false);
     });
-    setState(() {
-      loading = false;
-    });
+    // setState(() {
+    //   loading = false;
+    // });
     getCurrentHealth();
   }
 
@@ -162,7 +163,9 @@ class _HealthConditionState extends State<HealthCondition> {
         }
       }
     }
-    setState(() {});
+    setState(() {
+      loading = false;
+    });
     print(currentHealth);
   }
 
@@ -329,6 +332,35 @@ class _HealthConditionState extends State<HealthCondition> {
                       ),
                       const SizedBox(
                         height: 10,
+                      ),
+                      Card(
+                        child: ExpansionTile(
+                          title: Text(getWeight.isNotEmpty
+                              ? getWeight
+                              : "Weight in Kg"),
+                          children: [
+                            for (int i = 0; i < weightList.length; i++)
+                              CheckboxListTile(
+                                dense: true,
+                                visualDensity: VisualDensity.compact,
+                                value: getWeight == weightList[i].heightName,
+                                checkboxShape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(12))),
+                                onChanged: (value) {
+                                  setState(() {
+                                    getWeight = weightList[i].heightName;
+
+                                    if (value == true) {
+                                    } else {}
+                                  });
+                                },
+                                title: Text(weightList[i].heightName.tr()),
+                              ),
+                            //   },
+                            // )
+                          ],
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

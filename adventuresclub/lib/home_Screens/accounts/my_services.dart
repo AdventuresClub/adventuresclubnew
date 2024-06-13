@@ -15,11 +15,13 @@ import 'package:adventuresclub/models/services/create_services/availability_plan
 import 'package:adventuresclub/models/services/dependencies_model.dart';
 import 'package:adventuresclub/models/services/included_activities_model.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
+import 'package:adventuresclub/provider/navigation_index_provider.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/services_card.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 import '../become_partner/become_partner_packages.dart';
 
@@ -147,7 +149,13 @@ class _MyServicesState extends State<MyServices> {
     Navigator.of(context).pop();
   }
 
+  void getNotificatioNumber() {
+    Provider.of<NavigationIndexProvider>(context, listen: false)
+        .getNotificationBadge();
+  }
+
   Future<void> myServicesApi() async {
+    getNotificatioNumber();
     setState(() {
       loading = true;
     });

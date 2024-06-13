@@ -234,11 +234,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
           }
         });
         // }
-        setState(() {
-          loading = false;
-        });
       });
-    }
+    } else {}
+    setState(() {
+      loading = false;
+    });
   }
 
   @override

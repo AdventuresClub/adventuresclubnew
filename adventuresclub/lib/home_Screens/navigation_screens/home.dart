@@ -5,6 +5,7 @@ import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/banners/banners_model.dart';
 import 'package:adventuresclub/models/home_services/home_services_model.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
+import 'package:adventuresclub/provider/navigation_index_provider.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/widgets/Lists/home_lists/service_List.dart';
 import 'package:adventuresclub/widgets/home_widgets/new_filter.dart';
@@ -49,6 +50,7 @@ class _HomeState extends State<Home> {
   }
 
   Future getChatNotification() async {
+    getNotificatioNumber();
     var response = await http.get(
         Uri.parse("${Constants.baseUrl}/unreadchatcount/${Constants.userId}"));
     if (response.statusCode == 200) {
@@ -62,6 +64,11 @@ class _HomeState extends State<Home> {
       print(result);
       print(Constants.chatCount);
     }
+  }
+
+  void getNotificatioNumber() {
+    Provider.of<NavigationIndexProvider>(context, listen: false)
+        .getNotificationBadge();
   }
 
   void getBanners() async {
