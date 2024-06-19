@@ -380,7 +380,10 @@ class ServicesProvider with ChangeNotifier {
       'aimed_for': aimedFor,
       'provider_name': "",
     });
+
     if (response.statusCode == 200) {
+      loading = true;
+      notifyListeners();
       var getServicesMap = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       List<dynamic> result = getServicesMap['data'];
       String acc = "";
@@ -558,7 +561,7 @@ class ServicesProvider with ChangeNotifier {
       });
       filteredServices = [...gAllServices];
       notifyListeners();
-      clearData();
+      //clearData();
       // allServices.forEach((element) {
       //     gAllServices.add(element.serviceCategory, element);
       //   });

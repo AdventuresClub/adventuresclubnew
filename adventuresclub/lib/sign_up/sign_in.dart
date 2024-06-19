@@ -284,11 +284,11 @@ class _SignInState extends State<SignIn> {
             prefs.setInt("userId", up.id);
             prefs.setInt("countryId", up.countryId);
             prefs.setString("name", up.name);
-            prefs.setString("email", emailController.text);
+            prefs.setString("email", up.email);
             prefs.setString("password", passController.text);
             cId(up.countryId);
-            parseData(up.name, up.countryId, up.id, emailController.text,
-                passController.text);
+            parseData(
+                up.name, up.countryId, up.id, up.email, passController.text);
             //Constants.userRole = "3";
             goToNavigation();
           } else {

@@ -431,7 +431,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
     Navigator.of(context).pop();
     setState(
       () {
-        c = currencyP;
+        //c = currencyP;
         // Constants.countryId = id;
         // Constants.countryFlag = countryflag;
         // countryCode = country;
@@ -622,7 +622,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                                         .tr()),
                                                 onTap: () {
                                                   setState(() {
-                                                    ccCode =
+                                                    Constants.countryId =
                                                         filteredServices[index]
                                                             .id;
                                                     Constants.countryFlag =
@@ -631,8 +631,8 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                                     Constants.country =
                                                         filteredServices[index]
                                                             .country;
-                                                    c = filteredServices[index]
-                                                        .currency;
+                                                    // c = filteredServices[index]
+                                                    //     .currency;
                                                     // ccCode =
                                                     //     filteredServices[index]
                                                     //         .id;
