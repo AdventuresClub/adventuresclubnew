@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/provider/navigation_index_provider.dart';
 import 'package:adventuresclub/widgets/Lists/notifications_list.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class Notifications extends StatefulWidget {
   const Notifications({super.key});
@@ -35,8 +37,15 @@ class _NotificationsState extends State<Notifications> {
         message(body['message'].toString());
       }
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
+    } finally {
+      getNotificatioNumber();
     }
+  }
+
+  void getNotificatioNumber() {
+    Provider.of<NavigationIndexProvider>(context, listen: false)
+        .getNotificationBadge();
   }
 
   void message(String message) {

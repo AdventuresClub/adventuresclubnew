@@ -76,7 +76,7 @@ class NavigationIndexProvider with ChangeNotifier {
         totalBookings = convertToInt(element['totalbooking'] ?? "");
         //  });
       }
-      notifications = Constants.resultAccount;
+      notifications = Constants.totalNotication; //Constants.resultAccount;
       notifyListeners();
     } catch (e) {
       debugPrint(e.toString());
