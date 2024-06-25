@@ -113,8 +113,8 @@ class ServicesProvider with ChangeNotifier {
     if (loading) {
       return;
     }
-    loading = true;
-    filteredServices.clear();
+    setFilteredServices([], true);
+    //filteredServices.clear();
     allServices.clear();
     gAllServices.clear();
     var response = await http
@@ -297,13 +297,15 @@ class ServicesProvider with ChangeNotifier {
         });
         searchedList.add(SearchModel(acc, serviceId, adventureName));
       });
-      filteredServices = [...gAllServices];
-      notifyListeners();
+      setFilteredServices([...gAllServices], false);
+      //filteredServices = [...gAllServices];
+      
+      //notifyListeners();
       // allServices.forEach((element) {
       //     gAllServices.add(element.serviceCategory, element);
       //   });
     }
-    loading = false;
+    //loading = false;
   }
 
   // void getFilterList(
@@ -350,7 +352,8 @@ class ServicesProvider with ChangeNotifier {
     String region,
     String aimedFor,
   ) async {
-    filteredServices.clear();
+    setFilteredServices([], true);
+    //filteredServices.clear();
     allServices.clear();
     gAllServices.clear();
     // dynamic body = {
@@ -559,14 +562,28 @@ class ServicesProvider with ChangeNotifier {
         });
         searchedList.add(SearchModel(acc, serviceId, adventureName));
       });
-      filteredServices = [...gAllServices];
-      notifyListeners();
+      //filteredServices = [...gAllServices];
+      setFilteredServices([...gAllServices], false);
+      debugPrint("test_${filteredServices.length}***");
+      
+      //notifyListeners();
       //clearData();
       // allServices.forEach((element) {
       //     gAllServices.add(element.serviceCategory, element);
       //   });
     }
-    loading = false;
+    //loading = false;
+  }
+
+  void setLoading(bool status) {
+    loading = status;
+    notifyListeners();
+  }
+
+  void setFilteredServices(List<HomeServicesModel> services, bool loadingStatus) {
+    loading = loadingStatus;
+    filteredServices = services;
+    notifyListeners();
   }
 
   void clearData() {

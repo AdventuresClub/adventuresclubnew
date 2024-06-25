@@ -19,6 +19,8 @@ class ServiceList extends StatefulWidget {
 }
 
 class ServiceListState extends State<ServiceList> {
+  List<HomeServicesModel> gAllServices = [];
+  bool loading = false;
   Map getServicesMap = {};
   //bool loading = false;
   String id = "1";
@@ -83,9 +85,10 @@ class ServiceListState extends State<ServiceList> {
 
   @override
   Widget build(BuildContext context) {
-    List<HomeServicesModel> gAllServices =
+    gAllServices =
         Provider.of<ServicesProvider>(context).filteredServices;
-    bool loading = Provider.of<ServicesProvider>(context).loading;
+    loading = Provider.of<ServicesProvider>(context).loading;
+    debugPrint("test_${gAllServices.length}, loading: $loading");
     return loading
         ? Center(
             child: Column(
@@ -102,6 +105,7 @@ class ServiceListState extends State<ServiceList> {
             children: [
               for (int i = 0; i < gAllServices.length; i++)
                 Column(
+                  key: ValueKey(gAllServices[i].sm.first.id),
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

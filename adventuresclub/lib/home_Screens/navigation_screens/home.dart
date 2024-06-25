@@ -11,6 +11,7 @@ import 'package:adventuresclub/widgets/Lists/home_lists/service_List.dart';
 import 'package:adventuresclub/widgets/home_widgets/new_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
@@ -154,7 +155,7 @@ class _HomeState extends State<Home> {
                     //   height: 130,
                     //   child: TopList(),
                     // ),
-                    ServiceList()
+                    ServiceList(),
                   ],
                 ),
               ),
