@@ -299,7 +299,7 @@ class ServicesProvider with ChangeNotifier {
       });
       setFilteredServices([...gAllServices], false);
       //filteredServices = [...gAllServices];
-      
+
       //notifyListeners();
       // allServices.forEach((element) {
       //     gAllServices.add(element.serviceCategory, element);
@@ -565,7 +565,7 @@ class ServicesProvider with ChangeNotifier {
       //filteredServices = [...gAllServices];
       setFilteredServices([...gAllServices], false);
       debugPrint("test_${filteredServices.length}***");
-      
+
       //notifyListeners();
       //clearData();
       // allServices.forEach((element) {
@@ -580,7 +580,8 @@ class ServicesProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setFilteredServices(List<HomeServicesModel> services, bool loadingStatus) {
+  void setFilteredServices(
+      List<HomeServicesModel> services, bool loadingStatus) {
     loading = loadingStatus;
     filteredServices = services;
     notifyListeners();
