@@ -633,9 +633,9 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                                             .country;
                                                     // c = filteredServices[index]
                                                     //     .currency;
-                                                    // ccCode =
-                                                    //     filteredServices[index]
-                                                    //         .id;
+                                                    ccCode =
+                                                        filteredServices[index]
+                                                            .id;
                                                   });
                                                   Navigator.of(ctx).pop();
                                                   getRegions();
@@ -1325,11 +1325,11 @@ class _NewFilterPageState extends State<NewFilterPage> {
 
   void searchFilter() {
     String aimedFor = "";
-    if (aimedTextBool[0]) {
-      aimedFor = "Gents";
-    } else {
-      aimedFor = "Ladies";
-    }
+    // if (aimedTextBool[0]) {
+    //   aimedFor = "Gents";
+    // } else {
+    //   aimedFor = "Ladies";
+    // }
     // Provider.of<ServicesProvider>(context, listen: false).getServicesList();
 
     Provider.of<ServicesProvider>(context, listen: false).getFilterList(
@@ -1342,7 +1342,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
         selectedLevelId,
         selectedDurationId,
         selectedRegionId.toString(),
-        aimedFor);
+        selectedAimedForId);
 
     Provider.of<ServicesProvider>(context, listen: false).searchFilter;
     Navigator.of(context).pop();
