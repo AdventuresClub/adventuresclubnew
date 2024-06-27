@@ -124,62 +124,65 @@ class _BottomNavigationState extends State<BottomNavigation> {
     showDialog(
         barrierDismissible: false,
         context: context,
-        builder: (ctx) => SimpleDialog(
-              contentPadding: const EdgeInsets.all(12),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12)),
-              title: const Icon(
-                Icons.notifications,
-                size: 80,
-                color: bluishColor,
-              ),
-              children: [
-                const SizedBox(
-                  height: 10,
+        builder: (ctx) => PopScope(
+              canPop: false,
+              child: SimpleDialog(
+                contentPadding: const EdgeInsets.all(12),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
+                title: const Icon(
+                  Icons.notifications,
+                  size: 80,
+                  color: bluishColor,
                 ),
-                Align(
-                  alignment: Alignment.center,
-                  child: MyText(
-                    text: "Select Your Country",
-                    size: 18,
-                    weight: FontWeight.bold,
-                    color: blackColor,
+                children: [
+                  const SizedBox(
+                    height: 10,
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                //ListView.builder(
-                //itemCount: filteredServices.length,
-                //itemBuilder: ((context, index) {
-                //return
-
-                for (int index = 0; index < countriesList1.length; index++)
-                  ListTile(
-                    leading: Image.network(
-                      "${"${Constants.baseUrl}/public/"}${countriesList1[index].flag}",
-                      height: 25,
-                      width: 40,
+                  Align(
+                    alignment: Alignment.center,
+                    child: MyText(
+                      text: "Select Your Country",
+                      size: 18,
+                      weight: FontWeight.bold,
+                      color: blackColor,
                     ),
-                    title: Text(countriesList1[index].country),
-                    onTap: () {
-                      addCountry(
-                          filteredServices[index].country,
-                          filteredServices[index].id,
-                          filteredServices[index].flag,
-                          filteredServices[index].currency,
-                          ctx);
-                    },
                   ),
-                //}),
-                //),
-                // ElevatedButton(
-                //     onPressed: homePage,
-                //     child: MyText(
-                //       text: "Continue",
-                //     ),),
-                //BottomButton(bgColor: blueButtonColor, onTap: homePage)
-              ],
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  //ListView.builder(
+                  //itemCount: filteredServices.length,
+                  //itemBuilder: ((context, index) {
+                  //return
+
+                  for (int index = 0; index < countriesList1.length; index++)
+                    ListTile(
+                      leading: Image.network(
+                        "${"${Constants.baseUrl}/public/"}${countriesList1[index].flag}",
+                        height: 25,
+                        width: 40,
+                      ),
+                      title: Text(countriesList1[index].country),
+                      onTap: () {
+                        addCountry(
+                            filteredServices[index].country,
+                            filteredServices[index].id,
+                            filteredServices[index].flag,
+                            filteredServices[index].currency,
+                            ctx);
+                      },
+                    ),
+                  //}),
+                  //),
+                  // ElevatedButton(
+                  //     onPressed: homePage,
+                  //     child: MyText(
+                  //       text: "Continue",
+                  //     ),),
+                  //BottomButton(bgColor: blueButtonColor, onTap: homePage)
+                ],
+              ),
             ));
   }
 

@@ -133,11 +133,12 @@ class _HomeState extends State<Home> {
           currentFocus.unfocus();
         }
       },
-      child: WillPopScope(
-        onWillPop: () async {
-          return false;
-        },
-        child: const SafeArea(
+      child: const PopScope(
+        canPop: false,
+        // onWillPop: () async {
+        //   return false;
+        // },
+        child: SafeArea(
           child: Scaffold(
             body: SingleChildScrollView(
               child: Padding(
