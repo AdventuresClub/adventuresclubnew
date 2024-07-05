@@ -72,21 +72,29 @@ class ServiceListState extends State<ServiceList> {
         result = service.sm;
       }
     }
-    return ListView.builder(
-        itemCount: result.length,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-              onTap: () => goToDetails(result[index]),
-              child: ServicesCard(result[index]));
-        });
+    return result.isEmpty
+        ? const Column(
+            children: [
+              Text(
+                "There are no adventures in this country for now, please check again later",
+                style: TextStyle(fontSize: 16, color: blackColor),
+              )
+            ],
+          )
+        : ListView.builder(
+            itemCount: result.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                  onTap: () => goToDetails(result[index]),
+                  child: ServicesCard(result[index]));
+            });
     // return result;
   }
 
   @override
   Widget build(BuildContext context) {
-    gAllServices =
-        Provider.of<ServicesProvider>(context).filteredServices;
+    gAllServices = Provider.of<ServicesProvider>(context).filteredServices;
     loading = Provider.of<ServicesProvider>(context).loading;
     debugPrint("test_${gAllServices.length}, loading: $loading");
     return loading
@@ -101,64 +109,106 @@ class ServiceListState extends State<ServiceList> {
               ],
             ),
           )
-        : Column(
-            children: [
-              for (int i = 0; i < gAllServices.length; i++)
-                Column(
-                  key: ValueKey(gAllServices[i].sm.first.id),
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 6.0,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            height: 40,
-                            width: 140,
-                            decoration: BoxDecoration(
-                                color: whiteColor,
-                                borderRadius: BorderRadius.circular(12)),
-                            child: Center(
-                              child: MyText(
-                                text: gAllServices[i].category.tr(),
-                                color:
-                                    bluishColor, //blackColor.withOpacity(0.6),
-                                weight: FontWeight.bold,
-                                size: 20,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    // const SizedBox(
-                    //   height: 5,
-                    // ),
-                    // SizedBox(
-                    //   height: 230,
-                    //   child: getList(
-                    //     gAllServices[i].category,
-                    //     gAllServices,
-                    //   ),
-                    // ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                      child: SizedBox(
-                        height: 340,
-                        child: getList(
-                          gAllServices[i].category,
-                          gAllServices,
+        : gAllServices.isEmpty
+            ? Center(
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 8),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.notifications,
+                          color: kSecondaryColor,
+                          size: 60,
                         ),
-                      ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "thereAreNoAdventuresInThisCountry".tr(),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontSize: 16,
+                              color: blackColor,
+                              fontWeight: FontWeight.w600),
+                        )
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-            ],
-          );
+              )
+            : Column(
+                children: [
+                  for (int i = 0; i < gAllServices.length; i++)
+                    Column(
+                      key: ValueKey(gAllServices[i].sm.first.id),
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 6.0,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                height: 40,
+                                width: 140,
+                                decoration: BoxDecoration(
+                                    color: whiteColor,
+                                    borderRadius: BorderRadius.circular(12)),
+                                child: Center(
+                                  child: MyText(
+                                    text: gAllServices[i].category.tr(),
+                                    color:
+                                        bluishColor, //blackColor.withOpacity(0.6),
+                                    weight: FontWeight.bold,
+                                    size: 20,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        // const SizedBox(
+                        //   height: 5,
+                        // ),
+                        // SizedBox(
+                        //   height: 230,
+                        //   child: getList(
+                        //     gAllServices[i].category,
+                        //     gAllServices,
+                        //   ),
+                        // ),
+                        gAllServices.isEmpty
+                            ? const Column(
+                                children: [
+                                  Text(
+                                    "There are no adventures in this country for now, please check again later",
+                                    style: TextStyle(
+                                        fontSize: 16, color: blackColor),
+                                  )
+                                ],
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0),
+                                child: SizedBox(
+                                  height: 340,
+                                  child: getList(
+                                    gAllServices[i].category,
+                                    gAllServices,
+                                  ),
+                                ),
+                              ),
+                      ],
+                    ),
+                ],
+              );
     // : allServices.isEmpty
     //     ? Center(
     //         child: MyText(

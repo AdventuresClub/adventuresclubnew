@@ -22,7 +22,6 @@ import '../../models/services/dependencies_model.dart';
 import '../../models/services/included_activities_model.dart';
 import '../../models/services/manish_model.dart';
 import '../../models/services/service_image_model.dart';
-import '../details.dart';
 
 class Planned extends StatefulWidget {
   const Planned({super.key});
@@ -412,8 +411,10 @@ class _PlannedState extends State<Planned> {
           //});
         }
       } else {
-        if (_selectedDay.isAfter(element.startDate) &&
-            _selectedDay.isBefore(element.endDate)) {
+        if ( //_selectedDay.isAfter(element.startDate) ||
+            _selectedDay.day == element.startDate.day
+            //_selectedDay.isBefore(element.endDate),
+            ) {
           filterList.add(element);
         }
       }
