@@ -18,7 +18,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 
 class CheckProfile extends StatefulWidget {
-  const CheckProfile({Key? key}) : super(key: key);
+  const CheckProfile({super.key});
 
   @override
   CheckProfileState createState() => CheckProfileState();
@@ -27,6 +27,9 @@ class CheckProfile extends StatefulWidget {
 class CheckProfileState extends State<CheckProfile> {
   bool userExist = false;
   Map mapCountry = {};
+  String deviceType = "";
+  String deviceId = "";
+  Map<String, dynamic> deviceData = <String, dynamic>{};
   List<GetCountryModel> countriesList1 = [];
   ProfileBecomePartner pbp = ProfileBecomePartner(0, 0, "", "", "", "", "", "",
       "", "", 0, 0, "", "", "", "", "", "", "", 0, "", "", "", "", "", "");
@@ -67,17 +70,21 @@ class CheckProfileState extends State<CheckProfile> {
   @override
   void initState() {
     super.initState();
-    login();
+    getDeviceID();
   }
 
   void getDeviceID() async {
     final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
-    Map<String, dynamic> deviceData = <String, dynamic>{};
+
     try {
       if (Platform.isAndroid) {
         deviceData = readAndroidBuildData(await deviceInfoPlugin.androidInfo);
+        deviceId = deviceData['id'];
+        deviceType = "1";
       } else if (Platform.isIOS) {
         deviceData = readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
+        deviceId = deviceData['id'];
+        deviceType = "1";
       }
     } on PlatformException {
       deviceData = <String, dynamic>{
@@ -85,6 +92,7 @@ class CheckProfileState extends State<CheckProfile> {
       };
     }
     debugPrint("done");
+    login();
   }
 
   Map<String, dynamic> readAndroidBuildData(AndroidDeviceInfo build) {
@@ -197,7 +205,8 @@ class CheckProfileState extends State<CheckProfile> {
         await http.post(Uri.parse("${Constants.baseUrl}/api/v1/login"), body: {
       'email': e,
       'password': pass,
-      'device_id': "0",
+      'device_id': deviceId, //"0",,
+      'device_type': deviceType
     });
     if (response.statusCode == 200) {
       getDeviceID();
