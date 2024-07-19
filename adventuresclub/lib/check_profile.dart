@@ -1,17 +1,21 @@
 // ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls, use_build_context_synchronously
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:adventuresclub/choose_language.dart';
 import 'package:adventuresclub/models/get_country.dart';
 import 'package:adventuresclub/models/profile_models/profile_become_partner.dart';
 import 'package:adventuresclub/models/user_profile_model.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'constants.dart';
 import 'home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart';
 
 class CheckProfile extends StatefulWidget {
   const CheckProfile({Key? key}) : super(key: key);
@@ -64,6 +68,45 @@ class CheckProfileState extends State<CheckProfile> {
   void initState() {
     super.initState();
     login();
+  }
+
+  void getDeviceID() async {
+    final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+    Map<String, dynamic> deviceData = <String, dynamic>{};
+    try {
+      if (Platform.isAndroid) {
+        deviceData = readAndroidBuildData(await deviceInfoPlugin.androidInfo);
+      } else if (Platform.isIOS) {
+        deviceData = readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
+      }
+    } on PlatformException {
+      deviceData = <String, dynamic>{
+        'Error:': 'Failed to get platform version.'
+      };
+    }
+    debugPrint("done");
+  }
+
+  Map<String, dynamic> readAndroidBuildData(AndroidDeviceInfo build) {
+    return <String, dynamic>{
+      'id': build.id,
+      'model': build.model,
+      'product': build.product,
+      'serialNumber': build.serialNumber,
+    };
+  }
+
+  Map<String, dynamic> readIosDeviceInfo(IosDeviceInfo data) {
+    return <String, dynamic>{
+      'model': data.model,
+      'identifierForVendor': data.identifierForVendor,
+      'isPhysicalDevice': data.isPhysicalDevice,
+      'utsname.sysname:': data.utsname.sysname,
+      'utsname.nodename:': data.utsname.nodename,
+      'utsname.release:': data.utsname.release,
+      'utsname.version:': data.utsname.version,
+      'utsname.machine:': data.utsname.machine,
+    };
   }
 
   void goToNavigation() {
@@ -157,6 +200,7 @@ class CheckProfileState extends State<CheckProfile> {
       'device_id': "0",
     });
     if (response.statusCode == 200) {
+      getDeviceID();
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       dynamic userData = decodedResponse['data'];
       int userLoginId = int.tryParse(userData['id'].toString()) ?? 0;
