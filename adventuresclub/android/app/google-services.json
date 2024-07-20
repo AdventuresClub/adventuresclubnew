@@ -1,44 +1,26 @@
 {
   "project_info": {
-    "project_number": "552760439",
-    "project_id": "adclub-ace3d",
-    "storage_bucket": "adclub-ace3d.appspot.com"
+    "project_number": "794429399057",
+    "project_id": "adventures-club-12206",
+    "storage_bucket": "adventures-club-12206.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:552760439:android:955361c8b7520209734272",
+        "mobilesdk_app_id": "1:794429399057:android:366c317e2abc7eaa1551b0",
         "android_client_info": {
-          "package_name": "com.adventuresclub.app"
+          "package_name": "com.universalskills.adventuresclub"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "552760439-fs8edcqgu471eh0v1vuq08jkhoqk7vd0.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.adventuresclub.app",
-            "certificate_hash": "a789e505c817a122ea906ea6eaa3d48b3a30ab18"
-          }
-        },
-        {
-          "client_id": "552760439-5p1kqq7rn396tm5lbkddaa156pijj5n9.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCYJ7NKQ147_n1zX5qA-I_Wv6JuOL8IyKQ"
+          "current_key": "AIzaSyAtL9qUOhnLrU5W0G4bYLwuOzlpnPufMyg"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "552760439-5p1kqq7rn396tm5lbkddaa156pijj5n9.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

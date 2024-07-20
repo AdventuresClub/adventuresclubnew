@@ -1,17 +1,21 @@
 import 'package:adventuresclub/app_theme.dart';
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/firebase_options.dart';
 import 'package:adventuresclub/provider/navigation_index_provider.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/splashScreen/splash_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   initializeDateFormatting().then(
     (_) => runApp(
       MultiProvider(
