@@ -84,7 +84,7 @@ class CheckProfileState extends State<CheckProfile> {
       } else if (Platform.isIOS) {
         deviceData = readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
         deviceId = deviceData['id'];
-        deviceType = "1";
+        deviceType = "2";
       }
     } on PlatformException {
       deviceData = <String, dynamic>{
@@ -151,7 +151,8 @@ class CheckProfileState extends State<CheckProfile> {
 
   void parseData(String name, int countryId, int id, String email, String pass,
       String userRole) {
-    setState(() {
+        if (mounted) {
+          setState(() {
       Constants.userId = id;
       Constants.name = name;
       Constants.countryId = countryId;
@@ -159,16 +160,20 @@ class CheckProfileState extends State<CheckProfile> {
       Constants.password = pass;
       Constants.userRole = userRole;
     });
+        }
+    
   }
 
   void cId(int id) async {
     SharedPreferences prefs = await Constants.getPrefs();
     countriesList1.forEach((element) {
       if (id == element.id) {
-        setState(() {
+        if (mounted) {
+          setState(() {
           Constants.countryFlag = element.flag;
           Constants.country = element.country;
         });
+        }
       }
     });
     prefs.setString("country", Constants.country);
