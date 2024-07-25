@@ -9,6 +9,7 @@ import 'package:adventuresclub/models/profile_models/profile_become_partner.dart
 import 'package:adventuresclub/models/user_profile_model.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,6 +30,7 @@ class CheckProfileState extends State<CheckProfile> {
   Map mapCountry = {};
   String deviceType = "";
   String deviceId = "";
+  String token = "";
   Map<String, dynamic> deviceData = <String, dynamic>{};
   List<GetCountryModel> countriesList1 = [];
   ProfileBecomePartner pbp = ProfileBecomePartner(0, 0, "", "", "", "", "", "",
@@ -70,20 +72,46 @@ class CheckProfileState extends State<CheckProfile> {
   @override
   void initState() {
     super.initState();
+    //  getDeviceID();
+    registerFCM();
+  }
+
+  Future<void> registerFCM() async {
+    await FirebaseMessaging.instance.requestPermission();
+    final fcmToken = await FirebaseMessaging.instance.getToken(
+        vapidKey:
+            "BEr0HbHx_pAg1PMPbqHuA2g0hQrHtbvsM5cNfxMThTHvnvcH01-Z8MnBo-qyDR0LvRPi2fvb_3WVWf4T2rlLOhg");
+    if (fcmToken != null) {
+      setFCMToken(fcmToken);
+      token = fcmToken;
+    }
+    FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {
+      setFCMToken(fcmToken);
+    }).onError((err) {});
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      if (notification != null) {
+        Constants.showMessage(
+            context, "${notification.title}: ${notification.body}");
+        debugPrint('onMessage: ${notification.toString()}');
+      }
+    });
     getDeviceID();
   }
 
+  void setFCMToken(String fcmToken) async {}
+
   void getDeviceID() async {
-    final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+    // final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
 
     try {
       if (Platform.isAndroid) {
-        deviceData = readAndroidBuildData(await deviceInfoPlugin.androidInfo);
-        deviceId = deviceData['id'];
+        //deviceData = readAndroidBuildData(await deviceInfoPlugin.androidInfo);
+        //deviceId = deviceData['id'];
         deviceType = "1";
       } else if (Platform.isIOS) {
-        deviceData = readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
-        deviceId = deviceData['id'];
+        //deviceData = readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
+        //deviceId = deviceData['id'];
         deviceType = "2";
       }
     } on PlatformException {
@@ -151,17 +179,16 @@ class CheckProfileState extends State<CheckProfile> {
 
   void parseData(String name, int countryId, int id, String email, String pass,
       String userRole) {
-        if (mounted) {
-          setState(() {
-      Constants.userId = id;
-      Constants.name = name;
-      Constants.countryId = countryId;
-      Constants.emailId = email;
-      Constants.password = pass;
-      Constants.userRole = userRole;
-    });
-        }
-    
+    if (mounted) {
+      setState(() {
+        Constants.userId = id;
+        Constants.name = name;
+        Constants.countryId = countryId;
+        Constants.emailId = email;
+        Constants.password = pass;
+        Constants.userRole = userRole;
+      });
+    }
   }
 
   void cId(int id) async {
@@ -170,9 +197,9 @@ class CheckProfileState extends State<CheckProfile> {
       if (id == element.id) {
         if (mounted) {
           setState(() {
-          Constants.countryFlag = element.flag;
-          Constants.country = element.country;
-        });
+            Constants.countryFlag = element.flag;
+            Constants.country = element.country;
+          });
         }
       }
     });
@@ -210,11 +237,15 @@ class CheckProfileState extends State<CheckProfile> {
         await http.post(Uri.parse("${Constants.baseUrl}/api/v1/login"), body: {
       'email': e,
       'password': pass,
-      'device_id': deviceId, //"0",,
+      'device_id': token, //deviceId, //"0",,
       'device_type': deviceType
     });
+//     email:badaralsahi
+// password:87654321
+// device_id:hamza
+// device_type:2
     if (response.statusCode == 200) {
-      getDeviceID();
+      // getDeviceID();
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       dynamic userData = decodedResponse['data'];
       int userLoginId = int.tryParse(userData['id'].toString()) ?? 0;
