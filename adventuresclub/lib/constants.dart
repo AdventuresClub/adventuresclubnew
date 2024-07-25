@@ -69,6 +69,8 @@ const darkRed = Color.fromARGB(255, 176, 37, 37);
 
 class Constants {
   static DateTime usersDOB = DateTime.now();
+  static String token = "";
+  static String deviceType = "";
   static String name = "";
   static bool expired = false;
   static int countryId = 0;

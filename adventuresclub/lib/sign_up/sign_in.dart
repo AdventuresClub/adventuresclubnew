@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously, avoid_function_literals_in_foreach_calls
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/forgot_pass/forgot_pass.dart';
@@ -14,7 +15,9 @@ import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/space_text_field.dart';
 import 'package:adventuresclub/widgets/text_fields/tf_with_suffix_icon.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -39,6 +42,10 @@ class _SignInState extends State<SignIn> {
   String email = "";
   String password = "";
   Map mapCountry = {};
+  String deviceId = "";
+  String token = "";
+  String deviceType = "";
+  String deviceData = "";
   List<GetCountryModel> countriesList1 = [];
   ProfileBecomePartner pbp = ProfileBecomePartner(0, 0, "", "", "", "", "", "",
       "", "", 0, 0, "", "", "", "", "", "", "", 0, "", "", "", "", "", "");
@@ -47,7 +54,58 @@ class _SignInState extends State<SignIn> {
   @override
   void initState() {
     super.initState();
+    registerFCM();
+  }
+
+  Future<void> registerFCM() async {
+    await FirebaseMessaging.instance.requestPermission();
+    final fcmToken = await FirebaseMessaging.instance.getToken(
+        vapidKey:
+            "BEr0HbHx_pAg1PMPbqHuA2g0hQrHtbvsM5cNfxMThTHvnvcH01-Z8MnBo-qyDR0LvRPi2fvb_3WVWf4T2rlLOhg");
+    if (fcmToken != null) {
+      setFCMToken(fcmToken);
+      token = fcmToken;
+      Constants.token = fcmToken;
+    }
+    FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {
+      setFCMToken(fcmToken);
+    }).onError((err) {});
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      if (notification != null) {
+        Constants.showMessage(
+            context, "${notification.title}: ${notification.body}");
+        debugPrint('onMessage: ${notification.toString()}');
+      }
+    });
+    getDeviceID();
+  }
+
+  void setFCMToken(String fcmToken) async {}
+
+  void getDeviceID() async {
+    // final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+
+    try {
+      if (Platform.isAndroid) {
+        //deviceData = readAndroidBuildData(await deviceInfoPlugin.androidInfo);
+        //deviceId = deviceData['id'];
+        deviceType = "1";
+        Constants.deviceType = "1";
+      } else if (Platform.isIOS) {
+        //deviceData = readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
+        //deviceId = deviceData['id'];
+        deviceType = "2";
+        Constants.deviceType = "2";
+      }
+    } on PlatformException {
+      // deviceData = <String, dynamic>{
+      //   'Error:': 'Failed to get platform version.'
+      // };
+    }
+    debugPrint("done");
     getCountries();
+    login();
   }
 
   void enterOTP() {
@@ -191,7 +249,8 @@ class _SignInState extends State<SignIn> {
               .post(Uri.parse("${Constants.baseUrl}/api/v1/login"), body: {
             'email': emailController.text,
             'password': passController.text,
-            'device_id': "0",
+            'device_id': token, //deviceId, //"0",,
+            'device_type': deviceType
           });
           if (response.statusCode == 200) {
             var decodedResponse =

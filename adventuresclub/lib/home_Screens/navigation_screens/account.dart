@@ -247,7 +247,8 @@ class _AccountState extends State<Account> {
           .post(Uri.parse("${Constants.baseUrl}/api/v1/login"), body: {
         'email': Constants.emailId, //"hamza@gmail.com",
         'password': Constants.password, //"Upendra@321",
-        'device_id': "0"
+        'device_id': Constants.token, //deviceId, //"0",,
+        'device_type': Constants.deviceType,
       });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       dynamic userData = decodedResponse['data'];

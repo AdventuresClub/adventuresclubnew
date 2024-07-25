@@ -84,6 +84,7 @@ class CheckProfileState extends State<CheckProfile> {
     if (fcmToken != null) {
       setFCMToken(fcmToken);
       token = fcmToken;
+      Constants.token = fcmToken;
     }
     FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {
       setFCMToken(fcmToken);
@@ -109,10 +110,12 @@ class CheckProfileState extends State<CheckProfile> {
         //deviceData = readAndroidBuildData(await deviceInfoPlugin.androidInfo);
         //deviceId = deviceData['id'];
         deviceType = "1";
+        Constants.deviceType = "1";
       } else if (Platform.isIOS) {
         //deviceData = readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
         //deviceId = deviceData['id'];
         deviceType = "2";
+        Constants.deviceType = "2";
       }
     } on PlatformException {
       deviceData = <String, dynamic>{
