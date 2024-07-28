@@ -16,12 +16,13 @@ class ProfileTab extends StatelessWidget {
             length: 3, // length of tabs
             initialIndex: 0,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
                   //color: greyTextColor,
                   child: TabBar(
-                    padding: const EdgeInsets.all(0),
+                    // padding: const EdgeInsets.all(0),
                     labelPadding: const EdgeInsets.symmetric(horizontal: 4),
                     labelColor: blackColor,
                     labelStyle: const TextStyle(

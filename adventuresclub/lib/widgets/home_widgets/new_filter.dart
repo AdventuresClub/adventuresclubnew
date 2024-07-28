@@ -214,7 +214,6 @@ class _NewFilterPageState extends State<NewFilterPage> {
 
   void getRegions() async {
     regionList.clear();
-    aimedFor();
     setState(() {
       loading = true;
     });
