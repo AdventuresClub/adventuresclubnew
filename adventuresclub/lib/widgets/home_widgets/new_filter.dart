@@ -661,24 +661,24 @@ class _NewFilterPageState extends State<NewFilterPage> {
                               }),
                           contentPadding:
                               const EdgeInsets.symmetric(horizontal: 15),
-                          title: MyText(
-                            text: "Country".tr(),
-                            color: blackColor,
-                            size: 16,
-                            weight: FontWeight.w800,
-                          ),
-                          trailing: SizedBox(
-                            width: 140,
+                          // title: MyText(
+                          //   text: "Country".tr(),
+                          //   color: blackColor,
+                          //   size: 16,
+                          //   weight: FontWeight.w800,
+                          // ),
+                          subtitle: SizedBox(
+                            width: 120,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                MyText(
-                                  text: "Country".tr(),
-                                  color: blackColor.withOpacity(0.6),
-                                  size: 12,
-                                  weight: FontWeight.w600,
-                                ),
+                                // MyText(
+                                //   text: "Country".tr(),
+                                //   color: blackColor.withOpacity(0.6),
+                                //   size: 12,
+                                //   weight: FontWeight.w600,
+                                // ),
                                 const SizedBox(
                                   height: 1,
                                 ),
@@ -686,18 +686,18 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                   children: [
                                     Image.network(
                                       "${"${Constants.baseUrl}/public/"}${Constants.countryFlag}",
-                                      height: 15,
-                                      width: 15,
+                                      height: 30,
+                                      width: 30,
                                     ),
                                     const SizedBox(
                                       width: 5,
                                     ),
                                     Text(
-                                      Constants.country,
+                                      Constants.country.tr(),
                                       style: const TextStyle(
                                           color: blackColor,
                                           fontWeight: FontWeight.w700,
-                                          fontSize: 12),
+                                          fontSize: 14),
                                     ),
                                     const Icon(
                                       Icons.keyboard_arrow_down,
