@@ -1395,79 +1395,99 @@ class _NewFilterPageState extends State<NewFilterPage> {
     int unreadCount =
         Provider.of<NavigationIndexProvider>(context, listen: true).unreadCount;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+      padding: const EdgeInsets.symmetric(horizontal: 0.0),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              GestureDetector(
-                onTap: addActivites,
-                // child: const FaIcon(
-                //   FontAwesomeIcons.filter,
-                //   color: bluishColor,
-                //   size: 38,
-                // ),
-                child: const Icon(
-                  Icons.filter_list_outlined,
-                  color: bluishColor,
-                  size: 42,
-                ),
-                // child: Container(
-                //   height: 34,
-                //   width: 32,
-                //   decoration: BoxDecoration(
-                //     color: bluishColor,
-                //     image: const DecorationImage(
-                //       image: ExactAssetImage(
-                //         'images/pathpic.png',
-                //       ),
-                //     ),
-                //     borderRadius: BorderRadius.circular(8),
-                //   ),
-                // ),
-              ),
-              // const SizedBox(
-              //   width: 2,
-              // ),
-              SearchContainer('search'.tr(), 1.4, 10, searchController,
-                  'images/maskGroup51.png', true, true, Constants.country, 14),
-              const SizedBox(
-                width: 5,
-              ),
-              Stack(
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(6),
+              color: whiteColor,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                    onTap: goToMessages,
+                    onTap: addActivites,
+                    // child: const FaIcon(
+                    //   FontAwesomeIcons.filter,
+                    //   color: bluishColor,
+                    //   size: 38,
+                    // ),
                     child: const Icon(
-                      Icons.message,
+                      Icons.filter_list_outlined,
                       color: bluishColor,
-                      size: 38,
+                      size: 42,
                     ),
+                    // child: Container(
+                    //   height: 34,
+                    //   width: 32,
+                    //   decoration: BoxDecoration(
+                    //     color: bluishColor,
+                    //     image: const DecorationImage(
+                    //       image: ExactAssetImage(
+                    //         'images/pathpic.png',
+                    //       ),
+                    //     ),
+                    //     borderRadius: BorderRadius.circular(8),
+                    //   ),
+                    // ),
                   ),
-                  if (unreadCount != "0")
-                    Positioned(
-                      right: 4,
-                      bottom: -1,
-                      child: Container(
-                        height: 20,
-                        width: 15,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 187, 39, 28),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Center(
-                          child: MyText(
-                            text: unreadCount,
-                            color: whiteColor,
-                            weight: FontWeight.bold,
-                          ),
+                  // const SizedBox(
+                  //   width: 2,
+                  // ),
+                  GestureDetector(
+                    onTap: addActivites,
+                    child: SearchContainer(
+                        'search'.tr(),
+                        1.4,
+                        10,
+                        searchController,
+                        'images/maskGroup51.png',
+                        true,
+                        true,
+                        Constants.country,
+                        18),
+                  ),
+                  // const SizedBox(
+                  //   width: 5,
+                  // ),
+                  Stack(
+                    children: [
+                      GestureDetector(
+                        onTap: goToMessages,
+                        child: const Icon(
+                          Icons.message,
+                          color: bluishColor,
+                          size: 38,
                         ),
                       ),
-                    ),
+                      if (unreadCount != "0")
+                        Positioned(
+                          right: 4,
+                          bottom: -1,
+                          child: Container(
+                            height: 20,
+                            width: 15,
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 187, 39, 28),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Center(
+                              child: MyText(
+                                text: unreadCount,
+                                color: whiteColor,
+                                weight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
                 ],
               ),
-            ],
+            ),
           ),
           const SizedBox(
             height: 20,
