@@ -243,10 +243,6 @@ class CheckProfileState extends State<CheckProfile> {
       'device_id': token, //deviceId, //"0",,
       'device_type': deviceType
     });
-//     email:badaralsahi
-// password:87654321
-// device_id:hamza
-// device_type:2
     if (response.statusCode == 200) {
       // getDeviceID();
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;

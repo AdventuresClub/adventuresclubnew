@@ -3,8 +3,11 @@
 import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/get_country.dart';
+import 'package:adventuresclub/models/profile_models/profile_become_partner.dart';
+import 'package:adventuresclub/models/user_profile_model.dart';
 import 'package:adventuresclub/provider/navigation_index_provider.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
+import 'package:adventuresclub/widgets/loading_widget.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/text_fields.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -29,6 +32,9 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   TextEditingController emailController = TextEditingController();
   TextEditingController otpController = TextEditingController();
   TextEditingController searchController = TextEditingController();
+  ProfileBecomePartner pbp = ProfileBecomePartner(0, 0, "", "", "", "", "", "",
+      "", "", 0, 0, "", "", "", "", "", "", "", 0, "", "", "", "", "", "");
+  bool loading = false;
   String name = "";
   String email = "";
   String phone = "";
@@ -51,21 +57,143 @@ class _PersonalDetailsState extends State<PersonalDetails> {
   @override
   void initState() {
     super.initState();
-    getData();
+    login();
+    //  getCountries();
+  }
+
+  void login() async {
     getCountries();
+    SharedPreferences prefs = await Constants.getPrefs();
+    String pass = prefs.getString("password") ?? "";
+    String e = prefs.getString("email") ?? "";
+    var response =
+        await http.post(Uri.parse("${Constants.baseUrl}/api/v1/login"), body: {
+      'email': e,
+      'password': pass,
+      'device_id': Constants.token, //deviceId, //"0",,
+      'device_type': Constants.deviceType,
+    });
+    setState(() {
+      loading = true;
+    });
+    if (response.statusCode == 200) {
+      // getDeviceID();
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      dynamic userData = decodedResponse['data'];
+      int userLoginId = int.tryParse(userData['id'].toString()) ?? 0;
+      int countryId = int.tryParse(userData['country_id'].toString()) ?? 0;
+      int languageId = int.tryParse(userData['language_id'].toString()) ?? 0;
+      int currencyId = int.tryParse(userData['currency_id'].toString()) ?? 0;
+      int addedFrom = int.tryParse(userData['added_from'].toString()) ?? 0;
+      dynamic partnerInfo = decodedResponse['data']["become_partner"];
+      if (partnerInfo != null) {
+        int id = int.tryParse(partnerInfo['id'].toString()) ?? 0;
+        int userId = int.tryParse(partnerInfo['user_id'].toString()) ?? 0;
+        int debitCard = int.tryParse(partnerInfo['debit_card'].toString()) ?? 0;
+        int visaCard = int.tryParse(partnerInfo['visa_card'].toString()) ?? 0;
+        int packagesId =
+            int.tryParse(partnerInfo['packages_id'].toString()) ?? 0;
+        ProfileBecomePartner bp = ProfileBecomePartner(
+          id,
+          userId,
+          partnerInfo['company_name'] ?? "",
+          partnerInfo['address'] ?? "",
+          partnerInfo['location'] ?? "",
+          partnerInfo['description'] ?? "",
+          partnerInfo['license'] ?? "",
+          partnerInfo['cr_name'] ?? "",
+          partnerInfo['cr_number'] ?? "",
+          partnerInfo['cr_copy'] ?? "",
+          debitCard,
+          visaCard,
+          partnerInfo['payon_arrival'] ?? "",
+          partnerInfo['paypal'] ?? "",
+          partnerInfo['bankname'] ?? "",
+          partnerInfo['account_holdername'] ?? "",
+          partnerInfo['account_number'] ?? "",
+          partnerInfo['is_online'] ?? "",
+          partnerInfo['is_approved'] ?? "",
+          packagesId,
+          partnerInfo['start_date'] ?? "",
+          partnerInfo['end_date'] ?? "",
+          partnerInfo['is_wiretransfer'] ?? "",
+          partnerInfo['is_free_used'] ?? "",
+          partnerInfo['created_at'] ?? "",
+          partnerInfo['updated_at'] ?? "",
+        );
+        pbp = bp;
+      }
+      UserProfileModel up = UserProfileModel(
+          userLoginId,
+          userData['users_role'] ?? "",
+          userData['profile_image'] ?? "",
+          userData['name'] ?? "",
+          userData['height'] ?? "",
+          userData['weight'] ?? "",
+          userData['email'] ?? "",
+          countryId,
+          userData['region_id'] ?? "",
+          userData['city_id'] ?? "",
+          userData['now_in'] ?? "",
+          userData['mobile'] ?? "",
+          userData['mobile_verified_at'] ?? "",
+          userData['dob'] ?? "",
+          userData['gender'] ?? "",
+          languageId,
+          userData['nationality_id'] ?? "",
+          nationality: userData['nationality'] ?? "",
+          currencyId,
+          userData['app_notification'] ?? "",
+          userData['points'] ?? "",
+          userData['health_conditions'] ?? "",
+          userData['health_conditions_id'] ?? "",
+          userData['email_verified_at'] ?? "",
+          userData['mobile_code'] ?? "",
+          userData['status'] ?? "",
+          addedFrom,
+          userData['created_at'] ?? "",
+          userData['updated_at'] ?? "",
+          userData['deleted_at'] ?? "",
+          userData['device_id'] ?? "",
+          pbp);
+      Constants.profile = up;
+      nameController.text = Constants.profile.name;
+      phoneController.text = Constants.profile.mobile;
+      emailController.text = Constants.profile.email;
+      Constants.userRole = up.userRole;
+      prefs.setString("userRole", up.userRole);
+      prefs.setInt("userId", up.id);
+      prefs.setInt("countryId", up.countryId);
+      prefs.setString("name", up.name);
+      ccCode = Constants.profile.mobileCode;
+      name = Constants.profile.name;
+      phone = Constants.profile.mobileCode;
+      email = Constants.profile.email;
+      formattedDate = Constants.dob;
+      selectedGender = Constants.profile.gender;
+      //getNationality
+      if (Constants.profile.nationality != null) {
+        Constants.nationality = Constants.profile.nationality!;
+      } else {
+        //    getNationality(Constants.nationalityId);
+      }
+
+      // prefs.setString("email", Constants.emailId);
+      // prefs.setString("password", Constants.password);
+      //Constants.profile = profile;
+      Constants.userRole = up.userRole;
+      //Constants.userRole = "3";
+    }
+    setState(() {
+      loading = false;
+    });
   }
 
   void getData() {
     nameController.text = Constants.profile.name;
     phoneController.text = Constants.profile.mobile;
     emailController.text = Constants.profile.email;
-    setState(() {
-      ccCode = Constants.profile.mobileCode;
-      name = Constants.profile.name;
-      phone = Constants.profile.mobileCode;
-      email = Constants.profile.email;
-      formattedDate = Constants.dob;
-    });
+    setState(() {});
   }
 
   //   ${Constants.baseUrl}/api/v1/update_profile
@@ -424,6 +552,17 @@ class _PersonalDetailsState extends State<PersonalDetails> {
     }
   }
 
+  String getNationality(String id) {
+    int i = int.tryParse(id) ?? 0;
+    String nationality = "";
+    for (var element in countriesList1) {
+      if (element.id == i) {
+        Constants.nationality = element.country;
+      }
+    }
+    return nationality;
+  }
+
   void addCountry(String country, int id, String nationality) {
     Navigator.of(context).pop();
     setState(() {
@@ -435,321 +574,331 @@ class _PersonalDetailsState extends State<PersonalDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 15),
+    return loading
+        ? const LoadingWidget()
+        : SingleChildScrollView(
             child: Column(
               children: [
-                TextFields(
-                  name,
-                  nameController,
-                  15,
-                  greyProfileColor,
-                  true,
-                  editBorder: true,
-                ),
-                // Divider(
-                //   indent: 4,
-                //   endIndent: 4,
-                //   color: greyColor.withOpacity(0.5),
-                // ),
-                const SizedBox(
-                  height: 10,
-                ),
-                phoneNumberField(context),
-                // TextField(
-                //   inputFormatters: [NoSpaceFormatter()],
-                //   keyboardType: TextInputType.name,
-                //   controller: phoneController,
-                //   style: const TextStyle(
-                //     decoration: TextDecoration.none,
-                //   ),
-                //   onChanged: (val) {
-                //     final trimVal = val.trim();
-                //     if (val != trimVal) {
-                //       setState(() {
-                //         phoneController.text = trimVal;
-                //         phoneController.selection = TextSelection.fromPosition(
-                //             TextPosition(offset: trimVal.length));
-                //       });
-                //     }
-                //   },
-                //   decoration: InputDecoration(
-                //     suffixText: "Send OTP",
-                //     suffixStyle: const TextStyle(
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.bold,
-                //         color: blackColor),
-                //     contentPadding: const EdgeInsets.symmetric(
-                //         vertical: 15, horizontal: 15),
-                //     hintText: phone,
-                //     hintStyle: TextStyle(
-                //         color: blackColor.withOpacity(
-                //           0.6,
-                //         ),
-                //         fontWeight: FontWeight.w600,
-                //         fontSize: 14,
-                //         fontFamily: 'Raleway'),
-                //     hintMaxLines: 1,
-                //     isDense: true,
-                //     filled: true,
-                //     fillColor: greyProfileColor,
-                //     border: OutlineInputBorder(
-                //       borderRadius:
-                //           const BorderRadius.all(Radius.circular(10.0)),
-                //       borderSide:
-                //           BorderSide(color: blackColor.withOpacity(0.0)),
-                //     ),
-                //     enabledBorder: OutlineInputBorder(
-                //       borderRadius:
-                //           const BorderRadius.all(Radius.circular(10.0)),
-                //       borderSide:
-                //           BorderSide(color: blackColor.withOpacity(0.0)),
-                //     ),
-                //     focusedBorder: OutlineInputBorder(
-                //       borderRadius: const BorderRadius.all(Radius.circular(10)),
-                //       borderSide: BorderSide(
-                //         color: blackColor.withOpacity(0.0),
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                // Divider(
-                //   indent: 4,
-                //   endIndent: 4,
-                //   color: greyColor.withOpacity(0.5),
-                // ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFields(
-                  email,
-                  emailController,
-                  15,
-                  greyProfileColor,
-                  true,
-                  editBorder: true,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                GestureDetector(
-                  onTap: () => _selectDate(context),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 0),
-                    width: MediaQuery.of(context).size.width / 1,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: kPrimaryColor,
-                      border: Border.all(
-                        color: blackColor.withOpacity(0.2),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8.0, vertical: 15),
+                  child: Column(
+                    children: [
+                      TextFields(
+                        name,
+                        nameController,
+                        15,
+                        greyProfileColor,
+                        true,
+                        editBorder: true,
                       ),
-                    ),
-                    child: ListTile(
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 0, horizontal: 10),
-                      leading: Text(
-                        formattedDate.toString(),
-                        style: TextStyle(
-                            color: blackColor.withOpacity(0.6), fontSize: 14),
+                      // Divider(
+                      //   indent: 4,
+                      //   endIndent: 4,
+                      //   color: greyColor.withOpacity(0.5),
+                      // ),
+                      const SizedBox(
+                        height: 10,
                       ),
-                      trailing: Icon(
-                        Icons.calendar_today,
-                        color: blackColor.withOpacity(0.6),
-                        size: 20,
+                      phoneNumberField(context),
+                      // TextField(
+                      //   inputFormatters: [NoSpaceFormatter()],
+                      //   keyboardType: TextInputType.name,
+                      //   controller: phoneController,
+                      //   style: const TextStyle(
+                      //     decoration: TextDecoration.none,
+                      //   ),
+                      //   onChanged: (val) {
+                      //     final trimVal = val.trim();
+                      //     if (val != trimVal) {
+                      //       setState(() {
+                      //         phoneController.text = trimVal;
+                      //         phoneController.selection = TextSelection.fromPosition(
+                      //             TextPosition(offset: trimVal.length));
+                      //       });
+                      //     }
+                      //   },
+                      //   decoration: InputDecoration(
+                      //     suffixText: "Send OTP",
+                      //     suffixStyle: const TextStyle(
+                      //         fontSize: 16,
+                      //         fontWeight: FontWeight.bold,
+                      //         color: blackColor),
+                      //     contentPadding: const EdgeInsets.symmetric(
+                      //         vertical: 15, horizontal: 15),
+                      //     hintText: phone,
+                      //     hintStyle: TextStyle(
+                      //         color: blackColor.withOpacity(
+                      //           0.6,
+                      //         ),
+                      //         fontWeight: FontWeight.w600,
+                      //         fontSize: 14,
+                      //         fontFamily: 'Raleway'),
+                      //     hintMaxLines: 1,
+                      //     isDense: true,
+                      //     filled: true,
+                      //     fillColor: greyProfileColor,
+                      //     border: OutlineInputBorder(
+                      //       borderRadius:
+                      //           const BorderRadius.all(Radius.circular(10.0)),
+                      //       borderSide:
+                      //           BorderSide(color: blackColor.withOpacity(0.0)),
+                      //     ),
+                      //     enabledBorder: OutlineInputBorder(
+                      //       borderRadius:
+                      //           const BorderRadius.all(Radius.circular(10.0)),
+                      //       borderSide:
+                      //           BorderSide(color: blackColor.withOpacity(0.0)),
+                      //     ),
+                      //     focusedBorder: OutlineInputBorder(
+                      //       borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      //       borderSide: BorderSide(
+                      //         color: blackColor.withOpacity(0.0),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      // Divider(
+                      //   indent: 4,
+                      //   endIndent: 4,
+                      //   color: greyColor.withOpacity(0.5),
+                      // ),
+                      const SizedBox(
+                        height: 10,
                       ),
-                    ),
-                  ),
-                ),
-                // Divider(
-                //   indent: 4,
-                //   endIndent: 4,
-                //   color: greyColor.withOpacity(0.5),
-                // ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    if (Constants.nationality != "null")
-                      Expanded(
-                          child: Container(
-                              height: 57,
-                              decoration: BoxDecoration(
-                                  //color: whiteColor,
-                                  border: Border.all(
-                                      color: blackColor.withOpacity(0.2)),
-                                  borderRadius: BorderRadius.circular(12)),
-                              child:
-                                  Center(child: Text(Constants.nationality)))),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Expanded(
-                        child: pickCountry(context, selectedCountry, false)),
-                  ],
-                ),
-                // Divider(
-                //   indent: 4,
-                //   endIndent: 4,
-                //   color: greyColor.withOpacity(0.5),
-                // ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    //pickGender(context, 'Gender'),
-                    if (Constants.gender != "null")
-                      Expanded(
-                          child: Container(
-                              height: 57,
-                              decoration: BoxDecoration(
-                                  //color: whiteColor,
-                                  border: Border.all(
-                                      color: blackColor.withOpacity(0.2)),
-                                  borderRadius: BorderRadius.circular(12)),
-                              child: Center(child: Text(Constants.gender)))),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            //color: whiteColor,
-                            border:
-                                Border.all(color: blackColor.withOpacity(0.2)),
-                            borderRadius: BorderRadius.circular(12)),
-                        child: ExpansionTile(
-                          title: Text(selectedGender.isNotEmpty
-                              ? selectedGender
-                              : 'gender'.tr()),
-                          children: [
-                            for (int i = 0; i < genderText.length; i++)
-                              CheckboxListTile(
-                                dense: true,
-                                visualDensity: VisualDensity.compact,
-                                value: selectedGender == genderText[i],
-                                checkboxShape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(12))),
-                                onChanged: (value) {
-                                  setState(() {
-                                    selectedGender = genderText[i];
-
-                                    if (value == true) {
-                                    } else {}
-                                  });
-                                },
-                                title: Text(
-                                  genderText[i].tr(),
-                                  style: const TextStyle(fontSize: 14),
-                                ),
-                              ),
-                            //   },
-                            // )
-                          ],
-                        ),
+                      TextFields(
+                        email,
+                        emailController,
+                        15,
+                        greyProfileColor,
+                        true,
+                        editBorder: true,
                       ),
-                    ),
-                  ],
-                ),
-                // ListTile(
-                //   leading: const Icon(
-                //     Icons.delete_forever,
-                //     color: redColor,
-                //   ),
-                //   title: MyText(
-                //     text: "Delete Account",
-                //     color: blackColor,
-                //     size: 14,
-                //   ),
-                // ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Button(
-                    'save'.tr(),
-                    greenishColor,
-                    greenishColor,
-                    whiteColor,
-                    18,
-                    editProfile,
-                    Icons.add,
-                    whiteColor,
-                    false,
-                    1.3,
-                    'Raleway',
-                    FontWeight.w600,
-                    16),
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height / 16,
-                  width: MediaQuery.of(context).size.width / 1.3,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: redColor,
-                      width: 2.0,
-                    ),
-                    color: redColor,
-                    borderRadius: const BorderRadius.all(Radius.circular(28)),
-                  ),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: () =>
-                          showConfirmation("deleteAccount", "wantToDelete"),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "deleteAccount".tr(),
-                                style: const TextStyle(
-                                    color: whiteColor,
-                                    fontWeight: FontWeight.w600,
-                                    letterSpacing: 0.8,
-                                    fontSize: 16),
-                              ),
-                              // SizedBox(width: 3),
-                              // Icon(
-                              //   Icons.delete,
-                              //   color: whiteColor,
-                              // ),
-                            ],
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      GestureDetector(
+                        onTap: () => _selectDate(context),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 0),
+                          width: MediaQuery.of(context).size.width / 1,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: kPrimaryColor,
+                            border: Border.all(
+                              color: blackColor.withOpacity(0.2),
+                            ),
+                          ),
+                          child: ListTile(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 10),
+                            leading: Text(
+                              formattedDate.toString(),
+                              style: TextStyle(
+                                  color: blackColor.withOpacity(0.6),
+                                  fontSize: 14),
+                            ),
+                            trailing: Icon(
+                              Icons.calendar_today,
+                              color: blackColor.withOpacity(0.6),
+                              size: 20,
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                      // Divider(
+                      //   indent: 4,
+                      //   endIndent: 4,
+                      //   color: greyColor.withOpacity(0.5),
+                      // ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          if (Constants.nationality != "null")
+                            Expanded(
+                                child: Container(
+                                    height: 57,
+                                    decoration: BoxDecoration(
+                                        //color: whiteColor,
+                                        border: Border.all(
+                                            color: blackColor.withOpacity(0.2)),
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    child: Center(
+                                        child: Text(Constants.nationality)))),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Expanded(
+                              child:
+                                  pickCountry(context, selectedCountry, false)),
+                        ],
+                      ),
+                      // Divider(
+                      //   indent: 4,
+                      //   endIndent: 4,
+                      //   color: greyColor.withOpacity(0.5),
+                      // ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          //pickGender(context, 'Gender'),
+                          if (Constants.gender != "null")
+                            Expanded(
+                                child: Container(
+                                    height: 57,
+                                    decoration: BoxDecoration(
+                                        //color: whiteColor,
+                                        border: Border.all(
+                                            color: blackColor.withOpacity(0.2)),
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    child:
+                                        Center(child: Text(Constants.gender)))),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  //color: whiteColor,
+                                  border: Border.all(
+                                      color: blackColor.withOpacity(0.2)),
+                                  borderRadius: BorderRadius.circular(12)),
+                              child: ExpansionTile(
+                                title: Text(selectedGender.isNotEmpty
+                                    ? selectedGender
+                                    : 'gender'.tr()),
+                                children: [
+                                  for (int i = 0; i < genderText.length; i++)
+                                    CheckboxListTile(
+                                      dense: true,
+                                      visualDensity: VisualDensity.compact,
+                                      value: selectedGender == genderText[i],
+                                      checkboxShape:
+                                          const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(12))),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          selectedGender = genderText[i];
+
+                                          if (value == true) {
+                                          } else {}
+                                        });
+                                      },
+                                      title: Text(
+                                        genderText[i].tr(),
+                                        style: const TextStyle(fontSize: 14),
+                                      ),
+                                    ),
+                                  //   },
+                                  // )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      // ListTile(
+                      //   leading: const Icon(
+                      //     Icons.delete_forever,
+                      //     color: redColor,
+                      //   ),
+                      //   title: MyText(
+                      //     text: "Delete Account",
+                      //     color: blackColor,
+                      //     size: 14,
+                      //   ),
+                      // ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Button(
+                          'save'.tr(),
+                          greenishColor,
+                          greenishColor,
+                          whiteColor,
+                          18,
+                          editProfile,
+                          Icons.add,
+                          whiteColor,
+                          false,
+                          1.3,
+                          'Raleway',
+                          FontWeight.w600,
+                          16),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height / 16,
+                        width: MediaQuery.of(context).size.width / 1.3,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: redColor,
+                            width: 2.0,
+                          ),
+                          color: redColor,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(28)),
+                        ),
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: () => showConfirmation(
+                                "deleteAccount", "wantToDelete"),
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "deleteAccount".tr(),
+                                      style: const TextStyle(
+                                          color: whiteColor,
+                                          fontWeight: FontWeight.w600,
+                                          letterSpacing: 0.8,
+                                          fontSize: 16),
+                                    ),
+                                    // SizedBox(width: 3),
+                                    // Icon(
+                                    //   Icons.delete,
+                                    //   color: whiteColor,
+                                    // ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      // Button(
+                      //     'Delete Account',
+                      //     redColor,
+                      //     redColor,
+                      //     whiteColor,
+                      //     18,
+                      //     showConfirmation,
+                      //     Icons.add,
+                      //     whiteColor,
+                      //     false,
+                      //     1.3,
+                      //     'Raleway',
+                      //     FontWeight.w600,
+                      //     16),
+                    ],
                   ),
                 ),
-
-                // Button(
-                //     'Delete Account',
-                //     redColor,
-                //     redColor,
-                //     whiteColor,
-                //     18,
-                //     showConfirmation,
-                //     Icons.add,
-                //     whiteColor,
-                //     false,
-                //     1.3,
-                //     'Raleway',
-                //     FontWeight.w600,
-                //     16),
               ],
             ),
-          ),
-        ],
-      ),
-    );
+          );
   }
 
   Widget phoneNumberField(context) {
@@ -914,7 +1063,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       decoration: const BoxDecoration(
                         color: greyProfileColor,
                       ),
-                      child: ccCode != ""
+                      child: ccCode != null
                           ? Text(ccCode,
                               style: const TextStyle(
                                   color: Colors.black, fontSize: 14))
