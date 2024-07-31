@@ -12,6 +12,7 @@ import 'package:adventuresclub/sign_up/sign_in.dart';
 import 'package:adventuresclub/widgets/loading_widget.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/update_page.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -154,14 +155,25 @@ class _BottomNavigationState extends State<BottomNavigation> {
                   //itemCount: filteredServices.length,
                   //itemBuilder: ((context, index) {
                   //return
-
                   for (int index = 0; index < countriesList1.length; index++)
                     ListTile(
-                      leading: Image.network(
-                        "${"${Constants.baseUrl}/public/"}${countriesList1[index].flag}",
-                        height: 25,
+                      leading: CachedNetworkImage(
                         width: 40,
+                        height: 25,
+                        imageUrl:
+                            "${"${Constants.baseUrl}/public/"}${countriesList1[index].flag}",
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => const Icon(
+                          Icons.error,
+                          size: 25,
+                        ),
                       ),
+                      // leading: Image.network(
+                      //   "${"${Constants.baseUrl}/public/"}${countriesList1[index].flag}",
+                      //   height: 25,
+                      //   width: 40,
+                      // ),
                       title: Text(countriesList1[index].country),
                       onTap: () {
                         addCountry(
