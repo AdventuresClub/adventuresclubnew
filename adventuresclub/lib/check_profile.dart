@@ -108,9 +108,9 @@ class CheckProfileState extends State<CheckProfile> {
             debugPrint('onMessage: ${notification.toString()}');
           }
         });
-        getDeviceID();
       }
     }
+    getDeviceID();
   }
 
   void setFCMToken(String fcmToken) async {}

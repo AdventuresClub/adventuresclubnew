@@ -183,7 +183,7 @@ class _MyAppState extends State<MyApp> {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    await registerFCM();
+    //await registerFCM();
 
     await Constants.getPrefs();
   }
