@@ -97,6 +97,7 @@ class CheckProfileState extends State<CheckProfile> {
       if (fcmToken.isNotEmpty) {
         setFCMToken(fcmToken);
         Constants.token = fcmToken;
+        token = fcmToken;
         FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {
           setFCMToken(fcmToken);
         }).onError((err) {});
@@ -116,6 +117,7 @@ class CheckProfileState extends State<CheckProfile> {
   void setFCMToken(String fcmToken) async {}
 
   void getDeviceID() async {
+    login();
     // final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
 
     try {
@@ -136,7 +138,6 @@ class CheckProfileState extends State<CheckProfile> {
       };
     }
     debugPrint("done");
-    login();
   }
 
   Map<String, dynamic> readAndroidBuildData(AndroidDeviceInfo build) {
