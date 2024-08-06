@@ -77,26 +77,39 @@ class CheckProfileState extends State<CheckProfile> {
   }
 
   Future<void> registerFCM() async {
-    await FirebaseMessaging.instance.requestPermission();
-    final fcmToken = await FirebaseMessaging.instance.getToken(
-        vapidKey:
-            "BEr0HbHx_pAg1PMPbqHuA2g0hQrHtbvsM5cNfxMThTHvnvcH01-Z8MnBo-qyDR0LvRPi2fvb_3WVWf4T2rlLOhg");
-    if (fcmToken != null) {
-      setFCMToken(fcmToken);
-      token = fcmToken;
-      Constants.token = fcmToken;
-    }
-    FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {
-      setFCMToken(fcmToken);
-    }).onError((err) {});
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification? notification = message.notification;
-      if (notification != null) {
-        Constants.showMessage(
-            context, "${notification.title}: ${notification.body}");
-        debugPrint('onMessage: ${notification.toString()}');
+    String fcmToken = "";
+    NotificationSettings settings =
+        await FirebaseMessaging.instance.requestPermission();
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      if (Platform.isIOS) {
+        final apnsToken = await FirebaseMessaging.instance.getAPNSToken();
+        if (apnsToken != null) {
+          fcmToken = apnsToken;
+        }
+      } else {
+        final tempToken = await FirebaseMessaging.instance.getToken(
+            vapidKey:
+                "BEr0HbHx_pAg1PMPbqHuA2g0hQrHtbvsM5cNfxMThTHvnvcH01-Z8MnBo-qyDR0LvRPi2fvb_3WVWf4T2rlLOhg");
+        if (tempToken != null) {
+          fcmToken = tempToken;
+        }
       }
-    });
+      if (fcmToken.isNotEmpty) {
+        setFCMToken(fcmToken);
+        Constants.token = fcmToken;
+        FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {
+          setFCMToken(fcmToken);
+        }).onError((err) {});
+        FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+          RemoteNotification? notification = message.notification;
+          if (notification != null) {
+            Constants.showMessage(
+                context, "${notification.title}: ${notification.body}");
+            debugPrint('onMessage: ${notification.toString()}');
+          }
+        });
+      }
+    }
     getDeviceID();
   }
 
@@ -347,9 +360,6 @@ class CheckProfileState extends State<CheckProfile> {
         home();
       }
     }
-    print(response.statusCode);
-    print(response.body);
-    print(response.headers);
   }
 
   Future getCountries() async {

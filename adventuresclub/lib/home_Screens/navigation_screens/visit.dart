@@ -165,7 +165,7 @@ class _VisitState extends State<Visit> {
         });
       }
     }
-    getFilteredVisit(filteredtitleModel[0].title);
+    getFilteredVisit(filteredtitleModel.isNotEmpty ? filteredtitleModel[0].title : "");
   }
 
   Future getVisit() async {
