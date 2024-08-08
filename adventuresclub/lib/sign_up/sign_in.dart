@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/forgot_pass/forgot_pass.dart';
+import 'package:adventuresclub/home_Screens/accounts/about_us.dart';
 import 'package:adventuresclub/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:adventuresclub/models/get_country.dart';
 import 'package:adventuresclub/models/profile_models/profile_become_partner.dart';
@@ -390,6 +391,16 @@ class _SignInState extends State<SignIn> {
     );
   }
 
+  void navAboutus() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return const AboutUs(); //NewGetOtp(); //SignUp();
+        },
+      ),
+    );
+  }
+
   void goToForgotPass(String t) {
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -625,7 +636,7 @@ class _SignInState extends State<SignIn> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 40),
+              padding: const EdgeInsets.only(bottom: 0),
               child: Button(
                   "register".tr(),
                   greenishColor,
@@ -640,6 +651,29 @@ class _SignInState extends State<SignIn> {
                   'Raleway',
                   FontWeight.w600,
                   20),
+            ),
+            // const SizedBox(
+            //   height: 2,
+            // ),
+            Container(
+              color: transparentColor,
+              height: 40,
+              child: GestureDetector(
+                onTap: navAboutus,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                            text: "privacyPolicy".tr(),
+                            style: const TextStyle(
+                                color: whiteColor, fontSize: 16)),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ),
             const SizedBox(
               height: 20,
