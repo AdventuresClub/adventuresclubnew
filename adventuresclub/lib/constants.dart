@@ -16,6 +16,7 @@ import 'package:adventuresclub/models/profile_models/profile_become_partner.dart
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
 import 'package:adventuresclub/models/services/dependencies_model.dart';
 import 'package:adventuresclub/models/user_profile_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
@@ -322,7 +323,7 @@ class Constants {
 
     canvas.drawPath(path_0, paint_0);
 
-    TextPainter painter = TextPainter(textDirection: TextDirection.ltr);
+    TextPainter painter = TextPainter();
     painter.text = TextSpan(
       text: city,
       style: const TextStyle(
@@ -338,7 +339,7 @@ class Constants {
           (height * 0.1) - painter.height * 0.1),
     );
 
-    TextPainter painter1 = TextPainter(textDirection: TextDirection.ltr);
+    TextPainter painter1 = TextPainter();
     painter1.text = TextSpan(
       text: country,
       style: const TextStyle(
@@ -904,5 +905,13 @@ class Constants {
       return "Saturday";
     }
     return "";
+  }
+
+  static String getTranslatedNumber(String numbers) {
+    String result = "";
+    for (int i = 0; i < numbers.length; i++) {
+      result += numbers[i].tr();
+    }
+    return result;
   }
 }
