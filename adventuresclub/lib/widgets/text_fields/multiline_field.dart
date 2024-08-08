@@ -27,6 +27,9 @@ class _MultiLineFieldState extends State<MultiLineField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      // onChanged: (value) {
+      //   debugPrint(Constants.getTranslatedNumber(value));
+      // },
       maxLength: widget.maximumLetters,
       maxLengthEnforcement: MaxLengthEnforcement.enforced,
       autofocus: false,
