@@ -3,8 +3,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../minimum_length_limited.dart';
-
 class TFWithSize extends StatefulWidget {
   final String hintText;
   final TextEditingController? controller;
@@ -42,6 +40,14 @@ class TFWithSize extends StatefulWidget {
 
 class _TFWithSizeState extends State<TFWithSize> {
   void abc() {}
+
+  void edit() {
+    FocusScope.of(context).unfocus();
+    if (widget.onEdit != null) {
+      widget.onEdit!();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -49,7 +55,7 @@ class _TFWithSizeState extends State<TFWithSize> {
       child: TextField(
         maxLength: widget.maximumLetters,
         maxLengthEnforcement: MaxLengthEnforcement.enforced,
-        onEditingComplete: () => widget.onEdit,
+        onEditingComplete: edit,
         keyboardType: widget.show,
         controller: widget.controller,
 
