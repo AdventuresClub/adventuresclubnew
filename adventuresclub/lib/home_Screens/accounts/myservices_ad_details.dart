@@ -9,6 +9,7 @@ import 'package:adventuresclub/provider/navigation_index_provider.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/Lists/my_services_list.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:adventuresclub/widgets/services_pdf.dart';
 import 'package:adventuresclub/widgets/tabs/my_services_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -171,6 +172,12 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
     }
   }
 
+  void pdfService() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return ServicesPdf(sm: widget.sm);
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
     int serviceCount =
@@ -196,6 +203,13 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
         //   size: 18,
         // ),
         actions: [
+          IconButton(
+            onPressed: pdfService,
+            icon: const Icon(Icons.picture_as_pdf_sharp),
+          ),
+          const SizedBox(
+            width: 5,
+          ),
           GestureDetector(
             onTap: () => showConfirmation(widget.sm.serviceId.toString()),
             child: const Image(
