@@ -22,10 +22,34 @@ class ServicesPdf extends StatefulWidget {
 
 class _ServicesPdfState extends State<ServicesPdf> {
   bool loading = false;
+  String aPlan = "";
+  List<String> adventuresPlan = [""];
+  DateTime startDate = DateTime.now();
+  DateTime endDate = DateTime.now();
+  String sDate = "";
+  String ed = "";
 
   @override
   void initState() {
     super.initState();
+    if (widget.sm.sPlan == 2) {
+      startDate =
+          DateTime.tryParse(widget.sm.availability[0].st) ?? DateTime.now();
+      String sMonth = DateFormat('MMM').format(startDate);
+      sDate = "${startDate.day}-$sMonth-${startDate.year}";
+      endDate =
+          DateTime.tryParse(widget.sm.availability[0].ed) ?? DateTime.now();
+      String eMonth = DateFormat('MMM').format(startDate);
+      ed = "${endDate.day}-$eMonth-${endDate.year}";
+    }
+    getSteps();
+  }
+
+  void getSteps() {
+    for (var element in widget.sm.availabilityPlan) {
+      adventuresPlan.add(element.day.tr());
+    }
+    aPlan = adventuresPlan.join(", ");
   }
 
   Future<Uint8List> createPDF() async {
@@ -66,7 +90,7 @@ class _ServicesPdfState extends State<ServicesPdf> {
     final pdf = pw.Document();
     pdf.addPage(
       pw.Page(
-          pageFormat: PdfPageFormat.roll80,
+          pageFormat: PdfPageFormat.standard,
           theme: pw.ThemeData.withFont(
             base: arabicFont,
             bold: arabicFontBold,
@@ -179,13 +203,9 @@ class _ServicesPdfState extends State<ServicesPdf> {
         // pw.Text(widget.sm.adventureName,
         //     style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
         //pw.SizedBox(height: 2),
-        pw.Padding(
-          padding: const pw.EdgeInsets.symmetric(vertical: 5, horizontal: 0),
-          child: pw.Image(
-            image,
-            width: 600,
-            height: 100,
-          ),
+        pw.Image(image, width: 800, height: 300, fit: pw.BoxFit.contain),
+        pw.SizedBox(
+          height: 20,
         ),
         pw.Column(
           crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -196,61 +216,60 @@ class _ServicesPdfState extends State<ServicesPdf> {
                   pw.Column(children: [
                     pw.Image(
                       serviceImage,
-                      width: 20,
-                      height: 25,
+                      width: 100,
+                      height: 100,
                     ),
-                    pw.SizedBox(height: 5),
+                    pw.SizedBox(height: 10),
                     pw.Text(widget.sm.serviceCategory,
-                        style: const pw.TextStyle(fontSize: 8))
+                        style: const pw.TextStyle(fontSize: 22))
                   ]),
                   pw.Column(children: [
                     pw.Image(
                       ss,
-                      width: 20,
-                      height: 25,
+                      width: 100,
+                      height: 100,
                     ),
-                    pw.SizedBox(height: 5),
+                    pw.SizedBox(height: 10),
                     pw.Text(widget.sm.serviceSector,
-                        style: const pw.TextStyle(fontSize: 8))
+                        style: const pw.TextStyle(fontSize: 22))
                   ]),
                   pw.Column(children: [
                     pw.Image(
                       st,
-                      width: 20,
-                      height: 25,
+                      width: 100,
+                      height: 100,
                     ),
-                    pw.SizedBox(height: 5),
+                    pw.SizedBox(height: 10),
                     pw.Text(widget.sm.serviceType,
-                        style: const pw.TextStyle(fontSize: 8))
+                        style: const pw.TextStyle(fontSize: 22))
                   ]),
                   pw.Column(children: [
                     pw.Image(
                       sl,
-                      width: 20,
-                      height: 25,
+                      width: 100,
+                      height: 100,
                     ),
                     pw.SizedBox(height: 5),
                     pw.Text(widget.sm.serviceLevel,
-                        style: const pw.TextStyle(fontSize: 8))
+                        style: const pw.TextStyle(fontSize: 22))
                   ])
                 ]),
             pw.SizedBox(height: 10),
             pw.Text(
               widget.sm.adventureName,
               style: pw.TextStyle(
-                fontSize: 10,
+                fontSize: 28,
                 fontWeight: pw.FontWeight.bold,
               ),
             ),
-
             pw.Text(
               "${widget.sm.country} ${widget.sm.region}",
               style: const pw.TextStyle(
-                fontSize: 8,
+                fontSize: 14,
                 //fontWeight: pw.FontWeight.bold,
               ),
             ),
-            pw.Divider(thickness: -0),
+            pw.Divider(thickness: 1),
             pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.spaceAround,
                 children: [
@@ -260,28 +279,69 @@ class _ServicesPdfState extends State<ServicesPdf> {
                       style: pw.TextStyle(
                         fontWeight: pw.FontWeight.bold,
                         //color:Colors.blueAccent, //bluishColor,
-                        fontSize: 12,
+                        color: const PdfColor.fromInt(0xFF1C3947),
+                        fontSize: 14,
                       ),
                     ),
                     pw.SizedBox(height: 5),
                     pw.Text("Including gears & taxes",
-                        style: const pw.TextStyle(fontSize: 8))
+                        style: const pw.TextStyle(
+                          fontSize: 8,
+                          color: PdfColor.fromInt(0xFFDF5252),
+                        ))
                   ]),
+                  pw.Container(
+                    color: const PdfColor.fromInt(0xff000000),
+                    width: 0.01,
+                    height: 45,
+                  ),
                   pw.Column(children: [
                     pw.Text(
                       "${widget.sm.currency}  ${widget.sm.costExc}",
                       style: pw.TextStyle(
                         fontWeight: pw.FontWeight.bold,
-                        //color:Colors.blueAccent, //bluishColor,
-                        fontSize: 12,
+                        color: const PdfColor.fromInt(0xFF1C3947),
+                        fontSize: 10,
                       ),
                     ),
                     pw.SizedBox(height: 5),
                     pw.Text("Excluding gears & taxes",
-                        style: const pw.TextStyle(fontSize: 8))
+                        style: const pw.TextStyle(
+                          fontSize: 8,
+                          color: PdfColor.fromInt(0xFFDF5252),
+                        ))
                   ]),
                 ]),
-            pw.Divider(thickness: -0),
+            if (widget.sm.sPlan == 2)
+              pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                  pw.Text("${"Start Date : "} $sDate",
+                      style: const pw.TextStyle(fontSize: 8)),
+                  pw.Text("${"End Date : "} $ed",
+                      style: const pw.TextStyle(fontSize: 8))
+                ],
+              ),
+            if (widget.sm.sPlan == 1)
+              pw.RichText(
+                text: pw.TextSpan(
+                  text: 'Availability'.tr(),
+                  style: pw.TextStyle(
+                    color: const PdfColor.fromInt(0xFF1C3947),
+                    fontSize: 14,
+                    fontWeight: pw.FontWeight.bold,
+                  ),
+                  children: [
+                    pw.TextSpan(
+                        text: aPlan,
+                        style: const pw.TextStyle(
+                          fontSize: 24,
+                          //fontWeight: pw.FontWeight.w400,
+                        )),
+                  ],
+                ),
+              ),
+            pw.Divider(thickness: 1),
             // pw.SizedBox(height: 2),
             pw.Text(
               "Description",
@@ -293,7 +353,7 @@ class _ServicesPdfState extends State<ServicesPdf> {
             pw.Text(
               widget.sm.writeInformation,
               style: const pw.TextStyle(
-                fontSize: 10,
+                fontSize: 8,
                 //fontWeight: pw.FontWeight.bold,
               ),
             ),
