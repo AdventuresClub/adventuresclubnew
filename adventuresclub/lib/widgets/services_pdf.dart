@@ -348,7 +348,6 @@ class _ServicesPdfState extends State<ServicesPdf> {
             //fontWeight: pw.FontWeight.bold,
           ),
         ),
-
         pw.Divider(thickness: 1),
         pw.SizedBox(height: 20),
         pw.Text(
@@ -503,44 +502,77 @@ class _ServicesPdfState extends State<ServicesPdf> {
                             ])
                       ])
               ])),
-        pw.SizedBox(
-          width: PdfPageFormat.inch * 3,
-          child: pw.Column(
-            crossAxisAlignment: pw.CrossAxisAlignment.start,
-            children: [
-              pw.Text(
-                "${"Location"}",
-                style: pw.TextStyle(
-                  fontSize: 10,
-                  fontWeight: pw.FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        pw.SizedBox(
-          width: PdfPageFormat.inch * 3,
-          child: pw.Text(
-            "${""}",
-            style: pw.TextStyle(
-              fontSize: 10,
-              fontWeight: pw.FontWeight.bold,
-            ),
-          ),
-        ),
-        pw.SizedBox(height: 2),
-
-        pw.Divider(thickness: 0.1),
-
+        // pw.SizedBox(
+        //   width: PdfPageFormat.inch * 3,
+        //   child: pw.Column(
+        //     crossAxisAlignment: pw.CrossAxisAlignment.start,
+        //     children: [
+        //       pw.Text(
+        //         "${"Location"}",
+        //         style: pw.TextStyle(
+        //           fontSize: 10,
+        //           fontWeight: pw.FontWeight.bold,
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
         // if (widget.inspection != null && widget.inspection!.status == "closed")
-        pw.Column(children: [
-          pw.Divider(thickness: 1),
-          pw.Row(
-            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-            children: [],
+        // pw.Column(children: [
+
+        //   pw.Row(
+        //     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+        //     children: [],
+        //   ),
+        // ]),
+        pw.Divider(thickness: 1),
+        pw.SizedBox(height: 20),
+        pw.Text(
+          "Pre Requisites",
+          style: pw.TextStyle(
+            fontSize: 22,
+            fontWeight: pw.FontWeight.bold,
           ),
-        ])
+        ),
+        pw.Text(
+          widget.sm.preRequisites,
+          style: const pw.TextStyle(
+            fontSize: 16,
+            //fontWeight: pw.FontWeight.bold,
+          ),
+        ),
+        pw.Divider(thickness: 1),
+        pw.SizedBox(height: 10),
+        pw.Text(
+          "Minimum Requirements",
+          style: pw.TextStyle(
+            fontSize: 22,
+            fontWeight: pw.FontWeight.bold,
+          ),
+        ),
+        pw.Text(
+          widget.sm.mRequirements,
+          style: const pw.TextStyle(
+            fontSize: 16,
+            //fontWeight: pw.FontWeight.bold,
+          ),
+        ),
+        pw.Divider(thickness: 1),
+        pw.SizedBox(height: 10),
+        pw.Text(
+          "Terms & Conditions",
+          style: pw.TextStyle(
+            fontSize: 22,
+            fontWeight: pw.FontWeight.bold,
+          ),
+        ),
+        pw.Text(
+          widget.sm.tnc,
+          style: const pw.TextStyle(
+            fontSize: 16,
+            //fontWeight: pw.FontWeight.bold,
+          ),
+        ),
       ],
     );
   }
