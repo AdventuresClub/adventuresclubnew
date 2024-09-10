@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
+import 'package:printing/printing.dart' as printing;
 import 'package:http/http.dart' as http;
 
 class ServicesPdf extends StatefulWidget {
@@ -50,9 +51,20 @@ class _ServicesPdfState extends State<ServicesPdf> {
     aPlan = adventuresPlan.join(", ");
   }
 
+  // activitiesImages.add(
+  //     "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.sm.activityIncludes[i].image}");
+
   Future<Uint8List> createPDF() async {
+    List<Uint8List> activitiesImages = [];
     final pw.Font arabicFont = await PdfGoogleFonts.notoNaskhArabicRegular();
     final pw.Font arabicFontBold = await PdfGoogleFonts.notoNaskhArabicBold();
+    for (int i = 0; i < widget.sm.activityIncludes.length; i++) {
+      final http.Response responseActivityImage = await http.get(Uri.parse(
+          "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.sm.activityIncludes[i].image}"));
+      final Uint8List networkImage = responseActivityImage.bodyBytes;
+      final Uint8List aImage = networkImage.buffer.asUint8List();
+      activitiesImages.add(aImage);
+    }
     String image =
         "${"${Constants.baseUrl}/public/uploads/"}${widget.sm.images[0].imageUrl}";
     String serviceCategory =
@@ -84,380 +96,387 @@ class _ServicesPdfState extends State<ServicesPdf> {
     final Uint8List ss = serviceS.buffer.asUint8List();
     final Uint8List st = serviceT.buffer.asUint8List();
     final Uint8List sl = serviceL.buffer.asUint8List();
-
+    var images = [];
+    var audienceImages = [];
+    var dependencyImage = [];
+    for (int i = 0; i < widget.sm.activityIncludes.length; i++) {
+      final netImage = await printing.networkImage(
+          "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.sm.activityIncludes[i].image}");
+      images.add(netImage);
+    }
+    for (int z = 0; z < widget.sm.am.length; z++) {
+      final netImage = await printing.networkImage(
+          "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.sm.am[z].image}");
+      audienceImages.add(netImage);
+    }
+    for (int a = 0; a < widget.sm.dependency.length; a++) {
+      final netImage = await printing.networkImage(
+          "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.sm.dependency[a].name}");
+      dependencyImage.add(netImage);
+    }
     final pdf = pw.Document();
     pdf.addPage(
-      pw.Page(
+      pw.MultiPage(
           pageFormat: PdfPageFormat.standard,
           theme: pw.ThemeData.withFont(
             base: arabicFont,
             bold: arabicFontBold,
           ),
-          margin: const pw.EdgeInsets.symmetric(vertical: 0, horizontal: 5),
+          margin: const pw.EdgeInsets.symmetric(vertical: 20, horizontal: 20),
           // header: contentHeader,
-          build: ((pw.Context ctx) {
-            return contentBody(ctx, logoImage, serviceImage, ss, st, sl);
-          })),
+          build: ((pw.Context ctx) => [
+                contentBody(ctx, logoImage, serviceImage, ss, st, sl, images,
+                    audienceImages, dependencyImage)
+              ])),
     );
     return pdf.save();
   }
 
-  pw.Table getInspection() {
-    const tableHeaders = [
-      'Item Name',
-      'Description',
-      //'Labour',
-      'Qty',
-      'price',
-      'Sub Total',
-    ];
-    return pw.TableHelper.fromTextArray(
-      columnWidths: const {
-        0: pw.FlexColumnWidth(2),
-        1: pw.FlexColumnWidth(2),
-        2: pw.FlexColumnWidth(1),
-        3: pw.FlexColumnWidth(1),
-        4: pw.FlexColumnWidth(1.5),
-        5: pw.FlexColumnWidth(1.5),
-      },
-      border: null,
-      cellAlignment: pw.Alignment.centerLeft,
-      headerHeight: 0,
-      headerDecoration: pw.BoxDecoration(
-        color: PdfColors.grey400,
-        border: pw.Border.all(
-          color: PdfColors.black,
-          width: 1,
-        ),
-      ),
-      headerStyle: const pw.TextStyle(
-        color: PdfColors.black,
-        fontSize: 6,
-      ),
-      cellAlignments: {
-        0: pw.Alignment.centerLeft,
-        1: pw.Alignment.centerLeft,
-        2: pw.Alignment.centerLeft,
-        3: pw.Alignment.centerLeft,
-      },
-      cellDecoration: (index, data, rowNum) {
-        return pw.BoxDecoration(
-          color: PdfColors.white,
-          border: pw.Border.all(
-            color: PdfColors.black,
-            width: 1,
-          ),
-        );
-      },
-      cellStyle: const pw.TextStyle(fontSize: 8),
-      tableDirection: pw.TextDirection.rtl,
-      rowDecoration: const pw.BoxDecoration(
-        border: pw.Border(
-          bottom: pw.BorderSide(
-            color: PdfColors.grey,
-            width: .1,
-          ),
-        ),
-      ),
-      headers: List<String>.generate(
-          tableHeaders.length, (col) => tableHeaders[col]),
-      data: getInspectionTableData(),
-    );
+  Uint8List concatenateUint8List(List<Uint8List> list) {
+    final totalLength = list.fold(0, (sum, item) => sum + item.length);
+    final Uint8List result = Uint8List(totalLength);
+    int offset = 0;
+
+    for (var data in list) {
+      result.setRange(offset, offset + data.length, data);
+      offset += data.length;
+    }
+
+    return result;
   }
 
-  List<List<String>> getInspectionTableData() {
-    List<List<String>> itemsForTable = [];
-    itemsForTable.add([
-      "",
-      "",
-      //package!.labour.toString(),
-      "1",
-      "",
-      "",
-    ]);
-    return itemsForTable;
-  }
-
-  pw.Widget contentBody(
-      pw.Context ctx, qrCode, sImage, ssImage, stImage, slImage) {
+  pw.Widget contentBody(pw.Context ctx, qrCode, sImage, ssImage, stImage,
+      slImage, aImage, audienceImage, dependencyImage) {
+    //final List<dynamic> a = [];
     final imageBytes = qrCode.buffer.asUint8List();
     final sBytes = sImage.buffer.asUint8List();
     final ssBytes = ssImage.buffer.asUint8List();
     final stBytes = stImage.buffer.asUint8List();
     final slBytes = slImage.buffer.asUint8List();
+    // for (int i = 0; i < aaImages.length; i++) {
+
+    // }
+
     final image = pw.MemoryImage(imageBytes);
     final serviceImage = pw.MemoryImage(sBytes);
     final ss = pw.MemoryImage(ssBytes);
     final st = pw.MemoryImage(stBytes);
     final sl = pw.MemoryImage(slBytes);
+    // List<pw.MemoryImage> activitiesImages = [];
+    // for (int j = 0; j < aImage.length; j++) {
+    //   final sImageData = aImage[j].buffer.asUint8List();
+    //   //final sid = pw.MemoryImage(sImageData);
+    //   activitiesImages.add(sImageData);
+    // }
+    // List<Uint8List> aImages = aaImages; // Your list of Uint8List images
+
+// List<pw.MemoryImage> activitiesImages = aImages.map((Uint8List imageData) {
+//   return pw.MemoryImage(imageData); // No need to call asUint8List, it's already Uint8List
+// }).toList();
+    // List<pw.MemoryImage> activitiesImages = aaImages.map((imageData) {
+    //   final sImageData = imageData.buffer.asUint8List();
+    //   return pw.MemoryImage(sImageData); // No need for .buffer.asUint8List()
+    // }).toList();
+    // List<pw.MemoryImage> activitiesImages =
+    //     aaImages.map<pw.MemoryImage>((Uint8List imageData) {
+
+    //   return pw.MemoryImage(imageData);
+    // }).toList();
     pw.TextDirection textDirection = context.locale.languageCode == 'ar'
         ? pw.TextDirection.rtl
         : pw.TextDirection.ltr;
     return pw.Column(
-      crossAxisAlignment: pw.CrossAxisAlignment.center,
+      crossAxisAlignment: pw.CrossAxisAlignment.start,
       mainAxisAlignment: pw.MainAxisAlignment.center,
       children: [
         // pw.SizedBox(height: 5),
         // pw.Text(widget.sm.adventureName,
         //     style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
         //pw.SizedBox(height: 2),
-        pw.Image(image, width: 800, height: 300, fit: pw.BoxFit.contain),
+        pw.Center(
+          child:
+              pw.Image(image, width: 1000, height: 300, fit: pw.BoxFit.contain),
+        ),
         pw.SizedBox(
           height: 20,
         ),
-        pw.Column(
-          crossAxisAlignment: pw.CrossAxisAlignment.start,
-          children: [
-            pw.Row(
-                mainAxisAlignment: pw.MainAxisAlignment.spaceAround,
-                children: [
-                  pw.Column(children: [
-                    pw.Image(
-                      serviceImage,
-                      width: 100,
-                      height: 100,
-                    ),
-                    pw.SizedBox(height: 10),
-                    pw.Text(widget.sm.serviceCategory,
-                        style: const pw.TextStyle(fontSize: 22))
-                  ]),
-                  pw.Column(children: [
-                    pw.Image(
-                      ss,
-                      width: 100,
-                      height: 100,
-                    ),
-                    pw.SizedBox(height: 10),
-                    pw.Text(widget.sm.serviceSector,
-                        style: const pw.TextStyle(fontSize: 22))
-                  ]),
-                  pw.Column(children: [
-                    pw.Image(
-                      st,
-                      width: 100,
-                      height: 100,
-                    ),
-                    pw.SizedBox(height: 10),
-                    pw.Text(widget.sm.serviceType,
-                        style: const pw.TextStyle(fontSize: 22))
-                  ]),
-                  pw.Column(children: [
-                    pw.Image(
-                      sl,
-                      width: 100,
-                      height: 100,
-                    ),
-                    pw.SizedBox(height: 5),
-                    pw.Text(widget.sm.serviceLevel,
-                        style: const pw.TextStyle(fontSize: 22))
-                  ])
-                ]),
+        pw.Row(mainAxisAlignment: pw.MainAxisAlignment.spaceAround, children: [
+          pw.Column(children: [
+            pw.Image(
+              serviceImage,
+              width: 100,
+              height: 80,
+            ),
             pw.SizedBox(height: 10),
+            pw.Text(widget.sm.serviceCategory,
+                style: const pw.TextStyle(fontSize: 22))
+          ]),
+          pw.Column(children: [
+            pw.Image(
+              ss,
+              width: 100,
+              height: 80,
+            ),
+            pw.SizedBox(height: 10),
+            pw.Text(widget.sm.serviceSector,
+                style: const pw.TextStyle(fontSize: 22))
+          ]),
+          pw.Column(children: [
+            pw.Image(
+              st,
+              width: 100,
+              height: 80,
+            ),
+            pw.SizedBox(height: 10),
+            pw.Text(widget.sm.serviceType,
+                style: const pw.TextStyle(fontSize: 22))
+          ]),
+          pw.Column(children: [
+            pw.Image(
+              sl,
+              width: 100,
+              height: 80,
+            ),
+            pw.SizedBox(height: 5),
+            pw.Text(widget.sm.serviceLevel,
+                style: const pw.TextStyle(fontSize: 22))
+          ])
+        ]),
+        pw.SizedBox(height: 20),
+        pw.Text(
+          widget.sm.adventureName,
+          style: pw.TextStyle(
+            fontSize: 28,
+            fontWeight: pw.FontWeight.bold,
+          ),
+        ),
+        // pw.Text(
+        //   widget.sm.region,
+        //   style: const pw.TextStyle(
+        //     fontSize: 28,
+        //     //fontWeight: pw.FontWeight.bold,
+        //   ),
+        // ),
+        pw.Text(
+          "${widget.sm.country} ${widget.sm.region}",
+          style: const pw.TextStyle(
+            fontSize: 22,
+            //fontWeight: pw.FontWeight.bold,
+          ),
+        ),
+        pw.Divider(thickness: 1),
+        pw.Row(mainAxisAlignment: pw.MainAxisAlignment.spaceAround, children: [
+          pw.Column(children: [
             pw.Text(
-              widget.sm.adventureName,
+              "${widget.sm.currency}  ${widget.sm.costInc}",
               style: pw.TextStyle(
-                fontSize: 28,
+                fontWeight: pw.FontWeight.bold,
+                //color:Colors.blueAccent, //bluishColor,
+                color: const PdfColor.fromInt(0xFF1C3947),
+                fontSize: 22,
+              ),
+            ),
+            pw.Text("Including gears & taxes",
+                style: const pw.TextStyle(
+                  fontSize: 18,
+                  color: PdfColor.fromInt(0xFFDF5252),
+                ))
+          ]),
+          pw.Container(
+            color: const PdfColor.fromInt(0xff000000),
+            width: 0.01,
+            height: 45,
+          ),
+          pw.Column(children: [
+            pw.Text(
+              "${widget.sm.currency}  ${widget.sm.costExc}",
+              style: pw.TextStyle(
+                fontWeight: pw.FontWeight.bold,
+                color: const PdfColor.fromInt(0xFF1C3947),
+                fontSize: 22,
+              ),
+            ),
+            pw.Text("Excluding gears & taxes",
+                style: const pw.TextStyle(
+                  fontSize: 18,
+                  color: PdfColor.fromInt(0xFFDF5252),
+                ))
+          ]),
+        ]),
+        if (widget.sm.sPlan == 2)
+          pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+            children: [
+              pw.Text("${"Start Date : "} $sDate",
+                  style: const pw.TextStyle(fontSize: 18)),
+              pw.Text("${"End Date : "} $ed",
+                  style: const pw.TextStyle(fontSize: 18))
+            ],
+          ),
+        if (widget.sm.sPlan == 1)
+          pw.RichText(
+            text: pw.TextSpan(
+              text: 'Availability'.tr(),
+              style: pw.TextStyle(
+                color: const PdfColor.fromInt(0xFF1C3947),
+                fontSize: 14,
                 fontWeight: pw.FontWeight.bold,
               ),
+              children: [
+                pw.TextSpan(
+                    text: aPlan,
+                    style: const pw.TextStyle(
+                      fontSize: 24,
+                      //fontWeight: pw.FontWeight.w400,
+                    )),
+              ],
             ),
-            pw.Text(
-              "${widget.sm.country} ${widget.sm.region}",
-              style: const pw.TextStyle(
-                fontSize: 14,
-                //fontWeight: pw.FontWeight.bold,
-              ),
-            ),
-            pw.Divider(thickness: 1),
-            pw.Row(
-                mainAxisAlignment: pw.MainAxisAlignment.spaceAround,
-                children: [
-                  pw.Column(children: [
-                    pw.Text(
-                      "${widget.sm.currency}  ${widget.sm.costInc}",
-                      style: pw.TextStyle(
-                        fontWeight: pw.FontWeight.bold,
-                        //color:Colors.blueAccent, //bluishColor,
-                        color: const PdfColor.fromInt(0xFF1C3947),
-                        fontSize: 14,
-                      ),
-                    ),
-                    pw.SizedBox(height: 5),
-                    pw.Text("Including gears & taxes",
-                        style: const pw.TextStyle(
-                          fontSize: 8,
-                          color: PdfColor.fromInt(0xFFDF5252),
-                        ))
-                  ]),
-                  pw.Container(
-                    color: const PdfColor.fromInt(0xff000000),
-                    width: 0.01,
-                    height: 45,
-                  ),
-                  pw.Column(children: [
-                    pw.Text(
-                      "${widget.sm.currency}  ${widget.sm.costExc}",
-                      style: pw.TextStyle(
-                        fontWeight: pw.FontWeight.bold,
-                        color: const PdfColor.fromInt(0xFF1C3947),
-                        fontSize: 10,
-                      ),
-                    ),
-                    pw.SizedBox(height: 5),
-                    pw.Text("Excluding gears & taxes",
-                        style: const pw.TextStyle(
-                          fontSize: 8,
-                          color: PdfColor.fromInt(0xFFDF5252),
-                        ))
-                  ]),
-                ]),
-            if (widget.sm.sPlan == 2)
-              pw.Row(
-                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                children: [
-                  pw.Text("${"Start Date : "} $sDate",
-                      style: const pw.TextStyle(fontSize: 8)),
-                  pw.Text("${"End Date : "} $ed",
-                      style: const pw.TextStyle(fontSize: 8))
-                ],
-              ),
-            if (widget.sm.sPlan == 1)
-              pw.RichText(
-                text: pw.TextSpan(
-                  text: 'Availability'.tr(),
-                  style: pw.TextStyle(
-                    color: const PdfColor.fromInt(0xFF1C3947),
-                    fontSize: 14,
-                    fontWeight: pw.FontWeight.bold,
-                  ),
+          ),
+        pw.Divider(thickness: 1),
+        pw.SizedBox(height: 5),
+        pw.Text(
+          "Description",
+          style: pw.TextStyle(
+            fontSize: 22,
+            fontWeight: pw.FontWeight.bold,
+          ),
+        ),
+        pw.Text(
+          widget.sm.writeInformation,
+          style: const pw.TextStyle(
+            fontSize: 16,
+            //fontWeight: pw.FontWeight.bold,
+          ),
+        ),
+
+        pw.Divider(thickness: 1),
+        pw.SizedBox(height: 20),
+        pw.Text(
+          "Activities Includded",
+          style: pw.TextStyle(
+            fontSize: 22,
+            fontWeight: pw.FontWeight.bold,
+          ),
+        ),
+        pw.SizedBox(height: 10),
+        pw.Wrap(
+          children: [
+            for (int j = 0; j < aImage.length; j++)
+              pw.Padding(
+                padding: const pw.EdgeInsets.symmetric(horizontal: 8),
+                child: pw.Column(
                   children: [
-                    pw.TextSpan(
-                        text: aPlan,
-                        style: const pw.TextStyle(
-                          fontSize: 24,
-                          //fontWeight: pw.FontWeight.w400,
-                        )),
+                    pw.Image(
+                      aImage[j],
+                      height: 40,
+                      width: 40,
+                    ),
+                    pw.SizedBox(height: 10),
+                    pw.Text(
+                      widget.sm.activityIncludes[j].activity,
+                      style: const pw.TextStyle(
+                        fontSize: 18,
+                      ),
+                    )
                   ],
                 ),
-              ),
-            pw.Divider(thickness: 1),
-            // pw.SizedBox(height: 2),
-            pw.Text(
-              "Description",
-              style: pw.TextStyle(
-                fontSize: 10,
-                fontWeight: pw.FontWeight.bold,
-              ),
-            ),
-            pw.Text(
-              widget.sm.writeInformation,
-              style: const pw.TextStyle(
-                fontSize: 8,
-                //fontWeight: pw.FontWeight.bold,
-              ),
-            ),
-            pw.Divider(thickness: 1),
-            // pw.SizedBox(height: 2),
-            pw.Text(
-              "Activities Includded",
-              style: pw.TextStyle(
-                fontSize: 10,
-                //fontWeight: pw.FontWeight.bold,
-              ),
-            ),
-
-            // pw.SizedBox(height: 2),
-            pw.Text(
-              widget.sm.activityIncludes[0].activity,
-              style: pw.TextStyle(
-                fontSize: 10,
-                //fontWeight: pw.FontWeight.bold,
-              ),
-            ),
-            pw.Divider(thickness: 1),
-            //pw.SizedBox(height: 2),
-            pw.Text(
-              "Audience",
-              style: pw.TextStyle(
-                fontSize: 10,
-                //fontWeight: pw.FontWeight.bold,
-              ),
-            ),
-            // pw.SizedBox(height: 20),
-            pw.Text(
-              widget.sm.am[0].aimedName,
-              style: pw.TextStyle(
-                fontSize: 10,
-                fontWeight: pw.FontWeight.bold,
-              ),
-              textDirection: pw.TextDirection.rtl,
-            ),
-            pw.Divider(thickness: 1),
-            pw.Text(
-              "Dependency",
-              style: pw.TextStyle(
-                fontSize: 10,
-                fontWeight: pw.FontWeight.bold,
-              ),
-            ),
-            pw.SizedBox(
-              width: PdfPageFormat.inch * 3,
-              child: pw.Column(
-                children: [
-                  pw.Row(
-                    children: [
-                      pw.Text(widget.sm.dependency[0].dName),
-                      // pw.SizedBox(
-                      //   width: 10,
-                      // ),
-                      pw.Text(
-                        "Activity Program",
-                        style: pw.TextStyle(
-                          fontSize: 10,
-                          fontWeight: pw.FontWeight.bold,
-                        ),
-                      ),
-                      pw.Text(
-                        widget.sm.availability[0].st,
-                        style: pw.TextStyle(
-                          fontSize: 10,
-                          fontWeight: pw.FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-
-            pw.SizedBox(
-              width: PdfPageFormat.inch * 3,
-              child: pw.Column(
-                crossAxisAlignment: pw.CrossAxisAlignment.start,
-                children: [
-                  pw.Text(
-                    "${"Location"}",
-                    style: pw.TextStyle(
-                      fontSize: 10,
-                      fontWeight: pw.FontWeight.bold,
+              )
+          ],
+        ),
+        pw.Divider(thickness: 1),
+        pw.Text(
+          "Audience",
+          style: pw.TextStyle(
+            fontSize: 22,
+            fontWeight: pw.FontWeight.bold,
+          ),
+        ),
+        // pw.SizedBox(height: 20),
+        pw.Wrap(
+          children: [
+            for (int j = 0; j < audienceImage.length; j++)
+              pw.Padding(
+                padding: const pw.EdgeInsets.symmetric(horizontal: 8),
+                child: pw.Column(
+                  children: [
+                    pw.Image(
+                      audienceImage[j],
+                      height: 40,
+                      width: 40,
                     ),
-                  ),
-                ],
-              ),
-            ),
+                    pw.SizedBox(height: 10),
+                    pw.Text(
+                      widget.sm.am[j].aimedName,
+                      style: const pw.TextStyle(
+                        fontSize: 18,
+                      ),
+                      textDirection: pw.TextDirection.rtl,
+                    ),
+                  ],
+                ),
+              )
+          ],
+        ),
 
-            pw.SizedBox(
-              width: PdfPageFormat.inch * 3,
-              child: pw.Text(
-                "${""}",
+        pw.Divider(thickness: 1),
+        pw.Text(
+          "Dependency",
+          style: pw.TextStyle(
+            fontSize: 22,
+            fontWeight: pw.FontWeight.bold,
+          ),
+        ),
+        pw.Wrap(
+          children: [
+            for (int j = 0; j < dependencyImage.length; j++)
+              pw.Padding(
+                padding: const pw.EdgeInsets.symmetric(horizontal: 8),
+                child: pw.Column(
+                  children: [
+                    pw.Image(
+                      dependencyImage[j],
+                      height: 40,
+                      width: 40,
+                    ),
+                    pw.SizedBox(height: 10),
+                    pw.Text(
+                      widget.sm.dependency[j].dName,
+                      style: const pw.TextStyle(
+                        fontSize: 18,
+                      ),
+                      textDirection: pw.TextDirection.rtl,
+                    ),
+                  ],
+                ),
+              )
+          ],
+        ),
+
+        pw.SizedBox(
+          width: PdfPageFormat.inch * 3,
+          child: pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.start,
+            children: [
+              pw.Text(
+                "${"Location"}",
                 style: pw.TextStyle(
                   fontSize: 10,
                   fontWeight: pw.FontWeight.bold,
                 ),
               ),
-            ),
+            ],
+          ),
+        ),
 
-            //pw.Row(children: [pw.Expanded(child: getInspection())])
-          ],
+        pw.SizedBox(
+          width: PdfPageFormat.inch * 3,
+          child: pw.Text(
+            "${""}",
+            style: pw.TextStyle(
+              fontSize: 10,
+              fontWeight: pw.FontWeight.bold,
+            ),
+          ),
         ),
         pw.SizedBox(height: 2),
 
@@ -505,8 +524,8 @@ class _ServicesPdfState extends State<ServicesPdf> {
               child: InteractiveViewer(
                 panEnabled: true,
                 scaleEnabled: true,
-                minScale: 1,
-                maxScale: 3,
+                // minScale: 1,
+                // maxScale: 3,
                 child: SizedBox(
                   height: double.infinity,
                   width: double.infinity,
