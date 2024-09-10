@@ -451,7 +451,58 @@ class _ServicesPdfState extends State<ServicesPdf> {
               )
           ],
         ),
-
+        pw.Divider(thickness: 1),
+        pw.Text(
+          "Activity Program",
+          style: pw.TextStyle(
+            fontSize: 22,
+            fontWeight: pw.FontWeight.bold,
+          ),
+        ),
+        if (widget.sm.sPlan == 1) pw.Text(widget.sm.sPlan.toString()),
+        if (widget.sm.sPlan == 2)
+          pw.Padding(
+              padding:
+                  const pw.EdgeInsets.symmetric(vertical: 4.0, horizontal: 6),
+              child: pw.Column(children: [
+                for (int i = 0; i < widget.sm.programmes.length; i++)
+                  pw.Row(
+                      mainAxisAlignment: pw.MainAxisAlignment.start,
+                      children: [
+                        pw.Container(
+                          width: 80,
+                          height: 80,
+                          decoration: pw.BoxDecoration(
+                              color: const PdfColor.fromInt(0xFF1C3947),
+                              borderRadius: pw.BorderRadius.circular(46)),
+                          child: pw.Center(
+                            child: pw.Text(
+                              (i + 1).toString(),
+                              style: pw.TextStyle(
+                                fontSize: 22,
+                                fontWeight: pw.FontWeight.bold,
+                                color: const PdfColor.fromInt(0xFFE4E9F8),
+                              ),
+                            ),
+                          ),
+                        ),
+                        pw.SizedBox(width: 25),
+                        pw.Column(
+                            crossAxisAlignment: pw.CrossAxisAlignment.start,
+                            children: [
+                              pw.Text(
+                                  "${widget.sm.programmes[i].title} ${startDate.day}-${startDate.year}",
+                                  style: pw.TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: pw.FontWeight.bold)),
+                              pw.Text("${widget.sm.programmes[i].des}",
+                                  style: pw.TextStyle(
+                                      color: const PdfColor.fromInt(0xFF979797),
+                                      fontSize: 22,
+                                      fontWeight: pw.FontWeight.bold))
+                            ])
+                      ])
+              ])),
         pw.SizedBox(
           width: PdfPageFormat.inch * 3,
           child: pw.Column(
