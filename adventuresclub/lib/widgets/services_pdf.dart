@@ -1,15 +1,11 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
 class ServicesPdf extends StatefulWidget {
@@ -28,6 +24,8 @@ class _ServicesPdfState extends State<ServicesPdf> {
   DateTime endDate = DateTime.now();
   String sDate = "";
   String ed = "";
+  List<String> activityImages = [];
+  List<MemoryImage> activitiesIncluded = [];
 
   @override
   void initState() {
