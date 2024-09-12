@@ -1,5 +1,7 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
+import 'package:adventuresclub/models/profile_models/profile_become_partner.dart';
+import 'package:adventuresclub/models/user_profile_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,6 +29,41 @@ class _ServicesPdfState extends State<ServicesPdf> {
   String ed = "";
   List<String> activityImages = [];
   List<MemoryImage> activitiesIncluded = [];
+    ProfileBecomePartner pbp = ProfileBecomePartner(0, 0, "", "", "", "", "", "",
+      "", "", 0, 0, "", "", "", "", "", "", "", 0, "", "", "", "", "", "");
+  UserProfileModel profile = UserProfileModel(
+      0,
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      0,
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      0,
+      "",
+      0,
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      0,
+      "",
+      "",
+      "",
+      "",
+      ProfileBecomePartner(0, 0, "", "", "", "", "", "", "", "", 0, 0, "", "",
+          "", "", "", "", "", 0, "", "", "", "", "", ""));
 
   @override
   void initState() {
@@ -573,6 +610,23 @@ class _ServicesPdfState extends State<ServicesPdf> {
             //fontWeight: pw.FontWeight.bold,
           ),
         ),
+         pw.Divider(thickness: 1),
+         pw.SizedBox(height: 10),
+        pw.Text(
+          "Provided By",
+          style: pw.TextStyle(
+            fontSize: 22,
+            fontWeight: pw.FontWeight.bold,
+          ),
+        ),
+        pw.Text(
+          "Provided By",
+          style: pw.TextStyle(
+            fontSize: 22,
+            fontWeight: pw.FontWeight.bold,
+          ),
+        ),
+
       ],
     );
   }

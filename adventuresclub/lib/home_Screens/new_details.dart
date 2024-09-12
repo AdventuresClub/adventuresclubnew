@@ -9,7 +9,6 @@ import 'package:adventuresclub/widgets/buttons/button_icon_less.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/tabs/details_tabs/newdetails_tab.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/home_services/services_model.dart';
@@ -34,17 +33,15 @@ class _NewDetailsState extends State<NewDetails> {
   bool future = false;
   bool costInc = false;
   String sPrice = "";
+  int _currentPage = 0;
+  late Timer _timer;
 
   @override
   void dispose() {
     super.dispose();
     _pageViewController.dispose(); // dispose the PageController
-
     _timer.cancel();
   }
-
-  int _currentPage = 0;
-  late Timer _timer;
 
   @override
   void initState() {
@@ -55,7 +52,6 @@ class _NewDetailsState extends State<NewDetails> {
       } else {
         _activePage = 0;
       }
-
       _pageViewController.animateToPage(
         _activePage,
         duration: const Duration(milliseconds: 350),

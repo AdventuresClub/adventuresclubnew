@@ -87,7 +87,6 @@ class _BookTicketState extends State<BookTicket> {
       convert(widget.gm.costExc);
       amount = widget.gm.costExc;
     }
-
     setState(() {
       if (widget.costInc!) {
         text2.insert(0, widget.gm.costInc);
@@ -243,6 +242,9 @@ class _BookTicketState extends State<BookTicket> {
   }
 
   void bookAdventure(var date) async {
+    if (loading) {
+      return;
+    }
     if (widget.gm.sPlan == 1) {
       if (currentDate.day.isNaN) {
         message("Please Select from Desired Date");
@@ -254,6 +256,9 @@ class _BookTicketState extends State<BookTicket> {
       return;
     }
     if (totalPerson > 0) {
+      setState(() {
+        loading = true;
+      });
       try {
         var response = await http
             .post(Uri.parse("${Constants.baseUrl}/api/v1/book_service"), body: {
@@ -292,7 +297,9 @@ class _BookTicketState extends State<BookTicket> {
     } else {
       message("Persons cannot be empty");
     }
-
+    setState(() {
+      loading = false;
+    });
     // var date = DateTime.parse(widget.gm.startDate.toString());
     // String m = date.month < 10 ? "0${date.month}" : "${date.month}";
     // String d = date.day < 10 ? "0${date.day}" : "${date.day}";

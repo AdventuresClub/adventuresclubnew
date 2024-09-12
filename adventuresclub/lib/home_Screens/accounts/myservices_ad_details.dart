@@ -208,7 +208,19 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
             icon: const Icon(Icons.picture_as_pdf_sharp),
           ),
           const SizedBox(
-            width: 5,
+            width: 20,
+          ),
+          GestureDetector(
+            onTap: () => editService(
+                widget.sm.id.toString(), widget.sm.providerId.toString()),
+            child: const Image(
+              image: ExactAssetImage('images/edit.png'),
+              height: 30,
+              width: 30,
+            ),
+          ),
+          const SizedBox(
+            width: 20,
           ),
           GestureDetector(
             onTap: () => showConfirmation(widget.sm.serviceId.toString()),
