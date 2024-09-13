@@ -70,13 +70,27 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
     );
   }
 
-  void editService(String id, String providerId) async {
+  void editService1(String id, String providerId) async {
     try {
       var response = await http
           .post(Uri.parse("${Constants.baseUrl}/api/v1/edit_service"), body: {
         'service_id': id,
         'customer_id': providerId, //ccCode.toString(),
       });
+      print(response.statusCode);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  void editService(String serviceId) async {
+    try {
+      var response = await http.post(
+          Uri.parse("${Constants.baseUrl}/api/v1/check_booking_on_service"),
+          body: {
+            'user_id': Constants.userId.toString(),
+            'service_id': serviceId, //ccCode.toString(),
+          });
       print(response.statusCode);
     } catch (e) {
       print(e.toString());
@@ -211,8 +225,7 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
             width: 20,
           ),
           GestureDetector(
-            onTap: () => editService(
-                widget.sm.id.toString(), widget.sm.providerId.toString()),
+            onTap: () => editService(widget.sm.id.toString()),
             child: const Image(
               image: ExactAssetImage('images/edit.png'),
               height: 30,
