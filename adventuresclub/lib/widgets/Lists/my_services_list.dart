@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
+import 'package:adventuresclub/widgets/edit_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -59,57 +60,56 @@ class _MyServicesListState extends State<MyServicesList> {
       itemCount: widget.sm.images.length,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
-        return GestureDetector(
-          //   onTap: goToBookingDetails,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0),
-            child: Card(
-              child: Container(
-                width: MediaQuery.of(context).size.width / 1.6,
-                height: 140,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  image: DecorationImage(
-                      colorFilter: ColorFilter.mode(
-                          Colors.black.withOpacity(0.2), BlendMode.darken),
-                      image:
-                          // const ExactAssetImage(
-                          //   'images/picture1.png',
-                          // ),
-                          NetworkImage(
-                        "${"${Constants.baseUrl}/public/uploads/"}${widget.sm.images[index].imageUrl}",
-                      ),
-                      fit: BoxFit.cover),
-                ),
-                child: Stack(
-                  children: [
-                    if (edit)
-                      Positioned(
-                        top: 5,
-                        right: 10,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(64)),
-                          child: IconButton(
-                            autofocus: true,
-                            splashColor: Colors.white,
-                            hoverColor: Colors.white,
-                            highlightColor: Colors.white,
-                            focusColor: Colors.white,
-                            color: Colors.white,
-                            onPressed: () => pickMedia(index),
-                            icon: const Icon(
-                              size: 34,
-                              Icons.edit,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ),
+        return Card(
+          child: Container(
+            width: MediaQuery.of(context).size.width / 1.6,
+            height: 140,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              image: DecorationImage(
+                  // colorFilter: ColorFilter.mode(
+                  //     Colors.black.withOpacity(0.2), BlendMode.darken),
+                  image:
+                      // const ExactAssetImage(
+                      //   'images/picture1.png',
+                      // ),
+                      NetworkImage(
+                    "${"${Constants.baseUrl}/public/uploads/"}${widget.sm.images[index].imageUrl}",
+                  ),
+                  fit: BoxFit.cover),
+            ),
+            child: Stack(
+              children: [
+                if (edit)
+                  Positioned(
+                      top: 5,
+                      right: 10,
+                      child: EditIcon(
+                        tapped: pickMedia,
+                        i: index,
+                        indexRequired: true,
                       )
-                  ],
-                ),
-              ),
+                      // Container(
+                      //   decoration: BoxDecoration(
+                      //       color: Colors.white,
+                      //       borderRadius: BorderRadius.circular(64)),
+                      //   child: IconButton(
+                      //     autofocus: true,
+                      //     splashColor: Colors.white,
+                      //     hoverColor: Colors.white,
+                      //     highlightColor: Colors.white,
+                      //     focusColor: Colors.white,
+                      //     color: Colors.white,
+                      //     onPressed: () => pickMedia(index),
+                      //     icon: const Icon(
+                      //       size: 34,
+                      //       Icons.edit,
+                      //       color: Colors.red,
+                      //     ),
+                      //   ),
+                      // ),
+                      )
+              ],
             ),
           ),
         );

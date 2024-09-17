@@ -1,11 +1,15 @@
+import 'package:adventuresclub/complete_profile/banner_page.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/reviews.dart';
+import 'package:adventuresclub/provider/edit_provider.dart';
+import 'package:adventuresclub/widgets/edit_icon.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/tabs/details_tabs/service_gathering_location.dart';
 import 'package:adventuresclub/widgets/tabs/details_tabs/service_program/service_plans.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
 import '../../../models/home_services/services_model.dart';
 
 class NewServiceDescription extends StatefulWidget {
@@ -46,6 +50,7 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
   String aPlan = "";
   List<String> adventuresPlan = [""];
   String selectedPrice = '';
+  bool allowEdit = false;
 
   @override
   void initState() {
@@ -99,13 +104,21 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
     widget.parseData(costInc, selectedPrice);
   }
 
+  void getData() {}
+
   @override
   Widget build(BuildContext context) {
+    allowEdit = context.watch<EditProvider>().edit;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            EditIcon(tapped: getData),
+            const SizedBox(
+              height: 20,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -122,7 +135,7 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                     MyText(
                       text: widget.gm.serviceCategory,
                       color: bluishColor,
-                    )
+                    ),
                   ],
                 ),
                 Column(
@@ -181,12 +194,20 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                 const SizedBox(
                   height: 10,
                 ),
-                MyText(
-                  text: widget.gm.adventureName,
-                  //'River Rafting',
-                  weight: FontWeight.bold,
-                  color: bluishColor,
-                  size: 22,
+                Row(
+                  children: [
+                    MyText(
+                      text: widget.gm.adventureName,
+                      //'River Rafting',
+                      weight: FontWeight.bold,
+                      color: bluishColor,
+                      size: 22,
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    if (allowEdit) EditIcon(tapped: getData),
+                  ],
                 ),
                 const SizedBox(height: 5),
                 Row(
