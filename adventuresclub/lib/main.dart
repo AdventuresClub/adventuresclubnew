@@ -6,6 +6,7 @@ import 'package:adventuresclub/app_theme.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/firebase_options.dart';
 import 'package:adventuresclub/models/received_notification.dart';
+import 'package:adventuresclub/provider/edit_provider.dart';
 import 'package:adventuresclub/provider/navigation_index_provider.dart';
 import 'package:adventuresclub/provider/services_provider.dart';
 import 'package:adventuresclub/splashScreen/splash_screen.dart';
@@ -30,6 +31,9 @@ void main() async {
           ),
           ChangeNotifierProvider(
             create: (_) => NavigationIndexProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => EditProvider(),
           ),
         ],
         child: EasyLocalization(
