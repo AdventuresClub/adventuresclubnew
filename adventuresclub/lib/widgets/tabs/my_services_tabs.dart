@@ -15,7 +15,8 @@ import 'package:intl/intl.dart';
 
 class MyServicesTab extends StatefulWidget {
   final ServicesModel sm;
-  const MyServicesTab(this.sm, {super.key});
+  final bool? edit;
+  const MyServicesTab(this.sm, {this.edit = false, super.key});
 
   @override
   State<MyServicesTab> createState() => _MyServicesTabState();
@@ -31,7 +32,17 @@ class _MyServicesTabState extends State<MyServicesTab> {
   DateTime endDate = DateTime.now();
   String st = "";
   String ed = "";
+  bool edit = false;
   // "${widget.sm.availability[0].st.substring(8, 10)}-${widget.sm.availability[0].st.substring(5, 8)}${widget.sm.availability[0].st.substring(0, 4)}"
+
+  @override
+  void didUpdateWidget(covariant MyServicesTab oldWidget) {
+    edit = widget.edit!;
+    super.didUpdateWidget(oldWidget);
+    if (edit) {
+      // getEmployees();
+    }
+  }
 
   @override
   void initState() {

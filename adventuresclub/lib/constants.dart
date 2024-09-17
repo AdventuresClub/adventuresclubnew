@@ -914,4 +914,160 @@ class Constants {
     }
     return result;
   }
+
+//  static void createService() async {
+//     await convertProgramData();
+//     selectedActivityIncludesId = activitiesId.join(",");
+//     //ConstantsCreateNewServices.selectedActivitesId.join(",");
+
+//     List<Uint8List> banners = [];
+//     imageList.forEach((element) {
+//       banners.add(element.readAsBytesSync());
+//     });
+//     try {
+//       var request = http.MultipartRequest(
+//         "POST",
+//         Uri.parse(
+//             //${Constants.baseUrl}SIT
+//             "${Constants.baseUrl}/api/v1/create_service"),
+//       );
+//       banners.forEach((element) {
+//         String fileName =
+//             "${DateTime.now().millisecondsSinceEpoch.toString()}.png";
+//         request.files.add(http.MultipartFile.fromBytes('banner[]', element,
+//             filename: fileName));
+//       });
+//       dynamic programData = {
+//         'customer_id': Constants.userId.toString(),
+//         'adventure_name': adventureName.text,
+//         "country": Constants.countryId.toString(),
+//         'region':
+//             regionId.toString(), //ConstantsCreateNewServices.selectedRegionId
+//         //.toString(), //selectedRegionId.toString(),
+//         "service_sector": sectorId
+//             .toString(), //ConstantsCreateNewServices.selectedSectorId.toString(), //selectedSectorId.toString(), //"",
+//         "service_category": categoryId
+//             .toString(), //ConstantsCreateNewServices.selectedCategoryId.toString(), //"", //selectedCategoryId.toString(), //"",
+//         "service_type": typeId
+//             .toString(), //ConstantsCreateNewServices.serviceTypeId.toString(), // //serviceTypeId.toString(), //"",
+//         "service_level": levelId
+//             .toString(), //ConstantsCreateNewServices.selectedlevelId.toString(), //selectedlevelId.toString(), //"",
+//         "duration": durationId
+//             .toString(), //ConstantsCreateNewServices.selectedDurationId.toString(), //selectedDurationId.toString(), //"",
+//         "available_seats": availableSeatsController.text, //"",
+//         "start_date":
+//             ConstantsCreateNewServices.startDate.toString(), //startDate, //"",
+//         "end_date":
+//             ConstantsCreateNewServices.endDate.toString(), //endDate, //"",
+//         "write_information": infoController.text, //infoController.text, //"",
+//         // it is for particular week or calender
+//         "service_plan": sPlan.toString(), //"1", //"",
+//         "cost_inc":
+//             Constants.getTranslatedNumber(costOne.text), //setCost1.text, //"",
+//         "cost_exc": Constants.getTranslatedNumber(
+//             costTwo.text), //costTwo.text, //setCost2.text, //"",
+//         "currency": "1", //  %%% this is hardcoded
+//         "pre_requisites":
+//             preRequisites.text, //"", //preReqController.text, //"",
+//         "minimum_requirements":
+//             minimumRequirement.text, //minController.text, //"",
+//         "terms_conditions": terms.text, //tncController.text, //"",
+//         "recommended": "1", // this is hardcoded
+//         // this key needs to be discussed,
+//         "service_plan_days": servicePlanId, //selectedActivitesId
+//         //.toString(), //"1,6,7", //// %%%%this needs discussion
+//         // "availability": servicePlanId,
+//         "service_for": selectedActivitesId, //selectedActivitesId.toString(),
+//         "particular_date":
+//             ConstantsCreateNewServices.startDate, //gatheringDate, //"",
+//         // this is an array
+//         // "schedule_title[]":
+//         //   programTitle, //titleController, //scheduleController.text, //scheduleController.text, //"",
+//         // schedule title in array is skipped
+//         // this is an array
+//         //"gathering_date[]": programSelecteDate1, //gatheringDate, //"",
+//         // api did not accept list here
+//         "activities": selectedActivityIncludesId, //"5", // activityId, //"",
+//         "specific_address": specificAddressController
+//             .text, //"", //iLiveInController.text, //"",
+//         // this is a wrong field only for testing purposes....
+//         // this is an array
+//         //"gathering_start_time[]": programStartTime2, //"10",
+//         // this is an arrayt
+//         //"gathering_end_time[]": programEndTime, //"15",
+//         //"" //gatheringDate, //"",
+//         // this is an array
+//         // "program_description[]":
+//         //"scheule 2 , schule 1", // scheduleControllerList, //scheduleDesController.text, //"",
+//         // "service_for": selectedActivitesId
+//         //     .toString(), //"1,2,5", //"4", //["1", "4", "5", "7"], //"",
+//         "dependency":
+//             selectedDependencyId, //selectedDependencyId.toString(), //["1", "2", "3"],
+//         //"banners[]": "${banners[0]},test032423231108.png",
+//         //"banner[]":
+//         //"${banners[0]},test0324232311147.png", //adventureOne.toString(), //"",
+//         // banner image name.
+//         // we need file name,
+//         // after bytes array when adding into parameter. send the name of file.
+//         //
+//         "latitude": //"27.0546", //
+//             ConstantsCreateNewServices.lat.toString(), //lat.toString(), //"",
+//         "longitude": //"57.05650"
+//             ConstantsCreateNewServices.lng.toString(), //lng.toString(), //"",
+//         // 'mobile_code': ccCode,
+//         // "gathering_start_time[]": "13:0:0",
+//         // "gathering_end_time[]": "15:0:0",
+//       };
+//       String space = "";
+//       st.forEach((element) {
+//         //log(element);
+//         programData["gathering_start_time[]$space"] = element;
+//         space += " ";
+//       });
+//       // String programDataString = jsonEncode(programData);
+//       // int index = programDataString.indexOf("}");
+//       // String first = programDataString.substring(0, index);
+//       // st.forEach((element) {
+//       //   String i = ",gathering_start_time[]:'$element'";
+//       //   first += i;
+//       // });
+//       // first += "}";
+//       // programData = jsonDecode(first);
+//       //log(first);
+//       space = "";
+//       et.forEach((element1) {
+//         // log(element1);
+//         programData["gathering_end_time[]$space"] = element1;
+//         space += " ";
+//       });
+//       space = "";
+//       titleList.forEach((element) {
+//         programData["schedule_title[]$space"] = element;
+//         space += " ";
+//       });
+//       space = "";
+//       descriptionList.forEach((element) {
+//         programData["program_description[]$space"] = element;
+//         space += " ";
+//       });
+//       space = "";
+//       d.forEach((element) {
+//         programData["gathering_date[]$space"] = element;
+//         space += " ";
+//       });
+//       request.fields.addAll(programData);
+//       // debugPrint(programData);
+//       final response = await request.send();
+
+//       log(response.toString());
+//       debugPrint(response.statusCode.toString());
+//       // print(response.body);
+//       print(response.headers);
+//       clearAll();
+//       showConfirmation();
+//       //close();
+//     } catch (e) {
+//       print(e.toString());
+//     }
+  // }
 }

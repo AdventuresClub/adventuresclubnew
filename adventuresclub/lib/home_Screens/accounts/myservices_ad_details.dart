@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/reviews.dart';
@@ -25,6 +26,8 @@ class MyServicesAdDetails extends StatefulWidget {
 
 class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
   Map mapChatNotification = {};
+  bool allowEdit = false;
+  List<File> imageList = [];
   String groupChatCount = "";
   List text = [
     'Hill Climbing',
@@ -91,6 +94,13 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
             'user_id': Constants.userId.toString(),
             'service_id': serviceId, //ccCode.toString(),
           });
+      if (response.statusCode == 200) {
+        if (mounted) {
+          setState(() {
+            allowEdit = true;
+          });
+        }
+      }
       print(response.statusCode);
     } catch (e) {
       print(e.toString());
@@ -192,6 +202,10 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
     }));
   }
 
+  void getImages(List<File> imgList) {
+    imageList = imgList;
+  }
+
   @override
   Widget build(BuildContext context) {
     int serviceCount =
@@ -286,9 +300,14 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
         child: Column(
           children: [
             SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 5.5,
-                child: MyServicesList(widget.sm)),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height / 4,
+              child: MyServicesList(
+                widget.sm,
+                edit: allowEdit,
+                sendImages: getImages,
+              ),
+            ),
             //GestureDetector(
             //  onTap: () => goToReviews(widget.sm.serviceId.toString()),
             //child:
@@ -426,7 +445,10 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
                   //   widget.sm,
                   //   show: true,
                   // )
-                  MyServicesTab(widget.sm),
+                  MyServicesTab(
+                widget.sm,
+                edit: allowEdit,
+              ),
             )
           ],
         ),
