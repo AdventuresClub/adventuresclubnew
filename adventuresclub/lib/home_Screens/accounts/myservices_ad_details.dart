@@ -75,19 +75,6 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
     );
   }
 
-  void editService1(String id, String providerId) async {
-    try {
-      var response = await http
-          .post(Uri.parse("${Constants.baseUrl}/api/v1/edit_service"), body: {
-        'service_id': id,
-        'customer_id': providerId, //ccCode.toString(),
-      });
-      print(response.statusCode);
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
   void editService(String serviceId) async {
     try {
       var response = await http.post(

@@ -1,4 +1,3 @@
-import 'package:adventuresclub/become_a_partner/create_program_main_page.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/filter_data_model/category_filter_model.dart';
 import 'package:adventuresclub/models/filter_data_model/display_data_model.dart';
@@ -11,6 +10,7 @@ import 'package:adventuresclub/widgets/my_service_banner_container.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class EditMyService extends StatefulWidget {
   final ServicesModel gm;
@@ -272,6 +272,19 @@ class _EditMyServiceState extends State<EditMyService> {
             }),
           );
         });
+  }
+
+  void editService(String id, String providerId) async {
+    try {
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/edit_service"), body: {
+        'service_id': id,
+        'customer_id': providerId, //ccCode.toString(),
+      });
+      print(response.statusCode);
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   @override
