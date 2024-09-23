@@ -111,6 +111,11 @@ class _EditMyServiceState extends State<EditMyService> {
                           ),
                         ),
                       ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TextButton(
+                          onPressed: editService, child: const Text("Update"))
                     ],
                   ),
                 ),
@@ -274,13 +279,17 @@ class _EditMyServiceState extends State<EditMyService> {
         });
   }
 
-  void editService(String id, String providerId) async {
+  void editService() async {
     try {
       var response = await http
           .post(Uri.parse("${Constants.baseUrl}/api/v1/edit_service"), body: {
-        'service_id': id,
-        'customer_id': providerId, //ccCode.toString(),
+        'service_id': widget.gm.id.toString(),
+        'customer_id': Constants.userId.toString(),
+        'adventure_name': nameController.text.trim(), //ccCode.toString(),
       });
+      if (response.statusCode == 200) {
+        debugPrint(response.body);
+      }
       print(response.statusCode);
     } catch (e) {
       print(e.toString());
