@@ -53,6 +53,7 @@ class _EditMyServiceState extends State<EditMyService> {
   List<DependenciesModel> dependencyList = [];
   List<String> dependencyText = [];
   List<bool> dependencyValue = [];
+  ServicesModel? currentService;
 
   @override
   void initState() {
@@ -174,6 +175,75 @@ class _EditMyServiceState extends State<EditMyService> {
             }),
           );
         });
+  }
+
+  void addData(String type) {
+    if (type == "sector") {
+      // currentService = ServicesModel(
+      //   id: widget.gm.id,
+      //   owner: widget.gm.owner,
+      //   adventureName: adventureName,
+      //   country: widget.gm.country,
+      //   region: widget.gm.region,
+      //   cityId: widget.gm.cityId,
+      //    serviceSector: serviceSector,
+      //     serviceCategory: serviceCategory,
+      //      serviceType: serviceType,
+      //      serviceLevel: serviceLevel,
+      //      duration: duration,
+      //      aSeats: aSeats,
+      //       startDate: startDate,
+      //       endDate: endDate,
+      //       lat: lat,
+      //       lng: lng,
+      //       writeInformation: writeInformation,
+      //        sPlan: sPlan,
+      //        sForID: sForID,
+      //        availability: availability,
+      //        availabilityPlan: availabilityPlan,
+      //         geoLocation: geoLocation,
+      //         sAddress: sAddress,
+      //         costInc: costInc,
+      //         costExc: costExc,
+      //          currency: currency,
+      //          points: points,
+      //          preRequisites: preRequisites,
+      //          mRequirements: mRequirements,
+      //           tnc: tnc,
+      //           recommended: recommended,
+      //           status: status,
+      //           image: image,
+      //           des: des,
+      //            fImage: fImage,
+      //            ca: ca,
+      //            upda: upda,
+      //            da: da,
+      //            providerId: providerId,
+      //            serviceId: serviceId,
+      //             pName: pName,
+      //             pProfile: pProfile,
+      //             iaot: iaot,
+      //             eaot: eaot,
+      //             activityIncludes: activityIncludes,
+      //              dependency: dependency,
+      //              bp: bp,
+      //              am: am,
+      //              programmes: programmes,
+      //              stars: stars,
+      //              isLiked: isLiked,
+      //               baseURL: baseURL,
+      //               images: images,
+      //               rating: rating,
+      //               reviewdBy: reviewdBy,
+      //               remainingSeats: remainingSeats,
+      //                serviceCategoryImage: serviceCategoryImage,
+      //                serviceSectorImage: serviceSectorImage,
+      //                serviceTypeImage: serviceTypeImage,
+      //                serviceLevelImage: serviceLevelImage)
+
+      // "service_sector": sectorId
+      //   .toString(),
+    }
   }
 
   void addActivites(String type, String title) {
@@ -320,25 +390,28 @@ class _EditMyServiceState extends State<EditMyService> {
                                     fontFamily: 'Raleway'),
                               ),
                               const SizedBox(height: 20),
-                              for (int i = 0; i < dataList.length; i++)
+                              for (int index = 0;
+                                  index < dataList.length;
+                                  index++)
                                 SizedBox(
                                   //width: MediaQuery.of(context).size.width / 1,
                                   child: Column(
                                     children: [
                                       CheckboxListTile(
-                                        secondary: dataList[i].image.isNotEmpty
-                                            ? Image.network(
-                                                //   "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.serviceCategoryImage}",
-                                                "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${dataList[i].image}",
-                                                height: 36,
-                                                width: 26,
-                                              )
-                                            : Image.asset(
-                                                //   "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.serviceCategoryImage}",
-                                                'images/blueLogo.png',
-                                                height: 36,
-                                                width: 26,
-                                              ),
+                                        secondary:
+                                            dataList[index].image.isNotEmpty
+                                                ? Image.network(
+                                                    //   "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.serviceCategoryImage}",
+                                                    "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${dataList[index].image}",
+                                                    height: 36,
+                                                    width: 26,
+                                                  )
+                                                : Image.asset(
+                                                    //   "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.serviceCategoryImage}",
+                                                    'images/blueLogo.png',
+                                                    height: 36,
+                                                    width: 26,
+                                                  ),
                                         side: const BorderSide(
                                             color: bluishColor),
                                         checkboxShape:
@@ -349,16 +422,35 @@ class _EditMyServiceState extends State<EditMyService> {
                                             horizontal: 0, vertical: -4),
                                         activeColor: greyProfileColor,
                                         checkColor: bluishColor,
-                                        selected: dataListBool[i],
-                                        value: dataListBool[i],
+                                        selected: dataListBool[index],
+                                        value: dataListBool[index],
                                         onChanged: (value) {
                                           setState(() {
-                                            dataListBool[i] = !dataListBool[i];
+                                            for (int i = 0;
+                                                i < dataListBool.length;
+                                                i++) {
+                                              dataListBool[i] = (i == index);
+                                            }
+                                            // for (int j = 0;
+                                            //     j < dataListBool.length;
+                                            //     j++) {
+                                            //   if (i == dataListBool[i]) {
+                                            //     dataListBool[i] = true;
+                                            //   } else {
+                                            //     dataListBool[j] = false;
+                                            //   }
+                                            // }
+                                            //   // if (dataListBool[i]) {
+                                            //   // } else {
+                                            //   //   dataListBool[i] = false;
+                                            //   // }
+                                            // }
+
                                             //removeId(activitiesFilter[i].id);
                                           });
                                         },
                                         title: MyText(
-                                          text: dataList[i].title.tr(),
+                                          text: dataList[index].title.tr(),
                                           color: greyColor,
                                           fontFamily: 'Raleway',
                                           size: 18,
