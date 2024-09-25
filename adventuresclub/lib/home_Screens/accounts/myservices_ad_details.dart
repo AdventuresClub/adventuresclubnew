@@ -2,11 +2,9 @@
 
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/reviews.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
-import 'package:adventuresclub/provider/edit_provider.dart';
 import 'package:adventuresclub/provider/navigation_index_provider.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/Lists/my_services_list.dart';
