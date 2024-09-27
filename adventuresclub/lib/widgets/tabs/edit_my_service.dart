@@ -1,3 +1,4 @@
+import 'package:adventuresclub/app_theme.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/filter_data_model/activities_inc_model.dart';
 import 'package:adventuresclub/models/filter_data_model/category_filter_model.dart';
@@ -376,8 +377,8 @@ class _EditMyServiceState extends State<EditMyService> {
                           padding: const EdgeInsets.only(
                               right: 5.0, left: 5, top: 10),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            // crossAxisAlignment: CrossAxisAlignment.start,
+                            // mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               const SizedBox(height: 0),
                               Padding(
@@ -386,8 +387,8 @@ class _EditMyServiceState extends State<EditMyService> {
                                 child: MyText(
                                     text: type.tr(),
                                     weight: FontWeight.bold,
-                                    color: blackColor,
-                                    size: 16,
+                                    color: bluishColor,
+                                    size: 18,
                                     fontFamily: 'Raleway'),
                               ),
                               const SizedBox(height: 20),
@@ -461,24 +462,41 @@ class _EditMyServiceState extends State<EditMyService> {
                                     ],
                                   ),
                                 ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 30.0, vertical: 15),
-                                child: Button(
-                                    'done'.tr(),
-                                    greenishColor,
-                                    greyColorShade400,
-                                    whiteColor,
-                                    16,
-                                    () {},
-                                    Icons.add,
-                                    whiteColor,
-                                    false,
-                                    1.3,
-                                    'Raleway',
-                                    FontWeight.w600,
-                                    16),
+                              const SizedBox(
+                                height: 10,
                               ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      bluishColor, // Background color
+                                ),
+                                onPressed: () => editService(type),
+                                child: const Text(
+                                  "Edit",
+                                  style: TextStyle(color: whiteColor),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              // Padding(
+                              //   padding: const EdgeInsets.symmetric(
+                              //       horizontal: 30.0, vertical: 15),
+                              //   child: Button(
+                              //       'done'.tr(),
+                              //       greenishColor,
+                              //       greyColorShade400,
+                              //       whiteColor,
+                              //       16,
+                              //       () {},
+                              //       Icons.add,
+                              //       whiteColor,
+                              //       false,
+                              //       1.3,
+                              //       'Raleway',
+                              //       FontWeight.w600,
+                              //       16),
+                              // ),
                             ],
                           ),
                         )),
