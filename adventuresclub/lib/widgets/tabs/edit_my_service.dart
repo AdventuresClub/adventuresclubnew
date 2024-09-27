@@ -521,21 +521,30 @@ class _EditMyServiceState extends State<EditMyService> {
 
   void editService(String type) async {
     dynamic b = {};
-    if (type == "sector") {
+    if (type == "category") {
+      String categoryId = "";
+      for (int i = 0; i < dataListBool.length; i++) {
+        if (dataListBool[i]) {
+          categoryId = dataList[i].id;
+        }
+      }
       b = {
         'service_id': widget.gm.id.toString(),
         'customer_id': widget.gm.providerId.toString(),
+        "service_category": categoryId
       };
     }
 
     try {
-      var response = await http
-          .post(Uri.parse("${Constants.baseUrl}/api/v1/edit_service"), body: {
-        'service_id': widget.gm.id.toString(),
-        'customer_id':
-            widget.gm.providerId.toString(), //Constants.userId.toString(),
-        'adventure_name': nameController.text.trim(), //ccCode.toString(),
-      });
+      var response = await http.post(
+        Uri.parse("${Constants.baseUrl}/api/v1/edit_service"), body: b,
+        //     {
+        //   'service_id': widget.gm.id.toString(),
+        //   'customer_id':
+        //       widget.gm.providerId.toString(), //Constants.userId.toString(),
+        //   'adventure_name': nameController.text.trim(), //ccCode.toString(),
+        // },
+      );
       if (response.statusCode == 200) {
         debugPrint(response.body);
       }
@@ -553,13 +562,9 @@ class _EditMyServiceState extends State<EditMyService> {
   }
 
   void removeId(int id) {
-    // if (ConstantsCreateNewServices.selectedActivitesId.contains(id)) {
-    //   ConstantsCreateNewServices.selectedActivitesId.remove(id);
-    // }
     if (selectedActivitesid.contains(id)) {
       selectedActivitesid.remove(id);
     }
-    print(selectedActivitesid);
   }
 
   void abc() {
@@ -583,8 +588,6 @@ class _EditMyServiceState extends State<EditMyService> {
       selectedActivites.add(element.activity);
       selectedActivitesid.add(element.id);
     }
-    // widget.gm.activityIncludes(selectedActivitesid);
-    print(selectedActivitesid);
   }
 
   void addActivitesButton() {
