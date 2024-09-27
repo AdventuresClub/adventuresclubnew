@@ -533,6 +533,30 @@ class _EditMyServiceState extends State<EditMyService> {
         'customer_id': widget.gm.providerId.toString(),
         "service_category": categoryId
       };
+    } else if (type == "sector") {
+      String sectorId = "";
+      for (int i = 0; i < dataListBool.length; i++) {
+        if (dataListBool[i]) {
+          sectorId = dataList[i].id;
+        }
+      }
+      b = {
+        'service_id': widget.gm.id.toString(),
+        'customer_id': widget.gm.providerId.toString(),
+        "service_sector": sectorId
+      };
+    } else if (type == "type") {
+      String typeId = "";
+      for (int i = 0; i < dataListBool.length; i++) {
+        if (dataListBool[i]) {
+          typeId = dataList[i].id;
+        }
+      }
+      b = {
+        'service_id': widget.gm.id.toString(),
+        'customer_id': widget.gm.providerId.toString(),
+        "service_type": typeId
+      };
     }
 
     try {
