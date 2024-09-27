@@ -167,7 +167,8 @@ class _EditMyServiceState extends State<EditMyService> {
                         height: 10,
                       ),
                       TextButton(
-                          onPressed: editService, child: const Text("Update"))
+                          onPressed: () => editService("name"),
+                          child: const Text("Update"))
                     ],
                   ),
                 ),
@@ -500,7 +501,15 @@ class _EditMyServiceState extends State<EditMyService> {
     }
   }
 
-  void editService() async {
+  void editService(String type) async {
+    dynamic b = {};
+    if (type == "sector") {
+      b = {
+        'service_id': widget.gm.id.toString(),
+        'customer_id': widget.gm.providerId.toString(),
+      };
+    }
+
     try {
       var response = await http
           .post(Uri.parse("${Constants.baseUrl}/api/v1/edit_service"), body: {
