@@ -375,17 +375,22 @@ class _EditMyServiceState extends State<EditMyService> {
       for (var element in dependencyList) {
         dataList.add(DisplayDataModel(
             id: element.id.toString(), image: "", title: element.dName));
-        // if (element.aimedName == title) {
-        //   dataListBool.add(true);
-        // } else {
-        //   dataListBool.add(false);
-        // }
         for (var e in widget.gm.dependency) {
           if (e.dName == element.dName) {
             dataListBool.add(true);
           } else {
             dataListBool.add(false);
           }
+        }
+      }
+    } else if (type == "duration") {
+      for (var element in durationFilter) {
+        dataList.add(DisplayDataModel(
+            id: element.id.toString(), image: "", title: element.duration));
+        if (element.duration == title) {
+          dataListBool.add(true);
+        } else {
+          dataListBool.add(false);
         }
       }
     }
@@ -638,6 +643,19 @@ class _EditMyServiceState extends State<EditMyService> {
         'customer_id': widget.gm.providerId.toString(),
         "cost_exc": costExl.text.trim(),
       };
+    } else if (type == "duration") {
+      String durationId = "";
+      for (int i = 0; i < dataListBool.length; i++) {
+        if (dataListBool[i]) {
+          durationId = dataList[i].id;
+          widget.gm.duration = dataList[i].title;
+        }
+      }
+      b = {
+        'service_id': widget.gm.id.toString(),
+        'customer_id': widget.gm.providerId.toString(),
+        "duration": durationId,
+      };
     }
     setState(() {
       loading = true;
@@ -655,9 +673,10 @@ class _EditMyServiceState extends State<EditMyService> {
       if (response.statusCode == 200) {
         debugPrint(response.body);
       }
-      print(response.statusCode);
     } catch (e) {
-      print(e.toString());
+      if (mounted) {
+        Constants.showMessage(context, e.toString());
+      }
     } finally {
       setState(() {
         loading = false;
