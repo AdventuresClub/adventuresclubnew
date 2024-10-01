@@ -1,4 +1,3 @@
-import 'package:adventuresclub/app_theme.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/models/filter_data_model/activities_inc_model.dart';
 import 'package:adventuresclub/models/filter_data_model/category_filter_model.dart';
@@ -29,6 +28,9 @@ class EditMyService extends StatefulWidget {
 
 class _EditMyServiceState extends State<EditMyService> {
   TextEditingController nameController = TextEditingController();
+  TextEditingController costInc = TextEditingController();
+  TextEditingController costExl = TextEditingController();
+  TextEditingController desriptionController = TextEditingController();
   List<String> categoryList = [];
   List<SectorFilterModel> filterSectors = [];
   List<CategoryFilterModel> categoryFilter = [];
@@ -80,6 +82,9 @@ class _EditMyServiceState extends State<EditMyService> {
   @override
   void dispose() {
     nameController.dispose();
+    costExl.dispose();
+    costInc.dispose();
+    desriptionController.dispose();
     super.dispose();
   }
 
@@ -115,64 +120,86 @@ class _EditMyServiceState extends State<EditMyService> {
     TextEditingController controller = TextEditingController();
     String title = "";
     String hint = "";
+    int max = 2;
     if (type == "adventureName") {
       nameController = controller;
       title = widget.gm.adventureName;
       hint = "Adventure Name";
+      max = 3;
+    } else if (type == "costInc") {
+      costInc = controller;
+      title = widget.gm.costInc;
+      hint = "Cost Inc";
+      max = 1;
+    } else if (type == "costExl") {
+      costExl = controller;
+      title = widget.gm.costExc;
+      hint = "Cost Excluding";
+      max = 1;
     }
     showDialog(
         context: context,
         builder: (context) {
           return StatefulBuilder(
             builder: ((context, setState) {
-              return Dialog(
+              return SimpleDialog(
+                contentPadding: const EdgeInsets.all(16),
                 backgroundColor: Colors.white,
-                child: Card(
-                  child: Column(
-                    children: [
-                      MyText(
-                        text: title,
-                        color: blackColor,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextField(
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        controller: controller,
-                        decoration: InputDecoration(
-                          hintText: hint,
-                          hintStyle: const TextStyle(color: blackTypeColor4),
-                          border: OutlineInputBorder(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10.0)),
-                            borderSide:
-                                BorderSide(color: greyColor.withOpacity(0.2)),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10.0)),
-                            borderSide:
-                                BorderSide(color: greyColor.withOpacity(0.2)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10.0)),
-                            borderSide:
-                                BorderSide(color: greyColor.withOpacity(0.2)),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextButton(
-                          onPressed: () => editService("name"),
-                          child: const Text("Update"))
-                    ],
+                children: [
+                  const SizedBox(
+                    height: 10,
                   ),
-                ),
+                  MyText(
+                    text: title,
+                    color: blackColor,
+                    weight: FontWeight.bold,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextField(
+                    textAlign: TextAlign.center,
+                    maxLines: 5,
+                    controller: controller,
+                    decoration: InputDecoration(
+                      hintText: hint,
+                      hintStyle: const TextStyle(color: blackTypeColor4),
+                      border: OutlineInputBorder(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10.0)),
+                        borderSide:
+                            BorderSide(color: greyColor.withOpacity(0.5)),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10.0)),
+                        borderSide:
+                            BorderSide(color: greyColor.withOpacity(0.5)),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10.0)),
+                        borderSide:
+                            BorderSide(color: greyColor.withOpacity(0.5)),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  // TextButton(
+                  //     onPressed: () => editService("name"),
+                  //     child: const Text("Update"),),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: bluishColor, // Background color
+                      ),
+                      onPressed: () {},
+                      child: const Text(
+                        "Edit",
+                        style: TextStyle(color: Colors.white),
+                      )),
+                ],
               );
             }),
           );
@@ -581,6 +608,8 @@ class _EditMyServiceState extends State<EditMyService> {
         'customer_id': widget.gm.providerId.toString(),
         "region": regionId,
       };
+    } else if (type == "costInc") {
+      String costInc = "";
     }
 
     try {
@@ -934,7 +963,7 @@ class _EditMyServiceState extends State<EditMyService> {
                             width: 5,
                           ),
                           IconButton(
-                            onPressed: () => typeData("costExl"),
+                            onPressed: () => typeData("costInc"),
                             icon: const Icon(Icons.edit),
                           ),
                         ],
@@ -976,7 +1005,7 @@ class _EditMyServiceState extends State<EditMyService> {
                             width: 5,
                           ),
                           IconButton(
-                            onPressed: () => typeData("costInc"),
+                            onPressed: () => typeData("costExl"),
                             icon: const Icon(Icons.edit),
                           ),
                         ],

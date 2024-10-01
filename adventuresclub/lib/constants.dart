@@ -120,7 +120,7 @@ class Constants {
   static List<BpIncludesModel> gEList = [];
   static final regexForEmail = RegExp(
       r"^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
-  static String baseUrl = "https://adventuresclub.net/adventureClubSIT";
+  static String baseUrl = "https://adventuresclub.net/adventureClub";
   static const String googleMapsApi = "AIzaSyCtHdBmvvsOP97AxCzsu1fu8lNb1Dcq9M4";
   static ProfileBecomePartner pbp = ProfileBecomePartner(
       0,
