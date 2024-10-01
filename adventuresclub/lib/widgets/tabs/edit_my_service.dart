@@ -59,6 +59,8 @@ class _EditMyServiceState extends State<EditMyService> {
   List<bool> dependencyValue = [];
   ServicesModel? currentService;
   bool loading = false;
+  List<String> days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  List<bool> daysValue = [false, false, false, false, false, false, false];
 
   @override
   void initState() {
@@ -1105,24 +1107,73 @@ class _EditMyServiceState extends State<EditMyService> {
                         ],
                       ),
                     if (widget.gm.sPlan == 1)
-                      RichText(
-                        text: TextSpan(
-                          text: 'Availability'.tr(),
-                          style: const TextStyle(
-                              color: bluishColor,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Raleway'),
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: aPlan,
-                                style: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: blackColor,
-                                    fontFamily: 'Raleway')),
-                          ],
-                        ),
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                  text: 'Availability'.tr(),
+                                  style: const TextStyle(
+                                      color: bluishColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Raleway'),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: aPlan,
+                                        style: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                            color: blackColor,
+                                            fontFamily: 'Raleway')),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              IconButton(
+                                onPressed: () => typeData("costInc"),
+                                icon: const Icon(Icons.edit),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Wrap(
+                            direction: Axis.horizontal,
+                            children: List.generate(
+                              days.length,
+                              (index) {
+                                return Column(
+                                  children: [
+                                    MyText(
+                                      text: days[index],
+                                      color: blackTypeColor,
+                                      align: TextAlign.center,
+                                      size: 14,
+                                      weight: FontWeight.w500,
+                                    ),
+                                    Checkbox(
+                                      activeColor: bluishColor,
+                                      checkColor: whiteColor,
+                                      value: daysValue[index],
+                                      onChanged: (bool? value) {
+                                        setState(
+                                          () {
+                                            daysValue[index] = value!;
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 10),
