@@ -94,7 +94,6 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
           Constants.showMessage(context, response.body);
         }
       }
-      print(response.statusCode);
     } catch (e) {
       print(e.toString());
     }
