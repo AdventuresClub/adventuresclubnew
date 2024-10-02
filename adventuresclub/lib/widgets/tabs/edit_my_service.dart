@@ -44,7 +44,7 @@ class _EditMyServiceState extends State<EditMyService> {
   String st = "";
   String ed = "";
   DateTime startDate = DateTime.now();
-  DateTime endDate = DateTime.now();
+  DateTime endDate1 = DateTime.now();
   String aPlan = "";
   List<String> adventuresPlan = [""];
   int activitiesLength = 0;
@@ -61,6 +61,13 @@ class _EditMyServiceState extends State<EditMyService> {
   bool loading = false;
   List<String> days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   List<bool> daysValue = [false, false, false, false, false, false, false];
+  bool editDay = false;
+  String servicePlanId = "";
+  var formattedDate;
+  var endDate;
+  DateTime eDate = DateTime.now();
+  DateTime? pickedDate;
+  DateTime currentDate = DateTime.now();
 
   @override
   void initState() {
@@ -117,6 +124,14 @@ class _EditMyServiceState extends State<EditMyService> {
     }
     for (var element in dependencyText) {
       dependencyValue.add(false);
+    }
+  }
+
+  void setEdit(String type) {
+    if (type == "daysValue") {
+      setState(() {
+        editDay = !editDay;
+      });
     }
   }
 
@@ -341,18 +356,51 @@ class _EditMyServiceState extends State<EditMyService> {
         }
       }
     } else if (type == "activities") {
-      for (var element in activitiesFilter) {
-        dataList.add(DisplayDataModel(
-            id: element.id.toString(),
-            image: element.image,
-            title: element.activity));
-        for (var e in widget.gm.activityIncludes) {
-          if (e.activity == element.activity) {
-            dataListBool.add(true);
-          } else {
-            dataListBool.add(false);
+      dataListBool = List.filled(activitiesFilter.length, false);
+      for (int j = 0; j < activitiesFilter.length; j++) {
+        for (int i = 0; i < widget.gm.activityIncludes.length; i++) {
+          if (activitiesFilter[j].activity ==
+              widget.gm.activityIncludes[i].activity) {
+            dataListBool[j] = true;
           }
         }
+        dataList.add(
+          DisplayDataModel(
+              id: activitiesFilter[j].id.toString(),
+              image: activitiesFilter[j].image,
+              title: activitiesFilter[j].activity),
+        );
+        //  dataListBool.add(false);
+        // int index =
+        //     activitiesFilter.indexWhere((i) => i.activity == element.activity);
+        // if (index != -1) {
+        //   dataListBool[index] = true;
+        // }
+        // for (int i = 0; i < widget.gm.activityIncludes.length; i++) {
+        // if (widget.gm.activityIncludes[i].activity == element.activity) {
+        //   dataListBool[i] = true;
+        // } else {
+        //   dataListBool[i] = false;
+        // }
+        // if (widget.gm.activityIncludes.contains(element)) {
+        //   dataListBool.add(true);
+        // } else {
+        //   dataListBool.add(false);
+        // }
+
+        // for (var e in widget.gm.activityIncludes) {
+        // for (int i = 0; i < widget.gm.activityIncludes.length; i++) {
+        //   if (widget.gm.activityIncludes[i].activity == element.activity) {
+        //     dataListBool[i] = true;
+        //   }
+        // }
+        //}
+        // if (e.activity == element.activity) {
+        //   dataListBool.add(true);
+        // } else {
+        //   dataListBool.add(false);
+        // }
+        //}
       }
     } else if (type == "audience") {
       for (var element in aimedFilter) {
@@ -463,29 +511,36 @@ class _EditMyServiceState extends State<EditMyService> {
                                         selected: dataListBool[index],
                                         value: dataListBool[index],
                                         onChanged: (value) {
-                                          setState(() {
-                                            for (int i = 0;
-                                                i < dataListBool.length;
-                                                i++) {
-                                              dataListBool[i] = (i == index);
-                                            }
-                                            // for (int j = 0;
-                                            //     j < dataListBool.length;
-                                            //     j++) {
-                                            //   if (i == dataListBool[i]) {
-                                            //     dataListBool[i] = true;
-                                            //   } else {
-                                            //     dataListBool[j] = false;
-                                            //   }
-                                            // }
-                                            //   // if (dataListBool[i]) {
-                                            //   // } else {
-                                            //   //   dataListBool[i] = false;
-                                            //   // }
-                                            // }
+                                          if (type != "activities") {
+                                            setState(() {
+                                              for (int i = 0;
+                                                  i < dataListBool.length;
+                                                  i++) {
+                                                dataListBool[i] = (i == index);
+                                              }
+                                              // for (int j = 0;
+                                              //     j < dataListBool.length;
+                                              //     j++) {
+                                              //   if (i == dataListBool[i]) {
+                                              //     dataListBool[i] = true;
+                                              //   } else {
+                                              //     dataListBool[j] = false;
+                                              //   }
+                                              // }
+                                              //   // if (dataListBool[i]) {
+                                              //   // } else {
+                                              //   //   dataListBool[i] = false;
+                                              //   // }
+                                              // }
 
-                                            //removeId(activitiesFilter[i].id);
-                                          });
+                                              //removeId(activitiesFilter[i].id);
+                                            });
+                                          } else {
+                                            setState(() {
+                                              dataListBool[index] =
+                                                  !dataListBool[index];
+                                            });
+                                          }
                                         },
                                         title: MyText(
                                           text: dataList[index].title.tr(),
@@ -551,8 +606,49 @@ class _EditMyServiceState extends State<EditMyService> {
       }
     }
     for (var element in activityList) {
-      activityValue.add(false);
+      for (var i in widget.gm.activityIncludes) {
+        if (element == i.activity) {
+          activityValue.add(true);
+        } else {
+          activityValue.add(false);
+        }
+      }
     }
+  }
+
+  void servicePlan() {
+    List<String> d = [];
+    for (int i = 0; i < daysValue.length; i++) {
+      if (daysValue[i]) {
+        d.add(days[i]);
+      }
+    }
+    planDaysId(d);
+  }
+
+  void planDaysId(List<String> pDays) async {
+    List<int> id = [];
+    for (var element in pDays) {
+      if (element == "Mon") {
+        id.add(2);
+      } else if (element == "Tue") {
+        id.add(3);
+      } else if (element == "Wed") {
+        id.add(4);
+      } else if (element == "Thu") {
+        id.add(5);
+      } else if (element == "Fri") {
+        id.add(6);
+      } else if (element == "Sat") {
+        id.add(7);
+      } else if (element == "Sun") {
+        id.add(1);
+      }
+    }
+    // setState(() {
+    servicePlanId = id.join(",");
+    // });
+    editService("daysValue");
   }
 
   void editService(String type) async {
@@ -658,19 +754,22 @@ class _EditMyServiceState extends State<EditMyService> {
         'customer_id': widget.gm.providerId.toString(),
         "duration": durationId,
       };
-    }
+    } else if (type == "daysValue") {
+      b = {
+        'service_id': widget.gm.id.toString(),
+        'customer_id': widget.gm.providerId.toString(),
+        "service_plan_days": servicePlanId,
+        "service_plan": "1",
+      };
+    } else if (type == "plan2") {}
+    // debugPrint(b);
     setState(() {
       loading = true;
     });
     try {
       var response = await http.post(
-        Uri.parse("${Constants.baseUrl}/api/v1/edit_service"), body: b,
-        //     {
-        //   'service_id': widget.gm.id.toString(),
-        //   'customer_id':
-        //       widget.gm.providerId.toString(), //Constants.userId.toString(),
-        //   'adventure_name': nameController.text.trim(), //ccCode.toString(),
-        // },
+        Uri.parse("${Constants.baseUrl}/api/v1/edit_service"),
+        body: b,
       );
       if (response.statusCode == 200) {
         debugPrint(response.body);
@@ -680,15 +779,32 @@ class _EditMyServiceState extends State<EditMyService> {
         Constants.showMessage(context, e.toString());
       }
     } finally {
-      setState(() {
-        loading = false;
-      });
+      if (mounted) {
+        setState(() {
+          loading = false;
+        });
+      }
     }
   }
 
   void getSteps() {
     for (var element in widget.gm.availabilityPlan) {
       adventuresPlan.add(element.day.tr());
+      if (element.day == "Monday") {
+        daysValue[0] = true;
+      } else if (element.day == "Tuesday") {
+        daysValue[1] = true;
+      } else if (element.day == "Wednesday") {
+        daysValue[2] = true;
+      } else if (element.day == "Thursday") {
+        daysValue[3] = true;
+      } else if (element.day == "Friday") {
+        daysValue[4] = true;
+      } else if (element.day == "Saturday") {
+        daysValue[5] = true;
+      } else if (element.day == "Sunday") {
+        daysValue[6] = true;
+      }
     }
     aPlan = adventuresPlan.join(", ");
   }
@@ -843,6 +959,48 @@ class _EditMyServiceState extends State<EditMyService> {
         });
   }
 
+  Future<void> _selectDate(BuildContext context, var givenDate) async {
+    if (givenDate == formattedDate) {
+      pickedDate = await showDatePicker(
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime.now(),
+          lastDate: DateTime(2050));
+    } else if (givenDate == endDate) {
+      pickedDate = await showDatePicker(
+          context: context,
+          initialDate: startDate,
+          firstDate: startDate,
+          lastDate: DateTime(2050));
+    }
+    if (pickedDate != null && pickedDate != currentDate) {
+      if (givenDate == formattedDate) {
+        var date = DateTime.parse(pickedDate.toString());
+        String m = date.month < 10 ? "0${date.month}" : "${date.month}";
+        String d = date.day < 10 ? "0${date.day}" : "${date.day}";
+        setState(() {
+          formattedDate = "${date.year}-$m-$d";
+          startDate = pickedDate!;
+          //pm[0].startDate = startDate;
+          //  pm.insert(0, CreateServicesProgramModel(title, startDate, endDate, Duration(), Duration(), "description", DateTime.now, adventureEndDate))
+        });
+      } else if (givenDate == endDate) {
+        DateTime eDate = DateTime(
+            pickedDate!.year, pickedDate!.month, pickedDate!.day, 23, 59, 59);
+        print(eDate);
+        var date = DateTime.parse(eDate.toString());
+        String m = date.month < 10 ? "0${date.month}" : "${date.month}";
+        String d = date.day < 10 ? "0${date.day}" : "${date.day}";
+        setState(() {
+          endDate = "${date.year}-$m-$d";
+          //   pm[0].endDate = eDate;
+          currentDate = eDate;
+        });
+      }
+    }
+    print(currentDate);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -966,9 +1124,10 @@ class _EditMyServiceState extends State<EditMyService> {
                               width: 10,
                             ),
                             IconButton(
-                                onPressed: () =>
-                                    addActivites("region", widget.gm.region),
-                                icon: const Icon(Icons.edit))
+                              onPressed: () =>
+                                  addActivites("region", widget.gm.region),
+                              icon: const Icon(Icons.edit),
+                            ),
                           ],
                         ),
                         MyText(
@@ -996,6 +1155,7 @@ class _EditMyServiceState extends State<EditMyService> {
                             icon: const Icon(Icons.edit))
                       ],
                     ),
+
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1087,130 +1247,294 @@ class _EditMyServiceState extends State<EditMyService> {
                       height: 10,
                     ),
                     if (widget.gm.sPlan == 2)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          MyText(
-                            text: "${"Start Date : "} $st",
-                            //'River Rafting',
-                            //weight: FontWeight.w700,
-                            color: blackColor,
-                            size: 14,
-                          ),
-                          MyText(
-                            text: "${"End Date : "} $ed",
-                            //'River Rafting',
-                            //weight: FontWeight.w700,
-                            color: blackColor,
-                            size: 14,
-                          ),
-                        ],
-                      ),
-                    if (widget.gm.sPlan == 1)
                       Column(
                         children: [
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              RichText(
-                                text: TextSpan(
-                                  text: 'Availability'.tr(),
-                                  style: const TextStyle(
-                                      color: bluishColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Raleway'),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                        text: aPlan,
-                                        style: const TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            color: blackColor,
-                                            fontFamily: 'Raleway')),
-                                  ],
-                                ),
+                              MyText(
+                                text: "${"Start Date : "} $st",
+                                //'River Rafting',
+                                //weight: FontWeight.w700,
+                                color: blackColor,
+                                size: 14,
                               ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              IconButton(
-                                onPressed: () => typeData("costInc"),
-                                icon: const Icon(Icons.edit),
+                              MyText(
+                                text: "${"End Date : "} $ed",
+                                //'River Rafting',
+                                //weight: FontWeight.w700,
+                                color: blackColor,
+                                size: 14,
                               ),
                             ],
                           ),
                           const SizedBox(
-                            height: 5,
+                            height: 10,
                           ),
-                          Wrap(
-                            direction: Axis.horizontal,
-                            children: List.generate(
-                              days.length,
-                              (index) {
-                                return Column(
-                                  children: [
-                                    MyText(
-                                      text: days[index],
-                                      color: blackTypeColor,
-                                      align: TextAlign.center,
-                                      size: 14,
-                                      weight: FontWeight.w500,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () =>
+                                      _selectDate(context, formattedDate),
+                                  child: Container(
+                                    height: 50,
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 0),
+                                    //width: MediaQuery.of(context).size.width / 1,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: lightGreyColor,
+                                      border: Border.all(
+                                        width: 1,
+                                        color: greyColor.withOpacity(0.2),
+                                      ),
                                     ),
-                                    Checkbox(
-                                      activeColor: bluishColor,
-                                      checkColor: whiteColor,
-                                      value: daysValue[index],
-                                      onChanged: (bool? value) {
-                                        setState(
-                                          () {
-                                            daysValue[index] = value!;
-                                          },
+                                    child: ListTile(
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              vertical: 0, horizontal: 10),
+                                      leading: Text(
+                                        formattedDate.toString().tr(),
+                                        style: TextStyle(
+                                            color: blackColor.withOpacity(0.6),
+                                            fontSize: 14),
+                                      ),
+                                      trailing: Icon(
+                                        Icons.calendar_today,
+                                        color: blackColor.withOpacity(0.6),
+                                        size: 20,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () => _selectDate(context, endDate),
+                                  child: Container(
+                                    height: 50,
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 0),
+                                    //width: MediaQuery.of(context).size.width / 1,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: lightGreyColor,
+                                      border: Border.all(
+                                        width: 1,
+                                        color: greyColor.withOpacity(0.2),
+                                      ),
+                                    ),
+                                    child: ListTile(
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              vertical: 0, horizontal: 10),
+                                      leading: Text(
+                                        endDate.toString(),
+                                        style: TextStyle(
+                                            color: blackColor.withOpacity(0.6),
+                                            fontSize: 14),
+                                      ),
+                                      trailing: Icon(
+                                        Icons.calendar_today,
+                                        color: blackColor.withOpacity(0.6),
+                                        size: 20,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    if (widget.gm.sPlan == 1)
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12)),
+                        padding: const EdgeInsets.all(12),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                    text: 'Availability'.tr(),
+                                    style: const TextStyle(
+                                        color: bluishColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Raleway'),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: aPlan,
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              color: blackColor,
+                                              fontFamily: 'Raleway')),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                IconButton(
+                                  onPressed: () => setEdit("daysValue"),
+                                  icon: const Icon(Icons.edit),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            if (editDay)
+                              Column(
+                                children: [
+                                  Wrap(
+                                    direction: Axis.horizontal,
+                                    children: List.generate(
+                                      days.length,
+                                      (index) {
+                                        return Column(
+                                          children: [
+                                            MyText(
+                                              text: days[index],
+                                              color: blackTypeColor,
+                                              align: TextAlign.center,
+                                              size: 14,
+                                              weight: FontWeight.w500,
+                                            ),
+                                            Checkbox(
+                                              activeColor: Colors.green,
+                                              checkColor: whiteColor,
+                                              value: daysValue[index],
+                                              onChanged: (bool? value) {
+                                                setState(
+                                                  () {
+                                                    daysValue[index] = value!;
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                          ],
                                         );
                                       },
                                     ),
-                                  ],
-                                );
-                              },
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            greenishColor, // Background color
+                                      ),
+                                      onPressed: servicePlan,
+                                      child: const Text(
+                                        "Edit",
+                                        style: TextStyle(color: Colors.white),
+                                      ))
+                                ],
+                              ),
+                          ],
+                        ),
+                      ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        MyText(
+                          text: "activitiesIncludes".tr(),
+                          color: bluishColor,
+                          size: 18,
+                          weight: FontWeight.bold,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        IconButton(
+                          onPressed: () => addActivites("activities", ""),
+                          icon: const Icon(Icons.edit),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Wrap(
+                      children: [
+                        for (int i = 0;
+                            i < widget.gm.activityIncludes.length;
+                            i++)
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              // crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Image.network(
+                                  "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.activityIncludes[i].image}",
+                                  height: 42,
+                                  width: 42,
+                                ),
+                                const SizedBox(width: 5),
+                                MyText(
+                                  text: widget.gm.activityIncludes[i].activity
+                                      .tr(),
+                                  color: blackColor, //greyTextColor,
+                                  // weight: FontWeight.w600,
+                                  fontFamily: 'Roboto',
+                                  size: 14,
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              MyText(
-                                  text: 'activitiesIncludes'.tr(),
-                                  weight: FontWeight.bold,
-                                  color: blackTypeColor1),
-                              MyText(
-                                  text:
-                                      "$activitiesLength ${"activitiesIncludes".tr()}",
-                                  weight: FontWeight.bold,
-                                  color: blackTypeColor),
-                            ],
-                          ),
-                          Button(
-                              'addActivities',
-                              bluishColor,
-                              bluishColor,
-                              whiteColor,
-                              14,
-                              addActivitesButton,
-                              Icons.arrow_forward,
-                              whiteColor,
-                              true,
-                              2.5,
-                              'Roboto',
-                              FontWeight.w400,
-                              16),
-                        ],
-                      ),
+                      ],
                     ),
+                    // Container(
+                    //   padding: const EdgeInsets.symmetric(vertical: 10),
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //     children: [
+                    //       Column(
+                    //         crossAxisAlignment: CrossAxisAlignment.start,
+                    //         children: [
+                    //           MyText(
+                    //               text: 'activitiesIncludes'.tr(),
+                    //               weight: FontWeight.bold,
+                    //               color: blackTypeColor1),
+                    //           MyText(
+                    //               text:
+                    //                   "$activitiesLength ${"activitiesIncludes".tr()}",
+                    //               weight: FontWeight.bold,
+                    //               color: blackTypeColor),
+                    //         ],
+                    //       ),
+                    //       Button(
+                    //           'addActivities',
+                    //           bluishColor,
+                    //           bluishColor,
+                    //           whiteColor,
+                    //           14,
+                    //           addActivitesButton,
+                    //           Icons.arrow_forward,
+                    //           whiteColor,
+                    //           true,
+                    //           2.5,
+                    //           'Roboto',
+                    //           FontWeight.w400,
+                    //           16),
+                    //     ],
+                    //   ),
+                    // ),
                     const SizedBox(
                       height: 5,
                     ),
