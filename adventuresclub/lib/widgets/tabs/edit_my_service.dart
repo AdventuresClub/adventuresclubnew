@@ -761,7 +761,8 @@ class _EditMyServiceState extends State<EditMyService> {
         "service_plan_days": servicePlanId,
         "service_plan": "1",
       };
-    } else if (type == "plan2") {}
+    } else if (type == "plan2") {
+    } else if (type == "activities") {}
     // debugPrint(b);
     setState(() {
       loading = true;
