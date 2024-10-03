@@ -1391,101 +1391,101 @@ class _EditMyServiceState extends State<EditMyService> {
                     //       ),
                     //     ],
                     //   ),
-                    if (widget.gm.sPlan == 1)
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12)),
-                        padding: const EdgeInsets.all(12),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: RichText(
-                                    text: TextSpan(
-                                      text: 'Availability'.tr(),
-                                      style: const TextStyle(
-                                          color: bluishColor,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'Raleway'),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                            text: aPlan,
-                                            style: const TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400,
-                                                color: blackColor,
-                                                fontFamily: 'Raleway')),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                IconButton(
-                                  onPressed: () => setEdit("daysValue"),
-                                  icon: const Icon(Icons.edit),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            if (editDay)
-                              Column(
-                                children: [
-                                  Wrap(
-                                    direction: Axis.horizontal,
-                                    children: List.generate(
-                                      days.length,
-                                      (index) {
-                                        return Column(
-                                          children: [
-                                            MyText(
-                                              text: days[index],
-                                              color: blackTypeColor,
-                                              align: TextAlign.center,
-                                              size: 14,
-                                              weight: FontWeight.w500,
-                                            ),
-                                            Checkbox(
-                                              activeColor: Colors.green,
-                                              checkColor: whiteColor,
-                                              value: daysValue[index],
-                                              onChanged: (bool? value) {
-                                                setState(
-                                                  () {
-                                                    daysValue[index] = value!;
-                                                  },
-                                                );
-                                              },
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            greenishColor, // Background color
-                                      ),
-                                      onPressed: servicePlan,
-                                      child: const Text(
-                                        "Edit",
-                                        style: TextStyle(color: Colors.white),
-                                      ))
-                                ],
-                              ),
-                          ],
-                        ),
-                      ),
+                    // if (widget.gm.sPlan == 1)
+                    //   Container(
+                    //     decoration: BoxDecoration(
+                    //         color: Colors.white,
+                    //         borderRadius: BorderRadius.circular(12)),
+                    //     padding: const EdgeInsets.all(12),
+                    //     child: Column(
+                    //       children: [
+                    //         Row(
+                    //           children: [
+                    //             Expanded(
+                    //               child: RichText(
+                    //                 text: TextSpan(
+                    //                   text: 'Availability'.tr(),
+                    //                   style: const TextStyle(
+                    //                       color: bluishColor,
+                    //                       fontSize: 14,
+                    //                       fontWeight: FontWeight.bold,
+                    //                       fontFamily: 'Raleway'),
+                    //                   children: <TextSpan>[
+                    //                     TextSpan(
+                    //                         text: aPlan,
+                    //                         style: const TextStyle(
+                    //                             fontSize: 14,
+                    //                             fontWeight: FontWeight.w400,
+                    //                             color: blackColor,
+                    //                             fontFamily: 'Raleway')),
+                    //                   ],
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //             const SizedBox(
+                    //               width: 5,
+                    //             ),
+                    //             IconButton(
+                    //               onPressed: () => setEdit("daysValue"),
+                    //               icon: const Icon(Icons.edit),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //         const SizedBox(
+                    //           height: 5,
+                    //         ),
+                    //         if (editDay)
+                    //           Column(
+                    //             children: [
+                    //               Wrap(
+                    //                 direction: Axis.horizontal,
+                    //                 children: List.generate(
+                    //                   days.length,
+                    //                   (index) {
+                    //                     return Column(
+                    //                       children: [
+                    //                         MyText(
+                    //                           text: days[index],
+                    //                           color: blackTypeColor,
+                    //                           align: TextAlign.center,
+                    //                           size: 14,
+                    //                           weight: FontWeight.w500,
+                    //                         ),
+                    //                         Checkbox(
+                    //                           activeColor: Colors.green,
+                    //                           checkColor: whiteColor,
+                    //                           value: daysValue[index],
+                    //                           onChanged: (bool? value) {
+                    //                             setState(
+                    //                               () {
+                    //                                 daysValue[index] = value!;
+                    //                               },
+                    //                             );
+                    //                           },
+                    //                         ),
+                    //                       ],
+                    //                     );
+                    //                   },
+                    //                 ),
+                    //               ),
+                    //               const SizedBox(
+                    //                 height: 5,
+                    //               ),
+                    //               ElevatedButton(
+                    //                   style: ElevatedButton.styleFrom(
+                    //                     backgroundColor:
+                    //                         greenishColor, // Background color
+                    //                   ),
+                    //                   onPressed: servicePlan,
+                    //                   child: const Text(
+                    //                     "Edit",
+                    //                     style: TextStyle(color: Colors.white),
+                    //                   ))
+                    //             ],
+                    //           ),
+                    //       ],
+                    //     ),
+                    //   ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -1611,64 +1611,6 @@ class _EditMyServiceState extends State<EditMyService> {
                       color: blackColor,
                       // weight: FontWeight.w500,
                       size: 14,
-                    ),
-                    Divider(
-                      thickness: 1,
-                      color: blackColor.withOpacity(0.2),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        MyText(
-                          text: "activitiesIncludes".tr(),
-                          color: bluishColor,
-                          size: 18,
-                          weight: FontWeight.bold,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        IconButton(
-                          onPressed: () => addActivites("activities", ""),
-                          icon: const Icon(Icons.edit),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Wrap(
-                      children: [
-                        for (int i = 0;
-                            i < widget.gm.activityIncludes.length;
-                            i++)
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              // mainAxisAlignment: MainAxisAlignment.center,
-                              // crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Image.network(
-                                  "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${widget.gm.activityIncludes[i].image}",
-                                  height: 42,
-                                  width: 42,
-                                ),
-                                const SizedBox(width: 5),
-                                MyText(
-                                  text: widget.gm.activityIncludes[i].activity
-                                      .tr(),
-                                  color: blackColor, //greyTextColor,
-                                  // weight: FontWeight.w600,
-                                  fontFamily: 'Roboto',
-                                  size: 14,
-                                ),
-                              ],
-                            ),
-                          ),
-                      ],
                     ),
                     const SizedBox(
                       height: 10,
