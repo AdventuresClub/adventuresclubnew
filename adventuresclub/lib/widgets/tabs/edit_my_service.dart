@@ -157,6 +157,10 @@ class _EditMyServiceState extends State<EditMyService> {
       title = widget.gm.costExc;
       hint = "Cost Excluding";
       max = 1;
+    } else if (type == "description") {
+      desriptionController = controller;
+      title = "Description";
+      hint = "Description";
     }
     showDialog(
         context: context,
@@ -799,6 +803,13 @@ class _EditMyServiceState extends State<EditMyService> {
         'service_id': widget.gm.id.toString(),
         'customer_id': widget.gm.providerId.toString(),
         "activities": selectedActivityIncludesId,
+      };
+    } else if (type == "costInc") {
+      widget.gm.des = desriptionController.text;
+      b = {
+        'service_id': widget.gm.id.toString(),
+        'customer_id': widget.gm.providerId.toString(),
+        "write_information": desriptionController.text,
       };
     }
     // debugPrint(b);
