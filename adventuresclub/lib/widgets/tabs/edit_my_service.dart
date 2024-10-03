@@ -10,6 +10,7 @@ import 'package:adventuresclub/models/filter_data_model/service_types_filter.dar
 import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
 import 'package:adventuresclub/models/services/dependencies_model.dart';
+import 'package:adventuresclub/models/services/included_activities_model.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/loading_widget.dart';
 import 'package:adventuresclub/widgets/my_service_banner_container.dart';
@@ -62,12 +63,13 @@ class _EditMyServiceState extends State<EditMyService> {
   List<String> days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   List<bool> daysValue = [false, false, false, false, false, false, false];
   bool editDay = false;
-  String servicePlanId = "";
+  int servicePlanId = 0;
   var formattedDate;
   var endDate;
   DateTime eDate = DateTime.now();
   DateTime? pickedDate;
   DateTime currentDate = DateTime.now();
+  String selectedActivityIncludesId = "";
 
   @override
   void initState() {
@@ -296,7 +298,10 @@ class _EditMyServiceState extends State<EditMyService> {
 
   void addActivites(String type, String title) {
     dataList.clear();
-    dataListBool.clear();
+    if (type != "activities") {
+      dataListBool.clear();
+    }
+
     if (type == "sector") {
       for (var element in filterSectors) {
         dataList.add(DisplayDataModel(
@@ -646,7 +651,8 @@ class _EditMyServiceState extends State<EditMyService> {
       }
     }
     // setState(() {
-    servicePlanId = id.join(",");
+    // int s = int.parse(id.join());
+    servicePlanId = int.parse(id.join());
     // });
     editService("daysValue");
   }
@@ -758,11 +764,43 @@ class _EditMyServiceState extends State<EditMyService> {
       b = {
         'service_id': widget.gm.id.toString(),
         'customer_id': widget.gm.providerId.toString(),
-        "service_plan_days": servicePlanId,
+        "service_plan_days": "23", //servicePlanId,
         "service_plan": "1",
       };
     } else if (type == "plan2") {
-    } else if (type == "activities") {}
+    } else if (type == "activities") {
+      List<ActivitiesIncludeModel> activity = [];
+      widget.gm.activityIncludes.clear();
+      for (int j = 0; j < widget.gm.activityIncludes.length; j++) {
+        activity.add(ActivitiesIncludeModel(
+            widget.gm.activityIncludes[j].id,
+            widget.gm.activityIncludes[j].activity,
+            widget.gm.activityIncludes[j].image));
+      }
+      for (int i = 0; i < activitiesFilter.length; i++) {
+        if (dataListBool[i]) {
+          selectedActivitesid.add(
+            activitiesFilter[i].id,
+          );
+          //if (activity.contains(activitiesFilter[i])) {
+          //} else {
+
+          widget.gm.activityIncludes.add(IncludedActivitiesModel(
+              activitiesFilter[i].id,
+              0,
+              "",
+              activitiesFilter[i].activity,
+              activitiesFilter[i].image));
+          //}
+        }
+      }
+      selectedActivityIncludesId = selectedActivitesid.join(",");
+      b = {
+        'service_id': widget.gm.id.toString(),
+        'customer_id': widget.gm.providerId.toString(),
+        "activities": selectedActivityIncludesId,
+      };
+    }
     // debugPrint(b);
     setState(() {
       loading = true;
@@ -1247,112 +1285,112 @@ class _EditMyServiceState extends State<EditMyService> {
                     const SizedBox(
                       height: 10,
                     ),
-                    if (widget.gm.sPlan == 2)
-                      Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              MyText(
-                                text: "${"Start Date : "} $st",
-                                //'River Rafting',
-                                //weight: FontWeight.w700,
-                                color: blackColor,
-                                size: 14,
-                              ),
-                              MyText(
-                                text: "${"End Date : "} $ed",
-                                //'River Rafting',
-                                //weight: FontWeight.w700,
-                                color: blackColor,
-                                size: 14,
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Expanded(
-                                child: GestureDetector(
-                                  onTap: () =>
-                                      _selectDate(context, formattedDate),
-                                  child: Container(
-                                    height: 50,
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 0),
-                                    //width: MediaQuery.of(context).size.width / 1,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: lightGreyColor,
-                                      border: Border.all(
-                                        width: 1,
-                                        color: greyColor.withOpacity(0.2),
-                                      ),
-                                    ),
-                                    child: ListTile(
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              vertical: 0, horizontal: 10),
-                                      leading: Text(
-                                        formattedDate.toString().tr(),
-                                        style: TextStyle(
-                                            color: blackColor.withOpacity(0.6),
-                                            fontSize: 14),
-                                      ),
-                                      trailing: Icon(
-                                        Icons.calendar_today,
-                                        color: blackColor.withOpacity(0.6),
-                                        size: 20,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Expanded(
-                                child: GestureDetector(
-                                  onTap: () => _selectDate(context, endDate),
-                                  child: Container(
-                                    height: 50,
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 0),
-                                    //width: MediaQuery.of(context).size.width / 1,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: lightGreyColor,
-                                      border: Border.all(
-                                        width: 1,
-                                        color: greyColor.withOpacity(0.2),
-                                      ),
-                                    ),
-                                    child: ListTile(
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              vertical: 0, horizontal: 10),
-                                      leading: Text(
-                                        endDate.toString(),
-                                        style: TextStyle(
-                                            color: blackColor.withOpacity(0.6),
-                                            fontSize: 14),
-                                      ),
-                                      trailing: Icon(
-                                        Icons.calendar_today,
-                                        color: blackColor.withOpacity(0.6),
-                                        size: 20,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                    // if (widget.gm.sPlan == 2)
+                    //   Column(
+                    //     children: [
+                    //       Row(
+                    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //         children: [
+                    //           MyText(
+                    //             text: "${"Start Date : "} $st",
+                    //             //'River Rafting',
+                    //             //weight: FontWeight.w700,
+                    //             color: blackColor,
+                    //             size: 14,
+                    //           ),
+                    //           MyText(
+                    //             text: "${"End Date : "} $ed",
+                    //             //'River Rafting',
+                    //             //weight: FontWeight.w700,
+                    //             color: blackColor,
+                    //             size: 14,
+                    //           ),
+                    //         ],
+                    //       ),
+                    //       const SizedBox(
+                    //         height: 10,
+                    //       ),
+                    //       Row(
+                    //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    //         children: [
+                    //           Expanded(
+                    //             child: GestureDetector(
+                    //               onTap: () =>
+                    //                   _selectDate(context, formattedDate),
+                    //               child: Container(
+                    //                 height: 50,
+                    //                 padding:
+                    //                     const EdgeInsets.symmetric(vertical: 0),
+                    //                 //width: MediaQuery.of(context).size.width / 1,
+                    //                 decoration: BoxDecoration(
+                    //                   borderRadius: BorderRadius.circular(10),
+                    //                   color: lightGreyColor,
+                    //                   border: Border.all(
+                    //                     width: 1,
+                    //                     color: greyColor.withOpacity(0.2),
+                    //                   ),
+                    //                 ),
+                    //                 child: ListTile(
+                    //                   contentPadding:
+                    //                       const EdgeInsets.symmetric(
+                    //                           vertical: 0, horizontal: 10),
+                    //                   leading: Text(
+                    //                     formattedDate.toString().tr(),
+                    //                     style: TextStyle(
+                    //                         color: blackColor.withOpacity(0.6),
+                    //                         fontSize: 14),
+                    //                   ),
+                    //                   trailing: Icon(
+                    //                     Icons.calendar_today,
+                    //                     color: blackColor.withOpacity(0.6),
+                    //                     size: 20,
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //           ),
+                    //           const SizedBox(
+                    //             width: 10,
+                    //           ),
+                    //           Expanded(
+                    //             child: GestureDetector(
+                    //               onTap: () => _selectDate(context, endDate),
+                    //               child: Container(
+                    //                 height: 50,
+                    //                 padding:
+                    //                     const EdgeInsets.symmetric(vertical: 0),
+                    //                 //width: MediaQuery.of(context).size.width / 1,
+                    //                 decoration: BoxDecoration(
+                    //                   borderRadius: BorderRadius.circular(10),
+                    //                   color: lightGreyColor,
+                    //                   border: Border.all(
+                    //                     width: 1,
+                    //                     color: greyColor.withOpacity(0.2),
+                    //                   ),
+                    //                 ),
+                    //                 child: ListTile(
+                    //                   contentPadding:
+                    //                       const EdgeInsets.symmetric(
+                    //                           vertical: 0, horizontal: 10),
+                    //                   leading: Text(
+                    //                     endDate.toString(),
+                    //                     style: TextStyle(
+                    //                         color: blackColor.withOpacity(0.6),
+                    //                         fontSize: 14),
+                    //                   ),
+                    //                   trailing: Icon(
+                    //                     Icons.calendar_today,
+                    //                     color: blackColor.withOpacity(0.6),
+                    //                     size: 20,
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ],
+                    //   ),
                     if (widget.gm.sPlan == 1)
                       Container(
                         decoration: BoxDecoration(
@@ -1363,23 +1401,25 @@ class _EditMyServiceState extends State<EditMyService> {
                           children: [
                             Row(
                               children: [
-                                RichText(
-                                  text: TextSpan(
-                                    text: 'Availability'.tr(),
-                                    style: const TextStyle(
-                                        color: bluishColor,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Raleway'),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                          text: aPlan,
-                                          style: const TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400,
-                                              color: blackColor,
-                                              fontFamily: 'Raleway')),
-                                    ],
+                                Expanded(
+                                  child: RichText(
+                                    text: TextSpan(
+                                      text: 'Availability'.tr(),
+                                      style: const TextStyle(
+                                          color: bluishColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'Raleway'),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                            text: aPlan,
+                                            style: const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400,
+                                                color: blackColor,
+                                                fontFamily: 'Raleway')),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(
