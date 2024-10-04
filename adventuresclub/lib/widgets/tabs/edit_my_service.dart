@@ -302,7 +302,7 @@ class _EditMyServiceState extends State<EditMyService> {
 
   void addActivites(String type, String title) {
     dataList.clear();
-    if (type != "activities") {
+    if (type != "activities" || type != "audience") {
       dataListBool.clear();
     }
 
@@ -379,49 +379,14 @@ class _EditMyServiceState extends State<EditMyService> {
               image: activitiesFilter[j].image,
               title: activitiesFilter[j].activity),
         );
-        //  dataListBool.add(false);
-        // int index =
-        //     activitiesFilter.indexWhere((i) => i.activity == element.activity);
-        // if (index != -1) {
-        //   dataListBool[index] = true;
-        // }
-        // for (int i = 0; i < widget.gm.activityIncludes.length; i++) {
-        // if (widget.gm.activityIncludes[i].activity == element.activity) {
-        //   dataListBool[i] = true;
-        // } else {
-        //   dataListBool[i] = false;
-        // }
-        // if (widget.gm.activityIncludes.contains(element)) {
-        //   dataListBool.add(true);
-        // } else {
-        //   dataListBool.add(false);
-        // }
-
-        // for (var e in widget.gm.activityIncludes) {
-        // for (int i = 0; i < widget.gm.activityIncludes.length; i++) {
-        //   if (widget.gm.activityIncludes[i].activity == element.activity) {
-        //     dataListBool[i] = true;
-        //   }
-        // }
-        //}
-        // if (e.activity == element.activity) {
-        //   dataListBool.add(true);
-        // } else {
-        //   dataListBool.add(false);
-        // }
-        //}
       }
     } else if (type == "audience") {
       for (var element in aimedFilter) {
+        // dataListBool = List.filled(aimedFilter.length, false);
         dataList.add(DisplayDataModel(
             id: element.id.toString(),
             image: element.image,
             title: element.aimedName));
-        // if (element.aimedName == title) {
-        //   dataListBool.add(true);
-        // } else {
-        //   dataListBool.add(false);
-        // }
         for (var e in widget.gm.am) {
           if (e.aimedName == element.aimedName) {
             dataListBool.add(true);
@@ -520,7 +485,8 @@ class _EditMyServiceState extends State<EditMyService> {
                                         selected: dataListBool[index],
                                         value: dataListBool[index],
                                         onChanged: (value) {
-                                          if (type != "activities") {
+                                          if (type != "activities" ||
+                                              type != "audience") {
                                             setState(() {
                                               for (int i = 0;
                                                   i < dataListBool.length;
@@ -579,24 +545,6 @@ class _EditMyServiceState extends State<EditMyService> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              // Padding(
-                              //   padding: const EdgeInsets.symmetric(
-                              //       horizontal: 30.0, vertical: 15),
-                              //   child: Button(
-                              //       'done'.tr(),
-                              //       greenishColor,
-                              //       greyColorShade400,
-                              //       whiteColor,
-                              //       16,
-                              //       () {},
-                              //       Icons.add,
-                              //       whiteColor,
-                              //       false,
-                              //       1.3,
-                              //       'Raleway',
-                              //       FontWeight.w600,
-                              //       16),
-                              // ),
                             ],
                           ),
                         )),
@@ -804,8 +752,8 @@ class _EditMyServiceState extends State<EditMyService> {
         'customer_id': widget.gm.providerId.toString(),
         "activities": selectedActivityIncludesId,
       };
-    } else if (type == "costInc") {
-      widget.gm.des = desriptionController.text;
+    } else if (type == "description") {
+      widget.gm.writeInformation = desriptionController.text;
       b = {
         'service_id': widget.gm.id.toString(),
         'customer_id': widget.gm.providerId.toString(),
