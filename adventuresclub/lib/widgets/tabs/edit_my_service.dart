@@ -302,7 +302,7 @@ class _EditMyServiceState extends State<EditMyService> {
 
   void addActivites(String type, String title) {
     dataList.clear();
-    if (type != "activities" || type != "audience") {
+    if (type != "activities" && type != "audience") {
       dataListBool.clear();
     }
 
@@ -485,35 +485,19 @@ class _EditMyServiceState extends State<EditMyService> {
                                         selected: dataListBool[index],
                                         value: dataListBool[index],
                                         onChanged: (value) {
-                                          if (type != "activities" ||
-                                              type != "audience") {
+                                          if (type == "activities" ||
+                                              type == "audience") {
+                                            setState(() {
+                                              dataListBool[index] =
+                                                  !dataListBool[index];
+                                            });
+                                          } else {
                                             setState(() {
                                               for (int i = 0;
                                                   i < dataListBool.length;
                                                   i++) {
                                                 dataListBool[i] = (i == index);
                                               }
-                                              // for (int j = 0;
-                                              //     j < dataListBool.length;
-                                              //     j++) {
-                                              //   if (i == dataListBool[i]) {
-                                              //     dataListBool[i] = true;
-                                              //   } else {
-                                              //     dataListBool[j] = false;
-                                              //   }
-                                              // }
-                                              //   // if (dataListBool[i]) {
-                                              //   // } else {
-                                              //   //   dataListBool[i] = false;
-                                              //   // }
-                                              // }
-
-                                              //removeId(activitiesFilter[i].id);
-                                            });
-                                          } else {
-                                            setState(() {
-                                              dataListBool[index] =
-                                                  !dataListBool[index];
                                             });
                                           }
                                         },
