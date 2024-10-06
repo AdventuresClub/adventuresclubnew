@@ -33,6 +33,9 @@ class _EditMyServiceState extends State<EditMyService> {
   TextEditingController costInc = TextEditingController();
   TextEditingController costExl = TextEditingController();
   TextEditingController desriptionController = TextEditingController();
+  TextEditingController preRequisitesController = TextEditingController();
+  TextEditingController minimumRequirements = TextEditingController();
+  TextEditingController terms = TextEditingController();
   List<String> categoryList = [];
   List<SectorFilterModel> filterSectors = [];
   List<CategoryFilterModel> categoryFilter = [];
@@ -159,8 +162,20 @@ class _EditMyServiceState extends State<EditMyService> {
       max = 1;
     } else if (type == "description") {
       desriptionController = controller;
-      title = "Description";
+      title = widget.gm.writeInformation;
       hint = "Description";
+    } else if (type == "prerequisites") {
+      preRequisitesController = controller;
+      title = widget.gm.preRequisites;
+      hint = "Pre-Requisites";
+    } else if (type == "minimumRequirements") {
+      minimumRequirements = controller;
+      title = widget.gm.mRequirements;
+      hint = "minimumRequirements";
+    } else if (type == "terms") {
+      terms = controller;
+      title = widget.gm.tnc;
+      hint = "termsNConditions";
     }
     showDialog(
         context: context,
@@ -302,10 +317,9 @@ class _EditMyServiceState extends State<EditMyService> {
 
   void addActivites(String type, String title) {
     dataList.clear();
-    if (type != "activities" && type != "audience") {
+    if (type != "activities" && type != "audience" && type != "dependency") {
       dataListBool.clear();
     }
-
     if (type == "sector") {
       for (var element in filterSectors) {
         dataList.add(DisplayDataModel(
@@ -381,32 +395,63 @@ class _EditMyServiceState extends State<EditMyService> {
         );
       }
     } else if (type == "audience") {
-      for (var element in aimedFilter) {
-        // dataListBool = List.filled(aimedFilter.length, false);
-        dataList.add(DisplayDataModel(
-            id: element.id.toString(),
-            image: element.image,
-            title: element.aimedName));
-        for (var e in widget.gm.am) {
-          if (e.aimedName == element.aimedName) {
-            dataListBool.add(true);
-          } else {
-            dataListBool.add(false);
+      dataListBool = List.filled(aimedFilter.length, false);
+      for (int j = 0; j < aimedFilter.length; j++) {
+        for (int i = 0; i < widget.gm.am.length; i++) {
+          if (aimedFilter[j].aimedName == widget.gm.am[i].aimedName) {
+            dataListBool[j] = true;
           }
         }
+        dataList.add(
+          DisplayDataModel(
+              id: aimedFilter[j].id.toString(),
+              image: aimedFilter[j].image,
+              title: aimedFilter[j].aimedName),
+        );
       }
+      // dataList.add(DisplayDataModel(
+      //     id: element.id.toString(),
+      //     image: element.image,
+      //     title: element.aimedName));
+      // for (var e in widget.gm.am) {
+      //   if (e.aimedName == element.aimedName) {
+      //     dataListBool.add(true);
+      //   } else {
+      //     dataListBool.add(false);
+      //   }
+      // }
     } else if (type == "dependency") {
-      for (var element in dependencyList) {
-        dataList.add(DisplayDataModel(
-            id: element.id.toString(), image: "", title: element.dName));
-        for (var e in widget.gm.dependency) {
-          if (e.dName == element.dName) {
-            dataListBool.add(true);
-          } else {
-            dataListBool.add(false);
+      dataListBool = List.filled(dependencyList.length, false);
+      for (int j = 0; j < dependencyList.length; j++) {
+        for (int i = 0; i < widget.gm.dependency.length; i++) {
+          if (dependencyList[j].dName == widget.gm.dependency[i].dName) {
+            dataListBool[j] = true;
           }
         }
+        dataList.add(
+          DisplayDataModel(
+              id: dependencyList[j].id.toString(),
+              image: "",
+              title: dependencyList[j].dName),
+        );
       }
+      // for (var element in dependencyList) {
+      //   dataListBool = List.filled(dependencyList.length, false);
+      //   dataList.add(DisplayDataModel(
+      //       id: element.id.toString(), image: "", title: element.dName));
+      //   if (widget.gm.dependency.contains(element)) {
+      //     dataListBool.add(true);
+      //   } else {
+      //     dataListBool.add(false);
+      //   }
+      //   // for (var e in widget.gm.dependency) {
+      //   //   if (e.dName == element.dName) {
+      //   //     dataListBool.add(true);
+      //   //   } else {
+      //   //     dataListBool.add(false);
+      //   //   }
+      //   // }
+      // }
     } else if (type == "duration") {
       for (var element in durationFilter) {
         dataList.add(DisplayDataModel(
@@ -486,7 +531,8 @@ class _EditMyServiceState extends State<EditMyService> {
                                         value: dataListBool[index],
                                         onChanged: (value) {
                                           if (type == "activities" ||
-                                              type == "audience") {
+                                              type == "audience" ||
+                                              type == "dependency") {
                                             setState(() {
                                               dataListBool[index] =
                                                   !dataListBool[index];
@@ -718,16 +764,12 @@ class _EditMyServiceState extends State<EditMyService> {
           selectedActivitesid.add(
             activitiesFilter[i].id,
           );
-          //if (activity.contains(activitiesFilter[i])) {
-          //} else {
-
           widget.gm.activityIncludes.add(IncludedActivitiesModel(
               activitiesFilter[i].id,
               0,
               "",
               activitiesFilter[i].activity,
               activitiesFilter[i].image));
-          //}
         }
       }
       selectedActivityIncludesId = selectedActivitesid.join(",");
@@ -742,6 +784,59 @@ class _EditMyServiceState extends State<EditMyService> {
         'service_id': widget.gm.id.toString(),
         'customer_id': widget.gm.providerId.toString(),
         "write_information": desriptionController.text,
+      };
+    } else if (type == "audience") {
+      List<int> selectedAimedForList = [];
+      String aimedId = "";
+      widget.gm.am.clear();
+      for (int i = 0; i < aimedFilter.length; i++) {
+        if (dataListBool[i]) {
+          selectedAimedForList.add(aimedFilter[i].id);
+        }
+        widget.gm.am.add(aimedFilter[i]);
+      }
+      aimedId = selectedAimedForList.join(",");
+      b = {
+        'service_id': widget.gm.id.toString(),
+        'customer_id': widget.gm.providerId.toString(),
+        "service_for": aimedId,
+      };
+    } else if (type == "dependency") {
+      List<int> selectedDependencyList = [];
+      String dependencyId = "";
+      widget.gm.dependency.clear();
+      for (int i = 0; i < dependencyList.length; i++) {
+        if (dataListBool[i]) {
+          selectedDependencyList.add(dependencyList[i].id);
+        }
+        widget.gm.dependency.add(dependencyList[i]);
+      }
+      dependencyId = selectedDependencyList.join(",");
+      b = {
+        'service_id': widget.gm.id.toString(),
+        'customer_id': widget.gm.providerId.toString(),
+        "dependency": dependencyId,
+      };
+    } else if (type == "prerequisites") {
+      widget.gm.preRequisites = preRequisitesController.text.trim();
+      b = {
+        'service_id': widget.gm.id.toString(),
+        'customer_id': widget.gm.providerId.toString(),
+        "pre_requisites": preRequisitesController.text.trim(), //
+      };
+    } else if (type == "minimumRequirements") {
+      widget.gm.mRequirements = minimumRequirements.text.trim();
+      b = {
+        'service_id': widget.gm.id.toString(),
+        'customer_id': widget.gm.providerId.toString(),
+        "minimum_requirements": minimumRequirements.text.trim(), //
+      };
+    } else if (type == "terms") {
+      widget.gm.tnc = terms.text.trim();
+      b = {
+        'service_id': widget.gm.id.toString(),
+        'customer_id': widget.gm.providerId.toString(),
+        "terms_conditions": terms.text.trim(), //
       };
     }
     // debugPrint(b);
@@ -1680,10 +1775,65 @@ class _EditMyServiceState extends State<EditMyService> {
                       thickness: 1,
                       color: blackColor.withOpacity(0.2),
                     ),
-                    ServicesPlans(widget.gm.sPlan, widget.gm.programmes),
+                    Row(
+                      children: [
+                        MyText(
+                          text: "prerequisites",
+                          color: bluishColor,
+                          size: 18,
+                          weight: FontWeight.bold,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        IconButton(
+                          onPressed: () => typeData("prerequisites"),
+                          icon: const Icon(Icons.edit),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    MyText(
+                      text: widget.gm.preRequisites,
+                      color: blackColor,
+                      //weight: FontWeight.w500,
+                      size: 14,
+                    ),
+                    // ServicesPlans(widget.gm.sPlan, widget.gm.programmes),
                     Divider(
                       thickness: 1,
                       color: blackColor.withOpacity(0.2),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        MyText(
+                          text: "minimumRequirements",
+                          color: bluishColor,
+                          size: 18,
+                          weight: FontWeight.bold,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        IconButton(
+                          onPressed: () => typeData("minimumRequirements"),
+                          icon: const Icon(Icons.edit),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    MyText(
+                      text: widget.gm.mRequirements,
+                      color: blackColor,
+                      //weight: FontWeight.w500,
+                      size: 14,
                     ),
                   ],
                 ),
