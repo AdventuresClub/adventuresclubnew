@@ -1835,6 +1835,45 @@ class _EditMyServiceState extends State<EditMyService> {
                       //weight: FontWeight.w500,
                       size: 14,
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Divider(
+                      thickness: 1,
+                      color: blackColor.withOpacity(0.2),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        MyText(
+                          text: "termsAndConditions",
+                          color: bluishColor,
+                          size: 18,
+                          weight: FontWeight.bold,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        IconButton(
+                          onPressed: () => typeData("terms"),
+                          icon: const Icon(Icons.edit),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    MyText(
+                      text: widget.gm.tnc,
+                      color: blackColor,
+                      //weight: FontWeight.w500,
+                      size: 14,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
                   ],
                 ),
               ),
