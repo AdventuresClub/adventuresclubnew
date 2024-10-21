@@ -1,4 +1,5 @@
 // ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls, prefer_typing_uninitialized_variables, unused_local_variable
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:adventuresclub/become_a_partner/create_services/create_plan_one.dart';
@@ -130,6 +131,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   List<int> activitiesId = [];
   double lat = 0;
   double lng = 0;
+  Map mapFilter = {};
 
   @override
   void initState() {
@@ -1061,6 +1063,33 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     activitiesId = aId;
   }
 
+  void saveDraft() async {
+    try {
+      var response = await http.post(
+          Uri.parse("${Constants.baseUrl}/api/v1/create_service_advanced"),
+          body: {
+            "provider_id": Constants.profile.bp.id.toString(),
+            "adventure_name": adventureName.text,
+            "country_id": Constants.countryId.toString(),
+            //"banner":  --------------- file
+          });
+      if (response.statusCode == 200) {
+        mapFilter = json.decode(response.body);
+        dynamic result = mapFilter['data'];
+        // result.forEach((element) {
+        //   setState(() {
+      } else {
+        dynamic body = jsonDecode(response.body);
+        message(body['message'].toString());
+      }
+      print(response.statusCode);
+      print(response.body);
+      print(response.headers);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -1208,12 +1237,13 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                 IndexedStack(
                   index: count,
                   children: [
-                    BannerPage(getImages),
-
+                    BannerPage(
+                      getImages,
+                      adventureName,
+                    ),
                     CreateServicesDescription(
                       getActivityIds: getActivityId,
                       tapped: getIds,
-                      adventureName: adventureName,
                       available: availableSeatsController,
                       info: infoController,
                       aimedFor: Wrap(

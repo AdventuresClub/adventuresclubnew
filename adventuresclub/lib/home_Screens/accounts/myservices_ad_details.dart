@@ -100,9 +100,15 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
   }
 
   void navEdit() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return EditMyService(gm: widget.sm);
-    }));
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return EditMyService(
+            gm: widget.sm,
+          );
+        },
+      ),
+    );
   }
 
   void deleteService(String id) async {

@@ -363,14 +363,21 @@ class _MyServicesState extends State<MyServices> {
     }
   }
 
-  void goToDetails(ServicesModel gm) {
-    Navigator.of(context).push(
+  void refreshServices() {
+    myServicesApi();
+  }
+
+  void goToDetails(ServicesModel gm) async {
+    await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return MyServicesAdDetails(gm);
+          return MyServicesAdDetails(
+            gm,
+          );
         },
       ),
     );
+    myServicesApi();
   }
 
   @override

@@ -23,7 +23,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CreateServicesDescription extends StatefulWidget {
-  final TextEditingController adventureName;
   final TextEditingController available;
   final TextEditingController info;
   final Widget aimedFor;
@@ -33,8 +32,7 @@ class CreateServicesDescription extends StatefulWidget {
   final Function tapped;
   final Function getActivityIds;
   const CreateServicesDescription(
-      {required this.adventureName,
-      required this.available,
+      {required this.available,
       required this.info,
       required this.aimedFor,
       required this.daysBeforeActController,
@@ -336,15 +334,15 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-              TFWithSize(
-                'adventureName',
-                widget.adventureName,
-                12,
-                lightGreyColor,
-                1,
-                minimumLetters: 3,
-                maximumLetters: 50,
-              ),
+              // TFWithSize(
+              //   'adventureName',
+              //   widget.adventureName,
+              //   12,
+              //   lightGreyColor,
+              //   1,
+              //   minimumLetters: 3,
+              //   maximumLetters: 50,
+              // ),
               const SizedBox(height: 5),
               MultiLineField(
                 'typeInformation',

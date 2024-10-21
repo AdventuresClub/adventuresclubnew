@@ -1,17 +1,21 @@
 // ignore_for_file: unnecessary_null_comparison, avoid_function_literals_in_foreach_calls
 
+import 'dart:convert';
 import 'dart:io';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 class BannerPage extends StatefulWidget {
+  final TextEditingController adventureName;
   final Function sendImages;
-  const BannerPage(this.sendImages, {super.key});
+  const BannerPage(this.sendImages, this.adventureName, {super.key});
 
   @override
   State<BannerPage> createState() => _BannerPageState();
@@ -153,6 +157,10 @@ class _BannerPageState extends State<BannerPage> {
     );
   }
 
+  //https://adventuresclub.net/adventureClubSIT/api/v1/create_service_advanced
+
+  //https://adventuresclub.net/adventureClubSIT/api/v1/create_service_advanced
+
   void deleteImage(int i) {
     imageBanners.removeAt(i);
     imageList.removeAt(i);
@@ -165,33 +173,46 @@ class _BannerPageState extends State<BannerPage> {
         ? Text("loading".tr())
         : Column(
             children: [
-              GestureDetector(
-                onTap: addImageWidget,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    const Image(
-                        image: ExactAssetImage('images/add-circle.png'),
-                        height: 20),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    MyText(
-                      text: 'addMore'.tr(),
-                      color: bluishColor,
-                    )
-                  ],
-                ),
-              ),
               Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Column(
                     children: [
+                      TFWithSize(
+                        'adventureName',
+                        widget.adventureName,
+                        12,
+                        lightGreyColor,
+                        1,
+                        minimumLetters: 3,
+                        maximumLetters: 50,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      GestureDetector(
+                        onTap: addImageWidget,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            const Image(
+                                image: ExactAssetImage('images/add-circle.png'),
+                                height: 20),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            MyText(
+                              text: 'addMore'.tr(),
+                              color: bluishColor,
+                            )
+                          ],
+                        ),
+                      ),
                       for (int y = 0; y < imageBanners.length; y++)
                         //ImageContainer(imageBanners[y], addMedia, y),
                         imageBanners[y].path.isEmpty
                             ? Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
                                 child: Container(
                                   padding: const EdgeInsets.all(20),
                                   decoration: BoxDecoration(

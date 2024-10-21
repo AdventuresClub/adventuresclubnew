@@ -15,7 +15,6 @@ import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/loading_widget.dart';
 import 'package:adventuresclub/widgets/my_service_banner_container.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
-import 'package:adventuresclub/widgets/tabs/details_tabs/service_program/service_plans.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -792,8 +791,8 @@ class _EditMyServiceState extends State<EditMyService> {
       for (int i = 0; i < aimedFilter.length; i++) {
         if (dataListBool[i]) {
           selectedAimedForList.add(aimedFilter[i].id);
+          widget.gm.am.add(aimedFilter[i]);
         }
-        widget.gm.am.add(aimedFilter[i]);
       }
       aimedId = selectedAimedForList.join(",");
       b = {
@@ -808,8 +807,8 @@ class _EditMyServiceState extends State<EditMyService> {
       for (int i = 0; i < dependencyList.length; i++) {
         if (dataListBool[i]) {
           selectedDependencyList.add(dependencyList[i].id);
+          widget.gm.dependency.add(dependencyList[i]);
         }
-        widget.gm.dependency.add(dependencyList[i]);
       }
       dependencyId = selectedDependencyList.join(",");
       b = {
@@ -1078,10 +1077,25 @@ class _EditMyServiceState extends State<EditMyService> {
     print(currentDate);
   }
 
+  void cancel() {
+    Navigator.of(context).popUntil((route) => route.isFirst);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: whiteColor,
+        elevation: 1.5,
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: cancel,
+          icon: Image.asset(
+            'images/backArrow.png',
+            height: 18,
+          ),
+        ),
+      ),
       body: loading
           ? const LoadingWidget()
           : Padding(
