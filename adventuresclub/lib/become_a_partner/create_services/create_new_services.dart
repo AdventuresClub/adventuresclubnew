@@ -1063,7 +1063,11 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     activitiesId = aId;
   }
 
-  void saveDraft() async {
+  void saveDraft1() async {
+    List<Uint8List> banners = [];
+    imageList.forEach((element) {
+      banners.add(element.readAsBytesSync());
+    });
     try {
       var response = await http.post(
           Uri.parse("${Constants.baseUrl}/api/v1/create_service_advanced"),
@@ -1084,6 +1088,37 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       }
       print(response.statusCode);
       print(response.body);
+      print(response.headers);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  void saveDraft() async {
+    List<Uint8List> banners = [];
+    imageList.forEach((element) {
+      banners.add(element.readAsBytesSync());
+    });
+    try {
+      var request = http.MultipartRequest(
+        "POST",
+        Uri.parse("${Constants.baseUrl}/api/v1/create_service_advanced"),
+      );
+      banners.forEach((element) {
+        String fileName =
+            "${DateTime.now().millisecondsSinceEpoch.toString()}.png";
+        request.files.add(http.MultipartFile.fromBytes('banner[]', element,
+            filename: fileName));
+      });
+      dynamic programData = {
+        "provider_id": Constants.profile.bp.id.toString(),
+        "adventure_name": adventureName.text,
+        "country_id": Constants.countryId.toString(),
+      };
+      request.fields.addAll(programData);
+      final response = await request.send();
+      log(response.toString());
+      debugPrint(response.statusCode.toString());
       print(response.headers);
     } catch (e) {
       print(e.toString());
