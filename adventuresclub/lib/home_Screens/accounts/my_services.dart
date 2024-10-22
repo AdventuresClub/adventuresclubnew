@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'package:adventuresclub/become_a_partner/create_services/create_new_services.dart';
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/home_Screens/accounts/my_drafts.dart';
 import 'package:adventuresclub/home_Screens/accounts/myservices_ad_details.dart';
 import 'package:adventuresclub/models/filter_data_model/programs_model.dart';
 import 'package:adventuresclub/models/home_services/become_partner.dart';
@@ -48,7 +49,6 @@ class _MyServicesState extends State<MyServices> {
   void initState() {
     super.initState();
     myServicesApi();
-    getDrafts();
   }
 
   @override
@@ -156,22 +156,6 @@ class _MyServicesState extends State<MyServices> {
   }
 
   // https://adventuresclub.net/adventureClubSIT/api/v1/get_draft_service
-
-  Future<void> getDrafts() async {
-    try {
-      var response = await http.post(
-          Uri.parse("${Constants.baseUrl}/api/v1/get_draft_service"),
-          body: {
-            "provider_id": Constants.userId
-                .toString(), //Constants.profile.bp.id.toString(),
-            "country_id": Constants.countryId.toString(),
-          });
-      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-      List<dynamic> result = decodedResponse['data'];
-    } catch (e) {
-      Constants.showMessage(context, e.toString());
-    }
-  }
 
   Future<void> myServicesApi() async {
     getNotificatioNumber();
@@ -399,6 +383,12 @@ class _MyServicesState extends State<MyServices> {
     myServicesApi();
   }
 
+  void navDraft() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return const MyDrafts();
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -425,6 +415,19 @@ class _MyServicesState extends State<MyServices> {
             fontFamily: "Roboto",
           ),
           actions: [
+            GestureDetector(
+              onTap: goTo,
+              child: IconButton(
+                onPressed: navDraft,
+                icon: const Icon(
+                  Icons.drafts_outlined,
+                  size: 24,
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 5,
+            ),
             GestureDetector(
                 onTap: goTo,
                 child: const Image(
