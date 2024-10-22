@@ -507,6 +507,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       setState(() {
         count = 1;
       });
+      saveDraft();
     } else if (imageList.isEmpty) {
       message("Images cannot be empty");
     } else if (count == 1) {

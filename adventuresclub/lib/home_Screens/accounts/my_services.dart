@@ -48,6 +48,7 @@ class _MyServicesState extends State<MyServices> {
   void initState() {
     super.initState();
     myServicesApi();
+    getDrafts();
   }
 
   @override
@@ -152,6 +153,23 @@ class _MyServicesState extends State<MyServices> {
   void getNotificatioNumber() {
     Provider.of<NavigationIndexProvider>(context, listen: false)
         .getNotificationBadge();
+  }
+
+  // https://adventuresclub.net/adventureClubSIT/api/v1/get_draft_service
+
+  Future<void> getDrafts() async {
+    try {
+      var response = await http.post(
+          Uri.parse("${Constants.baseUrl}/api/v1/get_draft_service"),
+          body: {
+            "provider_id": Constants.profile.bp.id.toString(),
+            "country_id": Constants.countryId.toString(),
+          });
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      List<dynamic> result = decodedResponse['data'];
+    } catch (e) {
+      Constants.showMessage(context, e.toString());
+    }
   }
 
   Future<void> myServicesApi() async {
