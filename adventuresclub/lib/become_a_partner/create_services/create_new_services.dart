@@ -1112,7 +1112,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
             filename: fileName));
       });
       dynamic programData = {
-        "provider_id": Constants.profile.bp.id.toString(),
+        "provider_id": Constants.userId.toString(),
         "adventure_name": adventureName.text,
         "country_id": Constants.countryId.toString(),
       };

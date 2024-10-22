@@ -162,7 +162,8 @@ class _MyServicesState extends State<MyServices> {
       var response = await http.post(
           Uri.parse("${Constants.baseUrl}/api/v1/get_draft_service"),
           body: {
-            "provider_id": Constants.profile.bp.id.toString(),
+            "provider_id": Constants.userId
+                .toString(), //Constants.profile.bp.id.toString(),
             "country_id": Constants.countryId.toString(),
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
