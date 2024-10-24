@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/home_Screens/accounts/myservices_ad_details.dart';
 import 'package:adventuresclub/models/filter_data_model/programs_model.dart';
 import 'package:adventuresclub/models/home_services/become_partner.dart';
 import 'package:adventuresclub/models/home_services/home_services_model.dart';
@@ -25,10 +26,8 @@ class MyDrafts extends StatefulWidget {
 class _MyDraftsState extends State<MyDrafts> {
   bool loading = false;
   List<BecomePartner> nBp = [];
-  List<ServicesModel> allServices = [];
-  List<ServicesModel> filteredServices = [];
-  List<ServicesModel> allAccomodation = [];
-  List<ServicesModel> gAccomodationSModel = [];
+  List<ServicesModel> allDraftServices = [];
+  List<ServicesModel> filteredDraftServices = [];
 
   @override
   void initState() {
@@ -229,10 +228,8 @@ class _MyDraftsState extends State<MyDrafts> {
               int.tryParse(element['remaining_seats'].toString()) ?? 0,
         );
         //gAccomodationSModel.add(nSm);
-        allServices.add(nSm);
-        allAccomodation.add(nSm);
-        HomeServicesModel adv = HomeServicesModel("", gAccomodationSModel);
-        filteredServices = allServices;
+        allDraftServices.add(nSm);
+        filteredDraftServices = allDraftServices;
       }));
     } catch (e) {
       if (mounted) {
@@ -245,34 +242,53 @@ class _MyDraftsState extends State<MyDrafts> {
     }
   }
 
+  void goToDetails(ServicesModel gm) async {
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return MyServicesAdDetails(
+            gm,
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(),
-        body: loading
+    return
+        // Scaffold(
+        //     appBar: AppBar(
+        //       centerTitle: true,
+        //       title: const Text("Draft"),
+        //     ),
+        //     body:
+        loading
             ? const LoadingWidget()
-            : filteredServices.isEmpty
-                ? const Center(
-                    child: Text("No Services Created Yet",
-                        style: TextStyle(fontWeight: FontWeight.w600)),
-                  )
-                : Padding(
-                    padding: const EdgeInsets.only(
-                        top: 12.0, bottom: 12, left: 16, right: 16),
-                    child: ListView.builder(
-                        itemCount: filteredServices.length,
-                        scrollDirection: Axis.vertical,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                              // onTap: () => goToDetails(filteredServices[index]),
-                              child: SizedBox(
-                                  height: 310,
-                                  child: ServicesCard(
-                                    show: true,
-                                    filteredServices[index],
-                                    providerShow: false,
-                                  )));
-                        }),
-                  ));
+            // : filteredServices.isEmpty
+            //     ? const Center(
+            //         child: Text("No Services Created Yet",
+            //             style: TextStyle(fontWeight: FontWeight.w600)),
+            //       )
+            : Padding(
+                padding: const EdgeInsets.only(
+                    top: 12.0, bottom: 12, left: 16, right: 16),
+                child: ListView.builder(
+                  itemCount: filteredDraftServices.length,
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                        onTap: () => goToDetails(filteredDraftServices[index]),
+                        child: SizedBox(
+                            height: 310,
+                            child: ServicesCard(
+                              show: true,
+                              filteredDraftServices[index],
+                              providerShow: false,
+                            )));
+                  },
+                ),
+              );
+    //);
   }
 }

@@ -510,46 +510,57 @@ class _MyServicesState extends State<MyServices> {
                 child: Text("No Services Created Yet",
                     style: TextStyle(fontWeight: FontWeight.w600)),
               )
-            : RefreshIndicator(
-                onRefresh: myServicesApi,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 12.0, bottom: 12, left: 16, right: 16),
-                  child: ListView.builder(
-                      itemCount: filteredServices.length,
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                            onTap: () => goToDetails(filteredServices[index]),
-                            child: SizedBox(
-                                height: 310,
-                                child: ServicesCard(
-                                  show: true,
-                                  filteredServices[index],
-                                  providerShow: false,
-                                )));
-                      }),
-                  // GridView.count(
-                  //   physics: const AlwaysScrollableScrollPhysics(),
-                  //   shrinkWrap: true,
-                  //   mainAxisSpacing: 2,
-                  //   childAspectRatio: 1,
-                  //   crossAxisSpacing: 2,
-                  //   crossAxisCount: 2,
-                  //   children: List.generate(
-                  //     filteredServices.length, // widget.profileURL.length,
-                  //     (index) {
-                  //       return GestureDetector(
-                  //         onTap: () => goToDetails(filteredServices[index]),
-                  //         child: ServicesCard(
-                  //           filteredServices[index],
-                  //           show: true,
-                  //         ),
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
-                ),
+            : Column(
+                children: [
+                  const Expanded(child: MyDrafts()),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Expanded(
+                    child: RefreshIndicator(
+                      onRefresh: myServicesApi,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 12.0, bottom: 12, left: 16, right: 16),
+                        child: ListView.builder(
+                            itemCount: filteredServices.length,
+                            scrollDirection: Axis.vertical,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                  onTap: () =>
+                                      goToDetails(filteredServices[index]),
+                                  child: SizedBox(
+                                      height: 310,
+                                      child: ServicesCard(
+                                        show: true,
+                                        filteredServices[index],
+                                        providerShow: false,
+                                      )));
+                            }),
+                        // GridView.count(
+                        //   physics: const AlwaysScrollableScrollPhysics(),
+                        //   shrinkWrap: true,
+                        //   mainAxisSpacing: 2,
+                        //   childAspectRatio: 1,
+                        //   crossAxisSpacing: 2,
+                        //   crossAxisCount: 2,
+                        //   children: List.generate(
+                        //     filteredServices.length, // widget.profileURL.length,
+                        //     (index) {
+                        //       return GestureDetector(
+                        //         onTap: () => goToDetails(filteredServices[index]),
+                        //         child: ServicesCard(
+                        //           filteredServices[index],
+                        //           show: true,
+                        //         ),
+                        //       );
+                        //     },
+                        //   ),
+                        // ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
       ),
     );
