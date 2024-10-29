@@ -1,9 +1,10 @@
 import 'dart:convert';
+import 'package:adventuresclub/become_a_partner/create_services/create_draft_services.dart';
+import 'package:adventuresclub/become_a_partner/create_services/create_new_services.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/myservices_ad_details.dart';
 import 'package:adventuresclub/models/filter_data_model/programs_model.dart';
 import 'package:adventuresclub/models/home_services/become_partner.dart';
-import 'package:adventuresclub/models/home_services/home_services_model.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
 import 'package:adventuresclub/models/services/availability_model.dart';
@@ -17,7 +18,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class MyDrafts extends StatefulWidget {
-  const MyDrafts({super.key});
+  final List<ServicesModel> filteredDraftServices;
+  const MyDrafts({required this.filteredDraftServices, super.key});
 
   @override
   State<MyDrafts> createState() => _MyDraftsState();
@@ -25,20 +27,23 @@ class MyDrafts extends StatefulWidget {
 
 class _MyDraftsState extends State<MyDrafts> {
   bool loading = false;
-  List<BecomePartner> nBp = [];
+  List<BecomePartner> nBpDraft = [];
   List<ServicesModel> allDraftServices = [];
   List<ServicesModel> filteredDraftServices = [];
 
   @override
   void initState() {
     super.initState();
-    getDrafts();
+    filteredDraftServices = widget.filteredDraftServices;
+    // getDrafts();
   }
 
   Future<void> getDrafts() async {
     setState(() {
       loading = true;
     });
+    filteredDraftServices.clear();
+    allDraftServices.clear();
     try {
       var response = await http.post(
           Uri.parse("${Constants.baseUrl}/api/v1/get_draft_service"),
@@ -215,7 +220,7 @@ class _MyDraftsState extends State<MyDrafts> {
           eaot: element['excluding_gerea_and_other_taxes'] ?? "",
           activityIncludes: gIAm,
           dependency: gdM,
-          bp: nBp,
+          bp: nBpDraft,
           am: gAccomodationAimedfm,
           programmes: gPm,
           stars: element['stars'].toString() ?? "",
@@ -242,16 +247,28 @@ class _MyDraftsState extends State<MyDrafts> {
     }
   }
 
-  void goToDetails(ServicesModel gm) async {
-    await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return MyServicesAdDetails(
-            gm,
-          );
-        },
-      ),
-    );
+  void goToDetails(ServicesModel gm, String type) async {
+    if (type == "info") {
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) {
+            return MyServicesAdDetails(
+              gm,
+            );
+          },
+        ),
+      );
+    } else {
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) {
+            return CreateDraftServices(
+              draftService: gm,
+            );
+          },
+        ),
+      );
+    }
   }
 
   @override
@@ -272,16 +289,18 @@ class _MyDraftsState extends State<MyDrafts> {
             //       )
             : Padding(
                 padding: const EdgeInsets.only(
-                    top: 12.0, bottom: 12, left: 16, right: 16),
+                    top: 0.0, bottom: 0, left: 16, right: 16),
                 child: ListView.builder(
                   itemCount: filteredDraftServices.length,
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                        onTap: () => goToDetails(filteredDraftServices[index]),
+                        onTap: () =>
+                            goToDetails(filteredDraftServices[index], "draft"),
                         child: SizedBox(
-                            height: 310,
+                            height: 330,
                             child: ServicesCard(
+                              draft: true,
                               show: true,
                               filteredDraftServices[index],
                               providerShow: false,

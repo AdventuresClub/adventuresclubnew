@@ -12,8 +12,12 @@ class ServicesCard extends StatefulWidget {
   final ServicesModel gm;
   final bool show;
   final bool? providerShow;
+  final bool? draft;
   const ServicesCard(this.gm,
-      {this.show = false, this.providerShow = true, super.key});
+      {this.show = false,
+      this.providerShow = true,
+      this.draft = false,
+      super.key});
 
   @override
   State<ServicesCard> createState() => _ServicesCardState();
@@ -164,29 +168,53 @@ class _ServicesCardState extends State<ServicesCard> {
                             const SizedBox(
                               height: 5,
                             ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.pin_drop_sharp,
-                                  size: 18,
-                                  color: greyBackgroundColor.withOpacity(0.6),
-                                ),
-                                const SizedBox(
-                                  width: 2,
-                                ),
-                                Expanded(
-                                  child: MyText(
-                                    text: widget.gm.sAddress.tr(),
-                                    maxLines: 1,
-                                    color: blackColor,
-                                    size: 14,
-                                    weight: FontWeight.w500,
-                                    fontFamily: 'Raleway',
-                                    height: 1.3,
+                            widget.draft!
+                                ? Row(
+                                    children: [
+                                      Icon(
+                                        Icons.drafts_sharp,
+                                        size: 18,
+                                        color: greyBackgroundColor
+                                            .withOpacity(0.6),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      MyText(
+                                        text: "Draft",
+                                        maxLines: 1,
+                                        color: blackColor,
+                                        size: 16,
+                                        weight: FontWeight.bold,
+                                        fontFamily: 'Raleway',
+                                        height: 1.3,
+                                      ),
+                                    ],
+                                  )
+                                : Row(
+                                    children: [
+                                      Icon(
+                                        Icons.pin_drop_sharp,
+                                        size: 18,
+                                        color: greyBackgroundColor
+                                            .withOpacity(0.6),
+                                      ),
+                                      const SizedBox(
+                                        width: 2,
+                                      ),
+                                      Expanded(
+                                        child: MyText(
+                                          text: widget.gm.sAddress.tr(),
+                                          maxLines: 1,
+                                          color: blackColor,
+                                          size: 14,
+                                          weight: FontWeight.w500,
+                                          fontFamily: 'Raleway',
+                                          height: 1.3,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
                             const SizedBox(
                               height: 2,
                             ),

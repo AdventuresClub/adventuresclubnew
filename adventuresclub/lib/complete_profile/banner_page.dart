@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/provider/complete_profile_provider/complete_profile_provider.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
@@ -15,7 +16,9 @@ import 'package:http/http.dart' as http;
 class BannerPage extends StatefulWidget {
   final TextEditingController adventureName;
   final Function sendImages;
-  const BannerPage(this.sendImages, this.adventureName, {super.key});
+  final ServicesModel? draft;
+  const BannerPage(this.sendImages, this.adventureName, this.draft,
+      {super.key});
 
   @override
   State<BannerPage> createState() => _BannerPageState();
@@ -28,6 +31,25 @@ class _BannerPageState extends State<BannerPage> {
   final picker = ImagePicker();
   List<File> imageList = [];
   List<File> imageBanners = [File(""), File("")];
+  List<String> imageString = [];
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.draft != null) {
+      convert();
+    }
+  }
+
+  void convert() async {
+    for (var element in widget.draft!.images) {
+      // final text = element.imageUrl;
+      // final file = File('output.txt');
+      // await file.writeAsString(text);
+      // imageBanners.add(file);
+      imageString.add(element.imageUrl);
+    }
+  }
 
   // void addMedia(int i) async {
   //   showDialog(
@@ -207,120 +229,238 @@ class _BannerPageState extends State<BannerPage> {
                           ],
                         ),
                       ),
-                      for (int y = 0; y < imageBanners.length; y++)
-                        //ImageContainer(imageBanners[y], addMedia, y),
-                        imageBanners[y].path.isEmpty
-                            ? Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8.0),
-                                child: Container(
-                                  padding: const EdgeInsets.all(20),
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color:
-                                              blackTypeColor.withOpacity(0.2)),
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: lightGreyColor),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                      if (widget.draft != null)
+                        for (int y = 0; y < imageString.length; y++)
+                          imageString[y].isEmpty
+                              ? Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8.0),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(20),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: blackTypeColor
+                                                .withOpacity(0.2)),
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: lightGreyColor),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const SizedBox(height: 20),
+                                        GestureDetector(
+                                          onTap: () => pickMedia(y),
+                                          child: const Center(
+                                            child: Image(
+                                              image: ExactAssetImage(
+                                                  'images/upload.png'),
+                                              height: 45,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        MyText(
+                                          text: 'tapToBrowse'.tr(),
+                                          color: greyColor,
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        MyText(
+                                          text:
+                                              'addBannerImageToEffectivelyAdventure'
+                                                  .tr(),
+                                          color: greyColor,
+                                          align: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              : Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Stack(
                                     children: [
-                                      const SizedBox(height: 20),
-                                      GestureDetector(
-                                        onTap: () => pickMedia(y),
-                                        child: const Center(
-                                          child: Image(
-                                            image: ExactAssetImage(
-                                                'images/upload.png'),
-                                            height: 45,
+                                      Container(
+                                        padding: const EdgeInsets.all(20),
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: blackTypeColor
+                                                    .withOpacity(0.2)),
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            color: lightGreyColor),
+                                        child: Center(
+                                          child: Image.network(
+                                            "${"${Constants.baseUrl}/public/uploads/"}${imageString[y]}",
+                                            // imageString[y],
+                                            fit: BoxFit.fill,
+                                            height: 150,
+                                            width: 300,
                                           ),
                                         ),
                                       ),
-                                      const SizedBox(
-                                        height: 20,
+                                      Positioned(
+                                        right: 5,
+                                        top: 10,
+                                        child: GestureDetector(
+                                          onTap: () => editPickMedia(y),
+                                          child: Container(
+                                            height: 40,
+                                            width: 40,
+                                            decoration: BoxDecoration(
+                                              color: blackColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(32),
+                                            ),
+                                            child: const Icon(
+                                              Icons.edit,
+                                              color: whiteColor,
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                      MyText(
-                                        text: 'tapToBrowse'.tr(),
-                                        color: greyColor,
-                                      ),
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
-                                      MyText(
-                                        text:
-                                            'addBannerImageToEffectivelyAdventure'
-                                                .tr(),
-                                        color: greyColor,
-                                        align: TextAlign.center,
-                                      ),
+                                      Positioned(
+                                        right: 5,
+                                        top: 60,
+                                        child: GestureDetector(
+                                          onTap: () => deleteImage(y),
+                                          child: Container(
+                                            height: 40,
+                                            width: 40,
+                                            decoration: BoxDecoration(
+                                              color: blackColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(32),
+                                            ),
+                                            child: const Icon(
+                                              Icons.delete,
+                                              color: redColor,
+                                            ),
+                                          ),
+                                        ),
+                                      )
                                     ],
                                   ),
                                 ),
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.all(20),
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: blackTypeColor
-                                                  .withOpacity(0.2)),
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          color: lightGreyColor),
-                                      child: Center(
-                                        child: Image.file(
-                                          imageBanners[y],
-                                          fit: BoxFit.fill,
-                                          height: 150,
-                                          width: 300,
+                      if (widget.draft == null)
+                        for (int y = 0; y < imageBanners.length; y++)
+                          //ImageContainer(imageBanners[y], addMedia, y),
+                          imageBanners[y].path.isEmpty
+                              ? Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8.0),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(20),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: blackTypeColor
+                                                .withOpacity(0.2)),
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: lightGreyColor),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const SizedBox(height: 20),
+                                        GestureDetector(
+                                          onTap: () => pickMedia(y),
+                                          child: const Center(
+                                            child: Image(
+                                              image: ExactAssetImage(
+                                                  'images/upload.png'),
+                                              height: 45,
+                                            ),
+                                          ),
                                         ),
-                                      ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        MyText(
+                                          text: 'tapToBrowse'.tr(),
+                                          color: greyColor,
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        MyText(
+                                          text:
+                                              'addBannerImageToEffectivelyAdventure'
+                                                  .tr(),
+                                          color: greyColor,
+                                          align: TextAlign.center,
+                                        ),
+                                      ],
                                     ),
-                                    Positioned(
-                                      right: 5,
-                                      top: 10,
-                                      child: GestureDetector(
-                                        onTap: () => editPickMedia(y),
-                                        child: Container(
-                                          height: 40,
-                                          width: 40,
-                                          decoration: BoxDecoration(
-                                            color: blackColor,
+                                  ),
+                                )
+                              : Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.all(20),
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: blackTypeColor
+                                                    .withOpacity(0.2)),
                                             borderRadius:
-                                                BorderRadius.circular(32),
-                                          ),
-                                          child: const Icon(
-                                            Icons.edit,
-                                            color: whiteColor,
+                                                BorderRadius.circular(12),
+                                            color: lightGreyColor),
+                                        child: Center(
+                                          child: Image.file(
+                                            imageBanners[y],
+                                            fit: BoxFit.fill,
+                                            height: 150,
+                                            width: 300,
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Positioned(
-                                      right: 5,
-                                      top: 60,
-                                      child: GestureDetector(
-                                        onTap: () => deleteImage(y),
-                                        child: Container(
-                                          height: 40,
-                                          width: 40,
-                                          decoration: BoxDecoration(
-                                            color: blackColor,
-                                            borderRadius:
-                                                BorderRadius.circular(32),
-                                          ),
-                                          child: const Icon(
-                                            Icons.delete,
-                                            color: redColor,
+                                      Positioned(
+                                        right: 5,
+                                        top: 10,
+                                        child: GestureDetector(
+                                          onTap: () => editPickMedia(y),
+                                          child: Container(
+                                            height: 40,
+                                            width: 40,
+                                            decoration: BoxDecoration(
+                                              color: blackColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(32),
+                                            ),
+                                            child: const Icon(
+                                              Icons.edit,
+                                              color: whiteColor,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    )
-                                  ],
+                                      Positioned(
+                                        right: 5,
+                                        top: 60,
+                                        child: GestureDetector(
+                                          onTap: () => deleteImage(y),
+                                          child: Container(
+                                            height: 40,
+                                            width: 40,
+                                            decoration: BoxDecoration(
+                                              color: blackColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(32),
+                                            ),
+                                            child: const Icon(
+                                              Icons.delete,
+                                              color: redColor,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
                       // pickedMedia.path.isEmpty
                       //     ? Container(
                       //         padding: const EdgeInsets.all(20),
