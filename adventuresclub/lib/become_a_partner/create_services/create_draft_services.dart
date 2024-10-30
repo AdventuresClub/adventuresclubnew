@@ -285,13 +285,27 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
   }
 
   void parseDependency(List<DependenciesModel> dm) {
+    List<String> dependencyList = [];
+    if (widget.draftService != null) {
+      for (var element in widget.draftService!.dependency) {
+        dependencyList.add(element.dName);
+      }
+    }
     dm.forEach((element) {
       if (element.dName.isNotEmpty) {
         dependencyText.add(element.dName.tr());
       }
     });
     dependencyText.forEach((element) {
-      dependencyValue.add(false);
+      if (widget.draftService != null) {
+        if (dependencyList.contains(element)) {
+          dependencyValue.add(true);
+        } else {
+          dependencyValue.add(false);
+        }
+      } else {
+        dependencyValue.add(false);
+      }
     });
   }
 
@@ -320,13 +334,27 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
   }
 
   void parseAimed(List<AimedForModel> am) {
+    List<String> aimedList = [];
+    if (widget.draftService != null) {
+      for (var element in widget.draftService!.am) {
+        aimedList.add(element.aimedName);
+      }
+    }
     am.forEach((element) {
       if (element.aimedName.isNotEmpty) {
         aimedText.add(element.aimedName);
       }
     });
     aimedText.forEach((element) {
-      aimedValue.add(false);
+      if (widget.draftService != null) {
+        if (aimedList.contains(element)) {
+          aimedValue.add(true);
+        } else {
+          aimedValue.add(false);
+        }
+      } else {
+        aimedValue.add(false);
+      }
     });
   }
 
@@ -1123,80 +1151,89 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
     //   banners.add(element.readAsBytesSync());
     // });
     try {
-      var request = http.MultipartRequest(
-        "POST",
-        Uri.parse(
-            //${Constants.baseUrl}SIT
-            "${Constants.baseUrl}/api/v1/second_page_service"),
-      );
-      dynamic programData = {
-        "provider_id": Constants.userId.toString(),
-        "service_id": widget.draftService!.id.toString(),
-        "write_information": infoController.text.trim(),
-        "available_seats": availableSeatsController.text.trim(),
-        "service_sector": sectorId.toString(),
-        "service_category": categoryId.toString(),
-        "service_type": typeId.toString(),
-        "service_level": levelId.toString(),
-        "duration": durationId.toString(),
-        'region': regionId.toString(),
-        "service_for": selectedActivitesId,
-        "dependency": selectedDependencyId,
-        "service_plan": sPlan.toString(),
-        "service_plan_days": "1,2",
-        "particular_date":
-            particularDate, //ConstantsCreateNewServices.startDate,
-        "start_date":
-            formattedDate, //ConstantsCreateNewServices.startDate.toString(),
-        "end_date": endDate, //ConstantsCreateNewServices.endDate.toString(),
-        "activities": selectedActivityIncludesId,
-// service_sector:10
-// service_category:20
-// service_type:1
-// service_level:11
-// duration:5
-// region:15
-// service_for:3,4,5
-// dependency:4,5,6
-// service_plan:2
-// service_plan_days:1,2,3
-// particular_date:2024-06-03,2024-06-04
-// start_date:2024-06-03
-// end_date:2024-06-06
-// activities:5,6,7
-        // "provider_id": Constants.profile.bp.id.toString(),
-        // service_id:186
-        // 'adventure_name': adventureName.text,
-        // "country": Constants.countryId.toString(),
-        // //ConstantsCreateNewServices.selectedRegionId
-        // ////endDate, //"",
-        // // it is for particular week or calender
-        // "cost_inc":
-        //     Constants.getTranslatedNumber(costOne.text), //setCost1.text, //"",
-        // "cost_exc": Constants.getTranslatedNumber(
-        //     costTwo.text), //costTwo.text, //setCost2.text, //"",
-        // "currency": "1", //  %%% this is hardcoded
-        // "pre_requisites":
-        //     preRequisites.text, //"", //preReqController.text, //"",
-        // "minimum_requirements":
-        //     minimumRequirement.text, //minController.text, //"",
-        // "terms_conditions": terms.text, //tncController.text, //"",
-        // "recommended": "1", // this is hardcoded
-        // // this key needs to be discussed,
-        // //"5", // activityId, //"",
-        // "specific_address": specificAddressController
-        //     .text, //"", //iLiveInController.text, //"",
-        // //selectedDependencyId.toString(), //["1", "2", "3"],
-        // "latitude": //"27.0546", //
-        //     ConstantsCreateNewServices.lat.toString(), //lat.toString(), //"",
-        // "longitude": //"57.05650"
-        //     ConstantsCreateNewServices.lng.toString(), //lng.toString(), //"",
-      };
+      // var request = http.MultipartRequest(
+      //   "POST",
+      //   Uri.parse(
+      //       //${Constants.baseUrl}SIT
+      //       "${Constants.baseUrl}/api/v1/second_page_service"),
+      //   // https://adventuresclub.net/adventureClubSIT/api/v1/second_page_service
+      // );
+      var response = await http.post(
+          Uri.parse("${Constants.baseUrl}/api/v1/second_page_service"),
+          body: {
+            "provider_id": Constants.userId.toString(),
+            "service_id": widget.draftService!.id.toString(),
+            "write_information": infoController.text.trim(),
+            "available_seats": availableSeatsController.text.trim(),
+            "service_sector": sectorId.toString(),
+            "service_category": categoryId.toString(),
+            "service_type": typeId.toString(),
+            "service_level": levelId.toString(),
+            "duration": durationId.toString(),
+            'region': regionId.toString(),
+            "service_for": selectedActivitesId,
+            "dependency": selectedDependencyId,
+            "service_plan": sPlan.toString(),
+            "service_plan_days": "1,2",
+            "particular_date":
+                particularDate, //ConstantsCreateNewServices.startDate,
+            "start_date":
+                formattedDate, //ConstantsCreateNewServices.startDate.toString(),
+            "end_date":
+                endDate, //ConstantsCreateNewServices.endDate.toString(),
+            "activities": selectedActivityIncludesId,
+          });
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      if (response.statusCode == 200) {}
+//       dynamic programData = {
 
-      request.fields.addAll(programData);
-      final response = await request.send();
-      log(response.toString());
-      debugPrint(response.statusCode.toString());
+// // service_sector:10
+// // service_category:20
+// // service_type:1
+// // service_level:11
+// // duration:5
+// // region:15
+// // service_for:3,4,5
+// // dependency:4,5,6
+// // service_plan:2
+// // service_plan_days:1,2,3
+// // particular_date:2024-06-03,2024-06-04
+// // start_date:2024-06-03
+// // end_date:2024-06-06
+// // activities:5,6,7
+//         // "provider_id": Constants.profile.bp.id.toString(),
+//         // service_id:186
+//         // 'adventure_name': adventureName.text,
+//         // "country": Constants.countryId.toString(),
+//         // //ConstantsCreateNewServices.selectedRegionId
+//         // ////endDate, //"",
+//         // // it is for particular week or calender
+//         // "cost_inc":
+//         //     Constants.getTranslatedNumber(costOne.text), //setCost1.text, //"",
+//         // "cost_exc": Constants.getTranslatedNumber(
+//         //     costTwo.text), //costTwo.text, //setCost2.text, //"",
+//         // "currency": "1", //  %%% this is hardcoded
+//         // "pre_requisites":
+//         //     preRequisites.text, //"", //preReqController.text, //"",
+//         // "minimum_requirements":
+//         //     minimumRequirement.text, //minController.text, //"",
+//         // "terms_conditions": terms.text, //tncController.text, //"",
+//         // "recommended": "1", // this is hardcoded
+//         // // this key needs to be discussed,
+//         // //"5", // activityId, //"",
+//         // "specific_address": specificAddressController
+//         //     .text, //"", //iLiveInController.text, //"",
+//         // //selectedDependencyId.toString(), //["1", "2", "3"],
+//         // "latitude": //"27.0546", //
+//         //     ConstantsCreateNewServices.lat.toString(), //lat.toString(), //"",
+//         // "longitude": //"57.05650"
+//         //     ConstantsCreateNewServices.lng.toString(), //lng.toString(), //"",
+//       };
+
+      // request.fields.addAll(programData);
+      // final response = await request.send();
+      // log(response.toString());
+      // debugPrint(response.statusCode.toString());
       // print(response.body);
       //print(response.headers);
       //clearAll();
@@ -1389,6 +1426,7 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
                   children: [
                     BannerPage(getImages, adventureName, widget.draftService),
                     CreateServicesDescription(
+                      draftService: widget.draftService,
                       getActivityIds: getActivityId,
                       tapped: getIds,
                       available: availableSeatsController,

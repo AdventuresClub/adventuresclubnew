@@ -13,6 +13,7 @@ import 'package:adventuresclub/models/filter_data_model/level_filter_mode.dart';
 import 'package:adventuresclub/models/filter_data_model/region_model.dart';
 import 'package:adventuresclub/models/filter_data_model/sector_filter_model.dart';
 import 'package:adventuresclub/models/filter_data_model/service_types_filter.dart';
+import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/models/weightnheight_model.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
@@ -31,6 +32,7 @@ class CreateServicesDescription extends StatefulWidget {
   final Widget dependency;
   final Function tapped;
   final Function getActivityIds;
+  final ServicesModel? draftService;
   const CreateServicesDescription(
       {required this.available,
       required this.info,
@@ -40,6 +42,7 @@ class CreateServicesDescription extends StatefulWidget {
       required this.dependency,
       required this.tapped,
       required this.getActivityIds,
+      this.draftService,
       super.key});
 
   @override
@@ -101,6 +104,26 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
     super.initState();
     getData();
     //   getRegionId();
+    if (widget.draftService != null) {
+      if (widget.draftService!.region.isNotEmpty) {
+        parseDataDraft("region");
+      }
+      if (widget.draftService!.serviceSector.isNotEmpty) {
+        parseDataDraft("sector");
+      }
+      if (widget.draftService!.serviceCategory.isNotEmpty) {
+        parseDataDraft('category');
+      }
+    }
+    if (widget.draftService!.serviceType.isNotEmpty) {
+      parseDataDraft("type");
+    }
+    if (widget.draftService!.duration.isNotEmpty) {
+      parseDataDraft("duration");
+    }
+    if (widget.draftService!.serviceLevel.isNotEmpty) {
+      parseDataDraft("level");
+    }
   }
 
   void getRegionId() {
@@ -117,6 +140,52 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
     levelFilter = Constants.levelFilter;
     activitiesFilter = Constants.activitiesFilter;
     parseActivity(Constants.activitiesFilter);
+  }
+
+  void parseDataDraft(String type) {
+    if (type == "region") {
+      if (widget.draftService!.region.isNotEmpty) {
+        selectedRegion = regionList.indexWhere(
+            (element) => element.region == widget.draftService!.region);
+      }
+      if (selectedRegion >= 0) {
+        setState(() {
+          regionList[selectedRegion].showCountry = true;
+        });
+      }
+    } else if (type == "sector") {
+      if (widget.draftService!.serviceSector.isNotEmpty) {
+        selectedServiceSector = filterSectors.indexWhere(
+            (element) => element.sector == widget.draftService!.serviceSector);
+      }
+      setState(() {
+        filterSectors[selectedServiceSector].showfilterSectors = true;
+      });
+    } else if (type == "category") {
+      selectedCategory = categoryFilter.indexWhere((element) =>
+          element.category == widget.draftService!.serviceCategory);
+      setState(() {
+        categoryFilter[selectedCategory].showCategoryFilter = true;
+      });
+    } else if (type == "type") {
+      selectedServiceType = serviceFilter.indexWhere(
+          (element) => element.type == widget.draftService!.serviceType);
+      setState(() {
+        serviceFilter[selectedServiceType].showServiceFilter = true;
+      });
+    } else if (type == "duration") {
+      selectedDuration = durationFilter.indexWhere(
+          (element) => element.duration == widget.draftService!.duration);
+      setState(() {
+        durationFilter[selectedDuration].showDuration = true;
+      });
+    } else if (type == "level") {
+      selectedLevel = levelFilter.indexWhere(
+          (element) => element.level == widget.draftService!.serviceLevel);
+      setState(() {
+        levelFilter[selectedLevel].showLevel = true;
+      });
+    }
   }
 
   void removeId(int id) {
@@ -289,6 +358,12 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
   }
 
   void parseActivity(List<ActivitiesIncludeModel> am) {
+    List<String> customActivityList = [];
+    if (widget.draftService != null) {
+      for (var element in widget.draftService!.activityIncludes) {
+        customActivityList.add(element.activity);
+      }
+    }
     am.forEach((element) {
       if (element.activity.isNotEmpty) {
         activityList.add(element.activity.tr());
@@ -296,7 +371,15 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
     });
     activityList.forEach(
       (element) {
-        activityValue.add(false);
+        if (widget.draftService != null) {
+          if (customActivityList.contains(element)) {
+            activityValue.add(true);
+          } else {
+            activityValue.add(false);
+          }
+        } else {
+          activityValue.add(false);
+        }
       },
     );
   }
