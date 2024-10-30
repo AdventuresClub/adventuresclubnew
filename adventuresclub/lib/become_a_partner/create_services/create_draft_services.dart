@@ -148,6 +148,16 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
       adventureName.text = widget.draftService!.adventureName;
       infoController.text = widget.draftService!.writeInformation;
       availableSeatsController.text = widget.draftService!.aSeats.toString();
+      // if (widget.draftService!.sPlan == 2) {
+      //   particularDay = true;
+      //   DateTime d = widget.draftService!.startDate;
+      //   DateTime e = widget.draftService!.endDate;
+      //   String date = "${d.year - d.month - d.day}";
+      //   formattedDate = d;
+      //   endDate = "${e.year - e.month - e.day}";
+      // } else if (widget.draftService!.sPlan == 1) {
+      //   particularWeekDays = true;
+      // }
     }
     // addProgramData();
   }
@@ -1229,16 +1239,6 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
 //         // "longitude": //"57.05650"
 //         //     ConstantsCreateNewServices.lng.toString(), //lng.toString(), //"",
 //       };
-
-      // request.fields.addAll(programData);
-      // final response = await request.send();
-      // log(response.toString());
-      // debugPrint(response.statusCode.toString());
-      // print(response.body);
-      //print(response.headers);
-      //clearAll();
-      //showConfirmation();
-      //close();
     } catch (e) {
       print(e.toString());
     }
@@ -1276,6 +1276,69 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
       print(e.toString());
     }
   }
+
+  void saveThirdPage() async {
+    try {
+      var request = http.MultipartRequest(
+        "POST",
+        Uri.parse("${Constants.baseUrl}/api/v1/third_program_creation"),
+      );
+
+      dynamic programData = {
+        "provider_id": Constants.profile.bp.id.toString(),
+        "service_id": widget.draftService!.id.toString()
+      };
+      String space = "";
+      space = "";
+      et.forEach((element1) {
+        // log(element1);
+        programData["gathering_end_time[]$space"] = element1;
+        space += " ";
+      });
+      space = "";
+      titleList.forEach((element) {
+        programData["schedule_title[]$space"] = element;
+        space += " ";
+      });
+      space = "";
+      descriptionList.forEach((element) {
+        programData["program_description[]$space"] = element;
+        space += " ";
+      });
+      space = "";
+      d.forEach((element) {
+        programData["gathering_date[]$space"] = element;
+        space += " ";
+      });
+      request.fields.addAll(programData);
+      final response = await request.send();
+      log(response.toString());
+      debugPrint(response.statusCode.toString());
+      print(response.headers);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+//   https://adventuresclub.net/adventureClubSIT/api/v1/third_program_creation
+
+// provider_id:3
+// service_id:178
+// schedule_title[]:program1,
+// schedule_title[]:program2
+// schedule_title[]:program3
+// gathering_date[]:2024-06-03
+// gathering_date[]:2024-06-04
+// gathering_date[]:2024-06-05
+// gathering_start_time[]:06:00
+// gathering_start_time[]:14:00
+// gathering_start_time[]:16:00
+// gathering_end_time[]:17:00
+// gathering_end_time[]:18:00
+// gathering_end_time[]:15:00
+// program_description[]:program description1
+// program_description[]:Description 2
+// program_description[]:program description 3
 
   @override
   Widget build(BuildContext context) {

@@ -1727,14 +1727,17 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                                           .symmetric(
                                                           vertical: 0,
                                                           horizontal: 10),
-                                                  leading: Text(
-                                                    formattedDate
-                                                        .toString()
-                                                        .tr(),
-                                                    style: TextStyle(
-                                                        color: blackColor
-                                                            .withOpacity(0.6),
-                                                        fontSize: 14),
+                                                  leading: SizedBox(
+                                                    width: 10,
+                                                    child: Text(
+                                                      formattedDate
+                                                          .toString()
+                                                          .tr(),
+                                                      style: TextStyle(
+                                                          color: blackColor
+                                                              .withOpacity(0.6),
+                                                          fontSize: 14),
+                                                    ),
                                                   ),
                                                   trailing: Icon(
                                                     Icons.calendar_today,
@@ -1775,12 +1778,15 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                                           .symmetric(
                                                           vertical: 0,
                                                           horizontal: 10),
-                                                  leading: Text(
-                                                    endDate.toString(),
-                                                    style: TextStyle(
-                                                        color: blackColor
-                                                            .withOpacity(0.6),
-                                                        fontSize: 14),
+                                                  leading: SizedBox(
+                                                    width: 20,
+                                                    child: Text(
+                                                      endDate.toString(),
+                                                      style: TextStyle(
+                                                          color: blackColor
+                                                              .withOpacity(0.6),
+                                                          fontSize: 14),
+                                                    ),
                                                   ),
                                                   trailing: Icon(
                                                     Icons.calendar_today,
@@ -1951,9 +1957,12 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         child: ListTile(
           contentPadding:
               const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-          leading: Text(
-            i.toString(),
-            style: TextStyle(color: blackColor.withOpacity(0.6)),
+          leading: SizedBox(
+            width: 20,
+            child: Text(
+              i.toString(),
+              style: TextStyle(color: blackColor.withOpacity(0.6)),
+            ),
           ),
           trailing: Icon(
             Icons.calendar_today,
@@ -1987,9 +1996,12 @@ class _CreateNewServicesState extends State<CreateNewServices> {
               child: ListTile(
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                leading: Text(
-                  "${sd.hour.toString().padLeft(2, "0")} : ${sd.minute.toString().padLeft(2, '0')}",
-                  style: TextStyle(color: blackColor.withOpacity(0.6)),
+                leading: SizedBox(
+                  width: 20,
+                  child: Text(
+                    "${sd.hour.toString().padLeft(2, "0")} : ${sd.minute.toString().padLeft(2, '0')}",
+                    style: TextStyle(color: blackColor.withOpacity(0.6)),
+                  ),
                 ),
                 trailing: Icon(
                   Icons.punch_clock_sharp,
@@ -2021,8 +2033,11 @@ class _CreateNewServicesState extends State<CreateNewServices> {
               child: ListTile(
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                leading: Text(
-                  "${ed.hour.toString().padLeft(2, "0")} : ${ed.minute.toString().padLeft(2, '0')}",
+                leading: SizedBox(
+                  width: 20,
+                  child: Text(
+                    "${ed.hour.toString().padLeft(2, "0")} : ${ed.minute.toString().padLeft(2, '0')}",
+                  ),
                 ),
                 trailing: Icon(
                   Icons.lock_clock_sharp,

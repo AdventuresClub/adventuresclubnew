@@ -788,7 +788,6 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
               const SizedBox(
                 width: 10,
               ),
-
               const SizedBox(height: 20),
               const Divider(),
               widget.servicePlan,
