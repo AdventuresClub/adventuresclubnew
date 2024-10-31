@@ -179,8 +179,31 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
         }
         selectedActivitesId = id.join(",");
       }
+      for (int i = 0; i < widget.draftService!.programmes.length; i++) {
+        Duration durationSt = Duration.zero;
+        Duration durationEt = Duration.zero;
+        pm.add(CreateServicesProgramModel(
+            widget.draftService!.programmes[i].title,
+            stringToDateTime(widget.draftService!.programmes[i].sD),
+            stringToDateTime(widget.draftService!.programmes[i].eD),
+            durationSt,
+            durationEt,
+            widget.draftService!.programmes[i].des,
+            DateTime.now(),
+            //widget.pm.adventureStartDate,
+            DateTime.now()));
+      }
     }
     // addProgramData();
+  }
+
+  DateTime stringToDateTime(String dateString,
+      {String format = 'yyyy-MM-dd HH:mm:ss'}) {
+    try {
+      return DateFormat(format).parse(dateString);
+    } catch (e) {
+      throw FormatException('Invalid date format: $e');
+    }
   }
 
   void getProgramData(List<CreateServicesProgramModel> data) {
@@ -688,7 +711,7 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
       } else {
         bool check = checkPlans();
         if (!check) {
-          //message("Please Fill Empty Plan Infomation");
+          message("Please Fill Empty Plan Infomation");
           return;
         }
       }
@@ -777,7 +800,7 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
   }
 
   void previous() {
-    clearAll();
+    //clearAll();
     if (count == 0) {
       Navigator.of(context).pop();
     } else {

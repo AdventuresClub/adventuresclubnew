@@ -60,10 +60,17 @@ class _CreateProgramState extends State<CreateProgram> {
         for (int i = 0; i < widget.draftService!.programmes.length; i++) {
           Duration durationSt = Duration.zero;
           Duration durationEt = Duration.zero;
+          DateTime startDate =
+              stringToDateTime(widget.draftService!.programmes[i].sD);
+          DateTime endDate =
+              stringToDateTime(widget.draftService!.programmes[i].eD);
+          durationSt =
+              Duration(hours: startDate.hour, minutes: startDate.minute);
+          durationEt = Duration(hours: endDate.hour, minutes: endDate.minute);
           pm.add(CreateServicesProgramModel(
               widget.draftService!.programmes[i].title,
-              stringToDateTime(widget.draftService!.programmes[i].sD),
-              stringToDateTime(widget.draftService!.programmes[i].eD),
+              startDate,
+              endDate,
               durationSt,
               durationEt,
               widget.draftService!.programmes[i].des,
