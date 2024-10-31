@@ -2,8 +2,10 @@
 
 import 'package:adventuresclub/become_a_partner/create_program_main_page.dart';
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/models/services/create_services/create_services_program%20_model.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class CreateProgram extends StatefulWidget {
@@ -11,13 +13,15 @@ class CreateProgram extends StatefulWidget {
   final Function removeData;
   final DateTime startDate;
   final DateTime endDate;
+  final ServicesModel? draftService;
   // final int index;
   //final CreateServicesProgramModel pm;
   const CreateProgram(
       this.parseData, this.removeData, this.startDate, this.endDate,
       // this.index,
       //this.pm,
-      {super.key});
+      {this.draftService,
+      super.key});
 
   @override
   State<CreateProgram> createState() => _CreateProgramState();
@@ -47,6 +51,37 @@ class _CreateProgramState extends State<CreateProgram> {
   void initState() {
     //pickedDate = widget.pm.startDate;
     super.initState();
+    getData();
+  }
+
+  void getData() {
+    if (widget.draftService != null) {
+      if (widget.draftService!.sPlan == 2) {
+        for (int i = 0; i < widget.draftService!.programmes.length; i++) {
+          Duration durationSt = Duration.zero;
+          Duration durationEt = Duration.zero;
+          pm.add(CreateServicesProgramModel(
+              widget.draftService!.programmes[i].title,
+              stringToDateTime(widget.draftService!.programmes[i].sD),
+              stringToDateTime(widget.draftService!.programmes[i].eD),
+              durationSt,
+              durationEt,
+              widget.draftService!.programmes[i].des,
+              DateTime.now(),
+              //widget.pm.adventureStartDate,
+              DateTime.now()));
+        }
+      }
+    }
+  }
+
+  DateTime stringToDateTime(String dateString,
+      {String format = 'yyyy-MM-dd HH:mm:ss'}) {
+    try {
+      return DateFormat(format).parse(dateString);
+    } catch (e) {
+      throw FormatException('Invalid date format: $e');
+    }
   }
 
   void changeStatus() {

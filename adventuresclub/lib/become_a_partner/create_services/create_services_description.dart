@@ -145,8 +145,11 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
   void parseDataDraft(String type) {
     if (type == "region") {
       if (widget.draftService!.region.isNotEmpty) {
+        int regionId = 0;
         selectedRegion = regionList.indexWhere(
             (element) => element.region == widget.draftService!.region);
+        regionId = regionList[selectedRegion].regionId;
+        parseData("region", regionId);
       }
       if (selectedRegion >= 0) {
         setState(() {
@@ -155,33 +158,48 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
       }
     } else if (type == "sector") {
       if (widget.draftService!.serviceSector.isNotEmpty) {
+        int sectorId = 0;
         selectedServiceSector = filterSectors.indexWhere(
             (element) => element.sector == widget.draftService!.serviceSector);
+        sectorId = filterSectors[selectedServiceSector].id;
+        parseData("sector", sectorId);
       }
       setState(() {
         filterSectors[selectedServiceSector].showfilterSectors = true;
       });
     } else if (type == "category") {
+      int categoryId = 0;
       selectedCategory = categoryFilter.indexWhere((element) =>
           element.category == widget.draftService!.serviceCategory);
+      categoryId = categoryFilter[selectedCategory].id;
+      parseData("category", categoryId);
       setState(() {
         categoryFilter[selectedCategory].showCategoryFilter = true;
       });
     } else if (type == "type") {
+      int typeId = 0;
       selectedServiceType = serviceFilter.indexWhere(
           (element) => element.type == widget.draftService!.serviceType);
+      typeId = serviceFilter[selectedServiceType].id;
+      parseData("type", typeId);
       setState(() {
         serviceFilter[selectedServiceType].showServiceFilter = true;
       });
     } else if (type == "duration") {
+      int durationId = 0;
       selectedDuration = durationFilter.indexWhere(
           (element) => element.duration == widget.draftService!.duration);
+      durationId = durationFilter[selectedDuration].id;
+      parseData("duration", durationId);
       setState(() {
         durationFilter[selectedDuration].showDuration = true;
       });
     } else if (type == "level") {
+      int typeId = 0;
       selectedLevel = levelFilter.indexWhere(
           (element) => element.level == widget.draftService!.serviceLevel);
+      typeId = levelFilter[selectedLevel].id;
+      parseData("level", typeId);
       setState(() {
         levelFilter[selectedLevel].showLevel = true;
       });

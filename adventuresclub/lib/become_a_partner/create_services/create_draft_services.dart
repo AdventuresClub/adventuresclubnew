@@ -155,8 +155,22 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
         String date = "${d.year}-${d.month}-${d.day}";
         formattedDate = date;
         endDate = "${e.year}-${e.month}-${e.day}";
+        sPlan = 2;
       } else if (widget.draftService!.sPlan == 1) {
         particularWeekDays = true;
+        sPlan = 1;
+      }
+      if (widget.draftService!.activityIncludes.isNotEmpty) {
+        for (var element in widget.draftService!.activityIncludes) {
+          activitiesId.add(element.id);
+        }
+      }
+      if (widget.draftService!.dependency.isNotEmpty) {
+        List<int> a = [];
+        for (var element in widget.draftService!.dependency) {
+          a.add(element.id);
+        }
+        selectedDependencyId = a.join(",");
       }
     }
     // addProgramData();
@@ -630,7 +644,7 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
       }
       //if (ConstantsCreateNewServices.selectedActivitesId.isEmpty)
       if (activitiesId.isEmpty) {
-        message("Please Activities Included");
+        message("Please select activities");
         return;
       }
       if (selectedActivitesId.isEmpty) {
@@ -1889,14 +1903,15 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
                               children: [
                                 // for (int z = 0; z < pm.length; z++)
                                 CreateProgram(
-                                    // key: ValueKey(z.toString()),
-                                    getProgramData,
-                                    deleteProgramData,
-                                    startDate,
-                                    currentDate
-                                    //z,
-                                    //pm[z],
-                                    ),
+                                  // key: ValueKey(z.toString()),
+                                  getProgramData,
+                                  deleteProgramData,
+                                  startDate,
+                                  currentDate,
+                                  //z,
+                                  //pm[z],
+                                  draftService: widget.draftService,
+                                ),
                                 const SizedBox(
                                   height: 10,
                                 ),
