@@ -172,6 +172,13 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
         }
         selectedDependencyId = a.join(",");
       }
+      if (widget.draftService!.am.isNotEmpty) {
+        List<int> id = [];
+        for (var element in widget.draftService!.am) {
+          id.add(element.id);
+        }
+        selectedActivitesId = id.join(",");
+      }
     }
     // addProgramData();
   }
@@ -831,8 +838,6 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
   void createService() async {
     await convertProgramData();
     selectedActivityIncludesId = activitiesId.join(",");
-    //ConstantsCreateNewServices.selectedActivitesId.join(",");
-
     List<Uint8List> banners = [];
     imageList.forEach((element) {
       banners.add(element.readAsBytesSync());
