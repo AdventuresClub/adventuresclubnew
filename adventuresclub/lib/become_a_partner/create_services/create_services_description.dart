@@ -374,6 +374,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
         if (widget.draftService != null) {
           if (customActivityList.contains(element)) {
             activityValue.add(true);
+            activitiesLength += 1;
           } else {
             activityValue.add(false);
           }

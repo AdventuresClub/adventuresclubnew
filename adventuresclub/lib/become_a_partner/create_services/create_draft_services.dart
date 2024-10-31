@@ -148,16 +148,16 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
       adventureName.text = widget.draftService!.adventureName;
       infoController.text = widget.draftService!.writeInformation;
       availableSeatsController.text = widget.draftService!.aSeats.toString();
-      // if (widget.draftService!.sPlan == 2) {
-      //   particularDay = true;
-      //   DateTime d = widget.draftService!.startDate;
-      //   DateTime e = widget.draftService!.endDate;
-      //   String date = "${d.year - d.month - d.day}";
-      //   formattedDate = d;
-      //   endDate = "${e.year - e.month - e.day}";
-      // } else if (widget.draftService!.sPlan == 1) {
-      //   particularWeekDays = true;
-      // }
+      if (widget.draftService!.sPlan == 2) {
+        particularDay = true;
+        DateTime d = widget.draftService!.startDate;
+        DateTime e = widget.draftService!.endDate;
+        String date = "${d.year}-${d.month}-${d.day}";
+        formattedDate = date;
+        endDate = "${e.year}-${e.month}-${e.day}";
+      } else if (widget.draftService!.sPlan == 1) {
+        particularWeekDays = true;
+      }
     }
     // addProgramData();
   }
@@ -684,6 +684,7 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
       } else if (isTimeAfter) {
         message("End Time Cannot be before Start Time");
       }
+      saveThirdPage();
       setState(() {
         count = 3;
       });
@@ -745,7 +746,8 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
         return;
       }
       //convertProgramData();
-      createService();
+      saveLastPage();
+      //createService();
     }
   }
 
@@ -1278,6 +1280,7 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
   }
 
   void saveThirdPage() async {
+    convertProgramData();
     try {
       var request = http.MultipartRequest(
         "POST",
@@ -1285,10 +1288,15 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
       );
 
       dynamic programData = {
-        "provider_id": Constants.profile.bp.id.toString(),
+        "provider_id": Constants.userId.toString(),
         "service_id": widget.draftService!.id.toString()
       };
       String space = "";
+      st.forEach((element) {
+        //log(element);
+        programData["gathering_start_time[]$space"] = element;
+        space += " ";
+      });
       space = "";
       et.forEach((element1) {
         // log(element1);
@@ -1320,25 +1328,68 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
     }
   }
 
-//   https://adventuresclub.net/adventureClubSIT/api/v1/third_program_creation
+  void saveLastPage() async {
+    try {
+      var response = await http.post(
+          Uri.parse("${Constants.baseUrl}api/v1/third_geo_location_creation"),
+          body: {
+            "provider_id": Constants.userId.toString(),
+            "service_id": widget.draftService!.id.toString(),
+            "latitude": "27.0546", //
+            // ConstantsCreateNewServices.lat
+            //     .toString(), //lat.toString(), //"",
+            "longitude": "57.05650",
+            //  ConstantsCreateNewServices.lng.toString(),
+            "specific_address": specificAddressController.text,
+            "cost_inc": //Constants.getTranslatedNumber(
+                costOne.text, //) //setCost1.text, //"",
+            "cost_exc": //Constants.getTranslatedNumber(
+                costTwo.text, //),
+            "pre_requisites":
+                preRequisites.text, //"", //preReqController.text, //"",
+            "minimum_requirements": minimumRequirement.text,
+            "terms_conditions": terms.text,
+          });
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      if (response.statusCode == 200) {}
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
-// provider_id:3
-// service_id:178
-// schedule_title[]:program1,
-// schedule_title[]:program2
-// schedule_title[]:program3
-// gathering_date[]:2024-06-03
-// gathering_date[]:2024-06-04
-// gathering_date[]:2024-06-05
-// gathering_start_time[]:06:00
-// gathering_start_time[]:14:00
-// gathering_start_time[]:16:00
-// gathering_end_time[]:17:00
-// gathering_end_time[]:18:00
-// gathering_end_time[]:15:00
-// program_description[]:program description1
-// program_description[]:Description 2
-// program_description[]:program description 3
+  void saveLastPage1() async {
+    try {
+      var request = http.MultipartRequest(
+        "POST",
+        Uri.parse("${Constants.baseUrl}api/v1/third_geo_location_creation"),
+      );
+      dynamic programData = {
+        "provider_id": Constants.userId.toString(),
+        "service_id": widget.draftService!.id.toString(),
+        "latitude": //"27.0546", //
+            ConstantsCreateNewServices.lat.toString(), //lat.toString(), //"",
+        "longitude": //"57.05650"
+            ConstantsCreateNewServices.lng.toString(),
+        "specific_address": specificAddressController.text,
+        "cost_inc":
+            Constants.getTranslatedNumber(costOne.text), //setCost1.text, //"",
+        "cost_exc": Constants.getTranslatedNumber(costTwo.text),
+        "pre_requisites":
+            preRequisites.text, //"", //preReqController.text, //"",
+        "minimum_requirements": minimumRequirement.text,
+        "terms_conditions": terms.text,
+      };
+      request.fields.addAll(programData);
+      final response = await request.send();
+      log(response.toString());
+      debugPrint(response.statusCode.toString());
+      print(response.headers);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+//https://adventuresclub.net/adventureClubSIT/api/v1/third_geo_location_creation
 
   @override
   Widget build(BuildContext context) {
@@ -1682,14 +1733,17 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
                                                           .symmetric(
                                                           vertical: 0,
                                                           horizontal: 10),
-                                                  leading: Text(
-                                                    formattedDate
-                                                        .toString()
-                                                        .tr(),
-                                                    style: TextStyle(
-                                                        color: blackColor
-                                                            .withOpacity(0.6),
-                                                        fontSize: 14),
+                                                  leading: SizedBox(
+                                                    width: 100,
+                                                    child: Text(
+                                                      formattedDate
+                                                          .toString()
+                                                          .tr(),
+                                                      style: TextStyle(
+                                                          color: blackColor
+                                                              .withOpacity(0.6),
+                                                          fontSize: 14),
+                                                    ),
                                                   ),
                                                   trailing: Icon(
                                                     Icons.calendar_today,
@@ -1730,12 +1784,15 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
                                                           .symmetric(
                                                           vertical: 0,
                                                           horizontal: 10),
-                                                  leading: Text(
-                                                    endDate.toString(),
-                                                    style: TextStyle(
-                                                        color: blackColor
-                                                            .withOpacity(0.6),
-                                                        fontSize: 14),
+                                                  leading: SizedBox(
+                                                    width: 100,
+                                                    child: Text(
+                                                      endDate.toString(),
+                                                      style: TextStyle(
+                                                          color: blackColor
+                                                              .withOpacity(0.6),
+                                                          fontSize: 14),
+                                                    ),
                                                   ),
                                                   trailing: Icon(
                                                     Icons.calendar_today,
