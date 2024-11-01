@@ -51,29 +51,6 @@ class _BannerPageState extends State<BannerPage> {
     }
   }
 
-  // void addMedia(int i) async {
-  //   showDialog(
-  //     context: context,
-  //     builder: (ctx) => SimpleDialog(
-  //       title: const Text("From ?"),
-  //       children: [
-  //         GestureDetector(
-  //           onTap: () => pickMedia("Camera", i),
-  //           child: const ListTile(
-  //             title: Text("Camera"),
-  //           ),
-  //         ),
-  //         GestureDetector(
-  //           onTap: () => pickMedia("Gallery", i),
-  //           child: const ListTile(
-  //             title: Text("Gallery"),
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
   void pickMedia(int i) async {
     // Navigator.of(context).pop();
     setState(() {
@@ -92,29 +69,6 @@ class _BannerPageState extends State<BannerPage> {
     }
   }
 
-  // void editMedia(int i) async {
-  //   showDialog(
-  //     context: context,
-  //     builder: (ctx) => SimpleDialog(
-  //       title: const Text("From ?"),
-  //       children: [
-  //         GestureDetector(
-  //           onTap: () => editPickMedia("Camera", i),
-  //           child: const ListTile(
-  //             title: Text("Camera"),
-  //           ),
-  //         ),
-  //         GestureDetector(
-  //           onTap: () => editPickMedia("Gallery", i),
-  //           child: const ListTile(
-  //             title: Text("Gallery"),
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
   void editPickMedia(int i) async {
     Navigator.of(context).pop();
     setState(() {
@@ -125,15 +79,12 @@ class _BannerPageState extends State<BannerPage> {
     );
     if (photo != null) {
       pickedMedia = File(photo.path);
-
-      // imageList.add(pickedMedia);
       if (mounted) {
-setState(() {
-        imageList[i] = pickedMedia;
-        loading = false;
-      });
+        setState(() {
+          imageList[i] = pickedMedia;
+          loading = false;
+        });
       }
-      
       getAllImages();
       widget.sendImages(imageList);
     }

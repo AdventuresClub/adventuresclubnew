@@ -1377,18 +1377,12 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
           body: {
             "provider_id": Constants.userId.toString(),
             "service_id": widget.draftService!.id.toString(),
-            "latitude": "27.0546", //
-            // ConstantsCreateNewServices.lat
-            //     .toString(), //lat.toString(), //"",
-            "longitude": "57.05650",
-            //  ConstantsCreateNewServices.lng.toString(),
+            "latitude": ConstantsCreateNewServices.lat.toString(),
+            "longitude": ConstantsCreateNewServices.lng.toString(),
             "specific_address": specificAddressController.text,
-            "cost_inc": //Constants.getTranslatedNumber(
-                costOne.text, //) //setCost1.text, //"",
-            "cost_exc": //Constants.getTranslatedNumber(
-                costTwo.text, //),
-            "pre_requisites":
-                preRequisites.text, //"", //preReqController.text, //"",
+            "cost_inc": costOne.text,
+            "cost_exc": costTwo.text,
+            "pre_requisites": preRequisites.text,
             "minimum_requirements": minimumRequirement.text,
             "terms_conditions": terms.text,
           });
