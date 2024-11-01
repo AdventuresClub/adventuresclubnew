@@ -127,10 +127,13 @@ class _BannerPageState extends State<BannerPage> {
       pickedMedia = File(photo.path);
 
       // imageList.add(pickedMedia);
-      setState(() {
+      if (mounted) {
+setState(() {
         imageList[i] = pickedMedia;
         loading = false;
       });
+      }
+      
       getAllImages();
       widget.sendImages(imageList);
     }

@@ -114,15 +114,15 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
       if (widget.draftService!.serviceCategory.isNotEmpty) {
         parseDataDraft('category');
       }
-    }
-    if (widget.draftService!.serviceType.isNotEmpty) {
-      parseDataDraft("type");
-    }
-    if (widget.draftService!.duration.isNotEmpty) {
-      parseDataDraft("duration");
-    }
-    if (widget.draftService!.serviceLevel.isNotEmpty) {
-      parseDataDraft("level");
+      if (widget.draftService!.serviceType.isNotEmpty) {
+        parseDataDraft("type");
+      }
+      if (widget.draftService!.duration.isNotEmpty) {
+        parseDataDraft("duration");
+      }
+      if (widget.draftService!.serviceLevel.isNotEmpty) {
+        parseDataDraft("level");
+      }
     }
   }
 

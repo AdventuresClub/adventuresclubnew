@@ -1373,7 +1373,7 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
   void saveLastPage() async {
     try {
       var response = await http.post(
-          Uri.parse("${Constants.baseUrl}api/v1/third_geo_location_creation"),
+          Uri.parse("${Constants.baseUrl}/api/v1/third_geo_location_creation"),
           body: {
             "provider_id": Constants.userId.toString(),
             "service_id": widget.draftService!.id.toString(),
