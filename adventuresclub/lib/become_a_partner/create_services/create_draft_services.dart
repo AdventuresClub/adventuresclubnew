@@ -14,6 +14,7 @@ import 'package:adventuresclub/models/services/aimed_for_model.dart';
 import 'package:adventuresclub/models/services/create_services/create_services_plan_one.dart';
 import 'package:adventuresclub/models/services/create_services/create_services_program%20_model.dart';
 import 'package:adventuresclub/models/services/dependencies_model.dart';
+import 'package:adventuresclub/models/services/service_image_model.dart';
 import 'package:adventuresclub/widgets/buttons/bottom_button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -145,6 +146,7 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
     endDate = "endDate".tr();
     getData();
     if (widget.draftService != null) {
+      count = 1;
       adventureName.text = widget.draftService!.adventureName;
       infoController.text = widget.draftService!.writeInformation;
       availableSeatsController.text = widget.draftService!.aSeats.toString();
@@ -594,7 +596,7 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
     //checkPlan();
     if (count == 0 //&& imageList.isNotEmpty
         ) {
-      //  createService();
+      saveDraft();
       setState(() {
         count = 1;
       });
@@ -804,9 +806,13 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
     if (count == 0) {
       Navigator.of(context).pop();
     } else {
-      setState(() {
-        count--;
-      });
+      if (count != 1) {
+        setState(() {
+          count--;
+        });
+      } else {
+        Navigator.of(context).pop();
+      }
     }
   }
 
@@ -1159,11 +1165,31 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
     activitiesId = aId;
   }
 
+  Future<List<Uint8List>> convertFilePathsToUint8List(
+      List<String> imageList) async {
+    return await Future.wait(
+        imageList.map((path) async => await File(path).readAsBytes()));
+  }
+
+  void getImagesList(List<ServiceImageModel> images) {
+    for (var element in widget.draftService!.images) {
+      iList.add(element.imageUrl);
+    }
+  }
+
+  List<String> iList = [];
   void saveDraft() async {
     List<Uint8List> banners = [];
-    imageList.forEach((element) {
-      banners.add(element.readAsBytesSync());
-    });
+    if (widget.draftService != null) {
+      if (widget.draftService!.images.isNotEmpty) {
+        banners = await convertFilePathsToUint8List(iList);
+      }
+    } else {
+      imageList.forEach((element) {
+        banners.add(element.readAsBytesSync());
+      });
+    }
+
     try {
       var request = http.MultipartRequest(
         "POST",

@@ -48,6 +48,9 @@ class _BannerPageState extends State<BannerPage> {
       // await file.writeAsString(text);
       // imageBanners.add(file);
       imageString.add(element.imageUrl);
+      // if (imageString.length >= 1) {
+      //   imageString.add("");
+      // }
     }
   }
 
@@ -137,9 +140,14 @@ class _BannerPageState extends State<BannerPage> {
 
   //https://adventuresclub.net/adventureClubSIT/api/v1/create_service_advanced
 
-  void deleteImage(int i) {
-    imageBanners.removeAt(i);
-    imageList.removeAt(i);
+  void deleteImage(int i, String type) {
+    if (type == "draft") {
+      imageString.removeAt(i);
+    } else {
+      imageBanners.removeAt(i);
+      imageList.removeAt(i);
+    }
+
     getAllImages();
   }
 
@@ -165,24 +173,26 @@ class _BannerPageState extends State<BannerPage> {
                       const SizedBox(
                         height: 10,
                       ),
-                      GestureDetector(
-                        onTap: addImageWidget,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            const Image(
-                                image: ExactAssetImage('images/add-circle.png'),
-                                height: 20),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            MyText(
-                              text: 'addMore'.tr(),
-                              color: bluishColor,
-                            )
-                          ],
+                      if (imageString.isEmpty)
+                        GestureDetector(
+                          onTap: addImageWidget,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              const Image(
+                                  image:
+                                      ExactAssetImage('images/add-circle.png'),
+                                  height: 20),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              MyText(
+                                text: 'addMore'.tr(),
+                                color: bluishColor,
+                              )
+                            ],
+                          ),
                         ),
-                      ),
                       if (widget.draft != null)
                         for (int y = 0; y < imageString.length; y++)
                           imageString[y].isEmpty
@@ -256,31 +266,31 @@ class _BannerPageState extends State<BannerPage> {
                                           ),
                                         ),
                                       ),
-                                      Positioned(
-                                        right: 5,
-                                        top: 10,
-                                        child: GestureDetector(
-                                          onTap: () => editPickMedia(y),
-                                          child: Container(
-                                            height: 40,
-                                            width: 40,
-                                            decoration: BoxDecoration(
-                                              color: blackColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(32),
-                                            ),
-                                            child: const Icon(
-                                              Icons.edit,
-                                              color: whiteColor,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                      // Positioned(
+                                      //   right: 5,
+                                      //   top: 10,
+                                      //   child: GestureDetector(
+                                      //     onTap: () => editPickMedia(y),
+                                      //     child: Container(
+                                      //       height: 40,
+                                      //       width: 40,
+                                      //       decoration: BoxDecoration(
+                                      //         color: blackColor,
+                                      //         borderRadius:
+                                      //             BorderRadius.circular(32),
+                                      //       ),
+                                      //       child: const Icon(
+                                      //         Icons.edit,
+                                      //         color: whiteColor,
+                                      //       ),
+                                      //     ),
+                                      //   ),
+                                      // ),
                                       Positioned(
                                         right: 5,
                                         top: 60,
                                         child: GestureDetector(
-                                          onTap: () => deleteImage(y),
+                                          onTap: () => deleteImage(y, "draft"),
                                           child: Container(
                                             height: 40,
                                             width: 40,
@@ -299,7 +309,7 @@ class _BannerPageState extends State<BannerPage> {
                                     ],
                                   ),
                                 ),
-                      if (widget.draft == null)
+                      if (imageString.isEmpty)
                         for (int y = 0; y < imageBanners.length; y++)
                           //ImageContainer(imageBanners[y], addMedia, y),
                           imageBanners[y].path.isEmpty
@@ -396,7 +406,7 @@ class _BannerPageState extends State<BannerPage> {
                                         right: 5,
                                         top: 60,
                                         child: GestureDetector(
-                                          onTap: () => deleteImage(y),
+                                          onTap: () => deleteImage(y, "create"),
                                           child: Container(
                                             height: 40,
                                             width: 40,
