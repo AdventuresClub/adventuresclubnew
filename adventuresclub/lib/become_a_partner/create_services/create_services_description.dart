@@ -70,13 +70,13 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
   List<String> selectedActivites = [];
   List<int> selectedActivitesid = [];
   bool showRegion = false;
-  int selectedRegion = 1;
-  int selectedCategory = 1;
-  int selectedServiceSector = 1;
-  int selectedServiceType = 1;
-  int selectedDuration = 1;
-  int selectedLevel = 1;
-  int? currentIndex;
+  late int selectedRegion;
+  late int selectedCategory;
+  late int selectedServiceSector;
+  late int selectedServiceType;
+  late int selectedDuration;
+  late int selectedLevel;
+  late int currentIndex;
   var getCountry = 'Oman';
   List<WnHModel> weightList = [];
   List<String> countryList = [
@@ -104,6 +104,29 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
     super.initState();
     getData();
     //   getRegionId();
+  }
+
+  void getRegionId() {
+    print(ConstantsCreateNewServices.selectedRegionId);
+  }
+
+  void getData() {
+    setState(() {
+      loading = true;
+    });
+    regionList = Constants.regionList;
+    categoryFilter = Constants.categoryFilter;
+    filterSectors = Constants.filterSectors;
+    serviceFilter = Constants.serviceFilter;
+    durationFilter = Constants.durationFilter;
+    regionFilter = Constants.regionFilter;
+    levelFilter = Constants.levelFilter;
+    activitiesFilter = Constants.activitiesFilter;
+    parseActivity(Constants.activitiesFilter);
+    getAllData();
+  }
+
+  void getAllData() {
     if (widget.draftService != null) {
       if (widget.draftService!.region.isNotEmpty) {
         parseDataDraft("region");
@@ -126,25 +149,6 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
     }
   }
 
-  void getRegionId() {
-    print(ConstantsCreateNewServices.selectedRegionId);
-  }
-
-  void getData() {
-    setState(() {
-      loading = true;
-    });
-    regionList = Constants.regionList;
-    categoryFilter = Constants.categoryFilter;
-    filterSectors = Constants.filterSectors;
-    serviceFilter = Constants.serviceFilter;
-    durationFilter = Constants.durationFilter;
-    regionFilter = Constants.regionFilter;
-    levelFilter = Constants.levelFilter;
-    activitiesFilter = Constants.activitiesFilter;
-    parseActivity(Constants.activitiesFilter);
-  }
-
   void parseDataDraft(String type) {
     if (type == "region") {
       if (widget.draftService!.region.isNotEmpty ||
@@ -152,82 +156,94 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
         int regionId = 0;
         selectedRegion = regionList.indexWhere(
             (element) => element.region == widget.draftService!.region);
-        if (selectedRegion > 1) {
-          regionId = regionList[selectedRegion].regionId;
-          parseData("region", regionId);
+        if (selectedRegion != -1) {
+          if (selectedRegion >= 0) {
+            regionId = regionList[selectedRegion].regionId;
+            parseData("region", regionId);
+            setState(() {
+              regionList[selectedRegion].showCountry = true;
+            });
+          }
+        } else {
+          selectedRegion = 1;
         }
-      }
-      if (selectedRegion >= 0) {
-        setState(() {
-          regionList[selectedRegion].showCountry = true;
-        });
       }
     } else if (type == "sector") {
       if (widget.draftService!.serviceSector.isNotEmpty) {
         int sectorId = 0;
         selectedServiceSector = filterSectors.indexWhere(
             (element) => element.sector == widget.draftService!.serviceSector);
-        if (selectedServiceSector > 1) {
-          sectorId = filterSectors[selectedServiceSector].id;
-          parseData("sector", sectorId);
+        if (selectedServiceSector != -1) {
+          if (selectedServiceSector >= 0) {
+            sectorId = filterSectors[selectedServiceSector].id;
+            parseData("sector", sectorId);
+            setState(() {
+              filterSectors[selectedServiceSector].showfilterSectors = true;
+            });
+          }
+        } else {
+          selectedServiceSector = 1;
         }
-      }
-      if (selectedServiceSector >= 0) {
-        setState(() {
-          filterSectors[selectedServiceSector].showfilterSectors = true;
-        });
       }
     } else if (type == "category") {
       int categoryId = 0;
       selectedCategory = categoryFilter.indexWhere((element) =>
           element.category == widget.draftService!.serviceCategory);
-      if (selectedCategory > 1) {
-        categoryId = categoryFilter[selectedCategory].id;
-        parseData("category", categoryId);
-      }
-      if (selectedCategory >= 0) {
-        setState(() {
-          categoryFilter[selectedCategory].showCategoryFilter = true;
-        });
+      if (selectedCategory != -1) {
+        if (selectedCategory >= 0) {
+          categoryId = categoryFilter[selectedCategory].id;
+          parseData("category", categoryId);
+          setState(() {
+            categoryFilter[selectedCategory].showCategoryFilter = true;
+          });
+        }
+      } else {
+        selectedCategory = 1;
       }
     } else if (type == "type") {
       int typeId = 0;
       selectedServiceType = serviceFilter.indexWhere(
           (element) => element.type == widget.draftService!.serviceType);
-      if (selectedServiceType > 1) {
-        typeId = serviceFilter[selectedServiceType].id;
-        parseData("type", typeId);
-      }
-      if (selectedServiceType >= 0) {
-        setState(() {
-          serviceFilter[selectedServiceType].showServiceFilter = true;
-        });
+      if (selectedServiceType != -1) {
+        if (selectedServiceType >= 0) {
+          typeId = serviceFilter[selectedServiceType].id;
+          parseData("type", typeId);
+          setState(() {
+            serviceFilter[selectedServiceType].showServiceFilter = true;
+          });
+        }
+      } else {
+        selectedServiceType = 1;
       }
     } else if (type == "duration") {
       int durationId = 0;
       selectedDuration = durationFilter.indexWhere(
           (element) => element.duration == widget.draftService!.duration);
-      if (selectedDuration > 1) {
-        durationId = durationFilter[selectedDuration].id;
-        parseData("duration", durationId);
+      if (selectedDuration != -1) {
         if (selectedDuration >= 0) {
+          durationId = durationFilter[selectedDuration].id;
+          parseData("duration", durationId);
           setState(() {
             durationFilter[selectedDuration].showDuration = true;
           });
         }
+      } else {
+        selectedDuration = 1;
       }
     } else if (type == "level") {
       int typeId = 0;
       selectedLevel = levelFilter.indexWhere(
           (element) => element.level == widget.draftService!.serviceLevel);
-      if (selectedLevel > 1) {
-        typeId = levelFilter[selectedLevel].id;
-        parseData("level", typeId);
-      }
-      if (selectedLevel >= 0) {
-        setState(() {
-          levelFilter[selectedLevel].showLevel = true;
-        });
+      if (selectedDuration != -1) {
+        if (selectedLevel >= 0) {
+          typeId = levelFilter[selectedLevel].id;
+          parseData("level", typeId);
+          setState(() {
+            levelFilter[selectedLevel].showLevel = true;
+          });
+        }
+      } else {
+        selectedLevel = 1;
       }
     }
   }

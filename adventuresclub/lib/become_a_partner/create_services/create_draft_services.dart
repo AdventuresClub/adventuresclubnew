@@ -161,10 +161,12 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
       } else if (widget.draftService!.sPlan == 1) {
         particularWeekDays = true;
         sPlan = 1;
+        getDaysData();
       }
       if (widget.draftService!.activityIncludes.isNotEmpty) {
         for (var element in widget.draftService!.activityIncludes) {
-          activitiesId.add(element.id);
+          int i = int.tryParse(element.activityId) ?? 0;
+          activitiesId.add(i);
         }
       }
       if (widget.draftService!.dependency.isNotEmpty) {
@@ -197,6 +199,29 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
       }
     }
     // addProgramData();
+  }
+
+  void getDaysData() {
+    if (widget.draftService!.availabilityPlan.isNotEmpty) {
+      for (int i = 0; i < widget.draftService!.availabilityPlan.length; i++) {
+        if (widget.draftService!.availabilityPlan[i].day == "Monday") {
+          daysValue[0] = true;
+        } else if (widget.draftService!.availabilityPlan[i].day == "Tuesday") {
+          daysValue[1] = true;
+        } else if (widget.draftService!.availabilityPlan[i].day ==
+            "Wednesday") {
+          daysValue[2] = true;
+        } else if (widget.draftService!.availabilityPlan[i].day == "Thursday") {
+          daysValue[3] = true;
+        } else if (widget.draftService!.availabilityPlan[i].day == "Friday") {
+          daysValue[4] = true;
+        } else if (widget.draftService!.availabilityPlan[i].day == "Saturday") {
+          daysValue[5] = true;
+        } else if (widget.draftService!.availabilityPlan[i].day == "Sunday") {
+          daysValue[6] = true;
+        }
+      }
+    }
   }
 
   DateTime stringToDateTime(String dateString,
@@ -1254,7 +1279,7 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
             "service_for": selectedActivitesId,
             "dependency": selectedDependencyId,
             "service_plan": sPlan.toString(),
-            "service_plan_days": "1,2",
+            "service_plan_days": servicePlanId, //"1,2",
             "particular_date":
                 particularDate, //ConstantsCreateNewServices.startDate,
             "start_date":
