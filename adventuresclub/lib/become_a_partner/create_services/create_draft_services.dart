@@ -106,9 +106,7 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
     //     DateTime.now(),
     //     DateTime.now())
   ];
-  List<CreateServicesPlanOneModel> onePlan = [
-    CreateServicesPlanOneModel("", "")
-  ];
+  List<CreateServicesPlanOneModel> onePlan = [];
   String programSchedule = "";
   String programTitle = "";
   String programSelecteDate1 = "";
@@ -1385,17 +1383,25 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
         "service_id": widget.draftService!.id.toString()
       };
       String space = "";
-      st.forEach((element) {
-        //log(element);
-        programData["gathering_start_time[]$space"] = element;
+      if (sPlan == 2) {
+        st.forEach((element) {
+          programData["gathering_start_time[]$space"] = element;
+          space += " ";
+        });
+      } else {
+        programData["gathering_start_time[]$space"] = "element";
         space += " ";
-      });
+      }
       space = "";
-      et.forEach((element1) {
-        // log(element1);
-        programData["gathering_end_time[]$space"] = element1;
+      if (sPlan == 2) {
+        et.forEach((element1) {
+          programData["gathering_end_time[]$space"] = element1;
+          space += " ";
+        });
+      } else {
+        programData["gathering_end_time[]$space"] = "element1";
         space += " ";
-      });
+      }
       space = "";
       titleList.forEach((element) {
         programData["schedule_title[]$space"] = element;
@@ -1407,10 +1413,16 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
         space += " ";
       });
       space = "";
-      d.forEach((element) {
-        programData["gathering_date[]$space"] = element;
+      if (sPlan == 2) {
+        d.forEach((element) {
+          programData["gathering_date[]$space"] = element;
+          space += " ";
+        });
+      } else {
+        programData["gathering_date[]$space"] = "element";
         space += " ";
-      });
+      }
+
       request.fields.addAll(programData);
       final response = await request.send();
       log(response.toString());
