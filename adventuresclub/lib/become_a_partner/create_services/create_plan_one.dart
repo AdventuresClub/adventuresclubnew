@@ -7,9 +7,8 @@ import 'package:flutter/material.dart';
 class CreatePlanOne extends StatefulWidget {
   final Function parseData;
   final int index;
-  final ServicesModel? draftService;
-  const CreatePlanOne(this.parseData, this.index,
-      {this.draftService, super.key});
+  final CreateServicesPlanOneModel? draftPlan;
+  const CreatePlanOne(this.parseData, this.index, {this.draftPlan, super.key});
 
   @override
   State<CreatePlanOne> createState() => _CreatePlanOneState();
@@ -22,6 +21,10 @@ class _CreatePlanOneState extends State<CreatePlanOne> {
   @override
   void initState() {
     super.initState();
+    if (widget.draftPlan != null) {
+      titleController.text = widget.draftPlan!.title;
+      scheduleController.text = widget.draftPlan!.description;
+    }
   }
 
   void sendData() {

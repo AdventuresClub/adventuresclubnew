@@ -107,6 +107,7 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
     //     DateTime.now())
   ];
   List<CreateServicesPlanOneModel> onePlan = [];
+  List<CreateServicesPlanOneModel> draftPlanOne = [];
   String programSchedule = "";
   String programTitle = "";
   String programSelecteDate1 = "";
@@ -184,16 +185,22 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
       for (int i = 0; i < widget.draftService!.programmes.length; i++) {
         Duration durationSt = Duration.zero;
         Duration durationEt = Duration.zero;
-        pm.add(CreateServicesProgramModel(
-            widget.draftService!.programmes[i].title,
-            stringToDateTime(widget.draftService!.programmes[i].sD),
-            stringToDateTime(widget.draftService!.programmes[i].eD),
-            durationSt,
-            durationEt,
-            widget.draftService!.programmes[i].des,
-            DateTime.now(),
-            //widget.pm.adventureStartDate,
-            DateTime.now()));
+        if (widget.draftService!.sPlan == 2) {
+          pm.add(CreateServicesProgramModel(
+              widget.draftService!.programmes[i].title,
+              stringToDateTime(widget.draftService!.programmes[i].sD),
+              stringToDateTime(widget.draftService!.programmes[i].eD),
+              durationSt,
+              durationEt,
+              widget.draftService!.programmes[i].des,
+              DateTime.now(),
+              //widget.pm.adventureStartDate,
+              DateTime.now()));
+        } else {
+          draftPlanOne.add(CreateServicesPlanOneModel(
+              widget.draftService!.programmes[i].title,
+              widget.draftService!.programmes[i].des));
+        }
       }
     }
     // addProgramData();
@@ -1957,7 +1964,8 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
                             child: Column(
                               children: [
                                 for (int y = 0; y < onePlan.length; y++)
-                                  CreatePlanOne(getProgramOneData, y),
+                                  CreatePlanOne(getProgramOneData, y,
+                                      draftPlan: draftPlanOne[y]),
                                 const SizedBox(
                                   height: 10,
                                 ),
