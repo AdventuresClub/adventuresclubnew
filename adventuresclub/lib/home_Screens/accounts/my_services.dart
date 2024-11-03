@@ -162,7 +162,7 @@ class _MyServicesState extends State<MyServices> {
 
   Future<void> myServicesApi() async {
     getNotificatioNumber();
-    getDrafts();
+
     setState(() {
       loading = true;
     });
@@ -357,14 +357,15 @@ class _MyServicesState extends State<MyServices> {
         allServices.add(nSm);
         allAccomodation.add(nSm);
         HomeServicesModel adv = HomeServicesModel("", gAccomodationSModel);
-        setState(() {
-          loading = false;
-          filteredServices = allServices;
-        });
+        //setState(() {
+        // loading = false;
+        filteredServices = allServices;
+        //});
         print(response.statusCode);
         print(response.body);
         print(response.headers);
       }));
+      getDrafts();
     } catch (e) {
       print(e.toString());
     }
@@ -599,15 +600,16 @@ class _MyServicesState extends State<MyServices> {
         //gAccomodationSModel.add(nSm);
         allDraftServices.add(nSm);
         filteredDraftServices = allDraftServices;
+        filteredServices.insert(0, filteredDraftServices[0]);
       }));
     } catch (e) {
       if (mounted) {
         Constants.showMessage(context, e.toString());
       }
     } finally {
-      // setState(() {
-      //   loading = false;
-      // });
+      setState(() {
+        loading = false;
+      });
     }
   }
 
@@ -734,10 +736,10 @@ class _MyServicesState extends State<MyServices> {
               )
             : Column(
                 children: [
-                  if (filteredDraftServices.isNotEmpty)
-                    Expanded(
-                        child: MyDrafts(
-                            filteredDraftServices: filteredDraftServices)),
+                  // if (filteredDraftServices.isNotEmpty)
+                  //   Expanded(
+                  //       child: MyDrafts(
+                  //           filteredDraftServices: filteredDraftServices)),
                   // const SizedBox(
                   //   height: 5,
                   // ),

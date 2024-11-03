@@ -197,7 +197,7 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
               //widget.pm.adventureStartDate,
               DateTime.now()));
         } else {
-          draftPlanOne.add(CreateServicesPlanOneModel(
+          onePlan.add(CreateServicesPlanOneModel(
               widget.draftService!.programmes[i].title,
               widget.draftService!.programmes[i].des));
         }
@@ -1965,7 +1965,7 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
                               children: [
                                 for (int y = 0; y < onePlan.length; y++)
                                   CreatePlanOne(getProgramOneData, y,
-                                      draftPlan: draftPlanOne[y]),
+                                      draftPlan: onePlan[y]),
                                 const SizedBox(
                                   height: 10,
                                 ),
