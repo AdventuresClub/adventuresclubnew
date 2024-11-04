@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls, deprecated_member_use
 
 import 'dart:convert';
+import 'package:adventuresclub/become_a_partner/create_services/create_draft_services.dart';
 import 'package:adventuresclub/become_a_partner/create_services/create_new_services.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/my_drafts.dart';
@@ -376,15 +377,27 @@ class _MyServicesState extends State<MyServices> {
   }
 
   void goToDetails(ServicesModel gm) async {
-    await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return MyServicesAdDetails(
-            gm,
-          );
-        },
-      ),
-    );
+    if (gm.status != "3") {
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) {
+            return MyServicesAdDetails(
+              gm,
+            );
+          },
+        ),
+      );
+    } else {
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) {
+            return CreateDraftServices(
+              draftService: gm,
+            );
+          },
+        ),
+      );
+    }
     myServicesApi();
   }
 
