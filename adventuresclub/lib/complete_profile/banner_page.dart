@@ -17,8 +17,8 @@ class BannerPage extends StatefulWidget {
   final TextEditingController adventureName;
   final Function sendImages;
   final ServicesModel? draft;
-  const BannerPage(this.sendImages, this.adventureName, this.draft,
-      {super.key});
+  const BannerPage(this.sendImages, this.adventureName,
+      {this.draft, super.key});
 
   @override
   State<BannerPage> createState() => _BannerPageState();

@@ -163,7 +163,6 @@ class _MyServicesState extends State<MyServices> {
 
   Future<void> myServicesApi() async {
     getNotificatioNumber();
-
     setState(() {
       loading = true;
     });
@@ -405,9 +404,7 @@ class _MyServicesState extends State<MyServices> {
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return CreateNewServices(
-            draftService: gm,
-          );
+          return CreateNewServices();
         },
       ),
     );

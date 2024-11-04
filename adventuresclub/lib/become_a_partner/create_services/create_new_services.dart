@@ -9,7 +9,6 @@ import 'package:adventuresclub/complete_profile/banner_page.dart';
 import 'package:adventuresclub/complete_profile/cost.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/constants_create_new_services.dart';
-import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
 import 'package:adventuresclub/models/services/create_services/create_services_plan_one.dart';
 import 'package:adventuresclub/models/services/create_services/create_services_program%20_model.dart';
@@ -23,9 +22,7 @@ import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:http/http.dart' as http;
 
 class CreateNewServices extends StatefulWidget {
-  final ServicesModel? draftService;
-  final int? number;
-  const CreateNewServices({this.draftService, this.number, super.key});
+  const CreateNewServices({super.key});
 
   @override
   State<CreateNewServices> createState() => _CreateNewServicesState();
@@ -144,9 +141,6 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     formattedDate = 'startDate';
     endDate = "endDate".tr();
     getData();
-    if (widget.draftService != null) {
-      adventureName.text = widget.draftService!.adventureName;
-    }
     // addProgramData();
   }
 
@@ -1312,7 +1306,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       );
       dynamic programData = {
         "provider_id": Constants.profile.bp.id.toString(),
-        "service_id": widget.draftService!.id.toString(),
+        //"service_id": widget.draftService!.id.toString(),
         "write_information": infoController.text.trim(),
         "available_seats": availableSeatsController.text.trim(),
         "service_sector": sectorId.toString(),
@@ -1533,7 +1527,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                 IndexedStack(
                   index: count,
                   children: [
-                    BannerPage(getImages, adventureName, widget.draftService),
+                    BannerPage(getImages, adventureName),
                     CreateServicesDescription(
                       getActivityIds: getActivityId,
                       tapped: getIds,

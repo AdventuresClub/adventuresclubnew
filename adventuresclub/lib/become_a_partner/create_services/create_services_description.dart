@@ -70,13 +70,13 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
   List<String> selectedActivites = [];
   List<int> selectedActivitesid = [];
   bool showRegion = false;
-  late int selectedRegion;
-  late int selectedCategory;
-  late int selectedServiceSector;
-  late int selectedServiceType;
-  late int selectedDuration;
-  late int selectedLevel;
-  late int currentIndex;
+  int selectedRegion = 1;
+  int selectedCategory = 1;
+  int selectedServiceSector = 1;
+  int selectedServiceType = 1;
+  int selectedDuration = 1;
+  int selectedLevel = 1;
+  int currentIndex = 1;
   var getCountry = 'Oman';
   List<WnHModel> weightList = [];
   List<String> countryList = [

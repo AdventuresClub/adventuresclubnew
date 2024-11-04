@@ -1644,7 +1644,8 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
                 IndexedStack(
                   index: count,
                   children: [
-                    BannerPage(getImages, adventureName, widget.draftService),
+                    BannerPage(getImages, adventureName,
+                        draft: widget.draftService),
                     CreateServicesDescription(
                       draftService: widget.draftService,
                       getActivityIds: getActivityId,
