@@ -234,7 +234,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
       int typeId = 0;
       selectedLevel = levelFilter.indexWhere(
           (element) => element.level == widget.draftService!.serviceLevel);
-      if (selectedDuration != -1) {
+      if (selectedLevel != -1) {
         if (selectedLevel >= 0) {
           typeId = levelFilter[selectedLevel].id;
           parseData("level", typeId);

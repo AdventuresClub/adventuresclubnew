@@ -132,6 +132,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   double lat = 0;
   double lng = 0;
   Map mapFilter = {};
+  int serviceId = 0;
 
   @override
   void initState() {
@@ -500,6 +501,29 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     return result;
   }
 
+  void getDraftId() async {
+    try {
+      var response = await http.post(
+          Uri.parse("${Constants.baseUrl}/api/v1/get_draft_service"),
+          body: {
+            "provider_id": Constants.userId
+                .toString(), //Constants.profile.bp.id.toString(),
+            "country_id": Constants.countryId.toString(),
+          });
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      List<dynamic> result = decodedResponse['data'];
+      for (var element in result) {
+        serviceId = int.tryParse(element['id'].toString()) ?? 0;
+      }
+      setState(() {});
+    } catch (e) {
+      if (mounted) {
+        Constants.showMessage(context, "message");
+      }
+    }
+    debugPrint(serviceId.toString());
+  }
+
   void next() async {
     checkPlan();
     if (count == 0 && imageList.isNotEmpty) {
@@ -759,6 +783,15 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         //et.add(element.endTime.toString());
       });
       //programEndTime = et.join(",");
+    }
+  }
+
+  void clearProgramdata() {
+    if (sPlan == 1) {
+      titleList.clear();
+      descriptionList.clear();
+    } else {
+      pm = [];
     }
   }
 
@@ -1124,169 +1157,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       print(response.headers);
     } catch (e) {
       print(e.toString());
-    }
-  }
-
-  void saveSecondDraft() async {
-    await convertProgramData();
-    selectedActivityIncludesId = activitiesId.join(",");
-    List<Uint8List> banners = [];
-    imageList.forEach((element) {
-      banners.add(element.readAsBytesSync());
-    });
-    try {
-      var request = http.MultipartRequest(
-        "POST",
-        Uri.parse(
-            //${Constants.baseUrl}SIT
-            "${Constants.baseUrl}/api/v1/second_page_service"),
-      );
-      dynamic programData = {
-        // provider_id:3
-// service_id:186
-// write_information:Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
-// available_seats:50
-// service_sector:10
-// service_category:20
-// service_type:1
-// service_level:11
-// duration:5
-// region:15
-// service_for:3,4,5
-// dependency:4,5,6
-// service_plan:2
-// service_plan_days:1,2,3
-// particular_date:2024-06-03,2024-06-04
-// start_date:2024-06-03
-// end_date:2024-06-06
-// activities:5,6,7
-        "provider_id": Constants.profile.bp.id.toString(),
-        // service_id:186
-        'customer_id': Constants.userId.toString(),
-        'adventure_name': adventureName.text,
-        "country": Constants.countryId.toString(),
-        'region':
-            regionId.toString(), //ConstantsCreateNewServices.selectedRegionId
-        //.toString(), //selectedRegionId.toString(),
-        "service_sector": sectorId
-            .toString(), //ConstantsCreateNewServices.selectedSectorId.toString(), //selectedSectorId.toString(), //"",
-        "service_category": categoryId
-            .toString(), //ConstantsCreateNewServices.selectedCategoryId.toString(), //"", //selectedCategoryId.toString(), //"",
-        "service_type": typeId
-            .toString(), //ConstantsCreateNewServices.serviceTypeId.toString(), // //serviceTypeId.toString(), //"",
-        "service_level": levelId
-            .toString(), //ConstantsCreateNewServices.selectedlevelId.toString(), //selectedlevelId.toString(), //"",
-        "duration": durationId
-            .toString(), //ConstantsCreateNewServices.selectedDurationId.toString(), //selectedDurationId.toString(), //"",
-        "available_seats": availableSeatsController.text, //"",
-        "start_date":
-            ConstantsCreateNewServices.startDate.toString(), //startDate, //"",
-        "end_date":
-            ConstantsCreateNewServices.endDate.toString(), //endDate, //"",
-        "write_information": infoController.text, //infoController.text, //"",
-        // it is for particular week or calender
-        "service_plan": sPlan.toString(), //"1", //"",
-        "cost_inc":
-            Constants.getTranslatedNumber(costOne.text), //setCost1.text, //"",
-        "cost_exc": Constants.getTranslatedNumber(
-            costTwo.text), //costTwo.text, //setCost2.text, //"",
-        "currency": "1", //  %%% this is hardcoded
-        "pre_requisites":
-            preRequisites.text, //"", //preReqController.text, //"",
-        "minimum_requirements":
-            minimumRequirement.text, //minController.text, //"",
-        "terms_conditions": terms.text, //tncController.text, //"",
-        "recommended": "1", // this is hardcoded
-        // this key needs to be discussed,
-        "service_plan_days": servicePlanId, //selectedActivitesId
-        //.toString(), //"1,6,7", //// %%%%this needs discussion
-        // "availability": servicePlanId,
-        "service_for": selectedActivitesId, //selectedActivitesId.toString(),
-        "particular_date":
-            ConstantsCreateNewServices.startDate, //gatheringDate, //"",
-        "activities": selectedActivityIncludesId, //"5", // activityId, //"",
-        "specific_address": specificAddressController
-            .text, //"", //iLiveInController.text, //"",
-        "dependency":
-            selectedDependencyId, //selectedDependencyId.toString(), //["1", "2", "3"],
-        "latitude": //"27.0546", //
-            ConstantsCreateNewServices.lat.toString(), //lat.toString(), //"",
-        "longitude": //"57.05650"
-            ConstantsCreateNewServices.lng.toString(), //lng.toString(), //"",
-      };
-      String space = "";
-      st.forEach((element) {
-        //log(element);
-        programData["gathering_start_time[]$space"] = element;
-        space += " ";
-      });
-      space = "";
-      et.forEach((element1) {
-        // log(element1);
-        programData["gathering_end_time[]$space"] = element1;
-        space += " ";
-      });
-      space = "";
-      titleList.forEach((element) {
-        programData["schedule_title[]$space"] = element;
-        space += " ";
-      });
-      space = "";
-      descriptionList.forEach((element) {
-        programData["program_description[]$space"] = element;
-        space += " ";
-      });
-      space = "";
-      d.forEach((element) {
-        programData["gathering_date[]$space"] = element;
-        space += " ";
-      });
-      request.fields.addAll(programData);
-      // debugPrint(programData);
-      final response = await request.send();
-
-      log(response.toString());
-      debugPrint(response.statusCode.toString());
-      // print(response.body);
-      print(response.headers);
-      clearAll();
-      showConfirmation();
-      //close();
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
-//   https://adventuresclub.net/adventureClubSIT/api/v1/second_page_service
-
-  void saveSecondPage() async {
-    List<Uint8List> banners = [];
-    imageList.forEach((element) {
-      banners.add(element.readAsBytesSync());
-    });
-    try {
-      var request = http.MultipartRequest(
-        "POST",
-        Uri.parse("${Constants.baseUrl}/api/v1/second_page_service"),
-      );
-      // banners.forEach((element) {
-      //   String fileName =
-      //       "${DateTime.now().millisecondsSinceEpoch.toString()}.png";
-      //   request.files.add(http.MultipartFile.fromBytes('banner[]', element,
-      //       filename: fileName));
-      // });
-      dynamic programData = {
-        "provider_id": Constants.profile.bp.id.toString(),
-        "adventure_name": adventureName.text,
-        "country_id": Constants.countryId.toString(),
-      };
-      request.fields.addAll(programData);
-      final response = await request.send();
-      log(response.toString());
-      debugPrint(response.statusCode.toString());
-      print(response.headers);
-    } catch (e) {
-      print(e.toString());
+    } finally {
+      getDraftId();
     }
   }
 
@@ -1306,7 +1178,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       );
       dynamic programData = {
         "provider_id": Constants.profile.bp.id.toString(),
-        //"service_id": widget.draftService!.id.toString(),
+        "service_id": serviceId.toString(),
         "write_information": infoController.text.trim(),
         "available_seats": availableSeatsController.text.trim(),
         "service_sector": sectorId.toString(),
@@ -1323,22 +1195,6 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         "start_date": ConstantsCreateNewServices.startDate.toString(),
         "end_date": ConstantsCreateNewServices.endDate.toString(),
         "activities": selectedActivityIncludesId,
-// service_sector:10
-// service_category:20
-// service_type:1
-// service_level:11
-// duration:5
-// region:15
-// service_for:3,4,5
-// dependency:4,5,6
-// service_plan:2
-// service_plan_days:1,2,3
-// particular_date:2024-06-03,2024-06-04
-// start_date:2024-06-03
-// end_date:2024-06-06
-// activities:5,6,7
-        // "provider_id": Constants.profile.bp.id.toString(),
-        // service_id:186
         'adventure_name': adventureName.text,
         "country": Constants.countryId.toString(),
         //ConstantsCreateNewServices.selectedRegionId
@@ -1377,6 +1233,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       //close();
     } catch (e) {
       print(e.toString());
+    } finally {
+      clearProgramdata();
     }
   }
 

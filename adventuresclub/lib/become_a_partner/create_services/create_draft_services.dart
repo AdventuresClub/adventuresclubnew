@@ -302,6 +302,30 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
     parseDependency(Constants.dependency);
   }
 
+  void showConfirmation1(String title) async {
+    showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+              contentPadding: const EdgeInsets.all(12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              title: const Text(
+                "Are you sure you want to delete this",
+                textAlign: TextAlign.center,
+              ),
+              actions: [
+                MaterialButton(
+                  onPressed: cancel,
+                  child: const Text("No"),
+                ),
+                MaterialButton(
+                  onPressed: () => deleteService(title),
+                  child: const Text("Yes"),
+                )
+              ],
+            ));
+  }
+
   void showConfirmation() async {
     showDialog(
         context: context,
@@ -1497,6 +1521,54 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
 
 //https://adventuresclub.net/adventureClubSIT/api/v1/third_geo_location_creation
 
+  void deleteService(String id) async {
+    try {
+      var response = await http.post(
+          Uri.parse("${Constants.baseUrl}/api/v1/services_delete"),
+          body: {
+            'services_id': id,
+          });
+      // var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      if (response.statusCode == 200) {
+        dynamic body = jsonDecode(response.body);
+        // error = decodedError['data']['name'];
+        // Constants.showMessage(context, body['message'].toString());
+        showdelete(body['message'].toString());
+      } else {
+        dynamic body = jsonDecode(response.body);
+        showdelete(body['message'].toString());
+      }
+      print(response.statusCode);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  void showdelete(String title) {
+    Navigator.of(context).pop();
+    deleteConfirmation(title);
+  }
+
+  void deleteConfirmation(String title) async {
+    showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+              contentPadding: const EdgeInsets.all(12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              title: Text(
+                title,
+                textAlign: TextAlign.center,
+              ),
+              actions: [
+                MaterialButton(
+                  onPressed: cancel,
+                  child: const Text("OK"),
+                )
+              ],
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -1524,6 +1596,17 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
             color: bluishColor,
             weight: FontWeight.bold,
           ),
+          actions: [
+            GestureDetector(
+              onTap: () =>
+                  showConfirmation1(widget.draftService!.id.toString()),
+              child: const Image(
+                image: ExactAssetImage('images/bin.png'),
+                height: 30,
+                width: 30,
+              ),
+            ),
+          ],
         ),
         body: SingleChildScrollView(
           controller: heightController,
