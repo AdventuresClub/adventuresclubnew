@@ -617,9 +617,11 @@ class _MyServicesState extends State<MyServices> {
         Constants.showMessage(context, e.toString());
       }
     } finally {
-      setState(() {
-        loading = false;
-      });
+      if (mounted) {
+        setState(() {
+          loading = false;
+        });
+      }
     }
   }
 

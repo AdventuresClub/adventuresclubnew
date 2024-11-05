@@ -1481,7 +1481,9 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
             "terms_conditions": terms.text,
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-      if (response.statusCode == 200) {}
+      if (response.statusCode == 200) {
+        showConfirmation();
+      }
     } catch (e) {
       print(e.toString());
     }
