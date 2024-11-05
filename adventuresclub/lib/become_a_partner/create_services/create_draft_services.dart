@@ -9,6 +9,7 @@ import 'package:adventuresclub/complete_profile/banner_page.dart';
 import 'package:adventuresclub/complete_profile/cost.dart';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/constants_create_new_services.dart';
+import 'package:adventuresclub/home_Screens/accounts/my_services.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/models/services/aimed_for_model.dart';
 import 'package:adventuresclub/models/services/create_services/create_services_plan_one.dart';
@@ -125,12 +126,12 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
   List<String> programOnetitleList = [];
   List<String> programOnedescriptionList = [];
   bool isTimeAfter = false;
-  int regionId = 0;
-  int sectorId = 0;
-  int categoryId = 0;
-  int typeId = 0;
-  int durationId = 0;
-  int levelId = 0;
+  late int regionId;
+  late int sectorId;
+  late int categoryId;
+  late int typeId;
+  late int durationId;
+  late int levelId;
   List<int> activitiesId = [];
   double lat = 0;
   double lng = 0;
@@ -391,7 +392,10 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
   }
 
   void cancel() {
-    Navigator.of(context).pop();
+    //Navigator.of(context).pop();
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) {
+      return const MyServices();
+    }));
   }
 
   void parseDependency(List<DependenciesModel> dm) {
@@ -865,6 +869,12 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
           count--;
         });
       } else {
+        regionId = -1;
+        sectorId = -1;
+        categoryId = -1;
+        typeId = -1;
+        durationId = -1;
+        levelId = -1;
         Navigator.of(context).pop();
       }
     }
@@ -1319,50 +1329,6 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       if (response.statusCode == 200) {}
-//       dynamic programData = {
-
-// // service_sector:10
-// // service_category:20
-// // service_type:1
-// // service_level:11
-// // duration:5
-// // region:15
-// // service_for:3,4,5
-// // dependency:4,5,6
-// // service_plan:2
-// // service_plan_days:1,2,3
-// // particular_date:2024-06-03,2024-06-04
-// // start_date:2024-06-03
-// // end_date:2024-06-06
-// // activities:5,6,7
-//         // "provider_id": Constants.profile.bp.id.toString(),
-//         // service_id:186
-//         // 'adventure_name': adventureName.text,
-//         // "country": Constants.countryId.toString(),
-//         // //ConstantsCreateNewServices.selectedRegionId
-//         // ////endDate, //"",
-//         // // it is for particular week or calender
-//         // "cost_inc":
-//         //     Constants.getTranslatedNumber(costOne.text), //setCost1.text, //"",
-//         // "cost_exc": Constants.getTranslatedNumber(
-//         //     costTwo.text), //costTwo.text, //setCost2.text, //"",
-//         // "currency": "1", //  %%% this is hardcoded
-//         // "pre_requisites":
-//         //     preRequisites.text, //"", //preReqController.text, //"",
-//         // "minimum_requirements":
-//         //     minimumRequirement.text, //minController.text, //"",
-//         // "terms_conditions": terms.text, //tncController.text, //"",
-//         // "recommended": "1", // this is hardcoded
-//         // // this key needs to be discussed,
-//         // //"5", // activityId, //"",
-//         // "specific_address": specificAddressController
-//         //     .text, //"", //iLiveInController.text, //"",
-//         // //selectedDependencyId.toString(), //["1", "2", "3"],
-//         // "latitude": //"27.0546", //
-//         //     ConstantsCreateNewServices.lat.toString(), //lat.toString(), //"",
-//         // "longitude": //"57.05650"
-//         //     ConstantsCreateNewServices.lng.toString(), //lng.toString(), //"",
-//       };
     } catch (e) {
       print(e.toString());
     }
@@ -1420,8 +1386,10 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
           space += " ";
         });
       } else {
-        programData["gathering_start_time[]$space"] = "element";
-        space += " ";
+        titleList.forEach((element) {
+          programData["gathering_start_time[]$space"] = "element";
+          space += " ";
+        });
       }
       space = "";
       if (sPlan == 2) {
@@ -1430,8 +1398,10 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
           space += " ";
         });
       } else {
-        programData["gathering_end_time[]$space"] = "element1";
-        space += " ";
+        titleList.forEach((element1) {
+          programData["gathering_end_time[]$space"] = "element1";
+          space += " ";
+        });
       }
       space = "";
       titleList.forEach((element) {
@@ -1450,18 +1420,29 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
           space += " ";
         });
       } else {
-        programData["gathering_date[]$space"] = "element";
-        space += " ";
+        titleList.forEach((element) {
+          programData["gathering_date[]$space"] = "element";
+          space += " ";
+        });
       }
 
       request.fields.addAll(programData);
       final response = await request.send();
       log(response.toString());
+      clearPrograms();
       debugPrint(response.statusCode.toString());
       print(response.headers);
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  void clearPrograms() {
+    titleList.clear();
+    descriptionList.clear();
+    d.clear();
+    et.clear();
+    st.clear();
   }
 
   void saveLastPage() async {

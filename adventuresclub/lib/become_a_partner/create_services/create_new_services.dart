@@ -620,10 +620,11 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       // pm[0].endDate = currentDate;
       // pm[0].adventureStartDate = startDate;
       // pm[0].adventureEndDate = currentDate;
+      await saveSecondDraft();
       setState(() {
         count = 2;
       });
-      saveSecondDraft1();
+
       heightController.animateTo(heightController.position.minScrollExtent,
           duration: const Duration(milliseconds: 500), curve: Curves.bounceIn);
     } else if (count == 2
@@ -658,6 +659,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       } else if (isTimeAfter) {
         message("End Time Cannot be before Start Time");
       }
+      saveThirdPage();
       setState(() {
         count = 3;
       });
@@ -793,6 +795,84 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     } else {
       pm = [];
     }
+  }
+
+  void saveThirdPage() async {
+    convertProgramData();
+    try {
+      var request = http.MultipartRequest(
+        "POST",
+        Uri.parse("${Constants.baseUrl}/api/v1/third_program_creation"),
+      );
+
+      dynamic programData = {
+        "provider_id": Constants.userId.toString(),
+        "service_id": serviceId.toString()
+      };
+      String space = "";
+      if (sPlan == 2) {
+        st.forEach((element) {
+          programData["gathering_start_time[]$space"] = element;
+          space += " ";
+        });
+      } else {
+        titleList.forEach((element) {
+          programData["gathering_start_time[]$space"] = "element";
+          space += " ";
+        });
+      }
+      space = "";
+      if (sPlan == 2) {
+        et.forEach((element1) {
+          programData["gathering_end_time[]$space"] = element1;
+          space += " ";
+        });
+      } else {
+        titleList.forEach((element1) {
+          programData["gathering_end_time[]$space"] = "element1";
+          space += " ";
+        });
+      }
+      space = "";
+      titleList.forEach((element) {
+        programData["schedule_title[]$space"] = element;
+        space += " ";
+      });
+      space = "";
+      descriptionList.forEach((element) {
+        programData["program_description[]$space"] = element;
+        space += " ";
+      });
+      space = "";
+      if (sPlan == 2) {
+        d.forEach((element) {
+          programData["gathering_date[]$space"] = element;
+          space += " ";
+        });
+      } else {
+        titleList.forEach((element) {
+          programData["gathering_date[]$space"] = "element";
+          space += " ";
+        });
+      }
+
+      request.fields.addAll(programData);
+      final response = await request.send();
+      log(response.toString());
+      clearPrograms();
+      debugPrint(response.statusCode.toString());
+      print(response.headers);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  void clearPrograms() {
+    titleList.clear();
+    descriptionList.clear();
+    d.clear();
+    et.clear();
+    st.clear();
   }
 
   void createService() async {
@@ -1162,75 +1242,120 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     }
   }
 
-  void saveSecondDraft1() async {
-    await convertProgramData();
-    selectedActivityIncludesId = activitiesId.join(",");
-    List<Uint8List> banners = [];
-    imageList.forEach((element) {
-      banners.add(element.readAsBytesSync());
-    });
-    try {
-      var request = http.MultipartRequest(
-        "POST",
-        Uri.parse(
-            //${Constants.baseUrl}SIT
-            "${Constants.baseUrl}/api/v1/second_page_service"),
-      );
-      dynamic programData = {
-        "provider_id": Constants.profile.bp.id.toString(),
-        "service_id": serviceId.toString(),
-        "write_information": infoController.text.trim(),
-        "available_seats": availableSeatsController.text.trim(),
-        "service_sector": sectorId.toString(),
-        "service_category": categoryId.toString(),
-        "service_type": typeId.toString(),
-        "service_level": levelId.toString(),
-        "duration": durationId.toString(),
-        'region': regionId.toString(),
-        "service_for": selectedActivitesId,
-        "dependency": selectedDependencyId,
-        "service_plan": sPlan.toString(),
-        "service_plan_days": servicePlanId,
-        "particular_date": ConstantsCreateNewServices.startDate,
-        "start_date": ConstantsCreateNewServices.startDate.toString(),
-        "end_date": ConstantsCreateNewServices.endDate.toString(),
-        "activities": selectedActivityIncludesId,
-        'adventure_name': adventureName.text,
-        "country": Constants.countryId.toString(),
-        //ConstantsCreateNewServices.selectedRegionId
-        ////endDate, //"",
-        // it is for particular week or calender
-        "cost_inc":
-            Constants.getTranslatedNumber(costOne.text), //setCost1.text, //"",
-        "cost_exc": Constants.getTranslatedNumber(
-            costTwo.text), //costTwo.text, //setCost2.text, //"",
-        "currency": "1", //  %%% this is hardcoded
-        "pre_requisites":
-            preRequisites.text, //"", //preReqController.text, //"",
-        "minimum_requirements":
-            minimumRequirement.text, //minController.text, //"",
-        "terms_conditions": terms.text, //tncController.text, //"",
-        "recommended": "1", // this is hardcoded
-        // this key needs to be discussed,
-        //"5", // activityId, //"",
-        "specific_address": specificAddressController
-            .text, //"", //iLiveInController.text, //"",
-        //selectedDependencyId.toString(), //["1", "2", "3"],
-        "latitude": //"27.0546", //
-            ConstantsCreateNewServices.lat.toString(), //lat.toString(), //"",
-        "longitude": //"57.05650"
-            ConstantsCreateNewServices.lng.toString(), //lng.toString(), //"",
-      };
+  // Future<void> saveSecondDraft1() async {
+  //   await convertProgramData();
+  //   selectedActivityIncludesId = activitiesId.join(",");
+  //   List<Uint8List> banners = [];
+  //   imageList.forEach((element) {
+  //     banners.add(element.readAsBytesSync());
+  //   });
+  //   try {
+  //     var request = http.MultipartRequest(
+  //       "POST",
+  //       Uri.parse(
+  //           //${Constants.baseUrl}SIT
+  //           "${Constants.baseUrl}/api/v1/second_page_service"),
+  //     );
+  //     dynamic programData = {
+  //       "provider_id": Constants.profile.bp.id.toString(),
+  //       "service_id": serviceId.toString(),
+  //       "write_information": infoController.text.trim(),
+  //       "available_seats": availableSeatsController.text.trim(),
+  //       "service_sector": sectorId.toString(),
+  //       "service_category": categoryId.toString(),
+  //       "service_type": typeId.toString(),
+  //       "service_level": levelId.toString(),
+  //       "duration": durationId.toString(),
+  //       'region': regionId.toString(),
+  //       "service_for": selectedActivitesId,
+  //       "dependency": selectedDependencyId,
+  //       "service_plan": sPlan.toString(),
+  //       "service_plan_days": servicePlanId,
+  //       "particular_date": ConstantsCreateNewServices.startDate,
+  //       "start_date": ConstantsCreateNewServices.startDate.toString(),
+  //       "end_date": ConstantsCreateNewServices.endDate.toString(),
+  //       "activities": selectedActivityIncludesId,
+  //       'adventure_name': adventureName.text,
+  //       "country": Constants.countryId.toString(),
+  //       //ConstantsCreateNewServices.selectedRegionId
+  //       ////endDate, //"",
+  //       // it is for particular week or calender
+  //       "cost_inc":
+  //           Constants.getTranslatedNumber(costOne.text), //setCost1.text, //"",
+  //       "cost_exc": Constants.getTranslatedNumber(
+  //           costTwo.text), //costTwo.text, //setCost2.text, //"",
+  //       "currency": "1", //  %%% this is hardcoded
+  //       "pre_requisites":
+  //           preRequisites.text, //"", //preReqController.text, //"",
+  //       "minimum_requirements":
+  //           minimumRequirement.text, //minController.text, //"",
+  //       "terms_conditions": terms.text, //tncController.text, //"",
+  //       "recommended": "1", // this is hardcoded
+  //       // this key needs to be discussed,
+  //       //"5", // activityId, //"",
+  //       "specific_address": specificAddressController
+  //           .text, //"", //iLiveInController.text, //"",
+  //       //selectedDependencyId.toString(), //["1", "2", "3"],
+  //       "latitude": //"27.0546", //
+  //           ConstantsCreateNewServices.lat.toString(), //lat.toString(), //"",
+  //       "longitude": //"57.05650"
+  //           ConstantsCreateNewServices.lng.toString(), //lng.toString(), //"",
+  //     };
 
-      request.fields.addAll(programData);
-      final response = await request.send();
-      log(response.toString());
-      debugPrint(response.statusCode.toString());
-      // print(response.body);
-      //print(response.headers);
-      //clearAll();
-      //showConfirmation();
-      //close();
+  //     request.fields.addAll(programData);
+  //     final response = await request.send();
+  //     log(response.toString());
+  //     debugPrint(response.statusCode.toString());
+  //     // print(response.body);
+  //     //print(response.headers);
+  //     //clearAll();
+  //     //showConfirmation();
+  //     //close();
+  //   } catch (e) {
+  //     print(e.toString());
+  //   } finally {
+  //     clearProgramdata();
+  //   }
+  // }
+
+  Future<void> saveSecondDraft() async {
+    await convertProgramData();
+    checkPlanTwo();
+    List<String> d = [
+      formattedDate,
+      //ConstantsCreateNewServices.startDate.toString(),
+      endDate,
+    ];
+    String particularDate = d.join(",");
+    selectedActivityIncludesId = activitiesId.join(",");
+    try {
+      var response = await http.post(
+          Uri.parse("${Constants.baseUrl}/api/v1/second_page_service"),
+          body: {
+            "provider_id": Constants.userId.toString(),
+            "service_id": serviceId,
+            "write_information": infoController.text.trim(),
+            "available_seats": availableSeatsController.text.trim(),
+            "service_sector": sectorId.toString(),
+            "service_category": categoryId.toString(),
+            "service_type": typeId.toString(),
+            "service_level": levelId.toString(),
+            "duration": durationId.toString(),
+            'region': regionId.toString(),
+            "service_for": selectedActivitesId,
+            "dependency": selectedDependencyId,
+            "service_plan": sPlan.toString(),
+            "service_plan_days": servicePlanId, //"1,2",
+            "particular_date":
+                particularDate, //ConstantsCreateNewServices.startDate,
+            "start_date":
+                formattedDate, //ConstantsCreateNewServices.startDate.toString(),
+            "end_date":
+                endDate, //ConstantsCreateNewServices.endDate.toString(),
+            "activities": selectedActivityIncludesId,
+          });
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      if (response.statusCode == 200) {}
     } catch (e) {
       print(e.toString());
     } finally {
