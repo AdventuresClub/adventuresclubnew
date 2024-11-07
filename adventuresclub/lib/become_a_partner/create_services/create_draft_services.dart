@@ -1368,6 +1368,11 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
   }
 
   void saveThirdPage() async {
+    titleList.clear();
+    descriptionList.clear();
+    d.clear();
+    et.clear();
+    st.clear();
     convertProgramData();
     try {
       var request = http.MultipartRequest(

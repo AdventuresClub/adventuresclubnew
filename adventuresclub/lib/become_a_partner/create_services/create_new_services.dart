@@ -1333,7 +1333,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
           Uri.parse("${Constants.baseUrl}/api/v1/second_page_service"),
           body: {
             "provider_id": Constants.userId.toString(),
-            "service_id": serviceId,
+            "service_id": serviceId.toString(),
             "write_information": infoController.text.trim(),
             "available_seats": availableSeatsController.text.trim(),
             "service_sector": sectorId.toString(),

@@ -115,10 +115,10 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            EditIcon(tapped: getData),
-            const SizedBox(
-              height: 20,
-            ),
+            // EditIcon(tapped: getData),
+            // const SizedBox(
+            //   height: 20,
+            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

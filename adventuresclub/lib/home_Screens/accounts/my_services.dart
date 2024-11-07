@@ -174,6 +174,8 @@ class _MyServicesState extends State<MyServices> {
       });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       List<dynamic> result = decodedResponse['data'];
+      List<ProgrammesModel> gPm = [];
+      gPm.clear();
       filteredServices.clear();
       result.forEach(((element) {
         List<AvailabilityPlanModel> gAccomodationPlanModel = [];
@@ -271,7 +273,7 @@ class _MyServicesState extends State<MyServices> {
             gAccomodationServImgModel.add(sm);
           });
         }
-        List<ProgrammesModel> gPm = [];
+
         dynamic programs = element['programs'];
         if (programs != null) {
           programs.forEach((p) {

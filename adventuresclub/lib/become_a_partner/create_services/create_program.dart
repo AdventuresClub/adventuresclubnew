@@ -142,11 +142,17 @@ class _CreateProgramState extends State<CreateProgram> {
   }
 
   Future<void> _selectDate(BuildContext context, int i) async {
+    DateTime? endDate;
+    if (widget.draftService != null) {
+      endDate = widget.draftService!.endDate;
+    } else {
+      endDate = widget.endDate;
+    }
     DateTime? tDate = (await showDatePicker(
       context: context,
       initialDate: widget.startDate, //widget.pm.adventureStartDate,
       firstDate: DateTime.now(), //widget.pm.adventureStartDate,
-      lastDate: widget.endDate,
+      lastDate: endDate,
     )); //widget.pm.adventureEndDate));
     if (tDate != null) {
       pickedDate = tDate;
@@ -263,7 +269,6 @@ class _CreateProgramState extends State<CreateProgram> {
   String extractDate(DateTime dateTime) {
     String date =
         '${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}';
-
     return date;
   }
 
@@ -271,7 +276,6 @@ class _CreateProgramState extends State<CreateProgram> {
     int hours = duration.inHours;
     int minutes = duration.inMinutes.remainder(60);
     int seconds = duration.inSeconds.remainder(60);
-
     return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
   }
 
