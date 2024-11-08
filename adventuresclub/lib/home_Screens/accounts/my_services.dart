@@ -610,7 +610,7 @@ class _MyServicesState extends State<MyServices> {
         //gAccomodationSModel.add(nSm);
         allDraftServices.add(nSm);
         filteredDraftServices = allDraftServices;
-        //  filteredServices.insert(0, filteredDraftServices[0]);
+        filteredServices.insert(0, filteredDraftServices[0]);
       }));
     } catch (e) {
       if (mounted) {
