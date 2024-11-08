@@ -228,11 +228,17 @@ class _CreateProgramState extends State<CreateProgram> {
   }
 
   void navMainPage() async {
+    DateTime? endDate;
+    if (widget.draftService != null) {
+      endDate = widget.draftService!.endDate;
+    } else {
+      endDate = widget.endDate;
+    }
     CreateServicesProgramModel? p =
         await Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       return CreateProgramMainPage(
         startTime: widget.startDate,
-        endTime: widget.endDate,
+        endTime: endDate!,
       );
     }));
     if (p != null) {

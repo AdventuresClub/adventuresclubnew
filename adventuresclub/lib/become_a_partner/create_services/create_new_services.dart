@@ -692,6 +692,14 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         message("Cost Cannot be less than 1");
         return;
       }
+      if (costOne.text.trim() == "0") {
+        message("Cost Cannot be less than 1");
+        return;
+      }
+      if (costTwo.text.trim().isEmpty) {
+        message("Please set cost Two");
+        return;
+      }
       if (preRequisites.text.trim().isEmpty) {
         message("Please Type prerequisites");
         return;

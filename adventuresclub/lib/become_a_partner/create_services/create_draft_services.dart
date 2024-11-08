@@ -572,49 +572,54 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
 
   bool checkPlans() {
     bool result = false;
-    pm.forEach((element) {
-      if (element.title.trim().isEmpty || element.title.length < 3) {
-        Constants.showMessage(
-            context, "Schdule Title Cannot Be for less than 3 characters");
-        result = false;
-      } else if (element.description.trim().isEmpty ||
-          element.description.length < 50) {
-        Constants.showMessage(
-            context, "Schdule Title Cannot Be for less than 50 characters");
-        result = false;
-      } else if (element.adventureStartDate.day == 0) {
-        Constants.showMessage(context, "Please Select Start Time");
-        result = false;
-      } else if (element.adventureEndDate.day == 0) {
-        Constants.showMessage(context, "Please Select End Time");
-        result = false;
-      }
-      // else if (element.startTime.inHours == 0) {
-      //   result = false;
-      // } else if (element.endDate.day == 0) {
-      //   result = false;
-      // }
-      else if (element.startTime.inHours == 0) {
-        Constants.showMessage(context, "Please Select Start Time");
-        result = false;
-      } else if (element.endTime.inHours == 0) {
-        Constants.showMessage(context, "Please Select End Time");
-        result = false;
-      } else {
-        result = true;
-      }
-      // if (element.title.length < 3) {
-      //   Constants.showMessage(
-      //       context, "Schdule Title Cannot Be for less than 3 characters");
-      //   return;
-      // }
-      // if () {
-      //   Constants.showMessage(
-      //       context, "Schdule Title Cannot Be for less than 50 characters");
-      //   return;
-      // }
-    });
+    if (widget.draftService == null) {
+      pm.forEach((element) {
+        if (element.title.trim().isEmpty || element.title.length < 3) {
+          Constants.showMessage(
+              context, "Schdule Title Cannot Be for less than 3 characters");
+          result = false;
+        } else if (element.description.trim().isEmpty ||
+            element.description.length < 50) {
+          Constants.showMessage(
+              context, "Schdule Title Cannot Be for less than 50 characters");
+          result = false;
+        } else if (element.adventureStartDate.day == 0) {
+          Constants.showMessage(context, "Please Select Start Time");
+          result = false;
+        } else if (element.adventureEndDate.day == 0) {
+          Constants.showMessage(context, "Please Select End Time");
+          result = false;
+        }
+        // else if (element.startTime.inHours == 0) {
+        //   result = false;
+        // } else if (element.endDate.day == 0) {
+        //   result = false;
+        // }
+        else if (element.startTime.inHours == 0) {
+          Constants.showMessage(context, "Please Select Start Time");
+          result = false;
+        } else if (element.endTime.inHours == 0) {
+          Constants.showMessage(context, "Please Select End Time");
+          result = false;
+        } else {
+          result = true;
+        }
+        // if (element.title.length < 3) {
+        //   Constants.showMessage(
+        //       context, "Schdule Title Cannot Be for less than 3 characters");
+        //   return;
+        // }
+        // if () {
+        //   Constants.showMessage(
+        //       context, "Schdule Title Cannot Be for less than 50 characters");
+        //   return;
+        // }
+      });
 
+      result = true;
+    } else {
+      result = true;
+    }
     return result;
   }
 
@@ -818,6 +823,14 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
         return;
       }
       if (costOne.text.trim() == "0") {
+        message("Cost Cannot be less than 1");
+        return;
+      }
+      if (costTwo.text.trim().isEmpty) {
+        message("Please set cost Two");
+        return;
+      }
+      if (costTwo.text.trim() == "0") {
         message("Cost Cannot be less than 1");
         return;
       }

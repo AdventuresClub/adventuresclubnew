@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:adventuresclub/become_a_partner/create_services/create_draft_services.dart';
 import 'package:adventuresclub/become_a_partner/create_services/create_new_services.dart';
 import 'package:adventuresclub/constants.dart';
-import 'package:adventuresclub/home_Screens/accounts/my_drafts.dart';
 import 'package:adventuresclub/home_Screens/accounts/myservices_ad_details.dart';
 import 'package:adventuresclub/models/filter_data_model/programs_model.dart';
 import 'package:adventuresclub/models/home_services/become_partner.dart';
@@ -174,8 +173,7 @@ class _MyServicesState extends State<MyServices> {
       });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       List<dynamic> result = decodedResponse['data'];
-      List<ProgrammesModel> gPm = [];
-      gPm.clear();
+
       filteredServices.clear();
       result.forEach(((element) {
         List<AvailabilityPlanModel> gAccomodationPlanModel = [];
@@ -273,7 +271,7 @@ class _MyServicesState extends State<MyServices> {
             gAccomodationServImgModel.add(sm);
           });
         }
-
+        List<ProgrammesModel> gPm = [];
         dynamic programs = element['programs'];
         if (programs != null) {
           programs.forEach((p) {
@@ -359,10 +357,10 @@ class _MyServicesState extends State<MyServices> {
         allServices.add(nSm);
         allAccomodation.add(nSm);
         HomeServicesModel adv = HomeServicesModel("", gAccomodationSModel);
-        //setState(() {
-        // loading = false;
+        // setState(() {
+        loading = false;
         filteredServices = allServices;
-        //});
+        // });
         print(response.statusCode);
         print(response.body);
         print(response.headers);
@@ -612,7 +610,7 @@ class _MyServicesState extends State<MyServices> {
         //gAccomodationSModel.add(nSm);
         allDraftServices.add(nSm);
         filteredDraftServices = allDraftServices;
-        filteredServices.insert(0, filteredDraftServices[0]);
+        //  filteredServices.insert(0, filteredDraftServices[0]);
       }));
     } catch (e) {
       if (mounted) {
