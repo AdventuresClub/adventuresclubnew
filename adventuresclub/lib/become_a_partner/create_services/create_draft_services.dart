@@ -1195,6 +1195,16 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
       ConstantsCreateNewServices.particularWeekDays =
           !ConstantsCreateNewServices.particularWeekDays;
       particularWeekDays = !particularWeekDays;
+      if (!particularWeekDays) {
+        onePlan.clear();
+        for (var element in daysValue) {
+          if (element) {
+            element = false;
+          }
+        }
+      } else {
+        pm.clear();
+      }
       //particularDay = !particularDay;
       // planChecked = !planChecked;
     });

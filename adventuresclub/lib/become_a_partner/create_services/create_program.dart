@@ -229,7 +229,7 @@ class _CreateProgramState extends State<CreateProgram> {
 
   void navMainPage() async {
     DateTime? endDate;
-    if (widget.draftService != null) {
+    if (widget.draftService != null && widget.draftService!.endDate.day > 0) {
       endDate = widget.draftService!.endDate;
     } else {
       endDate = widget.endDate;
