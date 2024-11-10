@@ -156,6 +156,8 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
         DateTime e = widget.draftService!.endDate;
         String date = "${d.year}-${d.month}-${d.day}";
         formattedDate = date;
+        currentDate = widget.draftService!.endDate;
+        startDate = widget.draftService!.startDate;
         endDate = "${e.year}-${e.month}-${e.day}";
         sPlan = 2;
       } else if (widget.draftService!.sPlan == 1) {
@@ -729,11 +731,11 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
         message("Please select from the service plan");
         return;
       }
-      if (sPlan == 2 && formattedDate == "startDate") {
+      if (sPlan == 2 && formattedDate == "startDate" && formattedDate == null) {
         message("Please select start Date");
         return;
       }
-      if (sPlan == 2 && endDate == "End Date") {
+      if (sPlan == 2 && endDate == "End Date" && endDate == null) {
         message("Please select End Date");
         return;
       }
@@ -1197,13 +1199,18 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
       particularWeekDays = !particularWeekDays;
       if (!particularWeekDays) {
         onePlan.clear();
-        for (var element in daysValue) {
-          if (element) {
-            element = false;
-          }
-        }
+        // daysValue.clear();
+        daysValue = List.filled(days.length, false);
+        // for (var element in daysValue) {
+        //   if (element) {
+        //     element = false;
+        //   }
+        // }
+        // setState(() {});
       } else {
         pm.clear();
+        formattedDate = "startDate";
+        endDate = "End Date";
       }
       //particularDay = !particularDay;
       // planChecked = !planChecked;

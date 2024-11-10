@@ -1,4 +1,5 @@
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/models/services/create_services/create_services_program%20_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +8,10 @@ class CreateProgramMainPage extends StatefulWidget {
   final CreateServicesProgramModel? program;
   final DateTime startTime;
   final DateTime endTime;
+  final ServicesModel? draftService;
   const CreateProgramMainPage(
       {this.program,
+      this.draftService,
       required this.startTime,
       required this.endTime,
       super.key});
@@ -79,16 +82,23 @@ class _CreateProgramMainPageState extends State<CreateProgramMainPage> {
   }
 
   Future<void> _selectDate(BuildContext context) async {
+    DateTime? endDate;
+    DateTime? startDate;
+    // if (widget.draftService != null) {
+    //   endDate = widget.draftService!.endDate;
+    //   startDate = widget.draftService!.startDate;
+    //} else {
+    endDate = widget.endTime;
+    startDate = widget.startTime;
+    //}
     DateTime? tDate = (await showDatePicker(
       context: context,
       // initialDate: DateTime.now(), //widget.pm.adventureStartDate,
       //firstDate: DateTime.now(), //widget.pm.adventureStartDate,
       //lastDate: DateTime.now(),
-      initialDate:
-          widget.startTime, //DateTime.now(), //widget.pm.adventureStartDate,
-      firstDate:
-          widget.startTime, //DateTime.now(), //widget.pm.adventureStartDate,
-      lastDate: widget.endTime,
+      initialDate: startDate, //DateTime.now(), //widget.pm.adventureStartDate,
+      firstDate: startDate, //DateTime.now(), //widget.pm.adventureStartDate,
+      lastDate: endDate,
     )); //widget.pm.adventureEndDate));
     if (tDate != null) {
       pickedDate = tDate;
