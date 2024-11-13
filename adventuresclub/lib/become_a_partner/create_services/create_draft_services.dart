@@ -731,6 +731,12 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
         message("Please select from the service plan");
         return;
       }
+      if (sPlan == 1) {
+        if (!daysValue.contains(true)) {
+          message("Please select days");
+          return;
+        }
+      }
       if (sPlan == 2 && formattedDate == "startDate" && formattedDate == null) {
         message("Please select start Date");
         return;
@@ -1215,6 +1221,7 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
       //particularDay = !particularDay;
       // planChecked = !planChecked;
     });
+    saveThirdPage();
     print(planChecked);
     setId();
   }
@@ -2105,6 +2112,8 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
                                   currentDate,
                                   //z,
                                   //pm[z],
+                                  pm: pm,
+                                  index: sPlan,
                                   draftService: widget.draftService,
                                 ),
                                 const SizedBox(

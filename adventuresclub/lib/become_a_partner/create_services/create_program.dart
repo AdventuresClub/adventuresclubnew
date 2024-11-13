@@ -14,13 +14,16 @@ class CreateProgram extends StatefulWidget {
   final DateTime startDate;
   final DateTime endDate;
   final ServicesModel? draftService;
-  // final int index;
+  final int? index;
+  final List<CreateServicesProgramModel>? pm;
   //final CreateServicesProgramModel pm;
   const CreateProgram(
       this.parseData, this.removeData, this.startDate, this.endDate,
-      // this.index,
+      //
       //this.pm,
       {this.draftService,
+      this.index,
+      this.pm,
       super.key});
 
   @override
@@ -56,28 +59,32 @@ class _CreateProgramState extends State<CreateProgram> {
 
   void getData() {
     if (widget.draftService != null) {
-      if (widget.draftService!.sPlan == 2) {
-        for (int i = 0; i < widget.draftService!.programmes.length; i++) {
-          Duration durationSt = Duration.zero;
-          Duration durationEt = Duration.zero;
-          DateTime startDate =
-              stringToDateTime(widget.draftService!.programmes[i].sD);
-          DateTime endDate =
-              stringToDateTime(widget.draftService!.programmes[i].eD);
-          durationSt =
-              Duration(hours: startDate.hour, minutes: startDate.minute);
-          durationEt = Duration(hours: endDate.hour, minutes: endDate.minute);
-          pm.add(CreateServicesProgramModel(
-              widget.draftService!.programmes[i].title,
-              startDate,
-              endDate,
-              durationSt,
-              durationEt,
-              widget.draftService!.programmes[i].des,
-              DateTime.now(),
-              //widget.pm.adventureStartDate,
-              DateTime.now()));
+      if (widget.draftService!.sPlan == 2 && widget.index == 2) {
+        if (widget.pm != null) {
+          pm = widget.pm!;
         }
+
+        //for (int i = 0; i < widget.draftService!.programmes.length; i++) {
+        // Duration durationSt = Duration.zero;
+        // Duration durationEt = Duration.zero;
+        // DateTime startDate =
+        //     stringToDateTime(widget.draftService!.programmes[i].sD);
+        // DateTime endDate =
+        //     stringToDateTime(widget.draftService!.programmes[i].eD);
+        // durationSt =
+        //     Duration(hours: startDate.hour, minutes: startDate.minute);
+        // durationEt = Duration(hours: endDate.hour, minutes: endDate.minute);
+        // pm.add(CreateServicesProgramModel(
+        //     widget.draftService!.programmes[i].title,
+        //     startDate,
+        //     endDate,
+        //     durationSt,
+        //     durationEt,
+        //     widget.draftService!.programmes[i].des,
+        //     DateTime.now(),
+        //     //widget.pm.adventureStartDate,
+        //     DateTime.now()));
+        //}
       }
     }
   }
