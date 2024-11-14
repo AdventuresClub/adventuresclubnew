@@ -23,7 +23,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/get_country.dart';
 
 class BottomNavigation extends StatefulWidget {
-  const BottomNavigation({Key? key}) : super(key: key);
+  const BottomNavigation({super.key});
 
   @override
   State<BottomNavigation> createState() => _BottomNavigationState();
