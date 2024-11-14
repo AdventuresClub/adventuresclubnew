@@ -17,6 +17,7 @@ import 'package:adventuresclub/models/services/dependencies_model.dart';
 import 'package:adventuresclub/models/services/included_activities_model.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
 import 'package:adventuresclub/provider/navigation_index_provider.dart';
+import 'package:adventuresclub/widgets/loading_widget.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/services_card.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -74,13 +75,17 @@ class _MyServicesState extends State<MyServices> {
 
   void goTo() async {
     if (Constants.expired == false) {
-      await Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) {
-            return const CreateNewServices(); //CompleteProfile();
-          },
-        ),
-      );
+      if (filteredDraftServices.isEmpty) {
+        await Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) {
+              return const CreateNewServices(); //CompleteProfile();
+            },
+          ),
+        );
+      } else {
+        draftAlert();
+      }
       myServicesApi();
     } else if (Constants.expired == true) {
       requestSent();
@@ -121,6 +126,54 @@ class _MyServicesState extends State<MyServices> {
                     onPressed: cancel,
                     child: MyText(
                       text: "No",
+                      weight: FontWeight.bold,
+                      color: blackColor,
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+        children: const [],
+      ),
+    );
+  }
+
+  void draftAlert() async {
+    showDialog(
+      context: context,
+      builder: (ctx) => SimpleDialog(
+        title: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            children: [
+              const Text(
+                "Alert",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                "You have one incomplete service. Please complete or delete the service draft to create a new one",
+                style: TextStyle(fontSize: 16),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  // MaterialButton(
+                  //   onPressed: packagesList,
+                  //   child: MyText(
+                  //     text: "Yes",
+                  //     weight: FontWeight.bold,
+                  //     color: blackColor,
+                  //   ),
+                  // ),
+                  MaterialButton(
+                    onPressed: cancel,
+                    child: MyText(
+                      text: "Ok",
                       weight: FontWeight.bold,
                       color: blackColor,
                     ),
@@ -741,68 +794,70 @@ class _MyServicesState extends State<MyServices> {
             ),
           ),
         ),
-        body: filteredServices.isEmpty
-            ? const Center(
-                child: Text("No Services Created Yet",
-                    style: TextStyle(fontWeight: FontWeight.w600)),
-              )
-            : Column(
-                children: [
-                  // if (filteredDraftServices.isNotEmpty)
-                  //   Expanded(
-                  //       child: MyDrafts(
-                  //           filteredDraftServices: filteredDraftServices)),
-                  // const SizedBox(
-                  //   height: 5,
-                  // ),
-                  Expanded(
-                    child: RefreshIndicator(
-                      onRefresh: myServicesApi,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 12.0, bottom: 12, left: 16, right: 16),
-                        child: ListView.builder(
-                            itemCount: filteredServices.length,
-                            scrollDirection: Axis.vertical,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () =>
-                                    goToDetails(filteredServices[index]),
-                                child: SizedBox(
-                                  height: 310,
-                                  child: ServicesCard(
-                                    show: true,
-                                    filteredServices[index],
-                                    providerShow: false,
-                                  ),
-                                ),
-                              );
-                            }),
-                        // GridView.count(
-                        //   physics: const AlwaysScrollableScrollPhysics(),
-                        //   shrinkWrap: true,
-                        //   mainAxisSpacing: 2,
-                        //   childAspectRatio: 1,
-                        //   crossAxisSpacing: 2,
-                        //   crossAxisCount: 2,
-                        //   children: List.generate(
-                        //     filteredServices.length, // widget.profileURL.length,
-                        //     (index) {
-                        //       return GestureDetector(
-                        //         onTap: () => goToDetails(filteredServices[index]),
-                        //         child: ServicesCard(
-                        //           filteredServices[index],
-                        //           show: true,
-                        //         ),
-                        //       );
-                        //     },
-                        //   ),
-                        // ),
+        body: loading
+            ? const LoadingWidget()
+            : filteredServices.isEmpty
+                ? const Center(
+                    child: Text("No Services Created Yet",
+                        style: TextStyle(fontWeight: FontWeight.w600)),
+                  )
+                : Column(
+                    children: [
+                      // if (filteredDraftServices.isNotEmpty)
+                      //   Expanded(
+                      //       child: MyDrafts(
+                      //           filteredDraftServices: filteredDraftServices)),
+                      // const SizedBox(
+                      //   height: 5,
+                      // ),
+                      Expanded(
+                        child: RefreshIndicator(
+                          onRefresh: myServicesApi,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                top: 12.0, bottom: 12, left: 16, right: 16),
+                            child: ListView.builder(
+                                itemCount: filteredServices.length,
+                                scrollDirection: Axis.vertical,
+                                itemBuilder: (context, index) {
+                                  return GestureDetector(
+                                    onTap: () =>
+                                        goToDetails(filteredServices[index]),
+                                    child: SizedBox(
+                                      height: 310,
+                                      child: ServicesCard(
+                                        show: true,
+                                        filteredServices[index],
+                                        providerShow: false,
+                                      ),
+                                    ),
+                                  );
+                                }),
+                            // GridView.count(
+                            //   physics: const AlwaysScrollableScrollPhysics(),
+                            //   shrinkWrap: true,
+                            //   mainAxisSpacing: 2,
+                            //   childAspectRatio: 1,
+                            //   crossAxisSpacing: 2,
+                            //   crossAxisCount: 2,
+                            //   children: List.generate(
+                            //     filteredServices.length, // widget.profileURL.length,
+                            //     (index) {
+                            //       return GestureDetector(
+                            //         onTap: () => goToDetails(filteredServices[index]),
+                            //         child: ServicesCard(
+                            //           filteredServices[index],
+                            //           show: true,
+                            //         ),
+                            //       );
+                            //     },
+                            //   ),
+                            // ),
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
       ),
     );
   }
