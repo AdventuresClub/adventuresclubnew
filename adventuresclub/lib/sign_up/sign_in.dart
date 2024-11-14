@@ -467,13 +467,14 @@ class _SignInState extends State<SignIn> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Align(
-                          alignment: Alignment.centerLeft,
-                          child: MyText(
-                            text: "signIn".tr(), //'Sign In',
-                            weight: FontWeight.w600,
-                            color: whiteColor,
-                            size: 24,
-                          )),
+                        alignment: Alignment.centerLeft,
+                        child: MyText(
+                          text: "signIn".tr(), //'Sign In',
+                          weight: FontWeight.w600,
+                          color: whiteColor,
+                          size: 24,
+                        ),
+                      ),
                       PopupMenuButton<String>(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),

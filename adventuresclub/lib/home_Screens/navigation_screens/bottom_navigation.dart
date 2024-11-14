@@ -47,6 +47,12 @@ class _BottomNavigationState extends State<BottomNavigation> {
   int countryId = 0;
   Map mapCountry = {};
   List<GetCountryModel> countriesList1 = [];
+  List<String> languageList = ["English", "Arabic"];
+  List<String> languageImage = [
+    'images/great_britain.png',
+    'images/ksa_flag.png'
+  ];
+  String language = "";
 
   @override
   void initState() {
@@ -94,7 +100,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       // });
     }
     if (Constants.userId == 0) {
-      showConfirmation();
+      showSelectLanguage();
       //   _getCurrentPosition();
     }
   }
@@ -118,6 +124,71 @@ class _BottomNavigationState extends State<BottomNavigation> {
     Constants.getFilter();
     checkCountry();
     // homePage();
+  }
+
+  void showSelectLanguage() async {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (ctx) => PopScope(
+                child: SimpleDialog(
+              contentPadding: const EdgeInsets.all(16),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              title: const Icon(
+                Icons.translate,
+                size: 80,
+                color: bluishColor,
+              ),
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: MyText(
+                    text: "Select Preferred Language",
+                    size: 18,
+                    weight: FontWeight.bold,
+                    color: blackColor,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                for (int i = 0; i < languageList.length; i++)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Card(
+                      child: ListTile(
+                        onTap: () => changeLanguage(languageList[i]),
+                        leading: Image(
+                          image: ExactAssetImage(languageImage[i]),
+                          height: 40,
+                          width: 60,
+                        ),
+                        title: Text(
+                          languageList[i],
+                          style: const TextStyle(fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ),
+                  ),
+                const SizedBox(
+                  height: 20,
+                ),
+              ],
+            )));
+  }
+
+  void changeLanguage(String lang) {
+    Navigator.of(context).pop();
+    if (lang == "English") {
+      context.setLocale(const Locale('en', 'US'));
+    } else if (lang == "Arabic") {
+      context.setLocale(const Locale('ar', 'SA'));
+    }
+    showConfirmation();
   }
 
   void showConfirmation() async {
@@ -174,7 +245,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                       //   height: 25,
                       //   width: 40,
                       // ),
-                      title: Text(countriesList1[index].country),
+                      title: Text(countriesList1[index].country.tr()),
                       onTap: () {
                         addCountry(
                             filteredServices[index].country,
