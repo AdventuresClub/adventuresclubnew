@@ -370,7 +370,8 @@ class Constants {
           .post(Uri.parse("${Constants.baseUrl}/api/v1/login"), body: {
         'email': Constants.emailId, //"hamza@gmail.com",
         'password': Constants.password, //"Upendra@321",
-        'device_id': "0"
+        'device_id': "0",
+        'device_type': Constants.deviceType,
       });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       if (response.statusCode == 200) {

@@ -256,9 +256,11 @@ class _BookTicketState extends State<BookTicket> {
       return;
     }
     if (totalPerson > 0) {
-      setState(() {
-        loading = true;
-      });
+      if (mounted) {
+        setState(() {
+          loading = true;
+        });
+      }
       try {
         var response = await http
             .post(Uri.parse("${Constants.baseUrl}/api/v1/book_service"), body: {
@@ -282,7 +284,9 @@ class _BookTicketState extends State<BookTicket> {
         });
         if (response.statusCode == 200) {
           message("Booking sent successfully");
-          goToHome();
+          if (mounted) {
+            goToHome();
+          }
         } else {
           dynamic body = jsonDecode(response.body);
           message(body['message'].toString());
@@ -297,9 +301,12 @@ class _BookTicketState extends State<BookTicket> {
     } else {
       message("Persons cannot be empty");
     }
-    setState(() {
-      loading = false;
-    });
+    if (mounted) {
+      setState(() {
+        loading = false;
+      });
+    }
+
     // var date = DateTime.parse(widget.gm.startDate.toString());
     // String m = date.month < 10 ? "0${date.month}" : "${date.month}";
     // String d = date.day < 10 ? "0${date.day}" : "${date.day}";

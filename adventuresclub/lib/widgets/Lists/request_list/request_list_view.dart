@@ -457,10 +457,13 @@ class _RequestListViewState extends State<RequestListView> {
   }
 
   void dropped(String bookingId, int index, String serviceId) async {
-    Navigator.of(context).pop();
-    leaveGroup(serviceId);
+    await leaveGroup(serviceId);
     UpcomingRequestsModel gR = uRequestListInv.elementAt(index);
+    if (mounted) {
+      Navigator.of(context).pop();
+    }
     setState(() {
+      loading = true;
       uRequestListInv.removeAt(index);
     });
     try {
@@ -473,15 +476,21 @@ class _RequestListViewState extends State<RequestListView> {
       if (response.statusCode != 200) {
         setState(() {
           uRequestListInv.insert(index, gR);
+          loading = false;
         });
         message("Dropped Successfully");
       }
     } catch (e) {
       debugPrint(e.toString());
+    } finally {
+      setState(() {
+        // uRequestListInv.insert(index, gR);
+        loading = false;
+      });
     }
   }
 
-  void leaveGroup(String serviceId) async {
+  Future<void> leaveGroup(String serviceId) async {
     try {
       var response = await http
           .post(Uri.parse("${Constants.baseUrl}/api/v1/groupleave"), body: {
