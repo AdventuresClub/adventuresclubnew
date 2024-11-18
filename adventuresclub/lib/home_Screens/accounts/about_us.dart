@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/home_Screens/accounts/settings/new_privacy_policy.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../models/about_us_model.dart';
@@ -55,7 +56,7 @@ class _AboutUsState extends State<AboutUs> {
     return Scaffold(
         appBar: AppBar(
           title: MyText(
-            text: 'About us',
+            text: 'aboutUs',
             color: greenishColor,
             weight: FontWeight.bold,
           ),
@@ -95,9 +96,9 @@ class _AboutUsState extends State<AboutUs> {
                     child: ExpansionTile(
                       leading: const Icon(Icons.policy),
                       childrenPadding: const EdgeInsets.all(12),
-                      title: const Text(
-                        "Privacy Policy",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      title: Text(
+                        "privacyPolicy".tr(),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       children: [
                         MyText(

@@ -77,7 +77,7 @@ class _NewDetailsTabState extends State<NewDetailsTab>
         text6.insert(2, widget.gm.serviceType);
         text6.insert(3, widget.gm.serviceLevel);
         widget.gm.availability.isEmpty
-            ? text6.insert(4, "End Date")
+            ? text6.insert(4, "${"endDate".tr()} : ")
             : text6.insert(4, ed);
         // text6.insert(0, widget.gm.serviceSector);
         // text6.insert(1, widget.gm.serviceType);

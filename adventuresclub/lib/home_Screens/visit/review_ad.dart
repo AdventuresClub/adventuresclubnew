@@ -150,7 +150,7 @@ class _ReviewAdState extends State<ReviewAd> {
               height: 50,
             ),
             ButtonIconLess(
-                'Submit', bluishColor, whiteColor, 1.8, 16, 18, review),
+                'submit', bluishColor, whiteColor, 1.8, 16, 18, review),
           ],
         ),
       ),

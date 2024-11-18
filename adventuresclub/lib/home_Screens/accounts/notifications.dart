@@ -64,7 +64,7 @@ class _NotificationsState extends State<Notifications> {
           backgroundColor: whiteColor,
           iconTheme: const IconThemeData(color: blackColor),
           title: MyText(
-            text: 'Notifications',
+            text: 'Notification',
             color: blackColor,
             weight: FontWeight.bold,
           ),

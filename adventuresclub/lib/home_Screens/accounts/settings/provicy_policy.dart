@@ -57,7 +57,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
     return Scaffold(
       appBar: AppBar(
         title: MyText(
-          text: "Privacy Policy",
+          text: "privacyPolicy",
           weight: FontWeight.bold,
           color: bluishColor,
         ),
