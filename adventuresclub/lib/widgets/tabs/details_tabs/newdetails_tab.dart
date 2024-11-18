@@ -61,8 +61,8 @@ class _NewDetailsTabState extends State<NewDetailsTab>
     //widget.gm.availability[0].st.substring(0, 10)
     if (widget.gm.sPlan == 2) {
       setState(() {
-        text1.insert(5, "Start Date : ");
-        text5.insert(3, "End Date");
+        text1.insert(5, "${"startDate".tr()} : ");
+        text5.insert(3, "${"endDate".tr()} : ");
         text4.insert(0, widget.gm.country);
         text4.insert(1, widget.gm.region);
         text4.insert(2, widget.gm.serviceCategory);

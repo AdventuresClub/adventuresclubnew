@@ -378,14 +378,14 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       MyText(
-                        text: "${"Start Date : "} $st",
+                        text: "${"${"startDate".tr()} : "} $st",
                         //'River Rafting',
                         //weight: FontWeight.w700,
                         color: blackColor,
                         size: 14,
                       ),
                       MyText(
-                        text: "${"End Date : "} $ed",
+                        text: "${"endDate".tr()} : $ed",
                         //'River Rafting',
                         //weight: FontWeight.w700,
                         color: blackColor,
