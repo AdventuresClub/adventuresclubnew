@@ -1780,7 +1780,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                     ],
                                   ),
                                 )
-                              : Container(
+                              : const SizedBox(
                                   height: 1,
                                   width: 1,
                                 ),
