@@ -2351,7 +2351,7 @@ class _AccountState extends State<Account> {
                                       )
                                     : userTitle[index] ==
                                             'changeLanguage' //settings
-                                        ? Container(
+                                        ? SizedBox(
                                             width: 90,
                                             height: 50,
                                             child: PopupMenuButton<String>(
