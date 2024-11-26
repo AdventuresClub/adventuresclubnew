@@ -122,7 +122,6 @@ class _CreateProgramMainPageState extends State<CreateProgramMainPage> {
       sTime = "${newTime.hour}:${newTime.minute.toString().padLeft(2, '0')}";
       timeSt = Duration(hours: newTime.hour, minutes: newTime.minute);
     });
-    print(startTime);
     //sendData(i);
   }
 
