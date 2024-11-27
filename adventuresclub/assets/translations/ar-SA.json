@@ -523,5 +523,9 @@
     "enterOfficialAddress": "أدخل العنوان الرسمي",
     "enter:Geolocation": "حدد الموقع الجغرافي",
     "yesImLicensed": "نعم انا مرخّص",
-    "attachCrCopy":"إرفاق نسخة من السجل التجاري"
+    "attachCrCopy":"إرفاق نسخة من السجل التجاري",
+    "chargesWillDeductedFrom10%": "سيتم خصم من التحويلات لديكم حتى ١٠%",
+    "enterBankName": "أدخل اسم البنك هنا",
+    "enterAccountHolderNamehere": "أدخل اسم صاحب الحساب هنا",
+    "enterAccountNumber": "أدخل رقم الحساب"
 }

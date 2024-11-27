@@ -650,8 +650,7 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                           //   height: 2,
                           // ),
                           MyText(
-                            text:
-                                "10% charges will be detected from your transactions",
+                            text: "chargesWillDeductedFrom10%",
                             align: TextAlign.left,
                             color: redColor,
                             size: 14,
@@ -659,13 +658,13 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                           Column(
                             children: [
                               const SizedBox(height: 10),
-                              TFWithSize('Enter bank name here', bankName, 12,
+                              TFWithSize('enterBankName', bankName, 12,
                                   lightGreyColor, 1),
                               const SizedBox(height: 20),
-                              TFWithSize('Enter account holder name here',
+                              TFWithSize('enterAccountHolderNamehere',
                                   accountName, 12, lightGreyColor, 1),
                               const SizedBox(height: 20),
-                              TFWithSize('Enter account number', accountNum, 12,
+                              TFWithSize('enterAccountNumber', accountNum, 12,
                                   lightGreyColor, 1),
                               const SizedBox(height: 20),
                             ],

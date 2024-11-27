@@ -497,5 +497,9 @@
     "enterOfficialAddress": "Enter Official Address",
     "enter:Geolocation": "Enter: Geolocation",
     "yesImLicensed": "Yes, I'm licensed",
-    "attachCrCopy":"Attach Cr Copy"
+    "attachCrCopy":"Attach Cr Copy",
+    "chargesWillDeductedFrom10%": "Changes will be deducted from your transactions upto 10%",
+    "enterBankName": "Enter Bank Name",
+    "enterAccountHolderNamehere": "Enter account holder name here",
+    "enterAccountNumber": "Enter Account Number"
 }
