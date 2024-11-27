@@ -527,5 +527,7 @@
     "chargesWillDeductedFrom10%": "سيتم خصم من التحويلات لديكم حتى ١٠%",
     "enterBankName": "أدخل اسم البنك هنا",
     "enterAccountHolderNamehere": "أدخل اسم صاحب الحساب هنا",
-    "enterAccountNumber": "أدخل رقم الحساب"
+    "enterAccountNumber": "أدخل رقم الحساب",
+    "iAcceptPartnership": "أقبل شروط وأحكام الشراكة",
+    "bankCard(paymentGateway)":"البطاقة المصرفية (بوابة الدفع الاكتروني)"
 }

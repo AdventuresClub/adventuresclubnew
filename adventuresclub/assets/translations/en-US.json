@@ -501,5 +501,7 @@
     "chargesWillDeductedFrom10%": "Changes will be deducted from your transactions upto 10%",
     "enterBankName": "Enter Bank Name",
     "enterAccountHolderNamehere": "Enter account holder name here",
-    "enterAccountNumber": "Enter Account Number"
+    "enterAccountNumber": "Enter Account Number",
+    "iAcceptPartnership":"I accept partnership terms and conditions",
+    "bankCard(paymentGateway)":"البطاقة المصرفية (بوابة الدفع الاكتروني)"
 }

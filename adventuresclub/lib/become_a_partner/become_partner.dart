@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BecomePartnerNew extends StatefulWidget {
   const BecomePartnerNew({super.key});
@@ -47,6 +48,7 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
   int payPalArrived = 0;
   int isWireTrasfer = 0;
   bool payArrival = false;
+  bool terms = false;
   bool payPal = false;
   String license = "No";
   int crNum = 0;
@@ -276,6 +278,8 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
       message("Please Enter Official Address");
     } else if (iLiveInController.text.isEmpty) {
       message("GeoLocation Cannot be Empty");
+    } else if (!terms) {
+      message("Please agree with partnership terms");
     } else if (count == 1 &&
         bankName.text.isNotEmpty &&
         accountName.text.isNotEmpty &&
@@ -371,6 +375,16 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
         content: Text(message),
       ),
     );
+  }
+
+  void launchURL() async {
+    String url = 'https://adventuresclub.net/partnership/partnership.pdf';
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   void updateStatus(bool status, int update) {
@@ -639,7 +653,7 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                               //print(debit_card);
                             }),
                             title: MyText(
-                              text: "bankCard", //text[index],
+                              text: "bankCard(paymentGateway)", //text[index],
                               color: blackTypeColor,
                               fontFamily: 'Raleway',
                               weight: FontWeight.bold,
@@ -844,6 +858,39 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                           //     weight: FontWeight.bold,
                           //   ),
                           // ),
+                          const SizedBox(
+                            height: 70,
+                          ),
+                          CheckboxListTile(
+                            contentPadding: const EdgeInsets.only(
+                                left: 0, top: 0, bottom: 0, right: 0),
+                            side: const BorderSide(color: bluishColor),
+                            checkboxShape: const RoundedRectangleBorder(
+                              side: BorderSide(color: bluishColor),
+                            ),
+                            visualDensity: const VisualDensity(
+                                horizontal: 0, vertical: -4),
+                            activeColor: greyProfileColor,
+                            checkColor: bluishColor,
+                            value: terms,
+                            onChanged: ((bool? value2) {
+                              setState(() {
+                                terms = !terms;
+                              });
+                              // updateStatus(payArrival, payArrivalClicked);
+                              // print(payArrivalClicked);
+                            }),
+                            title: GestureDetector(
+                              onTap: launchURL,
+                              child: MyText(
+                                text: "iAcceptPartnership", //text[index],
+                                color: blackTypeColor,
+                                fontFamily: 'Raleway',
+                                weight: FontWeight.bold,
+                                size: 14,
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
