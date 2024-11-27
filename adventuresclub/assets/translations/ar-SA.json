@@ -515,5 +515,12 @@
     "North Sharqiyah": "شمال الشرقية",
     "Dakhiliyah": "الدّاخليّة",
     "Al Wusta": "الوسطى",
-    "thereAreNoAdventuresInThisCountry": "لاتوجد فعاليات مسجلة في هذه الدولة، نرجو منكم التأكد لاحقا."
+    "thereAreNoAdventuresInThisCountry": "لاتوجد فعاليات مسجلة في هذه الدولة، نرجو منكم التأكد لاحقا.",
+    "enterCRName": "أدخل اسم السجل التجاري",
+    "enterCRNumber": "أدخل رقم السجل التجاري",
+    "areYouLicensed": "هل أنت مرخّص ؟",
+    "notLicensedYetWillSoonerLicensed" : "لست مرخّص حتى الآن، سأحصل على رخصة قريبا",
+    "enterOfficialAddress": "أدخل العنوان الرسمي",
+    "enter:Geolocation": "حدد الموقع الجغرافي",
+    "yesImLicensed": "نعم انا مرخّص"
 }

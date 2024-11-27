@@ -489,5 +489,12 @@
     "North Sharqiyah": "North Sharqiyah ",
     "Dakhiliyah": "Al Dakhiliyah",
     "Al Wusta": "Al Wusta",
-    "thereAreNoAdventuresInThisCountry":"There are no services available in this country for now, please check again later"
+    "thereAreNoAdventuresInThisCountry":"There are no services available in this country for now, please check again later",
+    "enterCRName": "Enter CR name",
+    "enterCRNumber": "Enter CR number",
+    "areYouLicensed": "Are you licensed ?",
+    "notLicensedYetWillSoonerLicensed" : "I'm not licensed yet, will sooner get licensed.",
+    "enterOfficialAddress": "Enter Official Address",
+    "enter:Geolocation": "Enter: Geolocation",
+    "yesImLicensed": "Yes, I'm licensed",
 }

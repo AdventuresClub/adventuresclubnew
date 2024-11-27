@@ -455,11 +455,11 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                       child: Column(
                         children: [
                           const SizedBox(height: 20),
-                          TFWithSize('Enter Comany Name', nameController, 12,
+                          TFWithSize('enterCRName', nameController, 12,
                               lightGreyColor, 1),
                           const SizedBox(height: 20),
-                          TFWithSize('Enter Official Address', addController,
-                              12, lightGreyColor, 1),
+                          TFWithSize('enterOfficialAddress', addController, 12,
+                              lightGreyColor, 1),
                           const SizedBox(height: 20),
                           SizedBox(
                             width: MediaQuery.of(context).size.width / 1,
@@ -468,7 +468,7 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.symmetric(
                                     vertical: 8, horizontal: 8),
-                                hintText: 'Enter: Geolocation',
+                                hintText: 'enter:Geolocation',
                                 filled: true,
                                 fillColor: lightGreyColor,
                                 suffixIcon: GestureDetector(
@@ -505,7 +505,7 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: MyText(
-                              text: 'Are you having License?',
+                              text: 'areYouLicensed',
                               color: blackTypeColor1,
                               align: TextAlign.center,
                             ),
@@ -525,8 +525,7 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                                     print(license);
                                   }),
                               MyText(
-                                text:
-                                    'I’m not licensed yet, will sooner get license',
+                                text: 'notLicensedYetWillSoonerLicensed',
                                 color: blackTypeColor,
                                 align: TextAlign.center,
                               ),
@@ -547,7 +546,7 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                                     print(license);
                                   }),
                               MyText(
-                                text: 'Yes! I am lincensed',
+                                text: 'yesImLicensed',
                                 color: blackTypeColor,
                                 align: TextAlign.center,
                               ),
@@ -557,10 +556,10 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                             Column(
                               children: [
                                 const SizedBox(height: 20),
-                                TFWithSize('Enter CR name', crName, 12,
+                                TFWithSize('enterCRName', crName, 12,
                                     lightGreyColor, 1),
                                 const SizedBox(height: 20),
-                                TFWithSize('Enter CR number', crNumber, 12,
+                                TFWithSize('enterCRNumber', crNumber, 12,
                                     lightGreyColor, 1),
                                 const SizedBox(height: 20),
                                 GestureDetector(
