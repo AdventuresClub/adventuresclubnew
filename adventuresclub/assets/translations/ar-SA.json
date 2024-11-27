@@ -522,5 +522,6 @@
     "notLicensedYetWillSoonerLicensed" : "لست مرخّص حتى الآن، سأحصل على رخصة قريبا",
     "enterOfficialAddress": "أدخل العنوان الرسمي",
     "enter:Geolocation": "حدد الموقع الجغرافي",
-    "yesImLicensed": "نعم انا مرخّص"
+    "yesImLicensed": "نعم انا مرخّص",
+    "attachCrCopy":"إرفاق نسخة من السجل التجاري"
 }

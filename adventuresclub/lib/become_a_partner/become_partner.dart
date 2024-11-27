@@ -591,7 +591,7 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                                           height: 10,
                                         ),
                                         MyText(
-                                          text: 'Attach CR copy',
+                                          text: 'attachCrCopy',
                                           color: blackTypeColor1,
                                           align: TextAlign.center,
                                         ),
