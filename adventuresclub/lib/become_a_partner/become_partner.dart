@@ -10,6 +10,7 @@ import 'package:adventuresclub/temp_google_map.dart';
 import 'package:adventuresclub/widgets/buttons/bottom_button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/TF_with_size.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
@@ -464,11 +465,12 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width / 1,
                             child: TextField(
+                              onTap: openMap,
                               controller: iLiveInController,
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.symmetric(
                                     vertical: 8, horizontal: 8),
-                                hintText: 'enter:Geolocation',
+                                hintText: 'enterGeolocation'.tr(),
                                 filled: true,
                                 fillColor: lightGreyColor,
                                 suffixIcon: GestureDetector(
@@ -609,7 +611,7 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                         children: [
                           const SizedBox(height: 20),
                           MyText(
-                            text: "Payment methods from client",
+                            text: "paymentMethodsFromClient",
                             align: TextAlign.left,
                             color: blackColor,
                             size: 18,
@@ -637,7 +639,7 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                               //print(debit_card);
                             }),
                             title: MyText(
-                              text: "Bank Card", //text[index],
+                              text: "bankCard", //text[index],
                               color: blackTypeColor,
                               fontFamily: 'Raleway',
                               weight: FontWeight.bold,
@@ -654,8 +656,29 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                             color: redColor,
                             size: 14,
                           ),
+                          Column(
+                            children: [
+                              const SizedBox(height: 10),
+                              TFWithSize('Enter bank name here', bankName, 12,
+                                  lightGreyColor, 1),
+                              const SizedBox(height: 20),
+                              TFWithSize('Enter account holder name here',
+                                  accountName, 12, lightGreyColor, 1),
+                              const SizedBox(height: 20),
+                              TFWithSize('Enter account number', accountNum, 12,
+                                  lightGreyColor, 1),
+                              const SizedBox(height: 20),
+                            ],
+                          ),
+                          // const SizedBox(
+                          //   height: 5,
+                          // ),
                           const SizedBox(
                             height: 5,
+                          ),
+                          Divider(
+                            thickness: 1,
+                            color: blackColor.withOpacity(0.6),
                           ),
                           CheckboxListTile(
                             contentPadding: const EdgeInsets.only(
@@ -677,20 +700,14 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                               print(payArrivalClicked);
                             }),
                             title: MyText(
-                              text: "Pay on Arrival", //text[index],
+                              text: "payOnArrival", //text[index],
                               color: blackTypeColor,
                               fontFamily: 'Raleway',
                               weight: FontWeight.bold,
                               size: 14,
                             ),
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Divider(
-                            thickness: 1,
-                            color: blackColor.withOpacity(0.6),
-                          ),
+
                           // CheckboxListTile(
                           //   contentPadding: const EdgeInsets.only(
                           //       left: 0, top: 0, bottom: 0, right: 0),
@@ -791,53 +808,43 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                           //   color: blackColor,
                           //   size: 18,
                           // ),
-                          MyText(
-                            text: "Payment methods from Adventures Club",
-                            align: TextAlign.left,
-                            color: blackColor,
-                            size: 18,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          CheckboxListTile(
-                            contentPadding: const EdgeInsets.only(
-                              bottom: 0,
-                            ),
-                            side: const BorderSide(color: bluishColor),
-                            checkboxShape: const RoundedRectangleBorder(
-                              side: BorderSide(color: bluishColor),
-                            ),
-                            visualDensity:
-                                const VisualDensity(horizontal: 0, vertical: 4),
-                            activeColor: greyProfileColor,
-                            checkColor: bluishColor,
-                            value: wireTransferValue,
-                            onChanged: ((bool? value2) {
-                              setState(() {
-                                wireTransferValue = wireTransferValue;
-                                // updateStatus(wireTransferValue, isWireTrasfer);
-                                // print(isWireTrasfer);
-                              });
-                            }),
-                            title: MyText(
-                              text: 'Wire Transfer',
-                              color: blackTypeColor,
-                              fontFamily: 'Raleway',
-                              size: 14,
-                              weight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          TFWithSize('Enter bank name here', bankName, 12,
-                              lightGreyColor, 1),
-                          const SizedBox(height: 20),
-                          TFWithSize('Enter account holder name here',
-                              accountName, 12, lightGreyColor, 1),
-                          const SizedBox(height: 20),
-                          TFWithSize('Enter account number', accountNum, 12,
-                              lightGreyColor, 1),
-                          const SizedBox(height: 20),
+                          // MyText(
+                          //   text: "Payment methods from Adventures Club",
+                          //   align: TextAlign.left,
+                          //   color: blackColor,
+                          //   size: 18,
+                          // ),
+                          // const SizedBox(
+                          //   height: 10,
+                          // ),
+                          // CheckboxListTile(
+                          //   contentPadding: const EdgeInsets.only(
+                          //     bottom: 0,
+                          //   ),
+                          //   side: const BorderSide(color: bluishColor),
+                          //   checkboxShape: const RoundedRectangleBorder(
+                          //     side: BorderSide(color: bluishColor),
+                          //   ),
+                          //   visualDensity:
+                          //       const VisualDensity(horizontal: 0, vertical: 4),
+                          //   activeColor: greyProfileColor,
+                          //   checkColor: bluishColor,
+                          //   value: wireTransferValue,
+                          //   onChanged: ((bool? value2) {
+                          //     setState(() {
+                          //       wireTransferValue = wireTransferValue;
+                          //       // updateStatus(wireTransferValue, isWireTrasfer);
+                          //       // print(isWireTrasfer);
+                          //     });
+                          //   }),
+                          //   title: MyText(
+                          //     text: 'Wire Transfer',
+                          //     color: blackTypeColor,
+                          //     fontFamily: 'Raleway',
+                          //     size: 14,
+                          //     weight: FontWeight.bold,
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),

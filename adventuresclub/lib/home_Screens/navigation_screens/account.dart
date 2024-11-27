@@ -915,13 +915,16 @@ class _AccountState extends State<Account> {
                                                         MainAxisAlignment.start,
                                                     children: [
                                                       MyText(
-                                                        text:
-                                                            'Become A partner',
-                                                        size: 16,
-                                                        //fontFamily: 'Raleway',
-                                                        weight: FontWeight.w600,
-                                                        color: greyColor
-                                                            .withOpacity(1),
+                                                          text:
+                                                              'Become A Partner'
+                                                                  .tr(),
+                                                          size: 20,
+                                                          //fontFamily: 'Raleway',
+                                                          weight:
+                                                              FontWeight.bold,
+                                                          color: orangeColor),
+                                                      const SizedBox(
+                                                        width: 10,
                                                       ),
                                                       const Icon(
                                                         Icons.arrow_forward_ios,
@@ -1121,7 +1124,7 @@ class _AccountState extends State<Account> {
                                                     children: [
                                                       MyText(
                                                         text:
-                                                            'Become A partner',
+                                                            'Become A Partner',
                                                         size: 18,
                                                         //fontFamily: 'Raleway',
                                                         weight: FontWeight.w600,
@@ -1316,7 +1319,7 @@ class _AccountState extends State<Account> {
                                                     children: [
                                                       MyText(
                                                         text:
-                                                            'Become A partner',
+                                                            'Become A Partner',
                                                         size: 18,
                                                         //fontFamily: 'Raleway',
                                                         weight: FontWeight.w600,
