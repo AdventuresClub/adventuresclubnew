@@ -462,14 +462,16 @@ class _AccountState extends State<Account> {
     await Constants.clear();
     clearData();
     changeIndex();
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (_) {
-          return const SignIn();
-        },
-      ),
-      (route) => false,
-    );
+    if (mounted) {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (_) {
+            return const SignIn();
+          },
+        ),
+        (route) => false,
+      );
+    }
   }
 
   void clearData() {
