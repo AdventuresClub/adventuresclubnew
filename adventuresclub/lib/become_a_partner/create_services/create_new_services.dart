@@ -14,6 +14,7 @@ import 'package:adventuresclub/models/services/create_services/create_services_p
 import 'package:adventuresclub/models/services/create_services/create_services_program%20_model.dart';
 import 'package:adventuresclub/models/services/dependencies_model.dart';
 import 'package:adventuresclub/widgets/buttons/bottom_button.dart';
+import 'package:adventuresclub/widgets/loading_widget.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
@@ -418,7 +419,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   }
 
   void next1() {
-    createService();
+    // createService();
   }
 
   bool checkPlans() {
@@ -721,7 +722,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         return;
       }
       //convertProgramData();
-      createService();
+      saveLastPage();
     }
   }
 
@@ -875,159 +876,191 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     st.clear();
   }
 
-  void createService() async {
-    await convertProgramData();
-    selectedActivityIncludesId = activitiesId.join(",");
-    //ConstantsCreateNewServices.selectedActivitesId.join(",");
+  // void createService() async {
+  //   await convertProgramData();
+  //   selectedActivityIncludesId = activitiesId.join(",");
+  //   //ConstantsCreateNewServices.selectedActivitesId.join(",");
 
-    List<Uint8List> banners = [];
-    imageList.forEach((element) {
-      banners.add(element.readAsBytesSync());
+  //   List<Uint8List> banners = [];
+  //   imageList.forEach((element) {
+  //     banners.add(element.readAsBytesSync());
+  //   });
+  //   try {
+  //     var request = http.MultipartRequest(
+  //       "POST",
+  //       Uri.parse(
+  //           //${Constants.baseUrl}SIT
+  //           "${Constants.baseUrl}/api/v1/create_service"),
+  //     );
+  //     banners.forEach((element) {
+  //       String fileName =
+  //           "${DateTime.now().millisecondsSinceEpoch.toString()}.png";
+  //       request.files.add(http.MultipartFile.fromBytes('banner[]', element,
+  //           filename: fileName));
+  //     });
+  //     dynamic programData = {
+  //       'customer_id': Constants.userId.toString(),
+  //       'adventure_name': adventureName.text,
+  //       "country": Constants.countryId.toString(),
+  //       'region':
+  //           regionId.toString(), //ConstantsCreateNewServices.selectedRegionId
+  //       //.toString(), //selectedRegionId.toString(),
+  //       "service_sector": sectorId
+  //           .toString(), //ConstantsCreateNewServices.selectedSectorId.toString(), //selectedSectorId.toString(), //"",
+  //       "service_category": categoryId
+  //           .toString(), //ConstantsCreateNewServices.selectedCategoryId.toString(), //"", //selectedCategoryId.toString(), //"",
+  //       "service_type": typeId
+  //           .toString(), //ConstantsCreateNewServices.serviceTypeId.toString(), // //serviceTypeId.toString(), //"",
+  //       "service_level": levelId
+  //           .toString(), //ConstantsCreateNewServices.selectedlevelId.toString(), //selectedlevelId.toString(), //"",
+  //       "duration": durationId
+  //           .toString(), //ConstantsCreateNewServices.selectedDurationId.toString(), //selectedDurationId.toString(), //"",
+  //       "available_seats": availableSeatsController.text, //"",
+  //       "start_date":
+  //           ConstantsCreateNewServices.startDate.toString(), //startDate, //"",
+  //       "end_date":
+  //           ConstantsCreateNewServices.endDate.toString(), //endDate, //"",
+  //       "write_information": infoController.text, //infoController.text, //"",
+  //       // it is for particular week or calender
+  //       "service_plan": sPlan.toString(), //"1", //"",
+  //       "cost_inc":
+  //           Constants.getTranslatedNumber(costOne.text), //setCost1.text, //"",
+  //       "cost_exc": Constants.getTranslatedNumber(
+  //           costTwo.text), //costTwo.text, //setCost2.text, //"",
+  //       "currency": "1", //  %%% this is hardcoded
+  //       "pre_requisites":
+  //           preRequisites.text, //"", //preReqController.text, //"",
+  //       "minimum_requirements":
+  //           minimumRequirement.text, //minController.text, //"",
+  //       "terms_conditions": terms.text, //tncController.text, //"",
+  //       "recommended": "1", // this is hardcoded
+  //       // this key needs to be discussed,
+  //       "service_plan_days": servicePlanId, //selectedActivitesId
+  //       //.toString(), //"1,6,7", //// %%%%this needs discussion
+  //       // "availability": servicePlanId,
+  //       "service_for": selectedActivitesId, //selectedActivitesId.toString(),
+  //       "particular_date":
+  //           ConstantsCreateNewServices.startDate, //gatheringDate, //"",
+  //       // this is an array
+  //       // "schedule_title[]":
+  //       //   programTitle, //titleController, //scheduleController.text, //scheduleController.text, //"",
+  //       // schedule title in array is skipped
+  //       // this is an array
+  //       //"gathering_date[]": programSelecteDate1, //gatheringDate, //"",
+  //       // api did not accept list here
+  //       "activities": selectedActivityIncludesId, //"5", // activityId, //"",
+  //       "specific_address": specificAddressController
+  //           .text, //"", //iLiveInController.text, //"",
+  //       // this is a wrong field only for testing purposes....
+  //       // this is an array
+  //       //"gathering_start_time[]": programStartTime2, //"10",
+  //       // this is an arrayt
+  //       //"gathering_end_time[]": programEndTime, //"15",
+  //       //"" //gatheringDate, //"",
+  //       // this is an array
+  //       // "program_description[]":
+  //       //"scheule 2 , schule 1", // scheduleControllerList, //scheduleDesController.text, //"",
+  //       // "service_for": selectedActivitesId
+  //       //     .toString(), //"1,2,5", //"4", //["1", "4", "5", "7"], //"",
+  //       "dependency":
+  //           selectedDependencyId, //selectedDependencyId.toString(), //["1", "2", "3"],
+  //       //"banners[]": "${banners[0]},test032423231108.png",
+  //       //"banner[]":
+  //       //"${banners[0]},test0324232311147.png", //adventureOne.toString(), //"",
+  //       // banner image name.
+  //       // we need file name,
+  //       // after bytes array when adding into parameter. send the name of file.
+  //       //
+  //       "latitude": //"27.0546", //
+  //           ConstantsCreateNewServices.lat.toString(), //lat.toString(), //"",
+  //       "longitude": //"57.05650"
+  //           ConstantsCreateNewServices.lng.toString(), //lng.toString(), //"",
+  //       // 'mobile_code': ccCode,
+  //       // "gathering_start_time[]": "13:0:0",
+  //       // "gathering_end_time[]": "15:0:0",
+  //     };
+  //     String space = "";
+  //     st.forEach((element) {
+  //       //log(element);
+  //       programData["gathering_start_time[]$space"] = element;
+  //       space += " ";
+  //     });
+  //     // String programDataString = jsonEncode(programData);
+  //     // int index = programDataString.indexOf("}");
+  //     // String first = programDataString.substring(0, index);
+  //     // st.forEach((element) {
+  //     //   String i = ",gathering_start_time[]:'$element'";
+  //     //   first += i;
+  //     // });
+  //     // first += "}";
+  //     // programData = jsonDecode(first);
+  //     //log(first);
+  //     space = "";
+  //     et.forEach((element1) {
+  //       // log(element1);
+  //       programData["gathering_end_time[]$space"] = element1;
+  //       space += " ";
+  //     });
+  //     space = "";
+  //     titleList.forEach((element) {
+  //       programData["schedule_title[]$space"] = element;
+  //       space += " ";
+  //     });
+  //     space = "";
+  //     descriptionList.forEach((element) {
+  //       programData["program_description[]$space"] = element;
+  //       space += " ";
+  //     });
+  //     space = "";
+  //     d.forEach((element) {
+  //       programData["gathering_date[]$space"] = element;
+  //       space += " ";
+  //     });
+  //     request.fields.addAll(programData);
+  //     // debugPrint(programData);
+  //     final response = await request.send();
+
+  //     log(response.toString());
+  //     debugPrint(response.statusCode.toString());
+  //     // print(response.body);
+  //     print(response.headers);
+  //     clearAll();
+  //     showConfirmation();
+  //     //close();
+  //   } catch (e) {
+  //     print(e.toString());
+  //   }
+  // }
+
+  void saveLastPage() async {
+    setState(() {
+      loading = true;
     });
     try {
-      var request = http.MultipartRequest(
-        "POST",
-        Uri.parse(
-            //${Constants.baseUrl}SIT
-            "${Constants.baseUrl}/api/v1/create_service"),
-      );
-      banners.forEach((element) {
-        String fileName =
-            "${DateTime.now().millisecondsSinceEpoch.toString()}.png";
-        request.files.add(http.MultipartFile.fromBytes('banner[]', element,
-            filename: fileName));
-      });
-      dynamic programData = {
-        'customer_id': Constants.userId.toString(),
-        'adventure_name': adventureName.text,
-        "country": Constants.countryId.toString(),
-        'region':
-            regionId.toString(), //ConstantsCreateNewServices.selectedRegionId
-        //.toString(), //selectedRegionId.toString(),
-        "service_sector": sectorId
-            .toString(), //ConstantsCreateNewServices.selectedSectorId.toString(), //selectedSectorId.toString(), //"",
-        "service_category": categoryId
-            .toString(), //ConstantsCreateNewServices.selectedCategoryId.toString(), //"", //selectedCategoryId.toString(), //"",
-        "service_type": typeId
-            .toString(), //ConstantsCreateNewServices.serviceTypeId.toString(), // //serviceTypeId.toString(), //"",
-        "service_level": levelId
-            .toString(), //ConstantsCreateNewServices.selectedlevelId.toString(), //selectedlevelId.toString(), //"",
-        "duration": durationId
-            .toString(), //ConstantsCreateNewServices.selectedDurationId.toString(), //selectedDurationId.toString(), //"",
-        "available_seats": availableSeatsController.text, //"",
-        "start_date":
-            ConstantsCreateNewServices.startDate.toString(), //startDate, //"",
-        "end_date":
-            ConstantsCreateNewServices.endDate.toString(), //endDate, //"",
-        "write_information": infoController.text, //infoController.text, //"",
-        // it is for particular week or calender
-        "service_plan": sPlan.toString(), //"1", //"",
-        "cost_inc":
-            Constants.getTranslatedNumber(costOne.text), //setCost1.text, //"",
-        "cost_exc": Constants.getTranslatedNumber(
-            costTwo.text), //costTwo.text, //setCost2.text, //"",
-        "currency": "1", //  %%% this is hardcoded
-        "pre_requisites":
-            preRequisites.text, //"", //preReqController.text, //"",
-        "minimum_requirements":
-            minimumRequirement.text, //minController.text, //"",
-        "terms_conditions": terms.text, //tncController.text, //"",
-        "recommended": "1", // this is hardcoded
-        // this key needs to be discussed,
-        "service_plan_days": servicePlanId, //selectedActivitesId
-        //.toString(), //"1,6,7", //// %%%%this needs discussion
-        // "availability": servicePlanId,
-        "service_for": selectedActivitesId, //selectedActivitesId.toString(),
-        "particular_date":
-            ConstantsCreateNewServices.startDate, //gatheringDate, //"",
-        // this is an array
-        // "schedule_title[]":
-        //   programTitle, //titleController, //scheduleController.text, //scheduleController.text, //"",
-        // schedule title in array is skipped
-        // this is an array
-        //"gathering_date[]": programSelecteDate1, //gatheringDate, //"",
-        // api did not accept list here
-        "activities": selectedActivityIncludesId, //"5", // activityId, //"",
-        "specific_address": specificAddressController
-            .text, //"", //iLiveInController.text, //"",
-        // this is a wrong field only for testing purposes....
-        // this is an array
-        //"gathering_start_time[]": programStartTime2, //"10",
-        // this is an arrayt
-        //"gathering_end_time[]": programEndTime, //"15",
-        //"" //gatheringDate, //"",
-        // this is an array
-        // "program_description[]":
-        //"scheule 2 , schule 1", // scheduleControllerList, //scheduleDesController.text, //"",
-        // "service_for": selectedActivitesId
-        //     .toString(), //"1,2,5", //"4", //["1", "4", "5", "7"], //"",
-        "dependency":
-            selectedDependencyId, //selectedDependencyId.toString(), //["1", "2", "3"],
-        //"banners[]": "${banners[0]},test032423231108.png",
-        //"banner[]":
-        //"${banners[0]},test0324232311147.png", //adventureOne.toString(), //"",
-        // banner image name.
-        // we need file name,
-        // after bytes array when adding into parameter. send the name of file.
-        //
-        "latitude": //"27.0546", //
-            ConstantsCreateNewServices.lat.toString(), //lat.toString(), //"",
-        "longitude": //"57.05650"
-            ConstantsCreateNewServices.lng.toString(), //lng.toString(), //"",
-        // 'mobile_code': ccCode,
-        // "gathering_start_time[]": "13:0:0",
-        // "gathering_end_time[]": "15:0:0",
-      };
-      String space = "";
-      st.forEach((element) {
-        //log(element);
-        programData["gathering_start_time[]$space"] = element;
-        space += " ";
-      });
-      // String programDataString = jsonEncode(programData);
-      // int index = programDataString.indexOf("}");
-      // String first = programDataString.substring(0, index);
-      // st.forEach((element) {
-      //   String i = ",gathering_start_time[]:'$element'";
-      //   first += i;
-      // });
-      // first += "}";
-      // programData = jsonDecode(first);
-      //log(first);
-      space = "";
-      et.forEach((element1) {
-        // log(element1);
-        programData["gathering_end_time[]$space"] = element1;
-        space += " ";
-      });
-      space = "";
-      titleList.forEach((element) {
-        programData["schedule_title[]$space"] = element;
-        space += " ";
-      });
-      space = "";
-      descriptionList.forEach((element) {
-        programData["program_description[]$space"] = element;
-        space += " ";
-      });
-      space = "";
-      d.forEach((element) {
-        programData["gathering_date[]$space"] = element;
-        space += " ";
-      });
-      request.fields.addAll(programData);
-      // debugPrint(programData);
-      final response = await request.send();
-
-      log(response.toString());
-      debugPrint(response.statusCode.toString());
-      // print(response.body);
-      print(response.headers);
-      clearAll();
-      showConfirmation();
-      //close();
+      var response = await http.post(
+          Uri.parse("${Constants.baseUrl}/api/v1/third_geo_location_creation"),
+          body: {
+            "provider_id": Constants.userId.toString(),
+            "service_id": serviceId.toString(),
+            "latitude": ConstantsCreateNewServices.lat.toString(),
+            "longitude": ConstantsCreateNewServices.lng.toString(),
+            "specific_address": specificAddressController.text,
+            "cost_inc": costOne.text,
+            "cost_exc": costTwo.text,
+            "pre_requisites": preRequisites.text,
+            "minimum_requirements": minimumRequirement.text,
+            "terms_conditions": terms.text,
+          });
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      if (response.statusCode == 200) {
+        showConfirmation();
+      }
     } catch (e) {
       print(e.toString());
+    } finally {
+      setState(() {
+        loading = true;
+      });
     }
   }
 
@@ -1391,526 +1424,556 @@ class _CreateNewServicesState extends State<CreateNewServices> {
             weight: FontWeight.bold,
           ),
         ),
-        body: SingleChildScrollView(
-          controller: heightController,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: MyText(
-                    text: 'justFollowSimpleFourStepsToListUpYourAdventure'.tr(),
-                    size: 12,
-                    weight: FontWeight.w600,
-                    color: greyColor,
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                StepProgressIndicator(
-                  padding: 0,
-                  totalSteps: text1.length,
-                  currentStep: count + 1,
-                  size: 85,
-                  selectedColor: bluishColor,
-                  unselectedColor: greyColor,
-                  customStep: (index, color, _) => color == bluishColor
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 12),
-                                  decoration: BoxDecoration(
-                                      color: bluishColor,
-                                      borderRadius: BorderRadius.circular(65)),
-                                  child: Center(
-                                      child: MyText(
-                                    text: text1[index],
-                                    color: whiteColor,
-                                    weight: FontWeight.w700,
-                                    fontFamily: 'Roboto',
-                                    size: 12,
-                                  )),
-                                ),
-                                const Expanded(
-                                  child: Divider(
-                                    color: bluishColor,
-                                    thickness: 7,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                MyText(
-                                  text: stepTitle[index],
-                                  color: bluishColor,
-                                  weight: FontWeight.w700,
-                                  fontFamily: 'Roboto',
-                                  size: 12,
-                                ),
-                              ],
-                            ),
-                          ],
-                        )
-                      : Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 12),
-                                  decoration: BoxDecoration(
-                                      color: greyColor3,
-                                      borderRadius: BorderRadius.circular(65)),
-                                  child: Center(
-                                      child: MyText(
-                                    text: text1[index],
-                                    color: whiteColor,
-                                    weight: FontWeight.w700,
-                                    fontFamily: 'Roboto',
-                                    size: 12,
-                                  )),
-                                ),
-                                if (index != 3)
-                                  const Expanded(
-                                    child: Divider(
-                                      color: greyColor,
-                                      thickness: 7,
-                                    ),
-                                  ),
-                              ],
-                            ),
-                            MyText(
-                              text: stepTitle[index],
-                              color: greyColor,
-                              weight: FontWeight.w700,
-                              fontFamily: 'Roboto',
-                              size: 12,
-                            ),
-                          ],
-                        ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                //Text((selectedActivitesId.join(""))),
-                IndexedStack(
-                  index: count,
-                  children: [
-                    BannerPage(getImages, adventureName),
-                    CreateServicesDescription(
-                      getActivityIds: getActivityId,
-                      tapped: getIds,
-                      available: availableSeatsController,
-                      info: infoController,
-                      aimedFor: Wrap(
-                        direction: Axis.vertical,
-                        children: List.generate(
-                          aimedFilter.length,
-                          (index) {
-                            return SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              child: CheckboxListTile(
-                                secondary: Image.network(
-                                  "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${aimedFilter[index].image}",
-                                  height: 36,
-                                  width: 26,
-                                ),
-                                // contentPadding: const EdgeInsets.only(
-                                //     left: 0, top: 0, bottom: 0, right: 0),
-                                side: const BorderSide(color: bluishColor),
-                                checkboxShape: const RoundedRectangleBorder(
-                                  side: BorderSide(color: bluishColor),
-                                ),
-                                visualDensity: const VisualDensity(
-                                    horizontal: 0, vertical: -4),
-                                activeColor: bluishColor,
-                                checkColor: whiteColor,
-                                value: aimedValue[index],
-                                onChanged: ((bool? value) {
-                                  setState(() {
-                                    aimedValue[index] = value!;
-                                  });
-                                  aimed();
-                                }),
-                                title: MyText(
-                                  text:
-                                      //aimedText[index],
-                                      aimedFilter[index].aimedName.tr(),
-                                  color: blackTypeColor.withOpacity(0.5),
-                                  fontFamily: 'Raleway',
-                                  size: 16,
-                                  weight: FontWeight.w500,
-                                ),
-                              ),
-                            );
-                          },
+        body: loading
+            ? const LoadingWidget()
+            : SingleChildScrollView(
+                controller: heightController,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: MyText(
+                          text: 'justFollowSimpleFourStepsToListUpYourAdventure'
+                              .tr(),
+                          size: 12,
+                          weight: FontWeight.w600,
+                          color: greyColor,
                         ),
                       ),
-                      daysBeforeActController: daysExpiry,
-                      servicePlan: Column(
-                        children: [
-                          particularWeek == false
-                              ? SizedBox(
-                                  height: 140,
-                                  child: Column(
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      StepProgressIndicator(
+                        padding: 0,
+                        totalSteps: text1.length,
+                        currentStep: count + 1,
+                        size: 85,
+                        selectedColor: bluishColor,
+                        unselectedColor: greyColor,
+                        customStep: (index, color, _) => color == bluishColor
+                            ? Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: MyText(
-                                          text: 'servicePlan'.tr(),
-                                          color: blackTypeColor1,
-                                          align: TextAlign.center,
-                                          weight: FontWeight.bold,
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16, vertical: 12),
+                                        decoration: BoxDecoration(
+                                            color: bluishColor,
+                                            borderRadius:
+                                                BorderRadius.circular(65)),
+                                        child: Center(
+                                            child: MyText(
+                                          text: text1[index],
+                                          color: whiteColor,
+                                          weight: FontWeight.w700,
+                                          fontFamily: 'Roboto',
+                                          size: 12,
+                                        )),
+                                      ),
+                                      const Expanded(
+                                        child: Divider(
+                                          color: bluishColor,
+                                          thickness: 7,
                                         ),
                                       ),
-                                      Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Checkbox(
-                                                  activeColor: bluishColor,
-                                                  checkColor: whiteColor,
-                                                  side: const BorderSide(
-                                                      color: bluishColor,
-                                                      width: 2),
-                                                  value: particularWeekDays,
-                                                  onChanged: (bool? value) {
-                                                    addServicePlan();
-                                                  }),
-                                              MyText(
-                                                text: 'everyParticularWeekDays'
-                                                    .tr(),
-                                                color: blackTypeColor,
-                                                align: TextAlign.center,
-                                                weight: FontWeight.w600,
-                                              ),
-                                            ],
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      MyText(
+                                        text: stepTitle[index],
+                                        color: bluishColor,
+                                        weight: FontWeight.w700,
+                                        fontFamily: 'Roboto',
+                                        size: 12,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )
+                            : Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16, vertical: 12),
+                                        decoration: BoxDecoration(
+                                            color: greyColor3,
+                                            borderRadius:
+                                                BorderRadius.circular(65)),
+                                        child: Center(
+                                            child: MyText(
+                                          text: text1[index],
+                                          color: whiteColor,
+                                          weight: FontWeight.w700,
+                                          fontFamily: 'Roboto',
+                                          size: 12,
+                                        )),
+                                      ),
+                                      if (index != 3)
+                                        const Expanded(
+                                          child: Divider(
+                                            color: greyColor,
+                                            thickness: 7,
                                           ),
-                                          Wrap(
-                                            direction: Axis.horizontal,
-                                            children: List.generate(
-                                              days.length,
-                                              (index) {
-                                                return Column(
+                                        ),
+                                    ],
+                                  ),
+                                  MyText(
+                                    text: stepTitle[index],
+                                    color: greyColor,
+                                    weight: FontWeight.w700,
+                                    fontFamily: 'Roboto',
+                                    size: 12,
+                                  ),
+                                ],
+                              ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      //Text((selectedActivitesId.join(""))),
+                      IndexedStack(
+                        index: count,
+                        children: [
+                          BannerPage(getImages, adventureName),
+                          CreateServicesDescription(
+                            getActivityIds: getActivityId,
+                            tapped: getIds,
+                            available: availableSeatsController,
+                            info: infoController,
+                            aimedFor: Wrap(
+                              direction: Axis.vertical,
+                              children: List.generate(
+                                aimedFilter.length,
+                                (index) {
+                                  return SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: CheckboxListTile(
+                                      secondary: Image.network(
+                                        "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${aimedFilter[index].image}",
+                                        height: 36,
+                                        width: 26,
+                                      ),
+                                      // contentPadding: const EdgeInsets.only(
+                                      //     left: 0, top: 0, bottom: 0, right: 0),
+                                      side:
+                                          const BorderSide(color: bluishColor),
+                                      checkboxShape:
+                                          const RoundedRectangleBorder(
+                                        side: BorderSide(color: bluishColor),
+                                      ),
+                                      visualDensity: const VisualDensity(
+                                          horizontal: 0, vertical: -4),
+                                      activeColor: bluishColor,
+                                      checkColor: whiteColor,
+                                      value: aimedValue[index],
+                                      onChanged: ((bool? value) {
+                                        setState(() {
+                                          aimedValue[index] = value!;
+                                        });
+                                        aimed();
+                                      }),
+                                      title: MyText(
+                                        text:
+                                            //aimedText[index],
+                                            aimedFilter[index].aimedName.tr(),
+                                        color: blackTypeColor.withOpacity(0.5),
+                                        fontFamily: 'Raleway',
+                                        size: 16,
+                                        weight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            daysBeforeActController: daysExpiry,
+                            servicePlan: Column(
+                              children: [
+                                particularWeek == false
+                                    ? SizedBox(
+                                        height: 140,
+                                        child: Column(
+                                          children: [
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: MyText(
+                                                text: 'servicePlan'.tr(),
+                                                color: blackTypeColor1,
+                                                align: TextAlign.center,
+                                                weight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Column(
+                                              children: [
+                                                Row(
                                                   children: [
+                                                    Checkbox(
+                                                        activeColor:
+                                                            bluishColor,
+                                                        checkColor: whiteColor,
+                                                        side: const BorderSide(
+                                                            color: bluishColor,
+                                                            width: 2),
+                                                        value:
+                                                            particularWeekDays,
+                                                        onChanged:
+                                                            (bool? value) {
+                                                          addServicePlan();
+                                                        }),
                                                     MyText(
-                                                      text: days[index],
+                                                      text:
+                                                          'everyParticularWeekDays'
+                                                              .tr(),
                                                       color: blackTypeColor,
                                                       align: TextAlign.center,
-                                                      size: 14,
-                                                      weight: FontWeight.w500,
-                                                    ),
-                                                    Checkbox(
-                                                      activeColor: bluishColor,
-                                                      checkColor: whiteColor,
-                                                      value: daysValue[index],
-                                                      onChanged: (bool? value) {
-                                                        if (particularWeekDays) {
-                                                          setState(
-                                                            () {
-                                                              daysValue[index] =
-                                                                  value!;
-                                                            },
-                                                          );
-                                                        }
-                                                        if (particularWeekDays ==
-                                                            false) {
-                                                          setState(() {
-                                                            daysValue[index] =
-                                                                false;
-                                                          });
-                                                        }
-                                                      },
+                                                      weight: FontWeight.w600,
                                                     ),
                                                   ],
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              : const SizedBox(
-                                  height: 1,
-                                  width: 1,
-                                ),
-                          const SizedBox(height: 20),
-                          particularWeekDays == false
-                              ? SizedBox(
-                                  height: 110,
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Checkbox(
-                                              activeColor: bluishColor,
-                                              checkColor: whiteColor,
-                                              value: particularDay,
-                                              onChanged: (bool? value) {
-                                                daysPlan();
-                                              }),
-                                          MyText(
-                                            text: 'everyParticularCalenderDate'
-                                                .tr(),
-                                            color: blackTypeColor,
-                                            align: TextAlign.center,
-                                            weight: FontWeight.w600,
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Expanded(
-                                            child: GestureDetector(
-                                              onTap: () => _selectDate(
-                                                  context, formattedDate),
-                                              child: Container(
-                                                height: 50,
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 0),
-                                                //width: MediaQuery.of(context).size.width / 1,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  color: lightGreyColor,
-                                                  border: Border.all(
-                                                    width: 1,
-                                                    color: greyColor
-                                                        .withOpacity(0.2),
+                                                ),
+                                                Wrap(
+                                                  direction: Axis.horizontal,
+                                                  children: List.generate(
+                                                    days.length,
+                                                    (index) {
+                                                      return Column(
+                                                        children: [
+                                                          MyText(
+                                                            text: days[index],
+                                                            color:
+                                                                blackTypeColor,
+                                                            align: TextAlign
+                                                                .center,
+                                                            size: 14,
+                                                            weight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                          Checkbox(
+                                                            activeColor:
+                                                                bluishColor,
+                                                            checkColor:
+                                                                whiteColor,
+                                                            value: daysValue[
+                                                                index],
+                                                            onChanged:
+                                                                (bool? value) {
+                                                              if (particularWeekDays) {
+                                                                setState(
+                                                                  () {
+                                                                    daysValue[
+                                                                            index] =
+                                                                        value!;
+                                                                  },
+                                                                );
+                                                              }
+                                                              if (particularWeekDays ==
+                                                                  false) {
+                                                                setState(() {
+                                                                  daysValue[
+                                                                          index] =
+                                                                      false;
+                                                                });
+                                                              }
+                                                            },
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
                                                   ),
                                                 ),
-                                                child: ListTile(
-                                                  contentPadding:
-                                                      const EdgeInsets
-                                                          .symmetric(
-                                                          vertical: 0,
-                                                          horizontal: 10),
-                                                  leading: SizedBox(
-                                                    width: 10,
-                                                    child: Text(
-                                                      formattedDate
-                                                          .toString()
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    : const SizedBox(
+                                        height: 1,
+                                        width: 1,
+                                      ),
+                                const SizedBox(height: 20),
+                                particularWeekDays == false
+                                    ? SizedBox(
+                                        height: 110,
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Checkbox(
+                                                    activeColor: bluishColor,
+                                                    checkColor: whiteColor,
+                                                    value: particularDay,
+                                                    onChanged: (bool? value) {
+                                                      daysPlan();
+                                                    }),
+                                                MyText(
+                                                  text:
+                                                      'everyParticularCalenderDate'
                                                           .tr(),
-                                                      style: TextStyle(
-                                                          color: blackColor
-                                                              .withOpacity(0.6),
-                                                          fontSize: 14),
-                                                    ),
-                                                  ),
-                                                  trailing: Icon(
-                                                    Icons.calendar_today,
-                                                    color: blackColor
-                                                        .withOpacity(0.6),
-                                                    size: 20,
-                                                  ),
+                                                  color: blackTypeColor,
+                                                  align: TextAlign.center,
+                                                  weight: FontWeight.w600,
                                                 ),
-                                              ),
+                                              ],
                                             ),
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Expanded(
-                                            child: GestureDetector(
-                                              onTap: () =>
-                                                  _selectDate(context, endDate),
-                                              child: Container(
-                                                height: 50,
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 0),
-                                                //width: MediaQuery.of(context).size.width / 1,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  color: lightGreyColor,
-                                                  border: Border.all(
-                                                    width: 1,
-                                                    color: greyColor
-                                                        .withOpacity(0.2),
-                                                  ),
-                                                ),
-                                                child: ListTile(
-                                                  contentPadding:
-                                                      const EdgeInsets
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Expanded(
+                                                  child: GestureDetector(
+                                                    onTap: () => _selectDate(
+                                                        context, formattedDate),
+                                                    child: Container(
+                                                      height: 50,
+                                                      padding: const EdgeInsets
                                                           .symmetric(
-                                                          vertical: 0,
-                                                          horizontal: 10),
-                                                  leading: SizedBox(
-                                                    width: 20,
-                                                    child: Text(
-                                                      endDate.toString(),
-                                                      style: TextStyle(
+                                                          vertical: 0),
+                                                      //width: MediaQuery.of(context).size.width / 1,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                        color: lightGreyColor,
+                                                        border: Border.all(
+                                                          width: 1,
+                                                          color: greyColor
+                                                              .withOpacity(0.2),
+                                                        ),
+                                                      ),
+                                                      child: ListTile(
+                                                        contentPadding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                vertical: 0,
+                                                                horizontal: 10),
+                                                        leading: SizedBox(
+                                                          width: 10,
+                                                          child: Text(
+                                                            formattedDate
+                                                                .toString()
+                                                                .tr(),
+                                                            style: TextStyle(
+                                                                color: blackColor
+                                                                    .withOpacity(
+                                                                        0.6),
+                                                                fontSize: 14),
+                                                          ),
+                                                        ),
+                                                        trailing: Icon(
+                                                          Icons.calendar_today,
                                                           color: blackColor
                                                               .withOpacity(0.6),
-                                                          fontSize: 14),
+                                                          size: 20,
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
-                                                  trailing: Icon(
-                                                    Icons.calendar_today,
-                                                    color: blackColor
-                                                        .withOpacity(0.6),
-                                                    size: 20,
+                                                ),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Expanded(
+                                                  child: GestureDetector(
+                                                    onTap: () => _selectDate(
+                                                        context, endDate),
+                                                    child: Container(
+                                                      height: 50,
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          vertical: 0),
+                                                      //width: MediaQuery.of(context).size.width / 1,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                        color: lightGreyColor,
+                                                        border: Border.all(
+                                                          width: 1,
+                                                          color: greyColor
+                                                              .withOpacity(0.2),
+                                                        ),
+                                                      ),
+                                                      child: ListTile(
+                                                        contentPadding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                vertical: 0,
+                                                                horizontal: 10),
+                                                        leading: SizedBox(
+                                                          width: 20,
+                                                          child: Text(
+                                                            endDate.toString(),
+                                                            style: TextStyle(
+                                                                color: blackColor
+                                                                    .withOpacity(
+                                                                        0.6),
+                                                                fontSize: 14),
+                                                          ),
+                                                        ),
+                                                        trailing: Icon(
+                                                          Icons.calendar_today,
+                                                          color: blackColor
+                                                              .withOpacity(0.6),
+                                                          size: 20,
+                                                        ),
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
+                                              ],
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
+                                      )
+                                    : const SizedBox(
+                                        height: 1,
+                                        width: 1,
                                       ),
-                                    ],
-                                  ),
-                                )
-                              : const SizedBox(
-                                  height: 1,
-                                  width: 1,
-                                ),
-                        ],
-                      ),
-                      dependency: Wrap(
-                        direction: Axis.vertical,
-                        children: List.generate(dependencyText.length, (index) {
-                          return SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: CheckboxListTile(
-                              secondary: Image.network(
-                                "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${dependencyList[index].name}",
-                                height: 36,
-                                width: 26,
-                              ),
-                              side: const BorderSide(color: bluishColor),
-                              checkboxShape: const RoundedRectangleBorder(
-                                side: BorderSide(color: bluishColor),
-                              ),
-                              visualDensity: const VisualDensity(
-                                  horizontal: 0, vertical: -4),
-                              activeColor: bluishColor,
-                              checkColor: whiteColor,
-                              value: dependencyValue[index],
-                              onChanged: ((bool? value2) {
-                                setState(() {
-                                  dependencyValue[index] = value2!;
-                                });
-                                dependency();
-                              }),
-                              title: MyText(
-                                text: dependencyText[index],
-                                color: blackTypeColor1.withOpacity(0.5),
-                                fontFamily: 'Raleway',
-                                weight: FontWeight.w500,
-                                size: 16,
-                              ),
-                            ),
-                          );
-                        }),
-                      ),
-                    ),
-                    particularWeekDays
-                        ? SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                for (int y = 0; y < onePlan.length; y++)
-                                  CreatePlanOne(getProgramOneData, y),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                GestureDetector(
-                                  onTap: addProgramOneData,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      const Image(
-                                          image: ExactAssetImage(
-                                              'images/add-circle.png'),
-                                          height: 20),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      MyText(
-                                        text: 'addMoreSchedule'.tr(),
-                                        color: bluishColor,
-                                      ),
-                                    ],
-                                  ),
-                                ),
                               ],
                             ),
-                          )
-                        : SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                // for (int z = 0; z < pm.length; z++)
-                                CreateProgram(
-                                    // key: ValueKey(z.toString()),
-                                    getProgramData,
-                                    deleteProgramData,
-                                    startDate,
-                                    currentDate
-                                    //z,
-                                    //pm[z],
+                            dependency: Wrap(
+                              direction: Axis.vertical,
+                              children:
+                                  List.generate(dependencyText.length, (index) {
+                                return SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  child: CheckboxListTile(
+                                    secondary: Image.network(
+                                      "${"${Constants.baseUrl}/public/uploads/selection_manager/"}${dependencyList[index].name}",
+                                      height: 36,
+                                      width: 26,
                                     ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                // GestureDetector(
-                                //   onTap: addProgramData,
-                                //   child: Row(
-                                //     mainAxisAlignment: MainAxisAlignment.end,
-                                //     children: [
-                                //       const Image(
-                                //           image: ExactAssetImage(
-                                //               'images/add-circle.png'),
-                                //           height: 20),
-                                //       const SizedBox(
-                                //         width: 5,
-                                //       ),
-                                //       MyText(
-                                //         text: 'addMoreSchedule',
-                                //         color: bluishColor,
-                                //       ),
-                                //     ],
-                                //   ),
-                                // ),
-                              ],
+                                    side: const BorderSide(color: bluishColor),
+                                    checkboxShape: const RoundedRectangleBorder(
+                                      side: BorderSide(color: bluishColor),
+                                    ),
+                                    visualDensity: const VisualDensity(
+                                        horizontal: 0, vertical: -4),
+                                    activeColor: bluishColor,
+                                    checkColor: whiteColor,
+                                    value: dependencyValue[index],
+                                    onChanged: ((bool? value2) {
+                                      setState(() {
+                                        dependencyValue[index] = value2!;
+                                      });
+                                      dependency();
+                                    }),
+                                    title: MyText(
+                                      text: dependencyText[index],
+                                      color: blackTypeColor1.withOpacity(0.5),
+                                      fontFamily: 'Raleway',
+                                      weight: FontWeight.w500,
+                                      size: 16,
+                                    ),
+                                  ),
+                                );
+                              }),
                             ),
                           ),
-                    Cost(
-                      iLiveInController,
-                      lat,
-                      lng,
-                      specificAddressController,
-                      costOne,
-                      costTwo,
-                      preRequisites,
-                      minimumRequirement,
-                      terms,
-                    ),
-                    // Container(child: Text("testting"))
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
+                          particularWeekDays
+                              ? SingleChildScrollView(
+                                  child: Column(
+                                    children: [
+                                      for (int y = 0; y < onePlan.length; y++)
+                                        CreatePlanOne(getProgramOneData, y),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      GestureDetector(
+                                        onTap: addProgramOneData,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            const Image(
+                                                image: ExactAssetImage(
+                                                    'images/add-circle.png'),
+                                                height: 20),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            MyText(
+                                              text: 'addMoreSchedule'.tr(),
+                                              color: bluishColor,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : SingleChildScrollView(
+                                  child: Column(
+                                    children: [
+                                      // for (int z = 0; z < pm.length; z++)
+                                      CreateProgram(
+                                          // key: ValueKey(z.toString()),
+                                          getProgramData,
+                                          deleteProgramData,
+                                          startDate,
+                                          currentDate
+                                          //z,
+                                          //pm[z],
+                                          ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      // GestureDetector(
+                                      //   onTap: addProgramData,
+                                      //   child: Row(
+                                      //     mainAxisAlignment: MainAxisAlignment.end,
+                                      //     children: [
+                                      //       const Image(
+                                      //           image: ExactAssetImage(
+                                      //               'images/add-circle.png'),
+                                      //           height: 20),
+                                      //       const SizedBox(
+                                      //         width: 5,
+                                      //       ),
+                                      //       MyText(
+                                      //         text: 'addMoreSchedule',
+                                      //         color: bluishColor,
+                                      //       ),
+                                      //     ],
+                                      //   ),
+                                      // ),
+                                    ],
+                                  ),
+                                ),
+                          Cost(
+                            iLiveInController,
+                            lat,
+                            lng,
+                            specificAddressController,
+                            costOne,
+                            costTwo,
+                            preRequisites,
+                            minimumRequirement,
+                            terms,
+                          ),
+                          // Container(child: Text("testting"))
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
         bottomNavigationBar: BottomButton(bgColor: whiteColor, onTap: next),
       ),
     );
