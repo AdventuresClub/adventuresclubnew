@@ -321,10 +321,10 @@ class _SettingsState extends State<Settings> {
                     padding: const EdgeInsets.all(12.0),
                     child: Column(
                       children: [
-                        const Row(children: [
+                        Row(children: [
                           Text(
-                            "Select Your Country",
-                            style: TextStyle(
+                            "selectYourCountry".tr(),
+                            style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
                                 fontFamily: 'Raleway-Black'),
@@ -362,7 +362,7 @@ class _SettingsState extends State<Settings> {
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.symmetric(
                                       vertical: 8, horizontal: 8),
-                                  hintText: 'Country',
+                                  hintText: 'country'.tr(),
                                   filled: true,
                                   fillColor: lightGreyColor,
                                   suffixIcon: GestureDetector(

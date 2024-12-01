@@ -164,7 +164,7 @@ class _NewRegisterState extends State<NewRegister> {
         return;
       }
       if (emailController.text.isEmpty) {
-        message("Please Enter Email");
+        message("pleaseEnterEmail");
         return;
       }
       if (passController.text.isEmpty) {

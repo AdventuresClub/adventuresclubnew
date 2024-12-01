@@ -1608,7 +1608,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                               children: [
                                 particularWeek == false
                                     ? SizedBox(
-                                        height: 140,
+                                        height: 150,
                                         child: Column(
                                           children: [
                                             Align(
@@ -1706,7 +1706,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                         height: 1,
                                         width: 1,
                                       ),
-                                const SizedBox(height: 20),
+                                const SizedBox(height: 10),
                                 particularWeekDays == false
                                     ? SizedBox(
                                         height: 110,

@@ -14,6 +14,7 @@ import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/text_fields/text_fields.dart';
 import 'package:adventuresclub/widgets/text_fields/tf_with_suffix_icon.dart';
 import 'package:country_picker/country_picker.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -484,7 +485,7 @@ class _SignUpState extends State<SignUp> {
               message("Please Enter Password");
             }
           } else {
-            message("Please Enter Email");
+            message("pleaseEnterEmail");
           }
         } else {
           message("Please Enter Username");
@@ -518,7 +519,7 @@ class _SignUpState extends State<SignUp> {
   void message(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
+        content: Text(message.tr()),
       ),
     );
   }

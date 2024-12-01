@@ -505,5 +505,7 @@
     "iAcceptPartnership":"I accept partnership terms and conditions",
     "bankCard(paymentGateway)":"Bank Card(Payment Gateway)",
     "SPORTS": "SPORTS",
-    "enterCompanyName": "Enter Company Name"
+    "enterCompanyName": "Enter Company Name",
+    "country": "Country",
+    "pleaseEnterEmail": "Please Enter Email"
 }

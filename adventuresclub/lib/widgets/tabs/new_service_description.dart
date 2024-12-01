@@ -196,17 +196,18 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                 ),
                 Row(
                   children: [
-                    MyText(
-                      text: widget.gm.adventureName,
-                      //'River Rafting',
-                      weight: FontWeight.bold,
-                      color: bluishColor,
-                      size: 22,
+                    Expanded(
+                      child: MyText(
+                        text: widget.gm.adventureName,
+                        //'River Rafting',
+                        weight: FontWeight.bold,
+                        color: bluishColor,
+                        size: 22,
+                      ),
                     ),
                     const SizedBox(
                       width: 10,
                     ),
-                    if (allowEdit) EditIcon(tapped: getData),
                   ],
                 ),
                 const SizedBox(height: 5),

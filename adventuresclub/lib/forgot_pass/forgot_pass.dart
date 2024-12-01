@@ -6,6 +6,7 @@ import 'package:adventuresclub/forgot_pass/recovery_password.dart';
 import 'package:adventuresclub/sign_up/sign_in.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:country_picker/country_picker.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../models/get_country.dart';
@@ -351,10 +352,10 @@ class _ForgotPassState extends State<ForgotPass> {
                             padding: const EdgeInsets.all(12.0),
                             child: Column(
                               children: [
-                                const Row(children: [
+                                Row(children: [
                                   Text(
-                                    "Select Your Country",
-                                    style: TextStyle(
+                                    "selectYourCountry".tr(),
+                                    style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20,
                                         fontFamily: 'Raleway-Black'),

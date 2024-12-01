@@ -669,10 +669,10 @@ class _AccountState extends State<Account> {
             padding: const EdgeInsets.all(12.0),
             child: Column(
               children: [
-                const Row(children: [
+                Row(children: [
                   Text(
-                    "Select Your Country",
-                    style: TextStyle(
+                    "selectYourCountry".tr(),
+                    style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
                         fontFamily: 'Raleway-Black'),
@@ -709,7 +709,7 @@ class _AccountState extends State<Account> {
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 8, horizontal: 8),
-                          hintText: 'Country',
+                          hintText: 'country'.tr(),
                           filled: true,
                           fillColor: lightGreyColor,
                           suffixIcon: GestureDetector(
@@ -2453,10 +2453,10 @@ class _AccountState extends State<Account> {
                       padding: const EdgeInsets.all(12.0),
                       child: Column(
                         children: [
-                          const Row(children: [
+                          Row(children: [
                             Text(
-                              "Select Your Country",
-                              style: TextStyle(
+                              "selectYourCountry".tr(),
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
                                   fontFamily: 'Raleway-Black'),
