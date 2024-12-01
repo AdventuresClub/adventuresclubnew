@@ -529,5 +529,18 @@
     "enterAccountHolderNamehere": "أدخل اسم صاحب الحساب هنا",
     "enterAccountNumber": "أدخل رقم الحساب",
     "iAcceptPartnership": "أقبل شروط وأحكام الشراكة",
-    "bankCard(paymentGateway)":"البطاقة المصرفية (بوابة الدفع الاكتروني)"
+    "bankCard(paymentGateway)":"البطاقة المصرفية (بوابة الدفع الاكتروني)",
+    "SPORTS": "SPORTS",
+    "ALGERIA": "الجزائر",
+    "BAHRAIN": "البحرين",
+    "FRANCE": "فرنسا",
+    "KUWAIT": "الكويت",
+    "LEBANON": "لبنان",
+    "NEPAL": "النيبال",
+    "QATAR" : "قطر",
+    "SAUDI ARABIA": "السعودية",
+    "SRI LANKA": "سريلانكا",
+    "UNITED ARAB EMIRATES": "الإمارات العربية المتحدة",
+    "UNITED STATES": "الولايات المتحدة",
+    "enterCompanyName": "أدخل إسم الشركة"
 }

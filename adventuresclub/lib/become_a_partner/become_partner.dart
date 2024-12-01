@@ -470,7 +470,7 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                       child: Column(
                         children: [
                           const SizedBox(height: 20),
-                          TFWithSize('enterCRName', nameController, 12,
+                          TFWithSize('enterCompanyName', nameController, 12,
                               lightGreyColor, 1),
                           const SizedBox(height: 20),
                           TFWithSize('enterOfficialAddress', addController, 12,

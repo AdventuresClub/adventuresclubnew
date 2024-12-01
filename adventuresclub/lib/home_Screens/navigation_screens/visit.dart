@@ -165,7 +165,8 @@ class _VisitState extends State<Visit> {
         });
       }
     }
-    getFilteredVisit(filteredtitleModel.isNotEmpty ? filteredtitleModel[0].title : "");
+    getFilteredVisit(
+        filteredtitleModel.isNotEmpty ? filteredtitleModel[0].title : "");
   }
 
   Future getVisit() async {
@@ -362,8 +363,8 @@ class _VisitState extends State<Visit> {
         decoration: const BoxDecoration(
           color: greyProfileColor,
         ),
-        height: 180,
-        child: SizedBox(height: 175, child: VisitList(gGv)),
+        height: 200,
+        child: SizedBox(height: 200, child: VisitList(gGv)),
       ),
     );
   }
@@ -371,7 +372,7 @@ class _VisitState extends State<Visit> {
   Widget getVisitContainer(
       context, int index, double width, String image, String title) {
     return SizedBox(
-      height: 50,
+      height: 60,
       //width: title.length * 18,
       child: Card(
         elevation: 4,
