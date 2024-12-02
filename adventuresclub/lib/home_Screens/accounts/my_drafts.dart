@@ -82,12 +82,12 @@ class _MyDraftsState extends State<MyDrafts> {
         dynamic nullbp = element['become_partner'];
         if (nullbp != null) {
           List<dynamic> becomePartner = element['become_partner'];
-          becomePartner.forEach((b) {
+          for (var b in becomePartner) {
             BecomePartner bp = BecomePartner(
                 b['cr_name'].toString() ?? "",
                 b['cr_number'].toString() ?? "",
                 b['description'].toString() ?? "");
-          });
+          }
         }
         dynamic nullActivity = element['included_activities'];
         List<IncludedActivitiesModel> gIAm = [];
