@@ -363,7 +363,7 @@ class _SignInState extends State<SignIn> {
           Constants.showMessage(context, "Please Enter Password");
         }
       } else {
-        Constants.showMessage(context, "Please Enter Email");
+        Constants.showMessage(context, "Please Enter User Name");
       }
     } catch (e) {
       /// print(e.toString());
@@ -425,8 +425,10 @@ class _SignInState extends State<SignIn> {
   void changeLanguage(String lang) {
     if (lang == "en") {
       context.setLocale(const Locale('en', 'US'));
+      Constants.language = "en";
     } else if (lang == "ar") {
       context.setLocale(const Locale('ar', 'SA'));
+      Constants.language = "ar";
     }
   }
 

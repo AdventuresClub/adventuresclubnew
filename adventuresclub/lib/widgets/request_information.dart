@@ -155,29 +155,29 @@ class _RequestInformationState extends State<RequestInformation> {
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
-                RichText(
-                  text: TextSpan(
-                    text: 'Region'.tr(),
-                    style: const TextStyle(
-                        color: bluishColor,
-                        fontSize: 14,
-                        fontFamily: "Raleway",
-                        fontWeight: FontWeight.bold),
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: widget.gRM.region.tr(),
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: blackColor,
-                            fontWeight: FontWeight.w300,
-                            fontFamily: "Raleway",
-                          )),
-                    ],
-                  ),
-                ),
+                // const SizedBox(
+                //   height: 5,
+                // ),
+                // RichText(
+                //   text: TextSpan(
+                //     text: 'Region'.tr(),
+                //     style: const TextStyle(
+                //         color: bluishColor,
+                //         fontSize: 14,
+                //         fontFamily: "Raleway",
+                //         fontWeight: FontWeight.bold),
+                //     children: <TextSpan>[
+                //       TextSpan(
+                //           text: widget.gRM.region.tr(),
+                //           style: const TextStyle(
+                //             fontSize: 14,
+                //             color: blackColor,
+                //             fontWeight: FontWeight.w300,
+                //             fontFamily: "Raleway",
+                //           )),
+                //     ],
+                //   ),
+                // ),
                 const SizedBox(
                   height: 5,
                 ),

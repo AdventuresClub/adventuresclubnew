@@ -1,5 +1,6 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../models/packages_become_partner/bp_includes_model.dart';
 
@@ -34,7 +35,7 @@ class PackageIncludeDetails extends StatelessWidget {
               width: 10,
             ),
             MyText(
-              text: bp[index].title,
+              text: bp[index].title.tr(),
               size: 12,
               height: 2.2,
               weight: FontWeight.w600,

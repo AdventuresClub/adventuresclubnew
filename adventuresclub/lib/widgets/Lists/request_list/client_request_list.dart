@@ -9,7 +9,8 @@ import '../../../models/getClientRequest/get_client_request_model.dart';
 
 class ClientRequestList extends StatefulWidget {
   final List<GetClientRequestModel> rm;
-  const ClientRequestList(this.rm, {super.key});
+  final Function tapped;
+  const ClientRequestList(this.rm, this.tapped, {super.key});
 
   @override
   State<ClientRequestList> createState() => _ClientRequestListState();
@@ -18,6 +19,8 @@ class ClientRequestList extends StatefulWidget {
 class _ClientRequestListState extends State<ClientRequestList> {
   abc() {}
   List<GetClientRequestModel> gRM = [];
+  bool loading = false;
+  int? index;
 
   void goToMyAd() {
     // Navigator.of(context).push(
@@ -30,10 +33,9 @@ class _ClientRequestListState extends State<ClientRequestList> {
   }
 
   @override
-  void initState() {
-    super.initState();
+  void didUpdateWidget(covariant ClientRequestList oldWidget) {
+    super.didUpdateWidget(oldWidget);
     gRM = widget.rm;
-    // text2.insert(0, widget.rm[index].bookingId)
   }
 
   List text = [
@@ -70,8 +72,10 @@ class _ClientRequestListState extends State<ClientRequestList> {
   void decline(
       String userId, String bookingId, String providerId, int index) async {
     GetClientRequestModel gR = gRM.elementAt(index);
+
     setState(() {
       gRM.removeAt(index);
+      loading = true;
     });
     try {
       var response = await http
@@ -80,10 +84,12 @@ class _ClientRequestListState extends State<ClientRequestList> {
         'user_id': userId, //"3", //Constants.userId, //"27",
         'status': "3",
       });
+      widget.tapped;
       if (response.statusCode != 200) {
         setState(() {
           gRM.insert(index, gR);
         });
+        widget.tapped;
       } else {
         message("Cancelled Successfully");
       }
@@ -97,6 +103,7 @@ class _ClientRequestListState extends State<ClientRequestList> {
 
   void accept(String userId, String bookingId, int index) async {
     GetClientRequestModel gR = gRM.elementAt(index);
+
     setState(() {
       gRM.removeAt(index);
     });
@@ -108,6 +115,7 @@ class _ClientRequestListState extends State<ClientRequestList> {
         'status': "1",
         // 'id': "2",
       });
+      widget.tapped;
       // setState(() {
       //   favourite = true;
       // });

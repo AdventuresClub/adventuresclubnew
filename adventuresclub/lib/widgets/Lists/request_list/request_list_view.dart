@@ -2,12 +2,19 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:adventuresclub/constants.dart';
+import 'package:adventuresclub/home_Screens/new_details.dart';
 import 'package:adventuresclub/home_Screens/payment_methods/payment_methods.dart';
 import 'package:adventuresclub/models/currency_model.dart';
+import 'package:adventuresclub/models/filter_data_model/programs_model.dart';
 import 'package:adventuresclub/models/home_services/become_partner.dart';
 import 'package:adventuresclub/models/home_services/services_model.dart';
 import 'package:adventuresclub/models/profile_models/profile_become_partner.dart';
 import 'package:adventuresclub/models/requests/upcoming_Requests_Model.dart';
+import 'package:adventuresclub/models/services/aimed_for_model.dart';
+import 'package:adventuresclub/models/services/availability_model.dart';
+import 'package:adventuresclub/models/services/create_services/availability_plan_model.dart';
+import 'package:adventuresclub/models/services/dependencies_model.dart';
+import 'package:adventuresclub/models/services/included_activities_model.dart';
 import 'package:adventuresclub/models/services/service_image_model.dart';
 import 'package:adventuresclub/models/user_profile_model.dart';
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
@@ -19,10 +26,10 @@ import 'package:http/http.dart' as http;
 
 class RequestListView extends StatefulWidget {
   //final List<UpcomingRequestsModel> uRequestList;
-  final Function getDetails;
+  //final Function getDetails;
   const RequestListView(
       //this.uRequestList,
-      this.getDetails,
+      //this.getDetails,
       {super.key});
 
   @override
@@ -140,13 +147,13 @@ class _RequestListViewState extends State<RequestListView> {
   }
 
   void getList() async {
+    setState(() {
+      loading = true;
+    });
     var response = await http.get(Uri.parse(
         "${Constants.baseUrl}/api/v1/get_requests?user_id=${Constants.userId}&type=0"));
 
     try {
-      setState(() {
-        loading = true;
-      });
       List<UpcomingRequestsModel> uRequestList = [];
       if (response.statusCode == 200) {
         uList = json.decode(response.body);
@@ -196,17 +203,21 @@ class _RequestListViewState extends State<RequestListView> {
           uRequestList.add(up);
         }
       }
-      setState(() {
-        uRequestListInv = uRequestList.reversed.toList();
-        loading = false;
-      });
+      //setState(() {
+      uRequestListInv = uRequestList.reversed.toList();
+
+      // });
     } catch (e) {
       debugPrint(e.toString());
+    } finally {
+      setState(() {
+        loading = false;
+      });
     }
   }
 
   void getProfile(String providerId, String amount, String bId, String cur,
-      String tCost, UpcomingRequestsModel rm) async {
+      String tCost, UpcomingRequestsModel rm, int index) async {
     setState(() {
       loading = true;
     });
@@ -296,7 +307,7 @@ class _RequestListViewState extends State<RequestListView> {
         payOnArrival = up.bp.payOnArrival;
         loading = false;
       });
-      getPaymentMode(payOnArrival, amount, bId, cur, tCost, rm);
+      getPaymentMode(payOnArrival, amount, bId, cur, tCost, rm, index);
       // Constants.userRole = up.userRole;
       // prefs.setString("userRole", up.userRole);
     } catch (e) {
@@ -305,7 +316,7 @@ class _RequestListViewState extends State<RequestListView> {
   }
 
   void getPaymentMode(String pay, String amount, String bId, String cur,
-      String tCost, UpcomingRequestsModel rm) async {
+      String tCost, UpcomingRequestsModel rm, int index) async {
     if (pay == "1") {
       await Navigator.of(context).push(
         MaterialPageRoute(
@@ -320,7 +331,11 @@ class _RequestListViewState extends State<RequestListView> {
           },
         ),
       );
-      getList();
+      //getList();
+      UpcomingRequestsModel gR = uRequestListInv.elementAt(index);
+      setState(() {
+        gR.status = "8";
+      });
     } else {
       fetchCurrency(amount, bId, cur, tCost, rm);
     }
@@ -572,6 +587,189 @@ class _RequestListViewState extends State<RequestListView> {
                 //BottomButton(bgColor: blueButtonColor, onTap: homePage)
               ],
             ));
+  }
+
+  Future getDetails(String serviceId, String userId) async {
+    setState(() {
+      loading = true;
+    });
+    var response = await http.get(Uri.parse(
+        "${Constants.baseUrl}/api/v1/services/$serviceId?user_id=$userId"));
+    if (response.statusCode == 200) {
+      mapDetails = json.decode(response.body);
+      dynamic result = mapDetails['data'];
+      List<AvailabilityPlanModel> gAccomodationPlanModel = [];
+      List<dynamic> availablePlan = result['availability'];
+      availablePlan.forEach((ap) {
+        AvailabilityPlanModel amPlan = AvailabilityPlanModel(
+            int.tryParse(ap['id'].toString()) ?? 0, ap['day'].toString());
+        gAccomodationPlanModel.add(amPlan);
+      });
+      List<AvailabilityModel> gAccomodoationAvaiModel = [];
+      List<dynamic> available = result['availability'];
+      available.forEach((a) {
+        AvailabilityModel am = AvailabilityModel(
+            a['start_date'].toString() ?? "", a['end_date'].toString() ?? "");
+        gAccomodoationAvaiModel.add(am);
+      });
+      if (result['become_partner'] != null) {
+        List<dynamic> becomePartner = result['become_partner'];
+        becomePartner.forEach((b) {
+          BecomePartner bp = BecomePartner(
+              b['cr_name'].toString() ?? "",
+              b['cr_number'].toString() ?? "",
+              b['description'].toString() ?? "");
+        });
+      }
+      List<IncludedActivitiesModel> gIAm = [];
+      List<dynamic> iActivities = result['included_activities'];
+      iActivities.forEach((iA) {
+        IncludedActivitiesModel iAm = IncludedActivitiesModel(
+          int.tryParse(iA['id'].toString()) ?? 0,
+          int.tryParse(iA['service_id'].toString()) ?? 0,
+          iA['activity_id'].toString() ?? "",
+          iA['activity'].toString() ?? "",
+          iA['image'].toString() ?? "",
+        );
+        gIAm.add(iAm);
+      });
+      List<DependenciesModel> gdM = [];
+      List<dynamic> dependency = result['dependencies'];
+      dependency.forEach((d) {
+        DependenciesModel dm = DependenciesModel(
+          int.tryParse(d['id'].toString()) ?? 0,
+          d['dependency_name'].toString() ?? "",
+          d['image'].toString() ?? "",
+          d['updated_at'].toString() ?? "",
+          d['created_at'].toString() ?? "",
+          d['deleted_at'].toString() ?? "",
+        );
+        gdM.add(dm);
+      });
+      List<AimedForModel> gAccomodationAimedfm = [];
+      List<dynamic> aF = result['aimed_for'];
+      aF.forEach((a) {
+        AimedForModel afm = AimedForModel(
+          int.tryParse(a['id'].toString()) ?? 0,
+          a['AimedName'].toString() ?? "",
+          a['image'].toString() ?? "",
+          a['created_at'].toString() ?? "",
+          a['updated_at'].toString() ?? "",
+          a['deleted_at'].toString() ?? "",
+          int.tryParse(a['service_id'].toString()) ?? 0,
+        );
+        gAccomodationAimedfm.add(afm);
+      });
+      List<ServiceImageModel> gAccomodationServImgModel = [];
+      List<dynamic> image = result['images'];
+      image.forEach((i) {
+        ServiceImageModel sm = ServiceImageModel(
+          int.tryParse(i['id'].toString()) ?? 0,
+          int.tryParse(i['service_id'].toString()) ?? 0,
+          int.tryParse(i['is_default'].toString()) ?? 0,
+          i['image_url'].toString() ?? "",
+          i['thumbnail'].toString() ?? "",
+        );
+        gAccomodationServImgModel.add(sm);
+      });
+      List<ProgrammesModel> gPm = [];
+      List<dynamic> programs = result['programs'];
+      programs.forEach((p) {
+        ProgrammesModel pm = ProgrammesModel(
+          int.tryParse(p['id'].toString()) ?? 0,
+          int.tryParse(p['service_id'].toString()) ?? 0,
+          p['title'].toString() ?? "",
+          p['start_datetime'].toString() ?? "",
+          p['end_datetime'].toString() ?? "",
+          p['description'].toString() ?? "",
+        );
+        gPm.add(pm);
+      });
+      DateTime sDate =
+          DateTime.tryParse(result['start_date'].toString()) ?? DateTime.now();
+      DateTime eDate =
+          DateTime.tryParse(result['end_date'].toString()) ?? DateTime.now();
+      ServicesModel nSm = ServicesModel(
+        id: int.tryParse(result['id'].toString()) ?? 0,
+        owner: int.tryParse(result['owner'].toString()) ?? 0,
+        adventureName: result['adventure_name'].toString() ?? "",
+        country: result['country'].toString() ?? "",
+        region: result['region'].toString() ?? "",
+        cityId: result['city_id'].toString() ?? "",
+        serviceSector: result['service_sector'].toString() ?? "",
+        serviceCategory: result['service_category'].toString() ?? "",
+        serviceType: result['service_type'].toString() ?? "",
+        serviceLevel: result['service_level'].toString() ?? "",
+        duration: result['duration'].toString() ?? "",
+        aSeats: int.tryParse(result['available_seats'].toString()) ?? 0,
+        startDate: sDate,
+        endDate: eDate,
+        //int.tryParse(services['start_date'].toString()) ?? "",
+        //int.tryParse(services['end_date'].toString()) ?? "",
+        lat: result['latitude'].toString() ?? "",
+        lng: result['longitude'].toString() ?? "",
+        writeInformation: result['write_information'].toString() ?? "",
+        sPlan: int.tryParse(result['service_plan'].toString()) ?? 0,
+        sForID: int.tryParse(result['sfor_id'].toString()) ?? 0,
+        availability: gAccomodoationAvaiModel,
+        availabilityPlan: gAccomodationPlanModel,
+        geoLocation: result['geo_location'].toString() ?? "",
+        sAddress: result['specific_address'].toString() ?? "",
+        costInc: result['cost_inc'].toString() ?? "",
+        costExc: result['cost_exc'].toString() ?? "",
+        currency: result['currency'].toString() ?? "",
+        points: int.tryParse(result['points'].toString()) ?? 0,
+        preRequisites: result['pre_requisites'].toString() ?? "",
+        mRequirements: result['minimum_requirements'].toString() ?? "",
+        tnc: result['terms_conditions'].toString() ?? "",
+        recommended: int.tryParse(result['recommended'].toString()) ?? 0,
+        status: result['status'].toString() ?? "",
+        image: result['image'].toString() ?? "",
+        des: result['descreption]'].toString() ?? "",
+        fImage: result['favourite_image'].toString() ?? "",
+        ca: result['created_at'].toString() ?? "",
+        upda: result['updated_at'].toString() ?? "",
+        da: result['delete_at'].toString() ?? "",
+        providerId: int.tryParse(result['provider_id'].toString()) ?? 0,
+        serviceId: int.tryParse(result['service_id'].toString()) ?? 0,
+        pName: result['provided_name'].toString() ?? "",
+        pProfile: result['provider_profile'].toString() ?? "",
+        serviceCategoryImage: result['service_category_image'] ?? "",
+        serviceSectorImage: result['service_sector_image'] ?? "",
+        serviceTypeImage: result['service_type_image'] ?? "",
+        serviceLevelImage: result['service_level_image'] ?? "",
+        iaot: result['including_gerea_and_other_taxes'].toString() ?? "",
+        eaot: result['excluding_gerea_and_other_taxes'].toString() ?? "",
+        activityIncludes: gIAm,
+        dependency: gdM,
+        bp: nBp,
+        am: gAccomodationAimedfm,
+        programmes: gPm,
+        stars: result['stars'].toString() ?? "",
+        isLiked: int.tryParse(result['is_liked'].toString()) ?? 0,
+        baseURL: result['baseurl'].toString() ?? "",
+        images: gAccomodationServImgModel,
+        rating: result['rating'].toString() ?? "",
+        reviewdBy: result['reviewd_by'].toString() ?? "",
+        remainingSeats: int.tryParse(result['remaining_seats'].toString()) ?? 0,
+      );
+      //gAccomodationSModel.add(nSm);
+      setState(() {
+        service = nSm;
+        loading = false;
+      });
+      goToDetails(service);
+    }
+  }
+
+  void goToDetails(ServicesModel gm) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return NewDetails(gm: gm);
+        },
+      ),
+    );
   }
 
   @override
@@ -1043,7 +1241,8 @@ class _RequestListViewState extends State<RequestListView> {
                               child: Material(
                                 color: Colors.transparent,
                                 child: InkWell(
-                                  onTap: () => widget.getDetails(
+                                  onTap: () => getDetails(
+                                      //widget.getDetails(
                                       uRequestListInv[index]
                                           .serviceId
                                           .toString(),
@@ -1123,7 +1322,8 @@ class _RequestListViewState extends State<RequestListView> {
                                               .toString(),
                                           uRequestListInv[index].currency,
                                           uRequestListInv[index].tCost,
-                                          uRequestListInv[index])
+                                          uRequestListInv[index],
+                                          index)
                                       : uRequestListInv[index].status != "2"
                                           ? () => paymentPromt(
                                               uRequestListInv[index])

@@ -185,8 +185,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
     Navigator.of(context).pop();
     if (lang == "English") {
       context.setLocale(const Locale('en', 'US'));
+      Constants.language = "en";
     } else if (lang == "Arabic") {
       context.setLocale(const Locale('ar', 'SA'));
+      Constants.language = "ar";
     }
     showConfirmation();
   }

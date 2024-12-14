@@ -60,12 +60,14 @@ class _SettingsState extends State<Settings> {
   void changeLanguage(String lang) {
     if (lang == "English") {
       context.setLocale(const Locale('en', 'US'));
+      Constants.language = "en";
       // Navigator.of(context).pop();
       // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       //   return const Settings();
       // }));
     } else if (lang == "Arabic") {
       context.setLocale(const Locale('ar', 'SA'));
+      Constants.language = "ar";
       // Navigator.of(context).pop();
       // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       //   return const Settings();

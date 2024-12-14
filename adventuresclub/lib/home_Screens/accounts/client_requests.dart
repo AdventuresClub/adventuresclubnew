@@ -257,6 +257,10 @@ class _ClientsRequestsState extends State<ClientsRequests> {
     }
   }
 
+  void getData() {
+    getClient();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -277,7 +281,7 @@ class _ClientsRequestsState extends State<ClientsRequests> {
           weight: FontWeight.bold,
         ),
       ),
-      body: ClientRequestList(gRM),
+      body: ClientRequestList(gRM, getData),
     );
   }
 }

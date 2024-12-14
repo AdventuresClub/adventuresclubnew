@@ -516,11 +516,13 @@ class _NewRegisterState extends State<NewRegister> {
       context.setLocale(const Locale('en', 'US'));
       setState(() {
         language = "en";
+        Constants.language = "en";
       });
     } else if (lang == "ar") {
       context.setLocale(const Locale('ar', 'SA'));
       setState(() {
         language = "ar";
+        Constants.language = "ar";
       });
     }
   }

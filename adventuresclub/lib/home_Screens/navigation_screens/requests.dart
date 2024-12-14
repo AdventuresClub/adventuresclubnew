@@ -1,5 +1,6 @@
 import 'package:adventuresclub/constants.dart';
 import 'package:adventuresclub/widgets/Lists/request_list/req_completed_list.dart';
+import 'package:adventuresclub/widgets/Lists/request_list/request_list_view.dart';
 import 'package:adventuresclub/widgets/Lists/request_list/requests_lists.dart';
 import 'package:adventuresclub/widgets/buttons/button.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
@@ -224,7 +225,7 @@ class _RequestsState extends State<Requests> {
                       ],
                     ),
                   ),
-                  if (value == true) const RequestsList(),
+                  if (value == true) const RequestListView(), //RequestsList(),
                   if (value1 == true) const ReqCompletedList()
                 ],
               ),

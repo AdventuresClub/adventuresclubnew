@@ -11,6 +11,7 @@ import 'package:adventuresclub/models/packages_become_partner/packages_become_pa
 import 'package:adventuresclub/widgets/Lists/Chat_list.dart/show_chat.dart';
 import 'package:adventuresclub/widgets/my_text.dart';
 import 'package:adventuresclub/widgets/package_include_details.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -240,12 +241,12 @@ class _PackageListState extends State<PackageList> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),
       child: Stack(
         children: [
           widget.image1 != null
               ? Container(
-                  height: 200,
+                  height: 300,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(28),
                     image: DecorationImage(
@@ -254,7 +255,7 @@ class _PackageListState extends State<PackageList> {
                   ),
                 )
               : Container(
-                  height: 200,
+                  height: 300,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(28),
                     image: const DecorationImage(
@@ -277,34 +278,31 @@ class _PackageListState extends State<PackageList> {
           ),
           Positioned(
             bottom: 20,
-            right: 30,
+            //right: 30,
+            left: Constants.language == "en" ? 30 : 0,
+            right: Constants.language != "en" ? 30 : 0,
             child: GestureDetector(
               onTap: () => checkPayment(widget.bp.cost, widget.bp.id.toString(),
                   widget.bp.duration, widget.bp.title),
               // onTap: () => transactionApi(widget.bp.cost, widget.bp.id),
               child: Container(
                 height: MediaQuery.of(context).size.height / 16,
-                width: MediaQuery.of(context).size.width / 4,
+                width: 120, //MediaQuery.of(context).size.width / 2,
                 decoration: BoxDecoration(
                   color: blackColor,
                   border: Border.all(color: greenishColor),
                   borderRadius: const BorderRadius.all(Radius.circular(40)),
                 ),
-                child: const Center(
+                child: Center(
                   child: Padding(
                     padding: EdgeInsets.only(left: 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Proceed",
-                          style: TextStyle(
-                              color: whiteColor,
-                              fontSize: 14,
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ],
+                    child: Text(
+                      "Proceed".tr(),
+                      style: TextStyle(
+                          color: whiteColor,
+                          fontSize: 14,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w500),
                     ),
                   ),
                 ),
@@ -313,8 +311,9 @@ class _PackageListState extends State<PackageList> {
           ),
           if (widget.bp.cost == "0.00")
             Positioned(
-              bottom: 70,
-              right: 60,
+              bottom: 60,
+              left: Constants.language == "en" ? 60 : 0,
+              right: Constants.language != "en" ? 60 : 0,
               child: MyText(
                 text: "Free",
                 size: 24,
@@ -323,8 +322,9 @@ class _PackageListState extends State<PackageList> {
             ),
           if (widget.bp.cost != "0.00")
             Positioned(
-              bottom: 75,
-              right: 35,
+              bottom: 70,
+              left: Constants.language == "en" ? 35 : 0,
+              right: Constants.language != "en" ? 35 : 0,
               child: MyText(
                 text: "${widget.bp.symbol} ${widget.bp.cost}",
                 size: 24,
@@ -332,8 +332,9 @@ class _PackageListState extends State<PackageList> {
               ),
             ),
           Positioned(
-            left: 15,
-            top: 15,
+            top: 20,
+            left: Constants.language == "en" ? 15 : 0,
+            right: Constants.language != "en" ? 15 : 0,
             child: Row(
               children: [
                 const Icon(
@@ -343,24 +344,26 @@ class _PackageListState extends State<PackageList> {
                 ),
                 MyText(
                   text:
-                      ("${widget.bp.title} (${(widget.bp.duration)} ${("Days")})"),
+                      ("${widget.bp.title.tr()} (${(widget.bp.duration.tr())} ${("Days".tr())})"),
                   size: 18,
                   weight: FontWeight.bold,
                 ),
               ],
             ),
           ),
-          const Positioned(
-            top: 40,
-            left: 10,
-            child: Image(
+          Positioned(
+            top: 50,
+            left: Constants.language == "en" ? 5 : 0,
+            right: Constants.language != "en" ? 5 : 0,
+            child: const Image(
               image: ExactAssetImage('images/line.png'),
               color: whiteColor,
             ),
           ),
           Positioned(
-            left: 15,
-            top: 40,
+            left: Constants.language == "en" ? 15 : 0,
+            right: Constants.language != "en" ? 15 : 0,
+            top: 50,
             child: Column(
               children: [
                 PackageIncludeDetails(widget.bp.im),
