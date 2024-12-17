@@ -544,5 +544,23 @@
     "UNITED STATES": "الولايات المتحدة",
     "enterCompanyName": "أدخل إسم الشركة",
     "country": "الدولة",
-    "pleaseEnterEmail": "الرجاء إدخال البريد الإلكتروني"
+    "pleaseEnterEmail": "الرجاء إدخال البريد الإلكتروني",
+    "5% deduction for payment gateway transactions":"خصم 5% على تحويلات بوابة الدفع الاكتروني",
+    "One year subscription":"اشتراك لمدة سنة",
+    "International operations":"عمليات دولية",
+    "Unlimited product creation":"إنشاء منتجات غير محدوده",
+    "Clients management":"إدارة العملاء",
+    "Unlimited Chat clients":"دردشة غير محدودة مع العملاء",
+    "7% deduction for payment gateway transactions":"خصم 7% على تحويلات بوابة الدفع الاكتروني",
+    "Six months subscription":"اشتراك ستة أشهر",
+   "10% deduction for payment gateway transactions":"خصم 10% على تحويلات بوابة الدفع الاكتروني",
+   "One month subscription":"اشتراك لمدة شهر",
+   "One country operations":"عمليات دولة واحدة",
+   "Become a partner":"كُن شريك",
+   "Days":"أيّام",
+   "Startup":"مبتدأ",
+   "Local":"محلّي",
+   "Global":"دوْلي"
+   
+
 }
