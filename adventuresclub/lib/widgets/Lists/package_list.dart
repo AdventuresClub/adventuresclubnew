@@ -243,6 +243,7 @@ class _PackageListState extends State<PackageList> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0),
       child: Container(
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(28),
           image: widget.image1 != null
@@ -255,8 +256,7 @@ class _PackageListState extends State<PackageList> {
                 ),
         ),
         child: Container(
-          height: 280,
-          padding: const EdgeInsets.all(15),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(28),
             image: DecorationImage(
