@@ -884,8 +884,8 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                                 onTap: launchURL,
                                 child: Text(
                                   'iAcceptPartnership'.tr(),
-                                  style: TextStyle(
-                                    color: const Color.fromARGB(255, 7, 56, 95),
+                                  style: const TextStyle(
+                                    color: Color.fromARGB(255, 7, 56, 95),
                                     fontFamily: 'Raleway',
                                     fontWeight: FontWeight.bold,
                                     decoration: TextDecoration.underline,
