@@ -859,7 +859,7 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                           //   ),
                           // ),
                           const SizedBox(
-                            height: 70,
+                            height: 60,
                           ),
                           CheckboxListTile(
                             contentPadding: const EdgeInsets.only(
@@ -881,15 +881,27 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                               // print(payArrivalClicked);
                             }),
                             title: GestureDetector(
-                              onTap: launchURL,
-                              child: MyText(
-                                text: "iAcceptPartnership", //text[index],
-                                color: blackTypeColor,
-                                fontFamily: 'Raleway',
-                                weight: FontWeight.bold,
-                                size: 14,
-                              ),
-                            ),
+                                onTap: launchURL,
+                                child: Text(
+                                  'iAcceptPartnership'.tr(),
+                                  style: TextStyle(
+                                    color: const Color.fromARGB(255, 7, 56, 95),
+                                    fontFamily: 'Raleway',
+                                    fontWeight: FontWeight.bold,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                )
+                                // MyText(
+                                //   text: "iAcceptPartnership", //text[index],
+                                //   color: blackTypeColor,
+                                //   fontFamily: 'Raleway',
+                                //   weight: FontWeight.bold,
+                                //   size: 14,
+                                // ),
+                                ),
+                          ),
+                          const SizedBox(
+                            height: 10,
                           ),
                         ],
                       ),
