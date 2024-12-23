@@ -127,246 +127,246 @@ class _FavListState extends State<FavList> {
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
               return Slidable(
-                  key: const ValueKey(0),
-                  endActionPane: ActionPane(
-                    motion: const ScrollMotion(),
+                key: const ValueKey(0),
+                endActionPane: ActionPane(
+                  motion: const ScrollMotion(),
+                  children: [
+                    SlidableAction(
+                      onPressed: doNothing,
+                      backgroundColor: Colors.transparent,
+                      foregroundColor: Colors.red,
+                      icon: Icons.delete,
+                      label: '',
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: Card(
+                      child: Row(
                     children: [
-                      SlidableAction(
-                        onPressed: doNothing,
-                        backgroundColor: Colors.transparent,
-                        foregroundColor: Colors.red,
-                        icon: Icons.delete,
-                        label: '',
+                      const SizedBox(
+                        width: 5,
                       ),
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                    child: Card(
-                        child: Row(
-                      children: [
-                        const SizedBox(
-                          width: 5,
+                      Container(
+                        width: 80,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          image: DecorationImage(
+                              colorFilter: ColorFilter.mode(
+                                  Colors.black.withOpacity(0.2),
+                                  BlendMode.darken),
+                              image: NetworkImage(
+                                "${"${Constants.baseUrl}/public/uploads/"}${nm[index].sm[index].thumbnail}",
+                              ),
+                              // const ExactAssetImage(
+                              //   'images/Wadi-Hawar.png',
+                              // ),
+                              fit: BoxFit.cover),
                         ),
-                        Container(
-                          width: 80,
-                          height: 100,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4),
-                            image: DecorationImage(
-                                colorFilter: ColorFilter.mode(
-                                    Colors.black.withOpacity(0.2),
-                                    BlendMode.darken),
-                                image: NetworkImage(
-                                  "${"${Constants.baseUrl}/public/uploads/"}${nm[index].sm[index].thumbnail}",
-                                ),
-                                // const ExactAssetImage(
-                                //   'images/Wadi-Hawar.png',
-                                // ),
-                                fit: BoxFit.cover),
-                          ),
-                        ),
-                        Expanded(
-                          child: ListTile(
-                            title: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: MyText(
-                                          text: nm[index]
-                                              .adventureName, //'Wadi Haver',
-                                          color: bluishColor,
-                                          size: 14,
-                                          weight: FontWeight.bold,
-                                          fontFamily: 'Raleway'),
-                                    ),
-                                    const CircleAvatar(
-                                        radius: 18,
-                                        backgroundColor: Colors.red,
-                                        child: Icon(
-                                          Icons.favorite,
-                                          color: whiteColor,
-                                          size: 18,
-                                        )),
-                                  ],
-                                ),
-                                if (nm[index].stars != 0)
-                                  RatingBar.builder(
-                                    initialRating: convert(nm[index].stars),
-                                    itemSize: 12,
-                                    minRating: convert(nm[index].stars),
-                                    direction: Axis.horizontal,
-                                    allowHalfRating: true,
-                                    itemCount: 5,
-                                    itemPadding: const EdgeInsets.symmetric(
-                                        horizontal: 1.0),
-                                    itemBuilder: (context, _) => const Icon(
-                                      Icons.star,
-                                      color: Colors.amber,
-                                      size: 12,
-                                    ),
-                                    onRatingUpdate: (rating) {
-                                      print(rating);
-                                    },
-                                  ),
-                                if (nm[index].stars == 0)
-                                  RatingBar.builder(
-                                    initialRating: convertInt(nm[index].stars),
-                                    itemSize: 12,
-                                    minRating: convertInt(nm[index].stars),
-                                    direction: Axis.horizontal,
-                                    allowHalfRating: true,
-                                    itemCount: 5,
-                                    itemPadding: const EdgeInsets.symmetric(
-                                        horizontal: 1.0),
-                                    itemBuilder: (context, _) => const Icon(
-                                      Icons.star,
-                                      color: Colors.amber,
-                                      size: 12,
-                                    ),
-                                    onRatingUpdate: (rating) {
-                                      print(rating);
-                                    },
-                                  ),
-                                const SizedBox(height: 5),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    MyText(
-                                        text: "${nm[index].currency} "
-                                            " ${nm[index].costInc}", //'ر.ع 20,000',
-                                        color: greyColor3,
-                                        size: 14,
-                                        weight: FontWeight.w500,
-                                        fontFamily: 'Raleway'),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Image(
-                                  image:
-                                      const ExactAssetImage('images/line.png'),
-                                  width: MediaQuery.of(context).size.width / 1,
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () => goToProvider(
-                                          nm[index].providerId.toString()),
-                                      child: Row(
-                                        children: [
-                                          CircleAvatar(
-                                            radius: 14,
-                                            backgroundImage: NetworkImage(
-                                                nm[index].providerProfile),
-                                            // ExactAssetImage(
-                                            //     'images/avatar.png'),
-                                            backgroundColor: transparentColor,
-                                            // child: Image(
-                                            //   image: NetworkImage(
-                                            //       nm[index].providerProfile),
-                                            //   // ExactAssetImage(
-                                            //   //     'images/avatar.png'),
-                                            //   fit: BoxFit.fill,
-                                            // ),
-                                          ),
-                                          const SizedBox(width: 10),
-                                          MyText(
-                                              text: nm[index]
-                                                  .providerName, //'Alexander',
-                                              color: blackColor,
-                                              size: 12,
-                                              fontFamily: 'Raleway'),
-                                        ],
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () => selected(
-                                          context,
-                                          nm[index].serviceId,
-                                          nm[index].providerId),
-                                      child: const Icon(
-                                        Icons.chat,
+                      ),
+                      Expanded(
+                        child: ListTile(
+                          title: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: MyText(
+                                        text: nm[index]
+                                            .adventureName, //'Wadi Haver',
                                         color: bluishColor,
-                                        size: 30,
-                                      ),
-                                    ),
-                                  ],
+                                        size: 14,
+                                        weight: FontWeight.bold,
+                                        fontFamily: 'Raleway'),
+                                  ),
+                                  const CircleAvatar(
+                                      radius: 18,
+                                      backgroundColor: Colors.red,
+                                      child: Icon(
+                                        Icons.favorite,
+                                        color: whiteColor,
+                                        size: 18,
+                                      )),
+                                ],
+                              ),
+                              if (nm[index].stars != 0)
+                                RatingBar.builder(
+                                  initialRating: convert(nm[index].stars),
+                                  itemSize: 12,
+                                  minRating: convert(nm[index].stars),
+                                  direction: Axis.horizontal,
+                                  allowHalfRating: true,
+                                  itemCount: 5,
+                                  itemPadding: const EdgeInsets.symmetric(
+                                      horizontal: 1.0),
+                                  itemBuilder: (context, _) => const Icon(
+                                    Icons.star,
+                                    color: Colors.amber,
+                                    size: 12,
+                                  ),
+                                  onRatingUpdate: (rating) {
+                                    print(rating);
+                                  },
                                 ),
-                              ],
-                            ),
-                            // trailing: Column(
-                            //   mainAxisAlignment: MainAxisAlignment.start,
-                            //   crossAxisAlignment: CrossAxisAlignment.start,
-                            //   children: [
-
-                            //     const SizedBox(
-                            //       height: 10,
-                            //     ),
-                            //     // Image(image:  ExactAssetImage('images/line.png'),width: 40,),
-
-                            //     // Text(
-                            //     //   'Chat',
-                            //     //   style: TextStyle(
-                            //     //       color: bluishColor, fontFamily: 'Roboto'),
-                            //     // ),
-                            //   ],
-                            // ),
+                              if (nm[index].stars == 0)
+                                RatingBar.builder(
+                                  initialRating: convertInt(nm[index].stars),
+                                  itemSize: 12,
+                                  minRating: convertInt(nm[index].stars),
+                                  direction: Axis.horizontal,
+                                  allowHalfRating: true,
+                                  itemCount: 5,
+                                  itemPadding: const EdgeInsets.symmetric(
+                                      horizontal: 1.0),
+                                  itemBuilder: (context, _) => const Icon(
+                                    Icons.star,
+                                    color: Colors.amber,
+                                    size: 12,
+                                  ),
+                                  onRatingUpdate: (rating) {
+                                    print(rating);
+                                  },
+                                ),
+                              const SizedBox(height: 5),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  MyText(
+                                      text: "${nm[index].currency} "
+                                          " ${nm[index].costInc}", //'ر.ع 20,000',
+                                      color: greyColor3,
+                                      size: 14,
+                                      weight: FontWeight.w500,
+                                      fontFamily: 'Raleway'),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Image(
+                                image: const ExactAssetImage('images/line.png'),
+                                width: MediaQuery.of(context).size.width / 1,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () => goToProvider(
+                                        nm[index].providerId.toString()),
+                                    child: Row(
+                                      children: [
+                                        CircleAvatar(
+                                          radius: 14,
+                                          backgroundImage: NetworkImage(
+                                              nm[index].providerProfile),
+                                          // ExactAssetImage(
+                                          //     'images/avatar.png'),
+                                          backgroundColor: transparentColor,
+                                          // child: Image(
+                                          //   image: NetworkImage(
+                                          //       nm[index].providerProfile),
+                                          //   // ExactAssetImage(
+                                          //   //     'images/avatar.png'),
+                                          //   fit: BoxFit.fill,
+                                          // ),
+                                        ),
+                                        const SizedBox(width: 10),
+                                        MyText(
+                                            text: nm[index]
+                                                .providerName, //'Alexander',
+                                            color: blackColor,
+                                            size: 12,
+                                            fontFamily: 'Raleway'),
+                                      ],
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () => selected(
+                                        context,
+                                        nm[index].serviceId,
+                                        nm[index].providerId),
+                                    child: const Icon(
+                                      Icons.chat,
+                                      color: bluishColor,
+                                      size: 30,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
+                          // trailing: Column(
+                          //   mainAxisAlignment: MainAxisAlignment.start,
+                          //   crossAxisAlignment: CrossAxisAlignment.start,
+                          //   children: [
+
+                          //     const SizedBox(
+                          //       height: 10,
+                          //     ),
+                          //     // Image(image:  ExactAssetImage('images/line.png'),width: 40,),
+
+                          //     // Text(
+                          //     //   'Chat',
+                          //     //   style: TextStyle(
+                          //     //       color: bluishColor, fontFamily: 'Roboto'),
+                          //     // ),
+                          //   ],
+                          // ),
                         ),
+                      ),
 
-                        // const SizedBox(
-                        //   width: 10,
-                        // ),
-                        // Column(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   crossAxisAlignment: CrossAxisAlignment.center,
-                        //   children: [
-                        //     const SizedBox(
-                        //       height: 10,
-                        //     ),
+                      // const SizedBox(
+                      //   width: 10,
+                      // ),
+                      // Column(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   crossAxisAlignment: CrossAxisAlignment.center,
+                      //   children: [
+                      //     const SizedBox(
+                      //       height: 10,
+                      //     ),
 
-                        //     const CircleAvatar(
-                        //         radius: 18,
-                        //         backgroundColor: Colors.red,
-                        //         child: Icon(
-                        //           Icons.favorite,
-                        //           color: whiteColor,
-                        //           size: 18,
-                        //         )),
-                        //     const SizedBox(
-                        //       height: 20,
-                        //     ),
+                      //     const CircleAvatar(
+                      //         radius: 18,
+                      //         backgroundColor: Colors.red,
+                      //         child: Icon(
+                      //           Icons.favorite,
+                      //           color: whiteColor,
+                      //           size: 18,
+                      //         )),
+                      //     const SizedBox(
+                      //       height: 20,
+                      //     ),
 
-                        //     // Image(image:  ExactAssetImage('images/line.png'),width: 40,),
-                        //     GestureDetector(
-                        //       onTap: () => selected(context,
-                        //           nm[index].serviceId, nm[index].providerId),
-                        //       child: Icon(
-                        //         Icons.chat,
-                        //         color: blackColor.withOpacity(0.5),
-                        //         size: 30,
-                        //       ),
-                        //     ),
-                        //     // Text(
-                        //     //   'Chat',
-                        //     //   style: TextStyle(
-                        //     //       color: bluishColor, fontFamily: 'Roboto'),
-                        //     // ),
-                        //   ],
-                        // ),
-                      ],
-                    )),
-                  ));
+                      //     // Image(image:  ExactAssetImage('images/line.png'),width: 40,),
+                      //     GestureDetector(
+                      //       onTap: () => selected(context,
+                      //           nm[index].serviceId, nm[index].providerId),
+                      //       child: Icon(
+                      //         Icons.chat,
+                      //         color: blackColor.withOpacity(0.5),
+                      //         size: 30,
+                      //       ),
+                      //     ),
+                      //     // Text(
+                      //     //   'Chat',
+                      //     //   style: TextStyle(
+                      //     //       color: bluishColor, fontFamily: 'Roboto'),
+                      //     // ),
+                      //   ],
+                      // ),
+                    ],
+                  )),
+                ),
+              );
             });
   }
 }
