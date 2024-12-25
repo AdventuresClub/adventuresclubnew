@@ -1,0 +1,133 @@
+import 'package:app/models/filter_data_model/programs_model.dart';
+import 'package:app/models/services/aimed_for_model.dart';
+import 'package:app/models/services/availability_model.dart';
+import 'package:app/models/services/dependencies_model.dart';
+import 'package:app/models/services/included_activities_model.dart';
+import 'package:app/models/services/service_image_model.dart';
+import '../services/create_services/availability_plan_model.dart';
+import 'become_partner.dart';
+
+class ServicesModel {
+  int id;
+  int owner;
+  String adventureName;
+  String country;
+  String region;
+  String cityId;
+  String serviceSector;
+  String serviceCategory;
+  String serviceType;
+  String serviceLevel;
+  String duration;
+  int aSeats;
+  DateTime startDate;
+  DateTime endDate;
+  String lat;
+  String lng;
+  String writeInformation;
+  int sPlan;
+  int sForID;
+  List<AvailabilityModel> availability; // check
+  List<AvailabilityPlanModel> availabilityPlan;
+  String geoLocation;
+  String sAddress;
+  String costInc;
+  String costExc;
+  String currency;
+  int points;
+  String preRequisites;
+  String mRequirements;
+  String tnc;
+  int recommended;
+  String status;
+  String image;
+  String des;
+  String fImage;
+  String ca;
+  String upda;
+  String da;
+  int providerId;
+  int serviceId; // new addition
+  String pName;
+  String pProfile;
+  String serviceCategoryImage;
+  String serviceSectorImage;
+  String serviceTypeImage;
+  String serviceLevelImage;
+  String iaot; // new
+  String eaot; // new
+  List<IncludedActivitiesModel> activityIncludes;
+  List<DependenciesModel> dependency;
+  List<BecomePartner> bp; // new
+  List<AimedForModel> am; // new
+  List<ProgrammesModel> programmes;
+  String stars;
+  dynamic isLiked;
+  String baseURL;
+  List<ServiceImageModel> images;
+  String rating;
+  String reviewdBy;
+  int remainingSeats;
+  ServicesModel({
+    required this.id,
+    required this.owner,
+    required this.adventureName,
+    required this.country,
+    required this.region,
+    required this.cityId,
+    required this.serviceSector,
+    required this.serviceCategory,
+    required this.serviceType,
+    required this.serviceLevel,
+    required this.duration,
+    required this.aSeats,
+    required this.startDate,
+    required this.endDate,
+    required this.lat,
+    required this.lng,
+    required this.writeInformation,
+    required this.sPlan,
+    required this.sForID,
+    required this.availability,
+    required this.availabilityPlan,
+    required this.geoLocation,
+    required this.sAddress,
+    required this.costInc,
+    required this.costExc,
+    required this.currency,
+    required this.points,
+    required this.preRequisites,
+    required this.mRequirements,
+    required this.tnc,
+    required this.recommended,
+    required this.status,
+    required this.image,
+    required this.des,
+    required this.fImage,
+    required this.ca,
+    required this.upda,
+    required this.da,
+    required this.providerId,
+    required this.serviceId,
+    required this.pName,
+    required this.pProfile,
+    required this.iaot,
+    required this.eaot,
+    required this.activityIncludes,
+    required this.dependency,
+    required this.bp,
+    required this.am,
+    required this.programmes,
+    required this.stars,
+    required this.isLiked,
+    required this.baseURL,
+    required this.images,
+    required this.rating,
+    required this.reviewdBy,
+    required this.remainingSeats,
+    required this.serviceCategoryImage,
+    required this.serviceSectorImage,
+    required this.serviceTypeImage,
+    required this.serviceLevelImage,
+  });
+}
