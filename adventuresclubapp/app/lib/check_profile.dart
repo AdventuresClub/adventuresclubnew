@@ -12,6 +12,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'constants.dart';
 import 'home_Screens/navigation_screens/bottom_navigation.dart';
@@ -163,35 +164,40 @@ class CheckProfileState extends State<CheckProfile> {
   }
 
   void goToNavigation() {
-    Navigator.of(context).pushAndRemoveUntil(
+    context.replace('/home');
+    /* Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (_) {
           return const BottomNavigation();
         },
       ),
       (route) => false,
-    );
+    );*/
   }
 
   void home() {
-    Navigator.of(context).pushAndRemoveUntil(
+    context.replace('/home');
+    /*Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (_) {
-          return const BottomNavigation();
+          return BottomNavigation(
+            child: SizedBox(),
+          );
         },
       ),
       (route) => false,
-    );
+    );*/
   }
 
   void start() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return const ChooseLanguage();
-        },
-      ),
-    );
+    context.push('/chooseLanguage');
+    // Navigator.of(context).push(
+    //   MaterialPageRoute(
+    //     builder: (_) {
+    //       return const ChooseLanguage();
+    //     },
+    //   ),
+    // );
   }
 
   void parseData(String name, int countryId, int id, String email, String pass,

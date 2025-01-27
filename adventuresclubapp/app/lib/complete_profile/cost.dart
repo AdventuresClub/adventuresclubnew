@@ -12,6 +12,7 @@ import 'package:app/widgets/text_fields/multiline_field.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:go_router/go_router.dart';
 
 class Cost extends StatefulWidget {
   final TextEditingController iliveController;
@@ -121,13 +122,14 @@ class _CostState extends State<Cost> {
   }
 
   void goToBottomNavigation() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return const BottomNavigation();
-        },
-      ),
-    );
+    context.push('/home');
+    // Navigator.of(context).push(
+    //   MaterialPageRoute(
+    //     builder: (_) {
+    //       return const BottomNavigation();
+    //     },
+    //   ),
+    // );
   }
 
   void getMyLocation() async {

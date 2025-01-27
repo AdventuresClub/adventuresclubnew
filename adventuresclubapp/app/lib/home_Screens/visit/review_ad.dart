@@ -7,6 +7,7 @@ import 'package:app/widgets/my_text.dart';
 import 'package:app/widgets/text_fields/multiline_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 
 class ReviewAd extends StatefulWidget {
@@ -60,9 +61,10 @@ class _ReviewAdState extends State<ReviewAd> {
   }
 
   void home() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return const BottomNavigation();
-    }));
+    context.push('/home');
+    // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+    //   return const BottomNavigation();
+    // }));
   }
 
   @override

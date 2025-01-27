@@ -20,6 +20,7 @@ import 'package:app/models/services/service_image_model.dart';
 import 'package:app/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 
 import '../Chat_list.dart/show_chat.dart';
@@ -532,9 +533,10 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
   }
 
   void homePage() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return const BottomNavigation();
-    }));
+    context.push('/home');
+    // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+    //   return const BottomNavigation();
+    // }));
   }
 
   void dropped(String bookingId) async {

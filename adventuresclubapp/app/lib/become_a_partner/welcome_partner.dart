@@ -3,14 +3,16 @@ import 'package:app/home_Screens/become_partner/become_partner_packages.dart';
 import 'package:app/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:app/widgets/my_text.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class WelcomePartner extends StatelessWidget {
   const WelcomePartner({super.key});
 
   void agree(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return const BottomNavigation();
-    }));
+    context.push('/home');
+    // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+    //   return const BottomNavigation();
+    // }));
   }
 
   void packages(BuildContext context) {

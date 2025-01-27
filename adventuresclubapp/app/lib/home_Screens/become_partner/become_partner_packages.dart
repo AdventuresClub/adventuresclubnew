@@ -11,6 +11,7 @@ import 'package:app/widgets/Lists/package_list.dart';
 import 'package:app/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../models/packages_become_partner/packages_become_partner_model.dart';
 import 'package:http/http.dart' as http;
@@ -251,9 +252,11 @@ class _BecomePartnerPackagesState extends State<BecomePartnerPackages> {
 
   void close() async {
     Constants.getProfile();
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return const BottomNavigation();
-    }));
+    // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+    //   return const BottomNavigation();
+    // }));
+
+    context.push('/home');
   }
 
   void getMyLocation() async {

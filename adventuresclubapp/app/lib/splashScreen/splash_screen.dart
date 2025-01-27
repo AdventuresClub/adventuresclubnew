@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:app/check_profile.dart';
 import 'package:app/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -17,12 +18,13 @@ class SplashScreenState extends State<SplashScreen> {
     Timer(
       const Duration(seconds: 3),
       () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const CheckProfile() //ChooseLanguage(),
-              ),
-        );
+        context.pushReplacement('/checkProfile');
+        // Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(
+        //       builder: (context) => const CheckProfile() //ChooseLanguage(),
+        //       ),
+        // );
       },
     );
   }

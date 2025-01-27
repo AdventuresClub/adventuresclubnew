@@ -12,6 +12,7 @@ import 'package:app/sign_up/terms_condition.dart';
 import 'package:app/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -153,9 +154,11 @@ class _SettingsState extends State<Settings> {
 
   void homePage() {
     changeIndex();
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return const BottomNavigation();
-    }));
+    // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+    //   return const BottomNavigation();
+    // }));
+
+    context.push('/home');
   }
 
   void searchServices(String x, BuildContext context) {

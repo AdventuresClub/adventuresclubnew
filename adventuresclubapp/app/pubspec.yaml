@@ -45,6 +45,7 @@ dependencies:
   cached_network_image: ^3.4.1
   pdf: ^3.11.1
   printing: ^5.13.4
+  go_router: ^14.7.1
 
 flutter_icons:
   android: "launcher_icon"

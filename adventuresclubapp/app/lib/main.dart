@@ -9,6 +9,7 @@ import 'package:app/models/received_notification.dart';
 import 'package:app/provider/edit_provider.dart';
 import 'package:app/provider/navigation_index_provider.dart';
 import 'package:app/provider/services_provider.dart';
+import 'package:app/routes.dart';
 import 'package:app/splashScreen/splash_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -19,8 +20,11 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await EasyLocalization.ensureInitialized();
   initializeDateFormatting().then(
     (_) => runApp(
@@ -198,20 +202,21 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     bool isDark = false;
-    return MaterialApp(
+    return MaterialApp.router(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       title: 'Adventures Club',
       debugShowCheckedModeBanner: false,
+      routerConfig: router,
       theme: AppTheme.getCurrentTheme(isDark),
-      home: FutureBuilder(
+      /*   home: FutureBuilder(
         future: getApp(),
         builder: (context, asppsnapshot) {
           // return const TempGoogleMap();
           return const SplashScreen();
         },
-      ),
+      ),*/
     );
   }
 }

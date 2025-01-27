@@ -9,6 +9,7 @@ import 'package:app/widgets/my_text.dart';
 import 'package:app/widgets/services_card.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class ServiceList extends StatefulWidget {
@@ -37,7 +38,12 @@ class ServiceListState extends State<ServiceList> {
   //List<ServicesModel> gm = [];
 
   void goToDetails(ServicesModel gm) {
-    Navigator.of(context).push(
+    context.push('/newDetails', extra: {
+      'gm': gm,
+      "show": true,
+    });
+
+    /*Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
           return NewDetails(
@@ -46,7 +52,7 @@ class ServiceListState extends State<ServiceList> {
           );
         },
       ),
-    );
+    );*/
   }
 
   List activityHeading = [

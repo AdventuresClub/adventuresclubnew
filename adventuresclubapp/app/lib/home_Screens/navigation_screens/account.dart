@@ -23,6 +23,7 @@ import 'package:app/widgets/my_text.dart';
 import 'package:app/widgets/null_user_container.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -630,9 +631,11 @@ class _AccountState extends State<Account> {
 
   void homePage() {
     changeIndex();
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return const BottomNavigation();
-    }));
+    // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+    //   return const BottomNavigation();
+    // }));
+
+    context.push('/home');
   }
 
   Future getCountries() async {

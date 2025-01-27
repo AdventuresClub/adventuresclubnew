@@ -25,6 +25,7 @@ import 'package:app/widgets/dropdowns/service_type_drop_down.dart';
 import 'package:app/widgets/my_text.dart';
 import 'package:app/widgets/search_container.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import '../../home_Screens/navigation_screens/bottom_navigation.dart';
@@ -770,9 +771,11 @@ class _StackHomeState extends State<StackHome> {
 
   void changeStatus() {
     Navigator.of(context).pop();
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return const BottomNavigation();
-    }));
+
+    context.push('/home');
+    // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+    //   return const BottomNavigation();
+    // }));
     Provider.of<ServicesProvider>(context, listen: false).getServicesList;
   }
 

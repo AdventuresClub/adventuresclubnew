@@ -19,6 +19,7 @@ import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -130,13 +131,15 @@ class _SignUpState extends State<SignUp> {
   }
 
   void goToHome() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return const BottomNavigation();
-        },
-      ),
-    );
+    // Navigator.of(context).push(
+    //   MaterialPageRoute(
+    //     builder: (_) {
+    //       return const BottomNavigation();
+    //     },
+    //   ),
+    // );
+
+    context.push('/home');
   }
 
   void goToSignIn() {

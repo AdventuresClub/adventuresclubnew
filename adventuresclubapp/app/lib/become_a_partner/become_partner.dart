@@ -13,6 +13,7 @@ import 'package:app/widgets/text_fields/TF_with_size.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -133,9 +134,11 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
 
   void cancel() {
     Navigator.of(context).pop();
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return const BottomNavigation();
-    }));
+
+    context.push('/home');
+    // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+    //   return const BottomNavigation();
+    // }));
   }
 
   void addMedia() async {

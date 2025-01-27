@@ -19,6 +19,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -371,14 +372,15 @@ class _SignInState extends State<SignIn> {
   }
 
   void goToNavigation() {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (_) {
-          return const BottomNavigation();
-        },
-      ),
-      (route) => false,
-    );
+    context.replace('/home');
+    // Navigator.of(context).pushAndRemoveUntil(
+    //   MaterialPageRoute(
+    //     builder: (_) {
+    //       return const BottomNavigation();
+    //     },
+    //   ),
+    //   (route) => false,
+    // );
   }
 
   void goToSignUp() {
@@ -412,14 +414,15 @@ class _SignInState extends State<SignIn> {
   }
 
   void home() {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (_) {
-          return const BottomNavigation();
-        },
-      ),
-      (route) => false,
-    );
+    context.push('/home');
+    // Navigator.of(context).pushAndRemoveUntil(
+    //   MaterialPageRoute(
+    //     builder: (_) {
+    //       return const BottomNavigation();
+    //     },
+    //   ),
+    //   (route) => false,
+    // );
   }
 
   void changeLanguage(String lang) {

@@ -4,6 +4,7 @@ import 'package:app/constants.dart';
 import 'package:app/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:app/widgets/my_text.dart';
 import 'package:app/widgets/participants_container.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import '../../models/getParticipants/get_participants_model.dart';
@@ -258,9 +259,10 @@ class _ParticipantsListState extends State<ParticipantsList> {
   }
 
   void cancel() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+    context.push('/home');
+    /*Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       return const BottomNavigation();
-    }));
+    }));*/
   }
 
   // void convert(String d) {
