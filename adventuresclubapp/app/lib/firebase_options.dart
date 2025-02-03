@@ -47,29 +47,29 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDOu7hiklVBLAQgq5m4mvGleF-LFxQsyuQ',
-    appId: '1:794429399057:web:4148e0e7e008994f1551b0',
-    messagingSenderId: '794429399057',
-    projectId: 'adventures-club-12206',
-    authDomain: 'adventures-club-12206.firebaseapp.com',
-    storageBucket: 'adventures-club-12206.firebasestorage.app',
-    measurementId: 'G-JSK4LMF0TR',
+    apiKey: 'AIzaSyAnatsXDV908Li6bGzwnF_AHk1yWM7fHJQ',
+    appId: '1:328868209304:web:7126c5cb084ac6854ba6ed',
+    messagingSenderId: '328868209304',
+    projectId: 'adventuresclub-6b296',
+    authDomain: 'adventuresclub-6b296.firebaseapp.com',
+    storageBucket: 'adventuresclub-6b296.firebasestorage.app',
+    measurementId: 'G-9D3MTD55G9',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAtL9qUOhnLrU5W0G4bYLwuOzlpnPufMyg',
-    appId: '1:794429399057:android:366c317e2abc7eaa1551b0',
-    messagingSenderId: '794429399057',
-    projectId: 'adventures-club-12206',
-    storageBucket: 'adventures-club-12206.firebasestorage.app',
+    apiKey: 'AIzaSyBHxPdAapDULhuGBmco9gGkvtRrenhHE3I',
+    appId: '1:328868209304:android:8bb6051ddbc8f8ea4ba6ed',
+    messagingSenderId: '328868209304',
+    projectId: 'adventuresclub-6b296',
+    storageBucket: 'adventuresclub-6b296.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDjZDRq_ohrbPCPx17t0yf7ozwIJ3wY01o',
-    appId: '1:794429399057:ios:5ecbdea69893ee121551b0',
-    messagingSenderId: '794429399057',
-    projectId: 'adventures-club-12206',
-    storageBucket: 'adventures-club-12206.firebasestorage.app',
+    apiKey: 'AIzaSyBdMC9e7qGKO6Elh3_eSmgUK38hlfBs3Sw',
+    appId: '1:328868209304:ios:c2585967bfb80ebb4ba6ed',
+    messagingSenderId: '328868209304',
+    projectId: 'adventuresclub-6b296',
+    storageBucket: 'adventuresclub-6b296.firebasestorage.app',
     iosBundleId: 'com.universalskills.adventuresclub',
   );
 

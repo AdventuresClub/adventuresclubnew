@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "794429399057",
-    "project_id": "adventures-club-12206",
-    "storage_bucket": "adventures-club-12206.firebasestorage.app"
+    "project_number": "328868209304",
+    "project_id": "adventuresclub-6b296",
+    "storage_bucket": "adventuresclub-6b296.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:794429399057:android:366c317e2abc7eaa1551b0",
+        "mobilesdk_app_id": "1:328868209304:android:8bb6051ddbc8f8ea4ba6ed",
         "android_client_info": {
           "package_name": "com.universalskills.adventuresclub"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAtL9qUOhnLrU5W0G4bYLwuOzlpnPufMyg"
+          "current_key": "AIzaSyBHxPdAapDULhuGBmco9gGkvtRrenhHE3I"
         }
       ],
       "services": {
