@@ -1,0 +1,9 @@
+[{
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.universalskills.adventuresclub",
+      "sha256_cert_fingerprints":
+      ["65:84:16:9D:D5:3A:24:16:BD:8C:70:72:14:B6:8D:DA:26:F4:5D:16:C7:B9:CD:65:0C:99:ED:35:B3:34:91:AF"]
+    }
+}]

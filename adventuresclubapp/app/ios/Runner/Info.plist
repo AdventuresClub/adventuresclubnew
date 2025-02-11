@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>App</string>
+	<string>Adventures Club</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -45,5 +45,32 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Adventures Club needs access to yor calendar, so you can add meeting reminders.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Adventures Club needs access to camera so you can take/share photo/video</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Adventures Club needs access to location if you allow it, it can show you adventures in your area</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Adventures Club needs access to location if you allow it and the app is in use, it can show you adventures in your area</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Adventures Club needs access to location if you allow it and the app is in use, it can show you adventures in your area</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Adventures Club needs access to mic for your videos</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Adventures Club needs access to photos so you can upload photos for your profile, share photo(s) in chat</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Adventures Club needs access to mic to convert speech to text</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>comgooglemaps</string>
+		<string>iosamap</string>
+	</array>
+
 </dict>
 </plist>

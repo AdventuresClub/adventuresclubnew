@@ -11,6 +11,7 @@ import 'package:app/provider/navigation_index_provider.dart';
 import 'package:app/provider/services_provider.dart';
 import 'package:app/routes.dart';
 import 'package:app/splashScreen/splash_screen.dart';
+import 'package:app_links/app_links.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -60,11 +61,35 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late Future getAppFuture;
+  final navigatorKey = GlobalKey<NavigatorState>();
+  late AppLinks appLinks;
+  StreamSubscription<Uri>? linkSubscription;
+
   @override
   void initState() {
     getAppFuture = getApp();
-
     super.initState();
+    initDeepLinks();
+  }
+
+  @override
+  void dispose() {
+    linkSubscription?.cancel();
+    super.dispose();
+  }
+
+  Future<void> initDeepLinks() async {
+    appLinks = AppLinks();
+
+    // Handle links
+    linkSubscription = appLinks.uriLinkStream.listen((uri) {
+      debugPrint('onAppLink: $uri');
+      openAppLink(uri);
+    });
+  }
+
+  void openAppLink(Uri uri) {
+    navigatorKey.currentState?.pushNamed(uri.fragment);
   }
 
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -202,6 +227,34 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     bool isDark = false;
+    // return MaterialApp(
+    //   navigatorKey: navigatorKey,
+    //   initialRoute: "/",
+    //   onGenerateRoute: (RouteSettings settings) {
+    //     Widget routeWidget = SplashScreen();
+
+    //     // Mimic web routing
+    //     final routeName = settings.name;
+    //     if (routeName != null) {
+    //       if (routeName.startsWith('/book/')) {
+    //         // Navigated to /book/:id
+    //         routeWidget = customScreen(
+    //           routeName.substring(routeName.indexOf('/book/')),
+    //         );
+    //       } else if (routeName == '/book') {
+    //         // Navigated to /book without other parameters
+    //         routeWidget = customScreen("None");
+    //       }
+    //     }
+
+    //     return MaterialPageRoute(
+    //       builder: (context) => routeWidget,
+    //       settings: settings,
+    //       fullscreenDialog: true,
+    //     );
+    //   },
+    // );
+
     return MaterialApp.router(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
@@ -210,13 +263,20 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       routerConfig: router,
       theme: AppTheme.getCurrentTheme(isDark),
-      /*   home: FutureBuilder(
-        future: getApp(),
-        builder: (context, asppsnapshot) {
-          // return const TempGoogleMap();
-          return const SplashScreen();
-        },
-      ),*/
+      // home: FutureBuilder(
+      //   future: getApp(),
+      //   builder: (context, asppsnapshot) {
+      //     // return const TempGoogleMap();
+      //     return const SplashScreen();
+      //   },
+      // ),
     );
   }
+}
+
+Widget customScreen(String bookId) {
+  return Scaffold(
+    appBar: AppBar(title: const Text('Second Screen')),
+    body: Center(child: Text('Opened with parameter: $bookId')),
+  );
 }
