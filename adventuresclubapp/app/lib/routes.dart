@@ -1,3 +1,4 @@
+import 'package:app/app_link_page.dart';
 import 'package:app/check_profile.dart';
 import 'package:app/choose_language.dart';
 import 'package:app/home_Screens/accounts/about.dart';
@@ -25,18 +26,30 @@ final GoRouter router = GoRouter(
       ),
     );
   },
-  // redirect: (context, state) {
-  //   if (!Constants.signedIn) {
-  //     return '/';
-  //   }
-  //   return null;
-  // },
+  redirect: (context, state) {
+    if (state.uri.path.contains('/appLinkPage')) {
+      return '/appLinkPage/${state.uri.queryParameters['id']}/${state.uri.queryParameters['sID']}';
+    }
+    return null;
+  },
   routes: <RouteBase>[
     GoRoute(
       parentNavigatorKey: rootNavigatorKey,
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
         return SplashScreen();
+      },
+    ),
+    GoRoute(
+      parentNavigatorKey: rootNavigatorKey,
+      path: '/appLinkPage/:id/:sID',
+      builder: (BuildContext context, GoRouterState state) {
+        String? id = state.pathParameters['id'];
+        int? sId;
+        if (state.pathParameters['sID'] != null) {
+          sId = int.tryParse(state.pathParameters['sID']!);
+        }
+        return AppLinkPage(id: id, sId: sId);
       },
     ),
     GoRoute(

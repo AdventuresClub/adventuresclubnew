@@ -12,6 +12,7 @@ import 'package:app/widgets/home_widgets/new_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
@@ -133,7 +134,7 @@ class _HomeState extends State<Home> {
           currentFocus.unfocus();
         }
       },
-      child: const PopScope(
+      child: PopScope(
         canPop: false,
         // onWillPop: () async {
         //   return false;
@@ -146,6 +147,9 @@ class _HomeState extends State<Home> {
                 child: Column(
                   children: [
                     NewFilterPage(),
+                    TextButton(onPressed: () {
+                      context.push("/appLinkPage/123/456");
+                    }, child: Text("AppLink Test"),),
                     // SizedBox(
                     //   height: 35,
                     // ),
