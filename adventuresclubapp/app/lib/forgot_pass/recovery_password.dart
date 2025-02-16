@@ -6,6 +6,7 @@ import 'package:app/sign_up/sign_in.dart';
 import 'package:app/widgets/buttons/button.dart';
 import 'package:app/widgets/my_text.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import '../widgets/text_fields/space_text_field.dart';
 import '../widgets/text_fields/tf_with_suffix_icon.dart';
@@ -27,13 +28,14 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
   TextEditingController passController = TextEditingController();
 
   void goToSignIn() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return const SignIn();
-        },
-      ),
-    );
+    context.push('/signIn');
+    // Navigator.of(context).push(
+    //   MaterialPageRoute(
+    //     builder: (_) {
+    //       return const SignIn();
+    //     },
+    //   ),
+    // );
   }
 
   void requestSent() async {

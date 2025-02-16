@@ -11,8 +11,10 @@ import 'package:app/widgets/loading_widget.dart';
 import 'package:app/widgets/my_text.dart';
 import 'package:app/widgets/text_fields/text_fields.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -400,14 +402,19 @@ class _PersonalDetailsState extends State<PersonalDetails> {
     Constants.clear();
     changeIndex();
     print(Constants.userId);
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (_) {
-          return const SignIn();
-        },
-      ),
-      (route) => false,
-    );
+    while (context.canPop()) {
+      context.pop();
+    }
+    context.pushReplacement('/signIn');
+
+    // Navigator.of(context).pushAndRemoveUntil(
+    //   MaterialPageRoute(
+    //     builder: (_) {
+    //       return const SignIn();
+    //     },
+    //   ),
+    //   (route) => false,
+    // );
   }
 
   void enterOTP() {

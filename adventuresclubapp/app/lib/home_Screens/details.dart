@@ -10,6 +10,7 @@ import 'package:app/widgets/tabs/details_tabs/details_tabs.dart';
 import 'package:app/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/home_services/services_model.dart';
 import 'package:http/http.dart' as http;
@@ -102,9 +103,10 @@ class _DetailsState extends State<Details> {
   }
 
   void navLogin() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return const SignIn();
-    }));
+    context.push('/signIn');
+    // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+    //   return const SignIn();
+    // }));
   }
 
   void navRegister() {

@@ -6,6 +6,7 @@ import 'package:app/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:app/home_Screens/navigation_screens/home.dart';
 import 'package:app/home_Screens/new_details.dart';
 import 'package:app/models/home_services/services_model.dart';
+import 'package:app/sign_up/sign_in.dart';
 import 'package:app/splashScreen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -80,6 +81,13 @@ final GoRouter router = GoRouter(
       path: '/chooseLanguage',
       builder: (BuildContext context, GoRouterState state) {
         return ChooseLanguage();
+      },
+    ),
+    GoRoute(
+      parentNavigatorKey: rootNavigatorKey,
+      path: '/signIn',
+      builder: (BuildContext context, GoRouterState state) {
+        return SignIn();
       },
     ),
     GoRoute(

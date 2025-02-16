@@ -4,6 +4,7 @@ import 'package:app/sign_up/Sign_up.dart';
 import 'package:app/sign_up/sign_in.dart';
 import 'package:app/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class OnBoardingScreens extends StatefulWidget {
   const OnBoardingScreens({super.key});
@@ -344,13 +345,15 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
               left: 75,
               child: GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) {
-                        return const SignIn();
-                      },
-                    ),
-                  );
+                  context.push('/signIn');
+
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (_) {
+                  //       return const SignIn();
+                  //     },
+                  //   ),
+                  // );
                 },
                 child: const Text.rich(
                   TextSpan(

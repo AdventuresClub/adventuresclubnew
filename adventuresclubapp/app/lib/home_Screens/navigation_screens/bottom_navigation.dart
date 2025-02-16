@@ -17,6 +17,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -471,9 +472,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
   }
 
   void navLogin() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return const SignIn();
-    }));
+    context.push('/signIn');
+    // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+    //   return const SignIn();
+    // }));
   }
 
   void navRegister() {

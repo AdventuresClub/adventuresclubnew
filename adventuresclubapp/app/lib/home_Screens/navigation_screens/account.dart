@@ -464,14 +464,18 @@ class _AccountState extends State<Account> {
     clearData();
     changeIndex();
     if (mounted) {
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (_) {
-            return const SignIn();
-          },
-        ),
-        (route) => false,
-      );
+      // while (context.canPop()) {
+      //   context.pop();
+      // }
+      context.pushReplacement('/signIn');
+      // Navigator.of(context).pushAndRemoveUntil(
+      //   MaterialPageRoute(
+      //     builder: (_) {
+      //       return const SignIn();
+      //     },
+      //   ),
+      //   (route) => false,
+      // );
     }
   }
 

@@ -13,6 +13,7 @@ import 'package:app/widgets/text_fields/text_fields.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:permission_handler/permission_handler.dart';
@@ -93,14 +94,18 @@ class _ProfileState extends State<Profile> {
     Constants.clear();
     changeIndex();
     print(Constants.userId);
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (_) {
-          return const SignIn();
-        },
-      ),
-      (route) => false,
-    );
+    while (context.canPop()) {
+      context.pop();
+    }
+    context.pushReplacement('/signIn');
+    // Navigator.of(context).pushAndRemoveUntil(
+    //   MaterialPageRoute(
+    //     builder: (_) {
+    //       return const SignIn();
+    //     },
+    //   ),
+    //   (route) => false,
+    // );
   }
 
   void showConfirmation(String title, String message) async {

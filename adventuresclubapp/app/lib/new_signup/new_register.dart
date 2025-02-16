@@ -136,13 +136,14 @@ class _NewRegisterState extends State<NewRegister> {
   }
 
   void goToSignIn() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) {
-          return const SignIn();
-        },
-      ),
-    );
+    context.push('/signIn');
+    // Navigator.of(context).push(
+    //   MaterialPageRoute(
+    //     builder: (_) {
+    //       return const SignIn();
+    //     },
+    //   ),
+    // );
   }
 
   void register() async {

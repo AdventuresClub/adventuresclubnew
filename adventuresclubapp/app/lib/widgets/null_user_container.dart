@@ -6,6 +6,7 @@ import 'package:app/widgets/buttons/button.dart';
 import 'package:app/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class NullUserContainer extends StatefulWidget {
@@ -17,9 +18,11 @@ class NullUserContainer extends StatefulWidget {
 
 class _NullUserContainerState extends State<NullUserContainer> {
   void navLogin() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return const SignIn();
-    }));
+    context.push('/signIn');
+
+    // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+    //   return const SignIn();
+    // }));
   }
 
   void navRegister() {

@@ -4,6 +4,7 @@ import 'package:app/constants.dart';
 import 'package:app/widgets/null_user_container.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../new_signup/new_register.dart';
@@ -49,9 +50,11 @@ class _ShowChatState extends State<ShowChat> {
   }
 
   void navLogin() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return const SignIn();
-    }));
+    context.push('/signIn');
+
+    // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+    //   return const SignIn();
+    // }));
   }
 
   void navRegister() {
