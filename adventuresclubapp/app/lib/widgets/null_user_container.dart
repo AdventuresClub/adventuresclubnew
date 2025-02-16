@@ -17,12 +17,21 @@ class NullUserContainer extends StatefulWidget {
 }
 
 class _NullUserContainerState extends State<NullUserContainer> {
-  void navLogin() {
+  void navSignIn() {
     context.push('/signIn');
 
     // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
     //   return const SignIn();
     // }));
+  }
+
+  void changeIndex() {
+    Provider.of<NavigationIndexProvider>(context, listen: false).homeIndex = 0;
+  }
+
+  void navLogin() {
+    navSignIn();
+    changeIndex();
   }
 
   void navRegister() {

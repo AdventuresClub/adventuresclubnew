@@ -147,9 +147,9 @@ class _HomeState extends State<Home> {
                 child: Column(
                   children: [
                     NewFilterPage(),
-                    TextButton(onPressed: () {
-                      context.push("/appLinkPage/123/456");
-                    }, child: Text("AppLink Test"),),
+                    // TextButton(onPressed: () {
+                    //   context.push("/appLinkPage/123/456");
+                    // }, child: Text("AppLink Test"),),
                     // SizedBox(
                     //   height: 35,
                     // ),
