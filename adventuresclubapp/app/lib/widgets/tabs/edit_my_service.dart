@@ -1099,7 +1099,8 @@ class _EditMyServiceState extends State<EditMyService> {
       body: loading
           ? const LoadingWidget()
           : Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1271,9 +1272,9 @@ class _EditMyServiceState extends State<EditMyService> {
                                   color: bluishColor,
                                   size: 18,
                                 ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
+                                // const SizedBox(
+                                //   width: 2,
+                                // ),
                                 IconButton(
                                   onPressed: () => typeData("costInc"),
                                   icon: const Icon(Icons.edit),
@@ -1314,9 +1315,9 @@ class _EditMyServiceState extends State<EditMyService> {
                                   color: bluishColor,
                                   size: 18,
                                 ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
+                                // const SizedBox(
+                                //   width: 2,
+                                // ),
                                 IconButton(
                                   onPressed: () => typeData("costExl"),
                                   icon: const Icon(Icons.edit),

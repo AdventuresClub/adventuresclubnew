@@ -246,7 +246,7 @@ class _AccountState extends State<Account> {
     try {
       var response = await http
           .post(Uri.parse("${Constants.baseUrl}/api/v1/login"), body: {
-        'email': Constants.emailId, //"hamza@gmail.com",
+        'email': Constants.name, //Constants.emailId, //"hamza@gmail.com",
         'password': Constants.password, //"Upendra@321",
         'device_id': Constants.token, //deviceId, //"0",,
         'device_type': Constants.deviceType,
