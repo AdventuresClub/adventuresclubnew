@@ -616,13 +616,14 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                 // 3 rd Tab /////////
                 // gathering location
                 ServiceGatheringLocation(
-                    widget.gm.writeInformation,
-                    widget.gm.sAddress,
-                    widget.gm.region,
-                    widget.gm.country,
-                    widget.gm.geoLocation,
-                    widget.gm.lat,
-                    widget.gm.lng),
+                  widget.gm.writeInformation,
+                  widget.gm.sAddress,
+                  widget.gm.region,
+                  widget.gm.country,
+                  widget.gm.geoLocation,
+                  widget.gm.lat,
+                  widget.gm.lng,
+                ),
                 const SizedBox(
                   height: 10,
                 ),

@@ -19,11 +19,12 @@ class ServiceGatheringLocation extends StatefulWidget {
   final String region;
   final String country;
   final String geoLocation;
+  final bool? edit;
   String lat;
   String lng;
   ServiceGatheringLocation(this.writeInformation, this.sAddress, this.region,
       this.country, this.geoLocation, this.lat, this.lng,
-      {super.key});
+      {this.edit = false, super.key});
 
   @override
   State<ServiceGatheringLocation> createState() =>
@@ -321,34 +322,45 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
             const SizedBox(
               height: 10,
             ),
-            RichText(
-              text: TextSpan(
-                text: 'geoLocation'.tr(),
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Raleway",
-                    color: blackColor,
-                    fontSize: 14),
-                children: <TextSpan>[
-                  TextSpan(
-                      text:
-                          "${"Lat:"} ${widget.lat.substring(0, 7)} ${","} ${"Lng:"} ${widget.lng.substring(0, 7)}", //widget.geoLocation, //widget.lat.substring(0, 7),
-                      //text: ' 60.25455415, 54.2555125',
+            Row(
+              children: [
+                Expanded(
+                  child: RichText(
+                    text: TextSpan(
+                      text: 'geoLocation'.tr(),
                       style: const TextStyle(
+                          fontWeight: FontWeight.bold,
                           fontFamily: "Raleway",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: blackColor))
-                  // const TextSpan(
-                  //     text: " , ",
-                  //     //text: ' 60.25455415, 54.2555125',
-                  //     style: TextStyle(fontSize: 14, color: blackColor)),
-                  // TextSpan(
-                  //     text: widget.lng.substring(0, 7),
-                  //     //text: ' 60.25455415, 54.2555125',
-                  //     style: const TextStyle(fontSize: 14, color: blackColor)),
-                ],
-              ),
+                          color: blackColor,
+                          fontSize: 14),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text:
+                                "${"Lat:"} ${widget.lat.substring(0, 7)} ${","} ${"Lng:"} ${widget.lng.substring(0, 7)}", //widget.geoLocation, //widget.lat.substring(0, 7),
+                            //text: ' 60.25455415, 54.2555125',
+                            style: const TextStyle(
+                                fontFamily: "Raleway",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: blackColor))
+                        // const TextSpan(
+                        //     text: " , ",
+                        //     //text: ' 60.25455415, 54.2555125',
+                        //     style: TextStyle(fontSize: 14, color: blackColor)),
+                        // TextSpan(
+                        //     text: widget.lng.substring(0, 7),
+                        //     //text: ' 60.25455415, 54.2555125',
+                        //     style: const TextStyle(fontSize: 14, color: blackColor)),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                if (widget.edit!)
+                  IconButton(onPressed: () {}, icon: Icon(Icons.edit))
+              ],
             ),
             const SizedBox(
               height: 5,

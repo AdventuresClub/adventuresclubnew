@@ -11,10 +11,12 @@ import 'package:app/models/home_services/services_model.dart';
 import 'package:app/models/services/aimed_for_model.dart';
 import 'package:app/models/services/dependencies_model.dart';
 import 'package:app/models/services/included_activities_model.dart';
+import 'package:app/temp_google_map.dart';
 import 'package:app/widgets/buttons/button.dart';
 import 'package:app/widgets/loading_widget.dart';
 import 'package:app/widgets/my_service_banner_container.dart';
 import 'package:app/widgets/my_text.dart';
+import 'package:app/widgets/tabs/details_tabs/service_gathering_location.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -35,6 +37,7 @@ class _EditMyServiceState extends State<EditMyService> {
   TextEditingController preRequisitesController = TextEditingController();
   TextEditingController minimumRequirements = TextEditingController();
   TextEditingController terms = TextEditingController();
+  TextEditingController iLiveInController = TextEditingController();
   List<String> categoryList = [];
   List<SectorFilterModel> filterSectors = [];
   List<CategoryFilterModel> categoryFilter = [];
@@ -66,12 +69,15 @@ class _EditMyServiceState extends State<EditMyService> {
   List<bool> daysValue = [false, false, false, false, false, false, false];
   bool editDay = false;
   int servicePlanId = 0;
+  String servicePlanOneIds = "";
   var formattedDate;
   var endDate;
   DateTime eDate = DateTime.now();
   DateTime? pickedDate;
   DateTime currentDate = DateTime.now();
   String selectedActivityIncludesId = "";
+  double lat = 0;
+  double lng = 0;
 
   @override
   void initState() {
@@ -100,6 +106,7 @@ class _EditMyServiceState extends State<EditMyService> {
     costExl.dispose();
     costInc.dispose();
     desriptionController.dispose();
+    iLiveInController.dispose();
     super.dispose();
   }
 
@@ -634,6 +641,7 @@ class _EditMyServiceState extends State<EditMyService> {
     // setState(() {
     // int s = int.parse(id.join());
     servicePlanId = int.parse(id.join());
+    servicePlanOneIds = id.join(",");
     // });
     editService("daysValue");
   }
@@ -745,10 +753,22 @@ class _EditMyServiceState extends State<EditMyService> {
       b = {
         'service_id': widget.gm.id.toString(),
         'customer_id': widget.gm.providerId.toString(),
-        "service_plan_days": "23", //servicePlanId,
+        "service_plan_days":
+            servicePlanOneIds, //servicePlanId, //"23", //==servicePlanId,
         "service_plan": "1",
+        // "start_date": "2025-02-20",
+        // "end_date": "2025-02-24",
       };
     } else if (type == "plan2") {
+      b = {
+        'service_id': widget.gm.id.toString(),
+        'customer_id': widget.gm.providerId.toString(),
+        // "service_plan_days":
+        //     servicePlanOneIds, //servicePlanId, //"23", //==servicePlanId,
+        "service_plan": "2",
+        "start_date": "2025-03-25",
+        "end_date": "2025-03-30",
+      };
     } else if (type == "activities") {
       List<ActivitiesIncludeModel> activity = [];
       widget.gm.activityIncludes.clear();
@@ -836,6 +856,13 @@ class _EditMyServiceState extends State<EditMyService> {
         'service_id': widget.gm.id.toString(),
         'customer_id': widget.gm.providerId.toString(),
         "terms_conditions": terms.text.trim(), //
+      };
+    } else if (type == "location") {
+      b = {
+        "service_id": widget.gm.id.toString(),
+        'customer_id': widget.gm.providerId.toString(),
+        "latitude": lat.toString(),
+        "longitude": lng.toString(),
       };
     }
     // debugPrint(b);
@@ -1079,6 +1106,32 @@ class _EditMyServiceState extends State<EditMyService> {
 
   void cancel() {
     Navigator.of(context).popUntil((route) => route.isFirst);
+  }
+
+  Widget editIcon(String type) {
+    return IconButton(
+      onPressed: () => typeData(type),
+      icon: const Icon(Icons.edit),
+    );
+  }
+
+  void openGoogle() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (_) {
+          return TempGoogleMap(setLocation);
+        },
+      ),
+    );
+  }
+
+  void setLocation(String loc, double lt, double lg) {
+    //Navigator.of(context).pop();
+    iLiveInController.text = loc;
+    lat = lt;
+    lng = lg;
+    editService("location");
   }
 
   @override
@@ -1335,6 +1388,122 @@ class _EditMyServiceState extends State<EditMyService> {
                         ),
                       ],
                     ),
+                    if (widget.gm.sPlan == 2)
+                      Column(
+                        children: [
+                          const SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              MyText(
+                                text: "${"${"startDate".tr()} : "} $st",
+                                //'River Rafting',
+                                //weight: FontWeight.w700,
+                                color: blackColor,
+                                size: 14,
+                              ),
+                              MyText(
+                                text: "${"endDate".tr()} : $ed",
+                                //'River Rafting',
+                                //weight: FontWeight.w700,
+                                color: blackColor,
+                                size: 14,
+                              ),
+                              const SizedBox(width: 5),
+                            ],
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          IconButton(
+                              onPressed: () => editService("plan2"),
+                              icon: Icon(Icons.edit))
+                        ],
+                      ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    if (widget.gm.sPlan == 1)
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: RichText(
+                                  text: TextSpan(
+                                    text: 'Availability'.tr(),
+                                    style: const TextStyle(
+                                        color: bluishColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Raleway'),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: aPlan,
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              color: blackColor,
+                                              fontFamily: 'Raleway')),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              IconButton(
+                                  onPressed: servicePlan,
+                                  icon: Icon(Icons.edit))
+                              //editIcon("sPlan")
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Wrap(
+                            direction: Axis.horizontal,
+                            children: List.generate(
+                              days.length,
+                              (index) {
+                                return Column(
+                                  children: [
+                                    MyText(
+                                      text: days[index],
+                                      color: blackTypeColor,
+                                      align: TextAlign.center,
+                                      size: 14,
+                                      weight: FontWeight.w500,
+                                    ),
+                                    Checkbox(
+                                      activeColor: bluishColor,
+                                      checkColor: whiteColor,
+                                      value: daysValue[index],
+                                      onChanged: (bool? value) {
+                                        //if (particularWeekDays) {
+                                        setState(
+                                          () {
+                                            daysValue[index] = value!;
+                                          },
+                                        );
+                                        //}
+                                        // if (particularWeekDays ==
+                                        //     false) {
+                                        //   setState(() {
+                                        //     daysValue[
+                                        //             index] =
+                                        //         false;
+                                        //   });
+                                        // }
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                     const SizedBox(
                       height: 10,
                     ),
@@ -1732,9 +1901,27 @@ class _EditMyServiceState extends State<EditMyService> {
                       thickness: 1,
                       color: blackColor.withOpacity(0.2),
                     ),
+                    ServiceGatheringLocation(
+                      widget.gm.writeInformation,
+                      widget.gm.sAddress,
+                      widget.gm.region,
+                      widget.gm.country,
+                      widget.gm.geoLocation,
+                      widget.gm.lat,
+                      widget.gm.lng,
+                      edit: true,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                            onPressed: openGoogle, icon: Icon(Icons.edit))
+                      ],
+                    ),
                     const SizedBox(
                       height: 10,
                     ),
+
                     Row(
                       children: [
                         MyText(
