@@ -1,0 +1,2 @@
+C:/Users/P R O B O O K/projects/usman/adventure/adventuresclubnew/adventuresclubapp/app/android/app/.cxx/Debug/3r3s6f39/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/P R O B O O K/projects/usman/adventure/adventuresclubnew/adventuresclubapp/app/android/app/.cxx/Debug/3r3s6f39/x86_64/CMakeFiles/rebuild_cache.dir
