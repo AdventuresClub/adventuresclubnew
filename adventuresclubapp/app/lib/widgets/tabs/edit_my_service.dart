@@ -780,8 +780,8 @@ class _EditMyServiceState extends State<EditMyService> {
         // "service_plan_days":
         //     servicePlanOneIds, //servicePlanId, //"23", //==servicePlanId,
         "service_plan": "2",
-        "start_date": "2025-03-25",
-        "end_date": "2025-03-30",
+        "start_date": formattedDate, //"2025-03-25",
+        "end_date": endDate, //"2025-03-30",
       };
     } else if (type == "activities") {
       List<ActivitiesIncludeModel> activity = [];
@@ -1122,7 +1122,7 @@ class _EditMyServiceState extends State<EditMyService> {
         });
       }
     }
-    print(currentDate);
+    editService("plan2");
   }
 
   void cancel() {
@@ -1412,7 +1412,7 @@ class _EditMyServiceState extends State<EditMyService> {
                     if (widget.gm.sPlan == 2)
                       Column(
                         children: [
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -1431,19 +1431,24 @@ class _EditMyServiceState extends State<EditMyService> {
                                 size: 14,
                               ),
                               const SizedBox(width: 5),
+                              SizedBox(
+                                width: 30,
+                                child: IconButton(
+                                    onPressed: () =>
+                                        _selectDate(context, endDate),
+                                    icon: Icon(Icons.edit)),
+                              )
                             ],
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          IconButton(
-                              onPressed: () => editService("plan2"),
-                              icon: Icon(Icons.edit))
+                          // const SizedBox(
+                          //   width: 10,
+                          // ),
+                          // IconButton(
+                          //     onPressed: () => editService("plan2"),
+                          //     icon: Icon(Icons.edit))
                         ],
                       ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+
                     if (widget.gm.sPlan == 1)
                       Column(
                         children: [
@@ -1525,9 +1530,7 @@ class _EditMyServiceState extends State<EditMyService> {
                           ),
                         ],
                       ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+
                     // if (widget.gm.sPlan == 2)
                     //   Column(
                     //     children: [
@@ -1729,9 +1732,9 @@ class _EditMyServiceState extends State<EditMyService> {
                     //       ],
                     //     ),
                     //   ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
                     Row(
                       children: [
                         MyText(
