@@ -47,29 +47,29 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAnatsXDV908Li6bGzwnF_AHk1yWM7fHJQ',
-    appId: '1:328868209304:web:7126c5cb084ac6854ba6ed',
-    messagingSenderId: '328868209304',
-    projectId: 'adventuresclub-6b296',
-    authDomain: 'adventuresclub-6b296.firebaseapp.com',
-    storageBucket: 'adventuresclub-6b296.firebasestorage.app',
-    measurementId: 'G-9D3MTD55G9',
+    apiKey: 'AIzaSyAy8VlgDdWk37VDGEroe1AelRG-A-3yeIM',
+    appId: '1:393136578346:web:855dfcf6bd48e8b23f0853',
+    messagingSenderId: '393136578346',
+    projectId: 'adventuresclub-1d3b7',
+    authDomain: 'adventuresclub-1d3b7.firebaseapp.com',
+    storageBucket: 'adventuresclub-1d3b7.firebasestorage.app',
+    measurementId: 'G-MDJ6D4R97P',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBHxPdAapDULhuGBmco9gGkvtRrenhHE3I',
-    appId: '1:328868209304:android:8bb6051ddbc8f8ea4ba6ed',
-    messagingSenderId: '328868209304',
-    projectId: 'adventuresclub-6b296',
-    storageBucket: 'adventuresclub-6b296.firebasestorage.app',
+    apiKey: 'AIzaSyA7RRpdcJPLsSNQATm9TfPueve-LF29MQE',
+    appId: '1:393136578346:android:bd0048b790e3b4dd3f0853',
+    messagingSenderId: '393136578346',
+    projectId: 'adventuresclub-1d3b7',
+    storageBucket: 'adventuresclub-1d3b7.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBdMC9e7qGKO6Elh3_eSmgUK38hlfBs3Sw',
-    appId: '1:328868209304:ios:c2585967bfb80ebb4ba6ed',
-    messagingSenderId: '328868209304',
-    projectId: 'adventuresclub-6b296',
-    storageBucket: 'adventuresclub-6b296.firebasestorage.app',
+    apiKey: 'AIzaSyB_IMg2p3A8bcdDo8Z6YhDcGTSeT0TUjQs',
+    appId: '1:393136578346:ios:c3b8ac49284cf9de3f0853',
+    messagingSenderId: '393136578346',
+    projectId: 'adventuresclub-1d3b7',
+    storageBucket: 'adventuresclub-1d3b7.firebasestorage.app',
     iosBundleId: 'com.universalskills.adventuresclub',
   );
 
