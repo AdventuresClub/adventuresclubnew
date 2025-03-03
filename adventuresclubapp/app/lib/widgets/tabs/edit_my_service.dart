@@ -88,6 +88,7 @@ class _EditMyServiceState extends State<EditMyService> {
     categoryList.add(widget.gm.serviceLevel);
     getData();
     if (widget.gm.sPlan == 2) {
+      nameController.text = widget.gm.adventureName;
       startDate =
           DateTime.tryParse(widget.gm.availability[0].st) ?? DateTime.now();
       String sMonth = DateFormat('MMM').format(startDate);
@@ -152,7 +153,9 @@ class _EditMyServiceState extends State<EditMyService> {
     String hint = "";
     int max = 2;
     if (type == "adventureName") {
+      //nameController.text = widget.gm.adventureName;
       nameController = controller;
+      controller.text = widget.gm.adventureName;
       title = widget.gm.adventureName;
       hint = "Adventure Name";
       max = 3;
