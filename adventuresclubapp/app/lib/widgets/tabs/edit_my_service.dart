@@ -89,6 +89,11 @@ class _EditMyServiceState extends State<EditMyService> {
     getData();
     if (widget.gm.sPlan == 2) {
       nameController.text = widget.gm.adventureName;
+      costInc.text = widget.gm.costInc;
+      costExl.text = widget.gm.costExc;
+      desriptionController.text = widget.gm.des;
+      preRequisitesController.text = widget.gm.preRequisites;
+      minimumRequirements.text = widget.gm.mRequirements;
       startDate =
           DateTime.tryParse(widget.gm.availability[0].st) ?? DateTime.now();
       String sMonth = DateFormat('MMM').format(startDate);
@@ -161,28 +166,34 @@ class _EditMyServiceState extends State<EditMyService> {
       max = 3;
     } else if (type == "costInc") {
       costInc = controller;
+      controller.text = widget.gm.costInc;
       title = widget.gm.costInc;
       hint = "Cost Inc";
       max = 1;
     } else if (type == "costExl") {
       costExl = controller;
+      controller.text = widget.gm.costExc;
       title = widget.gm.costExc;
       hint = "Cost Excluding";
       max = 1;
     } else if (type == "description") {
       desriptionController = controller;
+      controller.text = widget.gm.writeInformation;
       title = widget.gm.writeInformation;
       hint = "Description";
     } else if (type == "prerequisites") {
       preRequisitesController = controller;
+      controller.text = widget.gm.preRequisites;
       title = widget.gm.preRequisites;
       hint = "Pre-Requisites";
     } else if (type == "minimumRequirements") {
       minimumRequirements = controller;
+      controller.text = widget.gm.mRequirements;
       title = widget.gm.mRequirements;
       hint = "minimumRequirements";
     } else if (type == "terms") {
       terms = controller;
+      controller.text = widget.gm.tnc;
       title = widget.gm.tnc;
       hint = "termsNConditions";
     }
@@ -866,6 +877,13 @@ class _EditMyServiceState extends State<EditMyService> {
         'customer_id': widget.gm.providerId.toString(),
         "latitude": lat.toString(),
         "longitude": lng.toString(),
+      };
+    } else if (type == "adventureName") {
+      widget.gm.adventureName = nameController.text.trim();
+      b = {
+        'service_id': widget.gm.id.toString(),
+        'customer_id': widget.gm.providerId.toString(),
+        "adventure_name": nameController.text.trim(),
       };
     }
     // debugPrint(b);
