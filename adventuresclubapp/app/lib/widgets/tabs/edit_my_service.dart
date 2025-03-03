@@ -1922,6 +1922,13 @@ class _EditMyServiceState extends State<EditMyService> {
                       thickness: 1,
                       color: blackColor.withOpacity(0.2),
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                            onPressed: openGoogle, icon: Icon(Icons.edit))
+                      ],
+                    ),
                     ServiceGatheringLocation(
                       widget.gm.writeInformation,
                       widget.gm.sAddress,
@@ -1930,15 +1937,9 @@ class _EditMyServiceState extends State<EditMyService> {
                       widget.gm.geoLocation,
                       widget.gm.lat,
                       widget.gm.lng,
-                      edit: true,
+                      // edit: true,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                            onPressed: openGoogle, icon: Icon(Icons.edit))
-                      ],
-                    ),
+
                     const SizedBox(
                       height: 10,
                     ),
