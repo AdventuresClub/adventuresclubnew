@@ -72,6 +72,7 @@ class _EditMyServiceState extends State<EditMyService> {
   String servicePlanOneIds = "";
   var formattedDate;
   var endDate;
+  var selectedEndDate;
   DateTime eDate = DateTime.now();
   DateTime? pickedDate;
   DateTime currentDate = DateTime.now();
@@ -94,6 +95,10 @@ class _EditMyServiceState extends State<EditMyService> {
       desriptionController.text = widget.gm.des;
       preRequisitesController.text = widget.gm.preRequisites;
       minimumRequirements.text = widget.gm.mRequirements;
+      formattedDate =
+          "${widget.gm.startDate.year}-${widget.gm.startDate.month}-${widget.gm.startDate.day}";
+      selectedEndDate =
+          "${widget.gm.endDate.year}-${widget.gm.endDate.month}-${widget.gm.endDate.day}";
       startDate =
           DateTime.tryParse(widget.gm.availability[0].st) ?? DateTime.now();
       String sMonth = DateFormat('MMM').format(startDate);
@@ -661,7 +666,10 @@ class _EditMyServiceState extends State<EditMyService> {
   }
 
   void editService(String type) async {
-    Navigator.of(context).pop();
+    if (type != "plan2") {
+      Navigator.of(context).pop();
+    }
+
     dynamic b = {};
     if (type == "category") {
       String categoryId = "";
@@ -774,6 +782,10 @@ class _EditMyServiceState extends State<EditMyService> {
         // "end_date": "2025-02-24",
       };
     } else if (type == "plan2") {
+      widget.gm.startDate = startDate;
+      //DateTime(formattedDate.year, formattedDate.month, formattedDate.day);
+      widget.gm.endDate = endDate; //DateTime(
+      //selectedEndDate.year, selectedEndDate.month, selectedEndDate.day);
       b = {
         'service_id': widget.gm.id.toString(),
         'customer_id': widget.gm.providerId.toString(),
@@ -781,7 +793,7 @@ class _EditMyServiceState extends State<EditMyService> {
         //     servicePlanOneIds, //servicePlanId, //"23", //==servicePlanId,
         "service_plan": "2",
         "start_date": formattedDate, //"2025-03-25",
-        "end_date": endDate, //"2025-03-30",
+        "end_date": selectedEndDate, //"2025-03-30",
       };
     } else if (type == "activities") {
       List<ActivitiesIncludeModel> activity = [];
@@ -1105,6 +1117,7 @@ class _EditMyServiceState extends State<EditMyService> {
         setState(() {
           formattedDate = "${date.year}-$m-$d";
           startDate = pickedDate!;
+          st = "${startDate.day}-${startDate.month}-${startDate.year}";
           //pm[0].startDate = startDate;
           //  pm.insert(0, CreateServicesProgramModel(title, startDate, endDate, Duration(), Duration(), "description", DateTime.now, adventureEndDate))
         });
@@ -1117,6 +1130,8 @@ class _EditMyServiceState extends State<EditMyService> {
         String d = date.day < 10 ? "0${date.day}" : "${date.day}";
         setState(() {
           endDate = "${date.year}-$m-$d";
+          selectedEndDate = "${date.year}-$m-$d";
+          ed = "${date.day}-${date.month}-${date.year}";
           //   pm[0].endDate = eDate;
           currentDate = eDate;
         });
@@ -1413,31 +1428,47 @@ class _EditMyServiceState extends State<EditMyService> {
                       Column(
                         children: [
                           const SizedBox(height: 20),
-                          Row(
+                          Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              MyText(
-                                text: "${"${"startDate".tr()} : "} $st",
-                                //'River Rafting',
-                                //weight: FontWeight.w700,
-                                color: blackColor,
-                                size: 14,
+                              Row(
+                                children: [
+                                  MyText(
+                                    text: "${"${"startDate".tr()} : "} $st",
+                                    //'River Rafting',
+                                    //weight: FontWeight.w700,
+                                    color: blackColor,
+                                    size: 14,
+                                  ),
+                                  const SizedBox(width: 10),
+                                  SizedBox(
+                                    width: 15,
+                                    child: IconButton(
+                                        onPressed: () =>
+                                            _selectDate(context, formattedDate),
+                                        icon: Icon(Icons.edit)),
+                                  ),
+                                ],
                               ),
-                              MyText(
-                                text: "${"endDate".tr()} : $ed",
-                                //'River Rafting',
-                                //weight: FontWeight.w700,
-                                color: blackColor,
-                                size: 14,
+                              Row(
+                                children: [
+                                  MyText(
+                                    text: "${"endDate".tr()} : $ed",
+                                    //'River Rafting',
+                                    //weight: FontWeight.w700,
+                                    color: blackColor,
+                                    size: 14,
+                                  ),
+                                  const SizedBox(width: 10),
+                                  SizedBox(
+                                    width: 20,
+                                    child: IconButton(
+                                        onPressed: () =>
+                                            _selectDate(context, endDate),
+                                        icon: Icon(Icons.edit)),
+                                  ),
+                                ],
                               ),
-                              const SizedBox(width: 5),
-                              SizedBox(
-                                width: 30,
-                                child: IconButton(
-                                    onPressed: () =>
-                                        _selectDate(context, endDate),
-                                    icon: Icon(Icons.edit)),
-                              )
                             ],
                           ),
                           // const SizedBox(
