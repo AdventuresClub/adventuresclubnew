@@ -101,6 +101,8 @@ class _EditMyServiceState extends State<EditMyService> {
           "${widget.gm.endDate.year}-${widget.gm.endDate.month}-${widget.gm.endDate.day}";
       startDate =
           DateTime.tryParse(widget.gm.availability[0].st) ?? DateTime.now();
+      endDate1 =
+          DateTime.tryParse(widget.gm.availability[0].ed) ?? DateTime.now();
       String sMonth = DateFormat('MMM').format(startDate);
       st = "${startDate.day}-$sMonth-${startDate.year}";
       endDate =
@@ -784,7 +786,7 @@ class _EditMyServiceState extends State<EditMyService> {
     } else if (type == "plan2") {
       widget.gm.startDate = startDate;
       //DateTime(formattedDate.year, formattedDate.month, formattedDate.day);
-      widget.gm.endDate = endDate; //DateTime(
+      widget.gm.endDate = endDate1; //DateTime(
       //selectedEndDate.year, selectedEndDate.month, selectedEndDate.day);
       b = {
         'service_id': widget.gm.id.toString(),
