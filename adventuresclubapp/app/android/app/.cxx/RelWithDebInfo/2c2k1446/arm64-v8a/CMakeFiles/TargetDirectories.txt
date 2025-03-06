@@ -1,0 +1,2 @@
+/Users/waqarqureshi/Desktop/Projects/adventuresclubnew/adventuresclubapp/app/android/app/.cxx/RelWithDebInfo/2c2k1446/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/waqarqureshi/Desktop/Projects/adventuresclubnew/adventuresclubapp/app/android/app/.cxx/RelWithDebInfo/2c2k1446/arm64-v8a/CMakeFiles/rebuild_cache.dir
