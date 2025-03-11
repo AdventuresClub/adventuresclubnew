@@ -149,8 +149,7 @@ class _HomeState extends State<Home> {
                     NewFilterPage(),
                     TextButton(
                       onPressed: () {
-                        debugPrint(
-                            "HTTPS://adventuresclub.net/appLinkPage/services/${5}");
+                        debugPrint("HTTPS://adventuresclub.net/services/${5}");
                         context.push("/appLinkPage/services/${123}");
                       },
                       child: Text("AppLink Test"),

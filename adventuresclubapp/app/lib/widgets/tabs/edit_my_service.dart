@@ -38,6 +38,7 @@ class _EditMyServiceState extends State<EditMyService> {
   TextEditingController minimumRequirements = TextEditingController();
   TextEditingController terms = TextEditingController();
   TextEditingController iLiveInController = TextEditingController();
+  TextEditingController availableSeats = TextEditingController();
   List<String> categoryList = [];
   List<SectorFilterModel> filterSectors = [];
   List<CategoryFilterModel> categoryFilter = [];
@@ -120,6 +121,10 @@ class _EditMyServiceState extends State<EditMyService> {
     costInc.dispose();
     desriptionController.dispose();
     iLiveInController.dispose();
+    availableSeats.dispose();
+    preRequisitesController.dispose();
+    minimumRequirements.dispose();
+    terms.dispose();
     super.dispose();
   }
 
@@ -168,41 +173,46 @@ class _EditMyServiceState extends State<EditMyService> {
       //nameController.text = widget.gm.adventureName;
       nameController = controller;
       controller.text = widget.gm.adventureName;
-      title = widget.gm.adventureName;
       hint = "Adventure Name";
+      title = hint;
       max = 3;
     } else if (type == "costInc") {
       costInc = controller;
       controller.text = widget.gm.costInc;
-      title = widget.gm.costInc;
       hint = "Cost Inc";
+      title = hint;
       max = 1;
     } else if (type == "costExl") {
       costExl = controller;
       controller.text = widget.gm.costExc;
-      title = widget.gm.costExc;
       hint = "Cost Excluding";
+      title = hint;
       max = 1;
     } else if (type == "description") {
       desriptionController = controller;
       controller.text = widget.gm.writeInformation;
-      title = widget.gm.writeInformation;
       hint = "Description";
+      title = hint;
     } else if (type == "prerequisites") {
       preRequisitesController = controller;
       controller.text = widget.gm.preRequisites;
-      title = widget.gm.preRequisites;
       hint = "Pre-Requisites";
+      title = hint;
     } else if (type == "minimumRequirements") {
       minimumRequirements = controller;
       controller.text = widget.gm.mRequirements;
-      title = widget.gm.mRequirements;
       hint = "minimumRequirements";
+      title = hint;
     } else if (type == "terms") {
       terms = controller;
       controller.text = widget.gm.tnc;
-      title = widget.gm.tnc;
       hint = "termsNConditions";
+      title = hint;
+    } else if (type == "availableSeats") {
+      availableSeats = controller;
+      controller.text = widget.gm.aSeats.toString();
+      hint = "Available Seats";
+      title = hint;
     }
     showDialog(
         context: context,
@@ -659,6 +669,7 @@ class _EditMyServiceState extends State<EditMyService> {
         id.add(1);
       }
     }
+
     // setState(() {
     // int s = int.parse(id.join());
     servicePlanId = int.parse(id.join());
@@ -899,6 +910,14 @@ class _EditMyServiceState extends State<EditMyService> {
         'customer_id': widget.gm.providerId.toString(),
         "adventure_name": nameController.text.trim(),
       };
+    } else if (type == "availableSeats") {
+      int i = int.tryParse(availableSeats.text.toString()) ?? 0;
+      widget.gm.aSeats = i;
+      b = {
+        "available_seats": availableSeats.text.trim(),
+        'service_id': widget.gm.id.toString(),
+        'customer_id': widget.gm.providerId.toString(),
+      };
     }
     // debugPrint(b);
     setState(() {
@@ -1127,6 +1146,11 @@ class _EditMyServiceState extends State<EditMyService> {
         DateTime eDate = DateTime(
             pickedDate!.year, pickedDate!.month, pickedDate!.day, 23, 59, 59);
         print(eDate);
+        if (endDate.isBefore(startDate)) {
+          Constants.showMessage(
+              context, "End date cannot be before the start date.");
+          return;
+        }
         var date = DateTime.parse(eDate.toString());
         String m = date.month < 10 ? "0${date.month}" : "${date.month}";
         String d = date.day < 10 ? "0${date.day}" : "${date.day}";
@@ -1169,6 +1193,8 @@ class _EditMyServiceState extends State<EditMyService> {
     iLiveInController.text = loc;
     lat = lt;
     lng = lg;
+    widget.gm.lat = lat.toString();
+    widget.gm.lng = lng.toString();
     editService("location");
   }
 
@@ -1303,9 +1329,9 @@ class _EditMyServiceState extends State<EditMyService> {
                               color: blackColor,
                               size: 14,
                             ),
-                            const SizedBox(
-                              width: 10,
-                            ),
+                            // const SizedBox(
+                            //   width: 2,
+                            // ),
                             IconButton(
                               onPressed: () =>
                                   addActivites("region", widget.gm.region),
@@ -1313,13 +1339,27 @@ class _EditMyServiceState extends State<EditMyService> {
                             ),
                           ],
                         ),
-                        MyText(
-                          text:
-                              "${widget.gm.aSeats} ${"seats".tr()} (${widget.gm.remainingSeats} ${"left".tr()})",
-                          //'River Rafting',
-                          // weight: FontWeight.w600,
-                          color: blackColor,
-                          size: 14,
+                        const SizedBox(
+                          width: 2,
+                        ),
+                        Row(
+                          children: [
+                            MyText(
+                              text:
+                                  "${widget.gm.aSeats} ${"seats".tr()} (${widget.gm.remainingSeats} ${"left".tr()})",
+                              //'River Rafting',
+                              // weight: FontWeight.w600,
+                              color: blackColor,
+                              size: 14,
+                            ),
+                            // const SizedBox(
+                            //   width: 5,
+                            // ),
+                            IconButton(
+                              onPressed: () => typeData("availableSeats"),
+                              icon: const Icon(Icons.edit),
+                            ),
+                          ],
                         ),
                       ],
                     ),
