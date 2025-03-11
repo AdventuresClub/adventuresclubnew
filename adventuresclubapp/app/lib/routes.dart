@@ -106,6 +106,7 @@ final GoRouter router = GoRouter(
         return NewDetails(
           gm: gm,
           show: show,
+          id: gm!.id.toString(),
         );
       },
     ),

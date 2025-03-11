@@ -9,6 +9,7 @@ import 'package:app/models/filter_data_model/sector_filter_model.dart';
 import 'package:app/models/filter_data_model/service_types_filter.dart';
 import 'package:app/models/home_services/services_model.dart';
 import 'package:app/models/services/aimed_for_model.dart';
+import 'package:app/models/services/create_services/availability_plan_model.dart';
 import 'package:app/models/services/dependencies_model.dart';
 import 'package:app/models/services/included_activities_model.dart';
 import 'package:app/temp_google_map.dart';
@@ -236,7 +237,10 @@ class _EditMyServiceState extends State<EditMyService> {
                   ),
                   TextField(
                     textAlign: TextAlign.center,
-                    maxLines: 5,
+                    maxLines: type == "availableSeats" ? 1 : 5,
+                    keyboardType: type == "availableSeats"
+                        ? TextInputType.number
+                        : TextInputType.multiline,
                     controller: controller,
                     decoration: InputDecoration(
                       hintText: hint,
@@ -669,7 +673,25 @@ class _EditMyServiceState extends State<EditMyService> {
         id.add(1);
       }
     }
-
+    widget.gm.availabilityPlan.clear();
+    for (var element in pDays) {
+      if (element == "Mon") {
+        widget.gm.availabilityPlan.add(AvailabilityPlanModel(0, "Monday"));
+      } else if (element == "Tue") {
+        widget.gm.availabilityPlan.add(AvailabilityPlanModel(0, "Tuesday"));
+      } else if (element == "Wed") {
+        widget.gm.availabilityPlan.add(AvailabilityPlanModel(0, "Wednesday"));
+      } else if (element == "Thu") {
+        widget.gm.availabilityPlan.add(AvailabilityPlanModel(0, "Thursday"));
+      } else if (element == "Fri") {
+        widget.gm.availabilityPlan.add(AvailabilityPlanModel(0, "Friday"));
+      } else if (element == "Sat") {
+        widget.gm.availabilityPlan.add(AvailabilityPlanModel(0, "Saturday"));
+      } else if (element == "Sun") {
+        widget.gm.availabilityPlan.add(AvailabilityPlanModel(0, "Sunday"));
+      }
+    }
+    getSteps();
     // setState(() {
     // int s = int.parse(id.join());
     servicePlanId = int.parse(id.join());
@@ -1116,14 +1138,14 @@ class _EditMyServiceState extends State<EditMyService> {
         });
   }
 
-  Future<void> _selectDate(BuildContext context, var givenDate) async {
-    if (givenDate == formattedDate) {
+  Future<void> _selectDate(BuildContext context, String givenDate) async {
+    if (givenDate == "startDate") {
       pickedDate = await showDatePicker(
           context: context,
           initialDate: DateTime.now(),
           firstDate: DateTime.now(),
           lastDate: DateTime(2050));
-    } else if (givenDate == endDate) {
+    } else if (givenDate == "endDate") {
       pickedDate = await showDatePicker(
           context: context,
           initialDate: startDate,
@@ -1131,7 +1153,7 @@ class _EditMyServiceState extends State<EditMyService> {
           lastDate: DateTime(2050));
     }
     if (pickedDate != null && pickedDate != currentDate) {
-      if (givenDate == formattedDate) {
+      if (givenDate == "startDate") {
         var date = DateTime.parse(pickedDate.toString());
         String m = date.month < 10 ? "0${date.month}" : "${date.month}";
         String d = date.day < 10 ? "0${date.day}" : "${date.day}";
@@ -1139,14 +1161,19 @@ class _EditMyServiceState extends State<EditMyService> {
           formattedDate = "${date.year}-$m-$d";
           startDate = pickedDate!;
           st = "${startDate.day}-${startDate.month}-${startDate.year}";
+          endDate = "${date.year}-$m-$d";
+          selectedEndDate = "${date.year}-$m-$d";
+          ed = "${date.day}-${date.month}-${date.year}";
+          //   pm[0].endDate = eDate;
+          currentDate = eDate;
           //pm[0].startDate = startDate;
           //  pm.insert(0, CreateServicesProgramModel(title, startDate, endDate, Duration(), Duration(), "description", DateTime.now, adventureEndDate))
         });
-      } else if (givenDate == endDate) {
+      } else if (givenDate == "endDate") {
         DateTime eDate = DateTime(
             pickedDate!.year, pickedDate!.month, pickedDate!.day, 23, 59, 59);
         print(eDate);
-        if (endDate.isBefore(startDate)) {
+        if (eDate.isBefore(startDate)) {
           Constants.showMessage(
               context, "End date cannot be before the start date.");
           return;
@@ -1487,7 +1514,7 @@ class _EditMyServiceState extends State<EditMyService> {
                                     width: 15,
                                     child: IconButton(
                                         onPressed: () =>
-                                            _selectDate(context, formattedDate),
+                                            _selectDate(context, "startDate"),
                                         icon: Icon(Icons.edit)),
                                   ),
                                 ],
@@ -1506,7 +1533,7 @@ class _EditMyServiceState extends State<EditMyService> {
                                     width: 20,
                                     child: IconButton(
                                         onPressed: () =>
-                                            _selectDate(context, endDate),
+                                            _selectDate(context, "endDate"),
                                         icon: Icon(Icons.edit)),
                                   ),
                                 ],

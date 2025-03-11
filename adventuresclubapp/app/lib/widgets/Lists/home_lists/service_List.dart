@@ -38,10 +38,7 @@ class ServiceListState extends State<ServiceList> {
   //List<ServicesModel> gm = [];
 
   void goToDetails(ServicesModel gm) {
-    context.push('/newDetails', extra: {
-      'gm': gm,
-      "show": true,
-    });
+    context.push('/newDetails', extra: {'gm': gm, "show": true, "id": gm.id});
 
     /*Navigator.of(context).push(
       MaterialPageRoute(

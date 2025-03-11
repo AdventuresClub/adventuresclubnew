@@ -20,7 +20,8 @@ import '../widgets/buttons/button.dart';
 class NewDetails extends StatefulWidget {
   final ServicesModel? gm;
   final bool? show;
-  const NewDetails({this.gm, this.show = true, super.key});
+  final String? id;
+  const NewDetails({this.gm, this.show = true, this.id, super.key});
 
   @override
   State<NewDetails> createState() => _NewDetailsState();
