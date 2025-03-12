@@ -104,6 +104,56 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
     return words.join(', ');
   }
 
+  void confirmBooking() async {
+    showDialog(
+        context: context,
+        builder: (ctx) => SimpleDialog(
+              contentPadding: const EdgeInsets.all(12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              title: Align(
+                alignment: Alignment.center,
+                child: MyText(
+                  text: "Alert",
+                  weight: FontWeight.bold,
+                  color: blackColor,
+                ),
+              ),
+              children: [
+                MyText(
+                  text:
+                      "Do you really want to change the booking request status to 'pay on arrival'?",
+                  size: 18,
+                  weight: FontWeight.w500,
+                  color: blackColor.withOpacity(0.6),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                      onPressed: homePage,
+                      child: MyText(
+                        text: "No",
+                        color: Colors.red,
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: MyText(
+                        text: "Yes",
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                )
+                //BottomButton(bgColor: blueButtonColor, onTap: homePage)
+              ],
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -605,11 +655,11 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
               height: 10,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Container(
                   height: MediaQuery.of(context).size.height / 21,
-                  width: MediaQuery.of(context).size.width / 3.8,
+                  width: MediaQuery.of(context).size.width / 2.7,
                   decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(12)),
                       color: blueColor1),
@@ -623,7 +673,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                           'chatClient'.tr(),
                           style: const TextStyle(
                               color: whiteColor,
-                              fontSize: 12,
+                              fontSize: 14,
                               fontWeight: FontWeight.w700),
                         ),
                       ),
@@ -633,22 +683,30 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                 ),
                 Container(
                   height: MediaQuery.of(context).size.height / 21,
-                  width: MediaQuery.of(context).size.width / 3.8,
-                  decoration: const BoxDecoration(
+                  width: MediaQuery.of(context).size.width / 2.7,
+                  decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(12)),
-                    color: Color.fromARGB(255, 92, 11, 106),
+                    color: widget.gm.status == "0" || widget.gm.status == "1"
+                        ? Color.fromARGB(255, 92, 11, 106)
+                        : Color.fromARGB(255, 92, 11, 106).withOpacity(0.5),
                   ),
                   child: Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      onTap: () => widget.rateUser,
-                      child: Center(
-                        child: Text(
-                          'rateUser'.tr(),
-                          style: const TextStyle(
-                              color: whiteColor,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700),
+                      onTap: () =>
+                          widget.gm.status == "0" || widget.gm.status == "1"
+                              ? confirmBooking() //widget.rateUser
+                              : null,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: Text(
+                            'Confirm Booking'.tr(),
+                            style: const TextStyle(
+                                color: whiteColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700),
+                          ),
                         ),
                       ),
                     ),

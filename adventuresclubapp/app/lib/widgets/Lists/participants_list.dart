@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls
 
 import 'package:app/constants.dart';
-import 'package:app/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:app/widgets/my_text.dart';
 import 'package:app/widgets/participants_container.dart';
 import 'package:go_router/go_router.dart';
