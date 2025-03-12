@@ -630,8 +630,8 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                                     Constants.country =
                                                         filteredServices[index]
                                                             .country;
-                                                    // c = filteredServices[index]
-                                                    //     .currency;
+                                                    c = filteredServices[index]
+                                                        .currency;
                                                     ccCode =
                                                         filteredServices[index]
                                                             .id;
@@ -1493,13 +1493,13 @@ class _NewFilterPageState extends State<NewFilterPage> {
             height: 20,
           ),
           const SizedBox(
-            height: 100,
+            height: 95,
             child: TopList(),
           ),
-          Divider(
-            thickness: 1.2,
-            color: blackColor.withOpacity(0.2),
-          )
+          // Divider(
+          //   thickness: 1.2,
+          //   color: blackColor.withOpacity(0.2),
+          // )
         ],
       ),
     );

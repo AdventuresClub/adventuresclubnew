@@ -20,7 +20,8 @@ class ServiceList extends StatefulWidget {
 }
 
 class ServiceListState extends State<ServiceList> {
-  List<HomeServicesModel> gAllServices = [];
+  //List<HomeServicesModel> gAllServices = [];
+  List<ServicesModel> gAllServices = [];
   bool loading = false;
   Map getServicesMap = {};
   //bool loading = false;
@@ -67,13 +68,13 @@ class ServiceListState extends State<ServiceList> {
     return result;
   }
 
-  Widget getList(String cat, List<HomeServicesModel> hm) {
+  Widget getList(List<HomeServicesModel> hm) {
     List<ServicesModel> result = [];
     //result = hm.where((element) => element.category == cat).
     for (HomeServicesModel service in hm) {
-      if (service.category == cat) {
-        result = service.sm;
-      }
+      //if (service.category == cat) {
+      result = service.sm;
+      //}
     }
     return result.isEmpty
         ? const Column(
@@ -86,7 +87,7 @@ class ServiceListState extends State<ServiceList> {
           )
         : ListView.builder(
             itemCount: result.length,
-            scrollDirection: Axis.horizontal,
+            scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
               return GestureDetector(
                   onTap: () => goToDetails(result[index]),
@@ -97,7 +98,7 @@ class ServiceListState extends State<ServiceList> {
 
   @override
   Widget build(BuildContext context) {
-    gAllServices = Provider.of<ServicesProvider>(context).filteredServices;
+    gAllServices = Provider.of<ServicesProvider>(context).allServices;
     loading = Provider.of<ServicesProvider>(context).loading;
     debugPrint("test_${gAllServices.length}, loading: $loading");
     return loading
@@ -145,71 +146,31 @@ class ServiceListState extends State<ServiceList> {
               )
             : Column(
                 children: [
-                  for (int i = 0; i < gAllServices.length; i++)
-                    Column(
-                      key: ValueKey(gAllServices[i].sm.first.id),
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 6.0,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                height: 40,
-                                width: 140,
-                                decoration: BoxDecoration(
-                                    color: whiteColor,
-                                    borderRadius: BorderRadius.circular(12)),
-                                child: Center(
-                                  child: MyText(
-                                    text: gAllServices[i].category.tr(),
-                                    color:
-                                        bluishColor, //blackColor.withOpacity(0.6),
-                                    weight: FontWeight.bold,
-                                    size: 20,
-                                  ),
-                                ),
-                              ),
-                            ],
+                  //for (int i = 0; i < gAllServices.length; i++)
+                  gAllServices.isEmpty
+                      ? const Column(
+                          children: [
+                            Text(
+                              "There are no adventures in this country for now, please check again later",
+                              style: TextStyle(fontSize: 16, color: blackColor),
+                            )
+                          ],
+                        )
+                      : Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(0.0),
+                            child: ListView.builder(
+                                padding: EdgeInsets.all(0),
+                                itemCount: gAllServices.length,
+                                scrollDirection: Axis.vertical,
+                                itemBuilder: (context, index) {
+                                  return GestureDetector(
+                                      onTap: () =>
+                                          goToDetails(gAllServices[index]),
+                                      child: ServicesCard(gAllServices[index]));
+                                }),
                           ),
                         ),
-                        // const SizedBox(
-                        //   height: 5,
-                        // ),
-                        // SizedBox(
-                        //   height: 230,
-                        //   child: getList(
-                        //     gAllServices[i].category,
-                        //     gAllServices,
-                        //   ),
-                        // ),
-                        gAllServices.isEmpty
-                            ? const Column(
-                                children: [
-                                  Text(
-                                    "There are no adventures in this country for now, please check again later",
-                                    style: TextStyle(
-                                        fontSize: 16, color: blackColor),
-                                  )
-                                ],
-                              )
-                            : Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12.0),
-                                child: SizedBox(
-                                  height: 340,
-                                  child: getList(
-                                    gAllServices[i].category,
-                                    gAllServices,
-                                  ),
-                                ),
-                              ),
-                      ],
-                    ),
                 ],
               );
     // : allServices.isEmpty

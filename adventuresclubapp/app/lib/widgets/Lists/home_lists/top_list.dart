@@ -125,7 +125,7 @@ class _TopListState extends State<TopList> {
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                padding: const EdgeInsets.symmetric(horizontal: 14.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [

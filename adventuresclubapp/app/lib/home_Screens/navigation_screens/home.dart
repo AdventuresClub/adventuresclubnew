@@ -141,32 +141,30 @@ class _HomeState extends State<Home> {
         // },
         child: SafeArea(
           child: Scaffold(
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 8),
-                child: Column(
-                  children: [
-                    NewFilterPage(),
-                    TextButton(
-                      onPressed: () {
-                        debugPrint("HTTPS://adventuresclub.net/services/${5}");
-                        context.push("/appLinkPage/services/${123}");
-                      },
-                      child: Text("AppLink Test"),
-                    ),
-                    // SizedBox(
-                    //   height: 35,
-                    // ),
-                    // SizedBox(
-                    //   height: 15,
-                    // ),
-                    // SizedBox(
-                    //   height: 130,
-                    //   child: TopList(),
-                    // ),
-                    ServiceList(),
-                  ],
-                ),
+            body: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 0),
+              child: Column(
+                children: [
+                  NewFilterPage(),
+                  // TextButton(
+                  //   onPressed: () {
+                  //     debugPrint("HTTPS://adventuresclub.net/services/${5}");
+                  //     context.push("/appLinkPage/services/${123}");
+                  //   },
+                  //   child: Text("AppLink Test"),
+                  // ),
+                  // SizedBox(
+                  //   height: 35,
+                  // ),
+                  // SizedBox(
+                  //   height: 15,
+                  // ),
+                  // SizedBox(
+                  //   height: 130,
+                  //   child: TopList(),
+                  // ),
+                  Expanded(child: ServiceList()),
+                ],
               ),
             ),
           ),

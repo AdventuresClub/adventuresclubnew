@@ -701,7 +701,7 @@ class _EditMyServiceState extends State<EditMyService> {
   }
 
   void editService(String type) async {
-    if (type != "plan2") {
+    if (type != "plan2" || type != "daysValue") {
       Navigator.of(context).pop();
     }
 
@@ -951,7 +951,9 @@ class _EditMyServiceState extends State<EditMyService> {
         body: b,
       );
       if (response.statusCode == 200) {
-        debugPrint(response.body);
+        if (type == "daysValue") {
+          cancel();
+        }
       }
     } catch (e) {
       if (mounted) {

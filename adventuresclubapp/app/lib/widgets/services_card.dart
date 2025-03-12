@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls
 
 import 'package:app/constants.dart';
-import 'package:app/home_Screens/accounts/about.dart';
 import 'package:app/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -341,8 +340,7 @@ class _ServicesCardState extends State<ServicesCard> {
                         children: [
                           widget.gm.images.isEmpty
                               ? Container(
-                                  width:
-                                      MediaQuery.of(context).size.width / 1.2,
+                                  width: MediaQuery.of(context).size.width / 1,
                                   height: 180,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8),
@@ -353,7 +351,7 @@ class _ServicesCardState extends State<ServicesCard> {
                                 )
                               : Container(
                                   width:
-                                      MediaQuery.of(context).size.width / 1.2,
+                                      MediaQuery.of(context).size.width / 1.1,
                                   height: 200,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8),
@@ -386,7 +384,7 @@ class _ServicesCardState extends State<ServicesCard> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8.0, vertical: 4),
                         child: SizedBox(
-                          width: MediaQuery.of(context).size.width / 1.2,
+                          width: MediaQuery.of(context).size.width / 1.125,
                           child: Column(
                             children: [
                               Row(
