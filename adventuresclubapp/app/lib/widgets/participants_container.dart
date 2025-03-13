@@ -9,9 +9,10 @@ class ParticipantsContainer extends StatefulWidget {
   final Function delete;
   final Function selected;
   final Function rateUser;
+  final Function confirmBooking;
   final int index;
-  const ParticipantsContainer(
-      this.gm, this.selected, this.delete, this.rateUser, this.index,
+  const ParticipantsContainer(this.gm, this.selected, this.delete,
+      this.rateUser, this.confirmBooking, this.index,
       {super.key});
 
   @override
@@ -104,7 +105,11 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
     return words.join(', ');
   }
 
-  void confirmBooking() async {
+  void confirmBooking(
+    String bookingUser,
+    String bookingId,
+    int index,
+  ) async {
     showDialog(
         context: context,
         builder: (ctx) => SimpleDialog(
@@ -141,7 +146,8 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () =>
+                          cancelAlerbox(bookingUser, bookingId, index),
                       child: MyText(
                         text: "Yes",
                         color: Colors.black,
@@ -152,6 +158,15 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                 //BottomButton(bgColor: blueButtonColor, onTap: homePage)
               ],
             ));
+  }
+
+  void cancelAlerbox(String bookingUser, String bookingId, int index) {
+    Navigator.of(context).pop();
+    widget.confirmBooking(
+      bookingUser,
+      bookingId,
+      index,
+    );
   }
 
   @override
@@ -695,7 +710,11 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                     child: InkWell(
                       onTap: () =>
                           widget.gm.status == "0" || widget.gm.status == "1"
-                              ? confirmBooking() //widget.rateUser
+                              ? confirmBooking(
+                                  widget.gm.bookingUser.toString(),
+                                  widget.gm.bookingId.toString(),
+                                  widget.index,
+                                ) //widget.rateUser
                               : null,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),

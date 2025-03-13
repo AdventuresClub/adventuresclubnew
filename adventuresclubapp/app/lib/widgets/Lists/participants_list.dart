@@ -245,6 +245,38 @@ class _ParticipantsListState extends State<ParticipantsList> {
     }
   }
 
+  void acceptBooking(String userId, String bookingId, int index) async {
+    GetParticipantsModel pm = gm.elementAt(index);
+    setState(() {
+      gm.removeAt(index);
+    });
+    try {
+      var response = await http
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/booking_accept"), body: {
+        "booking_id": bookingId,
+        'user_id': userId, //"3", //Constants.userId, //"27",
+        'status': "8",
+        // 'id': "2",
+      });
+      // setState(() {
+      //   favourite = true;
+      // });
+      //if (response.statusCode == 200) {
+      setState(() {
+        gm.insert(index, pm);
+      });
+      //}
+      //else {
+      message("Accepted Successfully");
+      //}
+      print(response.statusCode);
+      print(response.body);
+      print(response.headers);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   void message(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -301,8 +333,8 @@ class _ParticipantsListState extends State<ParticipantsList> {
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
               return //Container();
-                  ParticipantsContainer(
-                      gm[index], selected, delete, rateUser, index);
+                  ParticipantsContainer(gm[index], selected, delete, rateUser,
+                      acceptBooking, index);
             });
     // Card(
     //   child: Padding(
