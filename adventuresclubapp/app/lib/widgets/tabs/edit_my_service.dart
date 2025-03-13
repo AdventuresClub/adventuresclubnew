@@ -18,6 +18,7 @@ import 'package:app/widgets/loading_widget.dart';
 import 'package:app/widgets/my_service_banner_container.dart';
 import 'package:app/widgets/my_text.dart';
 import 'package:app/widgets/tabs/details_tabs/service_gathering_location.dart';
+import 'package:app/widgets/tabs/details_tabs/service_program/service_plans.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -2048,7 +2049,17 @@ class _EditMyServiceState extends State<EditMyService> {
                     const SizedBox(
                       height: 10,
                     ),
-
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(onPressed: () {}, icon: Icon(Icons.edit))
+                      ],
+                    ),
+                    ServicesPlans(widget.gm.sPlan, widget.gm.programmes),
+                    Divider(
+                      thickness: 1,
+                      color: blackColor.withOpacity(0.2),
+                    ),
                     Row(
                       children: [
                         MyText(
