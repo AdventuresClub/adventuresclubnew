@@ -1,15 +1,19 @@
 import 'package:app/become_a_partner/create_services/create_plan_one.dart';
 import 'package:app/constants.dart';
+import 'package:app/constants.dart' as AppTheme;
 import 'package:app/models/home_services/services_model.dart';
 import 'package:app/models/services/create_services/create_services_plan_one.dart';
+import 'package:app/models/services/create_services/create_services_program%20_model.dart';
 import 'package:app/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class CreatePlanOnePage extends StatefulWidget {
+  final Function parseDate;
   final ServicesModel? service;
   final CreateServicesPlanOneModel? draftPlan;
-  const CreatePlanOnePage({this.service, this.draftPlan, super.key});
+  const CreatePlanOnePage(
+      {required this.parseDate, this.service, this.draftPlan, super.key});
 
   @override
   State<CreatePlanOnePage> createState() => _CreatePlanOnePageState();
@@ -41,44 +45,67 @@ class _CreatePlanOnePageState extends State<CreatePlanOnePage> {
     });
   }
 
+  void sendData() {
+    List<CreateServicesPlanOneModel> dataList = [];
+    for (var element in onePlan) {
+      dataList
+          .add(CreateServicesPlanOneModel(element.title, element.description));
+    }
+    widget.parseDate(onePlan);
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: Column(
-          children: [
-            for (int y = 0; y < onePlan.length; y++)
-              CreatePlanOne(
-                getProgramOneData,
-                y,
-                draftPlan: onePlan[y],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              for (int y = 0; y < onePlan.length; y++)
+                CreatePlanOne(
+                  getProgramOneData,
+                  y,
+                  draftPlan: onePlan[y],
+                ),
+              const SizedBox(
+                height: 10,
               ),
-            const SizedBox(
-              height: 10,
-            ),
-            GestureDetector(
-              onTap: addProgramOneData,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  const Image(
-                      image: ExactAssetImage('images/add-circle.png'),
-                      height: 20),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  MyText(
-                    text: 'addMoreSchedule'.tr(),
-                    color: bluishColor,
-                  ),
-                ],
+              GestureDetector(
+                onTap: addProgramOneData,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    const Image(
+                        image: ExactAssetImage('images/add-circle.png'),
+                        height: 20),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    MyText(
+                      text: 'addMoreSchedule'.tr(),
+                      color: bluishColor,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
+      persistentFooterButtons: [
+        ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: bluishColor,
+            ),
+            onPressed: sendData,
+            child: Text(
+              "Save",
+              style: TextStyle(color: AppTheme.whiteColor),
+            ))
+      ],
     );
   }
 }

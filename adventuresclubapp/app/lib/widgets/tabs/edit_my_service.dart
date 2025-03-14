@@ -1,11 +1,11 @@
 import 'package:app/become_a_partner/create_plan_one_page.dart';
-import 'package:app/become_a_partner/create_services/create_plan_one.dart';
 import 'package:app/constants.dart';
 import 'package:app/models/filter_data_model/activities_inc_model.dart';
 import 'package:app/models/filter_data_model/category_filter_model.dart';
 import 'package:app/models/filter_data_model/display_data_model.dart';
 import 'package:app/models/filter_data_model/durations_model.dart';
 import 'package:app/models/filter_data_model/level_filter_mode.dart';
+import 'package:app/models/filter_data_model/programs_model.dart';
 import 'package:app/models/filter_data_model/region_model.dart';
 import 'package:app/models/filter_data_model/sector_filter_model.dart';
 import 'package:app/models/filter_data_model/service_types_filter.dart';
@@ -13,6 +13,7 @@ import 'package:app/models/home_services/services_model.dart';
 import 'package:app/models/services/aimed_for_model.dart';
 import 'package:app/models/services/create_services/availability_plan_model.dart';
 import 'package:app/models/services/create_services/create_services_plan_one.dart';
+import 'package:app/models/services/create_services/create_services_program%20_model.dart';
 import 'package:app/models/services/dependencies_model.dart';
 import 'package:app/models/services/included_activities_model.dart';
 import 'package:app/temp_google_map.dart';
@@ -55,6 +56,8 @@ class _EditMyServiceState extends State<EditMyService> {
   List<bool> dataListBool = [];
   String st = "";
   String ed = "";
+  List<String> startTimePlan = [];
+  List<String> endTimePlan = [];
   DateTime startDate = DateTime.now();
   DateTime endDate1 = DateTime.now();
   String aPlan = "";
@@ -85,6 +88,10 @@ class _EditMyServiceState extends State<EditMyService> {
   String selectedActivityIncludesId = "";
   double lat = 0;
   double lng = 0;
+  List<CreateServicesProgramModel> pm = [];
+  List<String> d = [];
+  List<String> titleList = [];
+  List<String> descriptionList = [];
 
   @override
   void initState() {
@@ -1235,8 +1242,159 @@ class _EditMyServiceState extends State<EditMyService> {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       return CreatePlanOnePage(
         service: widget.gm,
+        parseDate: getProgramData,
       );
     }));
+  }
+
+  void getProgramData(List<CreateServicesPlanOneModel> data) {
+    onePlan = data;
+    // pm = onePlan;
+    // for (var element in onePlan) {
+    //   pm
+    //       .add(CreateServicesProgramModel(element.title, element.description));
+    //}
+    convertProgramData(1);
+    setState(() {});
+    //  pm.add(data);
+  }
+
+  List<CreateServicesPlanOneModel> onePlan = [
+    CreateServicesPlanOneModel("", "")
+  ];
+
+  Future<void> convertProgramData(int sPlan) async {
+    if (sPlan == 1) {
+      for (var element in onePlan) {
+        titleList.add(element.title);
+      }
+      //programTitle = titleList.join(",");
+      for (var element in onePlan) {
+        descriptionList.add(element.description);
+      }
+    } else {
+      for (var element in pm) {
+        titleList.add(element.title);
+      }
+      //programTitle = titleList.join(",");
+      for (var element in pm) {
+        descriptionList.add(element.description);
+      }
+      // programSchedule = descriptionList.join(",");
+      for (var element in pm) {
+        String c =
+            "${element.startDate.year}-${element.startDate.month}-${element.startDate.day}";
+        // d.add(element.startDate.toString());
+        d.add(c);
+      }
+      // programSelecteDate1 = d.join(",");
+      for (var element in pm) {
+        String startTime = element.startDate.hour.toString();
+        startTime += ":${element.startDate.minute}";
+        startTime += ":${element.startDate.second}";
+        startTimePlan.add(startTime);
+        //st.add(element.startTime.toString());
+      }
+      // programStartTime1 = st.join(",");
+      for (var element in pm) {
+        String endTime = element.endDate.hour.toString();
+        endTime += ":${element.endDate.minute}";
+        endTime += ":${element.endDate.second}";
+        endTimePlan.add(endTime);
+        //et.add(element.endTime.toString());
+      }
+      //programEndTime = et.join(",");
+    }
+    saveThirdPage(sPlan);
+  }
+
+  void saveThirdPage(int sPlan) async {
+    setState(() {
+      loading = true;
+    });
+    widget.gm.programmes.clear();
+    for (var element in onePlan) {
+      widget.gm.programmes.add(ProgrammesModel(
+        0,
+        0,
+        element.title,
+        "",
+        "",
+        element.description,
+      ));
+    }
+    try {
+      var request = http.MultipartRequest(
+        "POST",
+        Uri.parse("${Constants.baseUrl}/api/v1/edit_service"),
+        //Uri.parse("${Constants.baseUrl}/api/v1/third_program_creation"),
+      );
+
+      dynamic programData = {
+        // "provider_id": Constants.userId.toString(),
+        // "service_id": serviceId.toString()
+        'service_id': widget.gm.id.toString(),
+        'customer_id': widget.gm.providerId.toString(),
+      };
+      String space = "";
+      if (sPlan == 2) {
+        for (var element in startTimePlan) {
+          programData["gathering_start_time[]$space"] = element;
+          space += " ";
+        }
+      }
+      // else {
+      //   for (var element in titleList) {
+      //     programData["gathering_start_time[]$space"] = "element";
+      //     space += " ";
+      //   }
+      // }
+      space = "";
+      if (sPlan == 2) {
+        for (var element1 in endTimePlan) {
+          programData["gathering_end_time[]$space"] = element1;
+          space += " ";
+        }
+      }
+      // else {
+      //   for (var element1 in titleList) {
+      //     programData["gathering_end_time[]$space"] = "element1";
+      //     space += " ";
+      //   }
+      // }
+      space = "";
+      for (var element in titleList) {
+        programData["schedule_title[]$space"] = element;
+        space += " ";
+      }
+      space = "";
+      for (var element in descriptionList) {
+        programData["program_description[]$space"] = element;
+        space += " ";
+      }
+      space = "";
+      if (sPlan == 2) {
+        for (var element in d) {
+          programData["gathering_date[]$space"] = element;
+          space += " ";
+        }
+      }
+      // else {
+      //   for (var element in titleList) {
+      //     programData["gathering_date[]$space"] = "element";
+      //     space += " ";
+      //   }
+      // }
+
+      request.fields.addAll(programData);
+      final response = await request.send();
+      debugPrint(response.statusCode.toString());
+      setState(() {
+        loading = false;
+      });
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   @override

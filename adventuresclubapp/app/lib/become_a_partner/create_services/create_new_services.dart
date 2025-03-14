@@ -1923,8 +1923,9 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                                     children: [
                                       // for (int z = 0; z < pm.length; z++)
                                       CreateProgram(
-                                          // key: ValueKey(z.toString()),
-                                          getProgramData,
+                                          parseData:
+                                              // key: ValueKey(z.toString()),
+                                              getProgramData,
                                           deleteProgramData,
                                           startDate,
                                           currentDate

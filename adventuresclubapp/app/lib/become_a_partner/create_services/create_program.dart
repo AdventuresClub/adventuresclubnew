@@ -17,11 +17,11 @@ class CreateProgram extends StatefulWidget {
   final int? index;
   final List<CreateServicesProgramModel>? pm;
   //final CreateServicesProgramModel pm;
-  const CreateProgram(
-      this.parseData, this.removeData, this.startDate, this.endDate,
+  const CreateProgram(this.removeData, this.startDate, this.endDate,
       //
       //this.pm,
-      {this.draftService,
+      {required this.parseData,
+      this.draftService,
       this.index,
       this.pm,
       super.key});

@@ -2106,7 +2106,7 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
                                 // for (int z = 0; z < pm.length; z++)
                                 CreateProgram(
                                   // key: ValueKey(z.toString()),
-                                  getProgramData,
+                                  parseData: getProgramData,
                                   deleteProgramData,
                                   startDate,
                                   currentDate,
