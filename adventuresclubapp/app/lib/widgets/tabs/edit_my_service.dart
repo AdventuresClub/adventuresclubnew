@@ -1,3 +1,4 @@
+import 'package:app/become_a_partner/create_plan_one_page.dart';
 import 'package:app/become_a_partner/create_services/create_plan_one.dart';
 import 'package:app/constants.dart';
 import 'package:app/models/filter_data_model/activities_inc_model.dart';
@@ -84,9 +85,6 @@ class _EditMyServiceState extends State<EditMyService> {
   String selectedActivityIncludesId = "";
   double lat = 0;
   double lng = 0;
-  List<CreateServicesPlanOneModel> onePlan = [
-    CreateServicesPlanOneModel("", "")
-  ];
 
   @override
   void initState() {
@@ -1233,62 +1231,12 @@ class _EditMyServiceState extends State<EditMyService> {
     editService("location");
   }
 
-  void getProgramOneData(CreateServicesPlanOneModel data, int index) {
-    onePlan[index] = data;
-    //  pm.add(data);
-  }
-
-  void addProgramOneData() {
-    setState(() {
-      onePlan.add(CreateServicesPlanOneModel("", ""));
-    });
-  }
-
-  void showPlanOneDetails() async {
-    showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-              contentPadding: const EdgeInsets.all(12),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12)),
-              title: const Text(
-                "Are you sure you want to delete this",
-                textAlign: TextAlign.center,
-              ),
-              actions: [
-                for (int y = 0; y < onePlan.length; y++)
-                  CreatePlanOne(getProgramOneData, y),
-                const SizedBox(
-                  height: 10,
-                ),
-                GestureDetector(
-                  onTap: addProgramOneData,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      const Image(
-                          image: ExactAssetImage('images/add-circle.png'),
-                          height: 20),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      MyText(
-                        text: 'addMoreSchedule'.tr(),
-                        color: bluishColor,
-                      ),
-                    ],
-                  ),
-                ),
-                // MaterialButton(
-                //   onPressed: cancel,
-                //   child: const Text("No"),
-                // ),
-                // MaterialButton(
-                //   onPressed: () => deleteService(title),
-                //   child: const Text("Yes"),
-                // )
-              ],
-            ));
+  void navServicePlanOne() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return CreatePlanOnePage(
+        service: widget.gm,
+      );
+    }));
   }
 
   @override
@@ -2116,7 +2064,7 @@ class _EditMyServiceState extends State<EditMyService> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         IconButton(
-                            onPressed: showPlanOneDetails,
+                            onPressed: navServicePlanOne,
                             icon: Icon(Icons.edit))
                       ],
                     ),
