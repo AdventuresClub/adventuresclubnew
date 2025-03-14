@@ -1594,6 +1594,12 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
             ));
   }
 
+  void deleteData(int index) {
+    setState(() {
+      onePlan.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -2073,8 +2079,12 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
                             child: Column(
                               children: [
                                 for (int y = 0; y < onePlan.length; y++)
-                                  CreatePlanOne(getProgramOneData, y,
-                                      draftPlan: onePlan[y]),
+                                  CreatePlanOne(
+                                    getProgramOneData,
+                                    y,
+                                    draftPlan: onePlan[y],
+                                    deleteData,
+                                  ),
                                 const SizedBox(
                                   height: 10,
                                 ),

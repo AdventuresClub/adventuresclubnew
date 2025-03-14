@@ -55,6 +55,12 @@ class _CreatePlanOnePageState extends State<CreatePlanOnePage> {
     Navigator.pop(context);
   }
 
+  void deleteData(int index) {
+    setState(() {
+      onePlan.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,10 +72,7 @@ class _CreatePlanOnePageState extends State<CreatePlanOnePage> {
             children: [
               for (int y = 0; y < onePlan.length; y++)
                 CreatePlanOne(
-                  getProgramOneData,
-                  y,
-                  draftPlan: onePlan[y],
-                ),
+                    getProgramOneData, y, draftPlan: onePlan[y], deleteData),
               const SizedBox(
                 height: 10,
               ),

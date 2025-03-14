@@ -1,3 +1,4 @@
+import 'package:app/app_theme.dart';
 import 'package:app/constants.dart';
 import 'package:app/models/services/create_services/create_services_plan_one.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -7,7 +8,9 @@ class CreatePlanOne extends StatefulWidget {
   final Function parseData;
   final int index;
   final CreateServicesPlanOneModel? draftPlan;
-  const CreatePlanOne(this.parseData, this.index, {this.draftPlan, super.key});
+  final Function deleteData;
+  const CreatePlanOne(this.parseData, this.index, this.deleteData,
+      {this.draftPlan, super.key});
 
   @override
   State<CreatePlanOne> createState() => _CreatePlanOneState();
@@ -40,6 +43,10 @@ class _CreatePlanOneState extends State<CreatePlanOne> {
     sendData();
   }
 
+  void delete() {
+    widget.deleteData(widget.index);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -47,6 +54,21 @@ class _CreatePlanOneState extends State<CreatePlanOne> {
         padding: const EdgeInsets.symmetric(vertical: 24.0),
         child: Column(
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  onPressed: delete,
+                  icon: Icon(Icons.delete, color: Colors.red),
+                ),
+                const SizedBox(
+                  width: 10,
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 5,
+            ),
             SizedBox(
               width: MediaQuery.of(context).size.width,
               child: TextField(
