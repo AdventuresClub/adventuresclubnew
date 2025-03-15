@@ -59,7 +59,8 @@ class _CreateProgramState extends State<CreateProgram> {
 
   void getData() {
     if (widget.draftService != null) {
-      if (widget.draftService!.sPlan == 2 && widget.index == 2) {
+      if (widget.draftService!.sPlan == 2 //&& widget.index == 2
+          ) {
         if (widget.pm != null) {
           pm = widget.pm!;
         }

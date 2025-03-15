@@ -1,4 +1,5 @@
 import 'package:app/become_a_partner/create_plan_one_page.dart';
+import 'package:app/become_a_partner/create_plan_two_mainpage.dart';
 import 'package:app/constants.dart';
 import 'package:app/models/filter_data_model/activities_inc_model.dart';
 import 'package:app/models/filter_data_model/category_filter_model.dart';
@@ -122,6 +123,37 @@ class _EditMyServiceState extends State<EditMyService> {
           DateTime.tryParse(widget.gm.availability[0].ed) ?? DateTime.now();
       String eMonth = DateFormat('MMM').format(startDate);
       ed = "${endDate.day}-$eMonth-${endDate.year}";
+      //    if (widget.gm.sPlan == 2) {
+      //   pm.add(CreateServicesProgramModel(
+      //       widget.gm!.programmes[i].title,
+      //       stringToDateTime(widget.draftService!.programmes[i].sD),
+      //       stringToDateTime(widget.draftService!.programmes[i].eD),
+      //       durationSt,
+      //       durationEt,
+      //       widget.draftService!.programmes[i].des,
+      //       DateTime.now(),
+      //       //widget.pm.adventureStartDate,
+      //       DateTime.now()));
+      // }
+      for (int i = 0; i < widget.gm.programmes.length; i++) {
+        Duration durationSt = Duration.zero;
+        Duration durationEt = Duration.zero;
+        if (widget.gm.sPlan == 2) {
+          pm.add(CreateServicesProgramModel(
+              widget.gm.programmes[i].title,
+              stringToDateTime(widget.gm.programmes[i].sD),
+              stringToDateTime(widget.gm.programmes[i].eD),
+              durationSt,
+              durationEt,
+              widget.gm.programmes[i].des,
+              DateTime.now(),
+              //widget.pm.adventureStartDate,
+              DateTime.now()));
+        } else {
+          onePlan.add(CreateServicesPlanOneModel(
+              widget.gm.programmes[i].title, widget.gm.programmes[i].des));
+        }
+      }
     }
     super.initState();
   }
@@ -138,6 +170,15 @@ class _EditMyServiceState extends State<EditMyService> {
     minimumRequirements.dispose();
     terms.dispose();
     super.dispose();
+  }
+
+  DateTime stringToDateTime(String dateString,
+      {String format = 'yyyy-MM-dd HH:mm:ss'}) {
+    try {
+      return DateFormat(format).parse(dateString);
+    } catch (e) {
+      throw FormatException('Invalid date format: $e');
+    }
   }
 
   void getData() {
@@ -1239,12 +1280,29 @@ class _EditMyServiceState extends State<EditMyService> {
   }
 
   void navServicePlanOne() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return CreatePlanOnePage(
-        service: widget.gm,
-        parseDate: getProgramData,
+    if (widget.gm.sPlan == 1) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+        return CreatePlanOnePage(
+          service: widget.gm,
+          parseDate: getProgramData,
+        );
+      }));
+    } else {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) {
+            return CreatePlanTwoMainpage(
+              startDate: widget.gm.startDate,
+              endTime: widget.gm.endDate,
+              parseData: getProgramDataTwo,
+              deleteProgramData: deleteProgramData,
+              service: widget.gm,
+              pm: pm,
+            );
+          },
+        ),
       );
-    }));
+    }
   }
 
   void getProgramData(List<CreateServicesPlanOneModel> data) {
@@ -1257,6 +1315,28 @@ class _EditMyServiceState extends State<EditMyService> {
     convertProgramData(1);
     setState(() {});
     //  pm.add(data);
+  }
+
+  void getProgramDataTwo(List<CreateServicesProgramModel> data) {
+    pm = data;
+    // .add(CreateServicesProgramModel(
+    //     data.title,
+    //     data.startDate,
+    //     data.endDate,
+    //     data.startTime,
+    //     data.endTime,
+    //     data.description,
+    //     data.adventureStartDate,
+    //     data.adventureEndDate));
+    //isTimeAfter = time;
+    convertProgramData(2);
+    setState(() {});
+    //  pm.add(data);
+  }
+
+  void deleteProgramData(int i) {
+    pm.removeAt(i);
+    setState(() {});
   }
 
   List<CreateServicesPlanOneModel> onePlan = [
@@ -1308,21 +1388,60 @@ class _EditMyServiceState extends State<EditMyService> {
     saveThirdPage(sPlan);
   }
 
+  String formatDateTime(DateTime dateTime) {
+    // Format the DateTime object into a string (e.g., "yyyy-MM-dd HH:mm:ss")
+    String formattedDate =
+        "${dateTime.year}-${_twoDigits(dateTime.month)}-${_twoDigits(dateTime.day)} "
+        "${_twoDigits(dateTime.hour)}:${_twoDigits(dateTime.minute)}:${_twoDigits(dateTime.second)}";
+    return formattedDate;
+  }
+
+// Helper function to ensure two digits for month, day, hour, minute, and second
+  String _twoDigits(int n) {
+    if (n >= 10) return "$n";
+    return "0$n";
+  }
+
   void saveThirdPage(int sPlan) async {
     setState(() {
       loading = true;
     });
     widget.gm.programmes.clear();
-    for (var element in onePlan) {
-      widget.gm.programmes.add(ProgrammesModel(
-        0,
-        0,
-        element.title,
-        "",
-        "",
-        element.description,
-      ));
+    if (sPlan == 1) {
+      for (var element in onePlan) {
+        widget.gm.programmes.add(ProgrammesModel(
+          0,
+          0,
+          element.title,
+          "",
+          "",
+          element.description,
+        ));
+      }
+    } else {
+      if (widget.gm.sPlan == 2) {
+        // pm.add(CreateServicesProgramModel(
+        //     widget.gm.programmes[i].title,
+        //     stringToDateTime(widget.gm.programmes[i].sD),
+        //     stringToDateTime(widget.gm.programmes[i].eD),
+        //     durationSt,
+        //     durationEt,
+        //     widget.gm.programmes[i].des,
+        //     DateTime.now(),
+        //     //widget.pm.adventureStartDate,
+        //     DateTime.now()));
+        for (var element in pm) {
+          widget.gm.programmes.add(ProgrammesModel(
+              0,
+              0,
+              element.title,
+              formatDateTime(element.startDate),
+              formatDateTime(element.endDate),
+              element.description));
+        }
+      }
     }
+
     try {
       var request = http.MultipartRequest(
         "POST",

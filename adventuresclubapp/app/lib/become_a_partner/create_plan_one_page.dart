@@ -72,7 +72,11 @@ class _CreatePlanOnePageState extends State<CreatePlanOnePage> {
             children: [
               for (int y = 0; y < onePlan.length; y++)
                 CreatePlanOne(
-                    getProgramOneData, y, draftPlan: onePlan[y], deleteData),
+                    key: GlobalKey(),
+                    getProgramOneData,
+                    y,
+                    draftPlan: onePlan[y],
+                    deleteData),
               const SizedBox(
                 height: 10,
               ),
