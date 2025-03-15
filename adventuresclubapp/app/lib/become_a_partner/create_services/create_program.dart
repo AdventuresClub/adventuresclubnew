@@ -16,6 +16,7 @@ class CreateProgram extends StatefulWidget {
   final ServicesModel? draftService;
   final int? index;
   final List<CreateServicesProgramModel>? pm;
+  final bool? mainPage;
   //final CreateServicesProgramModel pm;
   const CreateProgram(this.removeData, this.startDate, this.endDate,
       //
@@ -24,6 +25,7 @@ class CreateProgram extends StatefulWidget {
       this.draftService,
       this.index,
       this.pm,
+      this.mainPage = false,
       super.key});
 
   @override
@@ -284,8 +286,11 @@ class _CreateProgramState extends State<CreateProgram> {
   }
 
   void deleteRow(int i) {
+    // if (!widget.mainPage!) {
     pm.removeAt(i);
-    widget.removeData(i);
+    //}
+
+    //widget.removeData(i);
     setState(() {});
   }
 
@@ -331,6 +336,7 @@ class _CreateProgramState extends State<CreateProgram> {
               children: [
                 for (int z = 0; z < pm.length; z++)
                   Column(
+                    key: UniqueKey(),
                     children: [
                       Container(
                         width: MediaQuery.of(context).size.width,

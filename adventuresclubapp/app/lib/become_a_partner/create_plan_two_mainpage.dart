@@ -28,6 +28,7 @@ class _CreatePlanTwoMainpageState extends State<CreatePlanTwoMainpage> {
 
   @override
   void initState() {
+    pm = widget.pm;
     super.initState();
   }
 
@@ -45,15 +46,20 @@ class _CreatePlanTwoMainpageState extends State<CreatePlanTwoMainpage> {
     //     data.adventureStartDate,
     //     data.adventureEndDate));
     //isTimeAfter = time;
-    widget.parseData(pm);
+    // widget.parseData(pm);
     setState(() {});
     //  pm.add(data);
   }
 
   void deleteProgramData(int i) {
-    pm.removeAt(i);
-    widget.deleteProgramData(i);
+    //pm.removeAt(i);
+    //widget.deleteProgramData(i);
     setState(() {});
+  }
+
+  void update() {
+    widget.parseData(pm);
+    Navigator.of(context).pop();
   }
 
   @override
@@ -72,7 +78,8 @@ class _CreatePlanTwoMainpageState extends State<CreatePlanTwoMainpage> {
               widget.startDate,
               widget.endTime,
               draftService: widget.service,
-              pm: widget.pm,
+              pm: pm,
+              mainPage: true,
               //z,
               //pm[z],
             ),
@@ -82,6 +89,9 @@ class _CreatePlanTwoMainpageState extends State<CreatePlanTwoMainpage> {
           ],
         ),
       ),
+      persistentFooterButtons: [
+        ElevatedButton(onPressed: update, child: Text("Save"))
+      ],
     );
   }
 }
