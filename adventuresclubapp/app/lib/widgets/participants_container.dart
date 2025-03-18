@@ -161,12 +161,15 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
   }
 
   void cancelAlerbox(String bookingUser, String bookingId, int index) {
-    Navigator.of(context).pop();
+    setState(() {
+      widget.gm.status == "8";
+    });
     widget.confirmBooking(
       bookingUser,
       bookingId,
       index,
     );
+    Navigator.of(context).pop();
   }
 
   @override

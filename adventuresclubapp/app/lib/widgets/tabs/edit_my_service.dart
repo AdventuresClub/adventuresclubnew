@@ -1,6 +1,7 @@
 import 'package:app/become_a_partner/create_plan_one_page.dart';
 import 'package:app/become_a_partner/create_plan_two_mainpage.dart';
 import 'package:app/constants.dart';
+import 'package:app/models/create_adventure/regions_model.dart';
 import 'package:app/models/filter_data_model/activities_inc_model.dart';
 import 'package:app/models/filter_data_model/category_filter_model.dart';
 import 'package:app/models/filter_data_model/display_data_model.dart';
@@ -51,7 +52,7 @@ class _EditMyServiceState extends State<EditMyService> {
   List<CategoryFilterModel> categoryFilter = [];
   List<LevelFilterModel> levelFilter = [];
   List<ServiceTypeFilterModel> serviceType = [];
-  List<RegionFilterModel> regionFilter = [];
+  List<RegionsModel> regionFilter = [];
   List<DurationsModel> durationFilter = [];
   List<DisplayDataModel> dataList = [];
   List<bool> dataListBool = [];
@@ -189,7 +190,7 @@ class _EditMyServiceState extends State<EditMyService> {
     //   durationFilter = Constants.durationFilter;
     //   regionFilter = Constants.regionFilter;
     levelFilter = Constants.levelFilter;
-    regionFilter = Constants.regionFilter;
+    regionFilter = Constants.regionList;
     durationFilter = Constants.durationFilter;
     activitiesFilter = Constants.activitiesFilter;
     aimedFilter = Constants.am;
@@ -289,8 +290,14 @@ class _EditMyServiceState extends State<EditMyService> {
                   ),
                   TextField(
                     textAlign: TextAlign.center,
-                    maxLines: type == "availableSeats" ? 1 : 5,
-                    keyboardType: type == "availableSeats"
+                    maxLines: type == "availableSeats" ||
+                            type == "costInc" ||
+                            type == "costExl"
+                        ? 1
+                        : 5,
+                    keyboardType: type == "availableSeats" ||
+                            type == "costInc" ||
+                            type == "costExl"
                         ? TextInputType.number
                         : TextInputType.multiline,
                     controller: controller,
@@ -463,9 +470,13 @@ class _EditMyServiceState extends State<EditMyService> {
       }
     } else if (type == "region") {
       for (var element in regionFilter) {
-        dataList.add(DisplayDataModel(
-            id: element.id.toString(), image: "", title: element.regions));
-        if (element.regions == title) {
+        dataList.add(
+          DisplayDataModel(
+              id: element.regionId.toString(), image: "", title: element.region
+              //id: element.id.toString(), image: "", title: element.regions,
+              ),
+        );
+        if (element.region == title) {
           dataListBool.add(true);
         } else {
           dataListBool.add(false);
