@@ -99,8 +99,8 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
     }
   }
 
-  void navEdit() {
-    Navigator.of(context).push(
+  void navEdit() async {
+    ServicesModel? s = await Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (_) {
           return EditMyService(
@@ -109,6 +109,11 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
         },
       ),
     );
+    if (s != null) {
+      widget.sm.startDate = s.startDate;
+      widget.sm.endDate = s.endDate;
+      setState(() {});
+    }
   }
 
   void deleteService(String id) async {

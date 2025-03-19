@@ -51,11 +51,12 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
   List<String> adventuresPlan = [""];
   String selectedPrice = '';
   bool allowEdit = false;
-
+  // ServicesModel? service;
   @override
-  void initState() {
+  void didUpdateWidget(covariant NewServiceDescription oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // service = widget.gm;
     getSteps();
-    super.initState();
     if (widget.gm.sPlan == 2) {
       startDate =
           DateTime.tryParse(widget.gm.availability[0].st) ?? DateTime.now();
@@ -67,6 +68,13 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
       ed = "${endDate.day}-$eMonth-${endDate.year}";
     }
   }
+
+  // @override
+  // void initState() {
+
+  //   super.initState();
+
+  // }
 
   void goToReviews(BuildContext context, String id) {
     Navigator.of(context).push(
@@ -705,7 +713,7 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
               ],
             ),
 
-            //   DescriptionComponents('prerequisites', widget.gm.preRequisites),
+            //   DescriptionComponents('prerequisites', service!.preRequisites),
             // DescriptionComponents('minimumRequirements', widget.gm.mRequirements),
             // DescriptionComponents('termsAndConditions', widget.gm.tnc),
           ],

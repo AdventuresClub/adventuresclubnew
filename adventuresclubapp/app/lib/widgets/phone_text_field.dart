@@ -63,6 +63,11 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
           element['id'],
           element['currency'] ?? "",
         );
+        if (ccCode.isEmpty) {
+          if (gc.country == "OMAN") {
+            ccCode = gc.code;
+          }
+        }
         countriesList1.add(gc);
       }
       setState(() {

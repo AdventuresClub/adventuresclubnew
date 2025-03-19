@@ -764,7 +764,7 @@ class _EditMyServiceState extends State<EditMyService> {
   }
 
   void editService(String type) async {
-    if (type != "plan2" || type != "daysValue") {
+    if (type != "plan2" && type != "daysValue") {
       Navigator.of(context).pop();
     }
 
@@ -1014,7 +1014,10 @@ class _EditMyServiceState extends State<EditMyService> {
         body: b,
       );
       if (response.statusCode == 200) {
-        if (type == "daysValue") {
+        if (mounted) {
+          Constants.showMessage(context, "Success");
+        }
+        if (type == "plan2" || type == "daysValue") {
           cancel();
         }
       }
@@ -1255,11 +1258,19 @@ class _EditMyServiceState extends State<EditMyService> {
         });
       }
     }
+  }
+
+  void editDates() {
     editService("plan2");
   }
 
   void cancel() {
-    Navigator.of(context).popUntil((route) => route.isFirst);
+    //Navigator.of(context).popUntil((route) => route.isFirst);
+    Navigator.of(context).pop();
+  }
+
+  void close(ServicesModel service) {
+    Navigator.of(context).pop(service);
   }
 
   Widget editIcon(String type) {
@@ -1800,9 +1811,21 @@ class _EditMyServiceState extends State<EditMyService> {
                       Column(
                         children: [
                           const SizedBox(height: 20),
+                          Divider(
+                            thickness: 1,
+                            color: blackColor.withOpacity(0.2),
+                          ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
+                              GestureDetector(
+                                onTap: editDates,
+                                child: SizedBox(
+                                  width: 20,
+                                  child: Icon(Icons.edit),
+                                ),
+                              ),
                               Row(
                                 children: [
                                   MyText(
@@ -1813,14 +1836,17 @@ class _EditMyServiceState extends State<EditMyService> {
                                     size: 14,
                                   ),
                                   const SizedBox(width: 10),
-                                  SizedBox(
-                                    width: 15,
-                                    child: IconButton(
-                                        onPressed: () =>
-                                            _selectDate(context, "startDate"),
-                                        icon: Icon(Icons.edit)),
+                                  GestureDetector(
+                                    onTap: () =>
+                                        _selectDate(context, "startDate"),
+                                    child: SizedBox(
+                                        width: 20,
+                                        child: Icon(Icons.punch_clock)),
                                   ),
                                 ],
+                              ),
+                              const SizedBox(
+                                height: 10,
                               ),
                               Row(
                                 children: [
@@ -1832,16 +1858,30 @@ class _EditMyServiceState extends State<EditMyService> {
                                     size: 14,
                                   ),
                                   const SizedBox(width: 10),
-                                  SizedBox(
-                                    width: 20,
-                                    child: IconButton(
-                                        onPressed: () =>
-                                            _selectDate(context, "endDate"),
-                                        icon: Icon(Icons.edit)),
+                                  // SizedBox(
+                                  //   width: 20,
+                                  //   child: IconButton(
+                                  //       onPressed: () =>
+                                  //           _selectDate(context, "endDate"),
+                                  //       icon: Icon(Icons.edit)),
+                                  // ),
+                                  GestureDetector(
+                                    onTap: () =>
+                                        _selectDate(context, "endDate"),
+                                    child: SizedBox(
+                                        width: 20,
+                                        child: Icon(Icons.punch_clock)),
                                   ),
                                 ],
                               ),
                             ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Divider(
+                            thickness: 1,
+                            color: blackColor.withOpacity(0.2),
                           ),
                           // const SizedBox(
                           //   width: 10,

@@ -450,7 +450,7 @@ class _MyServicesState extends State<MyServices> {
         ),
       );
     }
-    myServicesApi();
+    await myServicesApi();
   }
 
   void goToDrafts(ServicesModel gm) async {

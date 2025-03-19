@@ -248,7 +248,8 @@ class _ParticipantsListState extends State<ParticipantsList> {
   void acceptBooking(String userId, String bookingId, int index) async {
     GetParticipantsModel pm = gm.elementAt(index);
     setState(() {
-      gm.removeAt(index);
+      //gm.removeAt(index);
+      pm.status = "8";
     });
     try {
       var response = await http
@@ -263,7 +264,8 @@ class _ParticipantsListState extends State<ParticipantsList> {
       // });
       //if (response.statusCode == 200) {
       setState(() {
-        gm.insert(index, pm);
+        //gm.insert(index, pm);
+        //pm.status = "8";
       });
       //}
       //else {

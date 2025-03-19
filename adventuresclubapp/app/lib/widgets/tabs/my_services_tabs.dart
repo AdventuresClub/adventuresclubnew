@@ -25,6 +25,7 @@ class MyServicesTab extends StatefulWidget {
 class _MyServicesTabState extends State<MyServicesTab> {
   String aPlan = "";
   bool loading = false;
+  ServicesModel? service;
   List<GetParticipantsModel> gGM = [];
   List<ServiceImageModel> gSim = [];
   List<String> adventuresPlan = [""];
@@ -39,65 +40,67 @@ class _MyServicesTabState extends State<MyServicesTab> {
   void didUpdateWidget(covariant MyServicesTab oldWidget) {
     edit = widget.edit!;
     super.didUpdateWidget(oldWidget);
+    service = widget.sm;
+    getParticipants();
+    if (service!.sPlan == 2) {
+      startDate =
+          DateTime.tryParse(service!.availability[0].st) ?? DateTime.now();
+      String sMonth = DateFormat('MMMM').format(startDate);
+      st = "${startDate.day}-$sMonth-${startDate.year}";
+      endDate =
+          DateTime.tryParse(service!.availability[0].ed) ?? DateTime.now();
+      String eMonth = DateFormat('MMMM').format(startDate);
+      ed = "${endDate.day}-$eMonth-${endDate.year}";
+    }
+    if (service!.sPlan == 2) {
+      setState(() {
+        text1.insert(5, "Start Date");
+        text5.insert(3, "End Date");
+        text4.insert(0, service!.country);
+        text4.insert(1, service!.region);
+        text4.insert(2, service!.serviceCategory);
+        text4.insert(3, service!.aSeats.toString());
+        text4.insert(4, service!.duration.toString());
+        service!.availability.isEmpty
+            ? text4.insert(5, "Start Date")
+            : text4.insert(5, st.substring(0, 9));
+        text6.insert(0, service!.reviewdBy);
+        text6.insert(1, service!.serviceSector);
+        text6.insert(2, service!.serviceType);
+        text6.insert(3, service!.serviceLevel);
+        service!.availability.isEmpty
+            ? text6.insert(4, "End Date")
+            : text6.insert(4, ed);
+      });
+    }
+    if (service!.sPlan == 1) {
+      getSteps();
+      setState(() {
+        text1.insert(5, "Availability");
+        text4.insert(0, service!.country);
+        text4.insert(1, service!.region);
+        text4.insert(2, service!.serviceCategory);
+        text4.insert(3, service!.aSeats.toString());
+        text4.insert(4, service!.duration.toString());
+        text4.insert(5, aPlan);
+        //  text6.insert(0, service!.reviewdBy);
+        text6.insert(0, service!.serviceSector);
+        text6.insert(1, service!.serviceType);
+        text6.insert(2, service!.serviceLevel);
+        // text6.insert(4, widget.gm.availability[0].ed);
+        // text6.insert(4, widget.gm.availability[0].ed);
+      });
+    }
     if (edit) {
       // getEmployees();
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    getParticipants();
-    if (widget.sm.sPlan == 2) {
-      startDate =
-          DateTime.tryParse(widget.sm.availability[0].st) ?? DateTime.now();
-      String sMonth = DateFormat('MMMM').format(startDate);
-      st = "${startDate.day}-$sMonth-${startDate.year}";
-      endDate =
-          DateTime.tryParse(widget.sm.availability[0].ed) ?? DateTime.now();
-      String eMonth = DateFormat('MMMM').format(startDate);
-      ed = "${endDate.day}-$eMonth-${endDate.year}";
-    }
-    if (widget.sm.sPlan == 2) {
-      setState(() {
-        text1.insert(5, "Start Date");
-        text5.insert(3, "End Date");
-        text4.insert(0, widget.sm.country);
-        text4.insert(1, widget.sm.region);
-        text4.insert(2, widget.sm.serviceCategory);
-        text4.insert(3, widget.sm.aSeats.toString());
-        text4.insert(4, widget.sm.duration.toString());
-        widget.sm.availability.isEmpty
-            ? text4.insert(5, "Start Date")
-            : text4.insert(5, st.substring(0, 9));
-        text6.insert(0, widget.sm.reviewdBy);
-        text6.insert(1, widget.sm.serviceSector);
-        text6.insert(2, widget.sm.serviceType);
-        text6.insert(3, widget.sm.serviceLevel);
-        widget.sm.availability.isEmpty
-            ? text6.insert(4, "End Date")
-            : text6.insert(4, ed);
-      });
-    }
-    if (widget.sm.sPlan == 1) {
-      getSteps();
-      setState(() {
-        text1.insert(5, "Availability");
-        text4.insert(0, widget.sm.country);
-        text4.insert(1, widget.sm.region);
-        text4.insert(2, widget.sm.serviceCategory);
-        text4.insert(3, widget.sm.aSeats.toString());
-        text4.insert(4, widget.sm.duration.toString());
-        text4.insert(5, aPlan);
-        //  text6.insert(0, widget.sm.reviewdBy);
-        text6.insert(0, widget.sm.serviceSector);
-        text6.insert(1, widget.sm.serviceType);
-        text6.insert(2, widget.sm.serviceLevel);
-        // text6.insert(4, widget.gm.availability[0].ed);
-        // text6.insert(4, widget.gm.availability[0].ed);
-      });
-    }
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  // }
 
   List<String> text5 = [
     // '4.8 (1048 Reviews)',
@@ -157,7 +160,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
   ];
 
   void getSteps() {
-    widget.sm.availabilityPlan.forEach((element) {
+    service!.availabilityPlan.forEach((element) {
       adventuresPlan.add(element.day.tr());
     });
     aPlan = adventuresPlan.join(", ");
@@ -171,7 +174,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
       var response = await http.post(
           Uri.parse("${Constants.baseUrl}/api/v1/get_participant"),
           body: {
-            'service_id': widget.sm.id.toString(),
+            'service_id': service!.id.toString(),
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       List<dynamic> result = decodedResponse['data'];
