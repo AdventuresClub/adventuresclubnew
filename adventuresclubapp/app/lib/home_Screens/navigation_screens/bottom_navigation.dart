@@ -1,4 +1,5 @@
 // ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls
+import 'dart:async';
 import 'dart:convert';
 import 'package:app/constants.dart';
 import 'package:app/home_Screens/navigation_screens/account.dart';
@@ -12,6 +13,7 @@ import 'package:app/sign_up/sign_in.dart';
 import 'package:app/widgets/loading_widget.dart';
 import 'package:app/widgets/my_text.dart';
 import 'package:app/widgets/update_page.dart';
+import 'package:app_links/app_links.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -55,10 +57,12 @@ class _BottomNavigationState extends State<BottomNavigation> {
     'images/ksa_flag.png'
   ];
   String language = "";
+  StreamSubscription<Uri>? linkSubscription;
 
   @override
   void initState() {
     super.initState();
+    initDeepLinks();
     if (Constants.userId == 0) {
       getCountries();
     } else {
@@ -68,7 +72,23 @@ class _BottomNavigationState extends State<BottomNavigation> {
     // index = context.read<ServicesProvider>().homeIndex;
     Constants.getFilter();
     getVersion();
+
   }
+
+  @override
+  void dispose() {
+    linkSubscription?.cancel();
+    super.dispose();
+  }
+
+  Future<void> initDeepLinks() async {
+    if (linkSubscription != null) return;
+    linkSubscription = AppLinks().uriLinkStream.listen((uri) {
+      if (!mounted) return;
+      context.push(uri.fragment);
+    });
+  }
+
 
   void getNotificatioNumber() {
     // Provider.of<NavigationIndexProvider>(context, listen: false)

@@ -90,10 +90,12 @@ final GoRouter router = GoRouter(
         return SignIn();
       },
     ),
+    //https://adventuresclub.net/newDetails/6
     GoRoute(
       parentNavigatorKey: rootNavigatorKey,
-      path: '/newDetails',
+      path: '/newDetails/:id',
       builder: (BuildContext context, GoRouterState state) {
+        String? id = state.pathParameters['id'];
         dynamic extra = state.extra;
         ServicesModel? gm;
         bool? show;
@@ -106,7 +108,7 @@ final GoRouter router = GoRouter(
         return NewDetails(
           gm: gm,
           show: show,
-          id: gm!.id.toString(),
+          id: id,
         );
       },
     ),
