@@ -681,8 +681,8 @@ class _NewDetailsState extends State<NewDetails> {
                       ];
                     }),
                     body: NewDetailsTab(
-                      service!,
-                      getPrice,
+                      gm: service!,
+                      sendData: getPrice,
                       show: widget.show,
                     ),
                     // children: [

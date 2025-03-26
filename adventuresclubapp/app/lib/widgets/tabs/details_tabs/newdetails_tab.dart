@@ -17,7 +17,7 @@ class NewDetailsTab extends StatefulWidget {
   final ServicesModel gm;
   final bool? show;
   final Function sendData;
-  const NewDetailsTab(this.gm, this.sendData, {this.show = false, super.key});
+  const NewDetailsTab({required this.gm, required this.sendData, this.show = false, super.key});
 
   @override
   State<NewDetailsTab> createState() => _NewDetailsTabState();
@@ -39,13 +39,17 @@ class _NewDetailsTabState extends State<NewDetailsTab>
   String ed = "";
   bool costInc = false;
   bool costExl = false;
+  bool show = false;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
     _tabController.addListener(_handleTabSelection);
-    if (widget.show!) {
+    if (widget.show != null) {
+      show = widget.show!;
+    }
+    if (show) {
       getParticipants();
     }
     if (widget.gm.sPlan == 2) {
@@ -368,7 +372,7 @@ class _NewDetailsTabState extends State<NewDetailsTab>
             // program tab
             // 2 nd Tab /////////
 
-            if (widget.show!)
+            if (show)
               NewAbout(
                   gm: widget.gm,
                   id: widget.gm.providerId.toString(),

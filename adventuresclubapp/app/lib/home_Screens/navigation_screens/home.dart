@@ -146,13 +146,13 @@ class _HomeState extends State<Home> {
               child: Column(
                 children: [
                   NewFilterPage(),
-                  TextButton(
-                    onPressed: () {
-                      debugPrint("HTTPS://adventuresclub.net/services/${5}");
-                      context.push("/newDetails/123");
-                    },
-                    child: Text("AppLink Test"),
-                  ),
+                  // TextButton(
+                  //   onPressed: () {
+                  //     debugPrint("HTTPS://adventuresclub.net/services/${5}");
+                  //     context.push("/newDetails/123");
+                  //   },
+                  //   child: Text("AppLink Test"),
+                  // ),
                   // SizedBox(
                   //   height: 35,
                   // ),
