@@ -79,7 +79,7 @@ class _NewDetailsState extends State<NewDetails> {
         }
       }
     } else if (widget.id != null) {
-      getDetails(widget.gm!.serviceId.toString());
+      getDetails(widget.id!);
       // debugPrint("Widget ID: ${widget.id}");
       // debugPrint(
       //     "Available Services: ${provider.allServices.map((e) => e.serviceId).toList()}");
