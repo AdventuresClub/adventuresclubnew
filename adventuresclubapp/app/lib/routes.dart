@@ -105,6 +105,9 @@ final GoRouter router = GoRouter(
         if (extra != null && extra['show'] != null) {
           show = extra['show'];
         }
+        if (extra != null && extra['show'] != null) {
+          show = extra['show'];
+        }
         return NewDetails(
           gm: gm,
           show: show,

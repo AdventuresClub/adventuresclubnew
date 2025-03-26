@@ -1,11 +1,9 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls, avoid_print
 
 import 'package:app/constants.dart';
-import 'package:app/home_Screens/new_details.dart';
 import 'package:app/models/home_services/home_services_model.dart';
 import 'package:app/models/home_services/services_model.dart';
 import 'package:app/provider/services_provider.dart';
-import 'package:app/widgets/my_text.dart';
 import 'package:app/widgets/services_card.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +37,8 @@ class ServiceListState extends State<ServiceList> {
   //List<ServicesModel> gm = [];
 
   void goToDetails(ServicesModel gm) {
-    context.push('/newDetails', extra: {'gm': gm, "show": true, "id": gm.id});
+    context.push('/newDetails',
+        extra: {'gm': gm, "show": true, "id": gm.serviceId.toString()});
 
     /*Navigator.of(context).push(
       MaterialPageRoute(
