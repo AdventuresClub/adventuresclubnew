@@ -93,7 +93,28 @@ final GoRouter router = GoRouter(
     //https://adventuresclub.net/newDetails/6
     GoRoute(
       parentNavigatorKey: rootNavigatorKey,
-      path: '/newDetails/:id',
+      path: '/newDetails',
+      builder: (BuildContext context, GoRouterState state) {
+        String? id = state.pathParameters['id'];
+        dynamic extra = state.extra;
+        ServicesModel? gm;
+        bool? show;
+        if (extra != null && extra['gm'] != null) {
+          gm = extra['gm'];
+        }
+        if (extra != null && extra['show'] != null) {
+          show = extra['show'];
+        }
+        return NewDetails(
+          gm: gm,
+          show: show,
+          id: id,
+        );
+      },
+    ),
+    GoRoute(
+      parentNavigatorKey: rootNavigatorKey,
+      path: '/aDetails/:id',
       builder: (BuildContext context, GoRouterState state) {
         String? id = state.pathParameters['id'];
         dynamic extra = state.extra;

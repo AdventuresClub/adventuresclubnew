@@ -42,8 +42,8 @@
                 <!--
                 <data android:scheme="https" android:host="adventuresclub.net" android:pathPrefix="/newDetails"/>
                 -->
-               <data android:scheme="http" android:host="adventuresclub.net" android:pathPrefix="/newDetails"/>
-               <data android:scheme="https" android:host="adventuresclub.net" android:pathPrefix="/newDetails"/>
+               <data android:scheme="http" android:host="adventuresclub.net" android:pathPrefix="/aDetails"/>
+               <data android:scheme="https" android:host="adventuresclub.net" android:pathPrefix="/aDetails"/>
             </intent-filter>
 
             <!-- Deep Link sample -->
