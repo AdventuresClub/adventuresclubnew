@@ -55,6 +55,11 @@ class _NewDetailsState extends State<NewDetails> {
   List<BecomePartner> nBp = [];
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   void dispose() {
     super.dispose();
     _pageViewController.dispose(); // dispose the PageController
@@ -78,6 +83,18 @@ class _NewDetailsState extends State<NewDetails> {
           future = true;
         }
       }
+      _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
+        if (_activePage < 6) {
+          _activePage++;
+        } else {
+          _activePage = 0;
+        }
+        _pageViewController.animateToPage(
+          _activePage,
+          duration: const Duration(milliseconds: 350),
+          curve: Curves.easeIn,
+        );
+      });
     } else if (widget.id != null) {
       getDetails(widget.id!);
       // debugPrint("Widget ID: ${widget.id}");
@@ -88,19 +105,6 @@ class _NewDetailsState extends State<NewDetails> {
       //   orElse: () => throw Exception("Service with ID ${widget.id} not found"),
       // );
     }
-
-    _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
-      if (_activePage < 6) {
-        _activePage++;
-      } else {
-        _activePage = 0;
-      }
-      _pageViewController.animateToPage(
-        _activePage,
-        duration: const Duration(milliseconds: 350),
-        curve: Curves.easeIn,
-      );
-    });
 
     // setState(() {});
   }

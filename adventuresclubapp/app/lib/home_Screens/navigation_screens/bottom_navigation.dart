@@ -8,6 +8,7 @@ import 'package:app/home_Screens/navigation_screens/planned.dart';
 import 'package:app/home_Screens/navigation_screens/visit.dart';
 import 'package:app/home_Screens/navigation_screens/requests.dart';
 import 'package:app/new_signup/new_register.dart';
+import 'package:app/provider/edit_provider.dart';
 import 'package:app/provider/navigation_index_provider.dart';
 import 'package:app/sign_up/sign_in.dart';
 import 'package:app/widgets/loading_widget.dart';
@@ -57,12 +58,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
     'images/ksa_flag.png'
   ];
   String language = "";
-  StreamSubscription<Uri>? linkSubscription;
 
   @override
   void initState() {
     super.initState();
-    initDeepLinks();
     if (Constants.userId == 0) {
       getCountries();
     } else {
@@ -72,23 +71,21 @@ class _BottomNavigationState extends State<BottomNavigation> {
     // index = context.read<ServicesProvider>().homeIndex;
     Constants.getFilter();
     getVersion();
-
   }
 
   @override
   void dispose() {
-    linkSubscription?.cancel();
     super.dispose();
   }
 
-  Future<void> initDeepLinks() async {
-    if (linkSubscription != null) return;
-    linkSubscription = AppLinks().uriLinkStream.listen((uri) {
-      if (!mounted) return;
-      context.push(uri.fragment);
-    });
+  void checkAppLink(String link) {
+    if (link.isNotEmpty) {
+      context.read<EditProvider>().clearAppLink();
+      Timer(Duration(seconds: 3), () {
+        context.push(link);
+      });
+    }
   }
-
 
   void getNotificatioNumber() {
     // Provider.of<NavigationIndexProvider>(context, listen: false)
@@ -512,6 +509,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
             .totalBookings;
     int account = Provider.of<NavigationIndexProvider>(context, listen: true)
         .totalAccount;
+    String appLink = context.watch<EditProvider>().appLink;
+    if (appLink.isNotEmpty) {
+      checkAppLink(appLink);
+    }
     return Scaffold(
       body: loading ? const LoadingWidget() : getBody(index),
       bottomNavigationBar: BottomNavigationBar(

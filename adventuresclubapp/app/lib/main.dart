@@ -10,12 +10,14 @@ import 'package:app/provider/edit_provider.dart';
 import 'package:app/provider/navigation_index_provider.dart';
 import 'package:app/provider/services_provider.dart';
 import 'package:app/routes.dart';
+import 'package:app_links/app_links.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -59,10 +61,12 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late Future getAppFuture;
+  StreamSubscription<Uri>? linkSubscription;
 
   @override
   void initState() {
     getAppFuture = getApp();
+    initDeepLinks();
     super.initState();
   }
 
@@ -70,6 +74,20 @@ class _MyAppState extends State<MyApp> {
   void dispose() {
     super.dispose();
   }
+
+  Future<void> initDeepLinks() async {
+    if (linkSubscription != null) return;
+    try {
+      linkSubscription = AppLinks().uriLinkStream.listen((uri) {
+        if (!mounted) return;
+        context.read<EditProvider>().setAppLink(uri.toString());
+        // context.push(uri.fragment);
+      });
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
 
 
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
