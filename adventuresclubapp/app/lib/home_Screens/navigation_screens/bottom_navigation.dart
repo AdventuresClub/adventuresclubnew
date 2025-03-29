@@ -81,7 +81,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   void checkAppLink(String link) {
     if (link.isNotEmpty) {
       context.read<EditProvider>().clearAppLink();
-      Timer(Duration(seconds: 3), () {
+      Timer(Duration(seconds: 2), () {
         context.push(link);
       });
     }
