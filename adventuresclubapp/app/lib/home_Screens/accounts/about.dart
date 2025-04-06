@@ -405,19 +405,15 @@ class _AboutState extends State<About> {
   Future<void> shareLinkOnWhatsApp() async {
     String link = "https://adventuresclub.net/aDetails/${widget.id}";
     final encodedLink = Uri.encodeComponent(link);
-
-    // WhatsApp share URL (opens directly in the app)
     final whatsAppUrl = "https://wa.me/?text=$encodedLink";
 
     try {
       if (await canLaunchUrl(Uri.parse(whatsAppUrl))) {
         await launchUrl(
           Uri.parse(whatsAppUrl),
-          mode:
-              LaunchMode.externalApplication, // Forces opening outside the app
+          mode: LaunchMode.externalApplication,
         );
       } else {
-        // Fallback: Open WhatsApp Web if the app isn't installed
         final whatsAppWebUrl =
             "https://web.whatsapp.com/send?text=$encodedLink";
         await launchUrl(
