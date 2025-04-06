@@ -607,13 +607,12 @@ class _NewDetailsState extends State<NewDetails> {
                                               height: 40,
                                               width: 40,
                                               decoration: BoxDecoration(
-                                                color: whiteColor,
+                                                color: redColor,
                                                 borderRadius:
                                                     BorderRadius.circular(32),
                                               ),
                                               child: const Icon(Icons.share,
-                                                  size: 30,
-                                                  color: Colors.green),
+                                                  size: 30, color: whiteColor),
                                             )),
                                       ),
                                       Positioned(

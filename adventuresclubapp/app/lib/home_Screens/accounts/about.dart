@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:app/app_theme.dart';
 import 'package:app/constants.dart';
 import 'package:app/models/filter_data_model/programs_model.dart';
 import 'package:app/models/home_services/become_partner.dart';
@@ -19,6 +20,7 @@ import 'package:app/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 import '../../models/services/create_services/availability_plan_model.dart';
 import '../../widgets/Lists/Chat_list.dart/show_chat.dart';
 
@@ -400,6 +402,34 @@ class _AboutState extends State<About> {
   // Chat Provider : ${Constants.baseUrl}/newreceiverchat/3/34/24
   // string ChatUrl = $"{CommonConstantUrl.ChatUrl}newreceiverchat/{Settings.UserId}/{completedDataModel.service_id}/{completedDataModel.provider_id}";
 
+  Future<void> shareLinkOnWhatsApp() async {
+    String link = "https://adventuresclub.net/aDetails/${widget.id}";
+    final encodedLink = Uri.encodeComponent(link);
+
+    // WhatsApp share URL (opens directly in the app)
+    final whatsAppUrl = "https://wa.me/?text=$encodedLink";
+
+    try {
+      if (await canLaunchUrl(Uri.parse(whatsAppUrl))) {
+        await launchUrl(
+          Uri.parse(whatsAppUrl),
+          mode:
+              LaunchMode.externalApplication, // Forces opening outside the app
+        );
+      } else {
+        // Fallback: Open WhatsApp Web if the app isn't installed
+        final whatsAppWebUrl =
+            "https://web.whatsapp.com/send?text=$encodedLink";
+        await launchUrl(
+          Uri.parse(whatsAppWebUrl),
+          mode: LaunchMode.externalApplication,
+        );
+      }
+    } catch (e) {
+      throw Exception("Failed to launch WhatsApp: $e");
+    }
+  }
+
   abc() {}
   @override
   Widget build(BuildContext context) {
@@ -430,7 +460,7 @@ class _AboutState extends State<About> {
                   return [
                     SliverAppBar(
                       toolbarHeight: 50,
-                      expandedHeight: 200,
+                      expandedHeight: MediaQuery.of(context).size.height / 3.2,
                       elevation: 4,
                       floating: false,
                       pinned: true,
@@ -442,6 +472,11 @@ class _AboutState extends State<About> {
                         weight: FontWeight.bold,
                         size: 18,
                       ),
+                      actions: [
+                        const SizedBox(
+                          width: 10,
+                        )
+                      ],
                       flexibleSpace: Padding(
                         padding: const EdgeInsets.only(top: 30.0),
                         child: FlexibleSpaceBar(
@@ -472,55 +507,92 @@ class _AboutState extends State<About> {
                                         size: 18,
                                       ),
                                     ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Container(
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              22,
-                                      width:
-                                          MediaQuery.of(context).size.width / 4,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: const Color.fromARGB(
-                                              255, 15, 71, 116),
-                                          width: 2.0,
-                                        ),
-                                        color: const Color.fromARGB(
-                                            255, 15, 71, 116),
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(28)),
-                                      ),
-                                      child: Material(
-                                        color: Colors.transparent,
-                                        child: InkWell(
-                                          onTap: () => selected(context),
-                                          child: Center(
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 0),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    'chat'.tr(),
-                                                    style: const TextStyle(
-                                                        color: whiteColor,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        letterSpacing: 0.8,
-                                                        fontFamily: "Raleway",
-                                                        fontSize: 14),
-                                                  ),
-                                                ],
-                                              ),
+
+                                    Row(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: shareLinkOnWhatsApp,
+                                          child: Container(
+                                            height: 45,
+                                            width: 45,
+                                            decoration: BoxDecoration(
+                                              color: redColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(32),
                                             ),
+                                            child: const Icon(Icons.share,
+                                                size: 30, color: whiteColor),
                                           ),
                                         ),
-                                      ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () => selected(context),
+                                          child: Container(
+                                            height: 45,
+                                            width: 45,
+                                            decoration: BoxDecoration(
+                                              color: redColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(32),
+                                            ),
+                                            child: const Icon(Icons.chat,
+                                                size: 25, color: whiteColor),
+                                          ),
+                                        ),
+                                      ],
                                     ),
+                                    // Container(
+                                    //   height:
+                                    //       MediaQuery.of(context).size.height /
+                                    //           16,
+                                    //   width:
+                                    //       MediaQuery.of(context).size.width / 8,
+                                    //   decoration: BoxDecoration(
+                                    //     border: Border.all(
+                                    //       color: const Color.fromARGB(
+                                    //           255, 15, 71, 116),
+                                    //       width: 2.0,
+                                    //     ),
+                                    //     color: const Color.fromARGB(
+                                    //         255, 15, 71, 116),
+                                    //     borderRadius: const BorderRadius.all(
+                                    //         Radius.circular(36)),
+                                    //   ),
+                                    //   child: Material(
+                                    //     color: Colors.transparent,
+                                    //     child: InkWell(
+                                    //       onTap: () => selected(context),
+                                    //       child: Center(
+                                    //         child: Padding(
+                                    //             padding: const EdgeInsets.only(
+                                    //                 left: 0),
+                                    //             child: Icon(
+                                    //               Icons.chat,
+                                    //               color: whiteColor,
+                                    //             )
+                                    //             // Row(
+                                    //             //   mainAxisAlignment:
+                                    //             //       MainAxisAlignment.center,
+                                    //             //   children: [
+                                    //             //     // Text(
+                                    //             //     //   'chat'.tr(),
+                                    //             //     //   style: const TextStyle(
+                                    //             //     //       color: whiteColor,
+                                    //             //     //       fontWeight:
+                                    //             //     //           FontWeight.bold,
+                                    //             //     //       letterSpacing: 0.8,
+                                    //             //     //       fontFamily: "Raleway",
+                                    //             //     //       fontSize: 14),
+                                    //             //     // ),
+                                    //             //   ],
+                                    //             // ),
+                                    //             ),
+                                    //       ),
+                                    //     ),
+                                    //   ),
+                                    // ),
                                   ],
                                 ),
                                 // ListTile(
