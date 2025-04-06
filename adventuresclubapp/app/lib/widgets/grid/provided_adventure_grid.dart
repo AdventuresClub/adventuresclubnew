@@ -2,6 +2,7 @@ import 'package:app/home_Screens/accounts/about.dart';
 import 'package:app/home_Screens/new_details.dart';
 import 'package:app/widgets/services_card.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../models/home_services/services_model.dart';
 
 class ProvidedAdventureGrid extends StatefulWidget {
@@ -32,17 +33,32 @@ class _ProvidedAdventureGridState extends State<ProvidedAdventureGrid> {
     );
   }
 
+  // void goToDetails(ServicesModel gm) {
+  //   Navigator.of(context).push(
+  //     MaterialPageRoute(
+  //       builder: (_) {
+  //         return NewDetails(
+  //           gm: gm,
+  //           show: false,
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
   void goToDetails(ServicesModel gm) {
-    Navigator.of(context).push(
+    context.push('/newDetails',
+        extra: {'gm': gm, "show": false, "id": gm.serviceId.toString()});
+
+    /*Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
           return NewDetails(
             gm: gm,
-            show: false,
+            show: true,
           );
         },
       ),
-    );
+    );*/
   }
 
   @override
