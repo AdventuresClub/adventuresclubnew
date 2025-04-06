@@ -136,6 +136,17 @@ final GoRouter router = GoRouter(
         );
       },
     ),
+    GoRoute(
+      parentNavigatorKey: rootNavigatorKey,
+      path: '/pDetails/:id',
+      builder: (BuildContext context, GoRouterState state) {
+        String? id = state.pathParameters['id'];
+        dynamic extra = state.extra;
+        return About(
+          id: id,
+        );
+      },
+    ),
 
     /* GoRoute(
       parentNavigatorKey: rootNavigatorKey,
