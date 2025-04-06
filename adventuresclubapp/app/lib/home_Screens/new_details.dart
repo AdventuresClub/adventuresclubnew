@@ -501,6 +501,34 @@ class _NewDetailsState extends State<NewDetails> {
     });
   }
 
+  Future<void> shareLinkOnWhatsApp() async {
+    String link = "https://adventuresclub.net/aDetails/${widget.gm!.serviceId}";
+    final encodedLink = Uri.encodeComponent(link);
+
+    // WhatsApp share URL (opens directly in the app)
+    final whatsAppUrl = "https://wa.me/?text=$encodedLink";
+
+    try {
+      if (await canLaunchUrl(Uri.parse(whatsAppUrl))) {
+        await launchUrl(
+          Uri.parse(whatsAppUrl),
+          mode:
+              LaunchMode.externalApplication, // Forces opening outside the app
+        );
+      } else {
+        // Fallback: Open WhatsApp Web if the app isn't installed
+        final whatsAppWebUrl =
+            "https://web.whatsapp.com/send?text=$encodedLink";
+        await launchUrl(
+          Uri.parse(whatsAppWebUrl),
+          mode: LaunchMode.externalApplication,
+        );
+      }
+    } catch (e) {
+      throw Exception("Failed to launch WhatsApp: $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -570,6 +598,24 @@ class _NewDetailsState extends State<NewDetails> {
                                               ),
                                             );
                                           }),
+                                      Positioned(
+                                        top: 20,
+                                        right: 70,
+                                        child: GestureDetector(
+                                            onTap: shareLinkOnWhatsApp,
+                                            child: Container(
+                                              height: 40,
+                                              width: 40,
+                                              decoration: BoxDecoration(
+                                                color: whiteColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(32),
+                                              ),
+                                              child: const Icon(Icons.share,
+                                                  size: 30,
+                                                  color: Colors.green),
+                                            )),
+                                      ),
                                       Positioned(
                                         top: 20,
                                         right: 15,
