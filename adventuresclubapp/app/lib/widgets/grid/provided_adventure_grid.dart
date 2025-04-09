@@ -46,8 +46,9 @@ class _ProvidedAdventureGridState extends State<ProvidedAdventureGrid> {
   //   );
   // }
   void goToDetails(ServicesModel gm) {
+    debugPrint("${"Serivce id"} ${gm.id}");
     context.push('/newDetails',
-        extra: {'gm': gm, "show": false, "id": gm.serviceId.toString()});
+        extra: {'gm': gm, "show": false, "id": gm.id.toString()});
 
     /*Navigator.of(context).push(
       MaterialPageRoute(
