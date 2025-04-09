@@ -502,7 +502,7 @@ class _NewDetailsState extends State<NewDetails> {
   }
 
   Future<void> shareLinkOnWhatsApp() async {
-    String link = "https://adventuresclub.net/aDetails/${widget.gm!.serviceId}";
+    String link = "https://adventuresclub.net/aDetails/${widget.gm!.id}";
     final encodedLink = Uri.encodeComponent(link);
 
     // WhatsApp share URL (opens directly in the app)
