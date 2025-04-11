@@ -3,7 +3,6 @@
 import 'dart:convert';
 import 'package:app/constants.dart';
 import 'package:app/forgot_pass/recovery_password.dart';
-import 'package:app/sign_up/sign_in.dart';
 import 'package:app/widgets/my_text.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:easy_localization/easy_localization.dart';

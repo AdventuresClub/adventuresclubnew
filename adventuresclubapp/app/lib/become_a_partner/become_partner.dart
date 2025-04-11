@@ -5,7 +5,6 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:app/constants.dart';
-import 'package:app/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:app/temp_google_map.dart';
 import 'package:app/widgets/buttons/bottom_button.dart';
 import 'package:app/widgets/my_text.dart';
