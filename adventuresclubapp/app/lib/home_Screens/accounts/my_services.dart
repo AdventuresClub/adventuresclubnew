@@ -48,6 +48,7 @@ class _MyServicesState extends State<MyServices> {
   List<BecomePartner> nBpDraft = [];
   List<ServicesModel> allDraftServices = [];
   List<ServicesModel> filteredDraftServices = [];
+  Map mapAimedFilter = {};
 
   @override
   void initState() {
@@ -60,6 +61,30 @@ class _MyServicesState extends State<MyServices> {
     searchController.dispose();
     super.dispose();
   }
+
+  // void aimedFor() async {
+  //   //https://adventuresclub.net/adventureClubSIT/api/v1/services_cost
+  //   var response = await http.get(Uri.parse(
+  //       //https://adventuresclub.net/adventureClubSIT
+  //       "https://adventuresclub.net/adventureClubSIT/api/v1/services_cost"));
+  //   if (response.statusCode == 200) {
+  //     List<dynamic> result = mapAimedFilter['data'];
+  //     result.forEach((element) {
+  //       int id = int.tryParse(element['id'].toString()) ?? 0;
+  //       AimedForModel amf = AimedForModel(
+  //         id,
+  //         element['AimedName'] ?? "",
+  //         element['image'] ?? "",
+  //         element['created_at'] ?? "",
+  //         element['updated_at'] ?? "",
+  //         element['deleted_at'] ?? "",
+  //         0,
+  //         //  selected: false,
+  //       );
+  //       // am.add(amf);
+  //     });
+  //   }
+  // }
 
   void searchServices(String x) {
     if (x.isNotEmpty) {

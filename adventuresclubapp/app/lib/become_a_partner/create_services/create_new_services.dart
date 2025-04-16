@@ -133,6 +133,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   double lat = 0;
   double lng = 0;
   Map mapFilter = {};
+  Map mapAimedFilter = {};
   int serviceId = 0;
 
   @override
@@ -143,6 +144,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     formattedDate = 'startDate';
     endDate = "endDate".tr();
     getData();
+    aimedFor();
     // addProgramData();
   }
 
@@ -208,6 +210,29 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     dependencyList = Constants.dependency;
     parseAimed(Constants.am);
     parseDependency(Constants.dependency);
+  }
+
+  void aimedFor() async {
+    //https://adventuresclub.net/adventureClubSIT/api/v1/services_cost
+    var response =
+        await http.get(Uri.parse("${Constants.baseUrl}api/v1/services_cost"));
+    if (response.statusCode == 200) {
+      List<dynamic> result = mapAimedFilter['message'];
+      result.forEach((element) {
+        int id = int.tryParse(element['id'].toString()) ?? 0;
+        AimedForModel amf = AimedForModel(
+          id,
+          element['AimedName'] ?? "",
+          element['image'] ?? "",
+          element['created_at'] ?? "",
+          element['updated_at'] ?? "",
+          element['deleted_at'] ?? "",
+          0,
+          //  selected: false,
+        );
+        // am.add(amf);
+      });
+    }
   }
 
   void showConfirmation() async {

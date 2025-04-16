@@ -1,10 +1,15 @@
 // ignore_for_file: avoid_print, prefer_interpolation_to_compose_strings, avoid_function_literals_in_foreach_calls
 
+import 'dart:convert';
+
+import 'package:app/complete_profile/services_dropdown.dart';
 import 'package:app/constants.dart';
 import 'package:app/constants_create_new_services.dart';
 import 'package:app/google_page.dart';
+import 'package:app/models/services_cost.dart';
 import 'package:app/temp_google_map.dart';
 import 'package:app/widgets/buttons/button.dart';
+import 'package:app/widgets/loading_widget.dart';
 import 'package:app/widgets/my_text.dart';
 import 'package:app/widgets/text_fields/TF_with_size.dart';
 import 'package:app/widgets/text_fields/multiline_field.dart';
@@ -12,6 +17,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
 
 class Cost extends StatefulWidget {
   final TextEditingController iliveController;
@@ -50,6 +56,8 @@ class _CostState extends State<Cost> {
   bool loading = false;
   double lat = 0;
   double lng = 0;
+  List<ServicesCost> services = [];
+  ServicesCost? _selectedService;
   void addActivites() {
     showDialog(
       context: context,
@@ -118,6 +126,14 @@ class _CostState extends State<Cost> {
     super.dispose();
     controller.dispose(); // dispose the PageController
     //_timer.cancel();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      servicesFor();
+    });
   }
 
   void goToBottomNavigation() {
@@ -231,260 +247,335 @@ class _CostState extends State<Cost> {
     );
   }
 
+  Future<List<ServicesCost>> getServicesCost() async {
+    try {
+      final response = await http.get(Uri.parse(
+          "https://adventuresclub.net/adventureClubSIT/api/v1/services_cost"));
+
+      if (response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body);
+        final List<dynamic> data = jsonResponse['data'];
+
+        return data.map((item) => ServicesCost.fromJson(item)).toList();
+      } else {
+        throw Exception('Failed to load data: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error fetching services cost: $e');
+    }
+  }
+
+  void servicesFor() async {
+    setState(() {
+      loading = true;
+    });
+    try {
+      services = await getServicesCost();
+      services.forEach((service) {
+        print('Service ID: ${service.id}, Description: ${service.description}');
+      });
+    } catch (e) {
+      print('Error: $e');
+    } finally {
+      setState(() {
+        loading = false;
+      });
+    }
+  }
+
+  int selectedService = 1;
+
   abc() {}
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
-      child: Column(children: [
-        SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: TextField(
-            onTap: openGoogle,
-            readOnly: true,
-            controller: widget.iliveController,
-            decoration: InputDecoration(
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-              hintText: 'enterGeolocation'.tr(),
-              filled: true,
-              fillColor: lightGreyColor,
-              suffixIcon: GestureDetector(
-                onTap: openGoogle,
-                child: const Image(
-                  image: ExactAssetImage('images/map-symbol.png'),
-                  height: 15,
-                  width: 20,
-                ),
-              ),
-              border: OutlineInputBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                borderSide:
-                    BorderSide(color: greyColor.withOpacity(0.5), width: 1.5),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                borderSide:
-                    BorderSide(color: greyColor.withOpacity(0.5), width: 1.5),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                borderSide:
-                    BorderSide(color: greyColor.withOpacity(0.5), width: 1.5),
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        TFWithSize(
-          'typeSpecificAddress/Location',
-          widget.specificAddress,
-          15,
-          lightGreyColor,
-          1,
-          type: true,
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width / 2.2,
-                  child: TFWithSize(
-                    //label: "Set Cost",
-                    show: TextInputType.number,
-                    //'setCost',
-                    "${Constants.countryCurrency} ${"(${Constants.country} Currency)"}",
-
-                    widget.costOne,
-                    16,
-                    lightGreyColor,
-                    2.2,
-                    type: true,
-                    maximumLetters: 10,
-                    label: "setCost".tr(),
+    return loading
+        ? LoadingWidget()
+        : Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: Column(children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: TextField(
+                  onTap: openGoogle,
+                  readOnly: true,
+                  controller: widget.iliveController,
+                  decoration: InputDecoration(
+                    contentPadding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                    hintText: 'enterGeolocation'.tr(),
+                    filled: true,
+                    fillColor: lightGreyColor,
+                    suffixIcon: GestureDetector(
+                      onTap: openGoogle,
+                      child: const Image(
+                        image: ExactAssetImage('images/map-symbol.png'),
+                        height: 15,
+                        width: 20,
+                      ),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10.0)),
+                      borderSide: BorderSide(
+                          color: greyColor.withOpacity(0.5), width: 1.5),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10.0)),
+                      borderSide: BorderSide(
+                          color: greyColor.withOpacity(0.5), width: 1.5),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10.0)),
+                      borderSide: BorderSide(
+                          color: greyColor.withOpacity(0.5), width: 1.5),
+                    ),
                   ),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width / 2.2,
-                  child: MyText(
-                    text: "includingGears",
-                    color: redColor,
-                    size: 12,
-                    weight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-            // const SizedBox(
-            //   width: 10,
-            // ),
-            Column(
-              children: [
-                TFWithSize(
-                  show: TextInputType.number,
-                  "${Constants.countryCurrency} ${"(${Constants.country} Currency)"}",
-                  widget.costTwo,
-                  16,
-                  lightGreyColor,
-                  2.2,
-                  type: true,
-                  maximumLetters: 10,
-                  label: "setCost".tr(),
-                ),
-                SizedBox(
-                  width: 180,
-                  child: MyText(
-                    text: "excludingGears",
-                    color: redColor,
-                    size: 12,
-                    weight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TFWithSize(
+                'typeSpecificAddress/Location',
+                widget.specificAddress,
+                15,
+                lightGreyColor,
+                1,
+                type: true,
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width / 4.5,
+                        height: 67,
+                        child: TFWithSize(
+                          //label: "Set Cost",
+                          show: TextInputType.number,
+                          //'setCost',
+                          "${Constants.countryCurrency} ${"(${Constants.country} Currency)"}",
 
-            // Column(
-            //   children: [
-            //     Container(
-            //       height: 55,
-            //       width: 120,
-            //       //width: MediaQuery.of(context).size.width / 2.4,
-            //       padding: const EdgeInsets.symmetric(
-            //           horizontal: 20, vertical: 12),
-            //       decoration: BoxDecoration(
-            //         color: lightGreyColor,
-            //         border: Border.all(
-            //             color: greyColor.withOpacity(0.5), width: 1.5),
-            //         borderRadius: BorderRadius.circular(8),
-            //       ),
-            //       child: Center(
-            //         child: MyText(
-            //           text: "omr", //getCountry.toString(),
-            //           color: blackTypeColor.withOpacity(0.5),
-            //           size: 14,
-            //           weight: FontWeight.w500,
-            //         ),
-            //       ),
-            //     ),
-            //     const SizedBox(height: 22),
-            //   ],
-            // ),
+                          widget.costOne,
+                          16,
+                          lightGreyColor,
+                          2.4,
+                          type: true,
+                          maximumLetters: 10,
+                          label: "cost 1".tr(),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      // SizedBox(
+                      //   width: MediaQuery.of(context).size.width / 2.2,
+                      //   child: MyText(
+                      //     text: "includingGears",
+                      //     color: redColor,
+                      //     size: 12,
+                      //     weight: FontWeight.bold,
+                      //   ),
+                      // ),
+                      SizedBox(
+                        width: 280,
+                        child: ServicesDropdown(
+                          services: services, // Your List<ServicesCost>
+                          onChanged: (selectedService) {
+                            print('Selected: ${selectedService?.description}');
+                            // Handle selection
+                          },
+                          hintText: 'cost description',
+                        ),
+                      ),
+                    ],
+                  ),
 
-            //DdButton(5.5)
-          ],
-        ),
-        const SizedBox(height: 2),
-        // Column(
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: [
-        //     Container(
-        //       height: 55,
-        //       width: 120,
-        //       //width: MediaQuery.of(context).size.width / 2.4,
-        //       padding:
-        //           const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-        //       decoration: BoxDecoration(
-        //         color: lightGreyColor,
-        //         border:
-        //             Border.all(color: greyColor.withOpacity(0.5), width: 1.5),
-        //         borderRadius: BorderRadius.circular(8),
-        //       ),
-        //       child: Center(
-        //         child: MyText(
-        //           text: "omr", //getCountry.toString(),
-        //           color: blackTypeColor.withOpacity(0.5),
-        //           size: 14,
-        //           weight: FontWeight.w500,
-        //         ),
-        //       ),
-        //     ),
-        //     const SizedBox(height: 22),
-        //   ],
-        // ),
-        // Row(
-        //   children: [
-        //     // SizedBox(
-        //     //   width: 190,
-        //     //   child: MyText(
-        //     //     text: "includingGears",
-        //     //     color: redColor,
-        //     //     size: 12,
-        //     //     weight: FontWeight.bold,
-        //     //   ),
-        //     // ),
-        //     // SizedBox(
-        //     //   width: 130,
-        //     //   child: MyText(
-        //     //     text: "excludingGears",
-        //     //     color: redColor,
-        //     //     size: 12,
-        //     //     weight: FontWeight.bold,
-        //     //   ),
-        //     // ),
-        //   ],
-        // ),
-        // Row(
-        //         children: [
-        //           MyText(
-        //             text: "Including Gears & Other Taxes",
-        //             color: redColor,
-        //             size: 12,
-        //             weight: FontWeight.bold,
-        //           ),
-        //           MyText(
-        //             text: "Excluding Gears & Other Taxes",
-        //             color: redColor,
-        //             size: 12,
-        //             weight: FontWeight.bold,
-        //           )
-        //         ],
-        //       ),
-        const SizedBox(height: 10),
-        // Align(
-        //     alignment: Alignment.centerLeft,
-        //     child: MyText(
-        //       text: 'Terms and conditions',
-        //       color: blackTypeColor,
-        //       weight: FontWeight.w500,
-        //     )),
-        MultiLineField(
-          label: 'prerequisites',
-          'prerequisites',
-          5,
-          lightGreyColor,
-          widget.preRequisites,
-          show: true,
-        ),
-        const SizedBox(height: 10),
-        MultiLineField(
-          label: 'minimumRequirements',
-          'minimumRequirements',
-          5,
-          lightGreyColor,
-          widget.minimumRequirement,
-          show: true,
-        ),
-        const SizedBox(height: 10),
-        MultiLineField(
-          label: 'termsAndConditions',
-          'termsAndConditions',
-          4,
-          lightGreyColor,
-          widget.terms,
-          show: true,
-        ),
-      ]),
-    );
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 67,
+                        child: TFWithSize(
+                          show: TextInputType.number,
+                          "${Constants.countryCurrency} ${"(${Constants.country} Currency)"}",
+                          widget.costTwo,
+                          16,
+                          lightGreyColor,
+                          4.5,
+                          type: true,
+                          maximumLetters: 2,
+                          label: "cost 2".tr(),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      // In your widget where you want to use the dropdown
+                      SizedBox(
+                        width: 280,
+                        child: ServicesDropdown(
+                          services: services, // Your List<ServicesCost>
+                          onChanged: (selectedService) {
+                            print('Selected: ${selectedService?.description}');
+                            // Handle selection
+                          },
+                          hintText: 'cost description',
+                        ),
+                      ),
+                      // SizedBox(
+                      //   width: 180,
+                      //   child: MyText(
+                      //     text: "excludingGears",
+                      //     color: redColor,
+                      //     size: 12,
+                      //     weight: FontWeight.bold,
+                      //   ),
+                      // ),
+                    ],
+                  ),
+
+                  // Column(
+                  //   children: [
+                  //     Container(
+                  //       height: 55,
+                  //       width: 120,
+                  //       //width: MediaQuery.of(context).size.width / 2.4,
+                  //       padding: const EdgeInsets.symmetric(
+                  //           horizontal: 20, vertical: 12),
+                  //       decoration: BoxDecoration(
+                  //         color: lightGreyColor,
+                  //         border: Border.all(
+                  //             color: greyColor.withOpacity(0.5), width: 1.5),
+                  //         borderRadius: BorderRadius.circular(8),
+                  //       ),
+                  //       child: Center(
+                  //         child: MyText(
+                  //           text: "omr", //getCountry.toString(),
+                  //           color: blackTypeColor.withOpacity(0.5),
+                  //           size: 14,
+                  //           weight: FontWeight.w500,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     const SizedBox(height: 22),
+                  //   ],
+                  // ),
+
+                  //DdButton(5.5)
+                ],
+              ),
+              const SizedBox(height: 2),
+              // Column(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     Container(
+              //       height: 55,
+              //       width: 120,
+              //       //width: MediaQuery.of(context).size.width / 2.4,
+              //       padding:
+              //           const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              //       decoration: BoxDecoration(
+              //         color: lightGreyColor,
+              //         border:
+              //             Border.all(color: greyColor.withOpacity(0.5), width: 1.5),
+              //         borderRadius: BorderRadius.circular(8),
+              //       ),
+              //       child: Center(
+              //         child: MyText(
+              //           text: "omr", //getCountry.toString(),
+              //           color: blackTypeColor.withOpacity(0.5),
+              //           size: 14,
+              //           weight: FontWeight.w500,
+              //         ),
+              //       ),
+              //     ),
+              //     const SizedBox(height: 22),
+              //   ],
+              // ),
+              // Row(
+              //   children: [
+              //     // SizedBox(
+              //     //   width: 190,
+              //     //   child: MyText(
+              //     //     text: "includingGears",
+              //     //     color: redColor,
+              //     //     size: 12,
+              //     //     weight: FontWeight.bold,
+              //     //   ),
+              //     // ),
+              //     // SizedBox(
+              //     //   width: 130,
+              //     //   child: MyText(
+              //     //     text: "excludingGears",
+              //     //     color: redColor,
+              //     //     size: 12,
+              //     //     weight: FontWeight.bold,
+              //     //   ),
+              //     // ),
+              //   ],
+              // ),
+              // Row(
+              //         children: [
+              //           MyText(
+              //             text: "Including Gears & Other Taxes",
+              //             color: redColor,
+              //             size: 12,
+              //             weight: FontWeight.bold,
+              //           ),
+              //           MyText(
+              //             text: "Excluding Gears & Other Taxes",
+              //             color: redColor,
+              //             size: 12,
+              //             weight: FontWeight.bold,
+              //           )
+              //         ],
+              //       ),
+              const SizedBox(height: 10),
+              // Align(
+              //     alignment: Alignment.centerLeft,
+              //     child: MyText(
+              //       text: 'Terms and conditions',
+              //       color: blackTypeColor,
+              //       weight: FontWeight.w500,
+              //     )),
+              MultiLineField(
+                label: 'prerequisites',
+                'prerequisites',
+                5,
+                lightGreyColor,
+                widget.preRequisites,
+                show: true,
+              ),
+              const SizedBox(height: 10),
+              MultiLineField(
+                label: 'minimumRequirements',
+                'minimumRequirements',
+                5,
+                lightGreyColor,
+                widget.minimumRequirement,
+                show: true,
+              ),
+              const SizedBox(height: 10),
+              MultiLineField(
+                label: 'termsAndConditions',
+                'termsAndConditions',
+                4,
+                lightGreyColor,
+                widget.terms,
+                show: true,
+              ),
+            ]),
+          );
   }
 }
