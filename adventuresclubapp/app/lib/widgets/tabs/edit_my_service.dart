@@ -1,5 +1,6 @@
 import 'package:app/become_a_partner/create_plan_one_page.dart';
 import 'package:app/become_a_partner/create_plan_two_mainpage.dart';
+import 'package:app/complete_profile/services_cost_dropdown.dart';
 import 'package:app/constants.dart';
 import 'package:app/models/create_adventure/regions_model.dart';
 import 'package:app/models/filter_data_model/activities_inc_model.dart';
@@ -18,6 +19,8 @@ import 'package:app/models/services/create_services/create_services_plan_one.dar
 import 'package:app/models/services/create_services/create_services_program%20_model.dart';
 import 'package:app/models/services/dependencies_model.dart';
 import 'package:app/models/services/included_activities_model.dart';
+import 'package:app/models/services_cost.dart';
+import 'package:app/provider/services_provider.dart';
 import 'package:app/temp_google_map.dart';
 import 'package:app/widgets/buttons/button.dart';
 import 'package:app/widgets/loading_widget.dart';
@@ -28,6 +31,7 @@ import 'package:app/widgets/tabs/details_tabs/service_program/service_plans.dart
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class EditMyService extends StatefulWidget {
   final ServicesModel gm;
@@ -94,9 +98,13 @@ class _EditMyServiceState extends State<EditMyService> {
   List<String> d = [];
   List<String> titleList = [];
   List<String> descriptionList = [];
+  List<ServicesCost> services = [];
+  String reasonOne = "";
+  String reasonTwo = "";
 
   @override
   void initState() {
+    services = context.read<ServicesProvider>().services;
     getSteps();
     categoryList.add(widget.gm.serviceCategory);
     categoryList.add(widget.gm.serviceSector);
@@ -717,6 +725,11 @@ class _EditMyServiceState extends State<EditMyService> {
     planDaysId(d);
   }
 
+  Future<void> getCostReason() async {
+    reasonOne = Provider.of<ServicesProvider>(context, listen: false).reasonOne;
+    reasonTwo = Provider.of<ServicesProvider>(context, listen: false).reasonOne;
+  }
+
   void planDaysId(List<String> pDays) async {
     List<int> id = [];
     for (var element in pDays) {
@@ -848,6 +861,7 @@ class _EditMyServiceState extends State<EditMyService> {
         'service_id': widget.gm.id.toString(),
         'customer_id': widget.gm.providerId.toString(),
         "cost_inc": costInc.text.trim(),
+        "inc_description": reasonOne,
       };
     } else if (type == "costExl") {
       widget.gm.costExc = costExl.text;
@@ -855,6 +869,7 @@ class _EditMyServiceState extends State<EditMyService> {
         'service_id': widget.gm.id.toString(),
         'customer_id': widget.gm.providerId.toString(),
         "cost_exc": costExl.text.trim(),
+        "exc_description": reasonTwo,
       };
     } else if (type == "duration") {
       String durationId = "";
@@ -1719,23 +1734,28 @@ class _EditMyServiceState extends State<EditMyService> {
                             icon: const Icon(Icons.edit))
                       ],
                     ),
-
+                    Divider(
+                      thickness: 1,
+                      color: blackColor.withOpacity(0.2),
+                    ),
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Row(
                               children: [
-                                Checkbox(
-                                  visualDensity: VisualDensity.compact,
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(30.0))),
-                                  value: false,
-                                  onChanged: (value) {},
-                                ),
+                                // Checkbox(
+                                //   visualDensity: VisualDensity.compact,
+                                //   shape: const RoundedRectangleBorder(
+                                //       borderRadius: BorderRadius.all(
+                                //           Radius.circular(30.0))),
+                                //   value: false,
+                                //   onChanged: (value) {},
+                                // ),
                                 MyText(
                                   text:
                                       "${widget.gm.currency}  ${widget.gm.costInc}",
@@ -1751,15 +1771,25 @@ class _EditMyServiceState extends State<EditMyService> {
                                   onPressed: () => typeData("costInc"),
                                   icon: const Icon(Icons.edit),
                                 ),
+                                SizedBox(
+                                  width: 210,
+                                  child: SizedBox(
+                                    width: 280,
+                                    child: ServicesCostDropdown(
+                                      dropDownList: services,
+                                      type: "cost1",
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
-                            MyText(
-                              text: "includingGears".tr(),
-                              //'River Rafting',
-                              //weight: FontWeight.w700,
-                              color: redColor,
-                              size: 14,
-                            ),
+                            // MyText(
+                            //   text: "includingGears".tr(),
+                            //   //'River Rafting',
+                            //   //weight: FontWeight.w700,
+                            //   color: redColor,
+                            //   size: 14,
+                            // ),
                           ],
                         ),
                         Container(
@@ -1767,41 +1797,48 @@ class _EditMyServiceState extends State<EditMyService> {
                           width: 0.5,
                           height: 55,
                         ),
-                        Column(
+                      ],
+                    ),
+                    Divider(
+                      thickness: 1,
+                      color: blackColor.withOpacity(0.2),
+                    ),
+                    Column(
+                      children: [
+                        Row(
                           children: [
-                            Row(
-                              children: [
-                                Checkbox(
-                                  visualDensity: VisualDensity.compact,
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(30.0))),
-                                  value: false,
-                                  onChanged: (value) => {},
-                                ),
-                                MyText(
-                                  text:
-                                      "${widget.gm.currency}  ${widget.gm.costExc}",
-                                  //'River Rafting',
-                                  weight: FontWeight.bold,
-                                  color: bluishColor,
-                                  size: 18,
-                                ),
-                                // const SizedBox(
-                                //   width: 2,
-                                // ),
-                                IconButton(
-                                  onPressed: () => typeData("costExl"),
-                                  icon: const Icon(Icons.edit),
-                                ),
-                              ],
-                            ),
+                            // Checkbox(
+                            //   visualDensity: VisualDensity.compact,
+                            //   shape: const RoundedRectangleBorder(
+                            //       borderRadius:
+                            //           BorderRadius.all(Radius.circular(30.0))),
+                            //   value: false,
+                            //   onChanged: (value) => {},
+                            // ),
                             MyText(
-                              text: "excludingGears".tr(),
+                              text:
+                                  "${widget.gm.currency}  ${widget.gm.costExc}",
                               //'River Rafting',
-                              //  weight: FontWeight.w700,
-                              color: redColor,
-                              size: 14,
+                              weight: FontWeight.bold,
+                              color: bluishColor,
+                              size: 18,
+                            ),
+                            // const SizedBox(
+                            //   width: 2,
+                            // ),
+                            IconButton(
+                              onPressed: () => typeData("costExl"),
+                              icon: const Icon(Icons.edit),
+                            ),
+                            SizedBox(
+                              width: 210,
+                              child: SizedBox(
+                                width: 280,
+                                child: ServicesCostDropdown(
+                                  dropDownList: services,
+                                  type: "cost1",
+                                ),
+                              ),
                             ),
                           ],
                         ),
