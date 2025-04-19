@@ -12,6 +12,7 @@ import 'package:app/models/services/availability_model.dart';
 import 'package:app/models/services/dependencies_model.dart';
 import 'package:app/models/services/included_activities_model.dart';
 import 'package:app/models/services/service_image_model.dart';
+import 'package:app/models/services_cost.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -49,6 +50,9 @@ class ServicesProvider with ChangeNotifier {
   List<HomeServicesModel> searchfilterServices = [];
   List<DependenciesModel> gdM = [];
   bool searchFilter = false;
+  String reasonOne = "";
+  String reasonTwo = "";
+  List<ServicesCost> services = [];
 
   bool loading = false;
 
@@ -56,6 +60,15 @@ class ServicesProvider with ChangeNotifier {
   //   homeIndex = i;
   //   notifyListeners();
   // }
+
+  void updateReason(String r, String t) {
+    if (t == "cost1") {
+      reasonOne = r;
+    } else {
+      reasonTwo = r;
+    }
+    notifyListeners();
+  }
 
   void setSearch(String x) {
     filteredServices.clear();
@@ -108,11 +121,30 @@ class ServicesProvider with ChangeNotifier {
     searchFilter = true;
   }
 
+  Future<List<ServicesCost>> getServicesCost() async {
+    try {
+      final response = await http.get(Uri.parse(
+          "https://adventuresclub.net/adventureClubSIT/api/v1/services_cost"));
+
+      if (response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body);
+        final List<dynamic> data = jsonResponse['data'];
+
+        return data.map((item) => ServicesCost.fromJson(item)).toList();
+      } else {
+        throw Exception('Failed to load data: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error fetching services cost: $e');
+    }
+  }
+
   Future getServicesList() async {
     //if ()
     if (loading) {
       return;
     }
+
     setFilteredServices([], true);
     //filteredServices.clear();
     allServices.clear();
@@ -297,6 +329,7 @@ class ServicesProvider with ChangeNotifier {
         });
         searchedList.add(SearchModel(acc, serviceId, adventureName));
       });
+      services = await getServicesCost();
       setFilteredServices([...gAllServices], false);
       //filteredServices = [...gAllServices];
 

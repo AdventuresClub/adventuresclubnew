@@ -2,22 +2,26 @@
 
 import 'dart:convert';
 
+import 'package:app/complete_profile/services_cost_dropdown.dart';
 import 'package:app/complete_profile/services_dropdown.dart';
 import 'package:app/constants.dart';
 import 'package:app/constants_create_new_services.dart';
 import 'package:app/google_page.dart';
 import 'package:app/models/services_cost.dart';
+import 'package:app/provider/services_provider.dart';
 import 'package:app/temp_google_map.dart';
 import 'package:app/widgets/buttons/button.dart';
 import 'package:app/widgets/loading_widget.dart';
 import 'package:app/widgets/my_text.dart';
 import 'package:app/widgets/text_fields/TF_with_size.dart';
 import 'package:app/widgets/text_fields/multiline_field.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class Cost extends StatefulWidget {
   final TextEditingController iliveController;
@@ -57,7 +61,10 @@ class _CostState extends State<Cost> {
   double lat = 0;
   double lng = 0;
   List<ServicesCost> services = [];
-  ServicesCost? _selectedService;
+  ServicesCost selectedService1 =
+      ServicesCost(id: 0, description: "", createdAt: "", updatedAt: "");
+  ServicesCost selectedService2 =
+      ServicesCost(id: 0, description: "", createdAt: "", updatedAt: "");
   void addActivites() {
     showDialog(
       context: context,
@@ -131,9 +138,8 @@ class _CostState extends State<Cost> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      servicesFor();
-    });
+    services = context.read<ServicesProvider>().services;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {});
   }
 
   void goToBottomNavigation() {
@@ -247,43 +253,49 @@ class _CostState extends State<Cost> {
     );
   }
 
-  Future<List<ServicesCost>> getServicesCost() async {
-    try {
-      final response = await http.get(Uri.parse(
-          "https://adventuresclub.net/adventureClubSIT/api/v1/services_cost"));
+  // Future<List<ServicesCost>> getServicesCost() async {
+  //   try {
+  //     final response = await http.get(Uri.parse(
+  //         "https://adventuresclub.net/adventureClubSIT/api/v1/services_cost"));
 
-      if (response.statusCode == 200) {
-        final jsonResponse = json.decode(response.body);
-        final List<dynamic> data = jsonResponse['data'];
+  //     if (response.statusCode == 200) {
+  //       final jsonResponse = json.decode(response.body);
+  //       final List<dynamic> data = jsonResponse['data'];
 
-        return data.map((item) => ServicesCost.fromJson(item)).toList();
-      } else {
-        throw Exception('Failed to load data: ${response.statusCode}');
-      }
-    } catch (e) {
-      throw Exception('Error fetching services cost: $e');
-    }
-  }
+  //       return data.map((item) => ServicesCost.fromJson(item)).toList();
+  //     } else {
+  //       throw Exception('Failed to load data: ${response.statusCode}');
+  //     }
+  //   } catch (e) {
+  //     throw Exception('Error fetching services cost: $e');
+  //   }
+  // }
 
-  void servicesFor() async {
-    setState(() {
-      loading = true;
-    });
-    try {
-      services = await getServicesCost();
-      services.forEach((service) {
-        print('Service ID: ${service.id}, Description: ${service.description}');
-      });
-    } catch (e) {
-      print('Error: $e');
-    } finally {
-      setState(() {
-        loading = false;
-      });
-    }
-  }
+  // void servicesFor() async {
+  //   setState(() {
+  //     loading = true;
+  //   });
+  //   services.clear();
+  //   try {
+  //     services = await getServicesCost();
+  //     services.forEach((service) {
+  //       print('Service ID: ${service.id}, Description: ${service.description}');
+  //     });
+  //   } catch (e) {
+  //     print('Error: $e');
+  //   } finally {
+  //     setState(() {
+  //       loading = false;
+  //     });
+  //   }
+  // }
 
   int selectedService = 1;
+
+  void selectService() {
+    Provider.of<ServicesProvider>(context, listen: false).updateReason(
+        selectedService1.description, selectedService2.description);
+  }
 
   abc() {}
   @override
@@ -386,17 +398,46 @@ class _CostState extends State<Cost> {
                       //     weight: FontWeight.bold,
                       //   ),
                       // ),
-                      SizedBox(
-                        width: 280,
-                        child: ServicesDropdown(
-                          services: services, // Your List<ServicesCost>
-                          onChanged: (selectedService) {
-                            print('Selected: ${selectedService?.description}');
-                            // Handle selection
-                          },
-                          hintText: 'cost description',
+                      // SizedBox(
+                      //   width: 280,
+                      //   child: ServicesDropdown(
+                      //     services: services, // Your List<ServicesCost>
+                      //     onChanged: (selectedService) {
+                      //       print('Selected: ${selectedService?.description}');
+                      //       // Handle selection
+                      //       _selectedService1 = selectedService;
+                      //       selectService();
+                      //       //setState(() {});
+                      //     },
+
+                      //     hintText: 'cost description',
+                      //   ),
+                      // ),
+                      if (services.isNotEmpty)
+                        SizedBox(
+                          width: 280,
+                          child: ServicesCostDropdown(
+                            dropDownList: services,
+                            type: "cost1",
+                          ),
                         ),
-                      ),
+                      // child: ServicesDropdown(
+                      //   services: services,
+                      //   selectedService:
+                      //       selectedService1, // Pass the current selection
+                      //   onChanged: (selectedService) {
+                      //     print(
+                      //         'Selected: ${selectedService?.description}');
+                      //     setState(() {
+                      //       selectedService1 = selectedService!;
+                      //     });
+                      //     if (selectedService1 != null) {
+                      //       selectService();
+                      //     }
+                      //   },
+                      //   hintText: 'cost description',
+                      // ),
+                      // )
                     ],
                   ),
 
@@ -422,17 +463,34 @@ class _CostState extends State<Cost> {
                         width: 5,
                       ),
                       // In your widget where you want to use the dropdown
-                      SizedBox(
-                        width: 280,
-                        child: ServicesDropdown(
-                          services: services, // Your List<ServicesCost>
-                          onChanged: (selectedService) {
-                            print('Selected: ${selectedService?.description}');
-                            // Handle selection
-                          },
-                          hintText: 'cost description',
+                      if (services.isNotEmpty)
+                        SizedBox(
+                          width: 280,
+                          child: SizedBox(
+                            width: 280,
+                            child: ServicesCostDropdown(
+                              dropDownList: services,
+                              type: "cost2",
+                            ),
+                          ),
                         ),
-                      ),
+                      // ServicesDropdown(
+                      //   services: services,
+                      //   selectedService:
+                      //       selectedService2, // Pass the current selection
+                      //   onChanged: (selectedService) {
+                      //     print(
+                      //         'Selected: ${selectedService?.description}');
+                      //     setState(() {
+                      //       selectedService2 = selectedService!;
+                      //     });
+                      //     if (selectedService2 != null) {
+                      //       selectService();
+                      //     }
+                      //   },
+                      //   hintText: 'cost description',
+                      // ),
+                      // )
                       // SizedBox(
                       //   width: 180,
                       //   child: MyText(

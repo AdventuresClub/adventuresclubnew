@@ -13,12 +13,15 @@ import 'package:app/models/services/aimed_for_model.dart';
 import 'package:app/models/services/create_services/create_services_plan_one.dart';
 import 'package:app/models/services/create_services/create_services_program%20_model.dart';
 import 'package:app/models/services/dependencies_model.dart';
+import 'package:app/models/services_cost.dart';
+import 'package:app/provider/services_provider.dart';
 import 'package:app/widgets/buttons/bottom_button.dart';
 import 'package:app/widgets/loading_widget.dart';
 import 'package:app/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:http/http.dart' as http;
 
@@ -86,6 +89,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   List<String> sSchedule = [];
   List<String> sDate = [];
   List<String> sTime = [];
+  String reasonOne = "";
+  String reasonTwo = "";
   String title = "";
   String schedule = "";
   String programsDate = "";
@@ -770,6 +775,11 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     imageList = imgList;
   }
 
+  Future<void> getCostReason() async {
+    reasonOne = Provider.of<ServicesProvider>(context, listen: false).reasonOne;
+    reasonTwo = Provider.of<ServicesProvider>(context, listen: false).reasonOne;
+  }
+
   Future<void> convertProgramData() async {
     if (sPlan == 1) {
       onePlan.forEach((element) {
@@ -1058,12 +1068,16 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   // }
 
   void saveLastPage() async {
+    await getCostReason();
+    debugPrint(reasonOne);
+    debugPrint(reasonTwo);
     setState(() {
       loading = true;
     });
     try {
-      var response = await http.post(
-          Uri.parse("${Constants.baseUrl}/api/v1/third_geo_location_creation"),
+      var response = await http.post(Uri.parse(
+              //"${Constants.baseUrl}/api/v1/third_geo_location_creation",
+              "https://adventuresclub.net/adventureClubSIT/api/v1/third_geo_location_creation"),
           body: {
             "provider_id": Constants.userId.toString(),
             "service_id": serviceId.toString(),
@@ -1075,6 +1089,8 @@ class _CreateNewServicesState extends State<CreateNewServices> {
             "pre_requisites": preRequisites.text,
             "minimum_requirements": minimumRequirement.text,
             "terms_conditions": terms.text,
+            "inc_description": reasonOne,
+            "exc_description": reasonTwo,
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       if (response.statusCode == 200) {
