@@ -4,6 +4,9 @@
       "namespace": "android_app",
       "package_name": "com.universalskills.adventuresclub",
       "sha256_cert_fingerprints":
-      ["65:84:16:9D:D5:3A:24:16:BD:8C:70:72:14:B6:8D:DA:26:F4:5D:16:C7:B9:CD:65:0C:99:ED:35:B3:34:91:AF"]
+      [
+        "65:84:16:9D:D5:3A:24:16:BD:8C:70:72:14:B6:8D:DA:26:F4:5D:16:C7:B9:CD:65:0C:99:ED:35:B3:34:91:AF",
+        "D4:D8:9A:9D:4E:A6:60:C8:02:FB:50:8F:AA:3E:C4:74:67:2E:33:45:E5:45:4B:82:E1:2B:83:72:3C:B6:D2:FC"
+      ]
     }
 }]
