@@ -777,7 +777,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
 
   Future<void> getCostReason() async {
     reasonOne = Provider.of<ServicesProvider>(context, listen: false).reasonOne;
-    reasonTwo = Provider.of<ServicesProvider>(context, listen: false).reasonOne;
+    reasonTwo = Provider.of<ServicesProvider>(context, listen: false).reasonTwo;
   }
 
   Future<void> convertProgramData() async {

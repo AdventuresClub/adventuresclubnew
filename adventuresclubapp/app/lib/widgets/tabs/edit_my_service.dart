@@ -857,6 +857,7 @@ class _EditMyServiceState extends State<EditMyService> {
       };
     } else if (type == "costInc") {
       widget.gm.costInc = costInc.text;
+      await getCostReason();
       b = {
         'service_id': widget.gm.id.toString(),
         'customer_id': widget.gm.providerId.toString(),
@@ -865,6 +866,7 @@ class _EditMyServiceState extends State<EditMyService> {
       };
     } else if (type == "costExl") {
       widget.gm.costExc = costExl.text;
+      await getCostReason();
       b = {
         'service_id': widget.gm.id.toString(),
         'customer_id': widget.gm.providerId.toString(),
@@ -1773,12 +1775,11 @@ class _EditMyServiceState extends State<EditMyService> {
                                 ),
                                 SizedBox(
                                   width: 210,
-                                  child: SizedBox(
-                                    width: 280,
-                                    child: ServicesCostDropdown(
-                                      dropDownList: services,
-                                      type: "cost1",
-                                    ),
+                                  child: ServicesCostDropdown(
+                                    dropDownList: services,
+                                    type: "cost1",
+                                    edit: true,
+                                    service: widget.gm,
                                   ),
                                 ),
                               ],
@@ -1792,11 +1793,11 @@ class _EditMyServiceState extends State<EditMyService> {
                             // ),
                           ],
                         ),
-                        Container(
-                          color: blackColor,
-                          width: 0.5,
-                          height: 55,
-                        ),
+                        // Container(
+                        //   color: blackColor,
+                        //   width: 0.5,
+                        //   height: 55,
+                        // ),
                       ],
                     ),
                     Divider(
@@ -1832,12 +1833,11 @@ class _EditMyServiceState extends State<EditMyService> {
                             ),
                             SizedBox(
                               width: 210,
-                              child: SizedBox(
-                                width: 280,
-                                child: ServicesCostDropdown(
-                                  dropDownList: services,
-                                  type: "cost1",
-                                ),
+                              child: ServicesCostDropdown(
+                                dropDownList: services,
+                                type: "cost2",
+                                edit: true,
+                                service: widget.gm,
                               ),
                             ),
                           ],
@@ -1848,10 +1848,10 @@ class _EditMyServiceState extends State<EditMyService> {
                       Column(
                         children: [
                           const SizedBox(height: 20),
-                          Divider(
-                            thickness: 1,
-                            color: blackColor.withOpacity(0.2),
-                          ),
+                          // Divider(
+                          //   thickness: 1,
+                          //   color: blackColor.withOpacity(0.2),
+                          // ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.end,
@@ -1913,13 +1913,13 @@ class _EditMyServiceState extends State<EditMyService> {
                               ),
                             ],
                           ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Divider(
-                            thickness: 1,
-                            color: blackColor.withOpacity(0.2),
-                          ),
+                          // const SizedBox(
+                          //   height: 5,
+                          // ),
+                          // Divider(
+                          //   thickness: 1,
+                          //   color: blackColor.withOpacity(0.2),
+                          // ),
                           // const SizedBox(
                           //   width: 10,
                           // ),
