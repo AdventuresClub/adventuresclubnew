@@ -2,7 +2,7 @@ name: app
 description: "Adbventures Club"
 publish_to: 'none'
 
-version: 3.0.0+19
+version: 3.0.0+37
 
 environment:
   sdk: ^3.6.0
