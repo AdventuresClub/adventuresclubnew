@@ -87,6 +87,8 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
   }
 
   void getSteps() {
+    aPlan = "";
+    adventuresPlan.clear();
     for (var element in widget.gm.availabilityPlan) {
       adventuresPlan.add(element.day.tr());
     }
