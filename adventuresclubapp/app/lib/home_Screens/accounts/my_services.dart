@@ -430,6 +430,8 @@ class _MyServicesState extends State<MyServices> {
           reviewdBy: element['reviewd_by'].toString() ?? "",
           remainingSeats:
               int.tryParse(element['remaining_seats'].toString()) ?? 0,
+          incDescription: element['inc_description'] ?? "",
+          excDescription: element['exc_description'] ?? "",
         );
         //gAccomodationSModel.add(nSm);
         allServices.add(nSm);
@@ -623,6 +625,8 @@ class _MyServicesState extends State<MyServices> {
         DateTime eDate =
             DateTime.tryParse(element['end_date'].toString()) ?? DateTime.now();
         ServicesModel nSm = ServicesModel(
+          incDescription: element['inc_description'] ?? "",
+          excDescription: element['exc_description'] ?? "",
           id: int.tryParse(element['id'].toString()) ?? 0,
           owner: int.tryParse(element['owner'].toString()) ?? 0,
           adventureName: element['adventure_name'] ?? "",

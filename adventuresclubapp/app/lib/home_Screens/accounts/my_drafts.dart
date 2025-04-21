@@ -169,6 +169,8 @@ class _MyDraftsState extends State<MyDrafts> {
         DateTime eDate =
             DateTime.tryParse(element['end_date'].toString()) ?? DateTime.now();
         ServicesModel nSm = ServicesModel(
+          incDescription: element['inc_description'] ?? "",
+          excDescription: element['exc_description'] ?? "",
           id: int.tryParse(element['id'].toString()) ?? 0,
           owner: int.tryParse(element['owner'].toString()) ?? 0,
           adventureName: element['adventure_name'] ?? "",

@@ -308,47 +308,66 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                 const SizedBox(
                   height: 5,
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Divider(
+                  color: blackColor,
+                  thickness: 0.3,
+                  //width: 0.5,
+                  //height: 55,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Checkbox(
-                              visualDensity: VisualDensity.compact,
-                              shape: const RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(30.0))),
-                              value: costInc,
-                              onChanged: (value) => setStatus("inc"),
+                            Row(
+                              children: [
+                                Checkbox(
+                                  visualDensity: VisualDensity.compact,
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(30.0))),
+                                  value: costInc,
+                                  onChanged: (value) => setStatus("inc"),
+                                ),
+                                MyText(
+                                  text:
+                                      "${widget.gm.currency}  ${widget.gm.costInc}",
+                                  //'River Rafting',
+                                  weight: FontWeight.bold,
+                                  color: bluishColor,
+                                  size: 18,
+                                ),
+                              ],
                             ),
                             MyText(
-                              text:
-                                  "${widget.gm.currency}  ${widget.gm.costInc}",
+                              text: widget
+                                  .gm.incDescription, //"includingGears".tr(),
                               //'River Rafting',
-                              weight: FontWeight.bold,
-                              color: bluishColor,
-                              size: 18,
+                              //weight: FontWeight.w700,
+                              color: redColor,
+                              size: 14,
                             ),
                           ],
                         ),
-                        MyText(
-                          text: "includingGears".tr(),
-                          //'River Rafting',
-                          //weight: FontWeight.w700,
-                          color: redColor,
-                          size: 14,
-                        ),
                       ],
                     ),
-                    Container(
-                      color: blackColor,
-                      width: 0.5,
-                      height: 55,
+                    // Divider(
+                    //   color: blackColor,
+                    //   thickness: 0.4,
+                    //   //width: 0.5,
+                    //   //height: 55,
+                    // ),
+                    const SizedBox(
+                      height: 5,
                     ),
-                    Column(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
                           children: [
@@ -371,7 +390,7 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                           ],
                         ),
                         MyText(
-                          text: "excludingGears".tr(),
+                          text: widget.gm.excDescription,
                           //'River Rafting',
                           //  weight: FontWeight.w700,
                           color: redColor,
@@ -382,8 +401,14 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                   ],
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
+                // Divider(
+                //   color: blackColor.withOpacity(0.1),
+                //   thickness: 1,
+                //   //width: 0.5,
+                //   //height: 55,
+                // ),
                 if (widget.gm.sPlan == 2)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -404,13 +429,19 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                       ),
                     ],
                   ),
+                Divider(
+                  color: blackColor.withOpacity(0.2),
+                  thickness: 1,
+                  //width: 0.5,
+                  //height: 55,
+                ),
                 if (widget.gm.sPlan == 1)
                   RichText(
                     text: TextSpan(
-                      text: 'Availability'.tr(),
+                      text: "${'Availability'} : ".tr(),
                       style: const TextStyle(
                           color: bluishColor,
-                          fontSize: 14,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Raleway'),
                       children: <TextSpan>[

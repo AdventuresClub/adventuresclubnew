@@ -304,6 +304,8 @@ class _AboutState extends State<About> {
           log(sDate.day.toString());
           //DateTime e
           ServicesModel nSm = ServicesModel(
+            incDescription: element['inc_description'] ?? "",
+            excDescription: element['exc_description'] ?? "",
             id: int.tryParse(element['id'].toString()) ?? 0,
             owner: int.tryParse(element['owner'].toString()) ?? 0,
             adventureName: element['adventure_name'] ?? "",

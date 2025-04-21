@@ -60,6 +60,8 @@ class _UpcomingRequestInformationState
   ProfileBecomePartner pbp = ProfileBecomePartner(0, 0, "", "", "", "", "", "",
       "", "", 0, 0, "", "", "", "", "", "", "", 0, "", "", "", "", "", "");
   static ServicesModel service = ServicesModel(
+      incDescription: "",
+      excDescription: "",
       id: 0,
       owner: 0,
       adventureName: "",
@@ -331,6 +333,8 @@ class _UpcomingRequestInformationState
       DateTime eDate =
           DateTime.tryParse(result['end_date'].toString()) ?? DateTime.now();
       ServicesModel nSm = ServicesModel(
+        incDescription: result['inc_description'] ?? "",
+        excDescription: result['exc_description'] ?? "",
         id: int.tryParse(result['id'].toString()) ?? 0,
         owner: int.tryParse(result['owner'].toString()) ?? 0,
         adventureName: result['adventure_name'].toString() ?? "",

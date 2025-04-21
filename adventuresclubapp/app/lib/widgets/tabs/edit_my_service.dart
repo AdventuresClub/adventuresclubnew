@@ -1,3 +1,4 @@
+import 'package:app/app_theme.dart';
 import 'package:app/become_a_partner/create_plan_one_page.dart';
 import 'package:app/become_a_partner/create_plan_two_mainpage.dart';
 import 'package:app/complete_profile/services_cost_dropdown.dart';
@@ -858,20 +859,22 @@ class _EditMyServiceState extends State<EditMyService> {
     } else if (type == "costInc") {
       widget.gm.costInc = costInc.text;
       await getCostReason();
+      widget.gm.incDescription = reasonOne;
       b = {
         'service_id': widget.gm.id.toString(),
         'customer_id': widget.gm.providerId.toString(),
         "cost_inc": costInc.text.trim(),
-        "inc_description": reasonOne,
+        //"inc_description": reasonOne,
       };
     } else if (type == "costExl") {
       widget.gm.costExc = costExl.text;
       await getCostReason();
+      widget.gm.excDescription = reasonTwo;
       b = {
         'service_id': widget.gm.id.toString(),
         'customer_id': widget.gm.providerId.toString(),
         "cost_exc": costExl.text.trim(),
-        "exc_description": reasonTwo,
+        //"exc_description": reasonTwo,
       };
     } else if (type == "duration") {
       String durationId = "";
@@ -1741,46 +1744,86 @@ class _EditMyServiceState extends State<EditMyService> {
                       color: blackColor.withOpacity(0.2),
                     ),
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                      // mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          // crossAxisAlignment: CrossAxisAlignment.start,
+                          // mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Row(
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                // Checkbox(
-                                //   visualDensity: VisualDensity.compact,
-                                //   shape: const RoundedRectangleBorder(
-                                //       borderRadius: BorderRadius.all(
-                                //           Radius.circular(30.0))),
-                                //   value: false,
-                                //   onChanged: (value) {},
+                                // Row(
+                                //   crossAxisAlignment: CrossAxisAlignment.start,
+                                //   mainAxisAlignment: MainAxisAlignment.start,
+                                //   children: [
+                                //     Text(
+                                //       widget.gm.incDescription,
+                                //       style: TextStyle(color: Colors.red),
+                                //     ),
+                                //   ],
                                 // ),
-                                MyText(
-                                  text:
-                                      "${widget.gm.currency}  ${widget.gm.costInc}",
-                                  //'River Rafting',
-                                  weight: FontWeight.bold,
-                                  color: bluishColor,
-                                  size: 18,
-                                ),
-                                // const SizedBox(
-                                //   width: 2,
-                                // ),
-                                IconButton(
-                                  onPressed: () => typeData("costInc"),
-                                  icon: const Icon(Icons.edit),
-                                ),
-                                SizedBox(
-                                  width: 210,
-                                  child: ServicesCostDropdown(
-                                    dropDownList: services,
-                                    type: "cost1",
-                                    edit: true,
-                                    service: widget.gm,
-                                  ),
+                                Row(
+                                  children: [
+                                    // Checkbox(
+                                    //   visualDensity: VisualDensity.compact,
+                                    //   shape: const RoundedRectangleBorder(
+                                    //       borderRadius: BorderRadius.all(
+                                    //           Radius.circular(30.0))),
+                                    //   value: false,
+                                    //   onChanged: (value) {},
+                                    // ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            MyText(
+                                              text:
+                                                  "${widget.gm.currency}  ${widget.gm.costInc}",
+                                              //'River Rafting',
+                                              weight: FontWeight.bold,
+                                              color: bluishColor,
+                                              size: 18,
+                                            ),
+                                            const SizedBox(
+                                              width: 2,
+                                            ),
+                                            IconButton(
+                                              onPressed: () =>
+                                                  typeData("costInc"),
+                                              icon: const Icon(Icons.edit),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 2,
+                                        ),
+                                      ],
+                                    ),
+                                    // const SizedBox(
+                                    //   width: 2,
+                                    // ),
+
+                                    SizedBox(
+                                      width: 210,
+                                      child: ServicesCostDropdown(
+                                        dropDownList: services,
+                                        type: "cost1",
+                                        edit: true,
+                                        service: widget.gm,
+                                        selectedValue: ServicesCost(
+                                            id: 0,
+                                            description:
+                                                widget.gm.incDescription,
+                                            createdAt: "",
+                                            updatedAt: ""),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -1838,6 +1881,11 @@ class _EditMyServiceState extends State<EditMyService> {
                                 type: "cost2",
                                 edit: true,
                                 service: widget.gm,
+                                selectedValue: ServicesCost(
+                                    id: 0,
+                                    description: widget.gm.excDescription,
+                                    createdAt: "",
+                                    updatedAt: ""),
                               ),
                             ),
                           ],

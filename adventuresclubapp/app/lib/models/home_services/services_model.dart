@@ -68,6 +68,8 @@ class ServicesModel {
   String rating;
   String reviewdBy;
   int remainingSeats;
+  String incDescription;
+  String excDescription;
   ServicesModel({
     required this.id,
     required this.owner,
@@ -129,5 +131,7 @@ class ServicesModel {
     required this.serviceSectorImage,
     required this.serviceTypeImage,
     required this.serviceLevelImage,
+    required this.incDescription,
+    required this.excDescription,
   });
 }

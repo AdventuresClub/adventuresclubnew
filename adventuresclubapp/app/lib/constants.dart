@@ -99,7 +99,9 @@ class Constants {
   static Map mapAimedFilter = {};
   static bool partnerRequest = false;
   static String lastestVersion = "";
+  static String iosVersion = "";
   static double currentVersion = 3.6;
+  static double iosCurrentVersion = 3.6;
   static List<SectorFilterModel> filterSectors = [];
   static List<CategoryFilterModel> categoryFilter = [];
   static List<ServiceTypeFilterModel> serviceFilter = [];

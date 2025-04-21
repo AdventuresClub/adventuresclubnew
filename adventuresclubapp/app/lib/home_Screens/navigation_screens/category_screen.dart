@@ -164,6 +164,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
               DateTime.now();
           List<ServicesModel> aS = [];
           ServicesModel nSm = ServicesModel(
+            incDescription: element['inc_description'] ?? "",
+            excDescription: element['exc_description'] ?? "",
             id: int.tryParse(services['id'].toString()) ?? 0,
             owner: int.tryParse(services['owner'].toString()) ?? 0,
             adventureName: services['adventure_name'].toString() ?? "",

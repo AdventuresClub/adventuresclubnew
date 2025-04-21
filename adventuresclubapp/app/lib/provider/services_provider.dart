@@ -254,6 +254,8 @@ class ServicesProvider with ChangeNotifier {
               DateTime.now();
           List<ServicesModel> aS = [];
           ServicesModel nSm = ServicesModel(
+            incDescription: services['inc_description'] ?? "",
+            excDescription: services['exc_description'] ?? "",
             id: int.tryParse(services['id'].toString()) ?? 0,
             owner: int.tryParse(services['owner'].toString()) ?? 0,
             adventureName: services['adventure_name'] ?? "",
@@ -520,6 +522,8 @@ class ServicesProvider with ChangeNotifier {
               DateTime.now();
           List<ServicesModel> aS = [];
           ServicesModel nSm = ServicesModel(
+            incDescription: services['inc_description'] ?? "",
+            excDescription: services['exc_description'] ?? "",
             id: int.tryParse(services['id'].toString()) ?? 0,
             owner: int.tryParse(services['owner'].toString()) ?? 0,
             adventureName: services['adventure_name'] ?? "",
@@ -970,6 +974,8 @@ class ServicesProvider with ChangeNotifier {
                 DateTime.tryParse(services['end_date'].toString()) ??
                     DateTime.now();
             ServicesModel nSm = ServicesModel(
+              incDescription: services['inc_description'] ?? "",
+              excDescription: services['exc_description'] ?? "",
               id: int.tryParse(services['id'].toString()) ?? 0,
               owner: int.tryParse(services['owner'].toString()) ?? 0,
               adventureName: services['adventure_name'] ?? "",
@@ -1139,6 +1145,8 @@ class ServicesProvider with ChangeNotifier {
                 DateTime.tryParse(tServices['end_date'].toString()) ??
                     DateTime.now();
             ServicesModel tServicesModelList = ServicesModel(
+              incDescription: tServices['inc_description'] ?? "",
+              excDescription: tServices['exc_description'] ?? "",
               id: int.tryParse(tServices['id'].toString()) ?? 0,
               owner: int.tryParse(tServices['owner'].toString()) ?? 0,
               adventureName: tServices['adventure_name'].toString() ?? "",
@@ -1315,6 +1323,8 @@ class ServicesProvider with ChangeNotifier {
                 DateTime.tryParse(skyServices['end_date'].toString()) ??
                     DateTime.now();
             ServicesModel skyServicesModelList = ServicesModel(
+              incDescription: skyServices['inc_description'] ?? "",
+              excDescription: skyServices['exc_description'] ?? "",
               id: int.tryParse(skyServices['id'].toString()) ?? 0,
               owner: int.tryParse(skyServices['owner'].toString()) ?? 0,
               adventureName: skyServices['adventure_name'].toString() ?? "",
@@ -1492,6 +1502,8 @@ class ServicesProvider with ChangeNotifier {
                 DateTime.tryParse(waterServices['end_date'].toString()) ??
                     DateTime.now();
             ServicesModel waterServicesModelList = ServicesModel(
+              incDescription: waterServices['inc_description'] ?? "",
+              excDescription: waterServices['exc_description'] ?? "",
               id: int.tryParse(waterServices['id'].toString()) ?? 0,
               owner: int.tryParse(waterServices['owner'].toString()) ?? 0,
               adventureName: waterServices['adventure_name'].toString() ?? "",
@@ -1675,6 +1687,8 @@ class ServicesProvider with ChangeNotifier {
                 DateTime.tryParse(landServices['end_date'].toString()) ??
                     DateTime.now();
             ServicesModel landServicesModelList = ServicesModel(
+              incDescription: landServices['inc_description'] ?? "",
+              excDescription: landServices['exc_description'] ?? "",
               id: int.tryParse(landServices['id'].toString()) ?? 0,
               owner: int.tryParse(landServices['owner'].toString()) ?? 0,
               adventureName: landServices['adventure_name'].toString() ?? "",
@@ -1856,6 +1870,8 @@ class ServicesProvider with ChangeNotifier {
                 DateTime.tryParse(otherElement['end_date'].toString()) ??
                     DateTime.now();
             ServicesModel otherModelList = ServicesModel(
+              incDescription: otherElement['inc_description'] ?? "",
+              excDescription: otherElement['exc_description'] ?? "",
               id: int.tryParse(otherElement['id'].toString()) ?? 0,
               owner: int.tryParse(otherElement['owner'].toString()) ?? 0,
               adventureName: otherElement['adventure_name'].toString() ?? "",

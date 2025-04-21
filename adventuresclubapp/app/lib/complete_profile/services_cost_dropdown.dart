@@ -17,11 +17,13 @@ class ServicesCostDropdown extends StatefulWidget {
   final String type;
   final ServicesModel? service;
   final bool? edit;
+  final ServicesCost? selectedValue;
   const ServicesCostDropdown(
       {required this.dropDownList,
       required this.type,
       this.service,
       this.edit = false,
+      this.selectedValue,
       super.key});
 
   @override
@@ -36,6 +38,14 @@ class _ServicesCostDropdownState extends State<ServicesCostDropdown> {
   bool isSelected = false;
   bool loading = false;
 
+  @override
+  void initState() {
+    super.initState();
+    if (widget.selectedValue != null) {
+      select(widget.selectedValue!, false);
+    }
+  }
+
   List<PopupMenuEntry<ServicesCost>> itemBuilder(BuildContext context) {
     return widget.dropDownList!.map((e) {
       return PopupMenuItem(
@@ -45,16 +55,24 @@ class _ServicesCostDropdownState extends State<ServicesCostDropdown> {
     }).toList();
   }
 
-  void select(ServicesCost s) {
-    setState(() {
+  void select(ServicesCost s, bool update) {
+    if (widget.selectedValue == null) {
       selected = s;
       isSelected = true;
-    });
+    } else {
+      selected = widget.selectedValue!;
+      isSelected = true;
+    }
+    if (mounted) {
+      setState(() {});
+    }
     if (!widget.edit!) {
       Provider.of<ServicesProvider>(context, listen: false)
           .updateReason(selected.description, widget.type);
     } else {
-      editService(widget.type);
+      if (update) {
+        editService(widget.type);
+      }
     }
   }
 
@@ -111,7 +129,7 @@ class _ServicesCostDropdownState extends State<ServicesCostDropdown> {
       itemBuilder: itemBuilder,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       offset: const Offset(10, 45),
-      onSelected: (ServicesCost result) => select(result),
+      onSelected: (ServicesCost result) => select(result, true),
       child: ListTile(
         title: isSelected
             ? null

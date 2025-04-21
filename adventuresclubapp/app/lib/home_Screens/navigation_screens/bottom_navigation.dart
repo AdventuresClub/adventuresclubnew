@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:app/constants.dart';
 import 'package:app/home_Screens/navigation_screens/account.dart';
 import 'package:app/home_Screens/navigation_screens/home.dart';
@@ -427,11 +428,20 @@ class _BottomNavigationState extends State<BottomNavigation> {
       mapVersion = json.decode(response.body);
       List<dynamic> result = mapVersion['data'];
       result.forEach((element) {
-        Constants.lastestVersion = element['version'] ?? "";
+        if (element['app_type'] == '2') {
+          Constants.lastestVersion = element['version'] ?? "";
+        } else {
+          Constants.iosVersion = element['version'];
+        }
       });
+      debugPrint("${"Andriod"} ${Constants.lastestVersion}");
+      debugPrint("${"Ios"} ${Constants.iosVersion}");
     }
     double lVersion = double.tryParse(Constants.lastestVersion) ?? 0;
-    if (Constants.currentVersion < lVersion) {
+    double iVersion = double.tryParse(Constants.iosVersion) ?? 0;
+    if (Platform.isAndroid && Constants.currentVersion < lVersion) {
+      navUpdatePage();
+    } else if (Platform.isIOS && Constants.iosCurrentVersion < iVersion) {
       navUpdatePage();
     }
   }
