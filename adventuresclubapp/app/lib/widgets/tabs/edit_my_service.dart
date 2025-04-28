@@ -728,7 +728,7 @@ class _EditMyServiceState extends State<EditMyService> {
 
   Future<void> getCostReason() async {
     reasonOne = Provider.of<ServicesProvider>(context, listen: false).reasonOne;
-    reasonTwo = Provider.of<ServicesProvider>(context, listen: false).reasonOne;
+    reasonTwo = Provider.of<ServicesProvider>(context, listen: false).reasonTwo;
   }
 
   void planDaysId(List<String> pDays) async {
@@ -1814,6 +1814,7 @@ class _EditMyServiceState extends State<EditMyService> {
                                         dropDownList: services,
                                         type: "cost1",
                                         edit: true,
+                                        update: true,
                                         service: widget.gm,
                                         selectedValue: ServicesCost(
                                             id: 0,

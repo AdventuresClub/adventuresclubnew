@@ -17,12 +17,14 @@ class ServicesCostDropdown extends StatefulWidget {
   final String type;
   final ServicesModel? service;
   final bool? edit;
+  final bool? update;
   final ServicesCost? selectedValue;
   const ServicesCostDropdown(
       {required this.dropDownList,
       required this.type,
       this.service,
       this.edit = false,
+      this.update = false,
       this.selectedValue,
       super.key});
 
@@ -76,6 +78,16 @@ class _ServicesCostDropdownState extends State<ServicesCostDropdown> {
     }
   }
 
+  void selectEdit(ServicesCost s, bool update) {
+    selected = s;
+    isSelected = true;
+    if (mounted) {
+      setState(() {});
+    }
+
+    editService(widget.type);
+  }
+
   void editService(String type) async {
     dynamic b = {};
     if (type == "cost1") {
@@ -92,9 +104,6 @@ class _ServicesCostDropdownState extends State<ServicesCostDropdown> {
       };
     }
     // debugPrint(b);
-    setState(() {
-      loading = true;
-    });
     try {
       var response = await http.post(
         Uri.parse("${Constants.baseUrl}/api/v1/edit_service"),
@@ -111,11 +120,7 @@ class _ServicesCostDropdownState extends State<ServicesCostDropdown> {
         Constants.showMessage(context, e.toString());
       }
     } finally {
-      if (mounted) {
-        setState(() {
-          loading = false;
-        });
-      }
+      if (mounted) {}
     }
   }
 
@@ -129,7 +134,8 @@ class _ServicesCostDropdownState extends State<ServicesCostDropdown> {
       itemBuilder: itemBuilder,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       offset: const Offset(10, 45),
-      onSelected: (ServicesCost result) => select(result, true),
+      onSelected: (ServicesCost result) =>
+          widget.edit! ? selectEdit(result, true) : select(result, true),
       child: ListTile(
         title: isSelected
             ? null

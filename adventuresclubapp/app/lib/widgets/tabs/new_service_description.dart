@@ -409,6 +409,10 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                 //   //width: 0.5,
                 //   //height: 55,
                 // ),
+                Divider(
+                  thickness: 1,
+                  color: blackColor.withOpacity(0.2),
+                ),
                 if (widget.gm.sPlan == 2)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -477,10 +481,7 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                 const SizedBox(
                   height: 5,
                 ),
-                Divider(
-                  thickness: 1,
-                  color: blackColor.withOpacity(0.2),
-                ),
+
                 const SizedBox(
                   height: 10,
                 ),

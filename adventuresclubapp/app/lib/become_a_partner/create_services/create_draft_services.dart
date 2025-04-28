@@ -16,11 +16,13 @@ import 'package:app/models/services/create_services/create_services_plan_one.dar
 import 'package:app/models/services/create_services/create_services_program%20_model.dart';
 import 'package:app/models/services/dependencies_model.dart';
 import 'package:app/models/services/service_image_model.dart';
+import 'package:app/provider/services_provider.dart';
 import 'package:app/widgets/buttons/bottom_button.dart';
 import 'package:app/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:http/http.dart' as http;
 
@@ -136,6 +138,8 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
   double lat = 0;
   double lng = 0;
   Map mapFilter = {};
+  String reasonOne = "";
+  String reasonTwo = "";
 
   @override
   void initState() {
@@ -1487,7 +1491,13 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
     st.clear();
   }
 
+  Future<void> getCostReason() async {
+    reasonOne = Provider.of<ServicesProvider>(context, listen: false).reasonOne;
+    reasonTwo = Provider.of<ServicesProvider>(context, listen: false).reasonTwo;
+  }
+
   void saveLastPage() async {
+    await getCostReason();
     try {
       var response = await http.post(
           Uri.parse("${Constants.baseUrl}/api/v1/third_geo_location_creation"),
@@ -1502,6 +1512,8 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
             "pre_requisites": preRequisites.text,
             "minimum_requirements": minimumRequirement.text,
             "terms_conditions": terms.text,
+            "inc_description": reasonOne,
+            "exc_description": reasonTwo,
           });
       var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
       if (response.statusCode == 200) {
