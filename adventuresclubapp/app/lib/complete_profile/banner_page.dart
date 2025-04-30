@@ -135,10 +135,6 @@ class _BannerPageState extends State<BannerPage> {
     );
   }
 
-  //https://adventuresclub.net/adventureClubSIT/api/v1/create_service_advanced
-
-  //https://adventuresclub.net/adventureClubSIT/api/v1/create_service_advanced
-
   void deleteImage(int i, String type) {
     if (type == "draft") {
       imageString.removeAt(i);

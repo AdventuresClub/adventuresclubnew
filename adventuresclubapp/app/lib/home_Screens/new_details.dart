@@ -113,7 +113,6 @@ class _NewDetailsState extends State<NewDetails> {
     setState(() {
       loading = true;
     });
-    // https://adventuresclub.net/adventureClubSIT/api/v1/services/6
     var response = await http
         .get(Uri.parse("${Constants.baseUrl}/api/v1/services/$serviceId"));
     if (response.statusCode == 200) {

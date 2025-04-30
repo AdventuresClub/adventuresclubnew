@@ -63,10 +63,7 @@ class _MyServicesState extends State<MyServices> {
   }
 
   // void aimedFor() async {
-  //   //https://adventuresclub.net/adventureClubSIT/api/v1/services_cost
-  //   var response = await http.get(Uri.parse(
-  //       //https://adventuresclub.net/adventureClubSIT
-  //       "https://adventuresclub.net/adventureClubSIT/api/v1/services_cost"));
+
   //   if (response.statusCode == 200) {
   //     List<dynamic> result = mapAimedFilter['data'];
   //     result.forEach((element) {
@@ -235,8 +232,6 @@ class _MyServicesState extends State<MyServices> {
     Provider.of<NavigationIndexProvider>(context, listen: false)
         .getNotificationBadge();
   }
-
-  // https://adventuresclub.net/adventureClubSIT/api/v1/get_draft_service
 
   Future<void> myServicesApi() async {
     getNotificatioNumber();

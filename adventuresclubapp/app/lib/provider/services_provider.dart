@@ -124,7 +124,8 @@ class ServicesProvider with ChangeNotifier {
   Future<List<ServicesCost>> getServicesCost() async {
     try {
       final response = await http.get(Uri.parse(
-          "https://adventuresclub.net/adventureClubSIT/api/v1/services_cost"));
+          //"https://adventuresclub.net/adventureClubSIT/api/v1/services_cost"
+          "${Constants.baseUrl}/api/v1/services_cost"));
 
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);

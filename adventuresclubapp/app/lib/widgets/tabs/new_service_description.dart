@@ -409,55 +409,82 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                 //   //width: 0.5,
                 //   //height: 55,
                 // ),
-                Divider(
-                  thickness: 1,
-                  color: blackColor.withOpacity(0.2),
-                ),
+                // Divider(
+                //thickness: 1,
+                // color: blackColor.withOpacity(0.2),
+                //),
                 if (widget.gm.sPlan == 2)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Column(
                     children: [
-                      MyText(
-                        text: "${"${"startDate".tr()} : "} $st",
-                        //'River Rafting',
-                        //weight: FontWeight.w700,
-                        color: blackColor,
-                        size: 14,
+                      Divider(
+                        color: blackColor.withOpacity(0.2),
+                        thickness: 1,
+                        //width: 0.5,
+                        //height: 55,
                       ),
-                      MyText(
-                        text: "${"endDate".tr()} : $ed",
-                        //'River Rafting',
-                        //weight: FontWeight.w700,
-                        color: blackColor,
-                        size: 14,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          MyText(
+                            text: "${"${"startDate".tr()} : "} $st",
+                            //'River Rafting',
+                            //weight: FontWeight.w700,
+                            color: blackColor,
+                            size: 14,
+                          ),
+                          MyText(
+                            text: "${"endDate".tr()} : $ed",
+                            //'River Rafting',
+                            //weight: FontWeight.w700,
+                            color: blackColor,
+                            size: 14,
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        color: blackColor.withOpacity(0.2),
+                        thickness: 1,
+                        //width: 0.5,
+                        //height: 55,
                       ),
                     ],
                   ),
-                Divider(
-                  color: blackColor.withOpacity(0.2),
-                  thickness: 1,
-                  //width: 0.5,
-                  //height: 55,
-                ),
+
                 if (widget.gm.sPlan == 1)
-                  RichText(
-                    text: TextSpan(
-                      text: "${'Availability'} : ".tr(),
-                      style: const TextStyle(
-                          color: bluishColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Raleway'),
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: aPlan,
-                            style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: blackColor,
-                                fontFamily: 'Raleway')),
-                      ],
-                    ),
+                  Column(
+                    children: [
+                      Divider(
+                        color: blackColor.withOpacity(0.2),
+                        thickness: 1,
+                        //width: 0.5,
+                        //height: 55,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: "${'Availability'} : ".tr(),
+                          style: const TextStyle(
+                              color: bluishColor,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Raleway'),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: aPlan,
+                                style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: blackColor,
+                                    fontFamily: 'Raleway')),
+                          ],
+                        ),
+                      ),
+                      Divider(
+                        color: blackColor.withOpacity(0.2),
+                        thickness: 1,
+                        //width: 0.5,
+                        //height: 55,
+                      ),
+                    ],
                   ),
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.spaceBetween,

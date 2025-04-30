@@ -13,7 +13,6 @@ import 'package:app/models/services/aimed_for_model.dart';
 import 'package:app/models/services/create_services/create_services_plan_one.dart';
 import 'package:app/models/services/create_services/create_services_program%20_model.dart';
 import 'package:app/models/services/dependencies_model.dart';
-import 'package:app/models/services_cost.dart';
 import 'package:app/provider/services_provider.dart';
 import 'package:app/widgets/buttons/bottom_button.dart';
 import 'package:app/widgets/loading_widget.dart';
@@ -1075,9 +1074,10 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       loading = true;
     });
     try {
-      var response = await http.post(Uri.parse(
-              //"${Constants.baseUrl}/api/v1/third_geo_location_creation",
-              "https://adventuresclub.net/adventureClubSIT/api/v1/third_geo_location_creation"),
+      var response = await http.post(
+          Uri.parse(
+            "${Constants.baseUrl}/api/v1/third_geo_location_creation",
+          ),
           body: {
             "provider_id": Constants.userId.toString(),
             "service_id": serviceId.toString(),

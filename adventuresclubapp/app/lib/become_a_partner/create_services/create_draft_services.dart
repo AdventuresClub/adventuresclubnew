@@ -1375,8 +1375,6 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
     }
   }
 
-//   https://adventuresclub.net/adventureClubSIT/api/v1/second_page_service
-
   void saveSecondPage() async {
     List<Uint8List> banners = [];
     imageList.forEach((element) {
