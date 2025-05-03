@@ -100,8 +100,8 @@ class Constants {
   static bool partnerRequest = false;
   static String lastestVersion = "";
   static String iosVersion = "";
-  static double currentVersion = 3.7;
-  static double iosCurrentVersion = 3.7;
+  static double currentVersion = 3.8;
+  static double iosCurrentVersion = 3.8;
   static List<SectorFilterModel> filterSectors = [];
   static List<CategoryFilterModel> categoryFilter = [];
   static List<ServiceTypeFilterModel> serviceFilter = [];
