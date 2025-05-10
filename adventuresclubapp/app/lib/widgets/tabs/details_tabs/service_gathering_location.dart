@@ -205,15 +205,25 @@ class _ServiceGatheringLocationState extends State<ServiceGatheringLocation> {
 
   void getPermissions() async {
     PermissionStatus status = await Permission.location.status;
-    if (!status.isGranted) {
-      PermissionStatus request = await Permission.location.request();
-      if (request.isPermanentlyDenied) {
-        openAppSettings();
-      } else if (request.isDenied) {
-        openAppSettings();
-      }
+    if (status.isGranted || status.isLimited) {
+      return;
     }
-
+    status = await Permission.locationAlways.status;
+    if (status.isGranted || status.isLimited) {
+      return;
+    }
+    status = await Permission.locationWhenInUse.status;
+    if (status.isGranted || status.isLimited) {
+      return;
+    }
+    // Permission.location.request();
+    // Permission.locationAlways.request();
+    await Permission.locationWhenInUse.request();
+    status = await Permission.locationWhenInUse.status;
+    if (status.isGranted || status.isLimited) {
+      return;
+    }
+    openAppSettings();
     //goBack();
   }
 

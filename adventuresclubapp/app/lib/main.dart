@@ -26,6 +26,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await EasyLocalization.ensureInitialized();
   initializeDateFormatting().then(
     (_) => runApp(
@@ -88,105 +89,13 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-
-
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-
-  /// Streams are created so that app can respond to notification-related events
-  /// since the plugin is initialised in the `main` function
-  final StreamController<ReceivedNotification>
-      didReceiveLocalNotificationStream =
-      StreamController<ReceivedNotification>.broadcast();
-
-  final StreamController<String?> selectNotificationStream =
-      StreamController<String?>.broadcast();
-
-  /// Create a [AndroidNotificationChannel] for heads up notifications
-  late AndroidNotificationChannel channel;
-  String? selectedNotificationPayload;
-
-  /// A notification action which triggers a url launch event
-  static const String urlLaunchActionId = 'id_1';
-
-  /// A notification action which triggers a App navigation event
-  static const String navigationActionId = 'id_3';
-
-  /// Defines a iOS/MacOS notification category for text input actions.
-  static const String darwinNotificationCategoryText = 'textCategory';
-
-  /// Defines a iOS/MacOS notification category for plain actions.
-  static const String darwinNotificationCategoryPlain = 'plainCategory';
-
-  @pragma('vm:entry-point')
-  void notificationTapBackground(
-      NotificationResponse notificationResponse) async {
+  Future<void> getApp() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    //Constants.updateBookingStatus(notificationResponse.actionId!, notificationResponse.payload!);
-    if (notificationResponse.input?.isNotEmpty ?? false) {
-      // ignore: avoid_print
-      print(
-          'notification action tapped with input: ${notificationResponse.input}');
-    }
-  }
+    //await registerFCM();
 
-  @pragma('vm:entry-point')
-  Future<void> _firebaseMessagingBackgroundHandler(
-      RemoteMessage message) async {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-    await setupFlutterNotifications();
-    showFlutterNotification(message);
-    // If you're going to use other Firebase services in the background, such as Firestore,
-    // make sure you call `initializeApp` before using other Firebase services.
-    log('Handling a background message ${message.messageId}');
-  }
-
-  Future<void> setupFlutterNotifications() async {
-    channel = const AndroidNotificationChannel(
-      'high_importance_channel', // id
-      'High Importance Notifications', // title
-      description:
-          'This channel is used for important notifications.', // description
-      importance: Importance.high,
-    );
-
-    /// Update the iOS foreground notification presentation options to allow
-    /// heads up notifications.
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
-  }
-
-  void showFlutterNotification(RemoteMessage message) {
-    RemoteNotification? notification = message.notification;
-    AndroidNotification? android = message.notification?.android;
-    if (notification != null && android != null && !kIsWeb) {
-      debugPrint(jsonEncode(message.data));
-      if (message.data['type'] != null && message.data['type'] == 'created') {
-        // showNotificationWithActions(message);
-      } else {
-        flutterLocalNotificationsPlugin.show(
-          notification.hashCode,
-          notification.title,
-          notification.body,
-          NotificationDetails(
-            android: AndroidNotificationDetails(
-              channel.id,
-              channel.name,
-              channelDescription: channel.description,
-              icon: '@mipmap/launcher_icon',
-            ),
-          ),
-        );
-      }
-    }
+    await Constants.getPrefs();
   }
 
   Future<void> registerFCM() async {
@@ -210,15 +119,6 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  Future<void> getApp() async {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-    //await registerFCM();
-
-    await Constants.getPrefs();
-  }
-
   void setFCMToken(String fcmToken) async {}
 
   // This widget is the root of your application.
@@ -234,6 +134,89 @@ class _MyAppState extends State<MyApp> {
       routerConfig: router,
       theme: AppTheme.getCurrentTheme(isDark),
     );
+  }
+}
 
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+/// Streams are created so that app can respond to notification-related events
+/// since the plugin is initialised in the `main` function
+final StreamController<ReceivedNotification> didReceiveLocalNotificationStream =
+    StreamController<ReceivedNotification>.broadcast();
+
+final StreamController<String?> selectNotificationStream =
+    StreamController<String?>.broadcast();
+
+/// Create a [AndroidNotificationChannel] for heads up notifications
+late AndroidNotificationChannel channel;
+String? selectedNotificationPayload;
+
+@pragma('vm:entry-point')
+void notificationTapBackground(
+    NotificationResponse notificationResponse) async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  //Constants.updateBookingStatus(notificationResponse.actionId!, notificationResponse.payload!);
+  if (notificationResponse.input?.isNotEmpty ?? false) {
+    // ignore: avoid_print
+    print(
+        'notification action tapped with input: ${notificationResponse.input}');
+  }
+}
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await setupFlutterNotifications();
+  showFlutterNotification(message);
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  log('Handling a background message ${message.messageId}');
+}
+
+Future<void> setupFlutterNotifications() async {
+  channel = const AndroidNotificationChannel(
+    'high_importance_channel', // id
+    'High Importance Notifications', // title
+    description:
+        'This channel is used for important notifications.', // description
+    importance: Importance.high,
+  );
+
+  /// Update the iOS foreground notification presentation options to allow
+  /// heads up notifications.
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+}
+
+void showFlutterNotification(RemoteMessage message) {
+  RemoteNotification? notification = message.notification;
+  AndroidNotification? android = message.notification?.android;
+  if (notification != null && android != null && !kIsWeb) {
+    debugPrint(jsonEncode(message.data));
+    if (message.data['type'] != null && message.data['type'] == 'created') {
+      // showNotificationWithActions(message);
+    } else {
+      flutterLocalNotificationsPlugin.show(
+        notification.hashCode,
+        notification.title,
+        notification.body,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            channel.id,
+            channel.name,
+            channelDescription: channel.description,
+            icon: '@mipmap/launcher_icon',
+          ),
+        ),
+      );
+    }
   }
 }

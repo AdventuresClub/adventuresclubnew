@@ -53,6 +53,8 @@
 	<string>Adventures Club needs access to location if you allow it, it can show you adventures in your area</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Adventures Club needs access to location if you allow it and the app is in use, it can show you adventures in your area</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Adventures Club needs access to location if you allow it and the app is in use, it can show you adventures in your area</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Adventures Club needs access to location if you allow it and the app is in use, it can show you adventures in your area</string>
 	<key>NSMicrophoneUsageDescription</key>

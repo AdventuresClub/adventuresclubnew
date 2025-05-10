@@ -80,10 +80,14 @@ class _ProfileState extends State<Profile> {
 
   Future<bool> checkPermission() async {
     PermissionStatus status = await Permission.camera.status;
-    if (status.isPermanentlyDenied || status.isDenied) {
-      return false;
+    if (status.isGranted || status.isLimited) {
+      return true;
     }
-    return true;
+    status = await Permission.camera.request();
+    if (status.isGranted || status.isLimited) {
+      return true;
+    }
+    return false;
   }
 
   void changeIndex() {

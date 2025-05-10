@@ -244,6 +244,11 @@ class _AccountState extends State<Account> {
     });
     SharedPreferences prefs = await Constants.getPrefs();
     try {
+      Constants.userId = prefs.getInt("userId") ?? 0;
+      Constants.name = prefs.getString("name") ?? "";
+      Constants.password = prefs.getString("password") ?? "";
+      Constants.token = prefs.getString("token") ?? "";
+      Constants.deviceType = prefs.getString("device_type") ?? "";
       var response = await http
           .post(Uri.parse("${Constants.baseUrl}/api/v1/login"), body: {
         'email': Constants.name, //Constants.emailId, //"hamza@gmail.com",

@@ -17,6 +17,7 @@ import 'package:app/widgets/text_fields/space_text_field.dart';
 import 'package:app/widgets/text_fields/tf_with_suffix_icon.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
@@ -61,14 +62,18 @@ class _SignInState extends State<SignIn> {
 
   Future<void> registerFCM() async {
     await FirebaseMessaging.instance.requestPermission();
-    final fcmToken = await FirebaseMessaging.instance.getToken(
-        vapidKey:
-            "BEr0HbHx_pAg1PMPbqHuA2g0hQrHtbvsM5cNfxMThTHvnvcH01-Z8MnBo-qyDR0LvRPi2fvb_3WVWf4T2rlLOhg");
-    if (fcmToken != null) {
-      setFCMToken(fcmToken);
-      token = fcmToken;
-      Constants.token = fcmToken;
+    String? fcmToken;
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
+      fcmToken = await FirebaseMessaging.instance.getAPNSToken();
+    } else {
+      fcmToken = await FirebaseMessaging.instance.getToken(
+          vapidKey:
+              "BEr0HbHx_pAg1PMPbqHuA2g0hQrHtbvsM5cNfxMThTHvnvcH01-Z8MnBo-qyDR0LvRPi2fvb_3WVWf4T2rlLOhg");
     }
+    fcmToken ??= DateTime.now().microsecondsSinceEpoch.toString();
+    setFCMToken(fcmToken);
+    token = fcmToken;
+    Constants.token = fcmToken;
     FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {
       setFCMToken(fcmToken);
     }).onError((err) {});
@@ -347,6 +352,8 @@ class _SignInState extends State<SignIn> {
             prefs.setString("name", up.name);
             prefs.setString("email", up.email);
             prefs.setString("password", passController.text);
+            prefs.setString("token", token);
+            prefs.setString("device_type", deviceType);
             cId(up.countryId);
             parseData(
                 up.name, up.countryId, up.id, up.email, passController.text);
