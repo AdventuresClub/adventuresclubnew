@@ -256,12 +256,14 @@ class CheckProfileState extends State<CheckProfile> {
     SharedPreferences prefs = await Constants.getPrefs();
     String pass = prefs.getString("password") ?? "";
     String e = prefs.getString("email") ?? "";
+    Constants.token = prefs.getString("token") ?? "";
+    Constants.deviceType = prefs.getString("device_type") ?? "";
     var response =
         await http.post(Uri.parse("${Constants.baseUrl}/api/v1/login"), body: {
       'email': e,
       'password': pass,
-      'device_id': token, //deviceId, //"0",,
-      'device_type': deviceType
+      'device_id': Constants.token, //deviceId, //"0",,
+      'device_type': Constants.deviceType,
     });
     if (response.statusCode == 200) {
       // getDeviceID();
