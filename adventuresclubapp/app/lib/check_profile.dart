@@ -3,19 +3,16 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:app/choose_language.dart';
 import 'package:app/models/get_country.dart';
 import 'package:app/models/profile_models/profile_become_partner.dart';
 import 'package:app/models/user_profile_model.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'constants.dart';
-import 'home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
 
@@ -95,6 +92,9 @@ class CheckProfileState extends State<CheckProfile> {
           fcmToken = tempToken;
         }
       }
+      if (fcmToken.isEmpty) {
+        fcmToken = DateTime.now().microsecondsSinceEpoch.toString();
+      }
       if (fcmToken.isNotEmpty) {
         setFCMToken(fcmToken);
         Constants.token = fcmToken;
@@ -118,7 +118,6 @@ class CheckProfileState extends State<CheckProfile> {
   void setFCMToken(String fcmToken) async {}
 
   void getDeviceID() async {
-    login();
     // final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
 
     try {
@@ -133,6 +132,7 @@ class CheckProfileState extends State<CheckProfile> {
         deviceType = "2";
         Constants.deviceType = "2";
       }
+      login();
     } on PlatformException {
       deviceData = <String, dynamic>{
         'Error:': 'Failed to get platform version.'
