@@ -79,6 +79,11 @@ class CheckProfileState extends State<CheckProfile> {
     NotificationSettings settings =
         await FirebaseMessaging.instance.requestPermission();
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      // String? tempToken1 = await FirebaseMessaging.instance.getToken();
+      // debugPrint(tempToken1);
+
+
+
       if (Platform.isIOS) {
         final apnsToken = await FirebaseMessaging.instance.getAPNSToken();
         if (apnsToken != null) {
