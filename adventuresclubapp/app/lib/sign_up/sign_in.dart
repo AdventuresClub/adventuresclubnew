@@ -61,19 +61,28 @@ class _SignInState extends State<SignIn> {
   }
 
   Future<void> registerFCM() async {
+    SharedPreferences prefs = await Constants.getPrefs();
+    token = prefs.getString("token") ?? "";
+    deviceType = prefs.getString("device_type") ?? "";
     await FirebaseMessaging.instance.requestPermission();
     String? fcmToken;
-    if (defaultTargetPlatform == TargetPlatform.iOS) {
-      fcmToken = await FirebaseMessaging.instance.getAPNSToken();
+
+    if (token.isEmpty) {
+      if (Platform.isIOS) {
+        fcmToken = await FirebaseMessaging.instance.getAPNSToken();
+      } else {
+        fcmToken = await FirebaseMessaging.instance.getToken(
+            vapidKey:
+                "BEr0HbHx_pAg1PMPbqHuA2g0hQrHtbvsM5cNfxMThTHvnvcH01-Z8MnBo-qyDR0LvRPi2fvb_3WVWf4T2rlLOhg");
+      }
+      fcmToken ??= DateTime.now().microsecondsSinceEpoch.toString();
+      token = fcmToken;
+      prefs.setString("token", token);
+      Constants.token = token;
     } else {
-      fcmToken = await FirebaseMessaging.instance.getToken(
-          vapidKey:
-              "BEr0HbHx_pAg1PMPbqHuA2g0hQrHtbvsM5cNfxMThTHvnvcH01-Z8MnBo-qyDR0LvRPi2fvb_3WVWf4T2rlLOhg");
+      fcmToken = token;
     }
-    fcmToken ??= DateTime.now().microsecondsSinceEpoch.toString();
     setFCMToken(fcmToken);
-    token = fcmToken;
-    Constants.token = fcmToken;
     FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {
       setFCMToken(fcmToken);
     }).onError((err) {});

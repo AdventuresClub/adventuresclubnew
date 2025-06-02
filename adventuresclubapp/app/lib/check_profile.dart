@@ -82,28 +82,36 @@ class CheckProfileState extends State<CheckProfile> {
       // String? tempToken1 = await FirebaseMessaging.instance.getToken();
       // debugPrint(tempToken1);
 
+      SharedPreferences prefs = await Constants.getPrefs();
+      token = prefs.getString("token") ?? "";
+      deviceType = prefs.getString("device_type") ?? "";
 
-
-      if (Platform.isIOS) {
-        final apnsToken = await FirebaseMessaging.instance.getAPNSToken();
-        if (apnsToken != null) {
-          fcmToken = apnsToken;
+      if (token.isEmpty) {
+        if (Platform.isIOS) {
+          final apnsToken = await FirebaseMessaging.instance.getAPNSToken();
+          if (apnsToken != null) {
+            fcmToken = apnsToken;
+          }
+        } else {
+          final tempToken = await FirebaseMessaging.instance.getToken(
+              vapidKey:
+                  "BEr0HbHx_pAg1PMPbqHuA2g0hQrHtbvsM5cNfxMThTHvnvcH01-Z8MnBo-qyDR0LvRPi2fvb_3WVWf4T2rlLOhg");
+          if (tempToken != null) {
+            fcmToken = tempToken;
+          }
         }
+        if (fcmToken.isEmpty) {
+          fcmToken = DateTime.now().microsecondsSinceEpoch.toString();
+        }
+        token = fcmToken;
+        prefs.setString("token", token);
+        Constants.token = token;
       } else {
-        final tempToken = await FirebaseMessaging.instance.getToken(
-            vapidKey:
-                "BEr0HbHx_pAg1PMPbqHuA2g0hQrHtbvsM5cNfxMThTHvnvcH01-Z8MnBo-qyDR0LvRPi2fvb_3WVWf4T2rlLOhg");
-        if (tempToken != null) {
-          fcmToken = tempToken;
-        }
+        fcmToken = token;
       }
-      if (fcmToken.isEmpty) {
-        fcmToken = DateTime.now().microsecondsSinceEpoch.toString();
-      }
+
       if (fcmToken.isNotEmpty) {
         setFCMToken(fcmToken);
-        Constants.token = fcmToken;
-        token = fcmToken;
         FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {
           setFCMToken(fcmToken);
         }).onError((err) {});
