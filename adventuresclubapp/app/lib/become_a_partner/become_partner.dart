@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:app/constants.dart';
+import 'package:app/home_Screens/navigation_screens/bottom_navigation.dart';
 import 'package:app/temp_google_map.dart';
 import 'package:app/widgets/buttons/bottom_button.dart';
 import 'package:app/widgets/my_text.dart';
@@ -132,9 +133,8 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
   }
 
   void cancel() {
-    Navigator.of(context).pop();
-
-    context.push('/home');
+    Navigator.of(context).popUntil((route) => route.isFirst);
+    //context.push('/home');
     // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
     //   return const BottomNavigation();
     // }));
@@ -435,35 +435,35 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
           currentFocus.unfocus();
         }
       },
-      child: loading
-          ? Center(
-              child: MyText(
-              text: "Sending Request",
-              weight: FontWeight.bold,
-              size: 16,
-              color: blackColor,
-            ))
-          : Scaffold(
-              backgroundColor: whiteColor,
-              appBar: AppBar(
-                backgroundColor: whiteColor,
-                elevation: 1.5,
-                centerTitle: true,
-                leading: IconButton(
-                  onPressed: lastStep,
-                  //() => completePartnerProvider.previousStep(context),
-                  icon: Image.asset(
-                    'images/backArrow.png',
-                    height: 20,
-                  ),
-                ),
-                title: MyText(
-                  text: 'Become A Partner',
-                  color: bluishColor,
-                  weight: FontWeight.bold,
-                ),
-              ),
-              body: Padding(
+      child: Scaffold(
+        backgroundColor: whiteColor,
+        appBar: AppBar(
+          backgroundColor: whiteColor,
+          elevation: 1.5,
+          centerTitle: true,
+          leading: IconButton(
+            onPressed: lastStep,
+            //() => completePartnerProvider.previousStep(context),
+            icon: Image.asset(
+              'images/backArrow.png',
+              height: 20,
+            ),
+          ),
+          title: MyText(
+            text: 'Become A Partner',
+            color: bluishColor,
+            weight: FontWeight.bold,
+          ),
+        ),
+        body: loading
+            ? Center(
+                child: MyText(
+                text: "Sending Request",
+                weight: FontWeight.bold,
+                size: 16,
+                color: blackColor,
+              ))
+            : Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: IndexedStack(
                   index: count,
@@ -911,17 +911,17 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                   ],
                 ),
               ),
-              bottomNavigationBar:
-                  // ElevatedButton(
-                  //     onPressed: showConfirmation,
-                  //     child: MyText(
-                  //       text: "Continue",
-                  //     ))
-                  BottomButton(
-                bgColor: whiteColor,
-                onTap: nextStep, //nextStep //showConfirmation, //nextStep
-              ),
-            ),
+        bottomNavigationBar:
+            // ElevatedButton(
+            //     onPressed: showConfirmation,
+            //     child: MyText(
+            //       text: "Continue",
+            //     ))
+            BottomButton(
+          bgColor: whiteColor,
+          onTap: nextStep, //nextStep //showConfirmation, //nextStep
+        ),
+      ),
     );
   }
 }

@@ -919,12 +919,13 @@ class _AccountState extends State<Account> {
                                                   fontFamily: "Raleway",
                                                 ),
                                                 GestureDetector(
-                                                  onTap: () {
-                                                    Navigator.of(context).push(
-                                                        MaterialPageRoute(
+                                                  onTap: () async {
+                                                    await Navigator.of(context)
+                                                        .push(MaterialPageRoute(
                                                             builder: (_) {
                                                       return const BecomePartnerNew();
                                                     }));
+                                                    getProfile();
                                                   },
                                                   child: Row(
                                                     mainAxisAlignment:
@@ -1140,7 +1141,7 @@ class _AccountState extends State<Account> {
                                                     children: [
                                                       MyText(
                                                         text:
-                                                            'Become A Partner',
+                                                            'Partnership Requested',
                                                         size: 18,
                                                         //fontFamily: 'Raleway',
                                                         weight: FontWeight.w600,
