@@ -98,6 +98,7 @@ class _ProfileState extends State<Profile> {
     Constants.clear();
     changeIndex();
     print(Constants.userId);
+    Navigator.of(context).pop();
     while (context.canPop()) {
       context.pop();
     }

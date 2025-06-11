@@ -579,9 +579,9 @@ class _AccountState extends State<Account> {
     Navigator.of(context).pop();
   }
 
-  void packagesList1(bool s) {
+  void packagesList1(bool s) async {
     //cancel();
-    Navigator.of(context).push(
+    await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
           return BecomePartnerPackages(
@@ -591,6 +591,7 @@ class _AccountState extends State<Account> {
         },
       ),
     );
+    getProfile();
   }
 
   void changeLanguage(String lang) {
@@ -1336,7 +1337,8 @@ class _AccountState extends State<Account> {
                                                     children: [
                                                       MyText(
                                                         text:
-                                                            'Become A Partner',
+                                                            'Subscribe to a Package',
+                                                        //'Become A Partner',
                                                         size: 18,
                                                         //fontFamily: 'Raleway',
                                                         weight: FontWeight.w600,

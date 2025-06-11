@@ -9,7 +9,8 @@ class WelcomePartner extends StatelessWidget {
   const WelcomePartner({super.key});
 
   void agree(BuildContext context) {
-    context.push('/home');
+    // context.push('/home');
+    Navigator.of(context).popUntil((route) => route.isFirst);
     // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
     //   return const BottomNavigation();
     // }));
@@ -46,7 +47,7 @@ class WelcomePartner extends StatelessWidget {
               height: 10,
             ),
             MyText(
-              text: "You are free member for just for one week",
+              text: "You are a free member for just one week",
               size: 14,
               weight: FontWeight.w600,
               color: bluishColor,

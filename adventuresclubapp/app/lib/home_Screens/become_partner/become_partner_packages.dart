@@ -252,11 +252,12 @@ class _BecomePartnerPackagesState extends State<BecomePartnerPackages> {
 
   void close() async {
     Constants.getProfile();
+    Navigator.of(context).popUntil((route) => route.isFirst);
     // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
     //   return const BottomNavigation();
     // }));
 
-    context.push('/home');
+    // context.push('/home');
   }
 
   void getMyLocation() async {

@@ -861,7 +861,7 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                           //   ),
                           // ),
                           const SizedBox(
-                            height: 60,
+                            height: 40,
                           ),
                           CheckboxListTile(
                             contentPadding: const EdgeInsets.only(
@@ -889,7 +889,7 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                                   style: const TextStyle(
                                     color: Color.fromARGB(255, 7, 56, 95),
                                     fontFamily: 'Raleway',
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w500,
                                     decoration: TextDecoration.underline,
                                   ),
                                 )
