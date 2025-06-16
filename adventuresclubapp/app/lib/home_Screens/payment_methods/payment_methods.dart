@@ -112,7 +112,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
         "payment_channel": "Pay On Arrival",
       });
       if (response.statusCode != 200) {
-        cancel();
+        cancel(false);
       } else {
         //  message("Cancelled Successfully");
       }
@@ -190,7 +190,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
                 Row(
                   children: [
                     MaterialButton(
-                      onPressed: cancel,
+                      onPressed: () => cancel(false),
                       child: Text("no".tr()),
                     ),
                     MaterialButton(
@@ -203,12 +203,13 @@ class _PaymentMethodsState extends State<PaymentMethods> {
             ));
   }
 
-  void cancel() {
-    Navigator.of(context).popUntil((route) => route.isFirst);
+  void cancel(bool payOnArrival) {
+    Navigator.of(context).pop();
+    //Navigator.of(context).popUntil((route) => route.isFirst);
+    Navigator.of(context).pop(payOnArrival);
   }
 
   void update() async {
-    addGroup();
     DateTime now = DateTime.now();
     try {
       var response = await http.post(
@@ -228,8 +229,9 @@ class _PaymentMethodsState extends State<PaymentMethods> {
       if (response.statusCode == 200) {
         message("PayMent Method Updated Successfly");
       }
+      await addGroup();
       decline();
-      cancel();
+      cancel(true);
       print(response.statusCode);
       print(response.body);
       print(response.headers);
@@ -246,7 +248,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
     );
   }
 
-  void addGroup() async {
+  Future<void> addGroup() async {
     try {
       var response = await http
           .post(Uri.parse("${Constants.baseUrl}/api/v1/groupjoin"), body: {
@@ -254,13 +256,17 @@ class _PaymentMethodsState extends State<PaymentMethods> {
         "service_id": widget.uRequestList.serviceId.toString(),
       });
       if (response.statusCode == 200) {
-        showConfirmation();
+        // showConfirmation();
         message("Updated Successfly");
       }
-      cancel();
+      // cancel(false);
     } catch (e) {
       message(e.toString());
     }
+  }
+
+  void close() {
+    Navigator.of(context).pop(false);
   }
 
   @override
@@ -271,7 +277,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
           elevation: 1.5,
           centerTitle: true,
           leading: IconButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: close,
             icon: Image.asset(
               'images/backArrow.png',
               height: 20,

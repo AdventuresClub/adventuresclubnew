@@ -219,7 +219,8 @@ class _RequestListViewState extends State<RequestListView> {
   }
 
   void getProfile(String providerId, String amount, String bId, String cur,
-      String tCost, UpcomingRequestsModel rm, int index) async {
+      String tCost, UpcomingRequestsModel rm, int index,
+      {bool refresh = true}) async {
     setState(() {
       loading = true;
     });
@@ -309,7 +310,10 @@ class _RequestListViewState extends State<RequestListView> {
         payOnArrival = up.bp.payOnArrival;
         loading = false;
       });
-      getPaymentMode(payOnArrival, amount, bId, cur, tCost, rm, index);
+      if (refresh) {
+        getPaymentMode(payOnArrival, amount, bId, cur, tCost, rm, index);
+      }
+
       // Constants.userRole = up.userRole;
       // prefs.setString("userRole", up.userRole);
     } catch (e) {
@@ -320,7 +324,7 @@ class _RequestListViewState extends State<RequestListView> {
   void getPaymentMode(String pay, String amount, String bId, String cur,
       String tCost, UpcomingRequestsModel rm, int index) async {
     if (pay == "1") {
-      await Navigator.of(context).push(
+      bool? check = await Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) {
             return PaymentMethods(
@@ -335,9 +339,21 @@ class _RequestListViewState extends State<RequestListView> {
       );
       //getList();
       UpcomingRequestsModel gR = uRequestListInv.elementAt(index);
-      setState(() {
-        gR.status = "8";
-      });
+      if (check != null && check) {
+        setState(() {
+          gR.status = "8";
+        });
+      } else {
+        getProfile(
+            uRequestListInv[index].providerId.toString(),
+            uRequestListInv[index].tCost,
+            uRequestListInv[index].BookingId.toString(),
+            uRequestListInv[index].currency,
+            uRequestListInv[index].tCost,
+            uRequestListInv[index],
+            index,
+            refresh: false);
+      }
     } else {
       fetchCurrency(amount, bId, cur, tCost, rm);
     }

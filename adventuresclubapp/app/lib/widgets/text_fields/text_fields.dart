@@ -41,18 +41,18 @@ class _TextFieldsState extends State<TextFields> {
         style: const TextStyle(
           decoration: TextDecoration.none,
         ),
-        onChanged: (val) {
-          if (widget.trim == true) {
-            final trimVal = val.trim();
-            if (val != trimVal) {
-              setState(() {
-                widget.controller!.text = trimVal;
-                widget.controller!.selection = TextSelection.fromPosition(
-                    TextPosition(offset: trimVal.length));
-              });
-            }
-          }
-        },
+        // onChanged: (val) {
+        //   if (widget.trim == true) {
+        //     final trimVal = val.trim();
+        //     if (val != trimVal) {
+        //       setState(() {
+        //         widget.controller!.text = trimVal;
+        //         widget.controller!.selection = TextSelection.fromPosition(
+        //             TextPosition(offset: trimVal.length));
+        //       });
+        //     }
+        //   }
+        // },
         decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(
                 vertical: widget.verticalPadding, horizontal: 15),
