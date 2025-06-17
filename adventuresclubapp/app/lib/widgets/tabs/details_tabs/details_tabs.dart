@@ -359,7 +359,7 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                     //<-- SEE HERE
                     data: ThemeData(
                       primarySwatch: Colors.blue,
-                      tabBarTheme: const TabBarTheme(
+                      tabBarTheme: const TabBarThemeData(
                           labelColor: Colors.black), //<-- SEE HERE
                     ),
                     child: TabBar(

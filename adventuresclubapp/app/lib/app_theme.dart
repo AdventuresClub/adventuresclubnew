@@ -9,7 +9,7 @@ class AppTheme {
       useMaterial3: true,
       fontFamily: fontName,
       scaffoldBackgroundColor: greyProfileColor,
-      cardTheme: const CardTheme(
+      cardTheme: const CardThemeData(
         color: Colors.white,
         surfaceTintColor: Colors.transparent,
       ),

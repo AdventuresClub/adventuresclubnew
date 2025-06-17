@@ -266,7 +266,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
               data: ThemeData(
                 primarySwatch: Colors.blue,
                 tabBarTheme:
-                    const TabBarTheme(labelColor: Colors.black), //<-- SEE HERE
+                    const TabBarThemeData(labelColor: Colors.black), //<-- SEE HERE
               ),
               child: TabBar(
                 labelColor: blackColor,

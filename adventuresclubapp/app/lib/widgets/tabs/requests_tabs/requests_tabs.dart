@@ -24,7 +24,7 @@ class _RequeststabState extends State<Requeststab> {
             data: ThemeData(
               primarySwatch: Colors.blue,
               tabBarTheme:
-                  const TabBarTheme(labelColor: Colors.black), //<-- SEE HERE
+                  const TabBarThemeData(labelColor: Colors.black), //<-- SEE HERE
             ),
             child: const TabBar(
               padding: EdgeInsets.all(0),
