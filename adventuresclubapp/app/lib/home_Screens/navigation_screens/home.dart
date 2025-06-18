@@ -9,12 +9,14 @@ import 'package:app/provider/navigation_index_provider.dart';
 import 'package:app/provider/services_provider.dart';
 import 'package:app/widgets/Lists/home_lists/service_List.dart';
 import 'package:app/widgets/home_widgets/new_filter.dart';
+import 'package:app/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -124,6 +126,16 @@ class _HomeState extends State<Home> {
     Provider.of<ServicesProvider>(context, listen: false).getServicesList();
   }
 
+  void launchURL() async {
+    String url = 'https://adventuresclub.net/partnership/partnership.pdf';
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     //allServices = Provider.of<ServicesProvider>(context).allAccomodation;
@@ -146,6 +158,15 @@ class _HomeState extends State<Home> {
               child: Column(
                 children: [
                   NewFilterPage(),
+                  // ElevatedButton(
+                  //   onPressed:
+                  // ),
+                  ElevatedButton(
+                      onPressed: launchURL,
+                      child: MyText(
+                        text: "test",
+                        color: blackColor,
+                      )),
                   // TextButton(
                   //   onPressed: () {
                   //     debugPrint("HTTPS://adventuresclub.net/services/${5}");
