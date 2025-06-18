@@ -342,6 +342,7 @@ class _RequestListViewState extends State<RequestListView> {
       if (check != null && check) {
         setState(() {
           gR.status = "8";
+          uRequestListInv[index].status = "8";
         });
       } else {
         getProfile(
