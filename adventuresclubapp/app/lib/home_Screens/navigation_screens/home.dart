@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'package:app/constants.dart';
+import 'package:app/external_pdfs_view.dart';
 import 'package:app/models/banners/banners_model.dart';
 import 'package:app/models/home_services/home_services_model.dart';
 import 'package:app/models/home_services/services_model.dart';
@@ -127,13 +128,17 @@ class _HomeState extends State<Home> {
   }
 
   void launchURL() async {
-    String url = 'https://adventuresclub.net/partnership/partnership.pdf';
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
-      throw 'Could not launch $url';
-    }
+    // String url = 'https://adventuresclub.net/partnership/partnership.pdf';
+    String url = 'https://firebasestorage.googleapis.com/v0/b/globallogistics-94538.appspot.com/o/terms%20and%20condtion%20new%20pdf.pdf?alt=media&token=8f5f0022-fef7-4dda-971c-b38b7cb93a7a.pdf';
+    await Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return ExternalPdfsView(url: url);
+    }));
+    // final uri = Uri.parse(url);
+    // if (await canLaunchUrl(uri)) {
+    //   await launchUrl(uri, mode: LaunchMode.externalApplication);
+    // } else {
+    //   throw 'Could not launch $url';
+    // }
   }
 
   @override
