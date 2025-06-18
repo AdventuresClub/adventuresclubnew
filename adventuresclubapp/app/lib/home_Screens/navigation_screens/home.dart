@@ -127,20 +127,6 @@ class _HomeState extends State<Home> {
     Provider.of<ServicesProvider>(context, listen: false).getServicesList();
   }
 
-  void launchURL() async {
-    // String url = 'https://adventuresclub.net/partnership/partnership.pdf';
-    String url = 'https://firebasestorage.googleapis.com/v0/b/globallogistics-94538.appspot.com/o/terms%20and%20condtion%20new%20pdf.pdf?alt=media&token=8f5f0022-fef7-4dda-971c-b38b7cb93a7a.pdf';
-    await Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return ExternalPdfsView(url: url);
-    }));
-    // final uri = Uri.parse(url);
-    // if (await canLaunchUrl(uri)) {
-    //   await launchUrl(uri, mode: LaunchMode.externalApplication);
-    // } else {
-    //   throw 'Could not launch $url';
-    // }
-  }
-
   @override
   Widget build(BuildContext context) {
     //allServices = Provider.of<ServicesProvider>(context).allAccomodation;
@@ -166,12 +152,12 @@ class _HomeState extends State<Home> {
                   // ElevatedButton(
                   //   onPressed:
                   // ),
-                  ElevatedButton(
-                      onPressed: launchURL,
-                      child: MyText(
-                        text: "test",
-                        color: blackColor,
-                      )),
+                  // ElevatedButton(
+                  //     onPressed: launchURL,
+                  //     child: MyText(
+                  //       text: "test",
+                  //       color: blackColor,
+                  //     )),
                   // TextButton(
                   //   onPressed: () {
                   //     debugPrint("HTTPS://adventuresclub.net/services/${5}");
