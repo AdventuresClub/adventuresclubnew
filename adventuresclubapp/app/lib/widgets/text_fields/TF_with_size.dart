@@ -59,21 +59,21 @@ class _TFWithSizeState extends State<TFWithSize> {
         keyboardType: widget.show,
         controller: widget.controller,
 
-        // onChanged: (text) {
-        //  // widget.tapped;
-        //   // if (text.length < 3) {
-        //   //   widget.controller!.value = TextEditingValue(
-        //   //     text: text,
-        //   //     selection: TextSelection.collapsed(offset: text.length),
-        //   //   );
-        //   // }
-        //   // if (text.length > 50) {
-        //   //   widget.controller!.value = TextEditingValue(
-        //   //     text: text.substring(0, 50),
-        //   //     selection: const TextSelection.collapsed(offset: 50),
-        //   //   );
-        //   // }
-        // },
+        onChanged: (text) {
+          widget.tapped;
+          //if (text.length < 3) {
+          widget.controller!.value = TextEditingValue(
+            text: text,
+            selection: TextSelection.collapsed(offset: text.length),
+          );
+          //}
+          if (text.length > 50) {
+            widget.controller!.value = TextEditingValue(
+              text: text.substring(0, 50),
+              selection: const TextSelection.collapsed(offset: 50),
+            );
+          }
+        },
 
         // inputFormatters: [
         //   LengthLimitingTextInputFormatter(widget.maximumLetters),
