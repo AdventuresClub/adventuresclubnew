@@ -482,6 +482,8 @@ class _NewDetailsState extends State<NewDetails> {
   }
 
   void launchURL() async {
+    //   https://adventuresclub.net/adventureClubSIT/provider-details/38
+    //https://Adventuresclub.net/adventureClub
     const url = 'https://adventuresclub.net/';
     final uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
@@ -503,7 +505,9 @@ class _NewDetailsState extends State<NewDetails> {
   }
 
   Future<void> shareLinkOnWhatsApp() async {
-    String link = "https://adventuresclub.net/aDetails/${widget.gm!.id}";
+    //https://adventuresclub.net/adventureClubSIT/adventure-details/180
+    //String link = "https://adventuresclub.net/aDetails/${widget.gm!.id}";
+    String link = "${Constants.baseUrl}/adventure-details/${widget.gm!.id}";
     final encodedLink = Uri.encodeComponent(link);
 
     // WhatsApp share URL (opens directly in the app)

@@ -405,7 +405,11 @@ class _AboutState extends State<About> {
   // string ChatUrl = $"{CommonConstantUrl.ChatUrl}newreceiverchat/{Settings.UserId}/{completedDataModel.service_id}/{completedDataModel.provider_id}";
 
   Future<void> shareLinkOnWhatsApp() async {
-    String link = "https://adventuresclub.net/pDetails/${widget.id}";
+    //https://adventuresclub.net/adventureClubSIT/provider-details/3
+    //String link = "https://adventuresclub.net/pDetails/${widget.gm!.id}";
+
+    //String link = "https://adventuresclub.net/pDetails/${widget.id}";
+    String link = "${Constants.baseUrl}/provider-details/${widget.id}";
     final encodedLink = Uri.encodeComponent(link);
     final whatsAppUrl = "https://wa.me/?text=$encodedLink";
 
