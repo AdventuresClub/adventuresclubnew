@@ -44,6 +44,10 @@
                 -->
                <data android:scheme="http" android:host="adventuresclub.net"/>
                <data android:scheme="https" android:host="adventuresclub.net"/>
+               <data android:scheme="http" android:host="adventuresclub.net/adventureClub"/>
+               <data android:scheme="https" android:host="adventuresclub.net/adventureClub"/>
+                <data android:scheme="http" android:host="adventuresclub.net/adventureClubSIT"/>
+               <data android:scheme="https" android:host="adventuresclub.net/adventureClubSIT"/>
             </intent-filter>
 
             <!-- Deep Link sample -->
