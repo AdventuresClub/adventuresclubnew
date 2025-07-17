@@ -93,31 +93,31 @@ class _MyAppState extends State<MyApp> {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    //await registerFCM();
+    await registerFCM();
 
     await Constants.getPrefs();
   }
 
-  // Future<void> registerFCM() async {
-  //   await FirebaseMessaging.instance.requestPermission();
-  //   final fcmToken = await FirebaseMessaging.instance.getToken(
-  //       vapidKey:
-  //           "BEr0HbHx_pAg1PMPbqHuA2g0hQrHtbvsM5cNfxMThTHvnvcH01-Z8MnBo-qyDR0LvRPi2fvb_3WVWf4T2rlLOhg");
-  //   if (fcmToken != null) {
-  //     setFCMToken(fcmToken);
-  //   }
-  //   FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {
-  //     setFCMToken(fcmToken);
-  //   }).onError((err) {});
-  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-  //     RemoteNotification? notification = message.notification;
-  //     if (notification != null) {
-  //       Constants.showMessage(
-  //           context, "${notification.title}: ${notification.body}");
-  //       debugPrint('onMessage: ${notification.toString()}');
-  //     }
-  //   });
-  // }
+  Future<void> registerFCM() async {
+    await FirebaseMessaging.instance.requestPermission();
+    final fcmToken = await FirebaseMessaging.instance.getToken(
+        vapidKey:
+            "BEr0HbHx_pAg1PMPbqHuA2g0hQrHtbvsM5cNfxMThTHvnvcH01-Z8MnBo-qyDR0LvRPi2fvb_3WVWf4T2rlLOhg");
+    if (fcmToken != null) {
+      setFCMToken(fcmToken);
+    }
+    FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {
+      setFCMToken(fcmToken);
+    }).onError((err) {});
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      if (notification != null) {
+        Constants.showMessage(
+            context, "${notification.title}: ${notification.body}");
+        debugPrint('onMessage: ${notification.toString()}');
+      }
+    });
+  }
 
   void setFCMToken(String fcmToken) async {}
 
@@ -158,7 +158,8 @@ void notificationTapBackground(
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  //Constants.updateBookingStatus(notificationResponse.actionId!, notificationResponse.payload!);
+  // Constants.updateBookingStatus(
+  //     notificationResponse.actionId!, notificationResponse.payload!);
   if (notificationResponse.input?.isNotEmpty ?? false) {
     // ignore: avoid_print
     print(
