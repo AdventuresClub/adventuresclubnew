@@ -261,6 +261,10 @@ class _BookTicketState extends State<BookTicket> {
           loading = true;
         });
       }
+      if (widget.gm.providerId == 0) {
+        Constants.showMessage(context, "Error, Please Try again later");
+        return;
+      }
       try {
         var response = await http
             .post(Uri.parse("${Constants.baseUrl}/api/v1/book_service"), body: {
@@ -283,6 +287,7 @@ class _BookTicketState extends State<BookTicket> {
           "final_amount": totalCost.toString(),
         });
         if (response.statusCode == 200) {
+          debugPrint(widget.gm.providerId.toString());
           message("Booking sent successfully");
           if (mounted) {
             goToHome();

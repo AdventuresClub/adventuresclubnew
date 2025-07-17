@@ -173,6 +173,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
       email = Constants.profile.email;
       formattedDate = Constants.dob;
       selectedGender = Constants.profile.gender;
+      selectedCountry = Constants.nationality;
       //getNationality
       if (Constants.profile.nationality != null) {
         Constants.nationality = Constants.profile.nationality!;
@@ -576,6 +577,7 @@ class _PersonalDetailsState extends State<PersonalDetails> {
       selectedCountry = nationality;
       nationalityId = id;
       selectedNationality = nationality;
+      Constants.nationality = nationality;
     });
   }
 
@@ -723,21 +725,21 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       ),
                       Row(
                         children: [
-                          if (Constants.nationality != "null")
-                            Expanded(
-                                child: Container(
-                                    height: 57,
-                                    decoration: BoxDecoration(
-                                        //color: whiteColor,
-                                        border: Border.all(
-                                            color: blackColor.withOpacity(0.2)),
-                                        borderRadius:
-                                            BorderRadius.circular(12)),
-                                    child: Center(
-                                        child: Text(Constants.nationality)))),
-                          const SizedBox(
-                            width: 5,
-                          ),
+                          // if (Constants.nationality != "null")
+                          //   Expanded(
+                          //       child: Container(
+                          //           height: 57,
+                          //           decoration: BoxDecoration(
+                          //               //color: whiteColor,
+                          //               border: Border.all(
+                          //                   color: blackColor.withOpacity(0.2)),
+                          //               borderRadius:
+                          //                   BorderRadius.circular(12)),
+                          //           child: Center(
+                          //               child: Text(Constants.nationality)))),
+                          // const SizedBox(
+                          //   width: 5,
+                          // ),
                           Expanded(
                               child:
                                   pickCountry(context, selectedCountry, false)),
@@ -754,21 +756,21 @@ class _PersonalDetailsState extends State<PersonalDetails> {
                       Row(
                         children: [
                           //pickGender(context, 'Gender'),
-                          if (Constants.gender != "null")
-                            Expanded(
-                                child: Container(
-                                    height: 57,
-                                    decoration: BoxDecoration(
-                                        //color: whiteColor,
-                                        border: Border.all(
-                                            color: blackColor.withOpacity(0.2)),
-                                        borderRadius:
-                                            BorderRadius.circular(12)),
-                                    child:
-                                        Center(child: Text(Constants.gender)))),
-                          const SizedBox(
-                            width: 5,
-                          ),
+                          // if (Constants.gender != "null")
+                          //   Expanded(
+                          //       child: Container(
+                          //           height: 57,
+                          //           decoration: BoxDecoration(
+                          //               //color: whiteColor,
+                          //               border: Border.all(
+                          //                   color: blackColor.withOpacity(0.2)),
+                          //               borderRadius:
+                          //                   BorderRadius.circular(12)),
+                          //           child:
+                          //               Center(child: Text(Constants.gender)))),
+                          // const SizedBox(
+                          //   width: 5,
+                          // ),
                           Expanded(
                             child: Container(
                               decoration: BoxDecoration(
