@@ -467,11 +467,9 @@ class _AccountState extends State<Account> {
   void logout() async {
     Navigator.pop(context);
     await Constants.clear();
-
+    clearData();
+    await changeIndex();
     if (mounted) {
-      //clearData();
-      //await changeIndex();
-
       while (context.canPop()) {
         context.pop();
       }
