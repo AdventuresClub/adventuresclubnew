@@ -460,26 +460,31 @@ class _AccountState extends State<Account> {
             ));
   }
 
-  void changeIndex() {
+  Future<void> changeIndex() async {
     Provider.of<NavigationIndexProvider>(context, listen: false).homeIndex = 0;
   }
 
   void logout() async {
+    Navigator.pop(context);
     await Constants.clear();
-    clearData();
-    changeIndex();
+
     if (mounted) {
-      // while (context.canPop()) {
-      //   context.pop();
-      // }
+      //clearData();
+      //await changeIndex();
+
+      while (context.canPop()) {
+        context.pop();
+      }
       context.pushReplacement('/signIn');
-      // Navigator.of(context).pushAndRemoveUntil(
+      // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) {
+      //   return const SignIn();
+      // }), (route) => false);
+      // await Navigator.of(context).pushReplacement(
       //   MaterialPageRoute(
       //     builder: (_) {
       //       return const SignIn();
       //     },
       //   ),
-      //   (route) => false,
       // );
     }
   }
