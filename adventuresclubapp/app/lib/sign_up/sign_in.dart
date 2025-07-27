@@ -251,7 +251,7 @@ class _SignInState extends State<SignIn> {
             element['id'],
             element['currency'] ?? "",
             maxPrice: element['max_price'] ?? "",
-            serviceCount: element['serviceCount'] ?? 0);
+            serviceCount: element['service_count'] ?? 0);
         countriesList1.add(gc);
       });
     }
