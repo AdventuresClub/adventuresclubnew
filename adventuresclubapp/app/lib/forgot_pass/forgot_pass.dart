@@ -53,13 +53,14 @@ class _ForgotPassState extends State<ForgotPass> {
       List<dynamic> result = mapCountry['data'];
       result.forEach((element) {
         GetCountryModel gc = GetCountryModel(
-          element['country'],
-          element['short_name'],
-          element['flag'],
-          element['code'],
-          element['id'],
-          element['currency'] ?? "",
-        );
+            element['country'],
+            element['short_name'],
+            element['flag'],
+            element['code'],
+            element['id'],
+            element['currency'] ?? "",
+            maxPrice: element['max_price'] ?? "",
+            serviceCount: element['serviceCount'] ?? 0);
         countriesList1.add(gc);
       });
     }

@@ -408,13 +408,14 @@ class _NewFilterPageState extends State<NewFilterPage> {
       countriesList1.clear();
       result.forEach((element) {
         GetCountryModel gc = GetCountryModel(
-          element['country'],
-          element['short_name'],
-          element['flag'],
-          element['code'],
-          element['id'],
-          element['currency'] ?? "",
-        );
+            element['country'],
+            element['short_name'],
+            element['flag'],
+            element['code'],
+            element['id'],
+            element['currency'] ?? "",
+            maxPrice: element['max_price'] ?? "",
+            serviceCount: element['serviceCount'] ?? 0);
         countriesList1.add(gc);
       });
       if (mounted) {
@@ -616,11 +617,12 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                                       )
                                                     : null,
                                                 title: Text(
-                                                    filteredServices[index]
-                                                        .country
-                                                        .tr()),
+                                                  "${filteredServices[index].country.tr()} (${filteredServices[index].serviceCount})",
+                                                ),
                                                 onTap: () {
                                                   setState(() {
+                                                    Constants.myCountry =
+                                                        filteredServices[index];
                                                     Constants.countryId =
                                                         filteredServices[index]
                                                             .id;
@@ -773,8 +775,9 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                                 height: 10,
                                               ),
                                               //Text("\$${values.start.toInt()}"),
+
                                               Text(
-                                                  "$c ${values.start.toInt()}"),
+                                                  "${Constants.myCountry!.currency} ${values.start.toInt()}"),
                                             ],
                                           ),
                                         ),
@@ -797,8 +800,12 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                               const SizedBox(
                                                 height: 10,
                                               ),
-                                              Text(
-                                                  "$c ${values.end.toInt().toString()}"),
+                                              Constants.myCountry!.maxPrice ==
+                                                      null
+                                                  ? Text(
+                                                      "${Constants.myCountry!.currency} ${values.end.toInt()}")
+                                                  : Text(
+                                                      "${Constants.myCountry!.currency} ${Constants.myCountry!.maxPrice}")
                                             ],
                                           ),
                                         ),

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:app/become_a_partner/terms_n_conditions.dart';
 import 'package:app/constants.dart';
 import 'package:app/external_pdfs_view.dart';
 import 'package:app/home_Screens/navigation_screens/bottom_navigation.dart';
@@ -390,7 +391,7 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
   //   }
   // }
 
-  void launchURL() async {
+  void launchURL1() async {
     String url =
         "https://adventuresclub.net/contact.html"; //'https://adventuresclub.net/partnership/partnership.pdf';
     // String url =
@@ -404,6 +405,12 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
     } else {
       throw 'Could not launch $url';
     }
+  }
+
+  void launchURL() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return TermsNConditions();
+    }));
   }
 
   void updateStatus(bool status, int update) {
@@ -587,6 +594,45 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                               ),
                             ],
                           ),
+                          // CheckboxListTile(
+                          //   contentPadding: const EdgeInsets.only(
+                          //       left: 0, top: 0, bottom: 0, right: 0),
+                          //   side: const BorderSide(color: bluishColor),
+                          //   checkboxShape: const RoundedRectangleBorder(
+                          //     side: BorderSide(color: bluishColor),
+                          //   ),
+                          //   visualDensity: const VisualDensity(
+                          //       horizontal: 0, vertical: -4),
+                          //   activeColor: greyProfileColor,
+                          //   checkColor: bluishColor,
+                          //   value: terms,
+                          //   onChanged: ((bool? value2) {
+                          //     setState(() {
+                          //       terms = !terms;
+                          //     });
+                          //     // updateStatus(payArrival, payArrivalClicked);
+                          //     // print(payArrivalClicked);
+                          //   }),
+                          //   title: GestureDetector(
+                          //       onTap: launchURL,
+                          //       child: Text(
+                          //         'iAcceptPartnership'.tr(),
+                          //         style: const TextStyle(
+                          //           color: Color.fromARGB(255, 7, 56, 95),
+                          //           fontFamily: 'Raleway',
+                          //           fontWeight: FontWeight.w500,
+                          //           decoration: TextDecoration.underline,
+                          //         ),
+                          //       )
+                          //       // MyText(
+                          //       //   text: "iAcceptPartnership", //text[index],
+                          //       //   color: blackTypeColor,
+                          //       //   fontFamily: 'Raleway',
+                          //       //   weight: FontWeight.bold,
+                          //       //   size: 14,
+                          //       // ),
+                          //       ),
+                          // ),
                           if (value1 == true)
                             Column(
                               children: [
@@ -878,7 +924,7 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                           //   ),
                           // ),
                           const SizedBox(
-                            height: 40,
+                            height: 30,
                           ),
                           CheckboxListTile(
                             contentPadding: const EdgeInsets.only(

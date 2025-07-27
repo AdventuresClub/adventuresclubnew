@@ -233,6 +233,7 @@ class CheckProfileState extends State<CheckProfile> {
       if (id == element.id) {
         if (mounted) {
           setState(() {
+            Constants.myCountry = element;
             Constants.countryFlag = element.flag;
             Constants.country = element.country;
           });
@@ -385,22 +386,28 @@ class CheckProfileState extends State<CheckProfile> {
   }
 
   Future getCountries() async {
-    var response =
-        await http.get(Uri.parse("${Constants.baseUrl}/api/v1/get_countries"));
-    if (response.statusCode == 200) {
-      mapCountry = json.decode(response.body);
-      List<dynamic> result = mapCountry['data'];
-      result.forEach((element) {
-        GetCountryModel gc = GetCountryModel(
-          element['country'] ?? "",
-          element['short_name'] ?? "",
-          element['flag'] ?? "",
-          element['code'] ?? "",
-          element['id'] ?? "",
-          element['currency'] ?? "",
-        );
-        countriesList1.add(gc);
-      });
+    try {
+      var response = await http
+          .get(Uri.parse("${Constants.baseUrl}/api/v1/get_countries"));
+      if (response.statusCode == 200) {
+        mapCountry = json.decode(response.body);
+        List<dynamic> result = mapCountry['data'];
+        result.forEach((element) {
+          GetCountryModel gc = GetCountryModel(
+            element['country'] ?? "",
+            element['short_name'] ?? "",
+            element['flag'] ?? "",
+            element['code'] ?? "",
+            element['id'] ?? "",
+            element['currency'] ?? "",
+            // maxPrice: element['max_price'] ?? "",
+            // serviceCount: element['service_count'] ?? 0,
+          );
+          countriesList1.add(gc);
+        });
+      }
+    } catch (e) {
+      debugPrint(e.toString());
     }
   }
 

@@ -661,13 +661,14 @@ class _AccountState extends State<Account> {
       List<dynamic> result = mapCountry['data'];
       for (var element in result) {
         GetCountryModel gc = GetCountryModel(
-          element['country'],
-          element['short_name'],
-          element['flag'],
-          element['code'],
-          element['id'],
-          element['currency'] ?? "",
-        );
+            element['country'],
+            element['short_name'],
+            element['flag'],
+            element['code'],
+            element['id'],
+            element['currency'] ?? "",
+            maxPrice: element['max_price'] ?? "",
+            serviceCount: element['serviceCount'] ?? 0);
         countriesList1.add(gc);
       }
       // if (mounted) {

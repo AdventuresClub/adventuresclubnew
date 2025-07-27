@@ -214,6 +214,7 @@ class _SignInState extends State<SignIn> {
         setState(() {
           Constants.countryFlag = element.flag;
           Constants.country = element.country;
+          Constants.myCountry = element;
         });
       }
     });
@@ -243,13 +244,14 @@ class _SignInState extends State<SignIn> {
       List<dynamic> result = mapCountry['data'];
       result.forEach((element) {
         GetCountryModel gc = GetCountryModel(
-          element['country'],
-          element['short_name'],
-          element['flag'],
-          element['code'],
-          element['id'],
-          element['currency'] ?? "",
-        );
+            element['country'],
+            element['short_name'],
+            element['flag'],
+            element['code'],
+            element['id'],
+            element['currency'] ?? "",
+            maxPrice: element['max_price'] ?? "",
+            serviceCount: element['serviceCount'] ?? 0);
         countriesList1.add(gc);
       });
     }
@@ -706,3 +708,522 @@ class _SignInState extends State<SignIn> {
     );
   }
 }
+
+// import 'package:flutter/material.dart';
+
+// class SignIn extends StatefulWidget {
+//   const SignIn({super.key});
+
+//   @override
+//   SignInState createState() => SignInState();
+// }
+
+// class SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
+//   bool _isAccepting = false;
+//   late AnimationController _animationController;
+//   late Animation<double> _scaleAnimation;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _animationController = AnimationController(
+//       duration: Duration(milliseconds: 200),
+//       vsync: this,
+//     );
+//     _scaleAnimation = Tween<double>(
+//       begin: 1.0,
+//       end: 0.95,
+//     ).animate(CurvedAnimation(
+//       parent: _animationController,
+//       curve: Curves.easeInOut,
+//     ));
+//   }
+
+//   @override
+//   void dispose() {
+//     _animationController.dispose();
+//     super.dispose();
+//   }
+
+//   void _acceptOrder() async {
+//     setState(() {
+//       _isAccepting = true;
+//     });
+
+//     // Simulate API call
+//     await Future.delayed(Duration(seconds: 2));
+
+//     setState(() {
+//       _isAccepting = false;
+//     });
+
+//     // Show success message and navigate
+//     _showSuccessDialog();
+//   }
+
+//   void _rejectOrder() {
+//     _showRejectDialog();
+//   }
+
+//   void _showSuccessDialog() {
+//     showDialog(
+//       context: context,
+//       builder: (BuildContext context) {
+//         return AlertDialog(
+//           shape: RoundedRectangleBorder(
+//             borderRadius: BorderRadius.circular(15),
+//           ),
+//           title: Row(
+//             children: [
+//               Icon(Icons.check_circle, color: Colors.green, size: 30),
+//               SizedBox(width: 10),
+//               Text('Order Accepted!'),
+//             ],
+//           ),
+//           content: Text('You have successfully accepted this delivery order.'),
+//           actions: [
+//             TextButton(
+//               onPressed: () {
+//                 Navigator.of(context).pop();
+//                 // Navigate to order tracking screen
+//               },
+//               child: Text('Continue'),
+//             ),
+//           ],
+//         );
+//       },
+//     );
+//   }
+
+//   void _showRejectDialog() {
+//     showDialog(
+//       context: context,
+//       builder: (BuildContext context) {
+//         return AlertDialog(
+//           shape: RoundedRectangleBorder(
+//             borderRadius: BorderRadius.circular(15),
+//           ),
+//           title: Text('Reject Order'),
+//           content: Text('Are you sure you want to reject this order?'),
+//           actions: [
+//             TextButton(
+//               onPressed: () => Navigator.of(context).pop(),
+//               child: Text('Cancel'),
+//             ),
+//             TextButton(
+//               onPressed: () {
+//                 Navigator.of(context).pop();
+//                 Navigator.of(context).pop(); // Go back to previous screen
+//               },
+//               style: TextButton.styleFrom(
+//                 foregroundColor: Colors.red,
+//               ),
+//               child: Text('Reject'),
+//             ),
+//           ],
+//         );
+//       },
+//     );
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       backgroundColor: Colors.grey[100],
+//       appBar: AppBar(
+//         backgroundColor: Color(0xFF55ABCB),
+//         title: Text(
+//           'New Delivery Order',
+//           style: TextStyle(
+//             color: Colors.white,
+//             fontWeight: FontWeight.w600,
+//           ),
+//         ),
+//         centerTitle: true,
+//         elevation: 0,
+//         leading: IconButton(
+//           icon: Icon(Icons.arrow_back, color: Colors.white),
+//           onPressed: () => Navigator.of(context).pop(),
+//         ),
+//       ),
+//       body: SingleChildScrollView(
+//         child: Column(
+//           children: [
+//             // Order Header Card
+//             Container(
+//               width: double.infinity,
+//               decoration: BoxDecoration(
+//                 color: Color(0xFF55ABCB),
+//                 borderRadius: BorderRadius.only(
+//                   bottomLeft: Radius.circular(30),
+//                   bottomRight: Radius.circular(30),
+//                 ),
+//               ),
+//               child: Padding(
+//                 padding: EdgeInsets.all(20),
+//                 child: Column(
+//                   children: [
+//                     Container(
+//                       padding:
+//                           EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+//                       decoration: BoxDecoration(
+//                         color: Colors.white.withOpacity(0.2),
+//                         borderRadius: BorderRadius.circular(20),
+//                       ),
+//                       child: Text(
+//                         'ORDER #WB001',
+//                         style: TextStyle(
+//                           color: Colors.white,
+//                           fontWeight: FontWeight.bold,
+//                           fontSize: 16,
+//                         ),
+//                       ),
+//                     ),
+//                     SizedBox(height: 15),
+//                     Row(
+//                       mainAxisAlignment: MainAxisAlignment.center,
+//                       children: [
+//                         Icon(Icons.access_time, color: Colors.white, size: 20),
+//                         SizedBox(width: 8),
+//                         Text(
+//                           'Delivery Time: 10:00 PM',
+//                           style: TextStyle(
+//                             color: Colors.white,
+//                             fontSize: 18,
+//                             fontWeight: FontWeight.w500,
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+
+//             SizedBox(height: 20),
+
+//             // Order Details Card
+//             Padding(
+//               padding: EdgeInsets.symmetric(horizontal: 20),
+//               child: Card(
+//                 elevation: 4,
+//                 shape: RoundedRectangleBorder(
+//                   borderRadius: BorderRadius.circular(15),
+//                 ),
+//                 child: Padding(
+//                   padding: EdgeInsets.all(20),
+//                   child: Column(
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     children: [
+//                       Text(
+//                         'Delivery Details',
+//                         style: TextStyle(
+//                           fontSize: 20,
+//                           fontWeight: FontWeight.bold,
+//                           color: Colors.grey[800],
+//                         ),
+//                       ),
+//                       SizedBox(height: 15),
+
+//                       // Location Info
+//                       _buildInfoRow(
+//                         icon: Icons.location_on,
+//                         title: 'Delivery Location',
+//                         subtitle: 'Muscat, Bosher',
+//                         iconColor: Color(0xFF55ABCB),
+//                       ),
+
+//                       SizedBox(height: 15),
+
+//                       // Items Info
+//                       _buildInfoRow(
+//                         icon: Icons.water_drop,
+//                         title: 'Items to Deliver',
+//                         subtitle: '3 Water Bottles',
+//                         iconColor: Colors.blue,
+//                       ),
+
+//                       SizedBox(height: 15),
+
+//                       // Time Info
+//                       _buildInfoRow(
+//                         icon: Icons.schedule,
+//                         title: 'Delivery Time',
+//                         subtitle: '10:00 PM Tonight',
+//                         iconColor: Colors.orange,
+//                       ),
+
+//                       SizedBox(height: 20),
+
+//                       // Payment Info
+//                       Container(
+//                         width: double.infinity,
+//                         padding: EdgeInsets.all(15),
+//                         decoration: BoxDecoration(
+//                           color: Colors.green[50],
+//                           borderRadius: BorderRadius.circular(10),
+//                           border: Border.all(color: Colors.green[200]!),
+//                         ),
+//                         child: Row(
+//                           children: [
+//                             Icon(Icons.payments, color: Colors.green),
+//                             SizedBox(width: 10),
+//                             Column(
+//                               crossAxisAlignment: CrossAxisAlignment.start,
+//                               children: [
+//                                 Text(
+//                                   'Payment',
+//                                   style: TextStyle(
+//                                     fontWeight: FontWeight.w600,
+//                                     color: Colors.green[800],
+//                                   ),
+//                                 ),
+//                                 Text(
+//                                   'Cash on Delivery',
+//                                   style: TextStyle(
+//                                     color: Colors.green[600],
+//                                     fontSize: 14,
+//                                   ),
+//                                 ),
+//                               ],
+//                             ),
+//                             Spacer(),
+//                             Text(
+//                               'OMR 5.00',
+//                               style: TextStyle(
+//                                 fontSize: 18,
+//                                 fontWeight: FontWeight.bold,
+//                                 color: Colors.green[700],
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ),
+
+//             SizedBox(height: 20),
+
+//             // Customer Info Card
+//             Padding(
+//               padding: EdgeInsets.symmetric(horizontal: 20),
+//               child: Card(
+//                 elevation: 4,
+//                 shape: RoundedRectangleBorder(
+//                   borderRadius: BorderRadius.circular(15),
+//                 ),
+//                 child: Padding(
+//                   padding: EdgeInsets.all(20),
+//                   child: Column(
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     children: [
+//                       Text(
+//                         'Customer Information',
+//                         style: TextStyle(
+//                           fontSize: 20,
+//                           fontWeight: FontWeight.bold,
+//                           color: Colors.grey[800],
+//                         ),
+//                       ),
+//                       SizedBox(height: 15),
+//                       Row(
+//                         children: [
+//                           CircleAvatar(
+//                             backgroundColor: Color(0xFF55ABCB),
+//                             child: Icon(Icons.person, color: Colors.white),
+//                           ),
+//                           SizedBox(width: 15),
+//                           Expanded(
+//                             child: Column(
+//                               crossAxisAlignment: CrossAxisAlignment.start,
+//                               children: [
+//                                 Text(
+//                                   'Ahmed Al-Rashid',
+//                                   style: TextStyle(
+//                                     fontWeight: FontWeight.w600,
+//                                     fontSize: 16,
+//                                   ),
+//                                 ),
+//                                 Text(
+//                                   '+968 9111 7172',
+//                                   style: TextStyle(
+//                                     color: Colors.grey[600],
+//                                     fontSize: 14,
+//                                   ),
+//                                 ),
+//                               ],
+//                             ),
+//                           ),
+//                           IconButton(
+//                             onPressed: () {
+//                               // Call customer
+//                             },
+//                             icon: Icon(Icons.call, color: Color(0xFF55ABCB)),
+//                           ),
+//                         ],
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ),
+
+//             SizedBox(height: 30),
+
+//             // Action Buttons
+//             Padding(
+//               padding: EdgeInsets.symmetric(horizontal: 20),
+//               child: Column(
+//                 children: [
+//                   // Accept Button
+//                   AnimatedBuilder(
+//                     animation: _scaleAnimation,
+//                     builder: (context, child) {
+//                       return Transform.scale(
+//                         scale: _scaleAnimation.value,
+//                         child: Container(
+//                           width: double.infinity,
+//                           height: 60,
+//                           child: ElevatedButton(
+//                             onPressed: _isAccepting ? null : _acceptOrder,
+//                             style: ElevatedButton.styleFrom(
+//                               backgroundColor: Colors.green,
+//                               shape: RoundedRectangleBorder(
+//                                 borderRadius: BorderRadius.circular(15),
+//                               ),
+//                               elevation: 5,
+//                             ),
+//                             child: _isAccepting
+//                                 ? Row(
+//                                     mainAxisAlignment: MainAxisAlignment.center,
+//                                     children: [
+//                                       SizedBox(
+//                                         width: 20,
+//                                         height: 20,
+//                                         child: CircularProgressIndicator(
+//                                           color: Colors.white,
+//                                           strokeWidth: 2,
+//                                         ),
+//                                       ),
+//                                       SizedBox(width: 10),
+//                                       Text(
+//                                         'Accepting Order...',
+//                                         style: TextStyle(
+//                                           color: Colors.white,
+//                                           fontSize: 18,
+//                                           fontWeight: FontWeight.w600,
+//                                         ),
+//                                       ),
+//                                     ],
+//                                   )
+//                                 : Row(
+//                                     mainAxisAlignment: MainAxisAlignment.center,
+//                                     children: [
+//                                       Icon(Icons.check_circle,
+//                                           color: Colors.white),
+//                                       SizedBox(width: 10),
+//                                       Text(
+//                                         'Accept Order',
+//                                         style: TextStyle(
+//                                           color: Colors.white,
+//                                           fontSize: 18,
+//                                           fontWeight: FontWeight.w600,
+//                                         ),
+//                                       ),
+//                                     ],
+//                                   ),
+//                           ),
+//                         ),
+//                       );
+//                     },
+//                   ),
+
+//                   SizedBox(height: 15),
+
+//                   // Reject Button
+//                   Container(
+//                     width: double.infinity,
+//                     height: 60,
+//                     child: OutlinedButton(
+//                       onPressed: _isAccepting ? null : _rejectOrder,
+//                       style: OutlinedButton.styleFrom(
+//                         side: BorderSide(color: Colors.red, width: 2),
+//                         shape: RoundedRectangleBorder(
+//                           borderRadius: BorderRadius.circular(15),
+//                         ),
+//                       ),
+//                       child: Row(
+//                         mainAxisAlignment: MainAxisAlignment.center,
+//                         children: [
+//                           Icon(Icons.cancel, color: Colors.red),
+//                           SizedBox(width: 10),
+//                           Text(
+//                             'Reject Order',
+//                             style: TextStyle(
+//                               color: Colors.red,
+//                               fontSize: 18,
+//                               fontWeight: FontWeight.w600,
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+
+//             SizedBox(height: 30),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+
+//   Widget _buildInfoRow({
+//     required IconData icon,
+//     required String title,
+//     required String subtitle,
+//     required Color iconColor,
+//   }) {
+//     return Row(
+//       children: [
+//         Container(
+//           padding: EdgeInsets.all(10),
+//           decoration: BoxDecoration(
+//             color: iconColor.withOpacity(0.1),
+//             shape: BoxShape.circle,
+//           ),
+//           child: Icon(icon, color: iconColor, size: 24),
+//         ),
+//         SizedBox(width: 15),
+//         Expanded(
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               Text(
+//                 title,
+//                 style: TextStyle(
+//                   fontWeight: FontWeight.w600,
+//                   fontSize: 16,
+//                   color: Colors.grey[800],
+//                 ),
+//               ),
+//               SizedBox(height: 2),
+//               Text(
+//                 subtitle,
+//                 style: TextStyle(
+//                   color: Colors.grey[600],
+//                   fontSize: 14,
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }

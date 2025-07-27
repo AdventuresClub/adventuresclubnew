@@ -11,6 +11,7 @@ import 'package:app/models/filter_data_model/filter_data_model.dart';
 import 'package:app/models/filter_data_model/level_filter_mode.dart';
 import 'package:app/models/filter_data_model/sector_filter_model.dart';
 import 'package:app/models/filter_data_model/service_types_filter.dart';
+import 'package:app/models/get_country.dart';
 import 'package:app/models/packages_become_partner/bp_includes_model.dart';
 import 'package:app/models/profile_models/profile_become_partner.dart';
 import 'package:app/models/services/aimed_for_model.dart';
@@ -121,9 +122,10 @@ class Constants {
   static Map getPackages = {};
   static List<BpIncludesModel> gIList = [];
   static List<BpIncludesModel> gEList = [];
+  static GetCountryModel? myCountry;
   static final regexForEmail = RegExp(
       r"^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
-  static String baseUrl = "https://adventuresclub.net/adventureClub";
+  static String baseUrl = "https://adventuresclub.net/adventureClubSIT";
   static const String googleMapsApi = "AIzaSyCtHdBmvvsOP97AxCzsu1fu8lNb1Dcq9M4";
   static ProfileBecomePartner pbp = ProfileBecomePartner(
       0,
