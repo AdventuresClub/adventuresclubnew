@@ -400,8 +400,8 @@ class CheckProfileState extends State<CheckProfile> {
             element['code'] ?? "",
             element['id'] ?? "",
             element['currency'] ?? "",
-            // maxPrice: element['max_price'] ?? "",
-            // serviceCount: element['service_count'] ?? 0,
+            maxPrice: element['max_price'] ?? "",
+            serviceCount: element['service_count'] ?? 0,
           );
           countriesList1.add(gc);
         });
