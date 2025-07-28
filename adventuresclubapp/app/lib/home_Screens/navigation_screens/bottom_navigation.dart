@@ -365,6 +365,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
         getC(countriesList1[i].country, countriesList1[i].id,
             countriesList1[i].flag, countriesList1[i].code, false);
         //setState(() {
+        Constants.myCountry = countriesList1[i];
         selectedCountry == countriesList1[i].country;
         countryCode == countriesList1[i].code;
         Constants.country = selectedCountry;

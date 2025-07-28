@@ -65,7 +65,8 @@ class _NewFilterPageState extends State<NewFilterPage> {
   Map mapCountry = {};
   List<GetCountryModel> countriesList1 = [];
   List<GetCountryModel> filteredServices = [];
-  RangeValues values = const RangeValues(1, 1000);
+  double maxLimit = 1000;
+  RangeValues values = RangeValues(0, 0);
   SectorFilterModel sectorList = SectorFilterModel(0, "", "", 0, "", "", "");
   List<bool> activityValue = [];
   List<ActivitiesIncludeModel> activityIds = [];
@@ -84,12 +85,17 @@ class _NewFilterPageState extends State<NewFilterPage> {
   String selectedAimedForId = "";
   String selectedLevelId = "";
   String c = "";
+  double maxPrice = 0;
   // String flag = "";
   // String selectedCountry = "";
   bool loading = false;
 
   @override
   void initState() {
+    if (Constants.myCountry != null && Constants.myCountry!.maxPrice != null) {
+      maxLimit = double.tryParse(Constants.myCountry!.maxPrice!) ?? 1000;
+    }
+    values = RangeValues(1, maxLimit);
     super.initState();
     getCountries();
     //getData();
@@ -451,6 +457,10 @@ class _NewFilterPageState extends State<NewFilterPage> {
     }
   }
 
+  double convertString(String value) {
+    return maxLimit = double.tryParse(value) ?? 0;
+  }
+
   void addActivites() {
     showGeneralDialog(
       context: context,
@@ -620,9 +630,19 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                                   "${filteredServices[index].country.tr()} (${filteredServices[index].serviceCount})",
                                                 ),
                                                 onTap: () {
+                                                  filteredServices[index]
+                                                              .maxPrice !=
+                                                          null
+                                                      ? maxLimit = 1000
+                                                      : maxLimit =
+                                                          convertString(
+                                                              filteredServices[
+                                                                      index]
+                                                                  .maxPrice!);
                                                   setState(() {
                                                     Constants.myCountry =
                                                         filteredServices[index];
+
                                                     Constants.countryId =
                                                         filteredServices[index]
                                                             .id;
@@ -741,7 +761,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                       activeColor: greyColor,
                                       inactiveColor: greyColor.withOpacity(0.3),
                                       min: 1,
-                                      max: 1000,
+                                      max: maxLimit,
                                       values: values,
                                       onChanged: (value) {
                                         setState(() {
@@ -800,12 +820,13 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                               const SizedBox(
                                                 height: 10,
                                               ),
-                                              Constants.myCountry!.maxPrice ==
-                                                      null
-                                                  ? Text(
-                                                      "${Constants.myCountry!.currency} ${values.end.toInt()}")
-                                                  : Text(
-                                                      "${Constants.myCountry!.currency} ${Constants.myCountry!.maxPrice}")
+                                              // Constants.myCountry!.maxPrice ==
+                                              //         null
+                                              //     ?
+                                              Text(
+                                                  "${Constants.myCountry!.currency} ${values.end.toInt()}")
+                                              // : Text(
+                                              //     "${Constants.myCountry!.currency} ${Constants.myCountry!.maxPrice}")
                                             ],
                                           ),
                                         ),
