@@ -768,7 +768,9 @@ class _AccountState extends State<Account> {
                                 width: 40,
                               )
                             : null,
-                        title: Text(filteredServices[index].country.tr()),
+                        title: Text(
+                          "${filteredServices[index].country.tr()} (${filteredServices[index].serviceCount})",
+                        ),
                         onTap: () {
                           addCountry(
                               filteredServices[index].country,

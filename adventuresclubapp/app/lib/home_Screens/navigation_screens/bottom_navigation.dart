@@ -112,6 +112,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
           element['code'],
           element['id'],
           element['currency'] ?? "",
+          maxPrice: element['max_price'] ?? "",
+          serviceCount: element['service_count'] ?? 0,
         );
         countriesList1.add(gc);
       });
@@ -267,7 +269,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
                       //   height: 25,
                       //   width: 40,
                       // ),
-                      title: Text(countriesList1[index].country.tr()),
+                      title: Text(
+                        "${filteredServices[index].country.tr()} (${filteredServices[index].serviceCount})",
+                      ),
                       onTap: () {
                         addCountry(
                             filteredServices[index].country,
