@@ -54,9 +54,14 @@ class _PaymentMethodsState extends State<PaymentMethods> {
     double product = selectedcountryPrice * omrInverse;
     double omrConverted = 1 / product;
     setState(() {
-      packagePrice = omrConverted * tc;
+      packagePrice = roundToDecimalPlaces(omrConverted * tc);
     });
     print(packagePrice);
+  }
+
+  double roundToDecimalPlaces(double value, {int decimalPlaces = 3}) {
+    num mod = pow(10, decimalPlaces);
+    return (value * mod).round() / mod;
   }
 
   // void getPaymentMode(
@@ -132,7 +137,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
       MaterialPageRoute(
         builder: (_) {
           return ShowChat(
-            "${'https://adventuresclub.net/admin1/dataFrom.htm?amount=$packagePrice&merchant_id=${67}&order_id=$orderId&tid=$transactionId&billing_name=${Constants.profile.name}&billing_address=${Constants.profile.bp.address}&billing_city=${Constants.profile.bp.address}&billing_zip=${Constants.profile.bp.address}&billing_country=${Constants.profile.bp.address}&billing_tel=${widget.uRequestList.bDate}&billing_email=${widget.uRequestList.adventureName}'}${'&merchant_param1=${'booking'}&merchant_param2=$bookingId&merchant_param3=${Constants.userId}&merchant_param4=${widget.uRequestList.tCost}&merchant_param5=${widget.uRequestList.adult}'}",
+            "${'https://adventuresclub.net/admin1/dataFrom.htm?amount=$packagePrice&merchant_id=${430}&order_id=$orderId&tid=$transactionId&billing_name=${Constants.profile.name}&billing_address=${Constants.profile.bp.address}&billing_city=${Constants.profile.bp.address}&billing_zip=${Constants.profile.bp.address}&billing_country=${Constants.profile.bp.address}&billing_tel=${widget.uRequestList.bDate}&billing_email=${widget.uRequestList.adventureName}'}${'&merchant_param1=${'booking'}&merchant_param2=$bookingId&merchant_param3=${Constants.userId}&merchant_param4=${widget.uRequestList.tCost}&merchant_param5=${widget.uRequestList.adult}'}",
             show: true,
           );
         },

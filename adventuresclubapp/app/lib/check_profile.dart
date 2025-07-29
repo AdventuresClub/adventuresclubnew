@@ -266,7 +266,7 @@ class CheckProfileState extends State<CheckProfile> {
   }
 
   void login() async {
-    getCountries();
+    await getCountries();
     SharedPreferences prefs = await Constants.getPrefs();
     String pass = prefs.getString("password") ?? "";
     String e = prefs.getString("email") ?? "";
