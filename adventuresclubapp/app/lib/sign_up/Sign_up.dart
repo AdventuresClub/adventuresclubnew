@@ -167,6 +167,8 @@ class _SignUpState extends State<SignUp> {
           element['code'],
           element['id'],
           element['currency'] ?? "",
+          maxPrice: element['max_price'] ?? "",
+          serviceCount: element['service_count'] ?? 0,
         );
         countriesList1.add(gc);
       });
@@ -1050,6 +1052,8 @@ class _SignUpState extends State<SignUp> {
                                                 fontFamily: 'Raleway'),
                                           ),
                                           onTap: () {
+                                            Constants.myCountry =
+                                                filteredServices[index];
                                             getC(
                                                 filteredServices[index].country,
                                                 filteredServices[index].code,

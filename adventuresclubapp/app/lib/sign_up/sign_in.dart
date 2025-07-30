@@ -94,12 +94,12 @@ class _SignInState extends State<SignIn> {
         debugPrint('onMessage: ${notification.toString()}');
       }
     });
-    getDeviceID();
+    await getDeviceID();
   }
 
   void setFCMToken(String fcmToken) async {}
 
-  void getDeviceID() async {
+  Future<void> getDeviceID() async {
     // final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
 
     try {

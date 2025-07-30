@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'package:app/constants.dart';
 import 'package:app/home_Screens/accounts/settings/provicy_policy.dart';
 import 'package:app/home_Screens/navigation_screens/bottom_navigation.dart';
@@ -17,6 +18,7 @@ import 'package:app/widgets/text_fields/tf_with_suffix_icon.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
@@ -74,6 +76,7 @@ class _NewRegisterState extends State<NewRegister> {
   List<GetCountryModel> countriesList1 = [];
   String language = "";
   String userCountry = "";
+  String deviceType = "";
 
   @override
   void initState() {
@@ -182,6 +185,7 @@ class _NewRegisterState extends State<NewRegister> {
         message("Please Select Country");
         return;
       }
+      prefs.setString("device_type", deviceType);
       if (formattedDate != null) {
         var response = await http
             .post(Uri.parse("${Constants.baseUrl}/api/v1/register_new"), body: {
@@ -452,6 +456,7 @@ class _NewRegisterState extends State<NewRegister> {
   }
 
   Future getCountries() async {
+    await getDeviceID();
     var response =
         await http.get(Uri.parse("${Constants.baseUrl}/api/v1/get_countries"));
     if (response.statusCode == 200) {
@@ -472,6 +477,29 @@ class _NewRegisterState extends State<NewRegister> {
       filteredServices = countriesList1;
       // });
     }
+  }
+
+  Future<void> getDeviceID() async {
+    // final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+
+    try {
+      if (Platform.isAndroid) {
+        //deviceData = readAndroidBuildData(await deviceInfoPlugin.androidInfo);
+        //deviceId = deviceData['id'];
+        deviceType = "1";
+        Constants.deviceType = "1";
+      } else if (Platform.isIOS) {
+        //deviceData = readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
+        //deviceId = deviceData['id'];
+        deviceType = "2";
+        Constants.deviceType = "2";
+      }
+    } on PlatformException {
+      // deviceData = <String, dynamic>{
+      //   'Error:': 'Failed to get platform version.'
+      // };
+    }
+    debugPrint("done");
   }
 
   void getC(
@@ -968,6 +996,7 @@ class _NewRegisterState extends State<NewRegister> {
                                   ? Text(filteredServices[index].country.tr())
                                   : Text(filteredServices[index].shortName),
                               onTap: () {
+                                Constants.myCountry = filteredServices[index];
                                 getC(
                                     filteredServices[index].country,
                                     filteredServices[index].id,
