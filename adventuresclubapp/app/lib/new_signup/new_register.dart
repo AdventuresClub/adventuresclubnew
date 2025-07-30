@@ -185,7 +185,10 @@ class _NewRegisterState extends State<NewRegister> {
         message("Please Select Country");
         return;
       }
-      prefs.setString("device_type", deviceType);
+      setState(() {
+        loading = true;
+      });
+
       if (formattedDate != null) {
         var response = await http
             .post(Uri.parse("${Constants.baseUrl}/api/v1/register_new"), body: {
@@ -218,6 +221,7 @@ class _NewRegisterState extends State<NewRegister> {
             "phoneNumber", mobileNumber, //widget.mobileNumber,
           );
           prefs.setString("userRole", "3");
+          prefs.setString("device_type", deviceType);
           parseData(
             userNameController.text,
             countryId,
@@ -234,6 +238,9 @@ class _NewRegisterState extends State<NewRegister> {
           Constants.country = selectedCountry;
           goToHome();
         } else {
+          setState(() {
+            loading = false;
+          });
           dynamic body = jsonDecode(response.body);
           message(body['message'].toString());
         }
@@ -241,8 +248,12 @@ class _NewRegisterState extends State<NewRegister> {
         message("Please Enter DOB");
       }
     } catch (e) {
+      setState(() {
+        loading = false;
+      });
+
       print(e);
-    }
+    } finally {}
   }
 
   void message(String message) {
