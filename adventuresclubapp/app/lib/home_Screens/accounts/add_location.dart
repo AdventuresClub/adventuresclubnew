@@ -114,6 +114,57 @@ class _AddLocationState extends State<AddLocation> {
     }
   }
 
+  void showConfirmation() async {
+    showDialog(
+        context: context,
+        builder: (ctx) => SimpleDialog(
+              contentPadding: const EdgeInsets.all(12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              title: const Icon(
+                Icons.check_circle,
+                size: 80,
+                color: greenColor1,
+              ),
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(30.0),
+                  child: Column(
+                    children: [
+                      // const Image(
+                      //   image: ExactAssetImage('images/check_circle.png'),
+                      //   height: 50,
+                      // ),
+                      // const SizedBox(height: 20),
+                      MyText(
+                        text: 'Thank you for submitting information',
+                        weight: FontWeight.bold,
+                        color: blackTypeColor,
+                        size: 16,
+                      ),
+                      const SizedBox(height: 10),
+                      MyText(
+                        text:
+                            'It will be reviewed and published after it approved',
+                        weight: FontWeight.w500,
+                        color: greyColor,
+                        align: TextAlign.center,
+                        size: 14,
+                      ),
+                      const SizedBox(height: 20),
+                      ButtonIconLess('Okay, Got it ', bluishColor, whiteColor,
+                          1.9, 15, 20, close)
+                    ],
+                  ),
+                )
+              ],
+            ));
+  }
+
+  void close() {
+    Navigator.of(context).popUntil((route) => route.isFirst);
+  }
+
   void goToSubInfo() {
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -177,7 +228,7 @@ class _AddLocationState extends State<AddLocation> {
       final response = await request.send();
       if (response.statusCode == 200) {
         message("Location added successfully");
-        goToSubInfo();
+        showConfirmation();
       } else {
         dynamic body = jsonDecode(response.toString());
         message(body['message'].toString());

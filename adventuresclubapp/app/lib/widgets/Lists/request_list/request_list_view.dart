@@ -396,7 +396,7 @@ class _RequestListViewState extends State<RequestListView> {
       MaterialPageRoute(
         builder: (_) {
           return ShowChat(
-            "${'https://adventuresclub.net/admin1/dataFrom.htm?amount=$packagePrice&merchant_id=${67}&order_id=$orderId&tid=$transactionId&billing_name=${Constants.profile.name}&billing_address=${Constants.profile.bp.address}&billing_city=${Constants.profile.bp.address}&billing_zip=${Constants.profile.bp.address}&billing_country=${Constants.profile.bp.address}&billing_tel=${"widget.uRequestList.bDate"}&billing_email=${"widget.uRequestList.adventureName"}'}${'&merchant_param1=${'booking'}&merchant_param2=$bookingId&merchant_param3=${Constants.userId}&merchant_param4=${"widget.uRequestList.tCost"}&merchant_param5=${"widget.uRequestList.adult"}'}",
+            "${'https://adventuresclub.net/admin1/dataFrom.htm?amount=$packagePrice&merchant_id=${430}&order_id=$orderId&tid=$transactionId&billing_name=${Constants.profile.name}&billing_address=${Constants.profile.bp.address}&billing_city=${Constants.profile.bp.address}&billing_zip=${Constants.profile.bp.address}&billing_country=${Constants.profile.bp.address}&billing_tel=${"widget.uRequestList.bDate"}&billing_email=${"widget.uRequestList.adventureName"}'}${'&merchant_param1=${'booking'}&merchant_param2=$bookingId&merchant_param3=${Constants.userId}&merchant_param4=${"widget.uRequestList.tCost"}&merchant_param5=${"widget.uRequestList.adult"}'}",
             show: true,
           );
         },
@@ -436,7 +436,8 @@ class _RequestListViewState extends State<RequestListView> {
     double product = selectedcountryPrice * omrInverse;
     double omrConverted = 1 / product;
     setState(() {
-      packagePrice = omrConverted * tc;
+      packagePrice = Constants.roundToDecimalPlaces(omrConverted * tc);
+      ;
     });
   }
 

@@ -52,6 +52,23 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
   String selectedPrice = '';
   bool allowEdit = false;
   // ServicesModel? service;
+
+  @override
+  void initState() {
+    super.initState();
+    getSteps();
+    if (widget.gm.sPlan == 2) {
+      startDate =
+          DateTime.tryParse(widget.gm.availability[0].st) ?? DateTime.now();
+      String sMonth = DateFormat('MMM').format(startDate);
+      st = "${startDate.day}-$sMonth-${startDate.year}";
+      endDate =
+          DateTime.tryParse(widget.gm.availability[0].ed) ?? DateTime.now();
+      String eMonth = DateFormat('MMM').format(startDate);
+      ed = "${endDate.day}-$eMonth-${endDate.year}";
+    }
+  }
+
   @override
   void didUpdateWidget(covariant NewServiceDescription oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -93,6 +110,7 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
       adventuresPlan.add(element.day.tr());
     }
     aPlan = adventuresPlan.join(", ");
+    setState(() {});
   }
 
   void setStatus(String selectedType) {

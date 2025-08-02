@@ -195,7 +195,8 @@ class _PackageListState extends State<PackageList> {
       dynamic result = mapCountry['results'];
       if (result['OMR'] != null) {
         CurrencyModel cm = CurrencyModel(result['OMR']);
-        packagePrice = valueDouble * cm.currency;
+        packagePrice =
+            Constants.roundToDecimalPlaces(valueDouble * cm.currency);
         // setState(() {
         //   amount = result.
         // });
@@ -219,7 +220,7 @@ class _PackageListState extends State<PackageList> {
       MaterialPageRoute(
         builder: (_) {
           return ShowChat(
-            "${'https://adventuresclub.net/admin1/dataFrom.htm?amount=$packagePrice&merchant_id=${67}&order_id=$orderId&tid=$transactionId&billing_name=${Constants.profile.name}&billing_address=${Constants.profile.bp.address}&billing_city=${Constants.profile.bp.address}&billing_zip=${Constants.profile.bp.address}&billing_country=${Constants.profile.bp.address}&billing_tel=${Constants.profile.bp.address}&billing_email=${Constants.profile.email}'}${'&merchant_param1=${'subscription'}&merchant_param2=$packageId&merchant_param3=${Constants.userId}&merchant_param4=$duration&merchant_param5={_paymentAndSubscreptionRequestModel.NoOfPerson'}",
+            "${'https://adventuresclub.net/admin1/dataFrom.htm?amount=$packagePrice&merchant_id=${430}&order_id=$orderId&tid=$transactionId&billing_name=${Constants.profile.name}&billing_address=${Constants.profile.bp.address}&billing_city=${Constants.profile.bp.address}&billing_zip=${Constants.profile.bp.address}&billing_country=${Constants.profile.bp.address}&billing_tel=${Constants.profile.bp.address}&billing_email=${Constants.profile.email}'}${'&merchant_param1=${'subscription'}&merchant_param2=$packageId&merchant_param3=${Constants.userId}&merchant_param4=$duration&merchant_param5={_paymentAndSubscreptionRequestModel.NoOfPerson'}",
             show: true,
           );
         },

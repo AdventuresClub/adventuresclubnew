@@ -921,6 +921,11 @@ class Constants {
     return result;
   }
 
+  static double roundToDecimalPlaces(double value, {int decimalPlaces = 3}) {
+    num mod = pow(10, decimalPlaces);
+    return (value * mod).round() / mod;
+  }
+
 //  static void createService() async {
 //     await convertProgramData();
 //     selectedActivityIncludesId = activitiesId.join(",");

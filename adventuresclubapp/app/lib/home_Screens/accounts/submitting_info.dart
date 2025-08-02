@@ -29,45 +29,7 @@ class _SubmittingInfoState extends State<SubmittingInfo> {
         body: Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(22)),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 22.0, vertical: 20),
-                child: Column(
-                  children: [
-                    const Image(
-                      image: ExactAssetImage('images/check_circle.png'),
-                      height: 50,
-                    ),
-                    const SizedBox(height: 20),
-                    MyText(
-                      text: 'Thank you for submitting information',
-                      weight: FontWeight.bold,
-                      color: blackTypeColor,
-                    ),
-                    const SizedBox(height: 10),
-                    MyText(
-                      text:
-                          'It will be reviewed and published after it approved',
-                      weight: FontWeight.w500,
-                      color: greyColor,
-                      align: TextAlign.center,
-                      size: 12,
-                    ),
-                    const SizedBox(height: 20),
-                    ButtonIconLess('Okay, Got it ', bluishColor, whiteColor,
-                        1.9, 15, 20, home)
-                  ],
-                ),
-              ),
-            ),
-          )
-        ],
+        children: [],
       ),
     ));
   }
