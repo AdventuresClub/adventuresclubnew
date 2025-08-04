@@ -95,7 +95,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
     if (Constants.myCountry != null && Constants.myCountry!.maxPrice != null) {
       maxLimit = double.tryParse(Constants.myCountry!.maxPrice!) ?? 1000;
     }
-    values = RangeValues(1, maxLimit);
+    values = RangeValues(0, maxLimit);
     super.initState();
     getCountries();
     //getData();
@@ -630,19 +630,34 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                                   "${filteredServices[index].country.tr()} (${filteredServices[index].serviceCount})",
                                                 ),
                                                 onTap: () {
-                                                  filteredServices[index]
-                                                              .maxPrice !=
-                                                          null
-                                                      ? maxLimit = 1000
-                                                      : maxLimit =
-                                                          convertString(
-                                                              filteredServices[
-                                                                      index]
-                                                                  .maxPrice!);
+                                                  // filteredServices[index]
+                                                  //             .maxPrice !=
+                                                  //         null
+                                                  //     ? maxLimit = 1000
+                                                  //     : maxLimit =
+                                                  //         convertString(
+                                                  //             filteredServices[
+                                                  //                     index]
+                                                  //                 .maxPrice!);
+                                                  // values = RangeValues(
+                                                  //     0,
+                                                  //     double.tryParse(Constants
+                                                  //             .myCountry!
+                                                  //             .maxPrice!) ??
+                                                  //         1000);
                                                   setState(() {
+                                                    maxLimit = convertString(
+                                                        filteredServices[index]
+                                                            .maxPrice!);
+
+                                                    values = RangeValues(
+                                                        0, maxLimit);
                                                     Constants.myCountry =
                                                         filteredServices[index];
-
+                                                    maxLimit = double.tryParse(
+                                                            Constants.myCountry!
+                                                                .maxPrice!) ??
+                                                        1000;
                                                     Constants.countryId =
                                                         filteredServices[index]
                                                             .id;
@@ -658,6 +673,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                                         filteredServices[index]
                                                             .id;
                                                   });
+
                                                   Navigator.of(ctx).pop();
                                                   getRegions();
                                                   // getC(
@@ -760,7 +776,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                   RangeSlider(
                                       activeColor: greyColor,
                                       inactiveColor: greyColor.withOpacity(0.3),
-                                      min: 1,
+                                      min: 0,
                                       max: maxLimit,
                                       values: values,
                                       onChanged: (value) {
