@@ -729,7 +729,8 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                           //   height: 2,
                           // ),
                           MyText(
-                            text: "chargesWillDeductedFrom10%",
+                            text:
+                                "10% commission charges will be deducted from your transactions",
                             align: TextAlign.left,
                             color: redColor,
                             size: 14,
