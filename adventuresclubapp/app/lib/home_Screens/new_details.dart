@@ -22,7 +22,6 @@ import 'package:app/widgets/tabs/details_tabs/newdetails_tab.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/home_services/services_model.dart';
 import 'package:http/http.dart' as http;
@@ -57,6 +56,7 @@ class _NewDetailsState extends State<NewDetails> {
   @override
   void initState() {
     super.initState();
+    debugPrint("${"i am in "} ${widget.id}");
   }
 
   @override
@@ -66,6 +66,7 @@ class _NewDetailsState extends State<NewDetails> {
     _timer.cancel();
   }
 
+//https://we.tl/t-1oiPMXkgu8`
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
