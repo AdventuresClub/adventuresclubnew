@@ -28,9 +28,9 @@ class _TermsNConditionsState extends State<TermsNConditions> {
       isLoading = true;
       error = '';
     });
-
-    const url =
-        "https://adventuresclub.net/ProdBackup/api/v1/contract-conditions";
+    // const u = "${Constants.baseUrl}/api/v1/get_allservices";
+    String url = "${Constants.baseUrl}/api/v1/contract-conditions";
+    //"https://adventuresclub.net/ProdBackup/api/v1/contract-conditions";
 
     try {
       final response = await http.get(Uri.parse(url));

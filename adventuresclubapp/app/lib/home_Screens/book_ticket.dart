@@ -33,8 +33,8 @@ class _BookTicketState extends State<BookTicket> {
   TextEditingController messageController = TextEditingController();
   TextEditingController pointsController = TextEditingController();
   bool loading = false;
-  int _n = 0;
-  int _m = 1;
+  double _n = 0;
+  double _m = 1;
   int totalPerson = 0;
   double totalCost = 0;
   String costInc = "";
@@ -186,7 +186,7 @@ class _BookTicketState extends State<BookTicket> {
 
   void addPerson() {
     setState(() {
-      totalPerson = _n + _m;
+      totalPerson = (_n + _m).toInt();
     });
     totalValue();
   }
@@ -450,44 +450,43 @@ class _BookTicketState extends State<BookTicket> {
                                       ),
                                     if (widget.gm.sPlan == 1 || expired)
                                       GestureDetector(
-                                          onTap: () => _selectDate(context),
-                                          child: Container(
-                                            padding: const EdgeInsets.all(12),
-                                            decoration: BoxDecoration(
-                                                color: whiteColor,
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                  Radius.circular(10.0),
-                                                ),
-                                                border: Border.all(
-                                                    color: greyColorShade400)),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                formattedDate != null
-                                                    ? MyText(
-                                                        text: formattedDate,
-                                                        color: blackColor,
-                                                        weight: FontWeight.w500,
-                                                      )
-                                                    : MyText(
-                                                        text:
-                                                            'selectDesiredDate'
-                                                                .tr(),
-                                                        weight: FontWeight.w600,
-                                                        color: greyTextColor,
-                                                        size: 16,
-                                                      ),
-                                                const Icon(
-                                                  Icons.calendar_month_sharp,
-                                                  color: greyColor,
-                                                  size: 30,
-                                                )
-                                              ],
-                                            ),
-                                          )),
+                                        onTap: () => _selectDate(context),
+                                        child: Container(
+                                          padding: const EdgeInsets.all(12),
+                                          decoration: BoxDecoration(
+                                              color: whiteColor,
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                Radius.circular(10.0),
+                                              ),
+                                              border: Border.all(
+                                                  color: greyColorShade400)),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              formattedDate != null
+                                                  ? MyText(
+                                                      text: formattedDate,
+                                                      color: blackColor,
+                                                      weight: FontWeight.w500,
+                                                    )
+                                                  : MyText(
+                                                      text: 'selectDesiredDate'
+                                                          .tr(),
+                                                      weight: FontWeight.w600,
+                                                      color: greyTextColor,
+                                                      size: 16,
+                                                    ),
+                                              const Icon(
+                                                Icons.calendar_month_sharp,
+                                                color: greyColor,
+                                                size: 30,
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
                                     const SizedBox(
                                       height: 10,
                                     ),
@@ -610,7 +609,7 @@ class _BookTicketState extends State<BookTicket> {
                                               padding:
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 8.0),
-                                              child: Text('$_n',
+                                              child: Text(_n.toString(),
                                                   style: const TextStyle(
                                                       fontSize: 16.0)),
                                             ),
@@ -655,13 +654,20 @@ class _BookTicketState extends State<BookTicket> {
                                               color: blackTypeColor3,
                                               weight: FontWeight.bold,
                                               fontFamily: 'Roboto'),
-                                          MyText(
-                                              // text: widget.gm.costInc,
-                                              text:
-                                                  "${pPerson.toStringAsFixed(0)}${" OMR"}",
-                                              color: greyColor,
-                                              weight: FontWeight.bold,
-                                              fontFamily: 'Roboto'),
+                                          Text(
+                                            "${pPerson.toStringAsFixed(2)}${" OMR"}",
+                                            style: TextStyle(
+                                                color: greyColor,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: 'Roboto'),
+                                          )
+                                          // MyText(
+                                          //     // text: widget.gm.costInc,
+                                          //     text:
+                                          //         "${pPerson.toStringAsFixed(2)}${" OMR"}",
+                                          //     color: greyColor,
+                                          //     weight: FontWeight.bold,
+                                          //     fontFamily: 'Roboto'),
                                         ],
                                       ),
                                       const SizedBox(
@@ -677,13 +683,20 @@ class _BookTicketState extends State<BookTicket> {
                                               color: blackTypeColor3,
                                               weight: FontWeight.bold,
                                               fontFamily: 'Roboto'),
-                                          MyText(
-                                              // text: widget.gm.costInc,
-                                              text:
-                                                  "${totalCost.toStringAsFixed(0)}${" OMR"}",
-                                              color: greyColor,
-                                              weight: FontWeight.bold,
-                                              fontFamily: 'Roboto'),
+                                          // MyText(
+                                          //     // text: widget.gm.costInc,
+                                          //     text:
+                                          //         "${totalCost.toStringAsFixed(2)}${" OMR"}",
+                                          //     color: greyColor,
+                                          //     weight: FontWeight.bold,
+                                          //     fontFamily: 'Roboto'),
+                                          Text(
+                                            "${totalCost.toStringAsFixed(2)}${" OMR"}",
+                                            style: TextStyle(
+                                                color: greyColor,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: 'Roboto'),
+                                          )
                                         ],
                                       ),
                                       const SizedBox(
@@ -740,15 +753,24 @@ class _BookTicketState extends State<BookTicket> {
                                               size: 18,
                                               height: 2,
                                               fontFamily: 'Roboto'),
-                                          MyText(
-                                              text:
-                                                  "$totalCost ${widget.gm.currency}"
-                                                      .tr(), //'ر.ع 19,350',
-                                              color: bluishColor,
-                                              weight: FontWeight.bold,
-                                              size: 16,
-                                              height: 1.5,
-                                              fontFamily: 'Roboto'),
+                                          // MyText(
+                                          //     text:
+                                          //         "$totalCost ${widget.gm.currency}"
+                                          //             .tr(), //'ر.ع 19,350',
+                                          //     color: bluishColor,
+                                          //     weight: FontWeight.bold,
+                                          //     size: 16,
+                                          //     height: 1.5,
+                                          //     fontFamily: 'Roboto'),
+                                          Text(
+                                            "$totalCost ${widget.gm.currency}",
+                                            style: TextStyle(
+                                                color: bluishColor,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                                height: 1.5,
+                                                fontFamily: 'Roboto'),
+                                          )
                                         ],
                                       ),
                                     ],

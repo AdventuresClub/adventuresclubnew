@@ -409,6 +409,7 @@ class _AboutState extends State<About> {
     //String link = "https://adventuresclub.net/pDetails/${widget.gm!.id}";
 
     //String link = "https://adventuresclub.net/pDetails/${widget.id}";
+    //  String link = "${Constants.baseUrl}/adventure-details/${widget.gm!.id}";
     String link = "${Constants.baseUrl}/provider-details/${widget.id}";
     final encodedLink = Uri.encodeComponent(link);
     final whatsAppUrl = "https://wa.me/?text=$encodedLink";

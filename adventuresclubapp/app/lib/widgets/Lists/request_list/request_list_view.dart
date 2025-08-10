@@ -805,6 +805,12 @@ class _RequestListViewState extends State<RequestListView> {
             itemCount: uRequestListInv.length,
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
+              double uCost =
+                  double.tryParse(uRequestListInv[index].uCost.toString()) ?? 0;
+              double tCost =
+                  double.tryParse(uRequestListInv[index].tCost.toString()) ?? 0;
+              double pCost =
+                  double.tryParse(uRequestListInv[index].tCost.toString()) ?? 0;
               return Card(
                 key: Key(uRequestListInv[index].BookingId.toString()),
                 elevation: 4,
@@ -1114,8 +1120,7 @@ class _RequestListViewState extends State<RequestListView> {
                                     fontWeight: FontWeight.bold),
                                 children: <TextSpan>[
                                   TextSpan(
-                                      text:
-                                          "${uRequestListInv[index].uCost.tr()}"
+                                      text: "${uCost.toStringAsFixed(2)}"
                                           " "
                                           "${uRequestListInv[index].currency}",
                                       style: const TextStyle(
@@ -1140,8 +1145,7 @@ class _RequestListViewState extends State<RequestListView> {
                                     fontWeight: FontWeight.bold),
                                 children: <TextSpan>[
                                   TextSpan(
-                                      text:
-                                          "${uRequestListInv[index].tCost.tr()}"
+                                      text: "${tCost.toStringAsFixed(2)}"
                                           " "
                                           "${uRequestListInv[index].currency}",
                                       style: const TextStyle(
@@ -1167,8 +1171,7 @@ class _RequestListViewState extends State<RequestListView> {
                                     fontWeight: FontWeight.bold),
                                 children: <TextSpan>[
                                   TextSpan(
-                                      text:
-                                          "${uRequestListInv[index].tCost.tr()}"
+                                      text: "${tCost.toStringAsFixed(2)}"
                                           " "
                                           "${uRequestListInv[index].currency}",
                                       style: const TextStyle(

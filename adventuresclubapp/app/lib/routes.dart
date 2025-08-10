@@ -160,12 +160,22 @@ final GoRouter router = GoRouter(
         );
       },
     ),
+    //  https://adventuresclub.net/adventureClub/provider-details/465
+    GoRoute(
+      parentNavigatorKey: rootNavigatorKey,
+      path: '/adventureClub/provider-details/:id',
+      builder: (BuildContext context, GoRouterState state) {
+        String? id = state.pathParameters['id'];
+        return About(
+          id: id,
+        );
+      },
+    ),
     GoRoute(
       parentNavigatorKey: rootNavigatorKey,
       path: '/pDetails/:id',
       builder: (BuildContext context, GoRouterState state) {
         String? id = state.pathParameters['id'];
-        dynamic extra = state.extra;
         return About(
           id: id,
         );
