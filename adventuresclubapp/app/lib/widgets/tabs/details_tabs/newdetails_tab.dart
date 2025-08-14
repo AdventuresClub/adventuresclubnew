@@ -17,7 +17,8 @@ class NewDetailsTab extends StatefulWidget {
   final ServicesModel gm;
   final bool? show;
   final Function sendData;
-  const NewDetailsTab({required this.gm, required this.sendData, this.show = false, super.key});
+  const NewDetailsTab(
+      {required this.gm, required this.sendData, this.show = false, super.key});
 
   @override
   State<NewDetailsTab> createState() => _NewDetailsTabState();
@@ -376,7 +377,7 @@ class _NewDetailsTabState extends State<NewDetailsTab>
               NewAbout(
                   gm: widget.gm,
                   id: widget.gm.providerId.toString(),
-                  sId: widget.gm.serviceId),
+                  sId: widget.gm.id),
 
             // 4th Tab /////////
             // ${Constants.baseUrl}/newchat/18/126/20
