@@ -15,6 +15,7 @@ import 'package:app/home_Screens/accounts/health_condition.dart';
 import 'package:app/home_Screens/accounts/settings/settings.dart';
 import 'package:app/home_Screens/invite_friends.dart';
 import 'package:app/home_Screens/navigation_screens/bottom_navigation.dart';
+import 'package:app/home_Screens/navigation_screens/version_container.dart';
 import 'package:app/models/profile_models/profile_become_partner.dart';
 import 'package:app/models/user_profile_model.dart';
 import 'package:app/provider/navigation_index_provider.dart';
@@ -133,6 +134,7 @@ class _AccountState extends State<Account> {
   List<GetCountryModel> countriesList1 = [];
   List<GetCountryModel> filteredServices = [];
   Map mapCountry = {};
+
   static ProfileBecomePartner pbp = ProfileBecomePartner(
       0,
       0,
@@ -880,6 +882,8 @@ class _AccountState extends State<Account> {
         return false;
       },
       child: Scaffold(
+        persistentFooterAlignment: AlignmentDirectional.bottomCenter,
+        persistentFooterButtons: [VersionContainer(version: "3.21")],
         body: Constants.userId == 0
             ? const NullUserContainer()
             : loading
