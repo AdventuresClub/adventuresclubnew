@@ -221,7 +221,7 @@ class _BookTicketState extends State<BookTicket> {
 
   void book() {
     if (widget.show!) {
-      if (formattedDate == "desiredDate") {
+      if (formattedDate == "Desired Date") {
         var date = DateTime.parse(widget.gm.startDate.toString());
         String m = date.month < 10 ? "0${date.month}" : "${date.month}";
         String d = date.day < 10 ? "0${date.day}" : "${date.day}";
