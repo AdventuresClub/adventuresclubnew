@@ -13,8 +13,6 @@ import 'package:app/models/services/dependencies_model.dart';
 import 'package:app/models/services/included_activities_model.dart';
 import 'package:app/models/services/service_image_model.dart';
 import 'package:app/new_signup/new_register.dart';
-import 'package:app/provider/services_provider.dart';
-import 'package:app/sign_up/sign_in.dart';
 import 'package:app/widgets/buttons/button_icon_less.dart';
 import 'package:app/widgets/loading_widget.dart';
 import 'package:app/widgets/my_text.dart';
