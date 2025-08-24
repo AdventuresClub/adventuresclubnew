@@ -54,7 +54,42 @@ class _NewDetailsState extends State<NewDetails> {
   @override
   void initState() {
     super.initState();
-    debugPrint("${"i am in "} ${widget.id}");
+    if (widget.gm != null) {
+      service = widget.gm;
+      if (service!.sPlan == 2) {
+        DateTime d = service!.startDate;
+        DateTime now = DateTime.now();
+        future = service!.startDate.isAfter(DateTime.now());
+        // if (d.year < now.year) {
+        //   future = true;
+        // } else if (d.month < now.month) {
+        //   future = true;
+        // } else if (d.day <= now.day) {
+        //   future = true;
+        // }
+      }
+      // _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
+      //   if (_activePage < 6) {
+      //     _activePage++;
+      //   } else {
+      //     _activePage = 0;
+      //   }
+      //   _pageViewController.animateToPage(
+      //     _activePage,
+      //     duration: const Duration(milliseconds: 350),
+      //     curve: Curves.easeIn,
+      //   );
+      // });
+    } else if (widget.id != null) {
+      getDetails(widget.id!);
+      // debugPrint("Widget ID: ${widget.id}");
+      // debugPrint(
+      //     "Available Services: ${provider.allServices.map((e) => e.serviceId).toList()}");
+      // service = provider.allServices.firstWhere(
+      //   (item) => item.serviceId.toString() == widget.id,
+      //   orElse: () => throw Exception("Service with ID ${widget.id} not found"),
+      // );
+    }
   }
 
   @override
@@ -94,16 +129,17 @@ class _NewDetailsState extends State<NewDetails> {
           curve: Curves.easeIn,
         );
       });
-    } else if (widget.id != null) {
-      getDetails(widget.id!);
-      // debugPrint("Widget ID: ${widget.id}");
-      // debugPrint(
-      //     "Available Services: ${provider.allServices.map((e) => e.serviceId).toList()}");
-      // service = provider.allServices.firstWhere(
-      //   (item) => item.serviceId.toString() == widget.id,
-      //   orElse: () => throw Exception("Service with ID ${widget.id} not found"),
-      // );
     }
+    // else if (widget.id != null) {
+    //   getDetails(widget.id!);
+    //   // debugPrint("Widget ID: ${widget.id}");
+    //   // debugPrint(
+    //   //     "Available Services: ${provider.allServices.map((e) => e.serviceId).toList()}");
+    //   // service = provider.allServices.firstWhere(
+    //   //   (item) => item.serviceId.toString() == widget.id,
+    //   //   orElse: () => throw Exception("Service with ID ${widget.id} not found"),
+    //   // );
+    // }
 
     // setState(() {});
   }
