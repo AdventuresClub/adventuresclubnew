@@ -441,7 +441,31 @@ class _RequestListViewState extends State<RequestListView> {
     });
   }
 
-  void showConfirmation(String bookingId, int index, String serviceId) async {
+  DateTime stringToDateTime(String dateString, {String format = 'yyyy-MM-dd'}) {
+    try {
+      return DateFormat(format).parse(dateString);
+    } catch (e) {
+      throw FormatException('Invalid date format: $e');
+    }
+  }
+
+  void showConfirmation(String bookingId, int index, String serviceId,
+      UpcomingRequestsModel request) async {
+    String status = "";
+    String message = "";
+    DateTime t = DateTime.now();
+    DateTime act = stringToDateTime(request.aDate);
+    if (t.day == act.day) {
+      status = "12";
+      message =
+          "According to our cancellation policy. The amount is not refundable";
+    } else if (act.isAfter(t)) {
+      // if (act.isAfter(t))
+      status = "11";
+      message =
+          "According to our cancellation policy. Please confirm if you agree to add deduction of 50% to the paid amount";
+    }
+    //if (request.)
     showDialog(
         context: context,
         builder: (ctx) => SimpleDialog(
@@ -460,7 +484,7 @@ class _RequestListViewState extends State<RequestListView> {
                 ),
                 //Text("data"),
                 Text(
-                  "areYouSureYouWantToDeleteThis".tr(),
+                  message, //"areYouSureYouWantToDeleteThis".tr(),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(
@@ -477,9 +501,10 @@ class _RequestListViewState extends State<RequestListView> {
                       ),
                     ),
                     MaterialButton(
-                      onPressed: () => dropped(bookingId, index, serviceId),
+                      onPressed: () =>
+                          dropped(bookingId, index, serviceId, status),
                       child: MyText(
-                        text: "yes",
+                        text: "Yes",
                         color: blackColor,
                         weight: FontWeight.bold,
                       ),
@@ -490,8 +515,10 @@ class _RequestListViewState extends State<RequestListView> {
               ],
             ));
   }
+//10 same day
 
-  void dropped(String bookingId, int index, String serviceId) async {
+  void dropped(
+      String bookingId, int index, String serviceId, String status) async {
     await leaveGroup(serviceId);
     UpcomingRequestsModel gR = uRequestListInv.elementAt(index);
     if (mounted) {
@@ -1305,7 +1332,9 @@ class _RequestListViewState extends State<RequestListView> {
                                           index,
                                           uRequestListInv[index]
                                               .serviceId
-                                              .toString()), //     () => showConfirmation(
+                                              .toString(),
+                                          uRequestListInv[
+                                              index]), //     () => showConfirmation(
                                   //   widget.uRequestListInv[index].BookingId.toString(),
                                   // ),
                                   child: Center(

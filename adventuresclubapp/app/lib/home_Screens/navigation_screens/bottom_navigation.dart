@@ -251,36 +251,37 @@ class _BottomNavigationState extends State<BottomNavigation> {
                   //itemBuilder: ((context, index) {
                   //return
                   for (int index = 0; index < countriesList1.length; index++)
-                    ListTile(
-                      leading: CachedNetworkImage(
-                        width: 40,
-                        height: 25,
-                        imageUrl:
-                            "${"${Constants.baseUrl}/public/"}${countriesList1[index].flag}",
-                        placeholder: (context, url) =>
-                            const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => const Icon(
-                          Icons.error,
-                          size: 25,
+                    if (countriesList1[index].serviceCount > 0)
+                      ListTile(
+                        leading: CachedNetworkImage(
+                          width: 40,
+                          height: 25,
+                          imageUrl:
+                              "${"${Constants.baseUrl}/public/"}${countriesList1[index].flag}",
+                          placeholder: (context, url) =>
+                              const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) => const Icon(
+                            Icons.error,
+                            size: 25,
+                          ),
                         ),
+                        // leading: Image.network(
+                        //   "${"${Constants.baseUrl}/public/"}${countriesList1[index].flag}",
+                        //   height: 25,
+                        //   width: 40,
+                        // ),
+                        title: Text(
+                          "${countriesList1[index].country.tr()} (${countriesList1[index].serviceCount})",
+                        ),
+                        onTap: () {
+                          addCountry(
+                              countriesList1[index].country,
+                              countriesList1[index].id,
+                              countriesList1[index].flag,
+                              countriesList1[index].currency,
+                              ctx);
+                        },
                       ),
-                      // leading: Image.network(
-                      //   "${"${Constants.baseUrl}/public/"}${countriesList1[index].flag}",
-                      //   height: 25,
-                      //   width: 40,
-                      // ),
-                      title: Text(
-                        "${filteredServices[index].country.tr()} (${filteredServices[index].serviceCount})",
-                      ),
-                      onTap: () {
-                        addCountry(
-                            filteredServices[index].country,
-                            filteredServices[index].id,
-                            filteredServices[index].flag,
-                            filteredServices[index].currency,
-                            ctx);
-                      },
-                    ),
                   //}),
                   //),
                   // ElevatedButton(
