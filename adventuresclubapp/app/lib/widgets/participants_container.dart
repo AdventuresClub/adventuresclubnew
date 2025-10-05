@@ -191,16 +191,17 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
     String message = "";
     DateTime t = DateTime.now();
     DateTime act = stringToDateTime(pm.serviceDate);
+    DateTime tomorrow = DateTime(t.year, t.month, t.day + 1);
+    DateTime dayAtomorrow = DateTime(t.year, t.month, t.day + 2);
+    DateTime twoDaysAhead = DateTime(t.year, t.month, t.day + 3);
+    DateTime actDate = DateTime(act.year, act.month, act.day);
     if (t.day == act.day) {
       status = "13";
       message =
           "According to our cancellation policy. 100% amount will be refunded to the client";
     } else if (act.isAfter(t)) {
       // Check if exactly 1 calendar day difference
-      DateTime tomorrow = DateTime(t.year, t.month, t.day + 1);
-      DateTime dayAtomorrow = DateTime(t.year, t.month, t.day + 2);
-      DateTime twoDaysAhead = DateTime(t.year, t.month, t.day + 3);
-      DateTime actDate = DateTime(act.year, act.month, act.day);
+
       // || actDate == dayAtomorrow
       if (actDate == tomorrow) {
         status = "13";
@@ -211,6 +212,10 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
         message =
             "According to our cancellation policy. 100% amount will be refunded to the client";
       }
+    } else if (act.isBefore(t)) {
+      status = "13";
+      message =
+          "According to our cancellation policy. 100% amount will be refunded to the client";
     }
     //if (request.)
     showDialog(
