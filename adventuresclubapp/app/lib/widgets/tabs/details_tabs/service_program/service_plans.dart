@@ -49,6 +49,7 @@ class _ServicesPlansState extends State<ServicesPlans> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ListTile(
+                        isThreeLine: true,
                         dense: true,
                         visualDensity: VisualDensity.compact,
                         contentPadding:
@@ -83,12 +84,14 @@ class _ServicesPlansState extends State<ServicesPlans> {
                               // const SizedBox(
                               //   width: 5,
                               // ),
-                              MyText(
-                                text: widget.programmes[index].title,
-                                color: blackColor,
-                                weight: FontWeight.bold,
-                                fontFamily: 'Raleway',
-                                size: 16,
+                              Expanded(
+                                child: MyText(
+                                  text: widget.programmes[index].title,
+                                  color: blackColor,
+                                  weight: FontWeight.bold,
+                                  fontFamily: 'Raleway',
+                                  size: 16,
+                                ),
                               ),
                             ],
                           ),
