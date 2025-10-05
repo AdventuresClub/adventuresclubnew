@@ -456,14 +456,25 @@ class _RequestListViewState extends State<RequestListView> {
     DateTime t = DateTime.now();
     DateTime act = stringToDateTime(request.aDate);
     if (t.day == act.day) {
-      status = "12";
+      status = "11";
       message =
           "According to our cancellation policy. The amount is not refundable";
     } else if (act.isAfter(t)) {
-      // if (act.isAfter(t))
-      status = "11";
-      message =
-          "According to our cancellation policy. Please confirm if you agree to add deduction of 50% to the paid amount";
+      // Check if exactly 1 calendar day difference
+      DateTime tomorrow = DateTime(t.year, t.month, t.day + 1);
+      DateTime dayAtomorrow = DateTime(t.year, t.month, t.day + 2);
+      DateTime twoDaysAhead = DateTime(t.year, t.month, t.day + 3);
+      DateTime actDate = DateTime(act.year, act.month, act.day);
+
+      if (actDate == tomorrow || actDate == dayAtomorrow) {
+        status = "10";
+        message =
+            "According to our cancellation policy. 50% amount will be refundable";
+      } else {
+        status = "9";
+        message =
+            "According to our cancellation policy. 100% amount will be refundable";
+      }
     }
     //if (request.)
     showDialog(
@@ -533,7 +544,7 @@ class _RequestListViewState extends State<RequestListView> {
           .post(Uri.parse("${Constants.baseUrl}/api/v1/booking_accept"), body: {
         'booking_id': bookingId,
         'user_id': Constants.userId.toString(),
-        'status': "5",
+        'status': status,
       });
       if (response.statusCode != 200) {
         setState(() {
@@ -907,6 +918,27 @@ class _RequestListViewState extends State<RequestListView> {
                           if (uRequestListInv[index].status == "8")
                             MyText(
                               text: "payOnArrival".tr(), //'Confirmed',
+                              color: greenColor1,
+                              weight: FontWeight.bold,
+                            ),
+                          if (uRequestListInv[index].status == "9")
+                            MyText(
+                              text:
+                                  "CANCELLED (100% REFUND)".tr(), //'Confirmed',
+                              color: greenColor1,
+                              weight: FontWeight.bold,
+                            ),
+                          if (uRequestListInv[index].status == "10")
+                            MyText(
+                              text:
+                                  "CANCELLED (50% REFUND)".tr(), //'Confirmed',
+                              color: greenColor1,
+                              weight: FontWeight.bold,
+                            ),
+                          if (uRequestListInv[index].status == "11")
+                            MyText(
+                              text: "CANCELLED (NON-REFUNDABLE)"
+                                  .tr(), //'Confirmed',
                               color: greenColor1,
                               weight: FontWeight.bold,
                             ),

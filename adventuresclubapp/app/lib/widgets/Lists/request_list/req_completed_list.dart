@@ -690,6 +690,27 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                             color: greenColor1,
                                             weight: FontWeight.bold,
                                           ),
+                                        if (uRequestList[index].status == "9")
+                                          MyText(
+                                            text: "CANCELLED (100% REFUND)"
+                                                .tr(), //'Confirmed',
+                                            color: greenColor1,
+                                            weight: FontWeight.bold,
+                                          ),
+                                        if (uRequestList[index].status == "10")
+                                          MyText(
+                                            text: "CANCELLED (50% REFUND)"
+                                                .tr(), //'Confirmed',
+                                            color: greenColor1,
+                                            weight: FontWeight.bold,
+                                          ),
+                                        if (uRequestList[index].status == "11")
+                                          MyText(
+                                            text: "CANCELLED (NON-REFUNDABLE)"
+                                                .tr(), //'Confirmed',
+                                            color: greenColor1,
+                                            weight: FontWeight.bold,
+                                          ),
                                         const SizedBox(
                                           width: 5,
                                         ),

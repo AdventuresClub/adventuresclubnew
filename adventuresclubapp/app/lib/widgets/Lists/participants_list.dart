@@ -87,8 +87,8 @@ class _ParticipantsListState extends State<ParticipantsList> {
 
   //// ${Constants.baseUrl}/newchat/3/2/6 //provider = 3 , service = 2 , member/userId = 6
 
-  void showConfirmation(
-      String bookingId, String bookingUser, int index, String serviceId) async {
+  void showConfirmation(String bookingId, String bookingUser, int index,
+      String serviceId, GetParticipantsModel p) async {
     showDialog(
         context: context,
         builder: (ctx) => SimpleDialog(
@@ -138,7 +138,7 @@ class _ParticipantsListState extends State<ParticipantsList> {
                     // ),
                     ElevatedButton(
                       onPressed: () =>
-                          delete(bookingId, bookingUser, index, serviceId),
+                          delete(bookingId, index, bookingUser, serviceId, p),
                       child: MyText(
                         text: "Yes",
                         color: kPrimaryColor,
@@ -149,6 +149,72 @@ class _ParticipantsListState extends State<ParticipantsList> {
                 //BottomButton(bgColor: blueButtonColor, onTap: homePage)
               ],
             ));
+  }
+
+  Future<bool> showConfirmationText() async {
+    bool result = false;
+    result = await showDialog(
+        context: context,
+        builder: (ctx) => SimpleDialog(
+              contentPadding: const EdgeInsets.all(12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              title: MyText(
+                text: "Alert",
+                weight: FontWeight.bold,
+                color: blackColor,
+              ),
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: MyText(
+                    text: "Are you sure you want to delete?",
+                    size: 16,
+                    weight: FontWeight.bold,
+                    color: blackColor,
+                  ),
+                ),
+                // text:
+                //     "After approval you'll be notified and have to buy your subscription package",
+                // size: 18,
+                // weight: FontWeight.w500,
+                // color: blackColor.withOpacity(0.6),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    MaterialButton(
+                      onPressed: homePage,
+                      child: const Text("No"),
+                    ),
+
+                    // ElevatedButton(
+                    //   onPressed: homePage,
+                    //   child: MyText(
+                    //     text: "No",
+                    //     color: redColor,
+                    //   ),
+                    // ),
+                    ElevatedButton(
+                      onPressed: () => Navigator.of(context).pop(true),
+                      //() =>
+                      //delete(bookingId, index, bookingUser, serviceId, p),
+                      child: MyText(
+                        text: "Yes",
+                        color: kPrimaryColor,
+                      ),
+                    ),
+                  ],
+                )
+                //BottomButton(bgColor: blueButtonColor, onTap: homePage)
+              ],
+            ));
+    return result;
   }
 
   void rateUser() async {
@@ -208,7 +274,7 @@ class _ParticipantsListState extends State<ParticipantsList> {
         "user_id": bookingUser,
         "service_id": serviceId,
       });
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 && mounted) {
         message("Updated Successfly");
       }
       //cancel();
@@ -217,31 +283,74 @@ class _ParticipantsListState extends State<ParticipantsList> {
     }
   }
 
+  // void delete(
+  //     String bookingId, String bookingUser, int index, String serviceId) async {
+  //   leaveGroup(bookingUser, serviceId);
+  //   Navigator.of(context).pop();
+  //   try {
+  //     GetParticipantsModel pm = gm.elementAt(index);
+  //     setState(() {
+  //       gm.removeAt(index);
+  //     });
+  //     var response = await http
+  //         .post(Uri.parse("${Constants.baseUrl}/api/v1/booking_delete"), body: {
+  //       'booking_id': bookingId,
+  //       // 'user_id': bookingUser,
+  //       // 'status': "3",
+  //     });
+  //     if (response.statusCode != 200) {
+  //       setState(() {
+  //         gm.insert(index, pm);
+  //       });
+  //     } else {
+  //       message("Deleted Successfully");
+  //     }
+  //     print(response.statusCode);
+  //   } catch (e) {
+  //     print(e.toString());
+  //   }
+  // }
+
   void delete(
-      String bookingId, String bookingUser, int index, String serviceId) async {
-    leaveGroup(bookingUser, serviceId);
+    String bookingId,
+    int index,
+    String serviceId,
+    String status,
+    GetParticipantsModel participant,
+  ) async {
+    // bool result = await showConfirmationText();
+    // if (!result) {
+    //   return;
+    // }
+    leaveGroup(participant.bookingUser.toString(), serviceId);
     Navigator.of(context).pop();
+    if (mounted) {
+      Navigator.of(context).pop();
+    }
+    GetParticipantsModel pm = gm.elementAt(index);
+    setState(() {
+      gm.removeAt(index);
+    });
     try {
-      GetParticipantsModel pm = gm.elementAt(index);
-      setState(() {
-        gm.removeAt(index);
-      });
       var response = await http
-          .post(Uri.parse("${Constants.baseUrl}/api/v1/booking_delete"), body: {
+          .post(Uri.parse("${Constants.baseUrl}/api/v1/booking_accept"), body: {
         'booking_id': bookingId,
-        // 'user_id': bookingUser,
-        // 'status': "3",
+        'user_id': Constants.userId.toString(),
+        'status': status,
       });
       if (response.statusCode != 200) {
         setState(() {
           gm.insert(index, pm);
         });
-      } else {
-        message("Deleted Successfully");
+        message("Updated Successfully");
       }
-      print(response.statusCode);
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
+    } finally {
+      // setState(() {
+      //   // uRequestListInv.insert(index, gR);
+      //   //loading = false;
+      // });
     }
   }
 

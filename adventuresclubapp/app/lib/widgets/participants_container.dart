@@ -24,64 +24,64 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
     Navigator.of(context).pop();
   }
 
-  void showConfirmation(
-      String bookingId, String bookingUser, int index, String serviceId) async {
-    showDialog(
-        context: context,
-        builder: (ctx) => SimpleDialog(
-              contentPadding: const EdgeInsets.all(12),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12)),
-              title: MyText(
-                text: "Alert",
-                weight: FontWeight.bold,
-                color: blackColor,
-              ),
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: MyText(
-                    text: "Are you sure you want to delete?",
-                    size: 16,
-                    weight: FontWeight.bold,
-                    color: blackColor,
-                  ),
-                ),
-                // text:
-                //     "After approval you'll be notified and have to buy your subscription package",
-                // size: 18,
-                // weight: FontWeight.w500,
-                // color: blackColor.withOpacity(0.6),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ElevatedButton(
-                      onPressed: homePage,
-                      child: MyText(
-                        text: "No",
-                        color: redColor,
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => widget.delete(
-                          bookingId, bookingUser, index, serviceId),
-                      child: MyText(
-                        text: "Yes",
-                        color: blackColor,
-                      ),
-                    ),
-                  ],
-                )
-                //BottomButton(bgColor: blueButtonColor, onTap: homePage)
-              ],
-            ));
-  }
+  // void showConfirmation(
+  //     String bookingId, String bookingUser, int index, String serviceId) async {
+  //   showDialog(
+  //       context: context,
+  //       builder: (ctx) => SimpleDialog(
+  //             contentPadding: const EdgeInsets.all(12),
+  //             shape: RoundedRectangleBorder(
+  //                 borderRadius: BorderRadius.circular(12)),
+  //             title: MyText(
+  //               text: "Alert",
+  //               weight: FontWeight.bold,
+  //               color: blackColor,
+  //             ),
+  //             children: [
+  //               const SizedBox(
+  //                 height: 10,
+  //               ),
+  //               Align(
+  //                 alignment: Alignment.topLeft,
+  //                 child: MyText(
+  //                   text: "Are you sure you want to delete?",
+  //                   size: 16,
+  //                   weight: FontWeight.bold,
+  //                   color: blackColor,
+  //                 ),
+  //               ),
+  //               // text:
+  //               //     "After approval you'll be notified and have to buy your subscription package",
+  //               // size: 18,
+  //               // weight: FontWeight.w500,
+  //               // color: blackColor.withOpacity(0.6),
+  //               const SizedBox(
+  //                 height: 10,
+  //               ),
+  //               Row(
+  //                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+  //                 children: [
+  //                   ElevatedButton(
+  //                     onPressed: homePage,
+  //                     child: MyText(
+  //                       text: "No",
+  //                       color: redColor,
+  //                     ),
+  //                   ),
+  //                   ElevatedButton(
+  //                     onPressed: () => widget.delete(
+  //                         bookingId, bookingUser, index, serviceId),
+  //                     child: MyText(
+  //                       text: "Yes",
+  //                       color: blackColor,
+  //                     ),
+  //                   ),
+  //                 ],
+  //               )
+  //               //BottomButton(bgColor: blueButtonColor, onTap: homePage)
+  //             ],
+  //           ));
+  // }
 
   String calculateAge(String d) {
     if (d.isEmpty) {
@@ -172,6 +172,112 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
     Navigator.of(context).pop();
   }
 
+  DateTime stringToDateTime(String dateString, {String format = 'yyyy-MM-dd'}) {
+    try {
+      return DateFormat(format).parse(dateString);
+    } catch (e) {
+      throw FormatException('Invalid date format: $e');
+    }
+  }
+
+  void showConfirmation(
+    String bookingId,
+    int index,
+    String serviceId,
+    String bookingUserId,
+    GetParticipantsModel pm,
+  ) async {
+    String status = "";
+    String message = "";
+    DateTime t = DateTime.now();
+    DateTime act = stringToDateTime(pm.serviceDate);
+    if (t.day == act.day) {
+      status = "11";
+      message =
+          "According to our cancellation policy. The amount is not refundable";
+    } else if (act.isAfter(t)) {
+      // Check if exactly 1 calendar day difference
+      DateTime tomorrow = DateTime(t.year, t.month, t.day + 1);
+      DateTime dayAtomorrow = DateTime(t.year, t.month, t.day + 2);
+      DateTime twoDaysAhead = DateTime(t.year, t.month, t.day + 3);
+      DateTime actDate = DateTime(act.year, act.month, act.day);
+      // || actDate == dayAtomorrow
+      if (actDate == tomorrow) {
+        status = "13";
+        message =
+            "According to our cancellation policy. 100% amount will be refunded to the client";
+      } else {
+        status = "12";
+        message =
+            "According to our cancellation policy. 100% amount will be refunded to the client";
+      }
+    }
+    //if (request.)
+    showDialog(
+        context: context,
+        builder: (ctx) => SimpleDialog(
+              contentPadding: const EdgeInsets.all(12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              title: MyText(
+                text: "alert",
+                size: 18,
+                weight: FontWeight.bold,
+                color: blackColor,
+              ),
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                //Text("data"),
+                Text(
+                  message, //"areYouSureYouWantToDeleteThis".tr(),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    MaterialButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: MyText(
+                        text: "no",
+                        color: blackColor,
+                        weight: FontWeight.bold,
+                      ),
+                    ),
+                    // MaterialButton(
+                    //   onPressed: () =>
+                    //       dropped(bookingId, index, serviceId, status),
+                    //   child: MyText(
+                    //     text: "Yes",
+                    //     color: blackColor,
+                    //     weight: FontWeight.bold,
+                    //   ),
+                    // ),
+                    ElevatedButton(
+                      onPressed: () => widget.delete(
+                        bookingId,
+                        index,
+                        serviceId,
+                        //bookingUserId,
+                        status,
+                        pm,
+                      ),
+                      child: MyText(
+                        text: "Yes",
+                        color: blackColor,
+                      ),
+                    ),
+                  ],
+                ),
+                //BottomButton(bgColor: blueButtonColor, onTap: homePage)
+              ],
+            ));
+  }
+//10 same day
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -250,15 +356,48 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                         color: greenColor1,
                         weight: FontWeight.bold,
                       ),
+                    if (widget.gm.status == "9")
+                      MyText(
+                        text: "CANCELLED (100% REFUND)".tr(), //'Confirmed',
+                        color: greenColor1,
+                        weight: FontWeight.bold,
+                      ),
+                    if (widget.gm.status == "10")
+                      MyText(
+                        text: "CANCELLED (50% REFUND)".tr(), //'Confirmed',
+                        color: greenColor1,
+                        weight: FontWeight.bold,
+                      ),
+                    if (widget.gm.status == "11")
+                      MyText(
+                        text: "CANCELLED (NON-REFUNDABLE)".tr(), //'Confirmed',
+                        color: greenColor1,
+                        weight: FontWeight.bold,
+                      ),
+                    if (widget.gm.status == "12")
+                      MyText(
+                        text: "Early Dropped (100% REFUND)".tr(), //'Confirmed',
+                        color: greenColor1,
+                        weight: FontWeight.bold,
+                      ),
+                    if (widget.gm.status == "13")
+                      MyText(
+                        text: "Late Dropped (100% REFUND)".tr(), //'Confirmed',
+                        color: greenColor1,
+                        weight: FontWeight.bold,
+                      ),
                     const SizedBox(
                       width: 5,
                     ),
                     GestureDetector(
-                      onTap: () => showConfirmation(
-                          widget.gm.bookingId.toString(),
-                          widget.gm.bookingUser.toString(),
-                          widget.index,
-                          widget.gm.serviceId.toString()),
+                      onTap: widget.gm.status == "2"
+                          ? () => showConfirmation(
+                              widget.gm.bookingId.toString(),
+                              widget.index,
+                              widget.gm.serviceId.toString(),
+                              widget.gm.bookingUser.toString(),
+                              widget.gm)
+                          : null,
                       child: const Icon(
                         Icons.delete_forever_outlined,
                         color: redColor,
