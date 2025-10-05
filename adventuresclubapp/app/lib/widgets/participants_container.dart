@@ -192,9 +192,9 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
     DateTime t = DateTime.now();
     DateTime act = stringToDateTime(pm.serviceDate);
     if (t.day == act.day) {
-      status = "11";
+      status = "13";
       message =
-          "According to our cancellation policy. The amount is not refundable";
+          "According to our cancellation policy. 100% amount will be refunded to the client";
     } else if (act.isAfter(t)) {
       // Check if exactly 1 calendar day difference
       DateTime tomorrow = DateTime(t.year, t.month, t.day + 1);
