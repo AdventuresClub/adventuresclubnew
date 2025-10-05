@@ -381,13 +381,13 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                       ),
                     if (widget.gm.status == "12")
                       MyText(
-                        text: "Early Dropped (100% REFUND)".tr(), //'Confirmed',
+                        text: "Early Drop (100% REFUND)".tr(), //'Confirmed',
                         color: greenColor1,
                         weight: FontWeight.bold,
                       ),
                     if (widget.gm.status == "13")
                       MyText(
-                        text: "Late Dropped (100% REFUND)".tr(), //'Confirmed',
+                        text: "Late Drop (100% REFUND)".tr(), //'Confirmed',
                         color: greenColor1,
                         weight: FontWeight.bold,
                       ),

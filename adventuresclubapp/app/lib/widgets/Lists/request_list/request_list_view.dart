@@ -942,6 +942,20 @@ class _RequestListViewState extends State<RequestListView> {
                               color: greenColor1,
                               weight: FontWeight.bold,
                             ),
+                          if (uRequestListInv[index].status == "12")
+                            MyText(
+                              text: "Early Drop (100% REFUND)"
+                                  .tr(), //'Confirmed',
+                              color: greenColor1,
+                              weight: FontWeight.bold,
+                            ),
+                          if (uRequestListInv[index].status == "13")
+                            MyText(
+                              text:
+                                  "Late Drop (100% REFUND)".tr(), //'Confirmed',
+                              color: greenColor1,
+                              weight: FontWeight.bold,
+                            ),
 
                           // GestureDetector(
                           //   onTap: () => showConfirmation(

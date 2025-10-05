@@ -711,6 +711,20 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                             color: greenColor1,
                                             weight: FontWeight.bold,
                                           ),
+                                        if (uRequestList[index].status == "12")
+                                          MyText(
+                                            text: "Early Drop (100% REFUND)"
+                                                .tr(), //'Confirmed',
+                                            color: greenColor1,
+                                            weight: FontWeight.bold,
+                                          ),
+                                        if (uRequestList[index].status == "13")
+                                          MyText(
+                                            text: "Late Drop (100% REFUND)"
+                                                .tr(), //'Confirmed',
+                                            color: greenColor1,
+                                            weight: FontWeight.bold,
+                                          ),
                                         const SizedBox(
                                           width: 5,
                                         ),
