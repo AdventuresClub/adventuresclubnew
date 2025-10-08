@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_function_literals_in_foreach_calls, avoid_print
+// ignore_for_file: avoid_function_literals_in_foreach_calls, avoid_print, deprecated_member_use
 
 import 'dart:async';
 import 'dart:convert';
@@ -422,7 +422,9 @@ class _NewFilterPageState extends State<NewFilterPage> {
             element['currency'] ?? "",
             maxPrice: element['max_price'] ?? "",
             serviceCount: element['service_count'] ?? 0);
-        countriesList1.add(gc);
+        if (gc.serviceCount > 0) {
+          countriesList1.add(gc);
+        }
       });
       if (mounted) {
         setState(() {
@@ -524,7 +526,7 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                       children: [
                                         Row(children: [
                                           Text(
-                                            "selectYourCountry".tr(),
+                                            "selectCountry".tr(),
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 20,

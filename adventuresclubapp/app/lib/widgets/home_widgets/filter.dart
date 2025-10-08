@@ -1068,7 +1068,7 @@ class _FilterPageState extends State<FilterPage> {
                   children: [
                     Row(children: [
                       Text(
-                        "selectYourCountry".tr(),
+                        "selectCountry".tr(),
                         style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,

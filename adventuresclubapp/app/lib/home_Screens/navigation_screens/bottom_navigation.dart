@@ -237,7 +237,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                   Align(
                     alignment: Alignment.center,
                     child: MyText(
-                      text: "selectYourCountry".tr(),
+                      text: "selectCountry".tr(),
                       size: 18,
                       weight: FontWeight.bold,
                       color: blackColor,

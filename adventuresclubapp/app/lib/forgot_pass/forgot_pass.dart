@@ -356,7 +356,7 @@ class _ForgotPassState extends State<ForgotPass> {
                               children: [
                                 Row(children: [
                                   Text(
-                                    "selectYourCountry".tr(),
+                                    "selectCountry".tr(),
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20,
