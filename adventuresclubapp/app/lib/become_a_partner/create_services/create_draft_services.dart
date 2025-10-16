@@ -97,6 +97,7 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
   String programsDate = "";
   String programeTime = "";
   TimeOfDay time = TimeOfDay.now();
+  bool termsValue = true;
   bool planChecked = false;
   List<CreateServicesProgramModel> pm = [
     // CreateServicesProgramModel(
@@ -805,6 +806,10 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
       } else if (isTimeAfter) {
         message("End Time Cannot be before Start Time");
       }
+      if (!termsValue) {
+        message("Please agree with terms and conditions");
+        return;
+      }
       saveThirdPage();
       setState(() {
         count = 3;
@@ -1105,6 +1110,11 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  void getTermsValue(bool value) {
+    value = termsValue;
+    setState(() {});
   }
 
   void message(String message) {
@@ -2171,6 +2181,7 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
                       preRequisites,
                       minimumRequirement,
                       terms,
+                      getTermsValue,
                     ),
                     // Container(child: Text("testting"))
                   ],

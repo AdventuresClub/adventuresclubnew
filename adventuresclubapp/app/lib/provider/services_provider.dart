@@ -322,6 +322,11 @@ class ServicesProvider with ChangeNotifier {
           allServices.add(nSm);
           all_Services.add(nSm);
         });
+        allServices.sort((a, b) {
+          DateTime aDate = DateTime.tryParse(a.upda) ?? DateTime(0);
+          DateTime bDate = DateTime.tryParse(b.upda) ?? DateTime(0);
+          return bDate.compareTo(aDate);
+        });
         HomeServicesModel adv = HomeServicesModel(acc, all_Services);
         gAllServices.add(adv);
         List<String> serviceId = [];
@@ -330,9 +335,16 @@ class ServicesProvider with ChangeNotifier {
           serviceId.add(element.id.toString());
           adventureName.add(element.adventureName);
         });
+
         searchedList.add(SearchModel(acc, serviceId, adventureName));
       });
       services = await getServicesCost();
+//       gAllServices.sort((a, b) {
+//   DateTime aDate = DateTime.tryParse(a.upda) ?? DateTime(0);
+//   DateTime bDate = DateTime.tryParse(b.upda) ?? DateTime(0);
+//   return bDate.compareTo(aDate);
+// });
+
       setFilteredServices([...gAllServices], false);
       //filteredServices = [...gAllServices];
 

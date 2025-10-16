@@ -9,6 +9,7 @@ import 'package:app/constants_create_new_services.dart';
 import 'package:app/google_page.dart';
 import 'package:app/models/services_cost.dart';
 import 'package:app/provider/services_provider.dart';
+import 'package:app/sign_up/terms_condition.dart';
 import 'package:app/temp_google_map.dart';
 import 'package:app/widgets/buttons/button.dart';
 import 'package:app/widgets/loading_widget.dart';
@@ -17,6 +18,7 @@ import 'package:app/widgets/text_fields/TF_with_size.dart';
 import 'package:app/widgets/text_fields/multiline_field.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:go_router/go_router.dart';
@@ -33,6 +35,7 @@ class Cost extends StatefulWidget {
   final TextEditingController preRequisites;
   final TextEditingController minimumRequirement;
   final TextEditingController terms;
+  final Function? tapped;
   const Cost(
       this.iliveController,
       this.lat,
@@ -43,6 +46,7 @@ class Cost extends StatefulWidget {
       this.preRequisites,
       this.minimumRequirement,
       this.terms,
+      this.tapped,
       {super.key});
 
   @override
@@ -60,6 +64,7 @@ class _CostState extends State<Cost> {
   bool loading = false;
   double lat = 0;
   double lng = 0;
+  bool termsValue = true;
   List<ServicesCost> services = [];
   ServicesCost selectedService1 =
       ServicesCost(id: 0, description: "", createdAt: "", updatedAt: "");
@@ -295,6 +300,23 @@ class _CostState extends State<Cost> {
   void selectService() {
     Provider.of<ServicesProvider>(context, listen: false).updateReason(
         selectedService1.description, selectedService2.description);
+  }
+
+  void termsPage() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return const TermsConditions();
+        },
+      ),
+    );
+  }
+
+  void updateTerms(bool value) {
+    setState(() {
+      termsValue = !termsValue;
+    });
+    widget.tapped!(termsValue);
   }
 
   abc() {}
@@ -632,6 +654,55 @@ class _CostState extends State<Cost> {
                 lightGreyColor,
                 widget.terms,
                 show: true,
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Checkbox(
+                      activeColor: bluishColor,
+                      side: const BorderSide(color: greyColor3, width: 2),
+                      value: termsValue,
+                      onChanged: ((bool? value) {
+                        updateTerms(value!);
+                      })),
+                  Expanded(
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                              text: "iHaveRead".tr(), //'I have read   ',
+                              style: const TextStyle(
+                                  fontSize: 16,
+                                  // color: whiteColor,
+                                  fontFamily: 'Raleway')),
+                          TextSpan(
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                termsPage();
+                              },
+                            text: "termsAndConditions"
+                                .tr(), //'Terms & Conditions',
+                            style: const TextStyle(
+                                fontSize: 13,
+                                decoration: TextDecoration.underline,
+                                fontWeight: FontWeight.w500,
+                                //color: whiteColor,
+                                fontFamily: 'Raleway'),
+                          ),
+                          const TextSpan(
+                            text: ' & ',
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                // color: whiteColor,
+                                fontFamily: 'Raleway'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ]),
           );

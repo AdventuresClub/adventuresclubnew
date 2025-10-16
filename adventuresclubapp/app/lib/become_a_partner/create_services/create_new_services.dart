@@ -64,6 +64,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
   // bool particularWeekDay = false;
   bool particularWeekDays = false;
   bool particularWeek = false;
+  bool termsValue = true;
   DateTime? pickedDate;
   var formattedDate;
   var endDate;
@@ -166,6 +167,11 @@ class _CreateNewServicesState extends State<CreateNewServices> {
     //isTimeAfter = time;
     setState(() {});
     //  pm.add(data);
+  }
+
+  void getTermsValue(bool value) {
+    termsValue = value;
+    setState(() {});
   }
 
   void deleteProgramData(int i) {
@@ -748,6 +754,10 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       }
       if (terms.text.trim().length < 30) {
         message("Terms cannot be for less than 30 characters");
+        return;
+      }
+      if (!termsValue) {
+        message("Please agree with terms and conditions");
         return;
       }
       //convertProgramData();
@@ -2015,7 +2025,9 @@ class _CreateNewServicesState extends State<CreateNewServices> {
                             preRequisites,
                             minimumRequirement,
                             terms,
+                            getTermsValue,
                           ),
+
                           // Container(child: Text("testting"))
                         ],
                       )

@@ -6,10 +6,12 @@ import 'package:app/constants.dart';
 import 'package:app/home_Screens/navigation_screens/requests.dart';
 import 'package:app/models/home_services/services_model.dart';
 import 'package:app/provider/navigation_index_provider.dart';
+import 'package:app/sign_up/terms_condition.dart';
 import 'package:app/widgets/buttons/button_icon_less.dart';
 import 'package:app/widgets/loading_widget.dart';
 import 'package:app/widgets/my_text.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -40,6 +42,7 @@ class _BookTicketState extends State<BookTicket> {
   String costInc = "";
   double costIncNum = 0;
   bool value = false;
+  bool terms = true;
   var cont = false;
   var formattedDate;
   DateTime? pickedDate;
@@ -220,6 +223,9 @@ class _BookTicketState extends State<BookTicket> {
   }
 
   void book() {
+    if (!terms) {
+      Constants.showMessage(context, "Please agree with terms & conditions");
+    }
     if (widget.show!) {
       if (formattedDate == "Desired Date") {
         var date = DateTime.parse(widget.gm.startDate.toString());
@@ -346,6 +352,16 @@ class _BookTicketState extends State<BookTicket> {
         '${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}';
 
     return date;
+  }
+
+  void termsPage() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return const TermsConditions();
+        },
+      ),
+    );
   }
 
   @override
@@ -1072,7 +1088,7 @@ class _BookTicketState extends State<BookTicket> {
                       ),
                       TextField(
                         controller: messageController,
-                        maxLines: 7,
+                        maxLines: 4,
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 15, horizontal: 15),
@@ -1112,6 +1128,80 @@ class _BookTicketState extends State<BookTicket> {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 10),
+                      // Row(
+                      //   children: [
+                      //     Checkbox(
+                      //         activeColor: bluishColor,
+                      //         checkColor: whiteColor,
+                      //         side: const BorderSide(
+                      //             color: bluishColor, width: 2),
+                      //         value: terms,
+                      //         onChanged: (bool? value) {
+                      //           setState(() {
+                      //             terms = !terms;
+                      //           });
+                      //         }),
+                      //     MyText(
+                      //       text: 'iAgreeWithTermsnConditions'.tr(),
+                      //       color: blackTypeColor,
+                      //       align: TextAlign.center,
+                      //       weight: FontWeight.w600,
+                      //     ),
+                      //   ],
+                      // ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Checkbox(
+                              activeColor: bluishColor,
+                              side:
+                                  const BorderSide(color: greyColor3, width: 2),
+                              value: terms,
+                              onChanged: ((bool? value) {
+                                return setState(() {
+                                  terms = value!;
+                                });
+                              })),
+                          Expanded(
+                            child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                      text:
+                                          "iHaveRead".tr(), //'I have read   ',
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          // color: whiteColor,
+                                          fontFamily: 'Raleway')),
+                                  TextSpan(
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        termsPage();
+                                      },
+                                    text: "termsAndConditions"
+                                        .tr(), //'Terms & Conditions',
+                                    style: const TextStyle(
+                                        fontSize: 13,
+                                        decoration: TextDecoration.underline,
+                                        fontWeight: FontWeight.w500,
+                                        //color: whiteColor,
+                                        fontFamily: 'Raleway'),
+                                  ),
+                                  const TextSpan(
+                                    text: ' & ',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        // color: whiteColor,
+                                        fontFamily: 'Raleway'),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                       // const SizedBox(
                       //   height: 40,
                       // ),
@@ -1124,7 +1214,7 @@ class _BookTicketState extends State<BookTicket> {
                 ),
               ),
         bottomNavigationBar: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 42.0, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 42.0, vertical: 6),
           child: ButtonIconLess(
               'sendRequest'.tr(), bluishColor, whiteColor, 2.5, 17, 18, book),
         ),
