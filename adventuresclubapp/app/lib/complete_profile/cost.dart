@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:app/become_a_partner/terms_n_conditions.dart';
 import 'package:app/complete_profile/services_cost_dropdown.dart';
 import 'package:app/complete_profile/services_dropdown.dart';
 import 'package:app/constants.dart';
@@ -313,10 +314,16 @@ class _CostState extends State<Cost> {
   }
 
   void updateTerms(bool value) {
-    setState(() {
-      termsValue = !termsValue;
-    });
+    // setState(() {
+    //   termsValue = !termsValue;
+    // });
     widget.tapped!(termsValue);
+  }
+
+  void launchURL() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return TermsNConditions();
+    }));
   }
 
   abc() {}
@@ -646,15 +653,15 @@ class _CostState extends State<Cost> {
                 widget.minimumRequirement,
                 show: true,
               ),
-              const SizedBox(height: 10),
-              MultiLineField(
-                label: 'termsAndConditions',
-                'termsAndConditions',
-                4,
-                lightGreyColor,
-                widget.terms,
-                show: true,
-              ),
+              //const SizedBox(height: 10),
+              // MultiLineField(
+              //   label: 'termsAndConditions',
+              //   'termsAndConditions',
+              //   4,
+              //   lightGreyColor,
+              //   widget.terms,
+              //   show: true,
+              // ),
               const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -671,7 +678,7 @@ class _CostState extends State<Cost> {
                       TextSpan(
                         children: [
                           TextSpan(
-                              text: "iHaveRead".tr(), //'I have read   ',
+                              text: "Clients ".tr(), //'I have read   ',
                               style: const TextStyle(
                                   fontSize: 16,
                                   // color: whiteColor,
@@ -690,14 +697,66 @@ class _CostState extends State<Cost> {
                                 //color: whiteColor,
                                 fontFamily: 'Raleway'),
                           ),
-                          const TextSpan(
-                            text: ' & ',
-                            style: TextStyle(
-                                fontSize: 14,
+                          // const TextSpan(
+                          //   text: ' & ',
+                          //   style: TextStyle(
+                          //       fontSize: 14,
+                          //       fontWeight: FontWeight.w500,
+                          //       // color: whiteColor,
+                          //       fontFamily: 'Raleway'),
+                          // ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 2,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Checkbox(
+                      activeColor: bluishColor,
+                      side: const BorderSide(color: greyColor3, width: 2),
+                      value: termsValue,
+                      onChanged: ((bool? value) {
+                        updateTerms(value!);
+                      })),
+                  Expanded(
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                              text: "I accept partnership "
+                                  .tr(), //'I have read   ',
+                              style: const TextStyle(
+                                  fontSize: 16,
+                                  // color: whiteColor,
+                                  fontFamily: 'Raleway')),
+                          TextSpan(
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                launchURL();
+                              },
+                            text: "termsAndConditions"
+                                .tr(), //'Terms & Conditions',
+                            style: const TextStyle(
+                                fontSize: 13,
+                                decoration: TextDecoration.underline,
                                 fontWeight: FontWeight.w500,
-                                // color: whiteColor,
+                                //color: whiteColor,
                                 fontFamily: 'Raleway'),
                           ),
+                          // const TextSpan(
+                          //   text: ' & ',
+                          //   style: TextStyle(
+                          //       fontSize: 14,
+                          //       fontWeight: FontWeight.w500,
+                          //       // color: whiteColor,
+                          //       fontFamily: 'Raleway'),
+                          // ),
                         ],
                       ),
                     ),
