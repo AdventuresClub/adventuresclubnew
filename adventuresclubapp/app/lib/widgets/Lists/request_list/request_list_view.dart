@@ -455,27 +455,35 @@ class _RequestListViewState extends State<RequestListView> {
     String message = "";
     DateTime t = DateTime.now();
     DateTime act = stringToDateTime(request.aDate);
-    if (t.day == act.day) {
-      status = "11";
-      message =
-          "According to our cancellation policy. The amount is not refundable";
-    } else if (act.isAfter(t)) {
-      // Check if exactly 1 calendar day difference
-      DateTime tomorrow = DateTime(t.year, t.month, t.day + 1);
-      DateTime dayAtomorrow = DateTime(t.year, t.month, t.day + 2);
-      DateTime twoDaysAhead = DateTime(t.year, t.month, t.day + 3);
-      DateTime actDate = DateTime(act.year, act.month, act.day);
+    if (request.status == "2") {
+      if (t.day == act.day) {
+        status = "11";
+        message =
+            "According to our cancellation policy. The amount is not refundable";
+      } else if (act.isAfter(t)) {
+        // Check if exactly 1 calendar day difference
+        DateTime tomorrow = DateTime(t.year, t.month, t.day + 1);
+        DateTime dayAtomorrow = DateTime(t.year, t.month, t.day + 2);
+        DateTime twoDaysAhead = DateTime(t.year, t.month, t.day + 3);
+        DateTime actDate = DateTime(act.year, act.month, act.day);
 
-      if (actDate == tomorrow || actDate == dayAtomorrow) {
-        status = "10";
-        message =
-            "According to our cancellation policy. 50% amount will be refundable";
-      } else {
-        status = "9";
-        message =
-            "According to our cancellation policy. 100% amount will be refundable";
+        if (actDate == tomorrow || actDate == dayAtomorrow) {
+          status = "10";
+          message =
+              "According to our cancellation policy. 50% amount will be refundable";
+        } else {
+          status = "9";
+          message =
+              "According to our cancellation policy. 100% amount will be refundable";
+        }
       }
+    } else if (request.status == "0" ||
+        request.status == "8" ||
+        request.status == "1") {
+      status = "5";
+      message = "Are you sure? you want to drop this booking.";
     }
+
     //if (request.)
     showDialog(
         context: context,
@@ -1379,8 +1387,7 @@ class _RequestListViewState extends State<RequestListView> {
                                           uRequestListInv[index]
                                               .serviceId
                                               .toString(),
-                                          uRequestListInv[
-                                              index]), //     () => showConfirmation(
+                                          uRequestListInv[index]),
                                   //   widget.uRequestListInv[index].BookingId.toString(),
                                   // ),
                                   child: Center(

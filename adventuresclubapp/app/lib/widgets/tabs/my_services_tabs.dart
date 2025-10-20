@@ -234,7 +234,9 @@ class _MyServicesTabState extends State<MyServicesTab> {
             element['category'] ?? "",
             element['nationality'] ?? "",
             gSim);
-        gGM.add(gm);
+        if (gm.status != "3") {
+          gGM.add(gm);
+        }
       });
       setState(() {
         loading = false;
@@ -265,8 +267,8 @@ class _MyServicesTabState extends State<MyServicesTab> {
               //<-- SEE HERE
               data: ThemeData(
                 primarySwatch: Colors.blue,
-                tabBarTheme:
-                    const TabBarThemeData(labelColor: Colors.black), //<-- SEE HERE
+                tabBarTheme: const TabBarThemeData(
+                    labelColor: Colors.black), //<-- SEE HERE
               ),
               child: TabBar(
                 labelColor: blackColor,

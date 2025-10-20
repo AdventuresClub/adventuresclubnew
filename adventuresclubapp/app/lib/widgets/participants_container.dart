@@ -195,27 +195,32 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
     DateTime dayAtomorrow = DateTime(t.year, t.month, t.day + 2);
     DateTime twoDaysAhead = DateTime(t.year, t.month, t.day + 3);
     DateTime actDate = DateTime(act.year, act.month, act.day);
-    if (t.day == act.day) {
-      status = "13";
-      message =
-          "According to our cancellation policy. 100% amount will be refunded to the client";
-    } else if (act.isAfter(t)) {
-      // Check if exactly 1 calendar day difference
-
-      // || actDate == dayAtomorrow
-      if (actDate == tomorrow) {
+    if (pm.status == "2") {
+      if (t.day == act.day) {
         status = "13";
         message =
             "According to our cancellation policy. 100% amount will be refunded to the client";
-      } else {
-        status = "12";
+      } else if (act.isAfter(t)) {
+        // Check if exactly 1 calendar day difference
+
+        // || actDate == dayAtomorrow
+        if (actDate == tomorrow) {
+          status = "13";
+          message =
+              "According to our cancellation policy. 100% amount will be refunded to the client";
+        } else {
+          status = "12";
+          message =
+              "According to our cancellation policy. 100% amount will be refunded to the client";
+        }
+      } else if (act.isBefore(t)) {
+        status = "13";
         message =
             "According to our cancellation policy. 100% amount will be refunded to the client";
       }
-    } else if (act.isBefore(t)) {
-      status = "13";
-      message =
-          "According to our cancellation policy. 100% amount will be refunded to the client";
+    } else if (pm.status == "0" || pm.status == "8" || pm.status == "1") {
+      status = "3";
+      message = "Are you sure? you want to drop this booking.";
     }
     //if (request.)
     showDialog(
@@ -395,14 +400,12 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                       width: 5,
                     ),
                     GestureDetector(
-                      onTap: widget.gm.status == "2"
-                          ? () => showConfirmation(
-                              widget.gm.bookingId.toString(),
-                              widget.index,
-                              widget.gm.serviceId.toString(),
-                              widget.gm.bookingUser.toString(),
-                              widget.gm)
-                          : null,
+                      onTap: () => showConfirmation(
+                          widget.gm.bookingId.toString(),
+                          widget.index,
+                          widget.gm.serviceId.toString(),
+                          widget.gm.bookingUser.toString(),
+                          widget.gm),
                       child: const Icon(
                         Icons.delete_forever_outlined,
                         color: redColor,

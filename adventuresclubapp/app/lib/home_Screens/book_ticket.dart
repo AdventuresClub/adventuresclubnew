@@ -225,6 +225,7 @@ class _BookTicketState extends State<BookTicket> {
   void book() {
     if (!terms) {
       Constants.showMessage(context, "Please agree with terms & conditions");
+      return;
     }
     if (widget.show!) {
       if (formattedDate == "Desired Date") {
