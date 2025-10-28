@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:app/complete_profile/banner_page.dart';
 import 'package:app/constants.dart';
 import 'package:app/home_Screens/accounts/reviews.dart';
@@ -757,38 +759,38 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                 const SizedBox(
                   height: 10,
                 ),
-                Divider(
-                  thickness: 1,
-                  color: blackColor.withOpacity(0.2),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                MyText(
-                  text: "termsAndConditions",
-                  color: bluishColor,
-                  size: 18,
-                  weight: FontWeight.bold,
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                MyText(
-                  text: widget.gm.tnc,
-                  color: blackColor,
-                  //weight: FontWeight.w500,
-                  size: 14,
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Divider(
-                  thickness: 1,
-                  color: blackColor.withOpacity(0.2),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
+                // Divider(
+                //   thickness: 1,
+                //   color: blackColor.withOpacity(0.2),
+                // ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
+                // MyText(
+                //   text: "termsAndConditions",
+                //   color: bluishColor,
+                //   size: 18,
+                //   weight: FontWeight.bold,
+                // ),
+                // const SizedBox(
+                //   height: 5,
+                // ),
+                // MyText(
+                //   text: widget.gm.tnc,
+                //   color: blackColor,
+                //   //weight: FontWeight.w500,
+                //   size: 14,
+                // ),
+                // const SizedBox(
+                //   height: 5,
+                // ),
+                // Divider(
+                //   thickness: 1,
+                //   color: blackColor.withOpacity(0.2),
+                // ),
+                // const SizedBox(
+                //   height: 10,
+                // ),
               ],
             ),
 
