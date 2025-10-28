@@ -49,7 +49,7 @@ class _EditMyServiceState extends State<EditMyService> {
   TextEditingController desriptionController = TextEditingController();
   TextEditingController preRequisitesController = TextEditingController();
   TextEditingController minimumRequirements = TextEditingController();
-  TextEditingController terms = TextEditingController();
+  //TextEditingController terms = TextEditingController();
   TextEditingController iLiveInController = TextEditingController();
   TextEditingController availableSeats = TextEditingController();
   List<String> categoryList = [];
@@ -178,7 +178,7 @@ class _EditMyServiceState extends State<EditMyService> {
     availableSeats.dispose();
     preRequisitesController.dispose();
     minimumRequirements.dispose();
-    terms.dispose();
+    // terms.dispose();
     super.dispose();
   }
 
@@ -266,12 +266,14 @@ class _EditMyServiceState extends State<EditMyService> {
       controller.text = widget.gm.mRequirements;
       hint = "minimumRequirements";
       title = hint;
-    } else if (type == "terms") {
-      terms = controller;
-      controller.text = widget.gm.tnc;
-      hint = "termsNConditions";
-      title = hint;
-    } else if (type == "availableSeats") {
+    }
+    // else if (type == "terms") {
+    //   terms = controller;
+    //   controller.text = widget.gm.tnc;
+    //   hint = "termsNConditions";
+    //   title = hint;
+    // }
+    else if (type == "availableSeats") {
       availableSeats = controller;
       controller.text = widget.gm.aSeats.toString();
       hint = "Available Seats";
@@ -994,14 +996,16 @@ class _EditMyServiceState extends State<EditMyService> {
         'customer_id': widget.gm.providerId.toString(),
         "minimum_requirements": minimumRequirements.text.trim(), //
       };
-    } else if (type == "terms") {
-      widget.gm.tnc = terms.text.trim();
-      b = {
-        'service_id': widget.gm.id.toString(),
-        'customer_id': widget.gm.providerId.toString(),
-        "terms_conditions": terms.text.trim(), //
-      };
-    } else if (type == "location") {
+    }
+    // else if (type == "terms") {
+    //   widget.gm.tnc = terms.text.trim();
+    //   b = {
+    //     'service_id': widget.gm.id.toString(),
+    //     'customer_id': widget.gm.providerId.toString(),
+    //     "terms_conditions": terms.text.trim(), //
+    //   };
+    // }
+    else if (type == "location") {
       b = {
         "service_id": widget.gm.id.toString(),
         'customer_id': widget.gm.providerId.toString(),
@@ -2613,32 +2617,32 @@ class _EditMyServiceState extends State<EditMyService> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      children: [
-                        MyText(
-                          text: "termsAndConditions",
-                          color: bluishColor,
-                          size: 18,
-                          weight: FontWeight.bold,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        IconButton(
-                          onPressed: () => typeData("terms"),
-                          icon: const Icon(Icons.edit),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    MyText(
-                      text: widget.gm.tnc,
-                      color: blackColor,
-                      //weight: FontWeight.w500,
-                      size: 14,
-                    ),
+                    // Row(
+                    //   children: [
+                    //     MyText(
+                    //       text: "termsAndConditions",
+                    //       color: bluishColor,
+                    //       size: 18,
+                    //       weight: FontWeight.bold,
+                    //     ),
+                    //     const SizedBox(
+                    //       width: 5,
+                    //     ),
+                    //     IconButton(
+                    //       onPressed: () => typeData("terms"),
+                    //       icon: const Icon(Icons.edit),
+                    //     ),
+                    //   ],
+                    // ),
+                    // const SizedBox(
+                    //   height: 5,
+                    // ),
+                    // MyText(
+                    //   text: widget.gm.tnc,
+                    //   color: blackColor,
+                    //   //weight: FontWeight.w500,
+                    //   size: 14,
+                    // ),
                     const SizedBox(
                       height: 5,
                     ),
