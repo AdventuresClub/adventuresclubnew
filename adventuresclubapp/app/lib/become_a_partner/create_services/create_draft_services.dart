@@ -806,10 +806,7 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
       } else if (isTimeAfter) {
         message("End Time Cannot be before Start Time");
       }
-      if (!termsValue) {
-        message("Please agree with terms and conditions");
-        return;
-      }
+
       saveThirdPage();
       setState(() {
         count = 3;
@@ -871,12 +868,16 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
         message("Please Type Minimum Requirements");
         return;
       }
-      if (terms.text.trim().isEmpty) {
-        message("Please Type Terms");
-        return;
-      }
-      if (terms.text.trim().length < 30) {
-        message("Terms cannot be for less than 30 characters");
+      // if (terms.text.trim().isEmpty) {
+      //   message("Please Type Terms");
+      //   return;
+      // }
+      // if (terms.text.trim().length < 30) {
+      //   message("Terms cannot be for less than 30 characters");
+      //   return;
+      // }
+      if (!termsValue) {
+        message("Please agree with partner terms and conditions");
         return;
       }
       //convertProgramData();
@@ -1113,7 +1114,8 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
   }
 
   void getTermsValue(bool value) {
-    value = termsValue;
+    termsValue = value;
+    debugPrint("${"term"} $termsValue");
     setState(() {});
   }
 
@@ -1417,6 +1419,10 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
   }
 
   void saveThirdPage() async {
+    if (!termsValue) {
+      message("Please agree with terms and conditions");
+      return;
+    }
     titleList.clear();
     descriptionList.clear();
     d.clear();
@@ -1505,6 +1511,10 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
   }
 
   void saveLastPage() async {
+    if (!termsValue) {
+      message("Please agree with terms and conditions");
+      return;
+    }
     await getCostReason();
     try {
       var response = await http.post(
@@ -1519,7 +1529,7 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
             "cost_exc": costTwo.text,
             "pre_requisites": preRequisites.text,
             "minimum_requirements": minimumRequirement.text,
-            "terms_conditions": terms.text,
+            "terms_conditions": "null",
             "inc_description": reasonOne,
             "exc_description": reasonTwo,
           });

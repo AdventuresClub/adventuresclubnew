@@ -748,14 +748,14 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         message("Please Type Minimum Requirements");
         return;
       }
-      if (terms.text.trim().isEmpty) {
-        message("Please Type Terms");
-        return;
-      }
-      if (terms.text.trim().length < 30) {
-        message("Terms cannot be for less than 30 characters");
-        return;
-      }
+      // if (terms.text.trim().isEmpty) {
+      //   message("Please Type Terms");
+      //   return;
+      // }
+      // if (terms.text.trim().length < 30) {
+      //   message("Terms cannot be for less than 30 characters");
+      //   return;
+      // }
       if (!termsValue) {
         message("Please agree with terms and conditions");
         return;

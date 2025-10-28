@@ -66,6 +66,7 @@ class _CostState extends State<Cost> {
   double lat = 0;
   double lng = 0;
   bool termsValue = true;
+  bool clientTerms = true;
   List<ServicesCost> services = [];
   ServicesCost selectedService1 =
       ServicesCost(id: 0, description: "", createdAt: "", updatedAt: "");
@@ -314,9 +315,9 @@ class _CostState extends State<Cost> {
   }
 
   void updateTerms(bool value) {
-    // setState(() {
-    //   termsValue = !termsValue;
-    // });
+    setState(() {
+      termsValue = !termsValue;
+    });
     widget.tapped!(termsValue);
   }
 
@@ -404,7 +405,7 @@ class _CostState extends State<Cost> {
                           //label: "Set Cost",
                           show: TextInputType.number,
                           //'setCost',
-                          "${Constants.countryCurrency} ${"(${Constants.country} Currency)"}",
+                          Constants.countryCurrency,
 
                           widget.costOne,
                           16,
@@ -478,7 +479,7 @@ class _CostState extends State<Cost> {
                         height: 67,
                         child: TFWithSize(
                           show: TextInputType.number,
-                          "${Constants.countryCurrency} ${"(${Constants.country} Currency)"}",
+                          Constants.countryCurrency,
                           widget.costTwo,
                           16,
                           lightGreyColor,
@@ -669,9 +670,9 @@ class _CostState extends State<Cost> {
                   Checkbox(
                       activeColor: bluishColor,
                       side: const BorderSide(color: greyColor3, width: 2),
-                      value: termsValue,
+                      value: clientTerms,
                       onChanged: ((bool? value) {
-                        updateTerms(value!);
+                        //updateTerms(value!);
                       })),
                   Expanded(
                     child: Text.rich(
