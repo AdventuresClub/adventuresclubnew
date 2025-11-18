@@ -12,6 +12,7 @@ import 'package:app/widgets/my_text.dart';
 import 'package:app/widgets/services_pdf.dart';
 import 'package:app/widgets/tabs/edit_my_service.dart';
 import 'package:app/widgets/tabs/my_services_tabs.dart';
+import 'package:app/widgets/transaction_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -94,6 +95,56 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
           Constants.showMessage(context, response.body);
         }
       }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  static Map mapFilter = {};
+  static Map mapAimedFilter = {};
+
+  void getData1() async {
+    //https://adventuresclub.net/adventureClub/api/v1/getTransactionByServiceId
+    var response = await http.get(
+        Uri.parse("${Constants.baseUrl}/api/v1/getTransactionByServiceId"));
+    if (response.statusCode == 200) {
+      mapAimedFilter = json.decode(response.body);
+      // List<dynamic> result = mapAimedFilter['message'];
+      // result.forEach((element) {
+      //   int id = int.tryParse(element['id'].toString()) ?? 0;
+      //   AimedForModel amf = AimedForModel(
+      //     id,
+      //     element['AimedName'] ?? "",
+      //     element['image'] ?? "",
+      //     element['created_at'] ?? "",
+      //     element['updated_at'] ?? "",
+      //     element['deleted_at'] ?? "",
+      //     0,
+      //     //  selected: false,
+      //   );
+      //   am.add(amf);
+      // });
+    }
+  }
+
+  void navTransactoinDetails() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return const TransactionScreen();
+        },
+      ),
+    );
+  }
+
+  void getServiceData() async {
+    try {
+      var response = await http.post(
+          Uri.parse("${Constants.baseUrl}/api/v1/getTransactionByServiceId"),
+          body: {
+            'service_id': "185",
+          });
+      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
     } catch (e) {
       print(e.toString());
     }
@@ -244,6 +295,14 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
           //   onPressed: pdfService,
           //   icon: const Icon(Icons.picture_as_pdf_sharp),
           // ),
+          GestureDetector(
+            onTap: () => navTransactoinDetails(),
+            child: const Image(
+              image: ExactAssetImage('images/edit.png'),
+              height: 30,
+              width: 30,
+            ),
+          ),
           const SizedBox(
             width: 20,
           ),
