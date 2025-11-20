@@ -1,464 +1,3 @@
-// // transaction_widget.dart
-// import 'dart:convert';
-
-// import 'package:app/constants.dart';
-// import 'package:app/models/transaction_model.dart';
-// import 'package:flutter/material.dart';
-// import 'package:http/http.dart' as http;
-
-// class TransactionScreen extends StatefulWidget {
-//   const TransactionScreen({super.key});
-
-//   @override
-//   TransactionScreenState createState() => TransactionScreenState();
-// }
-
-// class TransactionScreenState extends State<TransactionScreen> {
-//   TransactionResponse? _transactionData;
-//   bool _isLoading = true;
-//   String _errorMessage = '';
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _loadTransactionData();
-//   }
-
-//   // transaction_service.dart
-
-//   Future<TransactionResponse?> getServiceData() async {
-//     try {
-//       var response = await http.post(
-//         Uri.parse("${Constants.baseUrl}/api/v1/getTransactionByServiceId"),
-//         body: {'service_id': "185"},
-//       );
-
-//       if (response.statusCode == 200) {
-//         var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes));
-
-//         // Convert Map<dynamic, dynamic> to Map<String, dynamic>
-//         Map<String, dynamic> convertedResponse = {};
-//         decodedResponse.forEach((key, value) {
-//           convertedResponse[key.toString()] = value;
-//         });
-
-//         return TransactionResponse.fromJson(convertedResponse);
-//       } else {
-//         throw Exception('Failed to load data: ${response.statusCode}');
-//       }
-//     } catch (e) {
-//       print(e.toString());
-//       return null;
-//     }
-//   }
-
-//   Future<void> _loadTransactionData() async {
-//     setState(() {
-//       _isLoading = true;
-//       _errorMessage = '';
-//     });
-
-//     try {
-//       final data = await getServiceData();
-//       setState(() {
-//         _transactionData = data;
-//         _isLoading = false;
-//       });
-//     } catch (e) {
-//       setState(() {
-//         _errorMessage = 'Failed to load transaction data';
-//         _isLoading = false;
-//       });
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.grey[50],
-//       appBar: AppBar(
-//         title: Text(
-//           'Transaction Details',
-//           style: TextStyle(
-//             fontWeight: FontWeight.bold,
-//             color: Colors.white,
-//           ),
-//         ),
-//         backgroundColor: Colors.blue[800],
-//         elevation: 0,
-//         actions: [
-//           IconButton(
-//             icon: Icon(Icons.refresh),
-//             onPressed: _loadTransactionData,
-//           ),
-//         ],
-//       ),
-//       body: _isLoading
-//           ? _buildLoadingWidget()
-//           : _errorMessage.isNotEmpty
-//               ? _buildErrorWidget()
-//               : _transactionData == null
-//                   ? _buildNoDataWidget()
-//                   : _buildContentWidget(),
-//     );
-//   }
-
-//   Widget _buildLoadingWidget() {
-//     return Center(
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         children: [
-//           CircularProgressIndicator(
-//             valueColor: AlwaysStoppedAnimation<Color>(Colors.blue[800]!),
-//           ),
-//           SizedBox(height: 16),
-//           Text(
-//             'Loading transaction data...',
-//             style: TextStyle(
-//               fontSize: 16,
-//               color: Colors.grey[600],
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-//   Widget _buildErrorWidget() {
-//     return Center(
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         children: [
-//           Icon(
-//             Icons.error_outline,
-//             size: 64,
-//             color: Colors.red[400],
-//           ),
-//           SizedBox(height: 16),
-//           Text(
-//             _errorMessage,
-//             style: TextStyle(
-//               fontSize: 16,
-//               color: Colors.grey[600],
-//             ),
-//           ),
-//           SizedBox(height: 16),
-//           ElevatedButton(
-//             onPressed: _loadTransactionData,
-//             style: ElevatedButton.styleFrom(
-//               backgroundColor: Colors.blue[800],
-//               foregroundColor: Colors.white,
-//             ),
-//             child: Text('Try Again'),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-//   Widget _buildNoDataWidget() {
-//     return Center(
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         children: [
-//           Icon(
-//             Icons.receipt_long,
-//             size: 64,
-//             color: Colors.grey[400],
-//           ),
-//           SizedBox(height: 16),
-//           Text(
-//             'No transaction data available',
-//             style: TextStyle(
-//               fontSize: 16,
-//               color: Colors.grey[600],
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-//   Widget _buildContentWidget() {
-//     final data = _transactionData!.data;
-
-//     return SingleChildScrollView(
-//       padding: EdgeInsets.all(16),
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           // Summary Cards
-//           _buildSummaryCards(data),
-//           SizedBox(height: 24),
-
-//           // Transactions List
-//           Text(
-//             'Transactions',
-//             style: TextStyle(
-//               fontSize: 20,
-//               fontWeight: FontWeight.bold,
-//               color: Colors.grey[800],
-//             ),
-//           ),
-//           SizedBox(height: 16),
-
-//           if (data.transactions.isEmpty)
-//             _buildNoTransactionsWidget()
-//           else
-//             ...data.transactions
-//                 .map((transaction) => _buildTransactionCard(transaction))
-//                 .toList(),
-//         ],
-//       ),
-//     );
-//   }
-
-//   Widget _buildSummaryCards(TransactionData data) {
-//     return Row(
-//       children: [
-//         Expanded(
-//           child: _buildSummaryCard(
-//             'Total Earnings',
-//             '\$${data.totalEarnings}',
-//             Icons.attach_money,
-//             Colors.green,
-//           ),
-//         ),
-//         SizedBox(width: 12),
-//         Expanded(
-//           child: _buildSummaryCard(
-//             'Sold Amount',
-//             '\$${data.selledAmount}',
-//             Icons.shopping_cart,
-//             Colors.blue,
-//           ),
-//         ),
-//         SizedBox(width: 12),
-//         Expanded(
-//           child: _buildSummaryCard(
-//             'Pending',
-//             '\$${data.pendingSettlements}',
-//             Icons.pending_actions,
-//             Colors.orange,
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-
-//   Widget _buildSummaryCard(
-//       String title, String value, IconData icon, Color color) {
-//     return Card(
-//       elevation: 2,
-//       child: Padding(
-//         padding: EdgeInsets.all(16),
-//         child: Column(
-//           children: [
-//             Icon(icon, color: color, size: 32),
-//             SizedBox(height: 8),
-//             Text(
-//               value,
-//               style: TextStyle(
-//                 fontSize: 18,
-//                 fontWeight: FontWeight.bold,
-//                 color: Colors.grey[800],
-//               ),
-//             ),
-//             SizedBox(height: 4),
-//             Text(
-//               title,
-//               style: TextStyle(
-//                 fontSize: 12,
-//                 color: Colors.grey[600],
-//               ),
-//               textAlign: TextAlign.center,
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-
-//   Widget _buildNoTransactionsWidget() {
-//     return Card(
-//       child: Padding(
-//         padding: EdgeInsets.all(32),
-//         child: Column(
-//           children: [
-//             Icon(
-//               Icons.receipt_long,
-//               size: 48,
-//               color: Colors.grey[400],
-//             ),
-//             SizedBox(height: 16),
-//             Text(
-//               'No transactions found',
-//               style: TextStyle(
-//                 fontSize: 16,
-//                 color: Colors.grey[600],
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-
-//   Widget _buildTransactionCard(Transaction transaction) {
-//     return Card(
-//       elevation: 2,
-//       margin: EdgeInsets.only(bottom: 16),
-//       child: Padding(
-//         padding: EdgeInsets.all(16),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             // Header
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               children: [
-//                 Text(
-//                   'Transaction #${transaction.transactionId}',
-//                   style: TextStyle(
-//                     fontSize: 16,
-//                     fontWeight: FontWeight.bold,
-//                     color: Colors.blue[800],
-//                   ),
-//                 ),
-//                 _buildStatusChip(transaction.payStatus),
-//               ],
-//             ),
-//             SizedBox(height: 12),
-
-//             // Amount Information
-//             _buildInfoRow('Total Amount', '\$${transaction.totalAmount}'),
-//             _buildInfoRow(
-//                 'Discounted Amount', '\$${transaction.discountedAmount}'),
-//             _buildInfoRow('Provider Amount', '\$${transaction.providerAmount}'),
-//             _buildInfoRow('OAC Amount', '\$${transaction.oacAmount}'),
-
-//             Divider(height: 20),
-
-//             // Booking Details
-//             _buildInfoRow('Booking Date', transaction.bookingDate),
-//             _buildInfoRow(
-//                 'Adults/Kids', '${transaction.adult} / ${transaction.kids}'),
-//             _buildInfoRow('Payment Channel', transaction.paymentChannel),
-
-//             if (transaction.message.isNotEmpty) ...[
-//               Divider(height: 20),
-//               _buildInfoRow('Message', transaction.message),
-//             ],
-
-//             if (transaction.settlementComment.isNotEmpty) ...[
-//               Divider(height: 20),
-//               _buildInfoRow(
-//                   'Settlement Comment', transaction.settlementComment),
-//             ],
-
-//             // Settlement Status
-//             Divider(height: 20),
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               children: [
-//                 Text(
-//                   'Settlement Status:',
-//                   style: TextStyle(
-//                     fontWeight: FontWeight.w500,
-//                     color: Colors.grey[700],
-//                   ),
-//                 ),
-//                 _buildSettlementChip(transaction.settlementStatus),
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-
-//   Widget _buildInfoRow(String label, String value) {
-//     return Padding(
-//       padding: EdgeInsets.symmetric(vertical: 4),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           Text(
-//             label,
-//             style: TextStyle(
-//               color: Colors.grey[600],
-//               fontSize: 14,
-//             ),
-//           ),
-//           Text(
-//             value,
-//             style: TextStyle(
-//               fontWeight: FontWeight.w500,
-//               fontSize: 14,
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-//   Widget _buildStatusChip(String status) {
-//     Color chipColor;
-//     switch (status.toLowerCase()) {
-//       case 'success':
-//         chipColor = Colors.green;
-//         break;
-//       case 'pending':
-//         chipColor = Colors.orange;
-//         break;
-//       case 'failed':
-//         chipColor = Colors.red;
-//         break;
-//       default:
-//         chipColor = Colors.grey;
-//     }
-
-//     return Chip(
-//       label: Text(
-//         status,
-//         style: TextStyle(
-//           color: Colors.white,
-//           fontSize: 12,
-//         ),
-//       ),
-//       backgroundColor: chipColor,
-//       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-//     );
-//   }
-
-//   Widget _buildSettlementChip(String status) {
-//     Color chipColor;
-//     switch (status.toLowerCase()) {
-//       case 'settled':
-//         chipColor = Colors.green;
-//         break;
-//       case 'pending':
-//         chipColor = Colors.orange;
-//         break;
-//       default:
-//         chipColor = Colors.grey;
-//     }
-
-//     return Chip(
-//       label: Text(
-//         status.toUpperCase(),
-//         style: TextStyle(
-//           color: Colors.white,
-//           fontSize: 10,
-//           fontWeight: FontWeight.bold,
-//         ),
-//       ),
-//       backgroundColor: chipColor,
-//       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-//     );
-//   }
-// }
-
 // transaction_widget.dart
 import 'dart:convert';
 import 'package:app/constants.dart';
@@ -480,7 +19,7 @@ class TransactionScreenState extends State<TransactionScreen> {
   List<Transaction> _filteredTransactions = [];
   String _searchQuery = '';
   String _statusFilter = 'All';
-  List<String> _statusOptions = ['All', 'Success', 'Pending', 'Failed'];
+  List<String> _statusOptions = ['All', 'Settled', 'In Progress', 'In Review'];
   int _rowsPerPage = 10;
   int _currentPage = 0;
   List<Transaction> _sortedTransactions = [];
@@ -513,6 +52,7 @@ class TransactionScreenState extends State<TransactionScreen> {
         throw Exception('Failed to load data: ${response.statusCode}');
       }
     } catch (e) {
+      debugPrint("${"tractions data"}${e.toString()}");
       print(e.toString());
       return null;
     }
@@ -533,6 +73,7 @@ class TransactionScreenState extends State<TransactionScreen> {
         _isLoading = false;
       });
     } catch (e) {
+      debugPrint("${"tractions"}${e.toString()}");
       setState(() {
         _errorMessage = 'Failed to load transaction data';
         _isLoading = false;
@@ -566,7 +107,7 @@ class TransactionScreenState extends State<TransactionScreen> {
     if (_statusFilter != 'All') {
       filtered = filtered
           .where((transaction) =>
-              transaction.payStatus.toLowerCase() ==
+              transaction.settlementStatus.toLowerCase() ==
               _statusFilter.toLowerCase())
           .toList();
     }
@@ -591,8 +132,7 @@ class TransactionScreenState extends State<TransactionScreen> {
             comparison = a.transactionId.compareTo(b.transactionId);
             break;
           case 'totalAmount':
-            comparison = double.parse(a.totalAmount)
-                .compareTo(double.parse(b.totalAmount));
+            comparison = a.totalAmount.compareTo(b.totalAmount);
             break;
           case 'bookingDate':
             comparison = a.bookingDate.compareTo(b.bookingDate);
@@ -621,6 +161,12 @@ class TransactionScreenState extends State<TransactionScreen> {
           : endIndex,
     );
   }
+
+  // Calculate summary values
+  double get _totalEarnings => _transactionData?.data.totalEarnings ?? 0;
+  double get _pendingSettlements =>
+      _transactionData?.data.pendingSettlements ?? 0;
+  double get _settledAmount => _totalEarnings - _pendingSettlements;
 
   @override
   Widget build(BuildContext context) {
@@ -730,21 +276,19 @@ class TransactionScreenState extends State<TransactionScreen> {
   }
 
   Widget _buildDataTableWidget() {
-    final data = _transactionData!.data;
-
     return Column(
       children: [
-        // Summary Cards
-        _buildSummaryCards(data),
-        SizedBox(height: 16),
+        // Summary Cards - Compact mobile layout
+        _buildSummaryCards(),
+        SizedBox(height: 12),
 
         // Filters and Search
         _buildFilterBar(),
-        SizedBox(height: 16),
+        SizedBox(height: 12),
 
-        // DataTable
+        // DataTable with horizontal scroll
         Expanded(
-          child: _buildDataTable(),
+          child: _buildScrollableDataTable(),
         ),
 
         // Pagination
@@ -753,271 +297,383 @@ class TransactionScreenState extends State<TransactionScreen> {
     );
   }
 
-  Widget _buildSummaryCards(TransactionData data) {
+  Widget _buildSummaryCards() {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.all(12),
       color: Colors.white,
-      child: Row(
+      child: Column(
         children: [
-          Expanded(
-            child: _buildSummaryCard(
-              'Total Earnings',
-              '\$${data.totalEarnings}',
-              Icons.attach_money,
-              Colors.green,
-            ),
+          // Main total earnings
+          _buildSummaryRow(
+            'TOTAL EARNINGS',
+            'OMR $_totalEarnings',
+            Icons.attach_money,
+            Colors.green,
+            isMain: true,
           ),
-          SizedBox(width: 12),
-          Expanded(
-            child: _buildSummaryCard(
-              'Sold Amount',
-              '\$${data.selledAmount}',
-              Icons.shopping_cart,
-              Colors.blue,
-            ),
-          ),
-          SizedBox(width: 12),
-          Expanded(
-            child: _buildSummaryCard(
-              'Pending',
-              '\$${data.pendingSettlements}',
-              Icons.pending_actions,
-              Colors.orange,
-            ),
-          ),
-          SizedBox(width: 12),
-          Expanded(
-            child: _buildSummaryCard(
-              'Total Transactions',
-              '${_transactionData!.data.transactions.length}',
-              Icons.list_alt,
-              Colors.purple,
-            ),
+          SizedBox(height: 8),
+
+          // Sub totals in a row
+          Row(
+            children: [
+              Expanded(
+                child: _buildSummaryRow(
+                  'SETTLED',
+                  'OMR $_settledAmount',
+                  Icons.check_circle,
+                  Colors.blue,
+                ),
+              ),
+              SizedBox(width: 8),
+              Expanded(
+                child: _buildSummaryRow(
+                  'PENDING',
+                  'OMR $_pendingSettlements',
+                  Icons.pending_actions,
+                  Colors.orange,
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
   }
 
-  Widget _buildSummaryCard(
-      String title, String value, IconData icon, Color color) {
-    return Card(
-      elevation: 2,
-      child: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Icon(icon, color: color, size: 24),
-            SizedBox(height: 8),
-            Text(
-              value,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.grey[800],
+  Widget _buildSummaryRow(
+      String title, String value, IconData icon, Color color,
+      {bool isMain = false}) {
+    return Container(
+      padding: EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: isMain ? color.withOpacity(0.1) : Colors.grey[50],
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color.withOpacity(0.3)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Icon(icon, color: color, size: isMain ? 20 : 16),
+              SizedBox(width: 8),
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: isMain ? 14 : 12,
+                  fontWeight: isMain ? FontWeight.bold : FontWeight.normal,
+                  color: Colors.grey[700],
+                ),
               ),
+            ],
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: isMain ? 16 : 14,
+              fontWeight: FontWeight.bold,
+              color: color,
             ),
-            SizedBox(height: 4),
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey[600],
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
   Widget _buildFilterBar() {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.all(12),
       color: Colors.white,
-      child: Row(
+      child: Column(
         children: [
           // Search Field
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search transactions...',
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(),
-                contentPadding: EdgeInsets.symmetric(horizontal: 12),
-              ),
-              onChanged: (value) {
-                setState(() {
-                  _searchQuery = value;
-                });
-                _applyFilters();
-              },
+          TextField(
+            decoration: InputDecoration(
+              hintText: 'Search transactions...',
+              prefixIcon: Icon(Icons.search),
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              isDense: true,
             ),
+            onChanged: (value) {
+              setState(() {
+                _searchQuery = value;
+              });
+              _applyFilters();
+            },
           ),
-          SizedBox(width: 16),
-
-          // Status Filter
-          Container(
-            width: 150,
-            child: DropdownButtonFormField<String>(
-              value: _statusFilter,
-              decoration: InputDecoration(
-                labelText: 'Status',
-                border: OutlineInputBorder(),
-                contentPadding: EdgeInsets.symmetric(horizontal: 12),
+          SizedBox(height: 8),
+          Row(
+            children: [
+              // Status Filter
+              Expanded(
+                child: DropdownButtonFormField<String>(
+                  value: _statusFilter,
+                  decoration: InputDecoration(
+                    labelText: 'Settlement Status',
+                    border: OutlineInputBorder(),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    isDense: true,
+                  ),
+                  items: _statusOptions.map((String status) {
+                    return DropdownMenuItem<String>(
+                      value: status,
+                      child: Text(
+                        status,
+                        style: TextStyle(fontSize: 14),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _statusFilter = value!;
+                    });
+                    _applyFilters();
+                  },
+                ),
               ),
-              items: _statusOptions.map((String status) {
-                return DropdownMenuItem<String>(
-                  value: status,
-                  child: Text(status),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  _statusFilter = value!;
-                });
-                _applyFilters();
-              },
-            ),
-          ),
-          SizedBox(width: 16),
-
-          // Rows per page
-          Container(
-            width: 120,
-            child: DropdownButtonFormField<int>(
-              value: _rowsPerPage,
-              decoration: InputDecoration(
-                labelText: 'Rows',
-                border: OutlineInputBorder(),
-                contentPadding: EdgeInsets.symmetric(horizontal: 12),
+              SizedBox(width: 8),
+              // Rows per page
+              Container(
+                width: 120,
+                child: DropdownButtonFormField<int>(
+                  value: _rowsPerPage,
+                  decoration: InputDecoration(
+                    labelText: 'Rows',
+                    border: OutlineInputBorder(),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    isDense: true,
+                  ),
+                  items: [5, 10, 15, 20].map((int value) {
+                    return DropdownMenuItem<int>(
+                      value: value,
+                      child: Text(
+                        '$value',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _rowsPerPage = value!;
+                      _currentPage = 0;
+                    });
+                  },
+                ),
               ),
-              items: [5, 10, 25, 50].map((int value) {
-                return DropdownMenuItem<int>(
-                  value: value,
-                  child: Text('$value per page'),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  _rowsPerPage = value!;
-                  _currentPage = 0;
-                });
-              },
-            ),
+            ],
           ),
         ],
       ),
     );
   }
 
-  Widget _buildDataTable() {
+  Widget _buildScrollableDataTable() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
+      margin: EdgeInsets.symmetric(horizontal: 8),
       child: SingleChildScrollView(
-        child: DataTable(
-          headingRowColor: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) => Colors.blue[50],
+        scrollDirection: Axis.horizontal,
+        child: Container(
+          constraints: BoxConstraints(
+            minWidth: MediaQuery.of(context).size.width,
           ),
-          sortColumnIndex: _getSortColumnIndex(),
-          sortAscending: _sortAscending,
-          columns: [
-            DataColumn(
-              label: Text('Transaction ID'),
-              onSort: (columnIndex, ascending) {
-                _sortData('transactionId', ascending);
-              },
-            ),
-            DataColumn(
-              label: Text('Amount'),
-              numeric: true,
-              onSort: (columnIndex, ascending) {
-                _sortData('totalAmount', ascending);
-              },
-            ),
-            // DataColumn(
-            //   label: Text('Discounted'),
-            //   numeric: true,
-            // ),
-            // DataColumn(
-            //   label: Text('Provider'),
-            //   numeric: true,
-            // ),
-            DataColumn(
-              label: Text('Booking Date'),
-              onSort: (columnIndex, ascending) {
-                _sortData('bookingDate', ascending);
-              },
-            ),
-            DataColumn(
-              label: Text('Payment Status'),
-              onSort: (columnIndex, ascending) {
-                _sortData('payStatus', ascending);
-              },
-            ),
-            DataColumn(
-              label: Text('Settlement Status'),
-              onSort: (columnIndex, ascending) {
-                _sortData('settlementStatus', ascending);
-              },
-            ),
-            DataColumn(
-              label: Text('Actions'),
-            ),
-          ],
-          rows: _currentPageData.map((transaction) {
-            return DataRow(
-              cells: [
-                DataCell(
-                  Tooltip(
-                    message: 'ID: ${transaction.transactionId}',
-                    child: Text(
-                      transaction.transactionId.length > 8
-                          ? '${transaction.transactionId.substring(0, 8)}...'
-                          : transaction.transactionId,
-                      style: TextStyle(fontFamily: 'Monospace'),
-                    ),
-                  ),
-                ),
-                DataCell(
-                  Text(
-                    '\$${transaction.totalAmount}',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      color: Colors.green[700],
-                    ),
-                  ),
-                ),
-                // DataCell(Text('\$${transaction.discountedAmount}')),
-                // DataCell(Text('\$${transaction.providerAmount}')),
-                DataCell(Text(transaction.bookingDate)),
-                DataCell(_buildStatusChip(transaction.payStatus)),
-                DataCell(_buildSettlementChip(transaction.settlementStatus)),
-                DataCell(
-                  IconButton(
-                    icon: Icon(Icons.visibility, size: 18),
-                    onPressed: () {
-                      _showTransactionDetails(transaction);
-                    },
-                  ),
-                ),
-              ],
-            );
-          }).toList(),
+          child: Card(
+            elevation: 2,
+            child: _buildDataTable(),
+          ),
         ),
       ),
+    );
+  }
+
+  Widget _buildDataTable() {
+    return DataTable(
+      headingRowColor: MaterialStateProperty.resolveWith<Color?>(
+        (Set<MaterialState> states) => Colors.blue[50],
+      ),
+      dataRowMinHeight: 40,
+      dataRowMaxHeight: 60,
+      headingRowHeight: 44,
+      columnSpacing: 12,
+      horizontalMargin: 8,
+      sortColumnIndex: _getSortColumnIndex(),
+      sortAscending: _sortAscending,
+      columns: [
+        DataColumn(
+          label: Text(
+            'Transaction ID',
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+          ),
+          onSort: (columnIndex, ascending) {
+            _sortData('transactionId', ascending);
+          },
+        ),
+        DataColumn(
+          label: Text(
+            'User ID',
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+          ),
+        ),
+        DataColumn(
+          label: Text(
+            'Booking Date',
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+          ),
+          onSort: (columnIndex, ascending) {
+            _sortData('payStatus', ascending);
+          },
+        ),
+        DataColumn(
+          label: Text(
+            'Total Paid',
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+          ),
+          numeric: true,
+          onSort: (columnIndex, ascending) {
+            _sortData('totalAmount', ascending);
+          },
+        ),
+        DataColumn(
+          label: Text(
+            'Refunded',
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+          ),
+          numeric: true,
+        ),
+        DataColumn(
+          label: Text(
+            'Adventures\nClub',
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+          ),
+          numeric: true,
+        ),
+        DataColumn(
+          label: Text(
+            'Partner',
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+          ),
+          numeric: true,
+        ),
+        DataColumn(
+          label: Text(
+            'Settlement\nStatus',
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+          ),
+          onSort: (columnIndex, ascending) {
+            _sortData('settlementStatus', ascending);
+          },
+        ),
+        DataColumn(
+          label: Text(
+            'Comment',
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+          ),
+        ),
+        DataColumn(
+          label: Text(
+            'Actions',
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+          ),
+        ),
+      ],
+      rows: _currentPageData.map((transaction) {
+        return DataRow(
+          cells: [
+            DataCell(
+              SizedBox(
+                width: 80,
+                child: Text(
+                  transaction.transactionId.length > 8
+                      ? '${transaction.transactionId.substring(0, 8)}...'
+                      : transaction.transactionId,
+                  style: TextStyle(fontSize: 11, fontFamily: 'Monospace'),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+            DataCell(
+              Text(
+                '${transaction.userId}',
+                style: TextStyle(fontSize: 11),
+              ),
+            ),
+            //needs changing here
+            // DataCell(
+            //   _buildStatusChip(transaction.bookingDate),
+            // ),
+            DataCell(
+              Text(
+                transaction.bookingDate,
+                style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            DataCell(
+              Text(
+                'OMR ${transaction.totalAmount.toStringAsFixed(2)}',
+                style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.green[700],
+                ),
+              ),
+            ),
+            DataCell(
+              Text(
+                'OMR ${transaction.clientRefund.toStringAsFixed(2)}',
+                style: TextStyle(fontSize: 11),
+              ),
+            ),
+            DataCell(
+              Text(
+                'OMR ${transaction.oacAmount.toStringAsFixed(2)}',
+                style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            DataCell(
+              Text(
+                'OMR ${transaction.providerAmount.toStringAsFixed(2)}',
+                style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue[700],
+                ),
+              ),
+            ),
+            DataCell(
+              _buildSettlementChip(transaction.settlementStatus),
+            ),
+            DataCell(
+              SizedBox(
+                width: 80,
+                child: Text(
+                  transaction.settlementComment.isEmpty
+                      ? '-'
+                      : transaction.settlementComment,
+                  style: TextStyle(fontSize: 10),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+              ),
+            ),
+            DataCell(
+              IconButton(
+                icon: Icon(Icons.visibility, size: 16),
+                onPressed: () {
+                  _showTransactionDetails(transaction);
+                },
+              ),
+            ),
+          ],
+        );
+      }).toList(),
     );
   }
 
@@ -1026,13 +682,11 @@ class TransactionScreenState extends State<TransactionScreen> {
       case 'transactionId':
         return 0;
       case 'totalAmount':
-        return 1;
-      case 'bookingDate':
-        return 4;
+        return 3;
       case 'payStatus':
-        return 5;
+        return 2;
       case 'settlementStatus':
-        return 6;
+        return 7;
       default:
         return null;
     }
@@ -1059,12 +713,13 @@ class TransactionScreenState extends State<TransactionScreen> {
         status,
         style: TextStyle(
           color: Colors.white,
-          fontSize: 10,
+          fontSize: 9,
         ),
       ),
       backgroundColor: chipColor,
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       visualDensity: VisualDensity.compact,
+      padding: EdgeInsets.symmetric(horizontal: 4),
     );
   }
 
@@ -1074,8 +729,11 @@ class TransactionScreenState extends State<TransactionScreen> {
       case 'settled':
         chipColor = Colors.green;
         break;
-      case 'pending':
+      case 'in_progress':
         chipColor = Colors.orange;
+        break;
+      case 'in_review':
+        chipColor = Colors.blue;
         break;
       default:
         chipColor = Colors.grey;
@@ -1083,16 +741,17 @@ class TransactionScreenState extends State<TransactionScreen> {
 
     return Chip(
       label: Text(
-        status.toUpperCase(),
+        status.replaceAll('_', ' ').toUpperCase(),
         style: TextStyle(
           color: Colors.white,
-          fontSize: 9,
+          fontSize: 8,
           fontWeight: FontWeight.bold,
         ),
       ),
       backgroundColor: chipColor,
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       visualDensity: VisualDensity.compact,
+      padding: EdgeInsets.symmetric(horizontal: 4),
     );
   }
 
@@ -1100,19 +759,19 @@ class TransactionScreenState extends State<TransactionScreen> {
     final totalPages = (_filteredTransactions.length / _rowsPerPage).ceil();
 
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.all(12),
       color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'Showing ${_currentPage * _rowsPerPage + 1} to ${_currentPage * _rowsPerPage + _currentPageData.length} of ${_filteredTransactions.length} transactions',
-            style: TextStyle(color: Colors.grey[600]),
+            '${_currentPage * _rowsPerPage + 1}-${_currentPage * _rowsPerPage + _currentPageData.length} of ${_filteredTransactions.length}',
+            style: TextStyle(fontSize: 12, color: Colors.grey[600]),
           ),
           Row(
             children: [
               IconButton(
-                icon: Icon(Icons.chevron_left),
+                icon: Icon(Icons.chevron_left, size: 20),
                 onPressed: _currentPage > 0
                     ? () {
                         setState(() {
@@ -1122,11 +781,11 @@ class TransactionScreenState extends State<TransactionScreen> {
                     : null,
               ),
               Text(
-                'Page ${_currentPage + 1} of $totalPages',
-                style: TextStyle(fontWeight: FontWeight.w500),
+                '${_currentPage + 1}/$totalPages',
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
               ),
               IconButton(
-                icon: Icon(Icons.chevron_right),
+                icon: Icon(Icons.chevron_right, size: 20),
                 onPressed: _currentPage < totalPages - 1
                     ? () {
                         setState(() {
@@ -1145,48 +804,82 @@ class TransactionScreenState extends State<TransactionScreen> {
   void _showTransactionDetails(Transaction transaction) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Transaction Details'),
-        content: SingleChildScrollView(
+      builder: (context) => Dialog(
+        insetPadding: EdgeInsets.all(16),
+        child: Container(
+          width: double.infinity,
+          padding: EdgeInsets.all(16),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildDetailRow('Transaction ID', transaction.transactionId),
-              _buildDetailRow('Total Amount', '\$${transaction.totalAmount}'),
-              // _buildDetailRow(
-              //     'Discounted Amount', '\$${transaction.discountedAmount}'),
-              // _buildDetailRow(
-              //     'Provider Amount', '\$${transaction.providerAmount}'),
-              _buildDetailRow('OAC Amount', '\$${transaction.oacAmount}'),
-              _buildDetailRow('Booking Date', transaction.bookingDate),
-              _buildDetailRow(
-                  'Adults/Kids', '${transaction.adult} / ${transaction.kids}'),
-              _buildDetailRow('Payment Channel', transaction.paymentChannel),
-              _buildDetailRow('Payment Status', transaction.payStatus),
-              _buildDetailRow(
-                  'Settlement Status', transaction.settlementStatus),
-              if (transaction.message.isNotEmpty)
-                _buildDetailRow('Message', transaction.message),
-              if (transaction.settlementComment.isNotEmpty)
-                _buildDetailRow(
-                    'Settlement Comment', transaction.settlementComment),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Transaction Details',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.close),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                ],
+              ),
+              Divider(),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildDetailRow(
+                          'Transaction ID', transaction.transactionId),
+                      _buildDetailRow('User ID', '${transaction.userId}'),
+                      _buildDetailRow('Booking Date', transaction.bookingDate),
+                      _buildDetailRow('Status', transaction.payStatus),
+                      _buildDetailRow(
+                          'Settlement Status', transaction.settlementStatus),
+                      _buildDetailRow(
+                          'Total Paid', 'OMR ${transaction.totalAmount}'),
+                      // _buildDetailRow(
+                      //     'Discounted', 'OMR ${transaction.discountedAmount}'),
+                      _buildDetailRow(
+                          'Refunded Amount', 'OMR ${transaction.clientRefund}'),
+                      _buildDetailRow(
+                          'Adventures Club', 'OMR ${transaction.oacAmount}'),
+                      _buildDetailRow('Partner Amount',
+                          'OMR ${transaction.providerAmount}'),
+                      _buildDetailRow(
+                          'Payment Channel', transaction.paymentChannel),
+                      if (transaction.message.isNotEmpty)
+                        _buildDetailRow('Message', transaction.message),
+                      if (transaction.settlementComment.isNotEmpty)
+                        _buildDetailRow(
+                            'Comment', transaction.settlementComment),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('Close'),
+                ),
+              ),
             ],
           ),
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text('Close'),
-          ),
-        ],
       ),
     );
   }
 
   Widget _buildDetailRow(String label, String value) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
+      padding: EdgeInsets.symmetric(vertical: 6),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -1197,6 +890,7 @@ class TransactionScreenState extends State<TransactionScreen> {
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 color: Colors.grey[700],
+                fontSize: 12,
               ),
             ),
           ),
@@ -1204,7 +898,7 @@ class TransactionScreenState extends State<TransactionScreen> {
           Expanded(
             child: Text(
               value,
-              style: TextStyle(color: Colors.grey[800]),
+              style: TextStyle(fontSize: 12, color: Colors.grey[800]),
             ),
           ),
         ],
