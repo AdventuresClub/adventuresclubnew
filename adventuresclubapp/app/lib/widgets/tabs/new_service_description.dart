@@ -136,6 +136,106 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
 
   void getData() {}
 
+  Widget _buildAvailabilityChips(List<String> days) {
+    // Filter out empty strings and ensure unique days
+    final validDays =
+        days.where((day) => day.trim().isNotEmpty).toSet().toList();
+
+    if (validDays.isEmpty) {
+      return RichText(
+        text: TextSpan(
+          text: "${'Availability'} : ".tr(),
+          style: const TextStyle(
+            color: bluishColor,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Raleway',
+          ),
+          children: <TextSpan>[
+            TextSpan(
+              text: "Not specified".tr(),
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: blackColor,
+                fontFamily: 'Raleway',
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Title
+        Text(
+          "${'Availability'} :".tr(),
+          style: const TextStyle(
+            color: bluishColor,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Raleway',
+          ),
+        ),
+        const SizedBox(height: 8),
+
+        // Chips
+        Wrap(
+          spacing: 8,
+          runSpacing: 6,
+          children: validDays.map((day) {
+            return Chip(
+              label: Text(
+                _formatDayName(day),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              backgroundColor: Colors.green.shade600, //_getDayColor(day),
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              visualDensity: VisualDensity.compact,
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+            );
+          }).toList(),
+        ),
+      ],
+    );
+  }
+
+// Helper function to format day names (capitalize first letter)
+  String _formatDayName(String day) {
+    if (day.isEmpty) return day;
+    return day[0].toUpperCase() + day.substring(1).toLowerCase();
+  }
+
+// Helper function to assign colors to different days
+  Color _getDayColor(String day) {
+    final lowerDay = day.toLowerCase();
+
+    switch (lowerDay) {
+      case 'monday':
+        return Colors.blue.shade600;
+      case 'tuesday':
+        return Colors.green.shade600;
+      case 'wednesday':
+        return Colors.orange.shade600;
+      case 'thursday':
+        return Colors.purple.shade600;
+      case 'friday':
+        return Colors.red.shade600;
+      case 'saturday':
+        return Colors.teal.shade600;
+      case 'sunday':
+        return Colors.pink.shade600;
+      default:
+        return Colors.grey.shade600;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     allowEdit = context.watch<EditProvider>().edit;
@@ -479,25 +579,26 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                         //width: 0.5,
                         //height: 55,
                       ),
-                      RichText(
-                        text: TextSpan(
-                          text: "${'Availability'} : ".tr(),
-                          style: const TextStyle(
-                              color: bluishColor,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Raleway'),
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: aPlan,
-                                style: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: blackColor,
-                                    fontFamily: 'Raleway')),
-                          ],
-                        ),
-                      ),
+                      // RichText(
+                      //   text: TextSpan(
+                      //     text: "${'Availability'} : ".tr(),
+                      //     style: const TextStyle(
+                      //         color: bluishColor,
+                      //         fontSize: 18,
+                      //         fontWeight: FontWeight.bold,
+                      //         fontFamily: 'Raleway'),
+                      //     children: <TextSpan>[
+                      //       TextSpan(
+                      //           text: aPlan,
+                      //           style: const TextStyle(
+                      //               fontSize: 14,
+                      //               fontWeight: FontWeight.w400,
+                      //               color: blackColor,
+                      //               fontFamily: 'Raleway')),
+                      //     ],
+                      //   ),
+                      // ),
+                      _buildAvailabilityChips(adventuresPlan),
                       Divider(
                         color: blackColor.withOpacity(0.2),
                         thickness: 1,
