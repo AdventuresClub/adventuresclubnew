@@ -1832,6 +1832,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:app/constants.dart';
+import 'package:app/models/home_services/services_model.dart';
 import 'package:app/models/transaction_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -1841,7 +1842,8 @@ import 'package:open_file/open_file.dart';
 import 'dart:io';
 
 class TransactionScreen extends StatefulWidget {
-  const TransactionScreen({super.key});
+  final ServicesModel sm;
+  const TransactionScreen({required this.sm, super.key});
 
   @override
   TransactionScreenState createState() => TransactionScreenState();
@@ -1879,7 +1881,7 @@ class TransactionScreenState extends State<TransactionScreen> {
     try {
       var response = await http.post(
         Uri.parse("${Constants.baseUrl}/api/v1/getTransactionByServiceId"),
-        body: {'service_id': "185"},
+        body: {'service_id': widget.sm.id.toString()},
       );
 
       if (response.statusCode == 200) {
@@ -1948,7 +1950,7 @@ class TransactionScreenState extends State<TransactionScreen> {
       List<String> headers = [
         'Transaction ID',
         'User ID',
-        'Booking Date',
+        'Service Date',
         'Total Amount (OMR)',
         'Refunded Amount (OMR)',
         'Adventures Club (OMR)',

@@ -131,7 +131,9 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
-          return const TransactionScreen();
+          return TransactionScreen(
+            sm: widget.sm,
+          );
         },
       ),
     );

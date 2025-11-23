@@ -1858,7 +1858,7 @@ class _AccountState extends State<Account> {
                                                       );
                                                     }
                                                     if (text[i] ==
-                                                        "settlements") {
+                                                        "Settlements") {
                                                       Navigator.of(context)
                                                           .push(
                                                         MaterialPageRoute(

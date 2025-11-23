@@ -63,7 +63,22 @@ class _CreatePlanOnePageState extends State<CreatePlanOnePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: bluishColor,
+              ),
+              onPressed: sendData,
+              child: Text(
+                "Save",
+                style: TextStyle(color: AppTheme.whiteColor),
+              )),
+          const SizedBox(
+            width: 10,
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: SingleChildScrollView(
@@ -101,17 +116,9 @@ class _CreatePlanOnePageState extends State<CreatePlanOnePage> {
           ),
         ),
       ),
-      persistentFooterButtons: [
-        ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: bluishColor,
-            ),
-            onPressed: sendData,
-            child: Text(
-              "Save",
-              style: TextStyle(color: AppTheme.whiteColor),
-            ))
-      ],
+      // persistentFooterButtons: [
+
+      // ],
     );
   }
 }

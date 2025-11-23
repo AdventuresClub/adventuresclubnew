@@ -49,7 +49,9 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
     try {
       var response = await http.post(
         Uri.parse("${Constants.baseUrl}/api/v1/getTransactionByProviderId"),
-        body: {'provider_id': "3"}, // You can make this dynamic
+        body: {
+          'provider_id': Constants.userId.toString(),
+        }, // You can make this dynamic
       );
 
       if (response.statusCode == 200) {
