@@ -1,7 +1,6 @@
 // provider_transactions_widget.dart
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:app/app_theme.dart';
 import 'package:app/constants.dart';
 import 'package:app/models/transactions/provider_transactions_model.dart';
 import 'package:flutter/material.dart';
@@ -389,12 +388,20 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
                   ),
                 )
               : IconButton(
-                  icon: Icon(Icons.download),
+                  icon: Icon(
+                    Icons.download,
+                    color: Colors.white,
+                    size: 32,
+                  ),
                   tooltip: 'Export to Excel',
                   onPressed: _exportToExcel,
                 ),
           IconButton(
-            icon: Icon(Icons.refresh),
+            icon: Icon(
+              Icons.refresh,
+              color: Colors.white,
+              size: 32,
+            ),
             onPressed: _loadTransactionData,
           ),
         ],
@@ -554,7 +561,7 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
             children: [
               Expanded(
                 child: _buildSummaryRow(
-                  'SOLD AMOUNT',
+                  'SETTLED',
                   'OMR $_selledAmount',
                   Icons.shopping_cart,
                   Colors.blue,
@@ -776,6 +783,11 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
           numeric: true,
         ),
         DataColumn(
+          label: Text('Booking\nStatus',
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+          numeric: true,
+        ),
+        DataColumn(
           label: Text('Settlement\nStatus',
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
           onSort: (columnIndex, ascending) {
@@ -792,6 +804,7 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
         ),
       ],
       rows: _currentPageData.map((transaction) {
+        final statusInfo = Constants.getStatusInfo(transaction.status);
         return DataRow(
           cells: [
             DataCell(
@@ -851,6 +864,19 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
               Text(
                 'OMR ${transaction.oacAmount.toStringAsFixed(2)}',
                 style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
+              ),
+            ),
+            DataCell(
+              SizedBox(
+                width: 80,
+                child: Text(
+                  transaction.settlementComment.isEmpty
+                      ? '-'
+                      : "", //statusInfo['text'],
+                  style: TextStyle(fontSize: 10),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
               ),
             ),
             DataCell(_buildSettlementChip(transaction.settlementStatus)),
@@ -1004,11 +1030,12 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
                     children: [
                       _buildDetailRow(
                           'Transaction ID', transaction.transactionId),
+                      _buildDetailRow(
+                          'Transaction Status', transaction.payStatus),
                       _buildDetailRow('User Name', transaction.name),
                       _buildDetailRow(
                           'Adventure Name', transaction.adventureName),
                       _buildDetailRow('Booking Date', transaction.bookingDate),
-                      _buildDetailRow('Status', transaction.payStatus),
                       _buildDetailRow(
                           'Settlement Status',
                           _statusMapping[

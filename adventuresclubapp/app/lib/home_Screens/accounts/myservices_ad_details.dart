@@ -298,9 +298,9 @@ class _MyServicesAdDetailsState extends State<MyServicesAdDetails> {
           GestureDetector(
             onTap: () => navTransactoinDetails(),
             child: const Image(
-              image: ExactAssetImage('images/edit.png'),
-              height: 30,
-              width: 30,
+              image: ExactAssetImage('images/points.png'),
+              height: 36,
+              width: 36,
             ),
           ),
           const SizedBox(

@@ -926,6 +926,44 @@ class Constants {
     return (value * mod).round() / mod;
   }
 
+  static Map<String, dynamic> getStatusInfo(String status) {
+    switch (status) {
+      case "0":
+        return {'text': "requested".tr(), 'color': blueColor1};
+      case "1":
+        return {'text': "accepted".tr(), 'color': orangeColor};
+      case "2":
+        return {'text': "paid".tr(), 'color': greenColor1};
+      case "3":
+        return {'text': "declined".tr(), 'color': redColor};
+      case "4":
+        return {'text': "completed".tr(), 'color': greenColor1};
+      case "5":
+        return {'text': "dropped".tr(), 'color': redColor};
+      case "6":
+        return {'text': "confirm".tr(), 'color': greenColor1};
+      case "7":
+        return {'text': "unpaid".tr(), 'color': greenColor1};
+      case "8":
+        return {'text': "payOnArrival".tr(), 'color': greenColor1};
+      case "9":
+        return {'text': "CANCELLED (100% REFUND)".tr(), 'color': greenColor1};
+      case "10":
+        return {'text': "CANCELLED (50% REFUND)".tr(), 'color': greenColor1};
+      case "11":
+        return {
+          'text': "CANCELLED (NON-REFUNDABLE)".tr(),
+          'color': greenColor1
+        };
+      case "12":
+        return {'text': "Early Drop (100% REFUND)".tr(), 'color': greenColor1};
+      case "13":
+        return {'text': "Late Drop (100% REFUND)".tr(), 'color': greenColor1};
+      default:
+        return {'text': "unknown".tr(), 'color': Colors.grey};
+    }
+  }
+
 //  static void createService() async {
 //     await convertProgramData();
 //     selectedActivityIncludesId = activitiesId.join(",");

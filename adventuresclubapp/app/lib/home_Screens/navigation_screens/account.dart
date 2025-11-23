@@ -50,18 +50,25 @@ class _AccountState extends State<Account> {
     'images/points.png'
   ];
   List<String> partnerImages = [
-    'images/heart.png',
+    //'images/heart.png',
+    'images/points.png',
     'images/newservice.png',
     'images/newrequest.png'
   ];
-  List<String> text = ["favorite", 'myServices', 'clientRequests'];
+  List<String> text = [
+    //"favorite",
+    //"myPoints",
+    "Settlements",
+    'myServices', 'clientRequests'
+  ];
   List<String> userText = [
     "favorite",
     'Notification',
     'My Points',
   ];
   List<String> tile1 = [
-    'images/points.png',
+    'images/heart.png',
+    //  'images/points.png',
     'images/healthCondition.png',
     'images/notification.png',
     'images/about.png',
@@ -71,7 +78,8 @@ class _AccountState extends State<Account> {
     'images/logout.png',
   ];
   List<String> tile1Text = [
-    "myPoints",
+    "favorite",
+    //"myPoints",
     "healthCondition",
     "notification",
     "changeLanguage",
@@ -1650,8 +1658,10 @@ class _AccountState extends State<Account> {
                                                               ExactAssetImage(
                                                                   partnerImages[
                                                                       i]),
-                                                          height: 30,
-                                                          width: 30,
+                                                          height:
+                                                              i == 1 ? 36 : 30,
+                                                          width:
+                                                              i == 1 ? 36 : 30,
                                                         ),
                                                         cRequest > 0 &&
                                                                 text[i] ==
@@ -1848,6 +1858,17 @@ class _AccountState extends State<Account> {
                                                       );
                                                     }
                                                     if (text[i] ==
+                                                        "settlements") {
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        MaterialPageRoute(
+                                                          builder: (_) {
+                                                            return const ProviderTransactions();
+                                                          },
+                                                        ),
+                                                      );
+                                                    }
+                                                    if (text[i] ==
                                                         'myServices') {
                                                       navMyServices();
                                                     }
@@ -1862,8 +1883,9 @@ class _AccountState extends State<Account> {
                                                       Image(
                                                         image: ExactAssetImage(
                                                             partnerImages[i]),
-                                                        height: 30,
-                                                        width: 30,
+                                                        height:
+                                                            i == 0 ? 48 : 40,
+                                                        width: i == 0 ? 48 : 40,
                                                       ),
                                                       cRequest > 0 &&
                                                               text[i] ==
@@ -2117,6 +2139,16 @@ class _AccountState extends State<Account> {
                                   if (tile1Text[index] == "deleteAccount") {
                                     showConfirmation(
                                         "deleteAccount", "wantToDelete");
+                                  }
+                                  if (tile1Text[index] == "favorite") {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return const Favorite();
+                                          //const MyServicesAdDetails();
+                                        },
+                                      ),
+                                    );
                                   }
                                 }),
                                 leading:

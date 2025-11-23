@@ -2266,12 +2266,20 @@ class TransactionScreenState extends State<TransactionScreen> {
                   ),
                 )
               : IconButton(
-                  icon: Icon(Icons.download),
+                  icon: Icon(
+                    Icons.download,
+                    size: 32,
+                    color: Colors.white,
+                  ),
                   tooltip: 'Export to Excel',
                   onPressed: _exportToExcel,
                 ),
           IconButton(
-            icon: Icon(Icons.refresh),
+            icon: Icon(
+              Icons.refresh,
+              size: 32,
+              color: Colors.white,
+            ),
             tooltip: 'Refresh Data',
             onPressed: _loadTransactionData,
           ),

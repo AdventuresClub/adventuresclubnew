@@ -61,6 +61,7 @@ class ProviderTransaction {
   final String paymentChannel;
   final String adventureName;
   final String name;
+  final String status;
 
   ProviderTransaction({
     required this.id,
@@ -82,6 +83,7 @@ class ProviderTransaction {
     required this.paymentChannel,
     required this.adventureName,
     required this.name,
+    required this.status,
   });
 
   factory ProviderTransaction.fromJson(Map<String, dynamic> json) {
@@ -107,6 +109,7 @@ class ProviderTransaction {
       paymentChannel: json['payment_channel']?.toString() ?? '',
       adventureName: json['adventure_name']?.toString() ?? '',
       name: json['name']?.toString() ?? '',
+      status: json['status']?.toString() ?? '',
     );
   }
 }
