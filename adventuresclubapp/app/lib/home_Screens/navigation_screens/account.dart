@@ -22,6 +22,7 @@ import 'package:app/provider/navigation_index_provider.dart';
 import 'package:app/sign_up/sign_in.dart';
 import 'package:app/widgets/my_text.dart';
 import 'package:app/widgets/null_user_container.dart';
+import 'package:app/widgets/transaction_screens/provider_transactions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -1437,7 +1438,7 @@ class _AccountState extends State<Account> {
                                                           .push(
                                                         MaterialPageRoute(
                                                           builder: (_) {
-                                                            return const MyPoints();
+                                                            return const ProviderTransactions();
                                                           },
                                                         ),
                                                       );
@@ -2030,7 +2031,7 @@ class _AccountState extends State<Account> {
                                   if (tile1Text[index] == 'myPoints') {
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(builder: (_) {
-                                      return const MyPoints();
+                                      return const ProviderTransactions();
                                     }));
                                   }
                                   if (tile1Text[index] == 'healthCondition') {
@@ -2287,7 +2288,7 @@ class _AccountState extends State<Account> {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (_) {
-                                          return const MyPoints();
+                                          return const ProviderTransactions();
                                         },
                                       ),
                                     );
