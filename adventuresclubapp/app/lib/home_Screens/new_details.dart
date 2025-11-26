@@ -569,6 +569,12 @@ class _NewDetailsState extends State<NewDetails> {
     }
   }
 
+  bool _isFullScreen = false;
+  int _currentFullScreenIndex = 0;
+  double _scale = 1.0;
+  double _previousScale = 1.0;
+  double _rotation = 0.0;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -601,59 +607,60 @@ class _NewDetailsState extends State<NewDetails> {
                                     clipBehavior: Clip.none,
                                     children: [
                                       PageView.builder(
-                                          // reverse: true,
-                                          controller: _pageViewController,
-                                          onPageChanged: (index) {
-                                            setState(() {
-                                              _activePage = index;
-                                            });
-                                          },
-                                          itemCount: service!.images.length,
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
-                                            return Container(
+                                        controller: _pageViewController,
+                                        onPageChanged: (index) {
+                                          setState(() {
+                                            _activePage = index;
+                                          });
+                                        },
+                                        itemCount: service!.images.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                _isFullScreen = true;
+                                                _currentFullScreenIndex = index;
+                                                _scale = 1.0;
+                                                _rotation = 0.0;
+                                              });
+                                            },
+                                            child: Container(
                                               decoration: BoxDecoration(
-                                                // borderRadius: const BorderRadius.only(
-                                                //     bottomLeft: Radius.circular(50)),
                                                 image: DecorationImage(
-                                                    colorFilter:
-                                                        ColorFilter.mode(
-                                                            Colors
-                                                                .grey
-                                                                .withOpacity(
-                                                                    0.2),
-                                                            BlendMode.darken),
-                                                    image:
-                                                        // const ExactAssetImage(
-                                                        //     'images/River-rafting.png'),
-                                                        // fit: BoxFit.cover,
-                                                        NetworkImage(
-                                                      "${"${Constants.baseUrl}/public/uploads/"}${service!.images[index].imageUrl}",
-                                                    ),
-                                                    fit: BoxFit.fill
-                                                    // const ExactAssetImage(
-                                                    //     'images/River-rafting.png'),
-                                                    //fit: BoxFit.cover),
-                                                    ),
+                                                  colorFilter: ColorFilter.mode(
+                                                    Colors.grey
+                                                        .withOpacity(0.2),
+                                                    BlendMode.darken,
+                                                  ),
+                                                  image: NetworkImage(
+                                                    "${"${Constants.baseUrl}/public/uploads/"}${service!.images[index].imageUrl}",
+                                                  ),
+                                                  fit: BoxFit.fill,
+                                                ),
                                               ),
-                                            );
-                                          }),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                      // Your existing Positioned widgets (share, favorite, back)
                                       Positioned(
                                         top: 20,
                                         right: 70,
                                         child: GestureDetector(
-                                            onTap: shareLinkOnWhatsApp,
-                                            child: Container(
-                                              height: 40,
-                                              width: 40,
-                                              decoration: BoxDecoration(
-                                                color: redColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(32),
-                                              ),
-                                              child: const Icon(Icons.share,
-                                                  size: 30, color: whiteColor),
-                                            )),
+                                          onTap: shareLinkOnWhatsApp,
+                                          child: Container(
+                                            height: 40,
+                                            width: 40,
+                                            decoration: BoxDecoration(
+                                              color: redColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(32),
+                                            ),
+                                            child: const Icon(Icons.share,
+                                                size: 30, color: whiteColor),
+                                          ),
+                                        ),
                                       ),
                                       Positioned(
                                         top: 20,
@@ -702,9 +709,10 @@ class _NewDetailsState extends State<NewDetails> {
                                             height: 40,
                                             width: 40,
                                             decoration: BoxDecoration(
-                                                color: whiteColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(30)),
+                                              color: whiteColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                            ),
                                             child: const Icon(
                                               Icons.arrow_back_ios_new,
                                               color: blackColor,
@@ -715,6 +723,200 @@ class _NewDetailsState extends State<NewDetails> {
                                     ],
                                   ),
                                 ),
+
+// Full screen image viewer
+                                if (_isFullScreen)
+                                  Stack(
+                                    children: [
+                                      // Background
+                                      Container(
+                                        color: Colors.black87,
+                                        width: double.infinity,
+                                        height: double.infinity,
+                                      ),
+
+                                      // Image with zoom and rotate
+                                      Positioned.fill(
+                                        child: InteractiveViewer(
+                                          boundaryMargin: EdgeInsets.all(20),
+                                          minScale: 0.1,
+                                          maxScale: 5.0,
+                                          child: Transform.rotate(
+                                            angle: _rotation,
+                                            child: Center(
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.8,
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.8,
+                                                child: PageView.builder(
+                                                  itemCount:
+                                                      service!.images.length,
+                                                  controller: PageController(
+                                                      initialPage:
+                                                          _currentFullScreenIndex),
+                                                  onPageChanged: (index) {
+                                                    setState(() {
+                                                      _currentFullScreenIndex =
+                                                          index;
+                                                      _scale = 1.0;
+                                                      _rotation = 0.0;
+                                                    });
+                                                  },
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return Image.network(
+                                                      "${"${Constants.baseUrl}/public/uploads/"}${service!.images[index].imageUrl}",
+                                                      fit: BoxFit.contain,
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+
+                                      // Close button
+                                      Positioned(
+                                        top: 50,
+                                        right: 20,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              _isFullScreen = false;
+                                              _scale = 1.0;
+                                              _rotation = 0.0;
+                                            });
+                                          },
+                                          child: Container(
+                                            width: 50,
+                                            height: 50,
+                                            decoration: BoxDecoration(
+                                              color: Colors.black54,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Icon(
+                                              Icons.close,
+                                              color: Colors.white,
+                                              size: 30,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+
+                                      // Rotation buttons
+                                      Positioned(
+                                        bottom: 100,
+                                        left: 20,
+                                        child: Row(
+                                          children: [
+                                            // Rotate left
+                                            GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  _rotation -=
+                                                      0.5; // Rotate 90 degrees counter-clockwise
+                                                });
+                                              },
+                                              child: Container(
+                                                width: 50,
+                                                height: 50,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.black54,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: Icon(
+                                                  Icons.rotate_left,
+                                                  color: Colors.white,
+                                                  size: 30,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(width: 10),
+                                            // Rotate right
+                                            GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  _rotation +=
+                                                      0.5; // Rotate 90 degrees clockwise
+                                                });
+                                              },
+                                              child: Container(
+                                                width: 50,
+                                                height: 50,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.black54,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: Icon(
+                                                  Icons.rotate_right,
+                                                  color: Colors.white,
+                                                  size: 30,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
+                                      // Reset button
+                                      Positioned(
+                                        bottom: 40,
+                                        right: 20,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              _scale = 1.0;
+                                              _rotation = 0.0;
+                                            });
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 16, vertical: 8),
+                                            decoration: BoxDecoration(
+                                              color: Colors.black54,
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            child: Text(
+                                              'Reset',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+
+                                      // Page indicator
+                                      Positioned(
+                                        bottom: 100,
+                                        right: 20,
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 16, vertical: 8),
+                                          decoration: BoxDecoration(
+                                            color: Colors.black54,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          child: Text(
+                                            '${_currentFullScreenIndex + 1}/${service!.images.length}',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 Positioned(
                                   bottom: 0,
                                   left: 0,

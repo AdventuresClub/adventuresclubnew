@@ -65,7 +65,10 @@ class _CreatePlanTwoMainpageState extends State<CreatePlanTwoMainpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading:
+            IconButton(onPressed: update, icon: Icon(Icons.arrow_back_ios_new)),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -89,9 +92,9 @@ class _CreatePlanTwoMainpageState extends State<CreatePlanTwoMainpage> {
           ],
         ),
       ),
-      persistentFooterButtons: [
-        ElevatedButton(onPressed: update, child: Text("Save"))
-      ],
+      // persistentFooterButtons: [
+      //   ElevatedButton(onPressed: update, child: Text("Save"))
+      // ],
     );
   }
 }

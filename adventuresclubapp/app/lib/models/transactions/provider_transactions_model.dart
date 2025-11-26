@@ -62,29 +62,29 @@ class ProviderTransaction {
   final String adventureName;
   final String name;
   final String status;
-
-  ProviderTransaction({
-    required this.id,
-    required this.userId,
-    required this.serviceId,
-    required this.transactionId,
-    required this.payStatus,
-    required this.providerId,
-    required this.message,
-    required this.unitAmount,
-    required this.totalAmount,
-    required this.discountedAmount,
-    required this.bookingDate,
-    required this.settlementStatus,
-    required this.settlementComment,
-    required this.clientRefund,
-    required this.providerAmount,
-    required this.oacAmount,
-    required this.paymentChannel,
-    required this.adventureName,
-    required this.name,
-    required this.status,
-  });
+  final String bookingStatus;
+  ProviderTransaction(
+      {required this.id,
+      required this.userId,
+      required this.serviceId,
+      required this.transactionId,
+      required this.payStatus,
+      required this.providerId,
+      required this.message,
+      required this.unitAmount,
+      required this.totalAmount,
+      required this.discountedAmount,
+      required this.bookingDate,
+      required this.settlementStatus,
+      required this.settlementComment,
+      required this.clientRefund,
+      required this.providerAmount,
+      required this.oacAmount,
+      required this.paymentChannel,
+      required this.adventureName,
+      required this.name,
+      required this.status,
+      required this.bookingStatus});
 
   factory ProviderTransaction.fromJson(Map<String, dynamic> json) {
     return ProviderTransaction(
@@ -110,6 +110,7 @@ class ProviderTransaction {
       adventureName: json['adventure_name']?.toString() ?? '',
       name: json['name']?.toString() ?? '',
       status: json['status']?.toString() ?? '',
+      bookingStatus: json['booking_status']?.toString() ?? '',
     );
   }
 }

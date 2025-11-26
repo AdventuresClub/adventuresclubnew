@@ -2639,7 +2639,7 @@ class TransactionScreenState extends State<TransactionScreen> {
         ),
         DataColumn(
           label: Text(
-            'User ID',
+            'Name',
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
         ),
@@ -2685,6 +2685,13 @@ class TransactionScreenState extends State<TransactionScreen> {
         ),
         DataColumn(
           label: Text(
+            'Booking\nStatus',
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+          ),
+          numeric: true,
+        ),
+        DataColumn(
+          label: Text(
             'Settlement\nStatus',
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
@@ -2706,6 +2713,8 @@ class TransactionScreenState extends State<TransactionScreen> {
         ),
       ],
       rows: _currentPageData.map((transaction) {
+        final statusInfo =
+            Constants.getStatusInfo(transaction.bookingStatus ?? "");
         return DataRow(
           cells: [
             DataCell(
@@ -2722,7 +2731,7 @@ class TransactionScreenState extends State<TransactionScreen> {
             ),
             DataCell(
               Text(
-                '${transaction.userId}',
+                '${transaction.name}',
                 style: TextStyle(fontSize: 11),
               ),
             ),
@@ -2731,7 +2740,7 @@ class TransactionScreenState extends State<TransactionScreen> {
                 transaction.bookingDate,
                 style: TextStyle(
                   fontSize: 11,
-                  fontWeight: FontWeight.w600,
+                  //   fontWeight: FontWeight.w600,
                 ),
               ),
             ),
@@ -2767,6 +2776,19 @@ class TransactionScreenState extends State<TransactionScreen> {
                   fontSize: 11,
                   fontWeight: FontWeight.bold,
                   color: Colors.blue[700],
+                ),
+              ),
+            ),
+            DataCell(
+              SizedBox(
+                width: 80,
+                child: Text(
+                  transaction.settlementComment.isEmpty
+                      ? "" //statusInfo['text']
+                      : statusInfo['text'],
+                  style: TextStyle(fontSize: 10),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
                 ),
               ),
             ),
@@ -2967,7 +2989,7 @@ class TransactionScreenState extends State<TransactionScreen> {
                     children: [
                       _buildDetailRow(
                           'Transaction ID', transaction.transactionId),
-                      _buildDetailRow('User ID', '${transaction.userId}'),
+                      _buildDetailRow('User Name', '${transaction.name}'),
                       _buildDetailRow('Booking Date', transaction.bookingDate),
                       _buildDetailRow('Status', transaction.payStatus),
                       _buildDetailRow(

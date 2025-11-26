@@ -772,17 +772,17 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
           numeric: true,
         ),
         DataColumn(
+          label: Text('Adventures\nClub',
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+          numeric: true,
+        ),
+        DataColumn(
           label: Text('Provider\nAmount',
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
           numeric: true,
           onSort: (columnIndex, ascending) {
             _sortData('providerAmount', ascending);
           },
-        ),
-        DataColumn(
-          label: Text('OAC\nAmount',
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
-          numeric: true,
         ),
         DataColumn(
           label: Text('Booking\nStatus',
@@ -806,12 +806,12 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
         ),
       ],
       rows: _currentPageData.map((transaction) {
-        final statusInfo = Constants.getStatusInfo(transaction.status);
+        final statusInfo = Constants.getStatusInfo(transaction.bookingStatus);
         return DataRow(
           cells: [
             DataCell(
               SizedBox(
-                width: 80,
+                width: 60,
                 child: Text(
                   transaction.transactionId.length > 8
                       ? '${transaction.transactionId.substring(0, 8)}...'
@@ -855,6 +855,12 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
             ),
             DataCell(
               Text(
+                'OMR ${transaction.oacAmount.toStringAsFixed(2)}',
+                style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
+              ),
+            ),
+            DataCell(
+              Text(
                 'OMR ${transaction.providerAmount.toStringAsFixed(2)}',
                 style: TextStyle(
                     fontSize: 11,
@@ -863,18 +869,12 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
               ),
             ),
             DataCell(
-              Text(
-                'OMR ${transaction.oacAmount.toStringAsFixed(2)}',
-                style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
-              ),
-            ),
-            DataCell(
               SizedBox(
                 width: 80,
                 child: Text(
                   transaction.settlementComment.isEmpty
-                      ? '-'
-                      : "", //statusInfo['text'],
+                      ? "" //statusInfo['text']
+                      : statusInfo['text'],
                   style: TextStyle(fontSize: 10),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,

@@ -212,38 +212,40 @@ class Transaction {
   final String? deletedAt;
   final String createdAt;
   final String? updatedAt;
-
-  Transaction({
-    required this.id,
-    required this.userId,
-    required this.serviceId,
-    required this.transactionId,
-    required this.payStatus,
-    required this.providerId,
-    required this.adult,
-    required this.kids,
-    required this.message,
-    required this.unitAmount,
-    required this.totalAmount,
-    required this.discountedAmount,
-    required this.futurePlan,
-    required this.bookingDate,
-    required this.currency,
-    required this.couponApplied,
-    required this.status,
-    required this.settlementStatus,
-    required this.settlementComment,
-    required this.clientRefund,
-    required this.providerAmount,
-    required this.oacAmount,
-    required this.updatedBy,
-    this.cancelledReason,
-    this.paymentStatus,
-    required this.paymentChannel,
-    this.deletedAt,
-    required this.createdAt,
-    this.updatedAt,
-  });
+  final String? bookingStatus;
+  final String? name;
+  Transaction(
+      {required this.id,
+      required this.userId,
+      required this.serviceId,
+      required this.transactionId,
+      required this.payStatus,
+      required this.providerId,
+      required this.adult,
+      required this.kids,
+      required this.message,
+      required this.unitAmount,
+      required this.totalAmount,
+      required this.discountedAmount,
+      required this.futurePlan,
+      required this.bookingDate,
+      required this.currency,
+      required this.couponApplied,
+      required this.status,
+      required this.settlementStatus,
+      required this.settlementComment,
+      required this.clientRefund,
+      required this.providerAmount,
+      required this.oacAmount,
+      required this.updatedBy,
+      this.cancelledReason,
+      this.paymentStatus,
+      required this.paymentChannel,
+      this.deletedAt,
+      required this.createdAt,
+      this.updatedAt,
+      this.bookingStatus,
+      this.name});
 
   factory Transaction.fromJson(Map<String, dynamic> json) {
     return Transaction(
@@ -276,6 +278,8 @@ class Transaction {
       deletedAt: json['deleted_at']?.toString(),
       createdAt: json['created_at']?.toString() ?? '',
       updatedAt: json['updated_at']?.toString(),
+      bookingStatus: json['booking_status']?.toString(),
+      name: json['name']?.toString(),
     );
   }
 }

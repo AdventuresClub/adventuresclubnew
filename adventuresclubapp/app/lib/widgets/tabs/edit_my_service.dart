@@ -1660,12 +1660,14 @@ class _EditMyServiceState extends State<EditMyService> {
                     ),
                     Row(
                       children: [
-                        MyText(
-                          text: widget.gm.adventureName,
-                          //'River Rafting',
-                          weight: FontWeight.bold,
-                          color: bluishColor,
-                          size: 22,
+                        Expanded(
+                          child: MyText(
+                            text: widget.gm.adventureName,
+                            //'River Rafting',
+                            weight: FontWeight.bold,
+                            color: bluishColor,
+                            size: 22,
+                          ),
                         ),
                         const SizedBox(
                           width: 10,
