@@ -46,9 +46,13 @@ class _AboutUsState extends State<AboutUs> {
   }
 
   void navPrivacyPolicy() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return const NewPrivacyPolicy();
-    }));
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) {
+          return const NewPrivacyPolicy();
+        },
+      ),
+    );
   }
 
   @override

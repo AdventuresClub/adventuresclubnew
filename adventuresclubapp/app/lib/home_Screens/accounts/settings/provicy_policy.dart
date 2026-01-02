@@ -37,12 +37,14 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
       result.forEach((element) {
         int id = int.tryParse(element['id'].toString()) ?? 0;
         TermsConditionModel tc = TermsConditionModel(
-          id,
-          element['title'].toString() ?? "",
-          element['description'].toString() ?? "",
-          element['created_at'].toString() ?? "",
-          element['updated_at'].toString() ?? "",
-          element['deleted_at'].toString() ?? "",
+          id: id,
+          title: element['title'].toString() ?? "",
+          titleAr: element['title_ar'].toString() ?? "",
+          description: element['description'].toString() ?? "",
+          descriptionAr: element['description_ar'].toString() ?? "",
+          ca: element['created_at'].toString() ?? "",
+          ua: element['updated_at'].toString() ?? "",
+          da: element['deleted_at'].toString() ?? "",
         );
         privacyList.add(tc);
       });
@@ -73,28 +75,54 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const SizedBox(height: 10),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: MyText(
-                          text: privacyList[index].title, //"Text 1",
-                          weight: FontWeight.bold,
-                          size: 14,
-                          color: blackColor,
-                        ),
-                      ),
+                      if (privacyList[index].title != "null" &&
+                          privacyList[index].titleAr != "null" &&
+                          privacyList[index].title.isNotEmpty &&
+                          privacyList[index].titleAr.isNotEmpty)
+                        Constants.language == "en"
+                            ? MyText(
+                                text: privacyList[index].title, //"Text 1",
+                                weight: FontWeight.bold,
+                                size: 14,
+                                color: blackColor,
+                                align: TextAlign.justify,
+                              )
+                            : MyText(
+                                text: privacyList[index].titleAr, //"Text 1",
+                                weight: FontWeight.bold,
+                                size: 14,
+                                color: blackColor,
+                                align: TextAlign.justify,
+                              ),
                       const SizedBox(
                         height: 10,
                       ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: MyText(
-                          text: privacyList[index].description, //"Text 2",
-                          size: 14,
-                          color: blackColor,
+                      if (privacyList[index].descriptionAr != "null" &&
+                          privacyList[index].description != "null" &&
+                          privacyList[index].description.isNotEmpty &&
+                          privacyList[index].descriptionAr.isNotEmpty)
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Constants.language == "en"
+                              ? MyText(
+                                  text: privacyList[index]
+                                      .description, //"Text 2",
+                                  size: 14,
+                                  color: blackColor,
+                                  align: TextAlign.justify,
+                                )
+                              : MyText(
+                                  text: privacyList[index]
+                                      .descriptionAr, //"Text 2",
+                                  size: 14,
+                                  color: blackColor,
+                                  align: TextAlign.justify,
+                                ),
                         ),
-                      ),
                       const Divider(
                         thickness: 1,
                         color: greyProfileColor,

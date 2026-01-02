@@ -1,10 +1,19 @@
 class TermsConditionModel {
   int id;
   String title;
+  String titleAr;
   String description;
+  String descriptionAr;
   String ca;
   String ua;
   String da;
   TermsConditionModel(
-      this.id, this.title, this.description, this.ca, this.ua, this.da);
+      {required this.id,
+      required this.titleAr,
+      required this.descriptionAr,
+      required this.title,
+      required this.description,
+      required this.ca,
+      required this.ua,
+      required this.da});
 }

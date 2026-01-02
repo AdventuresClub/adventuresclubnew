@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:convert';
 
 import 'package:app/constants.dart';
@@ -193,17 +195,17 @@ class _TermsNConditionsState extends State<TermsNConditions> {
     }
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
+      padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
       child: Column(
         children: [
           // Header
-          const Text(
-            'Please review our terms carefully',
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.black,
-            ),
-          ),
+          // const Text(
+          //   'Please review our terms carefully',
+          //   style: TextStyle(
+          //     fontSize: 14,
+          //     color: Colors.black,
+          //   ),
+          // ),
           const SizedBox(height: 10),
           // const Text(
           //   'Last updated: June 2023',
@@ -215,7 +217,7 @@ class _TermsNConditionsState extends State<TermsNConditions> {
           //const SizedBox(height: 24),
 
           // Terms List
-          ...terms.map((term) => _buildTermCard(term)).toList(),
+          ...terms.map((term) => _buildTermCard(term))
 
           // Accept Button
           // Padding(
@@ -250,7 +252,7 @@ class _TermsNConditionsState extends State<TermsNConditions> {
 
   Widget _buildTermCard(Term term) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -271,14 +273,23 @@ class _TermsNConditionsState extends State<TermsNConditions> {
         // ),
         tilePadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         // childrenPadding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
-        title: Text(
-          term.title,
-          style: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
-            color: Colors.black87,
-          ),
-        ),
+        title: Constants.language == "en"
+            ? Text(
+                term.title,
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black87,
+                ),
+              )
+            : Text(
+                term.titleAr,
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black87,
+                ),
+              ),
         trailing: Icon(
           Icons.keyboard_arrow_down,
           color: Colors.teal[700],
@@ -289,14 +300,31 @@ class _TermsNConditionsState extends State<TermsNConditions> {
             color: Colors.grey[200],
           ),
           const SizedBox(height: 12),
-          Text(
-            term.description,
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey[900],
-              height: 1.6,
-            ),
-          ),
+          Constants.language == "en"
+              ? Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+                  child: Text(
+                    term.description,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey[900],
+                      height: 1.6,
+                    ),
+                  ),
+                )
+              : Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+                  child: Text(
+                    term.descriptionAr,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey[900],
+                      height: 1.6,
+                    ),
+                  ),
+                ),
         ],
       ),
     );

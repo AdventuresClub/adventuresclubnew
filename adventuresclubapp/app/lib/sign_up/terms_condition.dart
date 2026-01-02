@@ -38,12 +38,14 @@ class _TermsConditionsState extends State<TermsConditions> {
       result.forEach((element) {
         int id = int.tryParse(element['id'].toString()) ?? 0;
         TermsConditionModel tc = TermsConditionModel(
-          id,
-          element['title'].toString() ?? "",
-          element['description'].toString() ?? "",
-          element['created_at'].toString() ?? "",
-          element['updated_at'].toString() ?? "",
-          element['deleted_at'].toString() ?? "",
+          id: id,
+          title: element['title'].toString() ?? "",
+          titleAr: element['title_ar'].toString() ?? "",
+          description: element['description'].toString() ?? "",
+          descriptionAr: element['description_ar'].toString() ?? "",
+          ca: element['created_at'].toString() ?? "",
+          ua: element['updated_at'].toString() ?? "",
+          da: element['deleted_at'].toString() ?? "",
         );
         termsList.add(tc);
       });
@@ -58,7 +60,7 @@ class _TermsConditionsState extends State<TermsConditions> {
     return Scaffold(
         appBar: AppBar(
           title: MyText(
-            text: "Terms & Conditions",
+            text: "termsAndConditions",
             weight: FontWeight.bold,
             color: bluishColor,
           ),
@@ -73,27 +75,49 @@ class _TermsConditionsState extends State<TermsConditions> {
                   return Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: MyText(
-                            text: termsList[index].title, //"Text 1",
-                            weight: FontWeight.bold,
-                            size: 14,
-                            color: blackColor,
-                          ),
-                        ),
+                        if (termsList[index].title != "null" &&
+                            termsList[index].titleAr != "null" &&
+                            termsList[index].title.isNotEmpty &&
+                            termsList[index].titleAr.isNotEmpty)
+                          Constants.language == "en"
+                              ? MyText(
+                                  text: termsList[index].title, //"Text 1",
+                                  weight: FontWeight.bold,
+                                  size: 14,
+                                  color: blackColor,
+                                  align: TextAlign.justify,
+                                )
+                              : MyText(
+                                  text: termsList[index].titleAr, //"Text 1",
+                                  weight: FontWeight.bold,
+                                  size: 14,
+                                  color: blackColor,
+                                  align: TextAlign.justify,
+                                ),
                         const SizedBox(
                           height: 10,
                         ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: MyText(
-                            text: termsList[index].description, //"Text 2",
-                            size: 14,
-                            color: blackColor,
-                          ),
-                        ),
+                        if (termsList[index].descriptionAr != "null" &&
+                            termsList[index].description != "null" &&
+                            termsList[index].description.isNotEmpty &&
+                            termsList[index].descriptionAr.isNotEmpty)
+                          Constants.language == "en"
+                              ? MyText(
+                                  text:
+                                      termsList[index].description, //"Text 2",
+                                  size: 14,
+                                  color: blackColor,
+                                  align: TextAlign.justify,
+                                )
+                              : MyText(
+                                  text: termsList[index]
+                                      .descriptionAr, //"Text 2",
+                                  size: 14,
+                                  color: blackColor,
+                                  align: TextAlign.justify,
+                                ),
                         const Divider(
                           thickness: 1,
                           color: greyProfileColor,
