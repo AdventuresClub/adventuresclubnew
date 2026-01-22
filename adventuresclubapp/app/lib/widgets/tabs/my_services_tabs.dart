@@ -234,7 +234,7 @@ class _MyServicesTabState extends State<MyServicesTab> {
             element['category'] ?? "",
             element['nationality'] ?? "",
             gSim);
-        if (gm.status != "3") {
+        if (gm.bookingStatus != "") {
           gGM.add(gm);
         }
       });

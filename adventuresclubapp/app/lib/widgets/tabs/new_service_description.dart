@@ -572,6 +572,7 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
 
                 if (widget.gm.sPlan == 1)
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Divider(
                         color: blackColor.withOpacity(0.2),

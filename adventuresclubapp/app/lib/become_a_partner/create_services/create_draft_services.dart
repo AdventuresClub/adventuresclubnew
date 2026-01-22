@@ -1529,7 +1529,7 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
             "cost_exc": costTwo.text,
             "pre_requisites": preRequisites.text,
             "minimum_requirements": minimumRequirement.text,
-            "terms_conditions": "null",
+            "terms_conditions": "empty",
             "inc_description": reasonOne,
             "exc_description": reasonTwo,
           });
@@ -1538,7 +1538,7 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
         showConfirmation();
       }
     } catch (e) {
-      print(e.toString());
+      print("${"error"} : ${e.toString()}");
     }
   }
 
@@ -1547,6 +1547,7 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
       var request = http.MultipartRequest(
         "POST",
         Uri.parse("${Constants.baseUrl}api/v1/third_geo_location_creation"),
+        //"${Constants.baseUrl}/api/v1/third_geo_location_creation
       );
       dynamic programData = {
         "provider_id": Constants.userId.toString(),
@@ -1567,10 +1568,10 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
       request.fields.addAll(programData);
       final response = await request.send();
       log(response.toString());
-      debugPrint(response.statusCode.toString());
+      debugPrint("${"last api"}${response.statusCode.toString()}");
       print(response.headers);
     } catch (e) {
-      print(e.toString());
+      print("${"last api error"} : ${e.toString()}");
     }
   }
 

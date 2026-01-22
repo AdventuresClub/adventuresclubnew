@@ -1098,7 +1098,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
             "cost_exc": costTwo.text,
             "pre_requisites": preRequisites.text,
             "minimum_requirements": minimumRequirement.text,
-            "terms_conditions": terms.text,
+            "terms_conditions": "test", //terms.text,
             "inc_description": reasonOne,
             "exc_description": reasonTwo,
           });
@@ -1107,7 +1107,7 @@ class _CreateNewServicesState extends State<CreateNewServices> {
         showConfirmation();
       }
     } catch (e) {
-      print(e.toString());
+      print("${"last api"} : ${e.toString()}");
     } finally {
       setState(() {
         loading = true;
@@ -1318,9 +1318,9 @@ class _CreateNewServicesState extends State<CreateNewServices> {
       final response = await request.send();
       log(response.toString());
       debugPrint(response.statusCode.toString());
-      print(response.headers);
+      print("${"draft"} : ${response.headers}");
     } catch (e) {
-      print(e.toString());
+      print("${"Draft error"} : ${e.toString()}");
     } finally {
       getDraftId();
     }
