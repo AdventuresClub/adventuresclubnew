@@ -202,7 +202,9 @@ class _RequestListViewState extends State<RequestListView> {
               element["description"] ?? "",
               element["registrations"] ?? "",
               gSim);
-          uRequestList.add(up);
+          if (up.status != "") {
+            uRequestList.add(up);
+          }
         }
       }
       //setState(() {

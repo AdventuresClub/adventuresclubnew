@@ -180,7 +180,9 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
               element["description"].toString() ?? "",
               element["registrations"].toString() ?? "",
               gSim);
-          uRequestList.add(up);
+          if (up.status != "") {
+            uRequestList.add(up);
+          }
         });
       }
       setState(() {
