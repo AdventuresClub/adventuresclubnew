@@ -159,7 +159,7 @@ class CheckProfileState extends State<CheckProfile> {
       'id': build.id,
       'model': build.model,
       'product': build.product,
-      'serialNumber': build.serialNumber,
+      //'serialNumber': build.serialNumber,
     };
   }
 
