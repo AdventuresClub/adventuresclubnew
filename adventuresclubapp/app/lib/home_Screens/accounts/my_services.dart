@@ -783,7 +783,7 @@ class _MyServicesState extends State<MyServices> {
                       // ),
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 4, horizontal: 4),
-                      hintText: 'Search by Adventure Name',
+                      hintText: 'Search by Adventure Name'.tr(),
                       filled: true,
                       fillColor: whiteColor,
                       suffixIcon: GestureDetector(

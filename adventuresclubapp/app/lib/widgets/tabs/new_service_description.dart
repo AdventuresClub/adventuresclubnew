@@ -144,7 +144,7 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
     if (validDays.isEmpty) {
       return RichText(
         text: TextSpan(
-          text: "${'Availability'} : ".tr(),
+          text: "${'Availability'.tr()} : ".tr(),
           style: const TextStyle(
             color: bluishColor,
             fontSize: 18,
@@ -171,7 +171,7 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
       children: [
         // Title
         Text(
-          "${'Availability'} :".tr(),
+          "${'Availability'.tr()} :".tr(),
           style: const TextStyle(
             color: bluishColor,
             fontSize: 18,

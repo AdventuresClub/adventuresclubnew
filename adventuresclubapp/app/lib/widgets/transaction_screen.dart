@@ -1828,12 +1828,15 @@
 //   }
 // }
 
+// ignore_for_file: deprecated_member_use
+
 // transaction_widget.dart
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:app/constants.dart';
 import 'package:app/models/home_services/services_model.dart';
 import 'package:app/models/transaction_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:excel/excel.dart';
@@ -2242,16 +2245,17 @@ class TransactionScreenState extends State<TransactionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      // backgroundColor: Colors.grey[50],
       appBar: AppBar(
         title: Text(
-          'Transaction Details',
+          'Transaction Details'.tr(),
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
-        backgroundColor: Colors.blue[800],
+        iconTheme: IconThemeData(color: whiteColor),
+        backgroundColor: kSecondaryColor,
         elevation: 0,
         actions: [
           // Export to Excel button
@@ -2273,7 +2277,7 @@ class TransactionScreenState extends State<TransactionScreen> {
                     size: 32,
                     color: Colors.white,
                   ),
-                  tooltip: 'Export to Excel',
+                  tooltip: 'Export to Excel'.tr(),
                   onPressed: _exportToExcel,
                 ),
           IconButton(
@@ -2282,7 +2286,7 @@ class TransactionScreenState extends State<TransactionScreen> {
               size: 32,
               color: Colors.white,
             ),
-            tooltip: 'Refresh Data',
+            tooltip: 'Refresh Data'.tr(),
             onPressed: _loadTransactionData,
           ),
         ],
@@ -2307,7 +2311,7 @@ class TransactionScreenState extends State<TransactionScreen> {
           ),
           SizedBox(height: 16),
           Text(
-            'Loading transaction data...',
+            'Loading transaction data...'.tr(),
             style: TextStyle(
               fontSize: 16,
               color: Colors.grey[600],
@@ -2330,7 +2334,7 @@ class TransactionScreenState extends State<TransactionScreen> {
           ),
           SizedBox(height: 16),
           Text(
-            _errorMessage,
+            _errorMessage.tr(),
             style: TextStyle(
               fontSize: 16,
               color: Colors.grey[600],
@@ -2343,7 +2347,7 @@ class TransactionScreenState extends State<TransactionScreen> {
               backgroundColor: Colors.blue[800],
               foregroundColor: Colors.white,
             ),
-            child: Text('Try Again'),
+            child: Text('Try Again'.tr()),
           ),
         ],
       ),
@@ -2362,7 +2366,7 @@ class TransactionScreenState extends State<TransactionScreen> {
           ),
           SizedBox(height: 16),
           Text(
-            'No transaction data available',
+            'No transaction data available'.tr(),
             style: TextStyle(
               fontSize: 16,
               color: Colors.grey[600],
@@ -2397,7 +2401,7 @@ class TransactionScreenState extends State<TransactionScreen> {
                 Icon(Icons.info, size: 16, color: Colors.blue[600]),
                 SizedBox(width: 8),
                 Text(
-                  '${_filteredTransactions.length} transactions available for export',
+                  '${_filteredTransactions.length} "${"transactions available for export".tr()}"',
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.blue[700],
@@ -2432,8 +2436,8 @@ class TransactionScreenState extends State<TransactionScreen> {
         children: [
           // Main total earnings
           _buildSummaryRow(
-            'TOTAL EARNINGS',
-            'OMR $_totalEarnings',
+            'TOTAL EARNINGS'.tr(),
+            '${"OMR".tr()} $_totalEarnings',
             Icons.attach_money,
             Colors.green,
             isMain: true,
@@ -2445,8 +2449,8 @@ class TransactionScreenState extends State<TransactionScreen> {
             children: [
               Expanded(
                 child: _buildSummaryRow(
-                  'SETTLED',
-                  'OMR $_settledAmount',
+                  'SETTLED'.tr(),
+                  '${"OMR".tr()} $_settledAmount',
                   Icons.check_circle,
                   Colors.blue,
                 ),
@@ -2454,8 +2458,8 @@ class TransactionScreenState extends State<TransactionScreen> {
               SizedBox(width: 8),
               Expanded(
                 child: _buildSummaryRow(
-                  'PENDING',
-                  'OMR $_pendingSettlements',
+                  'PENDING'.tr(),
+                  '${"OMR".tr()} $_pendingSettlements',
                   Icons.pending_actions,
                   Colors.orange,
                 ),
@@ -2485,7 +2489,7 @@ class TransactionScreenState extends State<TransactionScreen> {
               Icon(icon, color: color, size: isMain ? 20 : 16),
               SizedBox(width: 8),
               Text(
-                title,
+                title.tr(),
                 style: TextStyle(
                   fontSize: isMain ? 14 : 12,
                   fontWeight: isMain ? FontWeight.bold : FontWeight.normal,
@@ -2495,7 +2499,7 @@ class TransactionScreenState extends State<TransactionScreen> {
             ],
           ),
           Text(
-            value,
+            value.tr(),
             style: TextStyle(
               fontSize: isMain ? 16 : 14,
               fontWeight: FontWeight.bold,
@@ -2516,7 +2520,7 @@ class TransactionScreenState extends State<TransactionScreen> {
           // Search Field
           TextField(
             decoration: InputDecoration(
-              hintText: 'Search transactions...',
+              hintText: 'Search transactions...'.tr(),
               prefixIcon: Icon(Icons.search),
               border: OutlineInputBorder(),
               contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -2537,7 +2541,7 @@ class TransactionScreenState extends State<TransactionScreen> {
                 child: DropdownButtonFormField<String>(
                   value: _statusFilter,
                   decoration: InputDecoration(
-                    labelText: 'Settlement Status',
+                    labelText: 'Settlement Status'.tr(),
                     border: OutlineInputBorder(),
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -2547,7 +2551,7 @@ class TransactionScreenState extends State<TransactionScreen> {
                     return DropdownMenuItem<String>(
                       value: status,
                       child: Text(
-                        status,
+                        status.tr(),
                         style: TextStyle(fontSize: 14),
                       ),
                     );
@@ -2562,33 +2566,30 @@ class TransactionScreenState extends State<TransactionScreen> {
               ),
               SizedBox(width: 8),
               // Rows per page
-              Container(
-                width: 120,
-                child: DropdownButtonFormField<int>(
-                  value: _rowsPerPage,
-                  decoration: InputDecoration(
-                    labelText: 'Rows',
-                    border: OutlineInputBorder(),
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    isDense: true,
-                  ),
-                  items: [5, 10, 15, 20].map((int value) {
-                    return DropdownMenuItem<int>(
-                      value: value,
-                      child: Text(
-                        '$value',
-                        style: TextStyle(fontSize: 14),
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      _rowsPerPage = value!;
-                      _currentPage = 0;
-                    });
-                  },
+              DropdownButtonFormField<int>(
+                value: _rowsPerPage,
+                decoration: InputDecoration(
+                  labelText: 'Rows'.tr(),
+                  border: OutlineInputBorder(),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  isDense: true,
                 ),
+                items: [5, 10, 15, 20].map((int value) {
+                  return DropdownMenuItem<int>(
+                    value: value,
+                    child: Text(
+                      '$value'.tr(),
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _rowsPerPage = value!;
+                    _currentPage = 0;
+                  });
+                },
               ),
             ],
           ),
@@ -2617,8 +2618,8 @@ class TransactionScreenState extends State<TransactionScreen> {
 
   Widget _buildDataTable() {
     return DataTable(
-      headingRowColor: MaterialStateProperty.resolveWith<Color?>(
-        (Set<MaterialState> states) => Colors.blue[50],
+      headingRowColor: WidgetStateProperty.resolveWith<Color?>(
+        (Set<WidgetState> states) => Colors.blue[50],
       ),
       dataRowMinHeight: 40,
       dataRowMaxHeight: 60,
@@ -2630,7 +2631,7 @@ class TransactionScreenState extends State<TransactionScreen> {
       columns: [
         DataColumn(
           label: Text(
-            'Transaction ID',
+            'Transaction ID'.tr(),
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
           onSort: (columnIndex, ascending) {
@@ -2639,13 +2640,13 @@ class TransactionScreenState extends State<TransactionScreen> {
         ),
         DataColumn(
           label: Text(
-            'Name',
+            'Name'.tr(),
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
         ),
         DataColumn(
           label: Text(
-            'Booking Date',
+            'Booking Date'.tr(),
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
           onSort: (columnIndex, ascending) {
@@ -2654,7 +2655,7 @@ class TransactionScreenState extends State<TransactionScreen> {
         ),
         DataColumn(
           label: Text(
-            'Total Paid',
+            'Total Paid'.tr(),
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
           numeric: true,
@@ -2664,35 +2665,35 @@ class TransactionScreenState extends State<TransactionScreen> {
         ),
         DataColumn(
           label: Text(
-            'Refunded',
+            'Refunded'.tr(),
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
           numeric: true,
         ),
         DataColumn(
           label: Text(
-            'Adventures\nClub',
+            '${"Adventures".tr()}\n${"Club".tr()}',
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
           numeric: true,
         ),
         DataColumn(
           label: Text(
-            'Partner',
+            'Partner'.tr(),
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
           numeric: true,
         ),
         DataColumn(
           label: Text(
-            'Booking\nStatus',
+            '${"Booking".tr()}\n${"Status".tr()}',
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
           numeric: true,
         ),
         DataColumn(
           label: Text(
-            'Settlement\nStatus',
+            '${"Settlement".tr()}\n${"Status".tr()}',
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
           onSort: (columnIndex, ascending) {
@@ -2701,13 +2702,13 @@ class TransactionScreenState extends State<TransactionScreen> {
         ),
         DataColumn(
           label: Text(
-            'Comment',
+            'Comment'.tr(),
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
         ),
         DataColumn(
           label: Text(
-            'Actions',
+            'Actions'.tr(),
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
         ),
@@ -2731,7 +2732,7 @@ class TransactionScreenState extends State<TransactionScreen> {
             ),
             DataCell(
               Text(
-                '${transaction.name}',
+                transaction.name!.tr(),
                 style: TextStyle(fontSize: 11),
               ),
             ),
@@ -2746,7 +2747,7 @@ class TransactionScreenState extends State<TransactionScreen> {
             ),
             DataCell(
               Text(
-                'OMR ${transaction.totalAmount.toStringAsFixed(2)}',
+                '${"OMR".tr()} ${transaction.totalAmount.toStringAsFixed(2)}',
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
@@ -2756,13 +2757,13 @@ class TransactionScreenState extends State<TransactionScreen> {
             ),
             DataCell(
               Text(
-                'OMR ${transaction.clientRefund.toStringAsFixed(2)}',
+                '${"OMR".tr()} ${transaction.clientRefund.toStringAsFixed(2)}',
                 style: TextStyle(fontSize: 11),
               ),
             ),
             DataCell(
               Text(
-                'OMR ${transaction.oacAmount.toStringAsFixed(2)}',
+                '${"OMR".tr()} ${transaction.oacAmount.toStringAsFixed(2)}',
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
@@ -2771,7 +2772,7 @@ class TransactionScreenState extends State<TransactionScreen> {
             ),
             DataCell(
               Text(
-                'OMR ${transaction.providerAmount.toStringAsFixed(2)}',
+                '${"OMR".tr()} ${transaction.providerAmount.toStringAsFixed(2)}',
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.bold,
@@ -2793,7 +2794,7 @@ class TransactionScreenState extends State<TransactionScreen> {
               ),
             ),
             DataCell(
-              _buildSettlementChip(transaction.settlementStatus),
+              _buildSettlementChip(transaction.settlementStatus.tr()),
             ),
             DataCell(
               SizedBox(
@@ -2801,7 +2802,7 @@ class TransactionScreenState extends State<TransactionScreen> {
                 child: Text(
                   transaction.settlementComment.isEmpty
                       ? '-'
-                      : transaction.settlementComment,
+                      : transaction.settlementComment.tr(),
                   style: TextStyle(fontSize: 10),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
@@ -2969,7 +2970,7 @@ class TransactionScreenState extends State<TransactionScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Transaction Details',
+                    'Transaction Details'.tr(),
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -3039,7 +3040,7 @@ class TransactionScreenState extends State<TransactionScreen> {
           SizedBox(
             width: 120,
             child: Text(
-              '$label:',
+              "${label.tr()} : ",
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 color: Colors.grey[700],
@@ -3050,7 +3051,7 @@ class TransactionScreenState extends State<TransactionScreen> {
           SizedBox(width: 8),
           Expanded(
             child: Text(
-              value,
+              value.tr(),
               style: TextStyle(fontSize: 12, color: Colors.grey[800]),
             ),
           ),

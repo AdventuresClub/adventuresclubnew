@@ -1,8 +1,11 @@
 // provider_transactions_widget.dart
+// ignore_for_file: deprecated_member_use
+
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:app/constants.dart';
 import 'package:app/models/transactions/provider_transactions_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:excel/excel.dart';
@@ -364,17 +367,18 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      //backgroundColor: Colors.grey[50],
       appBar: AppBar(
         title: Text(
-          'Provider Transactions',
+          'Provider Transactions'.tr(),
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: kSecondaryColor,
         centerTitle: true,
+        iconTheme: IconThemeData(color: whiteColor),
         elevation: 0,
         actions: [
           _isExporting
@@ -395,7 +399,7 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
                     color: Colors.white,
                     size: 32,
                   ),
-                  tooltip: 'Export to Excel',
+                  tooltip: 'Export to Excel'.tr(),
                   onPressed: _exportToExcel,
                 ),
           IconButton(
@@ -428,7 +432,7 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
           ),
           SizedBox(height: 16),
           Text(
-            'Loading provider transactions...',
+            'Loading provider transactions...'.tr(),
             style: TextStyle(
               fontSize: 16,
               color: Colors.grey[600],
@@ -451,7 +455,7 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
           ),
           SizedBox(height: 16),
           Text(
-            _errorMessage,
+            _errorMessage.tr(),
             style: TextStyle(
               fontSize: 16,
               color: Colors.grey[600],
@@ -483,7 +487,7 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
           ),
           SizedBox(height: 16),
           Text(
-            'No provider transaction data available',
+            'No provider transaction data available'.tr(),
             style: TextStyle(
               fontSize: 16,
               color: Colors.grey[600],
@@ -517,7 +521,8 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
                 Icon(Icons.info, size: 16, color: Colors.purple[600]),
                 SizedBox(width: 8),
                 Text(
-                  '${_filteredTransactions.length} transactions available for export',
+                  '${_filteredTransactions.length} "${"transactions available for export".tr()}"'
+                      .tr(),
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.purple[700],
@@ -552,8 +557,8 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
         children: [
           // Main total earnings
           _buildSummaryRow(
-            'TOTAL EARNINGS',
-            'OMR $_totalEarnings',
+            'TOTAL EARNINGS'.tr(),
+            '${"OMR".tr()} $_totalEarnings',
             Icons.attach_money,
             Colors.green,
             isMain: true,
@@ -563,8 +568,8 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
             children: [
               Expanded(
                 child: _buildSummaryRow(
-                  'SETTLED',
-                  'OMR $_selledAmount',
+                  'SETTLED'.tr(),
+                  '${"OMR".tr()} $_selledAmount',
                   Icons.shopping_cart,
                   Colors.blue,
                 ),
@@ -572,8 +577,8 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
               SizedBox(width: 8),
               Expanded(
                 child: _buildSummaryRow(
-                  'PENDING',
-                  'OMR $_pendingSettlements',
+                  'PENDING'.tr(),
+                  '${"OMR".tr()} $_pendingSettlements',
                   Icons.pending_actions,
                   Colors.orange,
                 ),
@@ -602,7 +607,7 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
               Icon(icon, color: color, size: isMain ? 20 : 16),
               SizedBox(width: 8),
               Text(
-                title,
+                title.tr(),
                 style: TextStyle(
                   fontSize: isMain ? 14 : 12,
                   fontWeight: isMain ? FontWeight.bold : FontWeight.normal,
@@ -612,7 +617,7 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
             ],
           ),
           Text(
-            value,
+            value.tr(),
             style: TextStyle(
               fontSize: isMain ? 16 : 14,
               fontWeight: FontWeight.bold,
@@ -632,7 +637,7 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
         children: [
           TextField(
             decoration: InputDecoration(
-              hintText: 'Search transactions...',
+              hintText: 'Search transactions...'.tr(),
               prefixIcon: Icon(Icons.search),
               border: OutlineInputBorder(),
               contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -652,7 +657,7 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
                 child: DropdownButtonFormField<String>(
                   value: _statusFilter,
                   decoration: InputDecoration(
-                    labelText: 'Settlement Status',
+                    labelText: 'Settlement Status'.tr(),
                     border: OutlineInputBorder(),
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -673,12 +678,12 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
                 ),
               ),
               SizedBox(width: 8),
-              Container(
+              SizedBox(
                 width: 120,
                 child: DropdownButtonFormField<int>(
                   value: _rowsPerPage,
                   decoration: InputDecoration(
-                    labelText: 'Rows',
+                    labelText: 'Rows'.tr(),
                     border: OutlineInputBorder(),
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -737,76 +742,77 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
       sortAscending: _sortAscending,
       columns: [
         DataColumn(
-          label: Text('Transaction ID',
+          label: Text('Transaction ID'.tr(),
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
           onSort: (columnIndex, ascending) {
-            _sortData('transactionId', ascending);
+            _sortData('transactionId'.tr(), ascending);
           },
         ),
         DataColumn(
-          label: Text('User Name',
+          label: Text('User Name'.tr(),
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
         ),
         DataColumn(
-          label: Text('Adventure',
+          label: Text('Adventure'.tr(),
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
         ),
         DataColumn(
-          label: Text('Booking Date',
+          label: Text('Booking Date'.tr(),
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
           onSort: (columnIndex, ascending) {
-            _sortData('bookingDate', ascending);
+            _sortData('bookingDate'.tr(), ascending);
           },
         ),
         DataColumn(
-          label: Text('Total Paid',
+          label: Text('Total Paid'.tr(),
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
           numeric: true,
           onSort: (columnIndex, ascending) {
-            _sortData('totalAmount', ascending);
+            _sortData('totalAmount'.tr(), ascending);
           },
         ),
         DataColumn(
-          label: Text('Refunded',
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
-          numeric: true,
-        ),
-        DataColumn(
-          label: Text('Adventures\nClub',
+          label: Text('Refunded'.tr(),
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
           numeric: true,
         ),
         DataColumn(
-          label: Text('Provider\nAmount',
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
-          numeric: true,
-          onSort: (columnIndex, ascending) {
-            _sortData('providerAmount', ascending);
-          },
-        ),
-        DataColumn(
-          label: Text('Booking\nStatus',
+          label: Text('${"Adventures".tr()}\n${"Club".tr()}'.tr(),
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
           numeric: true,
         ),
         DataColumn(
-          label: Text('Settlement\nStatus',
+          label: Text('${"Provider".tr()}\n${"Amount"}'.tr(),
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+          numeric: true,
           onSort: (columnIndex, ascending) {
-            _sortData('settlementStatus', ascending);
+            _sortData('provider Amount'.tr(), ascending);
           },
         ),
         DataColumn(
-          label: Text('Comment',
+          label: Text('${"Booking".tr()}\n${"Status".tr()}',
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+          numeric: true,
+        ),
+        DataColumn(
+          label: Text('${"Settlement".tr()}\n${"Status".tr()}',
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+          onSort: (columnIndex, ascending) {
+            _sortData('settlement Status'.tr(), ascending);
+          },
+        ),
+        DataColumn(
+          label: Text('Comment'.tr(),
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
         ),
         DataColumn(
-          label: Text('Actions',
+          label: Text('Actions'.tr(),
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
         ),
       ],
       rows: _currentPageData.map((transaction) {
-        final statusInfo = Constants.getStatusInfo(transaction.bookingStatus);
+        final statusInfo =
+            Constants.getStatusInfo(transaction.bookingStatus.tr());
         return DataRow(
           cells: [
             DataCell(
@@ -822,25 +828,25 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
               ),
             ),
             DataCell(
-              Text(transaction.name, style: TextStyle(fontSize: 11)),
+              Text(transaction.name.tr(), style: TextStyle(fontSize: 11)),
             ),
             DataCell(
               SizedBox(
                 width: 100,
                 child: Text(
-                  transaction.adventureName,
+                  transaction.adventureName.tr(),
                   style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
             ),
             DataCell(
-              Text(transaction.bookingDate,
+              Text(transaction.bookingDate.tr(),
                   style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600)),
             ),
             DataCell(
               Text(
-                'OMR ${transaction.totalAmount.toStringAsFixed(2)}',
+                '${"OMR".tr()} ${transaction.totalAmount.toStringAsFixed(2)}',
                 style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
@@ -849,19 +855,19 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
             ),
             DataCell(
               Text(
-                'OMR ${transaction.clientRefund.toStringAsFixed(2)}',
+                '${"OMR".tr()} ${transaction.clientRefund.toStringAsFixed(2)}',
                 style: TextStyle(fontSize: 11),
               ),
             ),
             DataCell(
               Text(
-                'OMR ${transaction.oacAmount.toStringAsFixed(2)}',
+                '${"OMR".tr()} ${transaction.oacAmount.toStringAsFixed(2)}',
                 style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
               ),
             ),
             DataCell(
               Text(
-                'OMR ${transaction.providerAmount.toStringAsFixed(2)}',
+                '${"OMR".tr()} ${transaction.providerAmount.toStringAsFixed(2)}',
                 style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.bold,
@@ -881,14 +887,14 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
                 ),
               ),
             ),
-            DataCell(_buildSettlementChip(transaction.settlementStatus)),
+            DataCell(_buildSettlementChip(transaction.settlementStatus.tr())),
             DataCell(
               SizedBox(
                 width: 80,
                 child: Text(
                   transaction.settlementComment.isEmpty
                       ? '-'
-                      : transaction.settlementComment,
+                      : transaction.settlementComment.tr(),
                   style: TextStyle(fontSize: 10),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
@@ -950,7 +956,7 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
 
     return Chip(
       label: Text(
-        displayStatus,
+        displayStatus.tr(),
         style: TextStyle(
             color: Colors.white, fontSize: 8, fontWeight: FontWeight.bold),
       ),
@@ -1016,7 +1022,7 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Transaction Details',
+                  Text('Transaction Details'.tr(),
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   IconButton(
@@ -1031,35 +1037,36 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _buildDetailRow(
-                          'Transaction ID', transaction.transactionId),
+                          'Transaction ID'.tr(), transaction.transactionId),
                       _buildDetailRow(
-                          'Transaction Status', transaction.payStatus),
-                      _buildDetailRow('User Name', transaction.name),
+                          'Transaction Status'.tr(), transaction.payStatus),
+                      _buildDetailRow('User Name'.tr(), transaction.name),
                       _buildDetailRow(
-                          'Adventure Name', transaction.adventureName),
-                      _buildDetailRow('Booking Date', transaction.bookingDate),
+                          'Adventure Name'.tr(), transaction.adventureName),
                       _buildDetailRow(
-                          'Settlement Status',
+                          'Booking Date'.tr(), transaction.bookingDate),
+                      _buildDetailRow(
+                          'Settlement Status'.tr(),
                           _statusMapping[
                                   transaction.settlementStatus.toLowerCase()] ??
                               transaction.settlementStatus),
+                      _buildDetailRow('Total Paid'.tr(),
+                          '${"OMR".tr()} ${transaction.totalAmount}'),
+                      _buildDetailRow('Discounted Amount'.tr(),
+                          '${"OMR".tr()} ${transaction.discountedAmount}'),
+                      _buildDetailRow("Refunded Amount".tr(),
+                          'OMR ${transaction.clientRefund}'),
+                      _buildDetailRow('Provider Amount'.tr(),
+                          '${"OMR".tr()} ${transaction.providerAmount}'),
+                      _buildDetailRow('OAC Amount'.tr(),
+                          '${"OMR".tr()} ${transaction.oacAmount}'),
                       _buildDetailRow(
-                          'Total Paid', 'OMR ${transaction.totalAmount}'),
-                      _buildDetailRow('Discounted Amount',
-                          'OMR ${transaction.discountedAmount}'),
-                      _buildDetailRow(
-                          'Refunded Amount', 'OMR ${transaction.clientRefund}'),
-                      _buildDetailRow('Provider Amount',
-                          'OMR ${transaction.providerAmount}'),
-                      _buildDetailRow(
-                          'OAC Amount', 'OMR ${transaction.oacAmount}'),
-                      _buildDetailRow(
-                          'Payment Channel', transaction.paymentChannel),
+                          'Payment Channel'.tr(), transaction.paymentChannel),
                       if (transaction.message.isNotEmpty)
-                        _buildDetailRow('Message', transaction.message),
+                        _buildDetailRow('Message'.tr(), transaction.message),
                       if (transaction.settlementComment.isNotEmpty)
                         _buildDetailRow(
-                            'Comment', transaction.settlementComment),
+                            'Comment'.tr(), transaction.settlementComment),
                     ],
                   ),
                 ),
@@ -1068,7 +1075,7 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
               Center(
                 child: ElevatedButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text('Close'),
+                  child: Text('Close'.tr()),
                 ),
               ),
             ],
@@ -1087,7 +1094,7 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
           SizedBox(
             width: 120,
             child: Text(
-              '$label:',
+              label.tr(),
               style: TextStyle(
                   fontWeight: FontWeight.w500,
                   color: Colors.grey[700],
@@ -1096,7 +1103,7 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
           ),
           SizedBox(width: 8),
           Expanded(
-              child: Text(value,
+              child: Text(value.tr(),
                   style: TextStyle(fontSize: 12, color: Colors.grey[800]))),
         ],
       ),

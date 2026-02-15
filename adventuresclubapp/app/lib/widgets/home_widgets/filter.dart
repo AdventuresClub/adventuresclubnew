@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_function_literals_in_foreach_calls, avoid_print
+// ignore_for_file: avoid_function_literals_in_foreach_calls, avoid_print, deprecated_member_use
 
 import 'dart:async';
 import 'dart:convert';
