@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:app/constants.dart';
 import 'package:app/models/getParticipants/get_participants_model.dart';
 import 'package:app/widgets/my_text.dart';

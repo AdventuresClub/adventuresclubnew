@@ -27,7 +27,12 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
   List<ProviderTransaction> _filteredTransactions = [];
   String _searchQuery = '';
   String _statusFilter = 'All';
-  List<String> _statusOptions = ['All', 'Settled', 'In Progress', 'In Review'];
+  final List<String> _statusOptions = [
+    'All',
+    'Settled',
+    'In Progress',
+    'In Review'
+  ];
   int _rowsPerPage = 10;
   int _currentPage = 0;
   List<ProviderTransaction> _sortedTransactions = [];
@@ -666,7 +671,7 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
                   items: _statusOptions.map((String status) {
                     return DropdownMenuItem<String>(
                       value: status,
-                      child: Text(status, style: TextStyle(fontSize: 14)),
+                      child: Text(status.tr(), style: TextStyle(fontSize: 14)),
                     );
                   }).toList(),
                   onChanged: (value) {
@@ -776,26 +781,53 @@ class ProviderTransactionsState extends State<ProviderTransactions> {
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
           numeric: true,
         ),
+        // DataColumn(
+        //   label: Text('${"Adventures".tr()}\n${"Club".tr()}'.tr(),
+        //       style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+        //   numeric: true,
+        // ),
         DataColumn(
-          label: Text('${"Adventures".tr()}\n${"Club".tr()}'.tr(),
+          label: Text("Adventures Club".tr(),
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
           numeric: true,
         ),
+        // Constants.language == "en"
+        //     ?
+        // DataColumn(
+        //   label: Text('${"Provider".tr()}\n${"Amount".tr()}',
+        //       style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+        //   numeric: true,
+        //   onSort: (columnIndex, ascending) {
+        //     _sortData('provider Amount'.tr(), ascending);
+        //   },
+        // ),
         DataColumn(
-          label: Text('${"Provider".tr()}\n${"Amount"}'.tr(),
+          label: Text("Provider Amount".tr(),
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
           numeric: true,
           onSort: (columnIndex, ascending) {
             _sortData('provider Amount'.tr(), ascending);
           },
         ),
+        // DataColumn(
+        //   label: Text('${"Booking".tr()}\n${"Status".tr()}',
+        //       style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+        //   numeric: true,
+        // ),
         DataColumn(
-          label: Text('${"Booking".tr()}\n${"Status".tr()}',
+          label: Text("Booking Status".tr(),
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
           numeric: true,
         ),
+        // DataColumn(
+        //   label: Text('${"Settlement".tr()}\n${"Status".tr()}',
+        //       style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+        //   onSort: (columnIndex, ascending) {
+        //     _sortData('settlement Status'.tr(), ascending);
+        //   },
+        // ),
         DataColumn(
-          label: Text('${"Settlement".tr()}\n${"Status".tr()}',
+          label: Text("Settlement Status".tr(),
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
           onSort: (columnIndex, ascending) {
             _sortData('settlement Status'.tr(), ascending);

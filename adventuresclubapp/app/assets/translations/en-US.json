@@ -565,6 +565,7 @@
 	"In Progress" : "In Progress",
     "in_progress": "In Progress",
 	"In Review" : "In Review",
+    "IN REVIEW" : "In Review",
 	"Search transactions..." : "Search transactions...",
 	"Rows" : "Rows",
 	"Settlement Status" : "Settlement Status",
@@ -613,5 +614,10 @@
     "Adventure Name": "Adventure Name",
     "Discounted Amount": "Discounted Amount",
     "OAC Amount": "OAC Amount",
-    "Name": "Name"
+    "Name": "Name",
+    "Late Drop (100% REFUND)": "Late Drop (100% REFUND)",
+    "CANCELLED (100% REFUND)": "CANCELLED (100% REFUND)",
+    "CANCELLED (50% REFUND)": "CANCELLED (50% REFUND)",
+    "CANCELLED (NON-REFUNDABLE)": "CANCELLED (NON-REFUNDABLE)",
+    "Early Drop (100% REFUND)": "Early Drop (100% REFUND)"
 }
