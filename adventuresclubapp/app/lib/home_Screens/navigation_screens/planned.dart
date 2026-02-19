@@ -477,23 +477,61 @@ class _PlannedState extends State<Planned> {
                   _focusedDay = _selectedDay;
                   focusedDay = _focusedDay;
                 },
-                calendarStyle: const CalendarStyle(
-                    todayDecoration: BoxDecoration(color: bluishColor),
-                    // todayColor: Colors.blue,
-                    selectedDecoration: BoxDecoration(color: bluishColor),
-                    todayTextStyle: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22.0,
-                        color: Colors.black)),
-                headerStyle: const HeaderStyle(
-                  titleCentered: true,
-                  formatButtonVisible: false,
-                  formatButtonShowsNext: false,
-                ),
-                startingDayOfWeek: StartingDayOfWeek.monday,
+                // calendarStyle: const CalendarStyle(
+                //     todayDecoration: BoxDecoration(color: bluishColor),
+                //     // todayColor: Colors.blue,
+                //     selectedDecoration: BoxDecoration(color: bluishColor),
+                //     todayTextStyle: TextStyle(
+                //         fontWeight: FontWeight.bold,
+                //         fontSize: 22.0,
+                //         color: Colors.black)),
+                // headerStyle: const HeaderStyle(
+                //   titleCentered: true,
+                //   formatButtonVisible: false,
+                //   formatButtonShowsNext: false,
+                // ),
+                // startingDayOfWeek: StartingDayOfWeek.monday,
+                // calendarBuilders: CalendarBuilders(
+                //   dowBuilder: (context, day) {
+                //     // if (day.weekday == DateTime.sunday) {
+                //     final text = DateFormat.E().format(day);
+                //     return Center(
+                //       child: Text(
+                //         text.tr(),
+                //         style: const TextStyle(
+                //             color: greyColor, fontWeight: FontWeight.w500),
+                //       ),
+                //     );
+                //     // }
+                //   },
+                //   selectedBuilder: (context, datetime, focusedDay) {
+                //     return Container(
+                //       decoration: BoxDecoration(
+                //           color: bluishColor,
+                //           borderRadius: BorderRadius.circular(32.0)),
+                //       margin: const EdgeInsets.all(10.0),
+                //       child: Center(
+                //         child: Text(
+                //           datetime.day.toString().tr(),
+                //           style: const TextStyle(color: Colors.white),
+                //         ),
+                //       ),
+                //     );
+                //   },
+                //   todayBuilder: (context, date, events) => Container(
+                //       margin: const EdgeInsets.all(10.0),
+                //       alignment: Alignment.center,
+                //       decoration: BoxDecoration(
+                //           color: whiteColor,
+                //           borderRadius: BorderRadius.circular(32.0)),
+                //       child: Text(
+                //         date.day.toString().tr(),
+                //         style: const TextStyle(
+                //             color: blackColor, fontWeight: FontWeight.w600),
+                //       )),
+                // ),
                 calendarBuilders: CalendarBuilders(
                   dowBuilder: (context, day) {
-                    // if (day.weekday == DateTime.sunday) {
                     final text = DateFormat.E().format(day);
                     return Center(
                       child: Text(
@@ -502,7 +540,19 @@ class _PlannedState extends State<Planned> {
                             color: greyColor, fontWeight: FontWeight.w500),
                       ),
                     );
-                    // }
+                  },
+                  defaultBuilder: (context, datetime, focusedDay) {
+                    return Container(
+                      margin: const EdgeInsets.all(10.0),
+                      alignment: Alignment.center,
+                      child: Text(
+                        datetime.day
+                            .toString()
+                            .tr(), // Apply translation here too
+                        style: const TextStyle(
+                            color: blackColor, fontWeight: FontWeight.w600),
+                      ),
+                    );
                   },
                   selectedBuilder: (context, datetime, focusedDay) {
                     return Container(

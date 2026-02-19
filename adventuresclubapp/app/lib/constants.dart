@@ -849,7 +849,7 @@ class Constants {
       SnackBar(
         backgroundColor: greenishColor,
         content: Text(
-          message,
+          message.tr(),
           style:
               const TextStyle(fontWeight: FontWeight.w500, color: whiteColor),
         ),

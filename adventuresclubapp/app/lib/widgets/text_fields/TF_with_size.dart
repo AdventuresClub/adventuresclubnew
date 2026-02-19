@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:app/constants.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +33,7 @@ class TFWithSize extends StatefulWidget {
       this.maximumLetters = 500,
       this.minimumLetters = 1,
       this.tapped,
-      this.label})
+      this.label = ""})
       : super(key: key);
 
   @override
@@ -83,7 +85,7 @@ class _TFWithSizeState extends State<TFWithSize> {
         //   //     min: widget.minimumLetters!, max: widget.maximumLetters!)
         // ],
         decoration: InputDecoration(
-          labelText: widget.label,
+          labelText: widget.label != null ? widget.label!.tr() : widget.label,
           labelStyle: const TextStyle(
               color: blackColor,
               fontWeight: FontWeight.bold,

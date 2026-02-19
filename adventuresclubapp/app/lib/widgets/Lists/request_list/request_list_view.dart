@@ -505,7 +505,7 @@ class _RequestListViewState extends State<RequestListView> {
                 ),
                 //Text("data"),
                 Text(
-                  message, //"areYouSureYouWantToDeleteThis".tr(),
+                  message.tr(), //"areYouSureYouWantToDeleteThis".tr(),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(

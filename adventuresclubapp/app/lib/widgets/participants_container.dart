@@ -243,7 +243,7 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                 ),
                 //Text("data"),
                 Text(
-                  message, //"areYouSureYouWantToDeleteThis".tr(),
+                  message.tr(), //"areYouSureYouWantToDeleteThis".tr(),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(

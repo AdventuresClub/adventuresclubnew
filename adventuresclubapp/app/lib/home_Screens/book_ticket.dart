@@ -267,7 +267,7 @@ class _BookTicketState extends State<BookTicket> {
       }
     }
     if (messageController.text.isEmpty) {
-      message("Please Enter Message");
+      message("Please Enter Message".tr());
       return;
     }
     if (totalPerson > 0) {
