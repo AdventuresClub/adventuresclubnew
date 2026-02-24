@@ -2640,7 +2640,8 @@ class TransactionScreenState extends State<TransactionScreen> {
         ),
         DataColumn(
           label: Text(
-            'Name'.tr(),
+            //'Name'.tr(),
+            'User Name'.tr(),
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
         ),
@@ -2672,7 +2673,7 @@ class TransactionScreenState extends State<TransactionScreen> {
         ),
         DataColumn(
           label: Text(
-            '${"Adventures".tr()}\n${"Club".tr()}',
+            "Adventures Club".tr(),
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
           numeric: true,
@@ -2686,14 +2687,14 @@ class TransactionScreenState extends State<TransactionScreen> {
         ),
         DataColumn(
           label: Text(
-            '${"Booking".tr()}\n${"Status".tr()}',
+            "Booking Status".tr(),
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
           numeric: true,
         ),
         DataColumn(
           label: Text(
-            '${"Settlement".tr()}\n${"Status".tr()}',
+            "Settlement Status".tr(),
             style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           ),
           onSort: (columnIndex, ascending) {

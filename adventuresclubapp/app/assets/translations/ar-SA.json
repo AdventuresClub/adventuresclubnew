@@ -676,5 +676,7 @@
 	"Bungee jumping": "القفز بالحبل المطاطي",
 	"Shooting": "إطلاق نار",
 	"Caving": "الكهوف",
-	"Bicycling": "ركوب الدراجات"
+	"Bicycling": "ركوب الدراجات",
+    "Transaction Details": "تفاصيل التحويلات",
+    "transactions available for export": "البيانات المتاحة للتصدير"
 }
