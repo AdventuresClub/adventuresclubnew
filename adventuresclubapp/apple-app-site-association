@@ -4,22 +4,17 @@
     "details": [
       {
         "appIDs": [
-          "1668119170.com.universalskills.adventuresclub"
+          "Q7T3G64GSF.com.universalskills.adventuresclub"
         ],
         "paths": [
           "*"
-        ],
-        "components": [
-          {
-            "/": "/*"
-          }
         ]
       }
     ]
   },
   "webcredentials": {
     "apps": [
-      "1668119170.com.universalskills.adventuresclub"
+      "Q7T3G64GSF.com.universalskills.adventuresclub"
     ]
   }
 }
