@@ -607,7 +607,9 @@ class _EditMyServiceState extends State<EditMyService> {
                                     weight: FontWeight.bold,
                                     color: bluishColor,
                                     size: 18,
-                                    fontFamily: 'Raleway'),
+                                    fontFamily: Constants.language == 'ar'
+                                        ? 'Noto Sans Arabic'
+                                        : 'Raleway'),
                               ),
                               const SizedBox(height: 20),
                               for (int index = 0;
@@ -665,7 +667,9 @@ class _EditMyServiceState extends State<EditMyService> {
                                         title: MyText(
                                           text: dataList[index].title.tr(),
                                           color: greyColor,
-                                          fontFamily: 'Raleway',
+                                          fontFamily: Constants.language == 'ar'
+                                              ? 'Noto Sans Arabic'
+                                              : 'Raleway',
                                           size: 18,
                                           weight: FontWeight.bold,
                                         ),
@@ -1143,7 +1147,9 @@ class _EditMyServiceState extends State<EditMyService> {
                                     weight: FontWeight.bold,
                                     color: blackColor,
                                     size: 16,
-                                    fontFamily: 'Raleway'),
+                                    fontFamily: Constants.language == 'ar'
+                                        ? 'Noto Sans Arabic'
+                                        : 'Raleway'),
                               ),
                               const SizedBox(height: 20),
                               for (int i = 0; i < activitiesFilter.length; i++)
@@ -1185,7 +1191,9 @@ class _EditMyServiceState extends State<EditMyService> {
                                           text:
                                               activitiesFilter[i].activity.tr(),
                                           color: greyColor,
-                                          fontFamily: 'Raleway',
+                                          fontFamily: Constants.language == 'ar'
+                                              ? 'Noto Sans Arabic'
+                                              : 'Raleway',
                                           size: 18,
                                           weight: FontWeight.bold,
                                         ),
@@ -1993,19 +2001,24 @@ class _EditMyServiceState extends State<EditMyService> {
                                 child: RichText(
                                   text: TextSpan(
                                     text: 'Availability'.tr(),
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                         color: bluishColor,
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
-                                        fontFamily: 'Raleway'),
+                                        fontFamily: Constants.language == 'ar'
+                                            ? 'Noto Sans Arabic'
+                                            : 'Raleway'),
                                     children: <TextSpan>[
                                       TextSpan(
                                           text: aPlan,
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w400,
                                               color: blackColor,
-                                              fontFamily: 'Raleway')),
+                                              fontFamily:
+                                                  Constants.language == 'ar'
+                                                      ? 'Noto Sans Arabic'
+                                                      : 'Raleway')),
                                     ],
                                   ),
                                 ),
@@ -2190,7 +2203,11 @@ class _EditMyServiceState extends State<EditMyService> {
                     //                       color: bluishColor,
                     //                       fontSize: 14,
                     //                       fontWeight: FontWeight.bold,
-                    //                       fontFamily: 'Raleway'),
+                    //                       fontFamily: Constants
+                    //         .language ==
+                    //     'ar'
+                    // ? 'Noto Sans Arabic': 'Raleway'
+                    // ),
                     //                   children: <TextSpan>[
                     //                     TextSpan(
                     //                         text: aPlan,
@@ -2198,7 +2215,11 @@ class _EditMyServiceState extends State<EditMyService> {
                     //                             fontSize: 14,
                     //                             fontWeight: FontWeight.w400,
                     //                             color: blackColor,
-                    //                             fontFamily: 'Raleway')),
+                    //                             fontFamily: Constants
+                    //         .language ==
+                    //     'ar'
+                    // ? 'Noto Sans Arabic': 'Raleway'
+                    // )),
                     //                   ],
                     //                 ),
                     //               ),

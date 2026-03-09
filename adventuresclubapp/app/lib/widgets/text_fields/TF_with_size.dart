@@ -86,11 +86,12 @@ class _TFWithSizeState extends State<TFWithSize> {
         // ],
         decoration: InputDecoration(
           labelText: widget.label != null ? widget.label!.tr() : widget.label,
-          labelStyle: const TextStyle(
+          labelStyle: TextStyle(
               color: blackColor,
               fontWeight: FontWeight.bold,
               fontSize: 14,
-              fontFamily: 'Raleway'),
+              fontFamily:
+                  Constants.language == 'ar' ? 'Noto Sans Arabic' : 'Raleway'),
           // contentPadding: EdgeInsets.symmetric(
           //     vertical: widget.verticalPadding, horizontal: 18),
           hintText: widget.hintText.tr(),
@@ -98,7 +99,8 @@ class _TFWithSizeState extends State<TFWithSize> {
               color: blackColor.withOpacity(0.5),
               fontWeight: FontWeight.w500,
               fontSize: 14,
-              fontFamily: 'Raleway'),
+              fontFamily:
+                  Constants.language == 'ar' ? 'Noto Sans Arabic' : 'Raleway'),
           hintMaxLines: widget.hintLines,
           isDense: true,
           filled: true,

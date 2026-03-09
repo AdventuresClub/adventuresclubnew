@@ -145,20 +145,22 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
       return RichText(
         text: TextSpan(
           text: "${'Availability'.tr()} : ".tr(),
-          style: const TextStyle(
+          style: TextStyle(
             color: bluishColor,
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            fontFamily: 'Raleway',
+            fontFamily:
+                Constants.language == 'ar' ? 'Noto Sans Arabic' : 'Raleway',
           ),
           children: <TextSpan>[
             TextSpan(
               text: "Not specified".tr(),
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
                 color: blackColor,
-                fontFamily: 'Raleway',
+                fontFamily:
+                    Constants.language == 'ar' ? 'Noto Sans Arabic' : 'Raleway',
               ),
             ),
           ],
@@ -172,11 +174,12 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
         // Title
         Text(
           "${'Availability'.tr()} :".tr(),
-          style: const TextStyle(
+          style: TextStyle(
             color: bluishColor,
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            fontFamily: 'Raleway',
+            fontFamily:
+                Constants.language == 'ar' ? 'Noto Sans Arabic' : 'Raleway',
           ),
         ),
         const SizedBox(height: 8),
@@ -587,7 +590,11 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                       //         color: bluishColor,
                       //         fontSize: 18,
                       //         fontWeight: FontWeight.bold,
-                      //         fontFamily: 'Raleway'),
+                      //         fontFamily: Constants
+                      //         .language ==
+                      //     'ar'
+                      // ? 'Noto Sans Arabic': 'Raleway'
+                      // ),
                       //     children: <TextSpan>[
                       //       TextSpan(
                       //           text: aPlan,
@@ -595,7 +602,11 @@ class _NewServiceDescriptionState extends State<NewServiceDescription> {
                       //               fontSize: 14,
                       //               fontWeight: FontWeight.w400,
                       //               color: blackColor,
-                      //               fontFamily: 'Raleway')),
+                      //               fontFamily: Constants
+                      //         .language ==
+                      //     'ar'
+                      // ? 'Noto Sans Arabic': 'Raleway'
+                      // )),
                       //     ],
                       //   ),
                       // ),

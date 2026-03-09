@@ -167,7 +167,9 @@ class _ServicesCardState extends State<ServicesCard> {
                               color: blackColor,
                               size: 16,
                               weight: FontWeight.bold,
-                              fontFamily: 'Raleway',
+                              fontFamily: Constants.language == 'ar'
+                                  ? 'Noto Sans Arabic'
+                                  : 'Raleway',
                               height: 1.3,
                             ),
                             const SizedBox(
@@ -191,7 +193,9 @@ class _ServicesCardState extends State<ServicesCard> {
                                         color: blackColor,
                                         size: 16,
                                         weight: FontWeight.bold,
-                                        fontFamily: 'Raleway',
+                                        fontFamily: Constants.language == 'ar'
+                                            ? 'Noto Sans Arabic'
+                                            : 'Raleway',
                                         height: 1.3,
                                       ),
                                     ],
@@ -214,7 +218,9 @@ class _ServicesCardState extends State<ServicesCard> {
                                           color: blackColor,
                                           size: 14,
                                           weight: FontWeight.w500,
-                                          fontFamily: 'Raleway',
+                                          fontFamily: Constants.language == 'ar'
+                                              ? 'Noto Sans Arabic'
+                                              : 'Raleway',
                                           height: 1.3,
                                         ),
                                       ),
@@ -396,7 +402,9 @@ class _ServicesCardState extends State<ServicesCard> {
                                       color: blackColor,
                                       size: 16,
                                       weight: FontWeight.bold,
-                                      fontFamily: 'Raleway',
+                                      fontFamily: Constants.language == 'ar'
+                                          ? 'Noto Sans Arabic'
+                                          : 'Raleway',
                                       height: 1.3,
                                     ),
                                   ),

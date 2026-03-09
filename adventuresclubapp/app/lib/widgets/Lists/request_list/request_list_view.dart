@@ -1017,21 +1017,25 @@ class _RequestListViewState extends State<RequestListView> {
                             RichText(
                               text: TextSpan(
                                 text: "activityName".tr(), //"Activity Name: ",
-                                style: const TextStyle(
+                                style: TextStyle(
                                     color: bluishColor,
                                     fontSize: 14,
-                                    fontFamily: 'Raleway',
+                                    fontFamily: Constants.language == 'ar'
+                                        ? 'Noto Sans Arabic'
+                                        : 'Raleway',
                                     fontWeight: FontWeight.bold),
                                 children: <TextSpan>[
                                   TextSpan(
                                       text:
                                           uRequestListInv[index].adventureName,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontSize: 14,
                                           color: blackColor,
                                           letterSpacing: 1,
                                           fontWeight: FontWeight.w300,
-                                          fontFamily: 'Raleway')),
+                                          fontFamily: Constants.language == 'ar'
+                                              ? 'Noto Sans Arabic'
+                                              : 'Raleway')),
                                 ],
                               ),
                             ),
@@ -1041,20 +1045,24 @@ class _RequestListViewState extends State<RequestListView> {
                             RichText(
                               text: TextSpan(
                                 text: "Region".tr(), //"Activity Name: ",
-                                style: const TextStyle(
+                                style: TextStyle(
                                     color: bluishColor,
                                     fontSize: 14,
-                                    fontFamily: 'Raleway',
+                                    fontFamily: Constants.language == 'ar'
+                                        ? 'Noto Sans Arabic'
+                                        : 'Raleway',
                                     fontWeight: FontWeight.bold),
                                 children: <TextSpan>[
                                   TextSpan(
                                       text: uRequestListInv[index].region.tr(),
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontSize: 14,
                                           color: blackColor,
                                           letterSpacing: 1,
                                           fontWeight: FontWeight.w300,
-                                          fontFamily: 'Raleway')),
+                                          fontFamily: Constants.language == 'ar'
+                                              ? 'Noto Sans Arabic'
+                                              : 'Raleway')),
                                 ],
                               ),
                             ),
@@ -1088,20 +1096,24 @@ class _RequestListViewState extends State<RequestListView> {
                             RichText(
                               text: TextSpan(
                                 text: "providerName".tr(), //"Activity Name: ",
-                                style: const TextStyle(
+                                style: TextStyle(
                                     color: bluishColor,
                                     fontSize: 14,
-                                    fontFamily: 'Raleway',
+                                    fontFamily: Constants.language == 'ar'
+                                        ? 'Noto Sans Arabic'
+                                        : 'Raleway',
                                     fontWeight: FontWeight.bold),
                                 children: <TextSpan>[
                                   TextSpan(
                                       text: uRequestListInv[index].pName.tr(),
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontSize: 14,
                                           color: blackColor,
                                           letterSpacing: 1,
                                           fontWeight: FontWeight.w300,
-                                          fontFamily: 'Raleway')),
+                                          fontFamily: Constants.language == 'ar'
+                                              ? 'Noto Sans Arabic'
+                                              : 'Raleway')),
                                 ],
                               ),
                             ),
@@ -1111,20 +1123,24 @@ class _RequestListViewState extends State<RequestListView> {
                             RichText(
                               text: TextSpan(
                                 text: "bookingDate".tr(),
-                                style: const TextStyle(
+                                style: TextStyle(
                                     color: bluishColor,
                                     fontSize: 14,
-                                    fontFamily: 'Raleway',
+                                    fontFamily: Constants.language == 'ar'
+                                        ? 'Noto Sans Arabic'
+                                        : 'Raleway',
                                     fontWeight: FontWeight.bold),
                                 children: <TextSpan>[
                                   TextSpan(
                                       text: uRequestListInv[index].bDate.tr(),
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontSize: 14,
                                           color: blackColor,
                                           letterSpacing: 1,
                                           fontWeight: FontWeight.w300,
-                                          fontFamily: 'Raleway')),
+                                          fontFamily: Constants.language == 'ar'
+                                              ? 'Noto Sans Arabic'
+                                              : 'Raleway')),
                                 ],
                               ),
                             ),
@@ -1134,20 +1150,24 @@ class _RequestListViewState extends State<RequestListView> {
                             RichText(
                               text: TextSpan(
                                 text: "activityDate".tr(),
-                                style: const TextStyle(
+                                style: TextStyle(
                                     color: bluishColor,
                                     fontSize: 14,
-                                    fontFamily: 'Raleway',
+                                    fontFamily: Constants.language == 'ar'
+                                        ? 'Noto Sans Arabic'
+                                        : 'Raleway',
                                     fontWeight: FontWeight.bold),
                                 children: <TextSpan>[
                                   TextSpan(
                                       text: uRequestListInv[index].aDate.tr(),
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontSize: 14,
                                           color: blackColor,
                                           letterSpacing: 1,
                                           fontWeight: FontWeight.w300,
-                                          fontFamily: 'Raleway')),
+                                          fontFamily: Constants.language == 'ar'
+                                              ? 'Noto Sans Arabic'
+                                              : 'Raleway')),
                                 ],
                               ),
                             ),
@@ -1157,10 +1177,12 @@ class _RequestListViewState extends State<RequestListView> {
                             RichText(
                               text: TextSpan(
                                 text: "registrations".tr(),
-                                style: const TextStyle(
+                                style: TextStyle(
                                     color: bluishColor,
                                     fontSize: 14,
-                                    fontFamily: 'Raleway',
+                                    fontFamily: Constants.language == 'ar'
+                                        ? 'Noto Sans Arabic'
+                                        : 'Raleway',
                                     fontWeight: FontWeight.bold),
                                 children: <TextSpan>[
                                   if (uRequestListInv[index].adult != 0)
@@ -1168,24 +1190,28 @@ class _RequestListViewState extends State<RequestListView> {
                                       text: "${uRequestListInv[index].adult} "
                                               " ${"adult, "}"
                                           .tr(),
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontSize: 14,
                                           color: blackColor,
                                           letterSpacing: 1,
                                           fontWeight: FontWeight.w300,
-                                          fontFamily: 'Raleway'),
+                                          fontFamily: Constants.language == 'ar'
+                                              ? 'Noto Sans Arabic'
+                                              : 'Raleway'),
                                     ),
                                   if (uRequestListInv[index].kids != 0)
                                     TextSpan(
                                       text: "${uRequestListInv[index].kids} "
                                               "${"Kids"}"
                                           .tr(),
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontSize: 14,
                                           color: blackColor,
                                           letterSpacing: 1,
                                           fontWeight: FontWeight.w300,
-                                          fontFamily: 'Raleway'),
+                                          fontFamily: Constants.language == 'ar'
+                                              ? 'Noto Sans Arabic'
+                                              : 'Raleway'),
                                     ),
                                 ],
                               ),
@@ -1196,22 +1222,26 @@ class _RequestListViewState extends State<RequestListView> {
                             RichText(
                               text: TextSpan(
                                 text: "unitCost".tr(),
-                                style: const TextStyle(
+                                style: TextStyle(
                                     color: bluishColor,
                                     fontSize: 14,
-                                    fontFamily: 'Raleway',
+                                    fontFamily: Constants.language == 'ar'
+                                        ? 'Noto Sans Arabic'
+                                        : 'Raleway',
                                     fontWeight: FontWeight.bold),
                                 children: <TextSpan>[
                                   TextSpan(
                                       text: "${uCost.toStringAsFixed(2)}"
                                           " "
                                           "${uRequestListInv[index].currency}",
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontSize: 14,
                                           color: blackColor,
                                           letterSpacing: 1,
                                           fontWeight: FontWeight.w300,
-                                          fontFamily: 'Raleway')),
+                                          fontFamily: Constants.language == 'ar'
+                                              ? 'Noto Sans Arabic'
+                                              : 'Raleway')),
                                 ],
                               ),
                             ),
@@ -1221,22 +1251,26 @@ class _RequestListViewState extends State<RequestListView> {
                             RichText(
                               text: TextSpan(
                                 text: "totalCost".tr(),
-                                style: const TextStyle(
+                                style: TextStyle(
                                     color: bluishColor,
                                     fontSize: 14,
-                                    fontFamily: 'Raleway',
+                                    fontFamily: Constants.language == 'ar'
+                                        ? 'Noto Sans Arabic'
+                                        : 'Raleway',
                                     fontWeight: FontWeight.bold),
                                 children: <TextSpan>[
                                   TextSpan(
                                       text: "${tCost.toStringAsFixed(2)}"
                                           " "
                                           "${uRequestListInv[index].currency}",
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontSize: 14,
                                           color: blackColor,
                                           letterSpacing: 1,
                                           fontWeight: FontWeight.w300,
-                                          fontFamily: 'Raleway')),
+                                          fontFamily: Constants.language == 'ar'
+                                              ? 'Noto Sans Arabic'
+                                              : 'Raleway')),
                                 ],
                               ),
                             ),
@@ -1247,22 +1281,26 @@ class _RequestListViewState extends State<RequestListView> {
                             RichText(
                               text: TextSpan(
                                 text: "payableCost".tr(),
-                                style: const TextStyle(
+                                style: TextStyle(
                                     color: bluishColor,
                                     fontSize: 14,
-                                    fontFamily: 'Raleway',
+                                    fontFamily: Constants.language == 'ar'
+                                        ? 'Noto Sans Arabic'
+                                        : 'Raleway',
                                     fontWeight: FontWeight.bold),
                                 children: <TextSpan>[
                                   TextSpan(
                                       text: "${tCost.toStringAsFixed(2)}"
                                           " "
                                           "${uRequestListInv[index].currency}",
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontSize: 14,
                                           color: blackColor,
                                           letterSpacing: 1,
                                           fontWeight: FontWeight.w300,
-                                          fontFamily: 'Raleway')),
+                                          fontFamily: Constants.language == 'ar'
+                                              ? 'Noto Sans Arabic'
+                                              : 'Raleway')),
                                 ],
                               ),
                             ),
@@ -1293,20 +1331,24 @@ class _RequestListViewState extends State<RequestListView> {
                             RichText(
                               text: TextSpan(
                                 text: "paymentChannel".tr(),
-                                style: const TextStyle(
+                                style: TextStyle(
                                     color: bluishColor,
                                     fontSize: 14,
-                                    fontFamily: 'Raleway',
+                                    fontFamily: Constants.language == 'ar'
+                                        ? 'Noto Sans Arabic'
+                                        : 'Raleway',
                                     fontWeight: FontWeight.bold),
                                 children: <TextSpan>[
                                   TextSpan(
                                       text: uRequestListInv[index].pChanel.tr(),
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontSize: 14,
                                           color: blackColor,
                                           letterSpacing: 1,
                                           fontWeight: FontWeight.w300,
-                                          fontFamily: 'Raleway')),
+                                          fontFamily: Constants.language == 'ar'
+                                              ? 'Noto Sans Arabic'
+                                              : 'Raleway')),
                                 ],
                               ),
                             ),

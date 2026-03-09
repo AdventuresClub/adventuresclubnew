@@ -180,7 +180,9 @@ class _FavListState extends State<FavList> {
                                         color: bluishColor,
                                         size: 14,
                                         weight: FontWeight.bold,
-                                        fontFamily: 'Raleway'),
+                                        fontFamily: Constants.language == 'ar'
+                                            ? 'Noto Sans Arabic'
+                                            : 'Raleway'),
                                   ),
                                   const CircleAvatar(
                                       radius: 18,
@@ -241,7 +243,9 @@ class _FavListState extends State<FavList> {
                                       color: greyColor3,
                                       size: 14,
                                       weight: FontWeight.w500,
-                                      fontFamily: 'Raleway'),
+                                      fontFamily: Constants.language == 'ar'
+                                          ? 'Noto Sans Arabic'
+                                          : 'Raleway'),
                                 ],
                               ),
                               const SizedBox(
@@ -284,7 +288,10 @@ class _FavListState extends State<FavList> {
                                                 .providerName, //'Alexander',
                                             color: blackColor,
                                             size: 12,
-                                            fontFamily: 'Raleway'),
+                                            fontFamily:
+                                                Constants.language == 'ar'
+                                                    ? 'Noto Sans Arabic'
+                                                    : 'Raleway'),
                                       ],
                                     ),
                                   ),

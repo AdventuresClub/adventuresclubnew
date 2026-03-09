@@ -88,7 +88,9 @@ class CountriesDropDownState extends State<CountriesDropDown> {
                                       weight: FontWeight.bold,
                                       color: blackColor,
                                       size: 20,
-                                      fontFamily: 'Raleway'),
+                                      fontFamily: Constants.language == 'ar'
+                                          ? 'Noto Sans Arabic'
+                                          : 'Raleway'),
                                 ),
                               ),
                               Container(

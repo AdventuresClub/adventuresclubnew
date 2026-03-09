@@ -78,7 +78,11 @@ class ServiceCategoryDropDownState extends State<ServiceCategoryDropDown> {
         //                               weight: FontWeight.bold,
         //                               color: blackColor,
         //                               size: 20,
-        //                               fontFamily: 'Raleway'),
+        //                               fontFamily: Constants
+        //         .language ==
+        //     'ar'
+        // ? 'Noto Sans Arabic': 'Raleway'
+        // ),
         //                         ),
         //                       ),
         //                       Container(
@@ -216,7 +220,9 @@ class ServiceCategoryDropDownState extends State<ServiceCategoryDropDown> {
                                       weight: FontWeight.bold,
                                       color: blackColor,
                                       size: 20,
-                                      fontFamily: 'Raleway'),
+                                      fontFamily: Constants.language == 'ar'
+                                          ? 'Noto Sans Arabic'
+                                          : 'Raleway'),
                                 ),
                               ),
                               Container(

@@ -335,7 +335,9 @@ class _SignUpState extends State<SignUp> {
                           weight: FontWeight.bold,
                           color: blackColor,
                           size: 20,
-                          fontFamily: 'Raleway'),
+                          fontFamily: Constants.language == 'ar'
+                              ? 'Noto Sans Arabic'
+                              : 'Raleway'),
                       const SizedBox(height: 5),
                       Padding(
                         padding: const EdgeInsets.symmetric(
@@ -347,7 +349,9 @@ class _SignUpState extends State<SignUp> {
                             weight: FontWeight.w400,
                             color: Colors.grey,
                             size: 16,
-                            fontFamily: 'Raleway'),
+                            fontFamily: Constants.language == 'ar'
+                                ? 'Noto Sans Arabic'
+                                : 'Raleway'),
                       ),
                       const SizedBox(height: 20),
                       TextField(
@@ -367,7 +371,9 @@ class _SignUpState extends State<SignUp> {
                           weight: FontWeight.w600,
                           color: greenishColor,
                           size: 18,
-                          fontFamily: 'Raleway'),
+                          fontFamily: Constants.language == 'ar'
+                              ? 'Noto Sans Arabic'
+                              : 'Raleway'),
                       const SizedBox(height: 30),
                       Button(
                           'Confirm',
@@ -623,7 +629,9 @@ class _SignUpState extends State<SignUp> {
                         weight: FontWeight.w600,
                         color: whiteColor,
                         size: 24,
-                        fontFamily: 'Raleway'),
+                        fontFamily: Constants.language == 'ar'
+                            ? 'Noto Sans Arabic'
+                            : 'Raleway'),
                   ),
                   const SizedBox(height: 20),
                   Image.asset(
@@ -753,7 +761,9 @@ class _SignUpState extends State<SignUp> {
                                           color: blackColor.withOpacity(0.6),
                                           weight: FontWeight.w700,
                                           size: 13,
-                                          fontFamily: 'Raleway'),
+                                          fontFamily: Constants.language == 'ar'
+                                              ? 'Noto Sans Arabic'
+                                              : 'Raleway'),
                                     ),
                                   ],
                                 );
@@ -820,32 +830,38 @@ class _SignUpState extends State<SignUp> {
                         child: Text.rich(
                           TextSpan(
                             children: [
-                              const TextSpan(
+                              TextSpan(
                                   text: 'I have read ',
                                   style: TextStyle(
                                       fontSize: 12,
                                       color: whiteColor,
-                                      fontFamily: 'Raleway')),
+                                      fontFamily: Constants.language == 'ar'
+                                          ? 'Noto Sans Arabic'
+                                          : 'Raleway')),
                               TextSpan(
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     terms();
                                   },
                                 text: 'Terms & Conditions',
-                                style: const TextStyle(
+                                style: TextStyle(
                                     fontSize: 14,
                                     decoration: TextDecoration.underline,
                                     fontWeight: FontWeight.w500,
                                     color: whiteColor,
-                                    fontFamily: 'Raleway'),
+                                    fontFamily: Constants.language == 'ar'
+                                        ? 'Noto Sans Arabic'
+                                        : 'Raleway'),
                               ),
-                              const TextSpan(
+                              TextSpan(
                                 text: ' & ',
                                 style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                     color: whiteColor,
-                                    fontFamily: 'Raleway'),
+                                    fontFamily: Constants.language == 'ar'
+                                        ? 'Noto Sans Arabic'
+                                        : 'Raleway'),
                               ),
                               TextSpan(
                                 recognizer: TapGestureRecognizer()
@@ -854,12 +870,14 @@ class _SignUpState extends State<SignUp> {
                                   },
                                 // onEnter: (event) => goToPrivacy,
                                 text: 'Privacy policy',
-                                style: const TextStyle(
+                                style: TextStyle(
                                     fontSize: 14,
                                     decoration: TextDecoration.underline,
                                     fontWeight: FontWeight.w500,
                                     color: whiteColor,
-                                    fontFamily: 'Raleway'),
+                                    fontFamily: Constants.language == 'ar'
+                                        ? 'Noto Sans Arabic'
+                                        : 'Raleway'),
                               ),
                             ],
                           ),
@@ -885,7 +903,7 @@ class _SignUpState extends State<SignUp> {
                   const SizedBox(height: 20),
                   GestureDetector(
                     onTap: goToSignIn,
-                    child: const Align(
+                    child: Align(
                       alignment: Alignment.center,
                       child: Text.rich(
                         TextSpan(
@@ -893,13 +911,18 @@ class _SignUpState extends State<SignUp> {
                             TextSpan(
                                 text: 'Already have an account ?',
                                 style: TextStyle(
-                                    color: whiteColor, fontFamily: 'Raleway')),
+                                    color: whiteColor,
+                                    fontFamily: Constants.language == 'ar'
+                                        ? 'Noto Sans Arabic'
+                                        : 'Raleway')),
                             TextSpan(
                               text: 'Sign In',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: whiteColor,
-                                  fontFamily: 'Raleway'),
+                                  fontFamily: Constants.language == 'ar'
+                                      ? 'Noto Sans Arabic'
+                                      : 'Raleway'),
                             ),
                           ],
                         ),
@@ -945,13 +968,15 @@ class _SignUpState extends State<SignUp> {
                               padding: const EdgeInsets.all(12.0),
                               child: Column(
                                 children: [
-                                  const Row(children: [
+                                  Row(children: [
                                     Text(
                                       "Select your active phone country code",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20,
-                                          fontFamily: 'Raleway-Black'),
+                                          fontFamily: Constants.language == 'ar'
+                                              ? 'Noto Sans Arabic'
+                                              : 'Raleway-Black'),
                                     )
                                   ]),
                                   const SizedBox(
@@ -1039,17 +1064,23 @@ class _SignUpState extends State<SignUp> {
                                               : null,
                                           title: Text(
                                             filteredServices[index].shortName,
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 color: blackColor,
-                                                fontFamily: 'Raleway'),
+                                                fontFamily:
+                                                    Constants.language == 'ar'
+                                                        ? 'Noto Sans Arabic'
+                                                        : 'Raleway'),
                                           ),
                                           trailing: Text(
                                             filteredServices[index].code,
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 color: blackColor,
-                                                fontFamily: 'Raleway'),
+                                                fontFamily:
+                                                    Constants.language == 'ar'
+                                                        ? 'Noto Sans Arabic'
+                                                        : 'Raleway'),
                                           ),
                                           onTap: () {
                                             Constants.myCountry =
@@ -1217,22 +1248,26 @@ class _SignUpState extends State<SignUp> {
                         height: 15,
                       ),
                       nowIn
-                          ? Row(children: const [
+                          ? Row(children: [
                               Text(
                                 "Select the country you are now in",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
-                                    fontFamily: 'Raleway-Black'),
+                                    fontFamily: Constants.language == 'ar'
+                                        ? 'Noto Sans Arabic'
+                                        : 'Raleway-Black'),
                               )
                             ])
-                          : Row(children: const [
+                          : Row(children: [
                               Text(
                                 "Select Your Nationality",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
-                                    fontFamily: 'Raleway-Black'),
+                                    fontFamily: Constants.language == 'ar'
+                                        ? 'Noto Sans Arabic'
+                                        : 'Raleway-Black'),
                               )
                             ]),
                       const SizedBox(
@@ -1488,7 +1523,9 @@ class _SignUpState extends State<SignUp> {
                                   weight: FontWeight.bold,
                                   color: blackColor,
                                   size: 20,
-                                  fontFamily: 'Raleway'),
+                                  fontFamily: Constants.language == 'ar'
+                                      ? 'Noto Sans Arabic'
+                                      : 'Raleway'),
                             ),
                           ),
                           Container(
@@ -1625,7 +1662,9 @@ class _SignUpState extends State<SignUp> {
                                 weight: FontWeight.bold,
                                 color: blackColor,
                                 size: 20,
-                                fontFamily: 'Raleway'),
+                                fontFamily: Constants.language == 'ar'
+                                    ? 'Noto Sans Arabic'
+                                    : 'Raleway'),
                           ),
                         ),
                         Container(
@@ -1762,7 +1801,9 @@ class _SignUpState extends State<SignUp> {
                                   weight: FontWeight.bold,
                                   color: blackColor,
                                   size: 20,
-                                  fontFamily: 'Raleway'),
+                                  fontFamily: Constants.language == 'ar'
+                                      ? 'Noto Sans Arabic'
+                                      : 'Raleway'),
                             ),
                           ),
                           Container(

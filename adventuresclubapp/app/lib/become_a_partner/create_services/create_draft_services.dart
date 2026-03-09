@@ -1832,7 +1832,9 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
                                       //aimedText[index],
                                       aimedFilter[index].aimedName.tr(),
                                   color: blackTypeColor.withOpacity(0.5),
-                                  fontFamily: 'Raleway',
+                                  fontFamily: Constants.language == 'ar'
+                                      ? 'Noto Sans Arabic'
+                                      : 'Raleway',
                                   size: 16,
                                   weight: FontWeight.w500,
                                 ),
@@ -2096,7 +2098,9 @@ class _CreateDraftServicesState extends State<CreateDraftServices> {
                               title: MyText(
                                 text: dependencyText[index],
                                 color: blackTypeColor1.withOpacity(0.5),
-                                fontFamily: 'Raleway',
+                                fontFamily: Constants.language == 'ar'
+                                    ? 'Noto Sans Arabic'
+                                    : 'Raleway',
                                 weight: FontWeight.w500,
                                 size: 16,
                               ),

@@ -104,7 +104,9 @@ class _CostState extends State<Cost> {
                           weight: FontWeight.bold,
                           color: blackColor,
                           size: 14,
-                          fontFamily: 'Raleway'),
+                          fontFamily: Constants.language == 'ar'
+                              ? 'Noto Sans Arabic'
+                              : 'Raleway'),
                     ),
                     const SizedBox(height: 30),
                     Padding(
@@ -680,10 +682,12 @@ class _CostState extends State<Cost> {
                         children: [
                           TextSpan(
                               text: "Clients ".tr(), //'I have read   ',
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontSize: 16,
                                   // color: whiteColor,
-                                  fontFamily: 'Raleway')),
+                                  fontFamily: Constants.language == 'ar'
+                                      ? 'Noto Sans Arabic'
+                                      : 'Raleway')),
                           TextSpan(
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
@@ -691,12 +695,14 @@ class _CostState extends State<Cost> {
                               },
                             text: "termsAndConditions"
                                 .tr(), //'Terms & Conditions',
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontSize: 13,
                                 decoration: TextDecoration.underline,
                                 fontWeight: FontWeight.w500,
                                 //color: whiteColor,
-                                fontFamily: 'Raleway'),
+                                fontFamily: Constants.language == 'ar'
+                                    ? 'Noto Sans Arabic'
+                                    : 'Raleway'),
                           ),
                           // const TextSpan(
                           //   text: ' & ',
@@ -704,7 +710,11 @@ class _CostState extends State<Cost> {
                           //       fontSize: 14,
                           //       fontWeight: FontWeight.w500,
                           //       // color: whiteColor,
-                          //       fontFamily: 'Raleway'),
+                          //       fontFamily: Constants
+                          //         .language ==
+                          //     'ar'
+                          // ? 'Noto Sans Arabic': 'Raleway'
+                          // ),
                           // ),
                         ],
                       ),
@@ -732,10 +742,12 @@ class _CostState extends State<Cost> {
                           TextSpan(
                               text: "I accept partnership "
                                   .tr(), //'I have read   ',
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontSize: 16,
                                   // color: whiteColor,
-                                  fontFamily: 'Raleway')),
+                                  fontFamily: Constants.language == 'ar'
+                                      ? 'Noto Sans Arabic'
+                                      : 'Raleway')),
                           TextSpan(
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
@@ -743,12 +755,14 @@ class _CostState extends State<Cost> {
                               },
                             text: "termsAndConditions"
                                 .tr(), //'Terms & Conditions',
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontSize: 13,
                                 decoration: TextDecoration.underline,
                                 fontWeight: FontWeight.w500,
                                 //color: whiteColor,
-                                fontFamily: 'Raleway'),
+                                fontFamily: Constants.language == 'ar'
+                                    ? 'Noto Sans Arabic'
+                                    : 'Raleway'),
                           ),
                           // const TextSpan(
                           //   text: ' & ',
@@ -756,7 +770,11 @@ class _CostState extends State<Cost> {
                           //       fontSize: 14,
                           //       fontWeight: FontWeight.w500,
                           //       // color: whiteColor,
-                          //       fontFamily: 'Raleway'),
+                          //       fontFamily: Constants
+                          //         .language ==
+                          //     'ar'
+                          // ? 'Noto Sans Arabic': 'Raleway'
+                          // ),
                           // ),
                         ],
                       ),

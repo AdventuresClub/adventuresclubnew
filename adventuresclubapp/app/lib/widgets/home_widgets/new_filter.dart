@@ -509,7 +509,9 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                   weight: FontWeight.w800,
                                   color: blackColor.withOpacity(0.7),
                                   size: 18,
-                                  fontFamily: 'Raleway'),
+                                  fontFamily: Constants.language == 'ar'
+                                      ? 'Noto Sans Arabic'
+                                      : 'Raleway'),
                             ),
                             const SizedBox(width: 40),
                           ],
@@ -527,10 +529,13 @@ class _NewFilterPageState extends State<NewFilterPage> {
                                         Row(children: [
                                           Text(
                                             "selectCountry".tr(),
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 20,
-                                                fontFamily: 'Raleway-Black'),
+                                                fontFamily:
+                                                    Constants.language == 'ar'
+                                                        ? 'Noto Sans Arabic'
+                                                        : 'Raleway-Black'),
                                           )
                                         ]),
                                         const SizedBox(
@@ -1171,7 +1176,11 @@ class _NewFilterPageState extends State<NewFilterPage> {
                         //         weight: FontWeight.w800,
                         //         color: blackColor,
                         //         size: 18,
-                        //         fontFamily: 'Raleway'),
+                        //         fontFamily: Constants
+                        //         .language ==
+                        //     'ar'
+                        // ? 'Noto Sans Arabic': 'Raleway'
+                        // ),
                         //   ),
                         // ),
                         // const SizedBox(
@@ -1255,7 +1264,11 @@ class _NewFilterPageState extends State<NewFilterPage> {
                         //         weight: FontWeight.w800,
                         //         color: blackColor,
                         //         size: 18,
-                        //         fontFamily: 'Raleway'),
+                        //         fontFamily: Constants
+                        //         .language ==
+                        //     'ar'
+                        // ? 'Noto Sans Arabic': 'Raleway'
+                        // ),
                         //   ),
                         // ),
                         // ListView.builder(

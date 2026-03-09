@@ -62,7 +62,9 @@ class _SpaceTextFieldsState extends State<SpaceTextFields> {
                 ),
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
-                fontFamily: 'Raleway'),
+                fontFamily: Constants.language == 'ar'
+                    ? 'Noto Sans Arabic'
+                    : 'Raleway'),
             hintMaxLines: 1,
             isDense: true,
             filled: true,

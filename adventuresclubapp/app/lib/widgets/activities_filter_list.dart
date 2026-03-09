@@ -119,7 +119,9 @@ class _ActivitiesFilterListState extends State<ActivitiesFilterList> {
                 title: MyText(
                   text: activitiesFilter[index].activity,
                   color: greyColor,
-                  fontFamily: 'Raleway',
+                  fontFamily: Constants.language == 'ar'
+                      ? 'Noto Sans Arabic'
+                      : 'Raleway',
                   size: 18,
                   weight: FontWeight.bold,
                 ),

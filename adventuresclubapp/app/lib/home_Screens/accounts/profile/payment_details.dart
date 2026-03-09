@@ -179,7 +179,9 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                       title: MyText(
                         text: "bankCard".tr(), //text[index],
                         color: blackTypeColor,
-                        fontFamily: 'Raleway',
+                        fontFamily: Constants.language == 'ar'
+                            ? 'Noto Sans Arabic'
+                            : 'Raleway',
                         weight: FontWeight.bold,
                         size: 14,
                       ),
@@ -218,7 +220,9 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                       title: MyText(
                         text: "payOnArrival".tr(), //text[index],
                         color: blackTypeColor,
-                        fontFamily: 'Raleway',
+                        fontFamily: Constants.language == 'ar'
+                            ? 'Noto Sans Arabic'
+                            : 'Raleway',
                         weight: FontWeight.bold,
                         size: 14,
                       ),
@@ -266,7 +270,9 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                       title: MyText(
                         text: 'wireTransfer'.tr(),
                         color: blackTypeColor,
-                        fontFamily: 'Raleway',
+                        fontFamily: Constants.language == 'ar'
+                            ? 'Noto Sans Arabic'
+                            : 'Raleway',
                         size: 14,
                         weight: FontWeight.bold,
                       ),

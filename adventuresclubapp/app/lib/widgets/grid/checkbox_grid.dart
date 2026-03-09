@@ -102,7 +102,9 @@ class CheckboxGridState extends State<CheckboxGrid> {
                     color: blackColor.withOpacity(0.6),
                     weight: FontWeight.w700,
                     size: 12,
-                    fontFamily: 'Raleway'),
+                    fontFamily: Constants.language == 'ar'
+                        ? 'Noto Sans Arabic'
+                        : 'Raleway'),
                 //Container()
                 // const Spacer(
                 //   flex: 3,

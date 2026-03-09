@@ -107,7 +107,9 @@ class _RecentlyAddedState extends State<RecentlyAdded> {
                                 text: activityHeading[index],
                                 color: blackColor,
                                 size: 12,
-                                fontFamily: 'Roboto',
+                                fontFamily: Constants.language == 'ar'
+                                    ? 'Noto Sans Arabic'
+                                    : 'Roboto',
                                 weight: FontWeight.bold,
                                 height: 1.3,
                               ),

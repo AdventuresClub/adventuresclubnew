@@ -202,7 +202,9 @@ class _DescriptionState extends State<Description> {
                               weight: FontWeight.bold,
                               color: blackColor,
                               size: 16,
-                              fontFamily: 'Raleway'),
+                              fontFamily: Constants.language == 'ar'
+                                  ? 'Noto Sans Arabic'
+                                  : 'Raleway'),
                         ),
                         const SizedBox(height: 30),
                         Wrap(
@@ -234,7 +236,9 @@ class _DescriptionState extends State<Description> {
                                     title: MyText(
                                       text: activitiesFilter[index].activity,
                                       color: greyColor,
-                                      fontFamily: 'Raleway',
+                                      fontFamily: Constants.language == 'ar'
+                                          ? 'Noto Sans Arabic'
+                                          : 'Raleway',
                                       size: 18,
                                     ),
                                   ),
@@ -988,7 +992,9 @@ class _DescriptionState extends State<Description> {
                                 //aimedText[index],
                                 aimedFilter[index].aimedName,
                             color: blackTypeColor.withOpacity(0.5),
-                            fontFamily: 'Raleway',
+                            fontFamily: Constants.language == 'ar'
+                                ? 'Noto Sans Arabic'
+                                : 'Raleway',
                             size: 16,
                             weight: FontWeight.w500,
                           ),
@@ -1041,7 +1047,9 @@ class _DescriptionState extends State<Description> {
                           title: MyText(
                             text: dependencyText[index],
                             color: blackTypeColor1.withOpacity(0.5),
-                            fontFamily: 'Raleway',
+                            fontFamily: Constants.language == 'ar'
+                                ? 'Noto Sans Arabic'
+                                : 'Raleway',
                             weight: FontWeight.w500,
                             size: 16,
                           ),
@@ -1114,7 +1122,9 @@ class _DescriptionState extends State<Description> {
                           weight: FontWeight.bold,
                           color: blackColor,
                           size: 20,
-                          fontFamily: 'Raleway'),
+                          fontFamily: Constants.language == 'ar'
+                              ? 'Noto Sans Arabic'
+                              : 'Raleway'),
                     ),
                   ),
                   Container(

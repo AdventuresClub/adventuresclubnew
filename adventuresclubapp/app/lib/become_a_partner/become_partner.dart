@@ -619,7 +619,11 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                           //         'iAcceptPartnership'.tr(),
                           //         style: const TextStyle(
                           //           color: Color.fromARGB(255, 7, 56, 95),
-                          //           fontFamily: 'Raleway',
+                          //           fontFamily: Constants
+                          //         .language ==
+                          //     'ar'
+                          // ? 'Noto Sans Arabic': 'Raleway'
+                          // ,
                           //           fontWeight: FontWeight.w500,
                           //           decoration: TextDecoration.underline,
                           //         ),
@@ -627,7 +631,11 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                           //       // MyText(
                           //       //   text: "iAcceptPartnership", //text[index],
                           //       //   color: blackTypeColor,
-                          //       //   fontFamily: 'Raleway',
+                          //       //   fontFamily: Constants
+                          //         .language ==
+                          //     'ar'
+                          // ? 'Noto Sans Arabic': 'Raleway'
+                          // ,
                           //       //   weight: FontWeight.bold,
                           //       //   size: 14,
                           //       // ),
@@ -720,7 +728,9 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                             title: MyText(
                               text: "bankCard(paymentGateway)", //text[index],
                               color: blackTypeColor,
-                              fontFamily: 'Raleway',
+                              fontFamily: Constants.language == 'ar'
+                                  ? 'Noto Sans Arabic'
+                                  : 'Raleway',
                               weight: FontWeight.bold,
                               size: 14,
                             ),
@@ -781,7 +791,9 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                             title: MyText(
                               text: "payOnArrival", //text[index],
                               color: blackTypeColor,
-                              fontFamily: 'Raleway',
+                              fontFamily: Constants.language == 'ar'
+                                  ? 'Noto Sans Arabic'
+                                  : 'Raleway',
                               weight: FontWeight.bold,
                               size: 14,
                             ),
@@ -809,7 +821,11 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                           //   title: MyText(
                           //     text: "Pay Pal", //text[index],
                           //     color: blackTypeColor,
-                          //     fontFamily: 'Raleway',
+                          //     fontFamily: Constants
+                          //         .language ==
+                          //     'ar'
+                          // ? 'Noto Sans Arabic': 'Raleway'
+                          // ,
                           //     size: 14,
                           //   ),
                           // ),
@@ -836,7 +852,11 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                           //       title: MyText(
                           //         text: text[index],
                           //         color: blackTypeColor,
-                          //         fontFamily: 'Raleway',
+                          //         fontFamily: Constants
+                          //         .language ==
+                          //     'ar'
+                          // ? 'Noto Sans Arabic': 'Raleway'
+                          // ,
                           //         size: 14,
                           //       ),
                           //     ),
@@ -870,7 +890,11 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                           //   title: MyText(
                           //     text: 'Pay Pal',
                           //     color: blackTypeColor,
-                          //     fontFamily: 'Raleway',
+                          //     fontFamily: Constants
+                          //         .language ==
+                          //     'ar'
+                          // ? 'Noto Sans Arabic': 'Raleway'
+                          // ,
                           //     size: 14,
                           //   ),
                           // ),
@@ -919,7 +943,11 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                           //   title: MyText(
                           //     text: 'Wire Transfer',
                           //     color: blackTypeColor,
-                          //     fontFamily: 'Raleway',
+                          //     fontFamily: Constants
+                          //         .language ==
+                          //     'ar'
+                          // ? 'Noto Sans Arabic': 'Raleway'
+                          // ,
                           //     size: 14,
                           //     weight: FontWeight.bold,
                           //   ),
@@ -928,14 +956,14 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                             height: 30,
                           ),
                           CheckboxListTile(
-                            contentPadding: const EdgeInsets.only(
+                            contentPadding: EdgeInsets.only(
                                 left: 0, top: 0, bottom: 0, right: 0),
                             side: const BorderSide(color: bluishColor),
                             checkboxShape: const RoundedRectangleBorder(
                               side: BorderSide(color: bluishColor),
                             ),
-                            visualDensity: const VisualDensity(
-                                horizontal: 0, vertical: -4),
+                            visualDensity:
+                                VisualDensity(horizontal: 0, vertical: -4),
                             activeColor: greyProfileColor,
                             checkColor: bluishColor,
                             value: terms,
@@ -950,9 +978,11 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                                 onTap: launchURL,
                                 child: Text(
                                   'iAcceptPartnership'.tr(),
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     color: Color.fromARGB(255, 7, 56, 95),
-                                    fontFamily: 'Raleway',
+                                    fontFamily: Constants.language == 'ar'
+                                        ? 'Noto Sans Arabic'
+                                        : 'Raleway',
                                     fontWeight: FontWeight.w500,
                                     decoration: TextDecoration.underline,
                                   ),
@@ -960,7 +990,11 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                                 // MyText(
                                 //   text: "iAcceptPartnership", //text[index],
                                 //   color: blackTypeColor,
-                                //   fontFamily: 'Raleway',
+                                //   fontFamily: Constants
+                                //         .language ==
+                                //     'ar'
+                                // ? 'Noto Sans Arabic': 'Raleway'
+                                // ,
                                 //   weight: FontWeight.bold,
                                 //   size: 14,
                                 // ),

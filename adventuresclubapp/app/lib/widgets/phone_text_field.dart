@@ -104,7 +104,9 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
                           weight: FontWeight.bold,
                           color: blackColor,
                           size: 20,
-                          fontFamily: 'Raleway'),
+                          fontFamily: Constants.language == 'ar'
+                              ? 'Noto Sans Arabic'
+                              : 'Raleway'),
                       const SizedBox(height: 5),
                       Padding(
                         padding: const EdgeInsets.symmetric(
@@ -116,7 +118,9 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
                             weight: FontWeight.w400,
                             color: Colors.grey,
                             size: 16,
-                            fontFamily: 'Raleway'),
+                            fontFamily: Constants.language == 'ar'
+                                ? 'Noto Sans Arabic'
+                                : 'Raleway'),
                       ),
                       const SizedBox(height: 20),
                       TextField(
@@ -136,7 +140,9 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
                           weight: FontWeight.w600,
                           color: greenishColor,
                           size: 18,
-                          fontFamily: 'Raleway'),
+                          fontFamily: Constants.language == 'ar'
+                              ? 'Noto Sans Arabic'
+                              : 'Raleway'),
                       const SizedBox(height: 30),
                       Button(
                           'Confirm',
@@ -357,17 +363,21 @@ class _PhoneTextFieldState extends State<PhoneTextField> {
                                       : null,
                                   title: Text(
                                     filteredServices[index].country,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         color: blackColor,
-                                        fontFamily: 'Raleway'),
+                                        fontFamily: Constants.language == 'ar'
+                                            ? 'Noto Sans Arabic'
+                                            : 'Raleway'),
                                   ),
                                   trailing: Text(
                                     filteredServices[index].code,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                         fontWeight: FontWeight.w500,
                                         color: blackColor,
-                                        fontFamily: 'Raleway'),
+                                        fontFamily: Constants.language == 'ar'
+                                            ? 'Noto Sans Arabic'
+                                            : 'Raleway'),
                                   ),
                                   onTap: () {
                                     getC(

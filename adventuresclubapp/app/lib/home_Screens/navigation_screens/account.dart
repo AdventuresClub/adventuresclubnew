@@ -702,10 +702,12 @@ class _AccountState extends State<Account> {
                 Row(children: [
                   Text(
                     "selectYourCountry".tr(),
-                    style: const TextStyle(
+                    style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
-                        fontFamily: 'Raleway-Black'),
+                        fontFamily: Constants.language == 'ar'
+                            ? 'Noto Sans Arabic'
+                            : 'Raleway-Black'),
                   )
                 ]),
                 const SizedBox(
@@ -936,7 +938,10 @@ class _AccountState extends State<Account> {
                                                   color: bluishColor,
                                                   weight: FontWeight.bold,
                                                   size: 22,
-                                                  fontFamily: "Raleway",
+                                                  fontFamily:
+                                                      Constants.language == 'ar'
+                                                          ? 'Noto Sans Arabic'
+                                                          : "Raleway",
                                                 ),
                                                 GestureDetector(
                                                   onTap: () async {
@@ -956,7 +961,11 @@ class _AccountState extends State<Account> {
                                                               'Become A Partner'
                                                                   .tr(),
                                                           size: 20,
-                                                          //fontFamily: 'Raleway',
+                                                          //fontFamily: Constants
+                                                          //         .language ==
+                                                          //     'ar'
+                                                          // ? 'Noto Sans Arabic': 'Raleway'
+                                                          // ,
                                                           weight:
                                                               FontWeight.bold,
                                                           color: orangeColor),
@@ -1163,7 +1172,11 @@ class _AccountState extends State<Account> {
                                                         text:
                                                             'Partnership Requested',
                                                         size: 18,
-                                                        //fontFamily: 'Raleway',
+                                                        //fontFamily: Constants
+                                                        //         .language ==
+                                                        //     'ar'
+                                                        // ? 'Noto Sans Arabic': 'Raleway'
+                                                        // ,
                                                         weight: FontWeight.w600,
                                                         color: greyColor
                                                             .withOpacity(1),
@@ -1359,7 +1372,11 @@ class _AccountState extends State<Account> {
                                                             'Subscribe to a Package',
                                                         //'Become A Partner',
                                                         size: 18,
-                                                        //fontFamily: 'Raleway',
+                                                        //fontFamily: Constants
+                                                        //         .language ==
+                                                        //     'ar'
+                                                        // ? 'Noto Sans Arabic': 'Raleway'
+                                                        // ,
                                                         weight: FontWeight.w600,
                                                         color: greyColor
                                                             .withOpacity(1),
@@ -1559,7 +1576,11 @@ class _AccountState extends State<Account> {
                                                           text:
                                                               'Your Subscription expired',
                                                           size: 18,
-                                                          //fontFamily: 'Raleway',
+                                                          //fontFamily: Constants
+                                                          //         .language ==
+                                                          //     'ar'
+                                                          // ? 'Noto Sans Arabic': 'Raleway'
+                                                          // ,
                                                           weight:
                                                               FontWeight.w600,
                                                           color: greyColor
@@ -1581,7 +1602,11 @@ class _AccountState extends State<Account> {
                                                     color: redColor,
                                                     weight: FontWeight.bold,
                                                     size: 14,
-                                                    fontFamily: "Raleway",
+                                                    fontFamily:
+                                                        Constants.language ==
+                                                                'ar'
+                                                            ? 'Noto Sans Arabic'
+                                                            : "Raleway",
                                                   ),
                                                 ],
                                               ),
@@ -1760,7 +1785,10 @@ class _AccountState extends State<Account> {
                                                   color: bluishColor,
                                                   weight: FontWeight.bold,
                                                   size: 20,
-                                                  fontFamily: "Raleway",
+                                                  fontFamily:
+                                                      Constants.language == 'ar'
+                                                          ? 'Noto Sans Arabic'
+                                                          : "Raleway",
                                                 ),
                                                 GestureDetector(
                                                   onTap: packagesList,
@@ -1778,7 +1806,11 @@ class _AccountState extends State<Account> {
                                                         text: 'alreadyPartner'
                                                             .tr(),
                                                         size: 18,
-                                                        //fontFamily: 'Raleway',
+                                                        //fontFamily: Constants
+                                                        //         .language ==
+                                                        //     'ar'
+                                                        // ? 'Noto Sans Arabic': 'Raleway'
+                                                        // ,
                                                         weight: FontWeight.w600,
                                                         color: greyColor
                                                             .withOpacity(1),
@@ -1799,7 +1831,11 @@ class _AccountState extends State<Account> {
                                                     color: redColor,
                                                     weight: FontWeight.bold,
                                                     size: 12,
-                                                    fontFamily: "Raleway",
+                                                    fontFamily:
+                                                        Constants.language ==
+                                                                'ar'
+                                                            ? 'Noto Sans Arabic'
+                                                            : "Raleway",
                                                   ),
                                               ],
                                             ),
@@ -2000,7 +2036,11 @@ class _AccountState extends State<Account> {
                           //                           MyText(
                           //                             text: 'Become A partner',
                           //                             size: 16,
-                          //                             //fontFamily: 'Raleway',
+                          //                             //fontFamily: Constants
+                          //         .language ==
+                          //     'ar'
+                          // ? 'Noto Sans Arabic': 'Raleway'
+                          // ,
                           //                             weight: FontWeight.w600,
                           //                             color: greyColor.withOpacity(1),
                           //                           ),
@@ -2516,10 +2556,12 @@ class _AccountState extends State<Account> {
                           Row(children: [
                             Text(
                               "selectYourCountry".tr(),
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
-                                  fontFamily: 'Raleway-Black'),
+                                  fontFamily: Constants.language == 'ar'
+                                      ? 'Noto Sans Arabic'
+                                      : 'Raleway-Black'),
                             )
                           ]),
                           const SizedBox(

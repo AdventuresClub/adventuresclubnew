@@ -97,14 +97,14 @@ class _InfoTileState extends State<InfoTile> {
             " ($sTime)", //${"-"} ", //$eTime  ",
         color: blackColor,
         weight: FontWeight.bold,
-        fontFamily: 'Raleway',
+        fontFamily: Constants.language == 'ar' ? 'Noto Sans Arabic' : 'Raleway',
         size: 15,
       ),
       subtitle: MyText(
         text: widget.des, //text[index],
         color: greyTextColor,
         weight: FontWeight.w500,
-        fontFamily: 'Raleway',
+        fontFamily: Constants.language == 'ar' ? 'Noto Sans Arabic' : 'Raleway',
         size: 14,
       ),
     );

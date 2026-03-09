@@ -45,7 +45,8 @@ class TFContainerState extends State<TFContainer> {
               color: blackColor.withOpacity(0.5),
               fontWeight: FontWeight.w500,
               fontSize: 14,
-              fontFamily: 'Raleway'),
+              fontFamily:
+                  Constants.language == 'ar' ? 'Noto Sans Arabic' : 'Raleway'),
           hintMaxLines: widget.hintLines,
           isDense: true,
           filled: true,

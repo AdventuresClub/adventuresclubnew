@@ -89,7 +89,9 @@ class LevelDropDownState extends State<LevelDropDown> {
                                       weight: FontWeight.bold,
                                       color: blackColor,
                                       size: 20,
-                                      fontFamily: 'Raleway'),
+                                      fontFamily: Constants.language == 'ar'
+                                          ? 'Noto Sans Arabic'
+                                          : 'Raleway'),
                                 ),
                               ),
                               Container(

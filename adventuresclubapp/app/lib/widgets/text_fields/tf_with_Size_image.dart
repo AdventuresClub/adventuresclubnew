@@ -38,11 +38,12 @@ class _TFWithSizeImageState extends State<TFWithSizeImage> {
           contentPadding: EdgeInsets.symmetric(
               vertical: widget.verticalPadding, horizontal: 15),
           hintText: widget.hintText,
-          hintStyle: const TextStyle(
+          hintStyle: TextStyle(
               color: blackColor,
               fontWeight: FontWeight.w400,
               fontSize: 14,
-              fontFamily: 'Raleway'),
+              fontFamily:
+                  Constants.language == 'ar' ? 'Noto Sans Arabic' : 'Raleway'),
           hintMaxLines: 1,
           suffixIcon: Icon(
             widget.icon,

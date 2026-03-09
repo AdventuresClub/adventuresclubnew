@@ -439,7 +439,9 @@ class _ContactUsState extends State<ContactUs> {
                                   weight: FontWeight.bold,
                                   color: blackColor,
                                   size: 20,
-                                  fontFamily: 'Raleway'),
+                                  fontFamily: Constants.language == 'ar'
+                                      ? 'Noto Sans Arabic'
+                                      : 'Raleway'),
                             ),
                           ),
                           Container(

@@ -66,7 +66,7 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
             image: const ExactAssetImage('images/climb.png'),
             fit: BoxFit.cover),
       ),
-      child: const Padding(
+      child: Padding(
         padding: EdgeInsets.only(top: 40.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -76,7 +76,9 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
               style: TextStyle(
                   fontSize: 20,
                   color: Colors.white,
-                  fontFamily: 'Raleway',
+                  fontFamily: Constants.language == 'ar'
+                      ? 'Noto Sans Arabic'
+                      : 'Raleway',
                   fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20),
@@ -89,7 +91,9 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                     fontSize: 22,
                     color: Colors.white,
                     height: 1.3,
-                    fontFamily: 'Raleway',
+                    fontFamily: Constants.language == 'ar'
+                        ? 'Noto Sans Arabic'
+                        : 'Raleway',
                   )),
             ),
             SizedBox(height: 2)
@@ -106,7 +110,7 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
             image: const ExactAssetImage('images/freerider.png'),
             fit: BoxFit.cover),
       ),
-      child: const Padding(
+      child: Padding(
         padding: EdgeInsets.only(top: 40.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -116,7 +120,9 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
               style: TextStyle(
                   fontSize: 20,
                   color: Colors.white,
-                  fontFamily: 'Raleway',
+                  fontFamily: Constants.language == 'ar'
+                      ? 'Noto Sans Arabic'
+                      : 'Raleway',
                   fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20),
@@ -131,7 +137,9 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                       fontSize: 22,
                       color: Colors.white,
                       height: 1.3,
-                      fontFamily: 'Raleway',
+                      fontFamily: Constants.language == 'ar'
+                          ? 'Noto Sans Arabic'
+                          : 'Raleway',
                     ),
                   ),
                   Text(
@@ -141,7 +149,9 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                       fontSize: 22,
                       color: Colors.white,
                       height: 1.3,
-                      fontFamily: 'Raleway',
+                      fontFamily: Constants.language == 'ar'
+                          ? 'Noto Sans Arabic'
+                          : 'Raleway',
                     ),
                   ),
                 ],
@@ -161,7 +171,7 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
               image: const ExactAssetImage('images/picture1.png'),
               fit: BoxFit.cover),
         ),
-        child: const Padding(
+        child: Padding(
           padding: EdgeInsets.only(top: 40.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -170,7 +180,9 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                   style: TextStyle(
                       fontSize: 20,
                       color: Colors.white,
-                      fontFamily: 'Raleway',
+                      fontFamily: Constants.language == 'ar'
+                          ? 'Noto Sans Arabic'
+                          : 'Raleway',
                       fontWeight: FontWeight.bold)),
               SizedBox(height: 20),
               Padding(
@@ -183,7 +195,9 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                           fontSize: 22,
                           color: Colors.white,
                           height: 1.3,
-                          fontFamily: 'Raleway',
+                          fontFamily: Constants.language == 'ar'
+                              ? 'Noto Sans Arabic'
+                              : 'Raleway',
                         )),
                     Text('to the moment that matter',
                         textAlign: TextAlign.center,
@@ -191,7 +205,9 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                           fontSize: 22,
                           color: Colors.white,
                           height: 1.3,
-                          fontFamily: 'Raleway',
+                          fontFamily: Constants.language == 'ar'
+                              ? 'Noto Sans Arabic'
+                              : 'Raleway',
                         )),
                   ],
                 ),
@@ -207,7 +223,7 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                   blackColor.withOpacity(0.4), BlendMode.darken),
               image: const ExactAssetImage('images/man.png'),
               fit: BoxFit.cover)),
-      child: const Padding(
+      child: Padding(
         padding: EdgeInsets.only(top: 40.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -216,7 +232,9 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                 style: TextStyle(
                     fontSize: 20,
                     color: Colors.white,
-                    fontFamily: 'Raleway',
+                    fontFamily: Constants.language == 'ar'
+                        ? 'Noto Sans Arabic'
+                        : 'Raleway',
                     fontWeight: FontWeight.bold)),
             SizedBox(height: 20),
             Padding(
@@ -229,7 +247,9 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                         fontSize: 22,
                         color: Colors.white,
                         height: 1.3,
-                        fontFamily: 'Raleway',
+                        fontFamily: Constants.language == 'ar'
+                            ? 'Noto Sans Arabic'
+                            : 'Raleway',
                       )),
                   Text(
                     'Outdoors',
@@ -238,7 +258,9 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                       fontSize: 22,
                       color: Colors.white,
                       height: 1.3,
-                      fontFamily: 'Raleway',
+                      fontFamily: Constants.language == 'ar'
+                          ? 'Noto Sans Arabic'
+                          : 'Raleway',
                     ),
                   ),
                 ],
@@ -257,7 +279,7 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                   blackColor.withOpacity(0.4), BlendMode.darken),
               image: const ExactAssetImage('images/swimming.png'),
               fit: BoxFit.cover)),
-      child: const Padding(
+      child: Padding(
         padding: EdgeInsets.only(top: 40.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -266,7 +288,9 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                 style: TextStyle(
                     fontSize: 20,
                     color: Colors.white,
-                    fontFamily: 'Raleway',
+                    fontFamily: Constants.language == 'ar'
+                        ? 'Noto Sans Arabic'
+                        : 'Raleway',
                     fontWeight: FontWeight.bold)),
             SizedBox(height: 20),
             Padding(
@@ -279,7 +303,9 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                         fontSize: 22,
                         color: Colors.white,
                         height: 1.3,
-                        fontFamily: 'Raleway',
+                        fontFamily: Constants.language == 'ar'
+                            ? 'Noto Sans Arabic'
+                            : 'Raleway',
                       )),
                   Text(
                     'connection',
@@ -288,7 +314,9 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                       fontSize: 22,
                       color: Colors.white,
                       height: 1.3,
-                      fontFamily: 'Raleway',
+                      fontFamily: Constants.language == 'ar'
+                          ? 'Noto Sans Arabic'
+                          : 'Raleway',
                     ),
                   ),
                 ],
@@ -355,21 +383,25 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
                   //   ),
                   // );
                 },
-                child: const Text.rich(
+                child: Text.rich(
                   TextSpan(
                     children: [
                       TextSpan(
                           text: 'Already have an account ?',
                           style: TextStyle(
                             color: whiteColor,
-                            fontFamily: 'Raleway',
+                            fontFamily: Constants.language == 'ar'
+                                ? 'Noto Sans Arabic'
+                                : 'Raleway',
                           )),
                       TextSpan(
                         text: 'Sign In',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: whiteColor,
-                          fontFamily: 'Raleway',
+                          fontFamily: Constants.language == 'ar'
+                              ? 'Noto Sans Arabic'
+                              : 'Raleway',
                         ),
                       ),
                     ],

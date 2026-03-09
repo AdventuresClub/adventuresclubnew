@@ -51,7 +51,9 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                       weight: FontWeight.bold,
                       color: blackColor,
                       size: 20,
-                      fontFamily: 'Raleway',
+                      fontFamily: Constants.language == 'ar'
+                          ? 'Noto Sans Arabic'
+                          : 'Raleway',
                     ),
                     const SizedBox(height: 20),
                     Padding(
@@ -78,7 +80,9 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                             title: MyText(
                               text: 'English',
                               color: greyColor,
-                              fontFamily: 'Raleway',
+                              fontFamily: Constants.language == 'ar'
+                                  ? 'Noto Sans Arabic'
+                                  : 'Raleway',
                             ),
                           ),
                           const Divider(
@@ -106,7 +110,9 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                             title: MyText(
                               text: 'Arabic',
                               color: greyColor,
-                              fontFamily: 'Raleway',
+                              fontFamily: Constants.language == 'ar'
+                                  ? 'Noto Sans Arabic'
+                                  : 'Raleway',
                             ),
                           ),
                           const Divider(
@@ -132,7 +138,11 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                     //   checkboxShape: RoundedRectangleBorder(
                     //     borderRadius: BorderRadius.circular(32)
                     //   ),
-                    //   title: MyText(text:'Arabic',color: greyColor,fontFamily: 'Raleway',),
+                    //   title: MyText(text:'Arabic',color: greyColor,fontFamily: Constants
+                    //         .language ==
+                    //     'ar'
+                    // ? 'Noto Sans Arabic': 'Raleway'
+                    // ,),
                     //   ),
 
                     // const Divider(indent: 10,

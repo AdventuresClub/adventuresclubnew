@@ -843,7 +843,11 @@ class _ParticipantsListState extends State<ParticipantsList> {
     //                   style: const TextStyle(
     //                       color: blackColor,
     //                       fontSize: 15,
-    //                       fontFamily: 'Raleway',
+    //                       fontFamily: Constants
+    //         .language ==
+    //     'ar'
+    // ? 'Noto Sans Arabic': 'Raleway'
+    // ,
     //                       fontWeight: FontWeight.bold),
     //                   children: <TextSpan>[
     //                     TextSpan(
@@ -851,7 +855,11 @@ class _ParticipantsListState extends State<ParticipantsList> {
     //                       style: const TextStyle(
     //                         fontSize: 13,
     //                         wordSpacing: 1,
-    //                         fontFamily: 'Raleway',
+    //                         fontFamily: Constants
+    //         .language ==
+    //     'ar'
+    // ? 'Noto Sans Arabic': 'Raleway'
+    // ,
     //                         color: greyTextColor,
     //                         fontWeight: FontWeight.w400,
     //                       ),

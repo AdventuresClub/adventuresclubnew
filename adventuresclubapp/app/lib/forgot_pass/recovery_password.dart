@@ -180,7 +180,7 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
               ),
               GestureDetector(
                 onTap: goToSignIn,
-                child: const Align(
+                child: Align(
                   alignment: Alignment.center,
                   child: Text.rich(
                     TextSpan(
@@ -188,13 +188,18 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
                         TextSpan(
                             text: 'Remember?',
                             style: TextStyle(
-                                color: blueButtonColor, fontFamily: 'Raleway')),
+                                color: blueButtonColor,
+                                fontFamily: Constants.language == 'ar'
+                                    ? 'Noto Sans Arabic'
+                                    : 'Raleway')),
                         TextSpan(
                           text: 'Sign In',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: blueButtonColor,
-                              fontFamily: 'Raleway'),
+                              fontFamily: Constants.language == 'ar'
+                                  ? 'Noto Sans Arabic'
+                                  : 'Raleway'),
                         ),
                       ],
                     ),

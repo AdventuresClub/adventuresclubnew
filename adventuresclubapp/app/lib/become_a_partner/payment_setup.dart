@@ -51,7 +51,9 @@ class _PaymentSetupState extends State<PaymentSetup> {
                 title: MyText(
                   text: text[index],
                   color: blackTypeColor,
-                  fontFamily: 'Raleway',
+                  fontFamily: Constants.language == 'ar'
+                      ? 'Noto Sans Arabic'
+                      : 'Raleway',
                   size: 14,
                 ),
               ),
@@ -85,7 +87,8 @@ class _PaymentSetupState extends State<PaymentSetup> {
           title: MyText(
             text: 'Pay Pal',
             color: blackTypeColor,
-            fontFamily: 'Raleway',
+            fontFamily:
+                Constants.language == 'ar' ? 'Noto Sans Arabic' : 'Raleway',
             size: 14,
           ),
         ),
@@ -112,7 +115,8 @@ class _PaymentSetupState extends State<PaymentSetup> {
           title: MyText(
             text: 'Wire Transfer',
             color: blackTypeColor,
-            fontFamily: 'Raleway',
+            fontFamily:
+                Constants.language == 'ar' ? 'Noto Sans Arabic' : 'Raleway',
             size: 14,
           ),
         ),

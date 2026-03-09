@@ -152,7 +152,9 @@ class _SignInState extends State<SignIn> {
                             weight: FontWeight.bold,
                             color: blackColor,
                             size: 20,
-                            fontFamily: 'Raleway'),
+                            fontFamily: Constants.language == 'ar'
+                                ? 'Noto Sans Arabic'
+                                : 'Raleway'),
                         const SizedBox(height: 5),
                         Padding(
                           padding: const EdgeInsets.symmetric(
@@ -164,7 +166,9 @@ class _SignInState extends State<SignIn> {
                               weight: FontWeight.w400,
                               color: Colors.grey,
                               size: 16,
-                              fontFamily: 'Raleway'),
+                              fontFamily: Constants.language == 'ar'
+                                  ? 'Noto Sans Arabic'
+                                  : 'Raleway'),
                         ),
                         const SizedBox(height: 20),
                         TextField(
@@ -183,7 +187,9 @@ class _SignInState extends State<SignIn> {
                             weight: FontWeight.w600,
                             color: greenishColor,
                             size: 18,
-                            fontFamily: 'Raleway'),
+                            fontFamily: Constants.language == 'ar'
+                                ? 'Noto Sans Arabic'
+                                : 'Raleway'),
                         const SizedBox(height: 30),
                         Button(
                             'Confirm',

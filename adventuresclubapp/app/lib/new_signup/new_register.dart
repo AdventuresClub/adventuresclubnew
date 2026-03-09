@@ -619,7 +619,9 @@ class _NewRegisterState extends State<NewRegister> {
                                     weight: FontWeight.w600,
                                     color: whiteColor,
                                     size: 24,
-                                    fontFamily: 'Raleway'),
+                                    fontFamily: Constants.language == 'ar'
+                                        ? 'Noto Sans Arabic'
+                                        : 'Raleway'),
                                 PopupMenuButton<String>(
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
@@ -732,10 +734,13 @@ class _NewRegisterState extends State<NewRegister> {
                                         TextSpan(
                                             text: "iHaveRead"
                                                 .tr(), //'I have read   ',
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 fontSize: 16,
                                                 color: whiteColor,
-                                                fontFamily: 'Raleway')),
+                                                fontFamily:
+                                                    Constants.language == 'ar'
+                                                        ? 'Noto Sans Arabic'
+                                                        : 'Raleway')),
                                         TextSpan(
                                           recognizer: TapGestureRecognizer()
                                             ..onTap = () {
@@ -743,21 +748,27 @@ class _NewRegisterState extends State<NewRegister> {
                                             },
                                           text: "termsAndConditions"
                                               .tr(), //'Terms & Conditions',
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                               fontSize: 13,
                                               decoration:
                                                   TextDecoration.underline,
                                               fontWeight: FontWeight.w500,
                                               color: whiteColor,
-                                              fontFamily: 'Raleway'),
+                                              fontFamily:
+                                                  Constants.language == 'ar'
+                                                      ? 'Noto Sans Arabic'
+                                                      : 'Raleway'),
                                         ),
-                                        const TextSpan(
+                                        TextSpan(
                                           text: ' & ',
                                           style: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500,
                                               color: whiteColor,
-                                              fontFamily: 'Raleway'),
+                                              fontFamily:
+                                                  Constants.language == 'ar'
+                                                      ? 'Noto Sans Arabic'
+                                                      : 'Raleway'),
                                         ),
                                         TextSpan(
                                           recognizer: TapGestureRecognizer()
@@ -767,13 +778,16 @@ class _NewRegisterState extends State<NewRegister> {
                                           // onEnter: (event) => goToPrivacy,
                                           text: "privacyPolicy"
                                               .tr(), //'Privacy policy',
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                               fontSize: 13,
                                               decoration:
                                                   TextDecoration.underline,
                                               fontWeight: FontWeight.w500,
                                               color: whiteColor,
-                                              fontFamily: 'Raleway'),
+                                              fontFamily:
+                                                  Constants.language == 'ar'
+                                                      ? 'Noto Sans Arabic'
+                                                      : 'Raleway'),
                                         ),
                                       ],
                                     ),
@@ -814,17 +828,23 @@ class _NewRegisterState extends State<NewRegister> {
                                       TextSpan(
                                           text: "alreadyHaveAnAccount"
                                               .tr(), //'Already have an account ?',
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                               color: whiteColor,
-                                              fontFamily: 'Raleway',
+                                              fontFamily:
+                                                  Constants.language == 'ar'
+                                                      ? 'Noto Sans Arabic'
+                                                      : 'Raleway',
                                               fontSize: 16)),
                                       TextSpan(
                                         text: "signIn".tr(), //'Sign In',
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
                                             color: whiteColor,
-                                            fontFamily: 'Raleway'),
+                                            fontFamily:
+                                                Constants.language == 'ar'
+                                                    ? 'Noto Sans Arabic'
+                                                    : 'Raleway'),
                                       ),
                                     ],
                                   ),
@@ -866,19 +886,23 @@ class _NewRegisterState extends State<NewRegister> {
                           ? Row(children: [
                               Text(
                                 "selectYourCountryYouAreNowIn".tr(),
-                                style: const TextStyle(
+                                style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
-                                    fontFamily: 'Raleway-Black'),
+                                    fontFamily: Constants.language == 'ar'
+                                        ? 'Noto Sans Arabic'
+                                        : 'Raleway-Black'),
                               )
                             ])
                           : Row(children: [
                               Text(
                                 "selectYourNationality".tr(),
-                                style: const TextStyle(
+                                style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
-                                    fontFamily: 'Raleway-Black'),
+                                    fontFamily: Constants.language == 'ar'
+                                        ? 'Noto Sans Arabic'
+                                        : 'Raleway-Black'),
                               )
                             ]),
                       const SizedBox(
@@ -1028,11 +1052,13 @@ class _NewRegisterState extends State<NewRegister> {
                       ),
                       Text(
                         "requestToAddCountry".tr(),
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 14,
                             color: redColor,
-                            fontFamily: 'Raleway-Black'),
+                            fontFamily: Constants.language == 'ar'
+                                ? 'Noto Sans Arabic'
+                                : 'Raleway-Black'),
                       ),
                       const SizedBox(
                         height: 20,

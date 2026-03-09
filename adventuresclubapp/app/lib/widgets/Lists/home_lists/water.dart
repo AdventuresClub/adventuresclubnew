@@ -192,7 +192,9 @@ class WaterState extends State<Water> {
                                       color: blackColor,
                                       size: 14,
                                       weight: FontWeight.bold,
-                                      fontFamily: 'Roboto',
+                                      fontFamily: Constants.language == 'ar'
+                                          ? 'Noto Sans Arabic'
+                                          : 'Roboto',
                                       height: 1.3,
                                     ),
                                     MyText(
@@ -349,11 +351,14 @@ class WaterState extends State<Water> {
                                         TextSpan(
                                           text: gm[index].pName,
                                           //text: 'AdventuresClub',
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: blackTypeColor4,
                                               fontSize: 11,
-                                              fontFamily: "Roboto"),
+                                              fontFamily:
+                                                  Constants.language == 'ar'
+                                                      ? 'Noto Sans Arabic'
+                                                      : "Roboto"),
                                         ),
                                       ],
                                     ),

@@ -43,7 +43,8 @@ class _TFWithSiffixIconState extends State<TFWithSiffixIcon> {
               color: blackColor.withOpacity(0.6),
               fontWeight: FontWeight.w600,
               fontSize: 16,
-              fontFamily: 'Raleway'),
+              fontFamily:
+                  Constants.language == 'ar' ? 'Noto Sans Arabic' : 'Raleway'),
           suffixIcon: widget.showPassword == false
               ? IconButton(
                   icon: Icon(

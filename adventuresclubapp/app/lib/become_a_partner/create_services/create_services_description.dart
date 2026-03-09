@@ -330,7 +330,9 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                                     weight: FontWeight.bold,
                                     color: blackColor,
                                     size: 16,
-                                    fontFamily: 'Raleway'),
+                                    fontFamily: Constants.language == 'ar'
+                                        ? 'Noto Sans Arabic'
+                                        : 'Raleway'),
                               ),
                               const SizedBox(height: 20),
                               for (int i = 0; i < activitiesFilter.length; i++)
@@ -372,7 +374,9 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                                           text:
                                               activitiesFilter[i].activity.tr(),
                                           color: greyColor,
-                                          fontFamily: 'Raleway',
+                                          fontFamily: Constants.language == 'ar'
+                                              ? 'Noto Sans Arabic'
+                                              : 'Raleway',
                                           size: 18,
                                           weight: FontWeight.bold,
                                         ),
@@ -984,7 +988,9 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                           weight: FontWeight.bold,
                           color: blackColor,
                           size: 20,
-                          fontFamily: 'Raleway'),
+                          fontFamily: Constants.language == 'ar'
+                              ? 'Noto Sans Arabic'
+                              : 'Raleway'),
                     ),
                   ),
                   Container(

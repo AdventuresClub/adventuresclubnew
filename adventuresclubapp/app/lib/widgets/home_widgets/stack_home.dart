@@ -255,7 +255,9 @@ class _StackHomeState extends State<StackHome> {
                                   weight: FontWeight.bold,
                                   color: blackColor,
                                   size: 20,
-                                  fontFamily: 'Raleway'),
+                                  fontFamily: Constants.language == 'ar'
+                                      ? 'Noto Sans Arabic'
+                                      : 'Raleway'),
                             ),
                             GestureDetector(
                               onTap: Navigator.of(context).pop,
@@ -641,7 +643,9 @@ class _StackHomeState extends State<StackHome> {
                             weight: FontWeight.bold,
                             color: blackColor,
                             size: 16,
-                            fontFamily: 'Raleway'),
+                            fontFamily: Constants.language == 'ar'
+                                ? 'Noto Sans Arabic'
+                                : 'Raleway'),
                       ),
                       const SizedBox(
                         height: 20,

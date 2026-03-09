@@ -89,7 +89,9 @@ class _ServicesPlansState extends State<ServicesPlans> {
                                   text: widget.programmes[index].title,
                                   color: blackColor,
                                   weight: FontWeight.bold,
-                                  fontFamily: 'Raleway',
+                                  fontFamily: Constants.language == 'ar'
+                                      ? 'Noto Sans Arabic'
+                                      : 'Raleway',
                                   size: 16,
                                 ),
                               ),
@@ -100,7 +102,9 @@ class _ServicesPlansState extends State<ServicesPlans> {
                           text: widget.programmes[index].des, //text[index],
                           color: greyTextColor,
                           weight: FontWeight.w500,
-                          fontFamily: 'Raleway',
+                          fontFamily: Constants.language == 'ar'
+                              ? 'Noto Sans Arabic'
+                              : 'Raleway',
                           size: 14,
                         ),
                       ),
@@ -172,14 +176,22 @@ class _ServicesPlansState extends State<ServicesPlans> {
                       //         " ${widget.programmes[index].sD.substring(10, 16)} ${" - "} ${widget.programmes[index].eD.substring(10, 16)} ${" - "} ${widget.programmes[index].sD.substring(0, 10)} ${"-"} ",
                       //     color: blackColor,
                       //     weight: FontWeight.bold,
-                      //     fontFamily: 'Raleway',
+                      //     fontFamily: Constants
+                      //         .language ==
+                      //     'ar'
+                      // ? 'Noto Sans Arabic': 'Raleway'
+                      // ,
                       //     size: 16,
                       //   ),
                       //   subtitle: MyText(
                       //     text: widget.programmes[index].des, //text[index],
                       //     color: greyTextColor,
                       //     weight: FontWeight.w500,
-                      //     fontFamily: 'Raleway',
+                      //     fontFamily: Constants
+                      //         .language ==
+                      //     'ar'
+                      // ? 'Noto Sans Arabic': 'Raleway'
+                      // ,
                       //     size: 14,
                       //   ),
                       // ),

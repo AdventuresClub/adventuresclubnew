@@ -768,22 +768,29 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                           text: TextSpan(
                                             text: "bookingNumber"
                                                 .tr(), //"Activity Name: ",
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 color: bluishColor,
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold,
-                                                fontFamily: 'Raleway'),
+                                                fontFamily:
+                                                    Constants.language == 'ar'
+                                                        ? 'Noto Sans Arabic'
+                                                        : 'Raleway'),
                                             children: <TextSpan>[
                                               TextSpan(
                                                   text: uRequestList[index]
                                                       .BookingId
                                                       .toString(),
-                                                  style: const TextStyle(
+                                                  style: TextStyle(
                                                       fontSize: 14,
                                                       color: blackColor,
                                                       fontWeight:
                                                           FontWeight.w400,
-                                                      fontFamily: 'Raleway')),
+                                                      fontFamily: Constants
+                                                                  .language ==
+                                                              'ar'
+                                                          ? 'Noto Sans Arabic'
+                                                          : 'Raleway')),
                                             ],
                                           ),
                                         ),
@@ -794,21 +801,28 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                           text: TextSpan(
                                             text: "Region"
                                                 .tr(), //"Activity Name: ",
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 color: bluishColor,
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.bold,
-                                                fontFamily: 'Raleway'),
+                                                fontFamily:
+                                                    Constants.language == 'ar'
+                                                        ? 'Noto Sans Arabic'
+                                                        : 'Raleway'),
                                             children: <TextSpan>[
                                               TextSpan(
                                                   text: uRequestList[index]
                                                       .region, //'Location Name',
-                                                  style: const TextStyle(
+                                                  style: TextStyle(
                                                       fontSize: 14,
                                                       color: blackColor,
                                                       fontWeight:
                                                           FontWeight.w400,
-                                                      fontFamily: 'Raleway')),
+                                                      fontFamily: Constants
+                                                                  .language ==
+                                                              'ar'
+                                                          ? 'Noto Sans Arabic'
+                                                          : 'Raleway')),
                                             ],
                                           ),
                                         ),
@@ -819,21 +833,28 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                           text: TextSpan(
                                             text: "activityName"
                                                 .tr(), //"Activity Name: ",
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 color: bluishColor,
                                                 fontSize: 14,
-                                                fontFamily: 'Raleway',
+                                                fontFamily:
+                                                    Constants.language == 'ar'
+                                                        ? 'Noto Sans Arabic'
+                                                        : 'Raleway',
                                                 fontWeight: FontWeight.bold),
                                             children: <TextSpan>[
                                               TextSpan(
                                                   text: uRequestList[index]
                                                       .adventureName,
-                                                  style: const TextStyle(
+                                                  style: TextStyle(
                                                       fontSize: 14,
                                                       color: blackColor,
                                                       fontWeight:
                                                           FontWeight.w400,
-                                                      fontFamily: 'Raleway')),
+                                                      fontFamily: Constants
+                                                                  .language ==
+                                                              'ar'
+                                                          ? 'Noto Sans Arabic'
+                                                          : 'Raleway')),
                                             ],
                                           ),
                                         ),
@@ -843,21 +864,28 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                         RichText(
                                           text: TextSpan(
                                             text: "providerName".tr(),
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 color: bluishColor,
                                                 fontSize: 14,
-                                                fontFamily: 'Raleway',
+                                                fontFamily:
+                                                    Constants.language == 'ar'
+                                                        ? 'Noto Sans Arabic'
+                                                        : 'Raleway',
                                                 fontWeight: FontWeight.bold),
                                             children: <TextSpan>[
                                               TextSpan(
                                                   text:
                                                       uRequestList[index].pName,
-                                                  style: const TextStyle(
+                                                  style: TextStyle(
                                                       fontSize: 14,
                                                       color: blackColor,
                                                       fontWeight:
                                                           FontWeight.w400,
-                                                      fontFamily: 'Raleway')),
+                                                      fontFamily: Constants
+                                                                  .language ==
+                                                              'ar'
+                                                          ? 'Noto Sans Arabic'
+                                                          : 'Raleway')),
                                             ],
                                           ),
                                         ),
@@ -888,21 +916,28 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                         RichText(
                                           text: TextSpan(
                                             text: "bookingDate".tr(),
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 color: bluishColor,
                                                 fontSize: 14,
-                                                fontFamily: 'Raleway',
+                                                fontFamily:
+                                                    Constants.language == 'ar'
+                                                        ? 'Noto Sans Arabic'
+                                                        : 'Raleway',
                                                 fontWeight: FontWeight.bold),
                                             children: <TextSpan>[
                                               TextSpan(
                                                   text:
                                                       uRequestList[index].bDate,
-                                                  style: const TextStyle(
+                                                  style: TextStyle(
                                                       fontSize: 14,
                                                       color: blackColor,
                                                       fontWeight:
                                                           FontWeight.w400,
-                                                      fontFamily: 'Raleway')),
+                                                      fontFamily: Constants
+                                                                  .language ==
+                                                              'ar'
+                                                          ? 'Noto Sans Arabic'
+                                                          : 'Raleway')),
                                             ],
                                           ),
                                         ),
@@ -933,21 +968,28 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                         RichText(
                                           text: TextSpan(
                                             text: "activityDate".tr(),
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 color: bluishColor,
                                                 fontSize: 14,
-                                                fontFamily: 'Raleway',
+                                                fontFamily:
+                                                    Constants.language == 'ar'
+                                                        ? 'Noto Sans Arabic'
+                                                        : 'Raleway',
                                                 fontWeight: FontWeight.bold),
                                             children: <TextSpan>[
                                               TextSpan(
                                                   text:
                                                       uRequestList[index].aDate,
-                                                  style: const TextStyle(
+                                                  style: TextStyle(
                                                       fontSize: 14,
                                                       color: blackColor,
                                                       fontWeight:
                                                           FontWeight.w400,
-                                                      fontFamily: 'Raleway')),
+                                                      fontFamily: Constants
+                                                                  .language ==
+                                                              'ar'
+                                                          ? 'Noto Sans Arabic'
+                                                          : 'Raleway')),
                                             ],
                                           ),
                                         ),
@@ -957,21 +999,28 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                         RichText(
                                           text: TextSpan(
                                             text: "registrations".tr(),
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 color: bluishColor,
                                                 fontSize: 14,
-                                                fontFamily: 'Raleway',
+                                                fontFamily:
+                                                    Constants.language == 'ar'
+                                                        ? 'Noto Sans Arabic'
+                                                        : 'Raleway',
                                                 fontWeight: FontWeight.bold),
                                             children: <TextSpan>[
                                               TextSpan(
                                                   text: uRequestList[index]
                                                       .registration,
-                                                  style: const TextStyle(
+                                                  style: TextStyle(
                                                       fontSize: 14,
                                                       color: blackColor,
                                                       fontWeight:
                                                           FontWeight.w400,
-                                                      fontFamily: 'Raleway')),
+                                                      fontFamily: Constants
+                                                                  .language ==
+                                                              'ar'
+                                                          ? 'Noto Sans Arabic'
+                                                          : 'Raleway')),
                                             ],
                                           ),
                                         ),
@@ -981,22 +1030,29 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                         RichText(
                                           text: TextSpan(
                                             text: "unitCost".tr(),
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 color: bluishColor,
                                                 fontSize: 14,
-                                                fontFamily: 'Raleway',
+                                                fontFamily:
+                                                    Constants.language == 'ar'
+                                                        ? 'Noto Sans Arabic'
+                                                        : 'Raleway',
                                                 fontWeight: FontWeight.bold),
                                             children: <TextSpan>[
                                               TextSpan(
                                                   text:
                                                       "${uRequestList[index].uCost} "
                                                       " ${uRequestList[index].currency}",
-                                                  style: const TextStyle(
+                                                  style: TextStyle(
                                                       fontSize: 14,
                                                       color: blackColor,
                                                       fontWeight:
                                                           FontWeight.w400,
-                                                      fontFamily: 'Raleway')),
+                                                      fontFamily: Constants
+                                                                  .language ==
+                                                              'ar'
+                                                          ? 'Noto Sans Arabic'
+                                                          : 'Raleway')),
                                             ],
                                           ),
                                         ),
@@ -1006,22 +1062,29 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                         RichText(
                                           text: TextSpan(
                                             text: "totalCost".tr(),
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 color: bluishColor,
                                                 fontSize: 14,
-                                                fontFamily: 'Raleway',
+                                                fontFamily:
+                                                    Constants.language == 'ar'
+                                                        ? 'Noto Sans Arabic'
+                                                        : 'Raleway',
                                                 fontWeight: FontWeight.bold),
                                             children: <TextSpan>[
                                               TextSpan(
                                                   text:
                                                       "${uRequestList[index].tCost} "
                                                       " ${uRequestList[index].currency}",
-                                                  style: const TextStyle(
+                                                  style: TextStyle(
                                                       fontSize: 14,
                                                       color: blackColor,
                                                       fontWeight:
                                                           FontWeight.w400,
-                                                      fontFamily: 'Raleway')),
+                                                      fontFamily: Constants
+                                                                  .language ==
+                                                              'ar'
+                                                          ? 'Noto Sans Arabic'
+                                                          : 'Raleway')),
                                             ],
                                           ),
                                         ),
@@ -1031,22 +1094,29 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                         RichText(
                                           text: TextSpan(
                                             text: "payableCost".tr(),
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 color: bluishColor,
                                                 fontSize: 14,
-                                                fontFamily: 'Raleway',
+                                                fontFamily:
+                                                    Constants.language == 'ar'
+                                                        ? 'Noto Sans Arabic'
+                                                        : 'Raleway',
                                                 fontWeight: FontWeight.bold),
                                             children: <TextSpan>[
                                               TextSpan(
                                                   text:
                                                       "${uRequestList[index].tCost} "
                                                       " ${uRequestList[index].currency}",
-                                                  style: const TextStyle(
+                                                  style: TextStyle(
                                                       fontSize: 14,
                                                       color: blackColor,
                                                       fontWeight:
                                                           FontWeight.w400,
-                                                      fontFamily: 'Raleway')),
+                                                      fontFamily: Constants
+                                                                  .language ==
+                                                              'ar'
+                                                          ? 'Noto Sans Arabic'
+                                                          : 'Raleway')),
                                             ],
                                           ),
                                         ),
@@ -1056,21 +1126,28 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                         RichText(
                                           text: TextSpan(
                                             text: "paymentChannel".tr(),
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 color: bluishColor,
                                                 fontSize: 14,
-                                                fontFamily: 'Raleway',
+                                                fontFamily:
+                                                    Constants.language == 'ar'
+                                                        ? 'Noto Sans Arabic'
+                                                        : 'Raleway',
                                                 fontWeight: FontWeight.bold),
                                             children: <TextSpan>[
                                               TextSpan(
                                                   text: uRequestList[index]
                                                       .pChanel,
-                                                  style: const TextStyle(
+                                                  style: TextStyle(
                                                       fontSize: 14,
                                                       color: blackColor,
                                                       fontWeight:
                                                           FontWeight.w400,
-                                                      fontFamily: 'Raleway')),
+                                                      fontFamily: Constants
+                                                                  .language ==
+                                                              'ar'
+                                                          ? 'Noto Sans Arabic'
+                                                          : 'Raleway')),
                                             ],
                                           ),
                                         ),

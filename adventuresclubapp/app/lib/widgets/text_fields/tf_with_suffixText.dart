@@ -31,11 +31,12 @@ class _TFWithSuffixTextState extends State<TFWithSuffixText> {
           contentPadding:
               const EdgeInsets.symmetric(vertical: 17, horizontal: 15),
           hintText: widget.hintText,
-          hintStyle: const TextStyle(
+          hintStyle: TextStyle(
               color: blackColor,
               fontWeight: FontWeight.w400,
               fontSize: 14,
-              fontFamily: 'Raleway'),
+              fontFamily:
+                  Constants.language == 'ar' ? 'Noto Sans Arabic' : 'Raleway'),
           hintMaxLines: 1,
           suffixText: widget.text,
           isDense: true,

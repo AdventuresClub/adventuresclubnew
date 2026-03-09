@@ -44,14 +44,18 @@ class ServiceScheduleWidget extends StatelessWidget {
                             text: programmes[index].title,
                             color: blackColor,
                             weight: FontWeight.bold,
-                            fontFamily: 'Raleway',
+                            fontFamily: Constants.language == 'ar'
+                                ? 'Noto Sans Arabic'
+                                : 'Raleway',
                             size: 16,
                           ),
                           subtitle: MyText(
                             text: programmes[index].des, //text[index],
                             color: greyTextColor,
                             weight: FontWeight.w500,
-                            fontFamily: 'Raleway',
+                            fontFamily: Constants.language == 'ar'
+                                ? 'Noto Sans Arabic'
+                                : 'Raleway',
                             size: 14,
                           ),
                         ),
@@ -102,7 +106,11 @@ class ServiceScheduleWidget extends StatelessWidget {
                       //           " ${programmes[index].sD.substring(10, 16)} ${" - "} ${programmes[index].eD.substring(10, 16)} ${" - "} ${programmes[index].sD.substring(0, 10)} ",
                       //       color: blackColor,
                       //       weight: FontWeight.bold,
-                      //       fontFamily: 'Raleway',
+                      //       fontFamily: Constants
+                      //         .language ==
+                      //     'ar'
+                      // ? 'Noto Sans Arabic': 'Raleway'
+                      // ,
                       //       size: 16,
                       //     ),
                       //     subtitle: Row(
@@ -121,7 +129,11 @@ class ServiceScheduleWidget extends StatelessWidget {
                       //           text: programmes[index].des, //text[index],
                       //           color: greyTextColor,
                       //           weight: FontWeight.w500,
-                      //           fontFamily: 'Raleway',
+                      //           fontFamily: Constants
+                      //         .language ==
+                      //     'ar'
+                      // ? 'Noto Sans Arabic': 'Raleway'
+                      // ,
                       //           size: 14,
                       //         ),
                       //       ],
@@ -158,14 +170,22 @@ class ServiceScheduleWidget extends StatelessWidget {
     //                     " ${programmes[index].sD.substring(10, 16)} ${" - "} ${programmes[index].eD.substring(10, 16)} ${" - "} ${programmes[index].sD.substring(0, 10)} ${"-"} ",
     //                 color: blackColor,
     //                 weight: FontWeight.bold,
-    //                 fontFamily: 'Raleway',
+    //                 fontFamily: Constants
+    //         .language ==
+    //     'ar'
+    // ? 'Noto Sans Arabic': 'Raleway'
+    // ,
     //                 size: 16,
     //               ),
     //               subtitle: MyText(
     //                 text: programmes[index].des, //text[index],
     //                 color: greyTextColor,
     //                 weight: FontWeight.w500,
-    //                 fontFamily: 'Raleway',
+    //                 fontFamily: Constants
+    //         .language ==
+    //     'ar'
+    // ? 'Noto Sans Arabic': 'Raleway'
+    // ,
     //                 size: 14,
     //               ),
     //             ),

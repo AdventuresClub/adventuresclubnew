@@ -282,7 +282,9 @@ class _PlanForFutureState extends State<PlanForFuture> {
                           text: 'Use earned Points',
                           weight: FontWeight.w500,
                           color: blackTypeColor1,
-                          fontFamily: 'Roboto',
+                          fontFamily: Constants.language == 'ar'
+                              ? 'Noto Sans Arabic'
+                              : 'Roboto',
                         ),
                         checkColor: whiteColor,
                         activeColor: bluishColor,
@@ -298,19 +300,23 @@ class _PlanForFutureState extends State<PlanForFuture> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           RichText(
-                            text: const TextSpan(
+                            text: TextSpan(
                               text: 'Available Points',
                               style: TextStyle(
                                   color: blueTextColor,
                                   fontSize: 10,
-                                  fontFamily: 'Roboto'),
+                                  fontFamily: Constants.language == 'ar'
+                                      ? 'Noto Sans Arabic'
+                                      : 'Roboto'),
                               children: <TextSpan>[
                                 TextSpan(
                                     text: ' 500',
                                     style: TextStyle(
                                         fontSize: 24,
                                         color: blueTextColor,
-                                        fontFamily: 'Roboto')),
+                                        fontFamily: Constants.language == 'ar'
+                                            ? 'Noto Sans Arabic'
+                                            : 'Roboto')),
                               ],
                             ),
                           ),
@@ -320,7 +326,9 @@ class _PlanForFutureState extends State<PlanForFuture> {
                                   text: 'Opt to use',
                                   color: blueTextColor,
                                   size: 10,
-                                  fontFamily: 'Roboto'),
+                                  fontFamily: Constants.language == 'ar'
+                                      ? 'Noto Sans Arabic'
+                                      : 'Roboto'),
                               const SizedBox(width: 5),
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 5,
@@ -375,12 +383,16 @@ class _PlanForFutureState extends State<PlanForFuture> {
                               weight: FontWeight.bold,
                               color: blackTypeColor4,
                               size: 22,
-                              fontFamily: 'Roboto')),
+                              fontFamily: Constants.language == 'ar'
+                                  ? 'Noto Sans Arabic'
+                                  : 'Roboto')),
                       TextField(
                         decoration: InputDecoration(
-                            suffixStyle: const TextStyle(
+                            suffixStyle: TextStyle(
                               color: bluishColor,
-                              fontFamily: 'Roboto',
+                              fontFamily: Constants.language == 'ar'
+                                  ? 'Noto Sans Arabic'
+                                  : 'Roboto',
                             ),
                             suffixText: 'Apply',
                             border: UnderlineInputBorder(
@@ -423,12 +435,16 @@ class _PlanForFutureState extends State<PlanForFuture> {
                                 text: text[index],
                                 color: blackTypeColor3,
                                 weight: FontWeight.w500,
-                                fontFamily: 'Roboto'),
+                                fontFamily: Constants.language == 'ar'
+                                    ? 'Noto Sans Arabic'
+                                    : 'Roboto'),
                             MyText(
                                 text: text2[index],
                                 color: greyColor,
                                 weight: FontWeight.bold,
-                                fontFamily: 'Roboto'),
+                                fontFamily: Constants.language == 'ar'
+                                    ? 'Noto Sans Arabic'
+                                    : 'Roboto'),
                           ],
                         );
                       })),
@@ -442,14 +458,18 @@ class _PlanForFutureState extends State<PlanForFuture> {
                               color: blackTypeColor3,
                               weight: FontWeight.w500,
                               height: 1.5,
-                              fontFamily: 'Roboto'),
+                              fontFamily: Constants.language == 'ar'
+                                  ? 'Noto Sans Arabic'
+                                  : 'Roboto'),
                           MyText(
                               text: 'ر.ع 19,350',
                               color: bluishColor,
                               weight: FontWeight.bold,
                               size: 16,
                               height: 1.5,
-                              fontFamily: 'Roboto'),
+                              fontFamily: Constants.language == 'ar'
+                                  ? 'Noto Sans Arabic'
+                                  : 'Roboto'),
                         ],
                       ),
                     ],

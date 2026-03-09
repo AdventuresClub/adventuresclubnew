@@ -425,10 +425,12 @@ class _DetailsTabState extends State<DetailsTab> with TickerProviderStateMixin {
                     labelPadding:
                         const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                     labelColor: blackColor,
-                    labelStyle: const TextStyle(
+                    labelStyle: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
-                      fontFamily: 'Raleway',
+                      fontFamily: Constants.language == 'ar'
+                          ? 'Noto Sans Arabic'
+                          : 'Raleway',
                     ),
                     indicatorColor: greenishColor,
                     //indicatorPadding: EdgeInsets.all(12),

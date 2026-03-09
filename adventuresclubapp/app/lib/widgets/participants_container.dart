@@ -721,20 +721,24 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                     RichText(
                       text: TextSpan(
                         text: 'healthCondition'.tr(),
-                        style: const TextStyle(
+                        style: TextStyle(
                             color: bluishColor,
                             fontSize: 14,
-                            fontFamily: 'Raleway',
+                            fontFamily: Constants.language == 'ar'
+                                ? 'Noto Sans Arabic'
+                                : 'Raleway',
                             fontWeight: FontWeight.bold),
                         children: <TextSpan>[
                           TextSpan(
                             text: widget.gm.healthConditions.isNotEmpty
                                 ? "${separateWords(widget.gm.healthConditions.tr())} "
                                 : "",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 14,
                               wordSpacing: 1,
-                              fontFamily: 'Raleway',
+                              fontFamily: Constants.language == 'ar'
+                                  ? 'Noto Sans Arabic'
+                                  : 'Raleway',
                               color: blackColor,
                               fontWeight: FontWeight.w400,
                             ),

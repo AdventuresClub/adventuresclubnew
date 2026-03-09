@@ -112,3 +112,21 @@ flutter:
           weight: 800
         - asset: fonts/Raleway-Black.ttf
           weight: 900
+    - family: Noto Sans Arabic
+      fonts:
+        - asset: fonts/NotoSansArabic-Thin.ttf
+          weight: 100
+        - asset: fonts/NotoSansArabic-Light.ttf
+          weight: 300
+        - asset: fonts/NotoSansArabic-Regular.ttf
+          weight: 400
+        - asset: fonts/NotoSansArabic-Medium.ttf
+          weight: 500
+        - asset: fonts/NotoSansArabic-SemiBold.ttf
+          weight: 600
+        - asset: fonts/NotoSansArabic-Bold.ttf
+          weight: 700
+        - asset: fonts/NotoSansArabic-ExtraBold.ttf
+          weight: 800
+        - asset: fonts/NotoSansArabic-Black.ttf
+          weight: 900

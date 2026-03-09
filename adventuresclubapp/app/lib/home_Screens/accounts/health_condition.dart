@@ -300,7 +300,9 @@ class _HealthConditionState extends State<HealthCondition> {
                                 title: MyText(
                                   text: healthList[index].healthCondition,
                                   color: greyColor,
-                                  fontFamily: 'Raleway',
+                                  fontFamily: Constants.language == 'ar'
+                                      ? 'Noto Sans Arabic'
+                                      : 'Raleway',
                                   size: 16,
                                 ),
                               ),
@@ -460,7 +462,9 @@ class _HealthConditionState extends State<HealthCondition> {
                                   weight: FontWeight.bold,
                                   color: blackColor,
                                   size: 12,
-                                  fontFamily: 'Raleway'),
+                                  fontFamily: Constants.language == 'ar'
+                                      ? 'Noto Sans Arabic'
+                                      : 'Raleway'),
                             ),
                           ),
                           Container(

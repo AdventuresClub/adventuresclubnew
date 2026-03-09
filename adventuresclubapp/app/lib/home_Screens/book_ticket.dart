@@ -429,21 +429,29 @@ class _BookTicketState extends State<BookTicket> {
                                             RichText(
                                               text: TextSpan(
                                                 text: 'From : ',
-                                                style: const TextStyle(
+                                                style: TextStyle(
                                                     color: bluishColor,
                                                     fontSize: 18,
                                                     fontWeight: FontWeight.bold,
-                                                    fontFamily: "Raleway"),
+                                                    fontFamily:
+                                                        Constants.language ==
+                                                                'ar'
+                                                            ? 'Noto Sans Arabic'
+                                                            : "Raleway"),
                                                 children: <TextSpan>[
                                                   TextSpan(
                                                     text: extractDate(
                                                         widget.gm.startDate),
-                                                    style: const TextStyle(
+                                                    style: TextStyle(
                                                         fontSize: 16,
                                                         color: blackColor,
                                                         fontWeight:
                                                             FontWeight.w400,
-                                                        fontFamily: "Raleway"),
+                                                        fontFamily: Constants
+                                                                    .language ==
+                                                                'ar'
+                                                            ? 'Noto Sans Arabic'
+                                                            : "Raleway"),
                                                   ),
                                                 ],
                                               ),
@@ -451,21 +459,29 @@ class _BookTicketState extends State<BookTicket> {
                                             RichText(
                                               text: TextSpan(
                                                 text: 'To :  '.tr(),
-                                                style: const TextStyle(
+                                                style: TextStyle(
                                                     color: bluishColor,
                                                     fontSize: 18,
                                                     fontWeight: FontWeight.bold,
-                                                    fontFamily: "Raleway"),
+                                                    fontFamily:
+                                                        Constants.language ==
+                                                                'ar'
+                                                            ? 'Noto Sans Arabic'
+                                                            : "Raleway"),
                                                 children: <TextSpan>[
                                                   TextSpan(
                                                     text: extractDate(
                                                         widget.gm.endDate),
-                                                    style: const TextStyle(
+                                                    style: TextStyle(
                                                         fontSize: 16,
                                                         color: blackColor,
                                                         fontWeight:
                                                             FontWeight.w400,
-                                                        fontFamily: "Raleway"),
+                                                        fontFamily: Constants
+                                                                    .language ==
+                                                                'ar'
+                                                            ? 'Noto Sans Arabic'
+                                                            : "Raleway"),
                                                   ),
                                                 ],
                                               ),
@@ -678,13 +694,19 @@ class _BookTicketState extends State<BookTicket> {
                                               text: "perPerson".tr(),
                                               color: blackTypeColor3,
                                               weight: FontWeight.bold,
-                                              fontFamily: 'Roboto'),
+                                              fontFamily:
+                                                  Constants.language == 'ar'
+                                                      ? 'Noto Sans Arabic'
+                                                      : 'Roboto'),
                                           Text(
                                             "${pPerson.toStringAsFixed(2)}${" OMR"}",
                                             style: TextStyle(
                                                 color: greyColor,
                                                 fontWeight: FontWeight.bold,
-                                                fontFamily: 'Roboto'),
+                                                fontFamily:
+                                                    Constants.language == 'ar'
+                                                        ? 'Noto Sans Arabic'
+                                                        : 'Roboto'),
                                           )
                                           // MyText(
                                           //     // text: widget.gm.costInc,
@@ -707,7 +729,10 @@ class _BookTicketState extends State<BookTicket> {
                                                   "${'totalPerson'.tr()} ${"  "} ${"x"} $totalPerson",
                                               color: blackTypeColor3,
                                               weight: FontWeight.bold,
-                                              fontFamily: 'Roboto'),
+                                              fontFamily:
+                                                  Constants.language == 'ar'
+                                                      ? 'Noto Sans Arabic'
+                                                      : 'Roboto'),
                                           // MyText(
                                           //     // text: widget.gm.costInc,
                                           //     text:
@@ -720,7 +745,10 @@ class _BookTicketState extends State<BookTicket> {
                                             style: TextStyle(
                                                 color: greyColor,
                                                 fontWeight: FontWeight.bold,
-                                                fontFamily: 'Roboto'),
+                                                fontFamily:
+                                                    Constants.language == 'ar'
+                                                        ? 'Noto Sans Arabic'
+                                                        : 'Roboto'),
                                           )
                                         ],
                                       ),
@@ -777,7 +805,10 @@ class _BookTicketState extends State<BookTicket> {
                                               weight: FontWeight.bold,
                                               size: 18,
                                               height: 2,
-                                              fontFamily: 'Roboto'),
+                                              fontFamily:
+                                                  Constants.language == 'ar'
+                                                      ? 'Noto Sans Arabic'
+                                                      : 'Roboto'),
                                           // MyText(
                                           //     text:
                                           //         "$totalCost ${widget.gm.currency}"
@@ -794,7 +825,10 @@ class _BookTicketState extends State<BookTicket> {
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16,
                                                 height: 1.5,
-                                                fontFamily: 'Roboto'),
+                                                fontFamily:
+                                                    Constants.language == 'ar'
+                                                        ? 'Noto Sans Arabic'
+                                                        : 'Roboto'),
                                           )
                                         ],
                                       ),
@@ -933,7 +967,11 @@ class _BookTicketState extends State<BookTicket> {
                       //             hintStyle: const TextStyle(
                       //                 fontWeight: FontWeight.w400,
                       //                 fontSize: 14,
-                      //                 fontFamily: 'Raleway'),
+                      //                 fontFamily: Constants
+                      //         .language ==
+                      //     'ar'
+                      // ? 'Noto Sans Arabic': 'Raleway'
+                      // ),
                       //             suffixStyle: const TextStyle(
                       //                 color: bluishColor, fontFamily: 'Roboto'),
                       //             suffixText: 'apply'.tr(),
@@ -1096,10 +1134,12 @@ class _BookTicketState extends State<BookTicket> {
                           hintText:
                               'typeMessageHere...Name, Ages or Health Conditions'
                                   .tr(),
-                          hintStyle: const TextStyle(
+                          hintStyle: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 14,
-                              fontFamily: 'Raleway'),
+                              fontFamily: Constants.language == 'ar'
+                                  ? 'Noto Sans Arabic'
+                                  : 'Raleway'),
                           hintMaxLines: 3,
                           isDense: true,
                           filled: true,
@@ -1171,10 +1211,12 @@ class _BookTicketState extends State<BookTicket> {
                                   TextSpan(
                                       text:
                                           "iHaveRead".tr(), //'I have read   ',
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontSize: 16,
                                           // color: whiteColor,
-                                          fontFamily: 'Raleway')),
+                                          fontFamily: Constants.language == 'ar'
+                                              ? 'Noto Sans Arabic'
+                                              : 'Raleway')),
                                   TextSpan(
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {
@@ -1182,20 +1224,24 @@ class _BookTicketState extends State<BookTicket> {
                                       },
                                     text: "termsAndConditions"
                                         .tr(), //'Terms & Conditions',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                         fontSize: 13,
                                         decoration: TextDecoration.underline,
                                         fontWeight: FontWeight.w500,
                                         //color: whiteColor,
-                                        fontFamily: 'Raleway'),
+                                        fontFamily: Constants.language == 'ar'
+                                            ? 'Noto Sans Arabic'
+                                            : 'Raleway'),
                                   ),
-                                  const TextSpan(
+                                  TextSpan(
                                     text: ' & ',
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500,
                                         // color: whiteColor,
-                                        fontFamily: 'Raleway'),
+                                        fontFamily: Constants.language == 'ar'
+                                            ? 'Noto Sans Arabic'
+                                            : 'Raleway'),
                                   ),
                                 ],
                               ),

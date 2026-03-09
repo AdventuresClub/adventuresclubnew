@@ -37,19 +37,21 @@ class _MultiLineFieldState extends State<MultiLineField> {
       maxLines: widget.lines,
       decoration: InputDecoration(
           labelText: widget.label!.tr(),
-          labelStyle: const TextStyle(
+          labelStyle: TextStyle(
               color: blackColor,
               fontWeight: FontWeight.bold,
               fontSize: 14,
-              fontFamily: 'Raleway'),
+              fontFamily:
+                  Constants.language == 'ar' ? 'Noto Sans Arabic' : 'Raleway'),
           // contentPadding:
           //     const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
           hintText: widget.hinttext.tr(),
-          hintStyle: const TextStyle(
+          hintStyle: TextStyle(
               color: blackColor,
               fontWeight: FontWeight.w400,
               fontSize: 14,
-              fontFamily: 'Raleway'),
+              fontFamily:
+                  Constants.language == 'ar' ? 'Noto Sans Arabic' : 'Raleway'),
           hintMaxLines: 1,
           isDense: true,
           filled: true,

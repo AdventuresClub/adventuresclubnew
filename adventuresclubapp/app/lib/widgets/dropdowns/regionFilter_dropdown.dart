@@ -121,7 +121,9 @@ class RegionFilterDropDownState extends State<RegionFilterDropDown> {
                                       weight: FontWeight.bold,
                                       color: blackColor,
                                       size: 20,
-                                      fontFamily: 'Raleway'),
+                                      fontFamily: Constants.language == 'ar'
+                                          ? 'Noto Sans Arabic'
+                                          : 'Raleway'),
                                 ),
                               ),
                               Container(
