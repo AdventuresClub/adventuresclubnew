@@ -447,7 +447,7 @@ class _CostState extends State<Cost> {
                       // ),
                       if (services.isNotEmpty)
                         SizedBox(
-                          width: 280,
+                          width: 270,
                           child: ServicesCostDropdown(
                             dropDownList: services,
                             type: "cost1",
@@ -497,9 +497,9 @@ class _CostState extends State<Cost> {
                       // In your widget where you want to use the dropdown
                       if (services.isNotEmpty)
                         SizedBox(
-                          width: 280,
+                          width: 270,
                           child: SizedBox(
-                            width: 280,
+                            width: 270,
                             child: ServicesCostDropdown(
                               dropDownList: services,
                               type: "cost2",

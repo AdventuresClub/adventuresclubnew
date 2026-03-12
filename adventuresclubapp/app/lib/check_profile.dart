@@ -236,6 +236,7 @@ class CheckProfileState extends State<CheckProfile> {
             Constants.myCountry = element;
             Constants.countryFlag = element.flag;
             Constants.country = element.country;
+            Constants.countryCurrency = element.currency;
           });
         }
       }
@@ -367,7 +368,14 @@ class CheckProfileState extends State<CheckProfile> {
       // prefs.setString("email", Constants.emailId);
       // prefs.setString("password", Constants.password);
       cId(up.countryId);
-      parseData(up.name, up.countryId, up.id, up.email, pass, up.userRole);
+      parseData(
+        up.name,
+        up.countryId,
+        up.id,
+        up.email,
+        pass,
+        up.userRole,
+      );
       profile = up;
       Constants.profile = profile;
       Constants.userRole = up.userRole;

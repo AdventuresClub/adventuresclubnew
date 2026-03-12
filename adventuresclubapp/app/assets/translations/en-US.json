@@ -619,5 +619,20 @@
     "CANCELLED (100% REFUND)": "CANCELLED (100% REFUND)",
     "CANCELLED (50% REFUND)": "CANCELLED (50% REFUND)",
     "CANCELLED (NON-REFUNDABLE)": "CANCELLED (NON-REFUNDABLE)",
-    "Early Drop (100% REFUND)": "Early Drop (100% REFUND)"
+    "Early Drop (100% REFUND)": "Early Drop (100% REFUND)",
+    "You Are Not logged In": "You are not logged in",
+    "IRAN": "Iran",
+    "KENYA": "Kenya",
+    "MAURITANIA": "Mauritania",
+    "Please Agree with terms & Conditions": "Please Agree with terms & Conditions",
+    "Please Enter Username": "Please Enter Username",
+    "Please Enter Password": "Please Enter Password",
+    "Please Enter Country Code": "Please Enter Country Code",
+    "The mobile field is required,.The email has already been taken.":"THe mobile field is required, the email has already been taken",
+    "The email has already been taken.": "The email has already been taken",
+    "Please Enter Official Address": "Please Enter Official Address",
+    "BankName Cannot be Empty": "Bank Name cannot be empty",
+    "Please agree with partnership terms": "Please agree with partnership terms",
+    "Your Request Submitted": "Your Request Submitted",
+    "After approval you'll be notified and have to buy your subscription package": "After approval you'll be notified and have to buy your subscription package"
 }

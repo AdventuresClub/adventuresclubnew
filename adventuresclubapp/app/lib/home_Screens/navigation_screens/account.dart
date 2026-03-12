@@ -59,7 +59,9 @@ class _AccountState extends State<Account> {
     //"favorite",
     //"myPoints",
     "Settlements",
-    'myServices', 'clientRequests'
+    //"Payments",
+    'myServices',
+    'clientRequests',
   ];
   List<String> userText = [
     "favorite",

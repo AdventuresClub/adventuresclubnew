@@ -730,21 +730,29 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                         const SizedBox(
                                           width: 5,
                                         ),
-                                        GestureDetector(
-                                          onTap: () => showConfirmation(
-                                              uRequestList[index]
-                                                  .BookingId
-                                                  .toString(),
-                                              index,
-                                              uRequestList[index]
-                                                  .serviceId
-                                                  .toString()),
-                                          child: const Icon(
-                                            Icons.delete_forever_outlined,
-                                            color: redColor,
-                                            size: 24,
-                                          ),
-                                        )
+                                        if (uRequestList[index].status != "9" &&
+                                            uRequestList[index].status !=
+                                                "10" &&
+                                            uRequestList[index].status !=
+                                                "11" &&
+                                            uRequestList[index].status !=
+                                                "12" &&
+                                            uRequestList[index].status != "13")
+                                          GestureDetector(
+                                            onTap: () => showConfirmation(
+                                                uRequestList[index]
+                                                    .BookingId
+                                                    .toString(),
+                                                index,
+                                                uRequestList[index]
+                                                    .serviceId
+                                                    .toString()),
+                                            child: const Icon(
+                                              Icons.delete_forever_outlined,
+                                              color: redColor,
+                                              size: 24,
+                                            ),
+                                          )
                                       ],
                                     )
                                   ],
@@ -1190,7 +1198,7 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                                   .toString()),
                                           child: Center(
                                             child: Text(
-                                              "viewDetails"
+                                              "viewDetail"
                                                   .tr(), //'View Details',
                                               style: const TextStyle(
                                                   color: whiteColor,

@@ -58,7 +58,7 @@ class _BannerPageState extends State<BannerPage> {
     setState(() {
       loading = true;
     });
-    final XFile? photo = await picker.pickImage(source: ImageSource.camera);
+    final XFile? photo = await picker.pickImage(source: ImageSource.gallery);
     if (photo != null) {
       pickedMedia = File(photo.path);
       imageList.add(pickedMedia);

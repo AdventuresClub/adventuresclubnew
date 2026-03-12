@@ -1423,15 +1423,25 @@ class _RequestListViewState extends State<RequestListView> {
                                 color: Colors.transparent,
                                 child: InkWell(
                                   onTap: // () {},
-                                      () => showConfirmation(
-                                          uRequestListInv[index]
-                                              .BookingId
-                                              .toString(),
-                                          index,
-                                          uRequestListInv[index]
-                                              .serviceId
-                                              .toString(),
-                                          uRequestListInv[index]),
+                                      uRequestListInv[index].status != "9" ||
+                                              uRequestListInv[index].status !=
+                                                  "10" ||
+                                              uRequestListInv[index].status !=
+                                                  "11" ||
+                                              uRequestListInv[index].status !=
+                                                  "12" ||
+                                              uRequestListInv[index].status !=
+                                                  "13"
+                                          ? () {}
+                                          : () => showConfirmation(
+                                              uRequestListInv[index]
+                                                  .BookingId
+                                                  .toString(),
+                                              index,
+                                              uRequestListInv[index]
+                                                  .serviceId
+                                                  .toString(),
+                                              uRequestListInv[index]),
                                   //   widget.uRequestListInv[index].BookingId.toString(),
                                   // ),
                                   child: Center(

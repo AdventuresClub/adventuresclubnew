@@ -259,7 +259,7 @@ class _NewRegisterState extends State<NewRegister> {
   void message(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
+        content: Text(message.tr()),
       ),
     );
   }

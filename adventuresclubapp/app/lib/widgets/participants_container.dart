@@ -401,19 +401,24 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                     const SizedBox(
                       width: 5,
                     ),
-                    GestureDetector(
-                      onTap: () => showConfirmation(
-                          widget.gm.bookingId.toString(),
-                          widget.index,
-                          widget.gm.serviceId.toString(),
-                          widget.gm.bookingUser.toString(),
-                          widget.gm),
-                      child: const Icon(
-                        Icons.delete_forever_outlined,
-                        color: redColor,
-                        size: 24,
-                      ),
-                    )
+                    if (widget.gm.status != "9" &&
+                        widget.gm.status != "10" &&
+                        widget.gm.status != "11" &&
+                        widget.gm.status != "12" &&
+                        widget.gm.status != "13")
+                      GestureDetector(
+                        onTap: () => showConfirmation(
+                            widget.gm.bookingId.toString(),
+                            widget.index,
+                            widget.gm.serviceId.toString(),
+                            widget.gm.bookingUser.toString(),
+                            widget.gm),
+                        child: const Icon(
+                          Icons.delete_forever_outlined,
+                          color: redColor,
+                          size: 24,
+                        ),
+                      )
                   ],
                 ),
               ],

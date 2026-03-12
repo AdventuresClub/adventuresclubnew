@@ -678,5 +678,20 @@
 	"Caving": "الكهوف",
 	"Bicycling": "ركوب الدراجات",
     "Transaction Details": "تفاصيل التحويلات",
-    "transactions available for export": "البيانات المتاحة للتصدير"
+    "transactions available for export": "البيانات المتاحة للتصدير",
+    "You Are Not logged In": "أنت غير مسجل دخولك",
+    "IRAN": "إيران",
+    "KENYA": "كينيا",
+    "MAURITANIA": "موريتانيا",
+    "Please Agree with terms & Conditions": "يرجى الموافقة على الشروط والأحكام",
+    "Please Enter Username": "يرجى إدخال اسم المستخدم",
+    "Please Enter Password": "يرجى إدخال كلمة المرور",
+    "Please Enter Country Code": "يرجى إدخال رمز الدولة",
+    "The mobile field is required,.The email has already been taken.": "حقل رقم الجوال مطلوب، والبريد الإلكتروني مستخدم بالفعل",
+    "The email has already been taken.": "البريد الإلكتروني مستخدم بالفعل",
+    "Please Enter Official Address": "يرجى إدخال العنوان الرسمي",
+    "BankName Cannot be Empty": "اسم البنك لا يمكن أن يكون فارغًا",
+    "Please agree with partnership terms": "يرجى الموافقة على شروط الشراكة",
+    "Your Request Submitted": "تم تقديم طلبك",
+    "After approval you'll be notified and have to buy your subscription package": "بعد الموافقة سيتم إخطارك وسيتعين عليك شراء باقة الاشتراك الخاصة بك"
 }
