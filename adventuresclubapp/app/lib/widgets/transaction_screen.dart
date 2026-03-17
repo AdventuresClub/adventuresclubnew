@@ -3264,7 +3264,7 @@ class TransactionScreenState extends State<TransactionScreen> {
       return [
         DataRow(
           cells: [
-            DataCell(Container(width: 100, child: Text('No data'))),
+            DataCell(SizedBox(width: 100, child: Text('No data'))),
             DataCell(Container(width: 80, child: Text(''))),
             DataCell(Container(width: 90, child: Text(''))),
             DataCell(Container(width: 80, child: Text(''))),
@@ -3363,10 +3363,23 @@ class TransactionScreenState extends State<TransactionScreen> {
               ),
             ),
           ),
+          // DataCell(
+          //   // Container(
+          //   //   width: 80,
+          //   //   child: _buildStatusChip(transaction.payStatus),
+          //   // ),
+          // ),
           DataCell(
-            Container(
+            SizedBox(
               width: 80,
-              child: _buildStatusChip(transaction.payStatus),
+              child: Text(
+                transaction.payStatus.isEmpty
+                    ? (transaction.payStatus ?? '')
+                    : transaction.payStatus,
+                style: TextStyle(fontSize: 10),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+              ),
             ),
           ),
           DataCell(
@@ -3471,6 +3484,47 @@ class TransactionScreenState extends State<TransactionScreen> {
     );
   }
 
+  // Widget _buildSettlementChip(String status) {
+  //   Color chipColor;
+  //   String displayStatus;
+
+  //   switch (status.toLowerCase()) {
+  //     case 'settled':
+  //       chipColor = Colors.green;
+  //       displayStatus = 'SETTLED';
+  //       break;
+  //     case 'in_progress':
+  //       chipColor = Colors.orange;
+  //       displayStatus = 'IN PROGRESS';
+  //       break;
+  //     case 'in_review':
+  //       chipColor = Colors.blue;
+  //       displayStatus = 'IN REVIEW';
+  //       break;
+  //     default:
+  //       chipColor = Colors.grey;
+  //       displayStatus = status.replaceAll('_', ' ').toUpperCase();
+  //   }
+
+  //   return Container(
+  //     padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+  //     decoration: BoxDecoration(
+  //       color: chipColor.withOpacity(0.2),
+  //       borderRadius: BorderRadius.circular(12),
+  //     ),
+  //     child: Text(
+  //       displayStatus.tr(),
+  //       style: TextStyle(
+  //         color: chipColor,
+  //         fontSize: 9,
+  //         fontWeight: FontWeight.bold,
+  //       ),
+  //       overflow: TextOverflow.ellipsis,
+  //       maxLines: 1,
+  //     ),
+  //   );
+  // }
+
   Widget _buildSettlementChip(String status) {
     Color chipColor;
     String displayStatus;
@@ -3493,22 +3547,16 @@ class TransactionScreenState extends State<TransactionScreen> {
         displayStatus = status.replaceAll('_', ' ').toUpperCase();
     }
 
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-      decoration: BoxDecoration(
-        color: chipColor.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Text(
-        displayStatus.tr(),
+    return Chip(
+      label: Text(
+        displayStatus.tr().trim(),
         style: TextStyle(
-          color: chipColor,
-          fontSize: 9,
-          fontWeight: FontWeight.bold,
-        ),
-        overflow: TextOverflow.ellipsis,
-        maxLines: 1,
+            color: Colors.white, fontSize: 8, fontWeight: FontWeight.bold),
       ),
+      backgroundColor: chipColor,
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      visualDensity: VisualDensity.compact,
+      padding: EdgeInsets.symmetric(horizontal: 4),
     );
   }
 
