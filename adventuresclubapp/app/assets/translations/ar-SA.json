@@ -698,5 +698,6 @@
     "Your Request Submitted": "تم تقديم طلبك",
     "After approval you'll be notified and have to buy your subscription package": "بعد الموافقة سيتم إخطارك وسيتعين عليك شراء باقة الاشتراك الخاصة بك",
     "Partnership Requested": "تم تقديم طلب الشراكة",
-    "Your request to become partner is already submitted Please check notifications section for approval": "تم تقديم طلبك للانضمام كشريك، يرجى مراجعة قسم الإشعارات للاطلاع على الموافقة."
+    "Your request to become partner is already submitted Please check notifications section for approval": "تم تقديم طلبك للانضمام كشريك، يرجى مراجعة قسم الإشعارات للاطلاع على الموافقة.",
+    "SUCCESS":"نجاح"
 }

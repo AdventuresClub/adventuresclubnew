@@ -3459,7 +3459,7 @@ class TransactionScreenState extends State<TransactionScreen> {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(
-        displayStatus,
+        displayStatus.tr(),
         style: TextStyle(
           color: chipColor,
           fontSize: 9,
@@ -3500,7 +3500,7 @@ class TransactionScreenState extends State<TransactionScreen> {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(
-        displayStatus,
+        displayStatus.tr(),
         style: TextStyle(
           color: chipColor,
           fontSize: 9,
