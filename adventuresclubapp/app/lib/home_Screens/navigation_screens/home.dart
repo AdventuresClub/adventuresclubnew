@@ -55,7 +55,8 @@ class _HomeState extends State<Home> {
   }
 
   Future getChatNotification() async {
-    getNotificatioNumber();
+    debugPrint("test_${gAllServices.length}, chatNotificatino:");
+    await getNotificatioNumber();
     var response = await http.get(
         Uri.parse("${Constants.baseUrl}/unreadchatcount/${Constants.userId}"));
     if (response.statusCode == 200) {
@@ -71,7 +72,7 @@ class _HomeState extends State<Home> {
     }
   }
 
-  void getNotificatioNumber() {
+  Future<void> getNotificatioNumber() async {
     Provider.of<NavigationIndexProvider>(context, listen: false)
         .getNotificationBadge();
   }

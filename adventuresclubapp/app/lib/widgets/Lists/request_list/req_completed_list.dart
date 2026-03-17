@@ -737,7 +737,9 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                                 "11" &&
                                             uRequestList[index].status !=
                                                 "12" &&
-                                            uRequestList[index].status != "13")
+                                            uRequestList[index].status !=
+                                                "13" &&
+                                            uRequestList[index].status != "2")
                                           GestureDetector(
                                             onTap: () => showConfirmation(
                                                 uRequestList[index]
@@ -1198,7 +1200,8 @@ class _ReqCompletedListState extends State<ReqCompletedList> {
                                                   .toString()),
                                           child: Center(
                                             child: Text(
-                                              "viewDetail"
+                                              "viewDetails"
+                                                  .tr()
                                                   .tr(), //'View Details',
                                               style: const TextStyle(
                                                   color: whiteColor,

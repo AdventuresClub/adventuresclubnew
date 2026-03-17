@@ -618,8 +618,11 @@
 	"SETTLED" : "تم التسديد",
 	"Transaction available for export" : "المعاملة متاحة للتصدير",
 	"Settled" : "تم التسديد",
-	"In Progress" : "جاري المعالجة",
+	"IN PROGRESS" : "جاري المعالجة",
+	"IN REVIEW" : "قيد المراجعة",
+    "In Progress" : "جاري المعالجة",
 	"In Review" : "قيد المراجعة",
+    "in_review":"قيد المراجعة",
 	"Search transactions..." : "معاملات البحث...",
 	"Rows" : "الصفوف",
 	"Settlement Status" : "حالة التحويلات",
@@ -693,5 +696,7 @@
     "BankName Cannot be Empty": "اسم البنك لا يمكن أن يكون فارغًا",
     "Please agree with partnership terms": "يرجى الموافقة على شروط الشراكة",
     "Your Request Submitted": "تم تقديم طلبك",
-    "After approval you'll be notified and have to buy your subscription package": "بعد الموافقة سيتم إخطارك وسيتعين عليك شراء باقة الاشتراك الخاصة بك"
+    "After approval you'll be notified and have to buy your subscription package": "بعد الموافقة سيتم إخطارك وسيتعين عليك شراء باقة الاشتراك الخاصة بك",
+    "Partnership Requested": "تم تقديم طلب الشراكة",
+    "Your request to become partner is already submitted Please check notifications section for approval": "تم تقديم طلبك للانضمام كشريك، يرجى مراجعة قسم الإشعارات للاطلاع على الموافقة."
 }

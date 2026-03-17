@@ -405,7 +405,8 @@ class _ParticipantsContainerState extends State<ParticipantsContainer> {
                         widget.gm.status != "10" &&
                         widget.gm.status != "11" &&
                         widget.gm.status != "12" &&
-                        widget.gm.status != "13")
+                        widget.gm.status != "13" &&
+                        widget.gm.status != "2")
                       GestureDetector(
                         onTap: () => showConfirmation(
                             widget.gm.bookingId.toString(),

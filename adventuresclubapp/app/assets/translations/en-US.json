@@ -539,7 +539,8 @@
     "Excluding gears": "Excluding gears",
     "iAgreeWithTermsnConditions": "I agree with terms & conditions",
     "partnership contract terms": "Partnership contract terms",
-    "Settlements" : "Settlement of Payments",
+    "Settlements of payments" : "Settlement of Payments",
+    "Settlements" : "Settlements",
 	"ِِAlert" : "Alert",
 	"Yes" : "Yes",
 	"No" : "No",
@@ -564,8 +565,10 @@
 	"Settled" : "Settled",
 	"In Progress" : "In Progress",
     "in_progress": "In Progress",
+    "IN PROGRESS": "In Progress",
 	"In Review" : "In Review",
     "IN REVIEW" : "In Review",
+    "in_review":"In Review",
 	"Search transactions..." : "Search transactions...",
 	"Rows" : "Rows",
 	"Settlement Status" : "Settlement Status",
@@ -634,5 +637,7 @@
     "BankName Cannot be Empty": "Bank Name cannot be empty",
     "Please agree with partnership terms": "Please agree with partnership terms",
     "Your Request Submitted": "Your Request Submitted",
-    "After approval you'll be notified and have to buy your subscription package": "After approval you'll be notified and have to buy your subscription package"
+    "After approval you'll be notified and have to buy your subscription package": "After approval you'll be notified and have to buy your subscription package",
+    "Partnership Requested": "Partnership Requested",
+    "Your request to become partner is already submitted Please check notifications section for approval": "Your request to become partner is already submitted Please check notifications section for approval"
 }

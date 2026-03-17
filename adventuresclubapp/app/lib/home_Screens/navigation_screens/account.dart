@@ -231,18 +231,19 @@ class _AccountState extends State<Account> {
     showDialog(
       context: context,
       builder: (ctx) => SimpleDialog(
-        title: const Padding(
+        title: Padding(
           padding: EdgeInsets.all(12.0),
           child: Center(
             child: Text(
-              "Your request for became partner is already submitted Please check notification section for approval",
+              "Your request to become partner is already submitted Please check notifications section for approval"
+                  .tr(),
               style: TextStyle(fontSize: 16),
             ),
           ),
         ),
         children: [
           MaterialButton(
-              onPressed: cancel, child: MyText(text: "Ok", color: blackColor))
+              onPressed: cancel, child: MyText(text: "ok", color: blackColor))
         ],
       ),
     );
@@ -401,9 +402,12 @@ class _AccountState extends State<Account> {
         }
       }
     }
-    setState(() {
-      loading = false;
-    });
+    if (mounted) {
+      setState(() {
+        loading = false;
+      });
+    }
+
     print(expired);
     print(Constants.expired);
   }
@@ -1172,7 +1176,8 @@ class _AccountState extends State<Account> {
                                                     children: [
                                                       MyText(
                                                         text:
-                                                            'Partnership Requested',
+                                                            'Partnership Requested'
+                                                                .tr(),
                                                         size: 18,
                                                         //fontFamily: Constants
                                                         //         .language ==
@@ -1922,7 +1927,7 @@ class _AccountState extends State<Account> {
                                                         image: ExactAssetImage(
                                                             partnerImages[i]),
                                                         height:
-                                                            i == 0 ? 48 : 40,
+                                                            i == 0 ? 40 : 40,
                                                         width: i == 0 ? 48 : 40,
                                                       ),
                                                       cRequest > 0 &&
