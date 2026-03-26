@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls, prefer_typing_uninitialized_variables
+// ignore_for_file: avoid_print, avoid_function_literals_in_foreach_calls, prefer_typing_uninitialized_variables, deprecated_member_use
 
 import 'package:app/constants.dart';
 import 'package:app/constants_create_new_services.dart';
@@ -762,7 +762,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                 ExpansionTile(
                   title: Text(
                     durationFilter[selectedDuration].showDuration == true
-                        ? durationFilter[selectedDuration].duration
+                        ? durationFilter[selectedDuration].duration.tr()
                         : 'Duration'.tr(),
                   ),
                   children: [
@@ -805,7 +805,7 @@ class _CreateServicesDescriptionState extends State<CreateServicesDescription> {
                 ExpansionTile(
                   title: Text(
                     levelFilter[selectedLevel].showLevel == true
-                        ? levelFilter[selectedLevel].level
+                        ? levelFilter[selectedLevel].level.tr()
                         : 'selectLevel'.tr(),
                   ),
                   children: [

@@ -104,8 +104,9 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                   height: 10,
                 ),
                 //Text("data"),
-                const Text(
-                  "After approval you'll be notified and have to buy your subscription package",
+                Text(
+                  "After approval you'll be notified and have to buy your subscription package"
+                      .tr(),
                   textAlign: TextAlign.center,
                 ),
                 // text:
@@ -119,7 +120,7 @@ class _BecomePartnerNewState extends State<BecomePartnerNew> {
                 ElevatedButton(
                     onPressed: homePage,
                     child: MyText(
-                      text: "Continue",
+                      text: "continue",
                       color: blackColor,
                     ))
                 //BottomButton(bgColor: blueButtonColor, onTap: homePage)
